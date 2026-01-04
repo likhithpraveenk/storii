@@ -1,0 +1,155 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:storii/app/navigation/nav_bar/default_nav_items.dart';
+import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/app_buttons.dart';
+
+class NavSettingScreen extends ConsumerStatefulWidget {
+  const NavSettingScreen({super.key});
+
+  @override
+  ConsumerState<NavSettingScreen> createState() => _NavSettingScreenState();
+}
+
+class _NavSettingScreenState extends ConsumerState<NavSettingScreen> {
+  late List<NavTarget> _masterOrder;
+  late Set<NavTarget> _activeDraft;
+
+  @override
+  void initState() {
+    super.initState();
+    final initiallyActive = ref.read(navTargetsProvider);
+    final allPossible = NavTarget.values.toList();
+
+    _masterOrder = [
+      ...initiallyActive,
+      ...allPossible.where((t) => !initiallyActive.contains(t)),
+    ];
+
+    _activeDraft = Set.from(initiallyActive);
+  }
+
+  void _onReorder(int oldIndex, int newIndex) {
+    setState(() {
+      if (oldIndex < newIndex) newIndex -= 1;
+      final item = _masterOrder.removeAt(oldIndex);
+      _masterOrder.insert(newIndex, item);
+    });
+  }
+
+  void _onToggle(NavTarget target, bool isEnabled) {
+    setState(() {
+      if (isEnabled) {
+        _activeDraft.add(target);
+      } else {
+        if (_activeDraft.length > 3) {
+          _activeDraft.remove(target);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.mustSelect3),
+              duration: const Duration(seconds: 1),
+            ),
+          );
+        }
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            context.pop();
+          },
+          icon: const Icon(Icons.arrow_back_ios_new),
+        ),
+        titleSpacing: 0,
+        title: Text(
+          AppLocalizations.of(context)!.configNav,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        actions: [
+          AppTextButton(
+            onPressed: () async {
+              final finalOrder = _masterOrder
+                  .where((t) => _activeDraft.contains(t))
+                  .toList();
+              await ref
+                  .read(appSettingsProvider.notifier)
+                  .setNavTargets(finalOrder);
+            },
+            text: AppLocalizations.of(context)!.save,
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
+      body: ReorderableListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        itemCount: _masterOrder.length,
+        onReorder: _onReorder,
+        proxyDecorator: (child, index, animation) =>
+            Material(type: MaterialType.transparency, child: child),
+        itemBuilder: (context, index) {
+          final target = _masterOrder[index];
+          final isEnabled = _activeDraft.contains(target);
+
+          return Container(
+            key: ValueKey(target),
+            margin: const EdgeInsets.only(bottom: 12),
+            decoration: BoxDecoration(
+              color: isEnabled
+                  ? scheme.surfaceContainerHighest.withValues(alpha: 0.5)
+                  : scheme.surface.withValues(alpha: 0.3),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: isEnabled
+                    ? scheme.outlineVariant.withValues(alpha: 0.5)
+                    : Colors.transparent,
+              ),
+            ),
+            child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 4,
+              ),
+              title: Text(
+                target.item.label,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: isEnabled
+                      ? scheme.onSurface
+                      : scheme.onSurface.withValues(alpha: 0.4),
+                ),
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Switch.adaptive(
+                    value: isEnabled,
+                    activeTrackColor: scheme.primary,
+                    onChanged: (value) => _onToggle(target, value),
+                  ),
+                  const SizedBox(width: 8),
+                  ReorderableDragStartListener(
+                    index: index,
+                    child: Icon(
+                      Icons.drag_indicator_rounded,
+                      color: scheme.onSurfaceVariant.withValues(alpha: 0.6),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}

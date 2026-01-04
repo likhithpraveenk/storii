@@ -1,0 +1,34 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          explicit_to_json: true
+        generate_for:
+          - lib/api/models/**
+          - lib/app/models/**
+          - lib/**/settings_provider.dart
+      freezed:
+        generate_for:
+          - lib/api/models/**
+          - lib/app/models/**
+          - lib/features/**/logic/**
+          - lib/**/settings_provider.dart
+      storii:settings_generator:
+        generate_for:
+          - lib/**/settings_provider.dart
+      drift_dev:
+        generate_for:
+          - lib/storage/drift/**
+      riverpod_generator:
+        generate_for:
+          - lib/app/providers/**
+          - lib/features/**/logic/**
+
+builders:
+  settings_generator:
+    import: "package:storii/builder/settings_builder.dart"
+    builder_factories: ["settingsBuilder"]
+    build_extensions: { ".dart": ["settings.g.part"] }
+    auto_apply: dependents
+    applies_builders: ["source_gen|combining_builder"]

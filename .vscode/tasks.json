@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Dart Fix",
+      "type": "shell",
+      "command": "dart fix --apply",
+      "problemMatcher": []
+    },
+    {
+      "label": "Dart Format",
+      "type": "shell",
+      "command": "dart format .",
+      "problemMatcher": [],
+    },
+    {
+      "label": "build_runner build",
+      "type": "shell",
+      "command": "dart run build_runner build -d",
+      "problemMatcher": []
+    },
+    {
+      "label": "build_runner watch",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "run",
+        "build_runner",
+        "watch",
+        "--delete-conflicting-outputs"
+      ],
+      "detail": "Running build_runner watch for code generation",
+      "presentation": {
+        "revealProblems": "onProblem",
+        "reveal": "silent",
+        "clear": true,
+        "panel": "dedicated"
+      },
+      "isBackground": true,
+      "problemMatcher": "$dart-build_runner"
+    }
+  ]
+}

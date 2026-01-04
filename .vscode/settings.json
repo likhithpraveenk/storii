@@ -1,0 +1,18 @@
+{
+  "files.watcherExclude": {
+    "**/.dart_tool/**": true,
+    "**/build/**": true,
+    "**/*.freezed.dart": true,
+    "**/*.g.dart": true
+  },
+  "search.exclude": {
+    "**/build/**": true,
+    "**/.dart_tool/**": true
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*.dart": "$(capture).g.dart, $(capture).freezed.dart"
+  },
+  "arb-editor.suppressedWarnings": ["missing_metadata_for_key"]
+}

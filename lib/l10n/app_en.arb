@@ -1,0 +1,105 @@
+{
+  "@@locale": "en",
+  "login": "Login",
+  "logout": "Logout",
+  "addServer": "Add Server",
+  "serverUrl": "Server URL",
+  "validateServer": "Validate Server",
+  "username": "Username",
+  "password": "Password",
+  "errorUnknown": "Something went wrong",
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "deleteServer": "Delete Server",
+  "deleteServerQ": "Delete Server?",
+  "deleteUserQ": "Delete {user}?",
+  "@deleteUserQ": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
+  "noUsersServer": "No users are linked to this server.",
+  "followingUsers": "You are about to delete the following users",
+  "urlCopied": "URL Copied",
+  "addUser": "Add User",
+  "errorLoadingUsers": "Error loading users",
+  "welcome": "Welcome {username}",
+  "@welcome": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "switchingToUser": "Switching to {user}",
+  "@switchingToUser": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
+  "loading": "Loading",
+  "active": "Active",
+  "noSession": "No session",
+  "noAuthor": "No Author",
+  "noTitle": "No Title",
+  "noImage": "No Image",
+  "errorImage": "Error loading image",
+  "sortTitle": "Title",
+  "sortAuthor": "Author",
+  "sortAddedAt": "Date Added",
+  "sortUpdatedAt": "Date Updated",
+  "sortSize": "Size",
+  "sortDuration": "Duration",
+  "sortPublishedYear": "Year",
+  "downloads": "Downloads",
+  "settings": "Settings",
+  "logs": "Logs",
+  "about": "About",
+  "switchAccount": "Switch Account",
+  "noLibrary": "No Library",
+  "empty": "Empty",
+  "collapse": "Collapse",
+  "readMore": "Read More",
+  "retry": "Retry",
+  "ascDesc": "Tap again for ascending/descending",
+  "gridCount": "Grid Count",
+  "percentCompleted": "{percent}% completed",
+  "@percentCompleted": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "noDescription": "No description available",
+  "resume": "Resume",
+  "play": "Play",
+  "deleteLogsQ": "Delete {count} logs?",
+  "@deleteLogsQ": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "search": "Search",
+  "dateFormat": "Date Format",
+  "custom": "Custom",
+  "invalidFormat": "Invalid Format",
+  "customPattern": "Custom Pattern",
+  "save": "Save",
+  "fontFamily": "Font Family",
+  "system": "System",
+  "language": "Language",
+  "configNav": "Configure Navigation",
+  "mustSelect3": "You must select at least 3 items",
+  "theme": "Theme",
+  "reset": "Reset",
+  "resetSettingsQ": "Reset Settings?",
+  "resetSettingsTxt": "This will revert all preferences to their default values.",
+  "settingsReset": "Settings are reset"
+}

@@ -1,0 +1,23 @@
+{
+  "@@locale": "es",
+  "login": "Iniciar sesión",
+  "logout": "Cerrar sesión",
+  "username": "Usuario",
+  "password": "Contraseña",
+  "errorUnknown": "Algo salió mal",
+  "welcome": "Bienvenido, {username}",
+  "@welcome": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "sortTitle": "Título",
+  "sortAuthor": "Autor",
+  "sortAddedAt": "Fecha de adición",
+  "sortUpdatedAt": "Fecha de actualización",
+  "sortSize": "Tamaño",
+  "sortDuration": "Duración",
+  "sortPublishedYear": "Año"
+}

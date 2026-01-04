@@ -1,0 +1,141 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/models/server.dart';
+import 'package:storii/features/auth/logic/users_provider.dart';
+import 'package:storii/features/auth/ui/add_user_sheet.dart';
+import 'package:storii/features/auth/ui/delete_server_dialog.dart';
+import 'package:storii/features/auth/ui/user_tile.dart';
+import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/widgets/app_buttons.dart';
+import 'package:storii/shared/widgets/waveform.dart';
+
+class ServerTile extends ConsumerStatefulWidget {
+  const ServerTile(this.server, {super.key});
+
+  final Server server;
+
+  @override
+  ConsumerState<ServerTile> createState() => _ServerTileState();
+}
+
+class _ServerTileState extends ConsumerState<ServerTile>
+    with SingleTickerProviderStateMixin {
+  bool _expanded = true;
+
+  @override
+  Widget build(BuildContext context) {
+    final usersAsync = ref.watch(usersOfServerProvider(widget.server.url));
+    final color = widget.server.url.color;
+    final scheme = Theme.of(context).colorScheme;
+    final l = AppLocalizations.of(context)!;
+
+    return Column(
+      children: [
+        InkWell(
+          borderRadius: AppStyles.circularRadius,
+          onTap: () => setState(() => _expanded = !_expanded),
+          onLongPress: () {
+            Clipboard.setData(
+              ClipboardData(text: widget.server.url.toString()),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(l.urlCopied),
+                duration: const Duration(seconds: 1),
+              ),
+            );
+          },
+          child: Padding(
+            padding: const .all(16),
+            child: Row(
+              children: [
+                Container(width: 4, height: 24, color: color),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    widget.server.url.cleanString,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+                if (usersAsync.hasValue)
+                  Padding(
+                    padding: const .symmetric(horizontal: 8),
+                    child: Text(
+                      '${(usersAsync.value)?.length}',
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                  ),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  child: Icon(
+                    _expanded ? Icons.unfold_less : Icons.unfold_more,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          child: _expanded
+              ? usersAsync.when(
+                  loading: () => const Center(child: RandomWaveform()),
+                  error: (error, stack) => Center(
+                    child: Padding(
+                      padding: const .all(16),
+                      child: Text('${l.errorLoadingUsers}: $error'),
+                    ),
+                  ),
+                  data: (users) => Column(
+                    children: [
+                      ...users.map(
+                        (user) => UserTile(user: user, server: widget.server),
+                      ),
+                      Padding(
+                        padding: const .only(left: 16, right: 16, bottom: 16),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
+                              child: AppOutlinedButton(
+                                icon: const Icon(Icons.delete_forever),
+                                text: l.deleteServer,
+                                color: scheme.error,
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) => DeleteServerDialog(
+                                      widget.server,
+                                      users,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            SizedBox(
+                              width: double.infinity,
+                              child: AppFilledButton(
+                                icon: const Icon(Icons.add),
+                                text: l.addUser,
+                                onPressed: () {
+                                  showAddUserSheet(context, widget.server.url);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
+      ],
+    );
+  }
+}
