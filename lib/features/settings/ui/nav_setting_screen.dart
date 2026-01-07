@@ -1,10 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/navigation/nav_bar/default_nav_items.dart';
+import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/router.dart';
+import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
+
+class ConfigNavSetting extends StatelessWidget {
+  const ConfigNavSetting({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: AppStyles.roundedRect,
+      color: Theme.of(
+        context,
+      ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+      child: ListTile(
+        leading: const Icon(Icons.explore),
+        title: Text(
+          AppLocalizations.of(context)!.configNav,
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        onTap: () {
+          context.push(AppRoute.navigationSettings.path);
+        },
+      ),
+    );
+  }
+}
 
 class NavSettingScreen extends ConsumerStatefulWidget {
   const NavSettingScreen({super.key});
@@ -40,9 +66,19 @@ class _NavSettingScreenState extends ConsumerState<NavSettingScreen> {
   }
 
   void _onToggle(NavTarget target, bool isEnabled) {
+    if (target == .library || target == .settings) return;
     setState(() {
       if (isEnabled) {
-        _activeDraft.add(target);
+        if (_activeDraft.length < 5) {
+          _activeDraft.add(target);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.maxSelect5),
+              duration: const Duration(seconds: 1),
+            ),
+          );
+        }
       } else {
         if (_activeDraft.length > 3) {
           _activeDraft.remove(target);
@@ -91,23 +127,23 @@ class _NavSettingScreenState extends ConsumerState<NavSettingScreen> {
       ),
       body: ReorderableListView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: const .symmetric(horizontal: 16, vertical: 12),
         itemCount: _masterOrder.length,
         onReorder: _onReorder,
         proxyDecorator: (child, index, animation) =>
-            Material(type: MaterialType.transparency, child: child),
+            Material(type: .transparency, child: child),
         itemBuilder: (context, index) {
           final target = _masterOrder[index];
           final isEnabled = _activeDraft.contains(target);
 
           return Container(
             key: ValueKey(target),
-            margin: const EdgeInsets.only(bottom: 12),
+            margin: const .only(bottom: 12),
             decoration: BoxDecoration(
               color: isEnabled
                   ? scheme.surfaceContainerHighest.withValues(alpha: 0.5)
                   : scheme.surface.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppStyles.circularRadius,
               border: Border.all(
                 color: isEnabled
                     ? scheme.outlineVariant.withValues(alpha: 0.5)
@@ -115,21 +151,18 @@ class _NavSettingScreenState extends ConsumerState<NavSettingScreen> {
               ),
             ),
             child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 4,
-              ),
+              contentPadding: const .symmetric(horizontal: 16, vertical: 4),
               title: Text(
-                target.item.label,
+                target.label(context),
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w600,
+                  fontWeight: .w600,
                   color: isEnabled
                       ? scheme.onSurface
                       : scheme.onSurface.withValues(alpha: 0.4),
                 ),
               ),
               trailing: Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: .min,
                 children: [
                   Switch.adaptive(
                     value: isEnabled,

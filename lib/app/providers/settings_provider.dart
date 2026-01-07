@@ -6,7 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/config/fonts.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/user.dart';
-import 'package:storii/app/navigation/nav_bar/default_nav_items.dart';
+import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/app/providers/database_provider.dart';
 import 'package:storii/builder/annotations.dart';
 import 'package:storii/storage/drift/database.dart';

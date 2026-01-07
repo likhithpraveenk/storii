@@ -5,8 +5,8 @@ import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 
-class ThemeSettingCard extends ConsumerWidget {
-  const ThemeSettingCard({super.key});
+class ThemeSetting extends ConsumerWidget {
+  const ThemeSetting({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,23 +24,20 @@ class ThemeSettingCard extends ConsumerWidget {
           AppLocalizations.of(context)!.theme,
           style: Theme.of(context).textTheme.titleSmall,
         ),
-        trailing: SizedBox(
-          width: 100,
-          child: DropdownButton<AppTheme>(
-            isExpanded: true,
-            value: currentTheme,
-            borderRadius: .circular(8),
-            padding: const .all(8),
-            underline: const SizedBox(),
-            icon: const Icon(Icons.arrow_drop_down),
-            onChanged: (val) => val != null ? notifier.setTheme(val) : null,
-            items: AppTheme.values.map((theme) {
-              return DropdownMenuItem(
-                value: theme,
-                child: Text(theme.displayName),
-              );
-            }).toList(),
-          ),
+        trailing: DropdownButton<AppTheme>(
+          value: currentTheme,
+          isDense: true,
+          borderRadius: .circular(8),
+          padding: const .all(8),
+          underline: const SizedBox(),
+          icon: const Icon(Icons.arrow_drop_down),
+          onChanged: (val) => val != null ? notifier.setTheme(val) : null,
+          items: AppTheme.values.map((theme) {
+            return DropdownMenuItem(
+              value: theme,
+              child: Text(theme.displayName),
+            );
+          }).toList(),
         ),
       ),
     );

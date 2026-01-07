@@ -458,6 +458,12 @@ abstract class AppLocalizations {
   /// **'System'**
   String get system;
 
+  /// No description provided for @fontScale.
+  ///
+  /// In en, this message translates to:
+  /// **'Font Scale'**
+  String get fontScale;
+
   /// No description provided for @language.
   ///
   /// In en, this message translates to:
@@ -475,6 +481,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You must select at least 3 items'**
   String get mustSelect3;
+
+  /// No description provided for @maxSelect5.
+  ///
+  /// In en, this message translates to:
+  /// **'You can select a maximum of 5 items'**
+  String get maxSelect5;
 
   /// No description provided for @theme.
   ///
@@ -505,6 +517,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings are reset'**
   String get settingsReset;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @library.
+  ///
+  /// In en, this message translates to:
+  /// **'Library'**
+  String get library;
+
+  /// No description provided for @collections.
+  ///
+  /// In en, this message translates to:
+  /// **'Collections'**
+  String get collections;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @series.
+  ///
+  /// In en, this message translates to:
+  /// **'Series'**
+  String get series;
+
+  /// No description provided for @authors.
+  ///
+  /// In en, this message translates to:
+  /// **'Authors'**
+  String get authors;
 }
 
 class _AppLocalizationsDelegate

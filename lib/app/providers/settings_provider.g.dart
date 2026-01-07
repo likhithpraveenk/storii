@@ -51,9 +51,10 @@ const _$AppThemeEnumMap = {
 const _$NavTargetEnumMap = {
   NavTarget.home: 'home',
   NavTarget.library: 'library',
-  NavTarget.series: 'series',
+  NavTarget.search: 'search',
+  NavTarget.downloads: 'downloads',
   NavTarget.collections: 'collections',
-  NavTarget.authors: 'authors',
+  NavTarget.settings: 'settings',
 };
 
 _UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>

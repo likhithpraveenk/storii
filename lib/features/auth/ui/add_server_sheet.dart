@@ -76,6 +76,7 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
             SizedBox(
               width: double.infinity,
               child: AppFilledButton(
+                icon: const Icon(Icons.monitor_heart_outlined),
                 text: l.validateServer,
                 loading: isLoading,
                 onPressed: submit,

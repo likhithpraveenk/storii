@@ -94,12 +94,20 @@
   "save": "Save",
   "fontFamily": "Font Family",
   "system": "System",
+  "fontScale": "Font Scale",
   "language": "Language",
   "configNav": "Configure Navigation",
   "mustSelect3": "You must select at least 3 items",
+  "maxSelect5": "You can select a maximum of 5 items",
   "theme": "Theme",
   "reset": "Reset",
   "resetSettingsQ": "Reset Settings?",
   "resetSettingsTxt": "This will revert all preferences to their default values.",
-  "settingsReset": "Settings are reset"
+  "settingsReset": "Settings are reset",
+  "home": "Home",
+  "library": "Library",
+  "collections": "Collections",
+  "all": "All",
+  "series": "Series",
+  "authors": "Authors"
 }

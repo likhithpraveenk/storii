@@ -11,9 +11,6 @@ class ResetSettingsAction extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(currentUserProvider);
     final appSettingNotifier = ref.read(appSettingsProvider.notifier);
-    final userSettingNotifier = ref.read(
-      userSettingsProvider(user!.id).notifier,
-    );
     final l = AppLocalizations.of(context)!;
 
     return IconButton(
@@ -45,7 +42,9 @@ class ResetSettingsAction extends ConsumerWidget {
 
         if (confirmed == true) {
           await appSettingNotifier.reset();
-          await userSettingNotifier.reset();
+          if (user != null) {
+            await ref.read(userSettingsProvider(user.id).notifier).reset();
+          }
 
           if (context.mounted) {
             ScaffoldMessenger.of(

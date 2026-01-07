@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/navigation/nav_bar/nav_bar.dart';
-import 'package:storii/app/navigation/top_search/menu_drawer.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/about/about_screen.dart';
 import 'package:storii/features/auth/ui/server_list_screen.dart';
-import 'package:storii/features/authors/ui/authors_screen.dart';
 import 'package:storii/features/collections/ui/collections_screen.dart';
 import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/features/home/ui/home_screen.dart';
@@ -14,7 +11,7 @@ import 'package:storii/features/library/ui/library_screen.dart';
 import 'package:storii/features/library_item/ui/item_detail_screen.dart';
 import 'package:storii/features/logs/ui/logs_screen.dart';
 import 'package:storii/features/search/ui/search_screen.dart';
-import 'package:storii/features/series/ui/series_screen.dart';
+import 'package:storii/features/settings/ui/about_screen.dart';
 import 'package:storii/features/settings/ui/nav_setting_screen.dart';
 import 'package:storii/features/settings/ui/settings_screen.dart';
 import 'package:storii/shared/splash_screen.dart';
@@ -24,17 +21,17 @@ enum AppRoute {
   login('/login'),
   home('/'),
   library('/library'),
-  series('/series'),
-  collections('/collections'),
-  authors('/authors'),
   search('/search'),
+  collections('/collections'),
+  settings('/settings'),
   // player('/player'),
   logs('/logs'),
   downloads('/downloads'),
   about('/about'),
-  settings('/settings'),
-  navigationSettings('/settings/navigation'),
-  item('/item/:id');
+  navigationSettings('/navigation-setting'),
+  item('/item/:id'),
+  series('/series/:id'),
+  authors('/authors/:id');
 
   final String path;
   const AppRoute(this.path);
@@ -75,8 +72,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state, navigationShell) {
           return Scaffold(
             key: homeScaffoldKey,
-            drawer: const MenuDrawer(),
-            bottomNavigationBar: BottomNavBar(
+            bottomNavigationBar: NavBar(
               currentIndex: navigationShell.currentIndex,
               onTap: navigationShell.goBranch,
             ),
@@ -92,9 +88,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                   child: switch (target) {
                     .home => const HomeScreen(),
                     .library => const LibraryScreen(),
-                    .series => const SeriesScreen(),
+                    .search => const SearchScreen(),
+                    .downloads => const DownloadsScreen(),
                     .collections => const CollectionsScreen(),
-                    .authors => const AuthorsScreen(),
+                    .settings => const SettingsScreen(),
                   },
                 ),
               ),
@@ -103,22 +100,8 @@ final routerProvider = Provider<GoRouter>((ref) {
         }).toList(),
       ),
       GoRoute(
-        path: AppRoute.settings.path,
-        builder: (context, state) => const SettingsScreen(),
-        routes: [
-          GoRoute(
-            path: 'navigation',
-            builder: (context, state) => const NavSettingScreen(),
-          ),
-        ],
-      ),
-      GoRoute(
-        path: AppRoute.downloads.path,
-        builder: (context, state) => const DownloadsScreen(),
-      ),
-      GoRoute(
-        path: AppRoute.search.path,
-        builder: (context, state) => const SearchScreen(),
+        path: AppRoute.navigationSettings.path,
+        builder: (context, state) => const NavSettingScreen(),
       ),
       GoRoute(
         path: AppRoute.about.path,

@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/api/models/requests/library_items_request_params.dart';
-import 'package:storii/app/models/library_item.dart';
+import 'package:storii/api/models/requests/series_request_params.dart';
+import 'package:storii/app/models/series.dart';
 import 'package:storii/app/models/to_domain.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
@@ -9,26 +9,26 @@ import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
-part 'library_items_provider.g.dart';
+part 'library_series_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-class LibraryItemsNotifier extends _$LibraryItemsNotifier {
-  final _limit = 100;
+class LibrarySeriesNotifier extends _$LibrarySeriesNotifier {
+  final _limit = 50;
 
   @override
-  Stream<List<LibraryItem>> build() async* {
-    yield* _fetchItems();
+  Stream<List<Series>> build() async* {
+    yield* _fetchSeries();
   }
 
-  Stream<List<LibraryItem>> _fetchItems() async* {
+  Stream<List<Series>> _fetchSeries() async* {
     final library = await ref.watch(activeLibraryProvider.future);
     final user = await ref.read(authenticatedUserProvider.future);
     final api = ref.read(libraryApiProvider(user));
 
     try {
-      final firstResponse = await api.getItems(
+      final firstResponse = await api.getSeries(
         library.id,
-        LibraryItemsRequestParams(limit: _limit, page: 0),
+        SeriesRequestParams(limit: _limit, page: 0),
       );
 
       final items = firstResponse.results.map((i) => i.toDomain()).toList();
@@ -39,9 +39,9 @@ class LibraryItemsNotifier extends _$LibraryItemsNotifier {
         final remainingPages = (remainingToFetch / _limit).ceil();
 
         for (int i = 1; i <= remainingPages; i++) {
-          final response = await api.getItems(
+          final response = await api.getSeries(
             library.id,
-            LibraryItemsRequestParams(page: i, limit: _limit),
+            SeriesRequestParams(page: i, limit: _limit),
           );
           items.addAll(response.results.map((i) => i.toDomain()));
 
@@ -53,7 +53,7 @@ class LibraryItemsNotifier extends _$LibraryItemsNotifier {
       ref
           .read(logsProvider.notifier)
           .log(
-            'LibraryItemsNotifier: $error',
+            'LibrarySeriesNotifier: $error',
             level: .error,
             stackTrace: st.toLimitedString(),
           );

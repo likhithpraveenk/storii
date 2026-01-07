@@ -13,7 +13,7 @@ part of 'library_items_provider.dart';
 final libraryItemsProvider = LibraryItemsNotifierProvider._();
 
 final class LibraryItemsNotifierProvider
-    extends $AsyncNotifierProvider<LibraryItemsNotifier, List<LibraryItem>> {
+    extends $StreamNotifierProvider<LibraryItemsNotifier, List<LibraryItem>> {
   LibraryItemsNotifierProvider._()
     : super(
         from: null,
@@ -34,11 +34,11 @@ final class LibraryItemsNotifierProvider
 }
 
 String _$libraryItemsNotifierHash() =>
-    r'826d9900759fce9f858bf280734625743208219c';
+    r'db08ffd0ce0ac86bc8f60ece21addb1f3936d3c2';
 
 abstract class _$LibraryItemsNotifier
-    extends $AsyncNotifier<List<LibraryItem>> {
-  FutureOr<List<LibraryItem>> build();
+    extends $StreamNotifier<List<LibraryItem>> {
+  Stream<List<LibraryItem>> build();
   @$mustCallSuper
   @override
   void runBuild() {

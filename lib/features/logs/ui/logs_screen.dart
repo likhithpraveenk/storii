@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/app_styles.dart';
-import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/app/providers/logs_provider.dart';
+import 'package:storii/features/logs/ui/log_entry_sheet.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
@@ -88,7 +88,7 @@ class LogsScreen extends ConsumerWidget {
                       ),
                   ],
                 ),
-                onTap: () => _showDataBottomSheet(context, entry),
+                onTap: () => showLogEntrySheet(context, entry),
               );
             },
           );
@@ -135,68 +135,6 @@ class LogsScreen extends ConsumerWidget {
           ),
         );
       },
-    );
-  }
-
-  void _showDataBottomSheet(BuildContext context, LogEntry entry) {
-    Widget data(String label, String value) {
-      final theme = Theme.of(context);
-      return Padding(
-        padding: const .only(bottom: 8),
-        child: Column(
-          crossAxisAlignment: .start,
-          children: [
-            Text(
-              label,
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-            const SizedBox(height: 2),
-            SelectableText(
-              value,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                shadows: [
-                  Shadow(
-                    color: theme.colorScheme.onSurfaceVariant.withValues(
-                      alpha: 0.1,
-                    ),
-                    blurRadius: 8,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
-      shape: AppStyles.roundedRect,
-      builder: (context) => Padding(
-        padding: .fromLTRB(
-          20,
-          0,
-          20,
-          MediaQuery.of(context).viewInsets.bottom + 20,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              data('Timestamp', entry.timestamp.fString(forLogs: true)),
-              data('Level', entry.level.name.toUpperCase()),
-              data('Message', entry.message),
-              if (entry.source != null) data('Source', entry.source!),
-              if (entry.stackTrace != null)
-                data('StackTrace', entry.stackTrace!),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

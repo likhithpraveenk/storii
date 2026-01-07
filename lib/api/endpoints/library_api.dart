@@ -58,9 +58,9 @@ class LibraryApi {
     return fromJson(response.data, SeriesResponse.fromJson);
   }
 
-  Future<SeriesResponse> getSeriesById(String librayId, String seriesId) async {
+  Future<SeriesResponse> getSeriesById(String libraryId, String seriesId) async {
     final response = await api.request(
-      ApiRoutes.seriesById(librayId, seriesId),
+      ApiRoutes.seriesById(libraryId, seriesId),
       method: .get,
       query: {'include': 'progress'},
     );

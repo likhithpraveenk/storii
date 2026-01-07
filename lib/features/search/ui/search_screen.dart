@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:storii/l10n/l10n.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -24,15 +23,6 @@ class SearchScreen extends StatelessWidget {
                     contentPadding: const .symmetric(
                       horizontal: 16,
                       vertical: 12,
-                    ),
-                    prefixIcon: GestureDetector(
-                      child: const Padding(
-                        padding: .symmetric(horizontal: 16, vertical: 12),
-                        child: Icon(Icons.arrow_back_ios),
-                      ),
-                      onTap: () {
-                        context.pop();
-                      },
                     ),
                     hint: Text(
                       AppLocalizations.of(context)!.search,

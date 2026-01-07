@@ -106,6 +106,7 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
               SizedBox(
                 width: double.infinity,
                 child: AppFilledButton(
+                  icon: const Icon(Icons.login),
                   text: l10n.login,
                   loading: isLoading,
                   onPressed: () => ref

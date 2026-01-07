@@ -1,10 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/config/router.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+class AboutTile extends StatelessWidget {
+  const AboutTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Theme.of(
+        context,
+      ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+      shape: AppStyles.roundedRect,
+      child: ListTile(
+        leading: const Icon(Icons.info_outline),
+        title: Text(AppLocalizations.of(context)!.about),
+        onTap: () {
+          context.push(AppRoute.about.path);
+        },
+      ),
+    );
+  }
+}
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});

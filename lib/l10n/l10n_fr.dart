@@ -196,6 +196,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get system => 'System';
 
   @override
+  String get fontScale => 'Font Scale';
+
+  @override
   String get language => 'Language';
 
   @override
@@ -203,6 +206,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mustSelect3 => 'You must select at least 3 items';
+
+  @override
+  String get maxSelect5 => 'You can select a maximum of 5 items';
 
   @override
   String get theme => 'Theme';
@@ -219,4 +225,22 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsReset => 'Settings are reset';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get library => 'Library';
+
+  @override
+  String get collections => 'Collections';
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get series => 'Series';
+
+  @override
+  String get authors => 'Authors';
 }

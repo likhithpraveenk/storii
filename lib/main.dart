@@ -24,7 +24,7 @@ class MyApp extends ConsumerWidget {
     final fontFamily = ref.watch(fontFamilyProvider);
     final fontScale = ref.watch(fontScaleProvider);
     final localeCode = ref.watch(localeCodeProvider);
-
+    // TODO: theme is messed up. fix it along with fontScale
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       themeMode: appTheme.themeMode,

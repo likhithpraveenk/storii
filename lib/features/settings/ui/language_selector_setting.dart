@@ -24,27 +24,21 @@ class LanguageSelectorSetting extends ConsumerWidget {
           AppLocalizations.of(context)!.language,
           style: Theme.of(context).textTheme.titleSmall,
         ),
-        trailing: SizedBox(
-          width: 100,
-          child: DropdownButton<String?>(
-            value: currentLocale,
-            isExpanded: true,
-            padding: const .all(8),
-            borderRadius: .circular(8),
-            underline: const SizedBox(),
-            icon: const Icon(Icons.arrow_drop_down),
-            onChanged: (v) {
-              if (v != null) {
-                notifier.setLocaleCode(v);
-              }
-            },
-            items: Languages.values.map((l) {
-              return DropdownMenuItem(
-                value: l.name,
-                child: Text(l.displayName),
-              );
-            }).toList(),
-          ),
+        trailing: DropdownButton<String?>(
+          value: currentLocale,
+          isDense: true,
+          padding: const .all(8),
+          borderRadius: .circular(8),
+          underline: const SizedBox(),
+          icon: const Icon(Icons.arrow_drop_down),
+          onChanged: (v) {
+            if (v != null) {
+              notifier.setLocaleCode(v);
+            }
+          },
+          items: Languages.values.map((l) {
+            return DropdownMenuItem(value: l.name, child: Text(l.displayName));
+          }).toList(),
         ),
       ),
     );

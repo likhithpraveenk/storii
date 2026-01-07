@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 
-class BottomNavBar extends ConsumerWidget {
-  const BottomNavBar({
-    required this.currentIndex,
-    required this.onTap,
-    super.key,
-  });
+class NavBar extends ConsumerWidget {
+  const NavBar({required this.currentIndex, required this.onTap, super.key});
 
   final int currentIndex;
   final void Function(int) onTap;
@@ -21,7 +17,7 @@ class BottomNavBar extends ConsumerWidget {
       selectedIndex: currentIndex,
       backgroundColor: scheme.surfaceContainer,
       elevation: 2,
-      labelBehavior: .alwaysShow,
+      labelBehavior: .onlyShowSelected,
       onDestinationSelected: (index) {
         if (index == currentIndex) return;
         onTap(index);
@@ -30,7 +26,7 @@ class BottomNavBar extends ConsumerWidget {
         for (final target in targets)
           NavigationDestination(
             icon: Icon(target.item.icon),
-            label: target.item.label,
+            label: target.label(context),
             selectedIcon: Icon(target.item.selectedIcon),
           ),
       ],

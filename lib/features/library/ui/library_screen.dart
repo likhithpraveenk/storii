@@ -1,15 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/navigation/top_search/top_search_bar.dart';
-import 'package:storii/features/library/logic/active_library_provider.dart';
-import 'package:storii/features/library/logic/library_filters_provider.dart';
-import 'package:storii/features/library/logic/library_items_provider.dart';
-import 'package:storii/features/library/ui/library_filter_bar.dart';
-import 'package:storii/features/library/ui/library_item_card.dart';
+import 'package:storii/features/library/ui/library_all_tab.dart';
+import 'package:storii/features/library/ui/library_authors_tab.dart';
+import 'package:storii/features/library/ui/library_series_tab.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/widgets/error_retry.dart';
-import 'package:storii/shared/widgets/waveform.dart';
 
 class LibraryScreen extends ConsumerStatefulWidget {
   const LibraryScreen({super.key});
@@ -18,22 +12,28 @@ class LibraryScreen extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _LibraryScreenState();
 }
 
-class _LibraryScreenState extends ConsumerState<LibraryScreen> {
+class _LibraryScreenState extends ConsumerState<LibraryScreen>
+    with SingleTickerProviderStateMixin {
   final _scrollController = ScrollController();
   bool _showBackToTopButton = false;
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 3, vsync: this);
     _scrollController.addListener(() {
-      setState(() {
-        _showBackToTopButton = _scrollController.offset >= 400;
-      });
+      if (_scrollController.hasClients) {
+        setState(() {
+          _showBackToTopButton = _scrollController.offset >= 400;
+        });
+      }
     });
   }
 
   @override
   void dispose() {
+    _tabController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -48,94 +48,73 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final itemsAsync = ref.watch(libraryItemsProvider);
-    final filterState = ref.watch(libraryFiltersProvider);
     final l = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      body: CustomScrollView(
-        controller: _scrollController,
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          const TopSearchBar(),
-          const LibraryFilterBar(),
-          CupertinoSliverRefreshControl(
-            refreshTriggerPullDistance: 160,
-            refreshIndicatorExtent: 60,
-            onRefresh: () =>
-                ref.read(libraryItemsProvider.notifier).manualSync(),
-            builder: (_, _, pulledExtent, _, refreshIndicatorExtent) {
-              final opacity = Curves.easeIn.transform(
-                (pulledExtent / refreshIndicatorExtent).clamp(0.0, 1.0),
-              );
-              return Opacity(
-                opacity: opacity,
-                child: const Center(child: RandomWaveform()),
-              );
-            },
-          ),
-          itemsAsync.when(
-            data: (items) {
-              if (items.isEmpty) {
-                return SliverFillRemaining(child: Center(child: Text(l.empty)));
-              }
-              final width = MediaQuery.of(context).size.width;
-              final crossAxisSpacing = 16.0;
-              final columnWidth =
-                  (width - (crossAxisSpacing * (filterState.gridCount - 1))) /
-                  filterState.gridCount;
-              final dynamicRatio = columnWidth / (columnWidth + 60);
-
-              if (filterState.gridCount == 1) {
-                return SliverList.builder(
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    return LibraryItemCardListView(
-                      key: ValueKey(items[index].id),
-                      items[index],
-                    );
-                  },
-                );
-              }
-
-              return SliverPadding(
-                padding: const .fromLTRB(16, 0, 16, 24),
-                sliver: SliverGrid.builder(
-                  itemCount: items.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: filterState.gridCount,
-                    mainAxisSpacing: 8,
-                    crossAxisSpacing: 16,
-                    childAspectRatio: dynamicRatio,
-                  ),
-                  itemBuilder: (context, index) {
-                    return LibraryItemCard(
-                      key: ValueKey(items[index].id),
-                      items[index],
-                    );
-                  },
+    return SafeArea(
+      child: Scaffold(
+        body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: _SliverTabDelegate(
+                TabBar(
+                  controller: _tabController,
+                  indicatorSize: .label,
+                  labelColor: Theme.of(context).colorScheme.primary,
+                  unselectedLabelColor: Theme.of(context).hintColor,
+                  tabs: [
+                    Tab(text: l.all),
+                    Tab(text: l.series),
+                    Tab(text: l.authors),
+                  ],
                 ),
-              );
-            },
-            loading: () => const SliverFillRemaining(
-              child: Center(child: RandomWaveform()),
+              ),
             ),
-            error: (error, _) => SliverErrorRetryWidget(
-              '$error',
-              onRetry: () => ref.invalidate(activeLibraryProvider),
-            ),
+          ],
+          body: TabBarView(
+            controller: _tabController,
+            children: [
+              LibraryAllTab(controller: _scrollController),
+              LibrarySeriesTab(controller: _scrollController),
+              LibraryAuthorsTab(controller: _scrollController),
+            ],
           ),
-        ],
-      ),
-      floatingActionButton: AnimatedScale(
-        scale: _showBackToTopButton ? 1.0 : 0.0,
-        duration: const Duration(milliseconds: 200),
-        child: FloatingActionButton(
-          onPressed: _scrollToTop,
-          mini: true,
-          child: const Icon(Icons.arrow_upward),
+        ),
+        floatingActionButton: AnimatedScale(
+          scale: _showBackToTopButton ? 1.0 : 0.0,
+          duration: const Duration(milliseconds: 200),
+          child: FloatingActionButton(
+            onPressed: _scrollToTop,
+            mini: true,
+            child: const Icon(Icons.arrow_upward),
+          ),
         ),
       ),
     );
   }
+}
+
+class _SliverTabDelegate extends SliverPersistentHeaderDelegate {
+  final TabBar tabBar;
+  _SliverTabDelegate(this.tabBar);
+
+  @override
+  double get minExtent => tabBar.preferredSize.height;
+  @override
+  double get maxExtent => tabBar.preferredSize.height;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: tabBar,
+    );
+  }
+
+  @override
+  bool shouldRebuild(_SliverTabDelegate oldDelegate) => false;
 }
