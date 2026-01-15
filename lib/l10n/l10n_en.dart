@@ -158,6 +158,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get description => 'Description';
+
+  @override
   String get noDescription => 'No description available';
 
   @override
@@ -243,4 +246,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authors => 'Authors';
+
+  @override
+  String get more => 'More';
+
+  @override
+  String get books => 'Books';
 }

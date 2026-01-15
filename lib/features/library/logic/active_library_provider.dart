@@ -1,7 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/models/library.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/library/logic/libraries_provider.dart';
+import 'package:storii/features/library/logic/user_libraries_provider.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 
 part 'active_library_provider.g.dart';
 
@@ -14,9 +15,10 @@ Future<Library> activeLibrary(Ref ref) async {
 
   final libraries = await ref.watch(userLibrariesProvider.future);
   if (libraries.isEmpty) throw StateError('No libraries found');
-
-  return libraries.firstWhere(
-    (l) => l.id == currentLibraryId,
-    orElse: () => libraries.first,
-  );
+  final library = libraries.firstWhereOrNull((l) => l.id == currentLibraryId);
+  if (library != null) return library;
+  ref
+      .read(userSettingsProvider(user.id).notifier)
+      .setCurrentLibraryId(libraries.first.id);
+  return libraries.first;
 }

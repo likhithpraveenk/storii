@@ -9,6 +9,8 @@ part of 'author.dart';
 _Author _$AuthorFromJson(Map<String, dynamic> json) => _Author(
   id: json['id'] as String,
   name: json['name'] as String,
+  lastFirst: json['lastFirst'] as String?,
+  libraryId: json['libraryId'] as String?,
   asin: json['asin'] as String?,
   description: json['description'] as String?,
   imagePath: json['imagePath'] as String?,
@@ -20,6 +22,7 @@ _Author _$AuthorFromJson(Map<String, dynamic> json) => _Author(
     json['updatedAt'],
     const DateTimeEpochConverter().fromJson,
   ),
+  numBooks: (json['numBooks'] as num?)?.toInt(),
   libraryItems: (json['libraryItems'] as List<dynamic>?)
       ?.map((e) => LibraryItem.fromJson(e as Map<String, dynamic>))
       .toList(),
@@ -31,6 +34,8 @@ _Author _$AuthorFromJson(Map<String, dynamic> json) => _Author(
 Map<String, dynamic> _$AuthorToJson(_Author instance) => <String, dynamic>{
   'id': instance.id,
   'name': instance.name,
+  'lastFirst': instance.lastFirst,
+  'libraryId': instance.libraryId,
   'asin': instance.asin,
   'description': instance.description,
   'imagePath': instance.imagePath,
@@ -42,6 +47,7 @@ Map<String, dynamic> _$AuthorToJson(_Author instance) => <String, dynamic>{
     instance.updatedAt,
     const DateTimeEpochConverter().toJson,
   ),
+  'numBooks': instance.numBooks,
   'libraryItems': instance.libraryItems?.map((e) => e.toJson()).toList(),
   'series': instance.series?.map((e) => e.toJson()).toList(),
 };

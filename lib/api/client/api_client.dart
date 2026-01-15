@@ -26,7 +26,14 @@ class ApiClient {
     this.onTokensUpdated,
     this.onTokensFailure,
     this.cancelToken,
-  }) : _dio = Dio(BaseOptions(baseUrl: baseUrl.toString())) {
+  }) : _dio = Dio(
+         BaseOptions(
+           baseUrl: baseUrl.toString(),
+           connectTimeout: const Duration(seconds: 10),
+           receiveTimeout: const Duration(seconds: 15),
+           sendTimeout: const Duration(seconds: 5),
+         ),
+       ) {
     _dio.options.headers = {'Content-Type': 'application/json'};
     _dio.interceptors.addAll([
       AuthInterceptor(this),

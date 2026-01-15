@@ -31,7 +31,9 @@ class LibrarySeriesNotifier extends _$LibrarySeriesNotifier {
         SeriesRequestParams(limit: _limit, page: 0),
       );
 
-      final items = firstResponse.results.map((i) => i.toDomain()).toList();
+      final items = firstResponse.results
+          .map((i) => i.toDomain(library.id))
+          .toList();
       yield items;
 
       if (firstResponse.total > items.length) {
@@ -43,7 +45,7 @@ class LibrarySeriesNotifier extends _$LibrarySeriesNotifier {
             library.id,
             SeriesRequestParams(page: i, limit: _limit),
           );
-          items.addAll(response.results.map((i) => i.toDomain()));
+          items.addAll(response.results.map((i) => i.toDomain(library.id)));
 
           yield List.from(items);
         }

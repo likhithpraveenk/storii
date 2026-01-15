@@ -75,6 +75,7 @@
       }
     }
   },
+  "description": "Description",
   "noDescription": "No description available",
   "resume": "Resume",
   "play": "Play",
@@ -109,5 +110,7 @@
   "collections": "Collections",
   "all": "All",
   "series": "Series",
-  "authors": "Authors"
+  "authors": "Authors",
+  "more": "More",
+  "books": "Books"
 }

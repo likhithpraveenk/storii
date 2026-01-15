@@ -13,32 +13,24 @@ class ThemeSetting extends ConsumerWidget {
     final currentTheme = ref.watch(themeProvider);
     final notifier = ref.read(appSettingsProvider.notifier);
 
-    return Card(
-      color: Theme.of(
-        context,
-      ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-      shape: AppStyles.roundedRect,
-      child: ListTile(
-        leading: Icon(_getIconForTheme(currentTheme)),
-        title: Text(
-          AppLocalizations.of(context)!.theme,
-          style: Theme.of(context).textTheme.titleSmall,
+    return ListTile(
+      leading: Icon(_getIconForTheme(currentTheme)),
+      title: Text(
+        AppLocalizations.of(context)!.theme,
+        style: Theme.of(context).textTheme.titleSmall,
+      ),
+      trailing: DropdownMenu<AppTheme>(
+        // width: 150,
+        initialSelection: currentTheme,
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+          border: AppStyles.inputBorder.copyWith(borderSide: .none),
         ),
-        trailing: DropdownButton<AppTheme>(
-          value: currentTheme,
-          isDense: true,
-          borderRadius: .circular(8),
-          padding: const .all(8),
-          underline: const SizedBox(),
-          icon: const Icon(Icons.arrow_drop_down),
-          onChanged: (val) => val != null ? notifier.setTheme(val) : null,
-          items: AppTheme.values.map((theme) {
-            return DropdownMenuItem(
-              value: theme,
-              child: Text(theme.displayName),
-            );
-          }).toList(),
-        ),
+        onSelected: (val) => val != null ? notifier.setTheme(val) : null,
+        dropdownMenuEntries: AppTheme.values.map((theme) {
+          return DropdownMenuEntry(value: theme, label: theme.displayName);
+        }).toList(),
       ),
     );
   }

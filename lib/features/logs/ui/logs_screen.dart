@@ -29,15 +29,36 @@ class LogsScreen extends ConsumerWidget {
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
         actions: [
-          // TODO: filter and combine filter to delete
           IconButton(
             onPressed: logsAsync.value?.isEmpty ?? true
                 ? null
-                : () => _confirmDeletion(
-                    context,
-                    scheme.error,
-                    ref,
-                    logsAsync.value!.length,
+                : () => showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        shape: AppStyles.roundedRect,
+                        actions: [
+                          AppTextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            text: l.cancel,
+                          ),
+                          AppFilledButton(
+                            text: l.delete,
+                            isDestructive: true,
+                            onPressed: () async {
+                              await ref.read(logsProvider.notifier).clear();
+                              if (context.mounted) {
+                                Navigator.of(context).pop();
+                              }
+                            },
+                          ),
+                        ],
+                        title: Text(
+                          l.deleteLogsQ(logsAsync.value?.length ?? 0),
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      );
+                    },
                   ),
             icon: const Icon(Icons.delete_sweep),
           ),
@@ -97,44 +118,6 @@ class LogsScreen extends ConsumerWidget {
             ErrorRetryWidget('$e', onRetry: () => ref.invalidate(logsProvider)),
         loading: () => const Center(child: RandomWaveform()),
       ),
-    );
-  }
-
-  Future<dynamic> _confirmDeletion(
-    BuildContext context,
-    Color error,
-    WidgetRef ref,
-    int length,
-  ) {
-    final l = AppLocalizations.of(context)!;
-
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          shape: AppStyles.roundedRect,
-          actions: [
-            AppTextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              text: l.cancel,
-            ),
-            AppFilledButton(
-              text: l.delete,
-              color: error,
-              onPressed: () async {
-                await ref.read(logsProvider.notifier).clear();
-                if (context.mounted) {
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ],
-          title: Text(
-            l.deleteLogsQ(length),
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-        );
-      },
     );
   }
 }

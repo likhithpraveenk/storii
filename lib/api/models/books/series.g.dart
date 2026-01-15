@@ -9,23 +9,22 @@ part of 'series.dart';
 _Series _$SeriesFromJson(Map<String, dynamic> json) => _Series(
   id: json['id'] as String,
   name: json['name'] as String,
-  libraryId: json['libraryId'] as String,
+  libraryId: json['libraryId'] as String?,
   nameIgnorePrefix: json['nameIgnorePrefix'] as String?,
   description: json['description'] as String?,
-  addedAt: const DateTimeEpochConverter().fromJson(
-    (json['addedAt'] as num).toInt(),
+  addedAt: _$JsonConverterFromJson<int, DateTime>(
+    json['addedAt'],
+    const DateTimeEpochConverter().fromJson,
   ),
-  updatedAt: const DateTimeEpochConverter().fromJson(
-    (json['updatedAt'] as num).toInt(),
+  updatedAt: _$JsonConverterFromJson<int, DateTime>(
+    json['updatedAt'],
+    const DateTimeEpochConverter().fromJson,
   ),
   books:
       (json['books'] as List<dynamic>?)
           ?.map((e) => LibraryItem.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const [],
-  libraryItemIds: (json['libraryItemIds'] as List<dynamic>?)
-      ?.map((e) => e as String)
-      .toList(),
   numBooks: (json['numBooks'] as num?)?.toInt(),
   sequence: json['sequence'] as String?,
   seriesSequenceList: json['seriesSequenceList'] as String?,
@@ -53,10 +52,15 @@ Map<String, dynamic> _$SeriesToJson(_Series instance) => <String, dynamic>{
   'libraryId': instance.libraryId,
   'nameIgnorePrefix': instance.nameIgnorePrefix,
   'description': instance.description,
-  'addedAt': const DateTimeEpochConverter().toJson(instance.addedAt),
-  'updatedAt': const DateTimeEpochConverter().toJson(instance.updatedAt),
+  'addedAt': _$JsonConverterToJson<int, DateTime>(
+    instance.addedAt,
+    const DateTimeEpochConverter().toJson,
+  ),
+  'updatedAt': _$JsonConverterToJson<int, DateTime>(
+    instance.updatedAt,
+    const DateTimeEpochConverter().toJson,
+  ),
   'books': instance.books.map((e) => e.toJson()).toList(),
-  'libraryItemIds': instance.libraryItemIds,
   'numBooks': instance.numBooks,
   'sequence': instance.sequence,
   'seriesSequenceList': instance.seriesSequenceList,

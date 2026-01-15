@@ -28,11 +28,7 @@ enum LibrarySortType {
 }
 
 enum Languages {
-  en('English'),
-  es('Español'),
-  fr('Français'),
-  de('Deutsch'),
-  pt('Português');
+  en('English');
 
   final String displayName;
   const Languages(this.displayName);

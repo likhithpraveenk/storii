@@ -1,10 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/models/shelf.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
+import 'package:storii/features/library/ui/author_card.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
+import 'package:storii/features/library/ui/series.card.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/app_refresh_indicator.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -19,22 +21,10 @@ class HomeScreen extends ConsumerWidget {
       child: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-          CupertinoSliverRefreshControl(
-            refreshTriggerPullDistance: 160,
-            refreshIndicatorExtent: 60,
+          AppRefreshIndicator(
             onRefresh: () => ref.read(shelvesProvider.notifier).manualSync(),
-            builder: (_, _, pulledExtent, _, refreshIndicatorExtent) {
-              final opacity = Curves.easeIn.transform(
-                (pulledExtent / refreshIndicatorExtent).clamp(0.0, 1.0),
-              );
-              return Opacity(
-                opacity: opacity,
-                child: const Center(child: RandomWaveform()),
-              );
-            },
           ),
           shelvesAsync.when(
-            skipLoadingOnRefresh: false,
             data: (shelves) {
               if (shelves.isEmpty) {
                 return SliverFillRemaining(child: Center(child: Text(l.empty)));
@@ -47,12 +37,9 @@ class HomeScreen extends ConsumerWidget {
               return SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
                   final shelf = displayList[index];
-                  final double screenWidth = MediaQuery.of(context).size.width;
-                  final double cardWidth = (screenWidth * 0.4).clamp(
-                    120.0,
-                    180.0,
-                  );
-                  final double totalHeight = cardWidth + 60.0;
+                  final screenWidth = MediaQuery.of(context).size.width;
+                  final cardWidth = (screenWidth * 0.4).clamp(120.0, 180.0);
+                  final totalHeight = cardWidth + 60.0;
 
                   return Column(
                     mainAxisSize: .min,
@@ -81,7 +68,6 @@ class HomeScreen extends ConsumerWidget {
                             authors: (s) => s.authors.length,
                           ),
                           itemBuilder: (context, i) {
-                            // TODO: Fix cover url for all.
                             return Container(
                               width: cardWidth,
                               margin: const .only(right: 12),
@@ -91,12 +77,8 @@ class HomeScreen extends ConsumerWidget {
                                   LibraryItemsShelf() => LibraryItemCard(
                                     shelf.items[i],
                                   ),
-                                  SeriesShelf() => PlaceholderCard(
-                                    label: shelf.series[i],
-                                  ),
-                                  AuthorShelf() => PlaceholderCard(
-                                    label: shelf.authors[i],
-                                  ),
+                                  SeriesShelf() => SeriesCard(shelf.series[i]),
+                                  AuthorShelf() => AuthorCard(shelf.authors[i]),
                                 },
                               ),
                             );
@@ -117,35 +99,6 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class PlaceholderCard extends StatelessWidget {
-  final String label;
-
-  const PlaceholderCard({super.key, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      margin: const .all(12),
-      child: Card(
-        elevation: 0,
-        color: Theme.of(
-          context,
-        ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-        child: Center(
-          child: Text(
-            label,
-            textAlign: .center,
-            maxLines: 3,
-            overflow: .ellipsis,
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ),
       ),
     );
   }

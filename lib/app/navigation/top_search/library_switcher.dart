@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/library/logic/libraries_provider.dart';
+import 'package:storii/features/library/logic/user_libraries_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';

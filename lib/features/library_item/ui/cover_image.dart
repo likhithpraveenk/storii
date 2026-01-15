@@ -5,10 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/image_cache.dart';
+import 'package:storii/app/config/router.dart';
 import 'package:storii/app/models/library_item.dart';
-import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/library/logic/cover_url.dart';
+import 'package:storii/features/library/logic/cover_url_provider.dart';
 import 'package:storii/features/library/ui/placeholder_image.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/dashed_underline.dart';
@@ -19,14 +20,18 @@ class CoverImage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final serverUrl = ref.watch(currentUserProvider)?.serverUrl;
-    final coverUrl = getCoverUrl(serverUrl, item.id, item.updatedAt, raw: true);
+    final coverUrl = ref.read(
+      coverUrlProvider(
+        item.id,
+        type: .item,
+        updatedAt: item.updatedAt,
+        raw: true,
+      ),
+    );
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final l = AppLocalizations.of(context)!;
     final size = MediaQuery.sizeOf(context);
-    final screenHeight = size.height;
-    final screenWidth = size.width;
 
     Widget buildImage() {
       if (coverUrl == null) return PlaceholderImage(label: l.noImage);
@@ -48,7 +53,7 @@ class CoverImage extends ConsumerWidget {
     }
 
     return SliverAppBar(
-      expandedHeight: screenHeight * 0.5,
+      expandedHeight: (size.height * 0.54).clamp(450.0, 600.0),
       pinned: true,
       stretch: true,
       leading: IconButton(
@@ -67,10 +72,7 @@ class CoverImage extends ConsumerWidget {
           final fadeT = rawT > 0.1 ? 0.0 : (1 - rawT);
 
           return FlexibleSpaceBar(
-            titlePadding: .only(
-              left: screenWidth * 0.14,
-              bottom: screenWidth * 0.04,
-            ),
+            titlePadding: const .only(left: 54, bottom: 16),
             centerTitle: false,
             title: SafeArea(
               child: IgnorePointer(
@@ -107,34 +109,98 @@ class CoverImage extends ConsumerWidget {
                     ),
                   ),
                 ),
-                Column(
-                  mainAxisAlignment: .center,
-                  children: [
-                    Padding(
-                      padding: .fromLTRB(
-                        screenWidth * 0.16,
-                        screenHeight * 0.1,
-                        screenWidth * 0.16,
-                        0,
-                      ),
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: ClipRRect(
-                          borderRadius: .circular(12),
-                          child: buildImage(),
+                Padding(
+                  padding: const .symmetric(vertical: 24),
+                  child: Column(
+                    mainAxisAlignment: .end,
+                    children: [
+                      SizedBox(
+                        width: (size.width * 0.8).clamp(0.0, 360),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: ClipRRect(
+                            borderRadius: AppStyles.circularRadius,
+                            child: buildImage(),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    Padding(
-                      padding: const .symmetric(horizontal: 24),
-                      child: Text(
-                        item.title ?? l.noTitle,
-                        style:
-                            (item.title == null
-                                    ? textTheme.labelSmall
-                                    : textTheme.titleLarge)
-                                ?.copyWith(
+                      const SizedBox(height: 12),
+                      Padding(
+                        padding: const .symmetric(horizontal: 24),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: size.height * 0.1,
+                          ),
+                          child: SingleChildScrollView(
+                            child: Text(
+                              item.title ?? l.noTitle,
+                              style: textTheme.titleLarge?.copyWith(
+                                shadows: [
+                                  Shadow(
+                                    color: scheme.onSurfaceVariant.withValues(
+                                      alpha: 0.25,
+                                    ),
+                                    blurRadius: 4,
+                                  ),
+                                ],
+                              ),
+                              textAlign: .center,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: switch (item) {
+                          final Audiobook a => Wrap(
+                            spacing: 16,
+                            runSpacing: 12,
+                            alignment: .center,
+                            children: a.authors
+                                .map(
+                                  (author) => InkWell(
+                                    onTap: () {
+                                      context.push(
+                                        AppRoute.authors.withId(author.id),
+                                      );
+                                    },
+                                    borderRadius: .circular(4),
+                                    child: CustomPaint(
+                                      painter: DashedUnderlinePainter(
+                                        color: scheme.onSurfaceVariant,
+                                      ),
+                                      child: Padding(
+                                        padding: const .only(bottom: 2),
+                                        child: Text(
+                                          author.name,
+                                          style: textTheme.titleSmall?.copyWith(
+                                            color: scheme.onSurface,
+                                            shadows: [
+                                              Shadow(
+                                                color: scheme.onSurfaceVariant
+                                                    .withValues(alpha: 0.25),
+                                                blurRadius: 4,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                          final Podcast _ => CustomPaint(
+                            painter: DashedUnderlinePainter(
+                              color: scheme.onSurfaceVariant,
+                            ),
+                            child: Padding(
+                              padding: const .only(bottom: 2),
+                              child: Text(
+                                item.authorName ?? l.noAuthor,
+                                style: textTheme.titleSmall?.copyWith(
+                                  color: scheme.onSurface,
                                   shadows: [
                                     Shadow(
                                       color: scheme.onSurfaceVariant.withValues(
@@ -144,49 +210,13 @@ class CoverImage extends ConsumerWidget {
                                     ),
                                   ],
                                 ),
-                        textAlign: .center,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: Wrap(
-                        spacing: 16,
-                        runSpacing: 12,
-                        alignment: .center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              // TODO: join table get authors
-                              debugPrint('Clicked author: ${item.authorName}');
-                            },
-                            borderRadius: .circular(4),
-                            child: CustomPaint(
-                              painter: DashedUnderlinePainter(
-                                color: scheme.onSurfaceVariant,
-                              ),
-                              child: Padding(
-                                padding: const .only(bottom: 2),
-                                child: Text(
-                                  item.authorName ?? l.noAuthor,
-                                  style: textTheme.titleSmall?.copyWith(
-                                    color: scheme.onSurface,
-                                    shadows: [
-                                      Shadow(
-                                        color: scheme.onSurfaceVariant
-                                            .withValues(alpha: 0.25),
-                                        blurRadius: 4,
-                                      ),
-                                    ],
-                                  ),
-                                ),
                               ),
                             ),
                           ),
-                        ],
+                        },
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

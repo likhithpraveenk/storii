@@ -2,13 +2,13 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Dart Fix",
+      "label": "dart fix",
       "type": "shell",
       "command": "dart fix --apply",
       "problemMatcher": []
     },
     {
-      "label": "Dart Format",
+      "label": "dart format",
       "type": "shell",
       "command": "dart format .",
       "problemMatcher": [],
@@ -29,7 +29,6 @@
         "watch",
         "--delete-conflicting-outputs"
       ],
-      "detail": "Running build_runner watch for code generation",
       "presentation": {
         "revealProblems": "onProblem",
         "reveal": "silent",

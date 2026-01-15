@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'library_author_provider.dart';
+part of 'library_authors_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,34 +9,34 @@ part of 'library_author_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(LibraryAuthorNotifier)
-final libraryAuthorProvider = LibraryAuthorNotifierProvider._();
+@ProviderFor(LibraryAuthorsNotifier)
+final libraryAuthorsProvider = LibraryAuthorsNotifierProvider._();
 
-final class LibraryAuthorNotifierProvider
-    extends $AsyncNotifierProvider<LibraryAuthorNotifier, List<Author>> {
-  LibraryAuthorNotifierProvider._()
+final class LibraryAuthorsNotifierProvider
+    extends $AsyncNotifierProvider<LibraryAuthorsNotifier, List<Author>> {
+  LibraryAuthorsNotifierProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'libraryAuthorProvider',
+        name: r'libraryAuthorsProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$libraryAuthorNotifierHash();
+  String debugGetCreateSourceHash() => _$libraryAuthorsNotifierHash();
 
   @$internal
   @override
-  LibraryAuthorNotifier create() => LibraryAuthorNotifier();
+  LibraryAuthorsNotifier create() => LibraryAuthorsNotifier();
 }
 
-String _$libraryAuthorNotifierHash() =>
-    r'f8931205af80f8588c184655b79b2d4b946af481';
+String _$libraryAuthorsNotifierHash() =>
+    r'74dce6aac4e6f3ebbfc092f89e3d3504642866dc';
 
-abstract class _$LibraryAuthorNotifier extends $AsyncNotifier<List<Author>> {
+abstract class _$LibraryAuthorsNotifier extends $AsyncNotifier<List<Author>> {
   FutureOr<List<Author>> build();
   @$mustCallSuper
   @override

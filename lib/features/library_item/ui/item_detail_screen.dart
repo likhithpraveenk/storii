@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/library/logic/cover_url.dart';
 import 'package:storii/features/library_item/logic/item_detail_provider.dart';
 import 'package:storii/features/library_item/logic/item_palette_provider.dart';
 import 'package:storii/features/library_item/ui/cover_image.dart';
@@ -23,14 +21,11 @@ class ItemDetailScreen extends ConsumerWidget {
 
     return itemAsync.when(
       data: (item) {
-        final serverUrl = ref.watch(currentUserProvider)?.serverUrl;
-        final coverUrl = getCoverUrl(serverUrl, item.id, item.updatedAt);
-        final paletteAsync = ref.watch(itemPaletteProvider(coverUrl));
-        final themeColor =
-            paletteAsync.whenOrNull(
-              data: (palette) => palette.dominantColor?.color,
-            ) ??
-            scheme.surface;
+        ref.watch(itemPaletteProvider(item.id));
+        final notifier = ref.read(itemPaletteProvider(item.id).notifier);
+        final themeColor = notifier.getBackgroundColor(
+          scheme.surfaceContainerHighest,
+        );
 
         return Scaffold(
           backgroundColor: Color.alphaBlend(
@@ -74,7 +69,10 @@ class ItemDetailScreen extends ConsumerWidget {
                             )
                             .toList(),
                       ),
-                      ExpandableHtml(data: item.description ?? l.noDescription),
+                      ExpandableHtml(
+                        title: l.description,
+                        data: item.description ?? l.noDescription,
+                      ),
                       const SizedBox(height: 200),
                     ],
                   ),
@@ -89,7 +87,6 @@ class ItemDetailScreen extends ConsumerWidget {
             margin: const EdgeInsets.symmetric(horizontal: 16),
             child: FloatingActionButton.extended(
               backgroundColor: themeColor,
-              foregroundColor: getTextColor(themeColor),
               elevation: 4,
               onPressed: () {
                 // TODO: playback
@@ -98,10 +95,13 @@ class ItemDetailScreen extends ConsumerWidget {
                 item.progress > 0
                     ? Icons.play_arrow_rounded
                     : Icons.play_circle_fill_rounded,
+                color: notifier.getForegroundColor(Theme.of(context)),
               ),
               label: Text(
                 item.progress > 0 ? l.resume : l.play,
-                style: textTheme.labelLarge,
+                style: textTheme.labelLarge?.copyWith(
+                  color: notifier.getForegroundColor(Theme.of(context)),
+                ),
               ),
             ),
           ),
@@ -111,7 +111,7 @@ class ItemDetailScreen extends ConsumerWidget {
       error: (e, s) => ErrorRetryScreen(
         e.toString(),
         onRetry: () {
-          ref.invalidate(itemDetailProvider);
+          ref.invalidate(itemDetailProvider(id));
         },
       ),
     );

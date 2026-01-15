@@ -6,6 +6,8 @@ import 'package:storii/app/providers/settings_provider.dart';
 part 'library_filters_provider.freezed.dart';
 part 'library_filters_provider.g.dart';
 
+enum FiltersTab { authors, all, series }
+
 @freezed
 sealed class FilterState with _$FilterState {
   const factory FilterState({
@@ -15,11 +17,17 @@ sealed class FilterState with _$FilterState {
   }) = _FilterState;
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
   @override
-  FilterState build() {
-    final count = ref.read(gridCountProvider);
+  FilterState build(FiltersTab tab) {
+    final userId = ref.watch(currentUserProvider)?.id;
+    if (userId == null) throw StateError('No current user');
+    final count = switch (tab) {
+      .all => ref.watch(allGridCountProvider(userId)),
+      .authors => ref.watch(authorsGridCountProvider(userId)),
+      .series => ref.watch(seriesGridCountProvider(userId)),
+    };
     return FilterState(gridCount: count);
   }
 
@@ -33,6 +41,16 @@ class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
 
   void setGridCount(int count) {
     state = state.copyWith(gridCount: count);
-    ref.read(appSettingsProvider.notifier).setGridCount(count);
+    final userId = ref.watch(currentUserProvider)?.id;
+    if (userId == null) throw StateError('No current user');
+    final notifier = ref.read(userSettingsProvider(userId).notifier);
+    switch (tab) {
+      case .all:
+        notifier.setAllGridCount(count);
+      case .authors:
+        notifier.setAuthorsGridCount(count);
+      case .series:
+        notifier.setSeriesGridCount(count);
+    }
   }
 }

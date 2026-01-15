@@ -66,7 +66,7 @@ class _NavSettingScreenState extends ConsumerState<NavSettingScreen> {
   }
 
   void _onToggle(NavTarget target, bool isEnabled) {
-    if (target == .library || target == .settings) return;
+    if (target == .library || target == .more) return;
     setState(() {
       if (isEnabled) {
         if (_activeDraft.length < 5) {

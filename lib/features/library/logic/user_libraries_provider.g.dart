@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'libraries_provider.dart';
+part of 'user_libraries_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -46,4 +46,4 @@ final class UserLibrariesProvider
   }
 }
 
-String _$userLibrariesHash() => r'dd42771a163d162bc745afe3a2a72a99bdf365af';
+String _$userLibrariesHash() => r'cae2df5008a29ff7bfaec5758f4d288294267253';

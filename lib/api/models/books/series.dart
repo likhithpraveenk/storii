@@ -14,17 +14,16 @@ sealed class Series with _$Series {
   const factory Series({
     required String id,
     required String name,
-    required String libraryId,
+    String? libraryId,
     String? nameIgnorePrefix,
 
     // Common Metadata
     String? description,
-    required DateTime addedAt,
-    required DateTime updatedAt,
+    DateTime? addedAt,
+    DateTime? updatedAt,
 
     // Content / Collections
     @Default([]) List<LibraryItem> books,
-    List<String>? libraryItemIds,
     int? numBooks,
 
     // Sequence & Sorting

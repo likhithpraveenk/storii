@@ -24,7 +24,6 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
       defaultNavTargets,
   fontFamily: json['fontFamily'] as String? ?? AppFonts.defaultFont,
   fontScale: (json['fontScale'] as num?)?.toDouble() ?? 1,
-  gridCount: (json['gridCount'] as num?)?.toInt() ?? 2,
 );
 
 Map<String, dynamic> _$AppSettingsToJson(
@@ -38,7 +37,6 @@ Map<String, dynamic> _$AppSettingsToJson(
   'navTargets': instance.navTargets.map((e) => _$NavTargetEnumMap[e]!).toList(),
   'fontFamily': instance.fontFamily,
   'fontScale': instance.fontScale,
-  'gridCount': instance.gridCount,
 };
 
 const _$AppThemeEnumMap = {
@@ -54,19 +52,29 @@ const _$NavTargetEnumMap = {
   NavTarget.search: 'search',
   NavTarget.downloads: 'downloads',
   NavTarget.collections: 'collections',
-  NavTarget.settings: 'settings',
+  NavTarget.more: 'more',
 };
 
 _UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>
     _UserSettings(
       userId: json['userId'] as String,
       currentLibraryId: json['currentLibraryId'] as String?,
+      currentItemId: json['currentItemId'] as String?,
+      isFullySynced: json['isFullySynced'] as bool? ?? false,
+      allGridCount: (json['allGridCount'] as num?)?.toInt() ?? 2,
+      seriesGridCount: (json['seriesGridCount'] as num?)?.toInt() ?? 1,
+      authorsGridCount: (json['authorsGridCount'] as num?)?.toInt() ?? 2,
     );
 
 Map<String, dynamic> _$UserSettingsToJson(_UserSettings instance) =>
     <String, dynamic>{
       'userId': instance.userId,
       'currentLibraryId': instance.currentLibraryId,
+      'currentItemId': instance.currentItemId,
+      'isFullySynced': instance.isFullySynced,
+      'allGridCount': instance.allGridCount,
+      'seriesGridCount': instance.seriesGridCount,
+      'authorsGridCount': instance.authorsGridCount,
     };
 
 // **************************************************************************
@@ -109,7 +117,7 @@ final class AppSettingsNotifierProvider
 }
 
 String _$appSettingsNotifierHash() =>
-    r'5f1db45d322fe593119b28b472efc78efdc06165';
+    r'a5c7f813e00ee1dc3f10436d0cd6bf47c4e58d93';
 
 abstract class _$AppSettingsNotifier extends $Notifier<AppSettings> {
   AppSettings build();
@@ -179,7 +187,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'180d519d41951d4b618bc39977313b19cb3f6e01';
+    r'15ce0f4a58b79c20f3641f8a7065f726d4d1970c';
 
 final class UserSettingsNotifierFamily extends $Family
     with
@@ -254,9 +262,6 @@ extension AppSettingsSetters on AppSettingsNotifier {
 
   Future<void> setFontScale(double value) =>
       _save(state.copyWith(fontScale: value));
-
-  Future<void> setGridCount(int value) =>
-      _save(state.copyWith(gridCount: value));
 }
 
 final themeProvider = Provider<AppTheme>(
@@ -291,10 +296,6 @@ final fontScaleProvider = Provider<double>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.fontScale)),
 );
 
-final gridCountProvider = Provider<int>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.gridCount)),
-);
-
 // **************************************************************************
 // _UserSettingsGenerator
 // **************************************************************************
@@ -302,9 +303,49 @@ final gridCountProvider = Provider<int>(
 extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setCurrentLibraryId(String? value) =>
       _save(state.copyWith(currentLibraryId: value));
+
+  Future<void> setCurrentItemId(String? value) =>
+      _save(state.copyWith(currentItemId: value));
+
+  Future<void> setIsFullySynced(bool value) =>
+      _save(state.copyWith(isFullySynced: value));
+
+  Future<void> setAllGridCount(int value) =>
+      _save(state.copyWith(allGridCount: value));
+
+  Future<void> setSeriesGridCount(int value) =>
+      _save(state.copyWith(seriesGridCount: value));
+
+  Future<void> setAuthorsGridCount(int value) =>
+      _save(state.copyWith(authorsGridCount: value));
 }
 
 final currentLibraryIdProvider = Provider.family<String?, String>(
   (ref, userId) =>
       ref.watch(userSettingsProvider(userId).select((s) => s.currentLibraryId)),
+);
+
+final currentItemIdProvider = Provider.family<String?, String>(
+  (ref, userId) =>
+      ref.watch(userSettingsProvider(userId).select((s) => s.currentItemId)),
+);
+
+final isFullySyncedProvider = Provider.family<bool, String>(
+  (ref, userId) =>
+      ref.watch(userSettingsProvider(userId).select((s) => s.isFullySynced)),
+);
+
+final allGridCountProvider = Provider.family<int, String>(
+  (ref, userId) =>
+      ref.watch(userSettingsProvider(userId).select((s) => s.allGridCount)),
+);
+
+final seriesGridCountProvider = Provider.family<int, String>(
+  (ref, userId) =>
+      ref.watch(userSettingsProvider(userId).select((s) => s.seriesGridCount)),
+);
+
+final authorsGridCountProvider = Provider.family<int, String>(
+  (ref, userId) =>
+      ref.watch(userSettingsProvider(userId).select((s) => s.authorsGridCount)),
 );

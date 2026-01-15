@@ -8,10 +8,10 @@ import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
-part 'library_author_provider.g.dart';
+part 'library_authors_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-class LibraryAuthorNotifier extends _$LibraryAuthorNotifier {
+class LibraryAuthorsNotifier extends _$LibraryAuthorsNotifier {
   @override
   Future<List<Author>> build() async {
     return _fetchAuthors();

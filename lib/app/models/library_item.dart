@@ -3,6 +3,7 @@ import 'package:storii/api/models/audio/audio_file.dart';
 import 'package:storii/api/models/audio/audio_track.dart';
 import 'package:storii/api/models/books/book_chapter.dart';
 import 'package:storii/api/models/podcasts/podcast_episode.dart';
+import 'package:storii/app/models/author.dart';
 
 part 'library_item.freezed.dart';
 
@@ -20,7 +21,7 @@ sealed class LibraryItem with _$LibraryItem {
     required Duration duration,
 
     String? title,
-    String? authorName,
+    @Default([]) List<Author> authors,
     String? description,
     String? language,
     @Default(false) bool explicit,
@@ -62,4 +63,9 @@ sealed class LibraryItem with _$LibraryItem {
     @Default(false) bool isFinished,
     @Default(false) bool hideFromContinueListening,
   }) = Podcast;
+
+  String? get authorName => switch (this) {
+    final Audiobook a => a.authors.firstOrNull?.name,
+    final Podcast p => p.authorName,
+  };
 }

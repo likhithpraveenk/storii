@@ -11,11 +11,11 @@ class SeriesTable extends Table {
   TextColumn get nameIgnorePrefix => text().nullable()();
   TextColumn get description => text().nullable()();
 
-  DateTimeColumn get addedAt => dateTime()();
-  DateTimeColumn get updatedAt => dateTime()();
+  DateTimeColumn get addedAt => dateTime().nullable()();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
 
   BoolColumn get isFinished => boolean().withDefault(const Constant(false))();
 
   @override
-  Set<Column> get primaryKey => {id};
+  Set<Column> get primaryKey => {id, libraryId};
 }

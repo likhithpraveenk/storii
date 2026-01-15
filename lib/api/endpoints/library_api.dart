@@ -1,6 +1,7 @@
 import 'package:storii/api/client/api_client.dart';
 import 'package:storii/api/endpoints/api_routes.dart';
 import 'package:storii/api/models/books/author.dart';
+import 'package:storii/api/models/books/series.dart';
 import 'package:storii/api/models/library/library.dart';
 import 'package:storii/api/models/library/shelf.dart';
 import 'package:storii/api/models/requests/library_items_request_params.dart';
@@ -58,13 +59,13 @@ class LibraryApi {
     return fromJson(response.data, SeriesResponse.fromJson);
   }
 
-  Future<SeriesResponse> getSeriesById(String libraryId, String seriesId) async {
+  Future<Series> getSeriesById(String libraryId, String seriesId) async {
     final response = await api.request(
       ApiRoutes.seriesById(libraryId, seriesId),
       method: .get,
       query: {'include': 'progress'},
     );
-    return fromJson(response.data, SeriesResponse.fromJson);
+    return fromJson(response.data, Series.fromJson);
   }
 
   Future<List<Author>> getAuthors(String libraryId) async {

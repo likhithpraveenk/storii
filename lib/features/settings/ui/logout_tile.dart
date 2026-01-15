@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/home/logic/user_session_controller.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -14,21 +13,14 @@ class LogoutTile extends ConsumerWidget {
     final user = ref.watch(currentUserProvider);
     final state = ref.watch(userSessionControllerProvider);
 
-    return Card(
-      color: Theme.of(
-        context,
-      ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-      shape: AppStyles.roundedRect,
-      child: ListTile(
-        leading: const Icon(Icons.logout),
-        title: state == .loading
-            ? const RandomWaveform()
-            : Text(AppLocalizations.of(context)!.logout),
-        onTap: user == null || state == .loading
-            ? null
-            : () =>
-                  ref.read(userSessionControllerProvider.notifier).logout(user),
-      ),
+    return ListTile(
+      leading: const Icon(Icons.logout),
+      title: state == .loading
+          ? const RandomWaveform()
+          : Text(AppLocalizations.of(context)!.logout),
+      onTap: user == null || state == .loading
+          ? null
+          : () => ref.read(userSessionControllerProvider.notifier).logout(user),
     );
   }
 }

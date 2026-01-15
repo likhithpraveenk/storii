@@ -25,7 +25,7 @@ class ShelvesNotifier extends _$ShelvesNotifier {
           .read(libraryApiProvider(user))
           .getPersonalized(libraryId);
 
-      return response.map((e) => e.toDomain()).toList();
+      return response.map((e) => e.toDomain(libraryId)).toList();
     } catch (e, s) {
       final error = AppError.resolve(e);
       ref

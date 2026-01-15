@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:storii/api/models/utils/enums.dart';
+import 'package:storii/app/models/author.dart';
 import 'package:storii/app/models/library_item.dart';
+import 'package:storii/app/models/series.dart';
 
 part 'shelf.freezed.dart';
 
@@ -19,14 +21,14 @@ sealed class Shelf with _$Shelf {
     required String id,
     required String label,
     required ShelfType type,
-    required List<String> series,
+    required List<Series> series,
   }) = SeriesShelf;
 
   const factory Shelf.authors({
     required String id,
     required String label,
     required ShelfType type,
-    required List<String> authors,
+    required List<Author> authors,
   }) = AuthorShelf;
 
   ShelfIdentity? get identity => ShelfIdentity.fromId(id);

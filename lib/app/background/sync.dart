@@ -1,5 +1,8 @@
+import 'package:drift/drift.dart';
 import 'package:storii/api/client/api_client.dart';
+import 'package:storii/api/endpoints/author_api.dart';
 import 'package:storii/api/endpoints/library_api.dart';
+import 'package:storii/api/models/requests/series_request_params.dart';
 import 'package:storii/app/config/sync_config.dart';
 import 'package:storii/app/models/library_item.dart';
 import 'package:storii/app/models/to_domain.dart';
@@ -17,7 +20,7 @@ Future<void> startBackgroundSync(SyncConfig config) async {
 
   try {
     final syncManager = SyncManager(db, api);
-    await syncManager.performFullSync(config.libraryId);
+    await syncManager.performLibrarySync(config.libraryId);
   } finally {
     await db.close();
   }
@@ -25,66 +28,94 @@ Future<void> startBackgroundSync(SyncConfig config) async {
 
 class SyncManager {
   final AppDatabase db;
-  final ApiClient api;
+  final Uri baseUrl;
   final LibraryApi libraryApi;
+  final AuthorApi authorApi;
 
-  SyncManager(this.db, this.api) : libraryApi = LibraryApi(api);
+  SyncManager(this.db, ApiClient api)
+    : baseUrl = api.baseUrl,
+      libraryApi = LibraryApi(api),
+      authorApi = AuthorApi(api);
 
-  Future<void> performFullSync(String libraryId) async {
-    final libraries = await LibraryApi(api).getAll();
-    await db.batch(
-      (batch) => batch.insertAllOnConflictUpdate(
-        db.libraries,
-        libraries.map((e) => e.toDomain(api.baseUrl).toInsertable()),
-      ),
-    );
-    await Future.wait([
-      _syncItems(libraryId),
-      _syncSeries(libraryId),
-      _syncAuthors(libraryId),
-    ]);
-  }
+  Future<void> performLibrarySync(String libraryId) async {
+    final itemsFuture = libraryApi.getItems(libraryId, null);
+    final items = (await itemsFuture).results.map((e) => e.toDomain());
+    if (items.isEmpty) return;
 
-  Future<void> _syncItems(String libId) async {
-    // TODO: Pagination
-    final response = await libraryApi.getItems(libId, null);
-    final items = response.results.map((e) => e.toDomain()).toList();
+    final books = items.whereType<Audiobook>().toList();
+    final podcasts = items.whereType<Podcast>().toList();
 
-    await db.batch((batch) {
-      final firstItem = items.first;
-      switch (firstItem) {
-        case Audiobook():
-          batch.insertAllOnConflictUpdate(
-            db.audiobooks,
-            items.cast<Audiobook>().map((item) => item.toInsertable()),
-          );
-        case Podcast():
+    if (podcasts.isNotEmpty) {
+      await db.transaction(() async {
+        await db.podcasts.deleteWhere((t) => t.libraryId.equals(libraryId));
+
+        await db.batch((batch) {
           batch.insertAllOnConflictUpdate(
             db.podcasts,
-            items.cast<Podcast>().map((item) => item.toInsertable()),
+            podcasts.map((item) => item.toInsertable()),
           );
+        });
+      });
+    } else {
+      final seriesFuture = libraryApi.getSeries(
+        libraryId,
+        const SeriesRequestParams(limit: 9999),
+      );
+      final authorsFuture = libraryApi.getAuthors(libraryId);
+      final seriesL = (await seriesFuture).results.map(
+        (e) => e.toDomain(libraryId),
+      );
+      final authorsList = (await authorsFuture).map(
+        (e) => e.toDomain(libraryId),
+      );
+
+      final audiobookSeriesLinks = <AudiobookSeriesLink>[];
+      for (final s in seriesL) {
+        for (final book in s.books ?? <LibraryItem>[]) {
+          audiobookSeriesLinks.add(
+            AudiobookSeriesLink(
+              seriesId: s.id,
+              audiobookId: book.id,
+              libraryId: libraryId,
+            ),
+          );
+        }
       }
-    });
-  }
 
-  Future<void> _syncSeries(String libId) async {
-    // TODO: Pagination
-    final response = await libraryApi.getSeries(libId, null);
-    await db.batch(
-      (batch) => batch.insertAllOnConflictUpdate(
-        db.seriesTable,
-        response.results.map((e) => e.toDomain().toInsertable()),
-      ),
-    );
-  }
+      final audiobookAuthorLinks = <AudiobookAuthorsLink>[];
+      for (final a in authorsList) {
+        for (final book in a.libraryItems ?? <LibraryItem>[]) {
+          audiobookAuthorLinks.add(
+            AudiobookAuthorsLink(
+              authorId: a.id,
+              audiobookId: book.id,
+              libraryId: libraryId,
+            ),
+          );
+        }
+      }
 
-  Future<void> _syncAuthors(String libId) async {
-    final response = await libraryApi.getAuthors(libId);
-    await db.batch(
-      (batch) => batch.insertAllOnConflictUpdate(
-        db.audiobooks,
-        response.map((e) => e.toDomain(libId).toInsertable()),
-      ),
-    );
+      await db.transaction(() async {
+        await db.audiobookSeries.deleteWhere(
+          (t) => t.libraryId.equals(libraryId),
+        );
+        await db.audiobookAuthors.deleteWhere(
+          (t) => t.libraryId.equals(libraryId),
+        );
+        await db.audiobooks.deleteWhere((t) => t.libraryId.equals(libraryId));
+        await db.seriesTable.deleteWhere((t) => t.libraryId.equals(libraryId));
+        await db.authors.deleteWhere((t) => t.libraryId.equals(libraryId));
+
+        await db.batch((batch) {
+          batch.insertAll(db.audiobooks, books.map((e) => e.toInsertable()));
+          batch.insertAll(db.seriesTable, seriesL.map((e) => e.toInsertable()));
+          batch.insertAll(db.authors, authorsList.map((e) => e.toInsertable()));
+          batch.insertAll(db.audiobookSeries, audiobookSeriesLinks);
+          batch.insertAll(db.audiobookAuthors, audiobookAuthorLinks);
+        });
+      });
+    }
+
+    // download images service?
   }
 }

@@ -6,8 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/image_cache.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/models/library_item.dart';
-import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/library/logic/cover_url.dart';
+import 'package:storii/features/library/logic/cover_url_provider.dart';
 import 'package:storii/features/library/ui/placeholder_image.dart';
 import 'package:storii/l10n/l10n.dart';
 
@@ -19,12 +18,13 @@ class LibraryItemCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
     final l = AppLocalizations.of(context)!;
-    final serverUrl = ref.watch(currentUserProvider)?.serverUrl;
-    final coverUrl = getCoverUrl(
-      serverUrl,
-      item.id,
-      item.updatedAt,
-      width: 400,
+    final coverUrl = ref.watch(
+      coverUrlProvider(
+        item.id,
+        type: .item,
+        updatedAt: item.updatedAt,
+        width: 400,
+      ),
     );
 
     return Column(
@@ -135,9 +135,14 @@ class LibraryItemCardListView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
     final l = AppLocalizations.of(context)!;
-    final serverUrl = ref.watch(currentUserProvider)?.serverUrl;
-    final coverUrl = getCoverUrl(serverUrl, item.id, item.updatedAt, width: 72);
-
+    final coverUrl = ref.watch(
+      coverUrlProvider(
+        item.id,
+        type: .item,
+        updatedAt: item.updatedAt,
+        width: 72,
+      ),
+    );
     return Padding(
       padding: const .symmetric(vertical: 8),
       child: ListTile(

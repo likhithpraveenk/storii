@@ -53,3 +53,35 @@ enum ShelfIdentity {
 }
 
 enum ShelfType { book, series, authors, episode, podcast }
+
+@JsonEnum(valueField: 'value')
+enum PlayMethod {
+  directPlay(0),
+  directStream(1),
+  transcode(2),
+  local(3);
+
+  final int value;
+
+  const PlayMethod(this.value);
+}
+
+@JsonEnum(valueField: 'name')
+enum DayOfTheWeek {
+  sunday(0, 'Sunday'),
+  monday(1, 'Monday'),
+  tuesday(2, 'Tuesday'),
+  wednesday(3, 'Wednesday'),
+  thursday(4, 'Thursday'),
+  friday(5, 'Friday'),
+  saturday(6, 'Saturday');
+
+  static final byValue = {
+    for (final value in DayOfTheWeek.values) value.value: value,
+  };
+
+  final int value;
+  final String name;
+
+  const DayOfTheWeek(this.value, this.name);
+}

@@ -13,41 +13,44 @@ part 'library_items_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class LibraryItemsNotifier extends _$LibraryItemsNotifier {
-  final _limit = 100;
+  static const int _defaultLimit = 100;
+
+  LibraryItemsRequestParams _currentParams = const LibraryItemsRequestParams(
+    sort: .title,
+    desc: false,
+    page: 0,
+    limit: _defaultLimit,
+  );
 
   @override
   Stream<List<LibraryItem>> build() async* {
-    yield* _fetchItems();
+    yield* _fetchItems(_currentParams);
   }
 
-  Stream<List<LibraryItem>> _fetchItems() async* {
+  Future<void> filterItems(LibraryItemsRequestParams params) async {
+    _currentParams = params.copyWith(
+      page: params.page ?? 0,
+      limit: params.limit ?? _defaultLimit,
+    );
+    ref.invalidateSelf();
+    await future;
+  }
+
+  Stream<List<LibraryItem>> _fetchItems(
+    LibraryItemsRequestParams params,
+  ) async* {
     final library = await ref.watch(activeLibraryProvider.future);
-    final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(libraryApiProvider(user));
+
+    final effectiveParams = params;
 
     try {
-      final firstResponse = await api.getItems(
-        library.id,
-        LibraryItemsRequestParams(limit: _limit, page: 0),
+      final items = <LibraryItem>[];
+
+      yield* _fetchPageRecursive(
+        libraryId: library.id,
+        params: effectiveParams,
+        accumulator: items,
       );
-
-      final items = firstResponse.results.map((i) => i.toDomain()).toList();
-      yield items;
-
-      if (firstResponse.total > items.length) {
-        final remainingToFetch = firstResponse.total - items.length;
-        final remainingPages = (remainingToFetch / _limit).ceil();
-
-        for (int i = 1; i <= remainingPages; i++) {
-          final response = await api.getItems(
-            library.id,
-            LibraryItemsRequestParams(page: i, limit: _limit),
-          );
-          items.addAll(response.results.map((i) => i.toDomain()));
-
-          yield List.from(items);
-        }
-      }
     } catch (e, st) {
       final error = AppError.resolve(e);
       ref
@@ -59,6 +62,33 @@ class LibraryItemsNotifier extends _$LibraryItemsNotifier {
           );
       throw error;
     }
+  }
+
+  Stream<List<LibraryItem>> _fetchPageRecursive({
+    required String libraryId,
+    required LibraryItemsRequestParams params,
+    required List<LibraryItem> accumulator,
+  }) async* {
+    final user = await ref.read(authenticatedUserProvider.future);
+    final api = ref.read(libraryApiProvider(user));
+    final response = await api.getItems(libraryId, params);
+
+    final newItems = response.results.map((i) => i.toDomain());
+    accumulator.addAll(newItems);
+
+    yield List.unmodifiable(accumulator);
+
+    final fetchedSoFar = accumulator.length;
+
+    if (fetchedSoFar >= response.total) return;
+
+    final nextParams = params.copyWith(page: params.page ?? 0 + 1);
+
+    yield* _fetchPageRecursive(
+      libraryId: libraryId,
+      params: nextParams,
+      accumulator: accumulator,
+    );
   }
 
   Future<void> manualSync() async {

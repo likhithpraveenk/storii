@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LibraryItem {
 
- String get id; String get libraryId; DateTime get addedAt; DateTime get updatedAt; bool get isMissing; int get size; String? get title; String? get authorName; String? get description; String? get language; bool get explicit; List<String> get genres; List<String> get tags; double get progress; bool get isFinished; bool get hideFromContinueListening;
+ String get id; String get libraryId; DateTime get addedAt; DateTime get updatedAt; bool get isMissing; int get size; String? get title; String? get description; String? get language; bool get explicit; List<String> get genres; List<String> get tags; double get progress; bool get isFinished; bool get hideFromContinueListening;
 /// Create a copy of LibraryItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $LibraryItemCopyWith<LibraryItem> get copyWith => _$LibraryItemCopyWithImpl<Libr
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItem&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isMissing, isMissing) || other.isMissing == isMissing)&&(identical(other.size, size) || other.size == size)&&(identical(other.title, title) || other.title == title)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.description, description) || other.description == description)&&(identical(other.language, language) || other.language == language)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&const DeepCollectionEquality().equals(other.genres, genres)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&(identical(other.hideFromContinueListening, hideFromContinueListening) || other.hideFromContinueListening == hideFromContinueListening));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItem&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isMissing, isMissing) || other.isMissing == isMissing)&&(identical(other.size, size) || other.size == size)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.language, language) || other.language == language)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&const DeepCollectionEquality().equals(other.genres, genres)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&(identical(other.hideFromContinueListening, hideFromContinueListening) || other.hideFromContinueListening == hideFromContinueListening));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,libraryId,addedAt,updatedAt,isMissing,size,title,authorName,description,language,explicit,const DeepCollectionEquality().hash(genres),const DeepCollectionEquality().hash(tags),progress,isFinished,hideFromContinueListening);
+int get hashCode => Object.hash(runtimeType,id,libraryId,addedAt,updatedAt,isMissing,size,title,description,language,explicit,const DeepCollectionEquality().hash(genres),const DeepCollectionEquality().hash(tags),progress,isFinished,hideFromContinueListening);
 
 @override
 String toString() {
-  return 'LibraryItem(id: $id, libraryId: $libraryId, addedAt: $addedAt, updatedAt: $updatedAt, isMissing: $isMissing, size: $size, title: $title, authorName: $authorName, description: $description, language: $language, explicit: $explicit, genres: $genres, tags: $tags, progress: $progress, isFinished: $isFinished, hideFromContinueListening: $hideFromContinueListening)';
+  return 'LibraryItem(id: $id, libraryId: $libraryId, addedAt: $addedAt, updatedAt: $updatedAt, isMissing: $isMissing, size: $size, title: $title, description: $description, language: $language, explicit: $explicit, genres: $genres, tags: $tags, progress: $progress, isFinished: $isFinished, hideFromContinueListening: $hideFromContinueListening)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $LibraryItemCopyWith<$Res>  {
   factory $LibraryItemCopyWith(LibraryItem value, $Res Function(LibraryItem) _then) = _$LibraryItemCopyWithImpl;
 @useResult
 $Res call({
- String id, String libraryId, DateTime addedAt, DateTime updatedAt, bool isMissing, int size, String? title, String? authorName, String? description, String? language, bool explicit, List<String> genres, List<String> tags, double progress, bool isFinished, bool hideFromContinueListening
+ String id, String libraryId, DateTime addedAt, DateTime updatedAt, bool isMissing, int size, String? title, String? description, String? language, bool explicit, List<String> genres, List<String> tags, double progress, bool isFinished, bool hideFromContinueListening
 });
 
 
@@ -62,7 +62,7 @@ class _$LibraryItemCopyWithImpl<$Res>
 
 /// Create a copy of LibraryItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? libraryId = null,Object? addedAt = null,Object? updatedAt = null,Object? isMissing = null,Object? size = null,Object? title = freezed,Object? authorName = freezed,Object? description = freezed,Object? language = freezed,Object? explicit = null,Object? genres = null,Object? tags = null,Object? progress = null,Object? isFinished = null,Object? hideFromContinueListening = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? libraryId = null,Object? addedAt = null,Object? updatedAt = null,Object? isMissing = null,Object? size = null,Object? title = freezed,Object? description = freezed,Object? language = freezed,Object? explicit = null,Object? genres = null,Object? tags = null,Object? progress = null,Object? isFinished = null,Object? hideFromContinueListening = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,libraryId: null == libraryId ? _self.libraryId : libraryId // ignore: cast_nullable_to_non_nullable
@@ -71,7 +71,6 @@ as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore
 as DateTime,isMissing: null == isMissing ? _self.isMissing : isMissing // ignore: cast_nullable_to_non_nullable
 as bool,size: null == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
 as int,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String?,authorName: freezed == authorName ? _self.authorName : authorName // ignore: cast_nullable_to_non_nullable
 as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,language: freezed == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
 as String?,explicit: null == explicit ? _self.explicit : explicit // ignore: cast_nullable_to_non_nullable
@@ -165,10 +164,10 @@ return podcast(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  Duration duration,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> narrators,  List<String> genres,  List<String> tags,  List<AudioFile> audioFiles,  List<AudioTrack> tracks,  List<BookChapter> chapters,  double progress,  bool isFinished,  bool hideFromContinueListening)?  audiobook,TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  String? episodeId,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> genres,  List<String> tags,  List<PodcastEpisode> episodes,  Uri? feedUrl,  DateTime? lastEpisodeCheck,  double progress,  bool isFinished,  bool hideFromContinueListening)?  podcast,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  Duration duration,  String? title,  List<Author> authors,  String? description,  String? language,  bool explicit,  List<String> narrators,  List<String> genres,  List<String> tags,  List<AudioFile> audioFiles,  List<AudioTrack> tracks,  List<BookChapter> chapters,  double progress,  bool isFinished,  bool hideFromContinueListening)?  audiobook,TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  String? episodeId,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> genres,  List<String> tags,  List<PodcastEpisode> episodes,  Uri? feedUrl,  DateTime? lastEpisodeCheck,  double progress,  bool isFinished,  bool hideFromContinueListening)?  podcast,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case Audiobook() when audiobook != null:
-return audiobook(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.size,_that.duration,_that.title,_that.authorName,_that.description,_that.language,_that.explicit,_that.narrators,_that.genres,_that.tags,_that.audioFiles,_that.tracks,_that.chapters,_that.progress,_that.isFinished,_that.hideFromContinueListening);case Podcast() when podcast != null:
+return audiobook(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.size,_that.duration,_that.title,_that.authors,_that.description,_that.language,_that.explicit,_that.narrators,_that.genres,_that.tags,_that.audioFiles,_that.tracks,_that.chapters,_that.progress,_that.isFinished,_that.hideFromContinueListening);case Podcast() when podcast != null:
 return podcast(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.size,_that.episodeId,_that.title,_that.authorName,_that.description,_that.language,_that.explicit,_that.genres,_that.tags,_that.episodes,_that.feedUrl,_that.lastEpisodeCheck,_that.progress,_that.isFinished,_that.hideFromContinueListening);case _:
   return orElse();
 
@@ -187,10 +186,10 @@ return podcast(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMi
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  Duration duration,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> narrators,  List<String> genres,  List<String> tags,  List<AudioFile> audioFiles,  List<AudioTrack> tracks,  List<BookChapter> chapters,  double progress,  bool isFinished,  bool hideFromContinueListening)  audiobook,required TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  String? episodeId,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> genres,  List<String> tags,  List<PodcastEpisode> episodes,  Uri? feedUrl,  DateTime? lastEpisodeCheck,  double progress,  bool isFinished,  bool hideFromContinueListening)  podcast,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  Duration duration,  String? title,  List<Author> authors,  String? description,  String? language,  bool explicit,  List<String> narrators,  List<String> genres,  List<String> tags,  List<AudioFile> audioFiles,  List<AudioTrack> tracks,  List<BookChapter> chapters,  double progress,  bool isFinished,  bool hideFromContinueListening)  audiobook,required TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  String? episodeId,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> genres,  List<String> tags,  List<PodcastEpisode> episodes,  Uri? feedUrl,  DateTime? lastEpisodeCheck,  double progress,  bool isFinished,  bool hideFromContinueListening)  podcast,}) {final _that = this;
 switch (_that) {
 case Audiobook():
-return audiobook(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.size,_that.duration,_that.title,_that.authorName,_that.description,_that.language,_that.explicit,_that.narrators,_that.genres,_that.tags,_that.audioFiles,_that.tracks,_that.chapters,_that.progress,_that.isFinished,_that.hideFromContinueListening);case Podcast():
+return audiobook(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.size,_that.duration,_that.title,_that.authors,_that.description,_that.language,_that.explicit,_that.narrators,_that.genres,_that.tags,_that.audioFiles,_that.tracks,_that.chapters,_that.progress,_that.isFinished,_that.hideFromContinueListening);case Podcast():
 return podcast(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.size,_that.episodeId,_that.title,_that.authorName,_that.description,_that.language,_that.explicit,_that.genres,_that.tags,_that.episodes,_that.feedUrl,_that.lastEpisodeCheck,_that.progress,_that.isFinished,_that.hideFromContinueListening);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -205,10 +204,10 @@ return podcast(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMi
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  Duration duration,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> narrators,  List<String> genres,  List<String> tags,  List<AudioFile> audioFiles,  List<AudioTrack> tracks,  List<BookChapter> chapters,  double progress,  bool isFinished,  bool hideFromContinueListening)?  audiobook,TResult? Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  String? episodeId,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> genres,  List<String> tags,  List<PodcastEpisode> episodes,  Uri? feedUrl,  DateTime? lastEpisodeCheck,  double progress,  bool isFinished,  bool hideFromContinueListening)?  podcast,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  Duration duration,  String? title,  List<Author> authors,  String? description,  String? language,  bool explicit,  List<String> narrators,  List<String> genres,  List<String> tags,  List<AudioFile> audioFiles,  List<AudioTrack> tracks,  List<BookChapter> chapters,  double progress,  bool isFinished,  bool hideFromContinueListening)?  audiobook,TResult? Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  String? episodeId,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> genres,  List<String> tags,  List<PodcastEpisode> episodes,  Uri? feedUrl,  DateTime? lastEpisodeCheck,  double progress,  bool isFinished,  bool hideFromContinueListening)?  podcast,}) {final _that = this;
 switch (_that) {
 case Audiobook() when audiobook != null:
-return audiobook(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.size,_that.duration,_that.title,_that.authorName,_that.description,_that.language,_that.explicit,_that.narrators,_that.genres,_that.tags,_that.audioFiles,_that.tracks,_that.chapters,_that.progress,_that.isFinished,_that.hideFromContinueListening);case Podcast() when podcast != null:
+return audiobook(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.size,_that.duration,_that.title,_that.authors,_that.description,_that.language,_that.explicit,_that.narrators,_that.genres,_that.tags,_that.audioFiles,_that.tracks,_that.chapters,_that.progress,_that.isFinished,_that.hideFromContinueListening);case Podcast() when podcast != null:
 return podcast(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.size,_that.episodeId,_that.title,_that.authorName,_that.description,_that.language,_that.explicit,_that.genres,_that.tags,_that.episodes,_that.feedUrl,_that.lastEpisodeCheck,_that.progress,_that.isFinished,_that.hideFromContinueListening);case _:
   return null;
 
@@ -221,7 +220,7 @@ return podcast(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMi
 
 
 class Audiobook extends LibraryItem {
-  const Audiobook({required this.id, required this.libraryId, required this.addedAt, required this.updatedAt, required this.isMissing, required this.size, required this.duration, this.title, this.authorName, this.description, this.language, this.explicit = false, final  List<String> narrators = const [], final  List<String> genres = const [], final  List<String> tags = const [], final  List<AudioFile> audioFiles = const [], final  List<AudioTrack> tracks = const [], final  List<BookChapter> chapters = const [], this.progress = 0, this.isFinished = false, this.hideFromContinueListening = false}): _narrators = narrators,_genres = genres,_tags = tags,_audioFiles = audioFiles,_tracks = tracks,_chapters = chapters,super._();
+  const Audiobook({required this.id, required this.libraryId, required this.addedAt, required this.updatedAt, required this.isMissing, required this.size, required this.duration, this.title, final  List<Author> authors = const [], this.description, this.language, this.explicit = false, final  List<String> narrators = const [], final  List<String> genres = const [], final  List<String> tags = const [], final  List<AudioFile> audioFiles = const [], final  List<AudioTrack> tracks = const [], final  List<BookChapter> chapters = const [], this.progress = 0, this.isFinished = false, this.hideFromContinueListening = false}): _authors = authors,_narrators = narrators,_genres = genres,_tags = tags,_audioFiles = audioFiles,_tracks = tracks,_chapters = chapters,super._();
   
 
 @override final  String id;
@@ -232,7 +231,13 @@ class Audiobook extends LibraryItem {
 @override final  int size;
  final  Duration duration;
 @override final  String? title;
-@override final  String? authorName;
+ final  List<Author> _authors;
+@JsonKey() List<Author> get authors {
+  if (_authors is EqualUnmodifiableListView) return _authors;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_authors);
+}
+
 @override final  String? description;
 @override final  String? language;
 @override@JsonKey() final  bool explicit;
@@ -292,16 +297,16 @@ $AudiobookCopyWith<Audiobook> get copyWith => _$AudiobookCopyWithImpl<Audiobook>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Audiobook&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isMissing, isMissing) || other.isMissing == isMissing)&&(identical(other.size, size) || other.size == size)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.title, title) || other.title == title)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.description, description) || other.description == description)&&(identical(other.language, language) || other.language == language)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&const DeepCollectionEquality().equals(other._narrators, _narrators)&&const DeepCollectionEquality().equals(other._genres, _genres)&&const DeepCollectionEquality().equals(other._tags, _tags)&&const DeepCollectionEquality().equals(other._audioFiles, _audioFiles)&&const DeepCollectionEquality().equals(other._tracks, _tracks)&&const DeepCollectionEquality().equals(other._chapters, _chapters)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&(identical(other.hideFromContinueListening, hideFromContinueListening) || other.hideFromContinueListening == hideFromContinueListening));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Audiobook&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isMissing, isMissing) || other.isMissing == isMissing)&&(identical(other.size, size) || other.size == size)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other._authors, _authors)&&(identical(other.description, description) || other.description == description)&&(identical(other.language, language) || other.language == language)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&const DeepCollectionEquality().equals(other._narrators, _narrators)&&const DeepCollectionEquality().equals(other._genres, _genres)&&const DeepCollectionEquality().equals(other._tags, _tags)&&const DeepCollectionEquality().equals(other._audioFiles, _audioFiles)&&const DeepCollectionEquality().equals(other._tracks, _tracks)&&const DeepCollectionEquality().equals(other._chapters, _chapters)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&(identical(other.hideFromContinueListening, hideFromContinueListening) || other.hideFromContinueListening == hideFromContinueListening));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,id,libraryId,addedAt,updatedAt,isMissing,size,duration,title,authorName,description,language,explicit,const DeepCollectionEquality().hash(_narrators),const DeepCollectionEquality().hash(_genres),const DeepCollectionEquality().hash(_tags),const DeepCollectionEquality().hash(_audioFiles),const DeepCollectionEquality().hash(_tracks),const DeepCollectionEquality().hash(_chapters),progress,isFinished,hideFromContinueListening]);
+int get hashCode => Object.hashAll([runtimeType,id,libraryId,addedAt,updatedAt,isMissing,size,duration,title,const DeepCollectionEquality().hash(_authors),description,language,explicit,const DeepCollectionEquality().hash(_narrators),const DeepCollectionEquality().hash(_genres),const DeepCollectionEquality().hash(_tags),const DeepCollectionEquality().hash(_audioFiles),const DeepCollectionEquality().hash(_tracks),const DeepCollectionEquality().hash(_chapters),progress,isFinished,hideFromContinueListening]);
 
 @override
 String toString() {
-  return 'LibraryItem.audiobook(id: $id, libraryId: $libraryId, addedAt: $addedAt, updatedAt: $updatedAt, isMissing: $isMissing, size: $size, duration: $duration, title: $title, authorName: $authorName, description: $description, language: $language, explicit: $explicit, narrators: $narrators, genres: $genres, tags: $tags, audioFiles: $audioFiles, tracks: $tracks, chapters: $chapters, progress: $progress, isFinished: $isFinished, hideFromContinueListening: $hideFromContinueListening)';
+  return 'LibraryItem.audiobook(id: $id, libraryId: $libraryId, addedAt: $addedAt, updatedAt: $updatedAt, isMissing: $isMissing, size: $size, duration: $duration, title: $title, authors: $authors, description: $description, language: $language, explicit: $explicit, narrators: $narrators, genres: $genres, tags: $tags, audioFiles: $audioFiles, tracks: $tracks, chapters: $chapters, progress: $progress, isFinished: $isFinished, hideFromContinueListening: $hideFromContinueListening)';
 }
 
 
@@ -312,7 +317,7 @@ abstract mixin class $AudiobookCopyWith<$Res> implements $LibraryItemCopyWith<$R
   factory $AudiobookCopyWith(Audiobook value, $Res Function(Audiobook) _then) = _$AudiobookCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String libraryId, DateTime addedAt, DateTime updatedAt, bool isMissing, int size, Duration duration, String? title, String? authorName, String? description, String? language, bool explicit, List<String> narrators, List<String> genres, List<String> tags, List<AudioFile> audioFiles, List<AudioTrack> tracks, List<BookChapter> chapters, double progress, bool isFinished, bool hideFromContinueListening
+ String id, String libraryId, DateTime addedAt, DateTime updatedAt, bool isMissing, int size, Duration duration, String? title, List<Author> authors, String? description, String? language, bool explicit, List<String> narrators, List<String> genres, List<String> tags, List<AudioFile> audioFiles, List<AudioTrack> tracks, List<BookChapter> chapters, double progress, bool isFinished, bool hideFromContinueListening
 });
 
 
@@ -329,7 +334,7 @@ class _$AudiobookCopyWithImpl<$Res>
 
 /// Create a copy of LibraryItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? libraryId = null,Object? addedAt = null,Object? updatedAt = null,Object? isMissing = null,Object? size = null,Object? duration = null,Object? title = freezed,Object? authorName = freezed,Object? description = freezed,Object? language = freezed,Object? explicit = null,Object? narrators = null,Object? genres = null,Object? tags = null,Object? audioFiles = null,Object? tracks = null,Object? chapters = null,Object? progress = null,Object? isFinished = null,Object? hideFromContinueListening = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? libraryId = null,Object? addedAt = null,Object? updatedAt = null,Object? isMissing = null,Object? size = null,Object? duration = null,Object? title = freezed,Object? authors = null,Object? description = freezed,Object? language = freezed,Object? explicit = null,Object? narrators = null,Object? genres = null,Object? tags = null,Object? audioFiles = null,Object? tracks = null,Object? chapters = null,Object? progress = null,Object? isFinished = null,Object? hideFromContinueListening = null,}) {
   return _then(Audiobook(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,libraryId: null == libraryId ? _self.libraryId : libraryId // ignore: cast_nullable_to_non_nullable
@@ -339,8 +344,8 @@ as DateTime,isMissing: null == isMissing ? _self.isMissing : isMissing // ignore
 as bool,size: null == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
 as int,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
 as Duration,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String?,authorName: freezed == authorName ? _self.authorName : authorName // ignore: cast_nullable_to_non_nullable
-as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String?,authors: null == authors ? _self._authors : authors // ignore: cast_nullable_to_non_nullable
+as List<Author>,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,language: freezed == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
 as String?,explicit: null == explicit ? _self.explicit : explicit // ignore: cast_nullable_to_non_nullable
 as bool,narrators: null == narrators ? _self._narrators : narrators // ignore: cast_nullable_to_non_nullable
@@ -374,7 +379,7 @@ class Podcast extends LibraryItem {
 @override final  int size;
  final  String? episodeId;
 @override final  String? title;
-@override final  String? authorName;
+ final  String? authorName;
 @override final  String? description;
 @override final  String? language;
 @override@JsonKey() final  bool explicit;

@@ -7,11 +7,11 @@ import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
-part 'libraries_provider.g.dart';
+part 'user_libraries_provider.g.dart';
 
 @riverpod
 Future<List<Library>> userLibraries(Ref ref) async {
-  final user = await ref.read(authenticatedUserProvider.future);
+  final user = await ref.watch(authenticatedUserProvider.future);
   final api = ref.read(libraryApiProvider(user));
 
   try {

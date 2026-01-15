@@ -1,4 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:storii/app/models/library_item.dart';
+import 'package:storii/app/models/series.dart';
 
 part 'author.freezed.dart';
 
@@ -9,5 +11,10 @@ sealed class Author with _$Author {
     required String name,
     required String libraryId,
     String? description,
+    DateTime? addedAt,
+    DateTime? updatedAt,
+    int? numBooks,
+    List<LibraryItem>? libraryItems,
+    List<Series>? series,
   }) = _Author;
 }

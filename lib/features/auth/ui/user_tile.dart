@@ -101,7 +101,7 @@ class UserTile extends ConsumerWidget {
                     ),
                     AppFilledButton(
                       text: l.delete,
-                      color: scheme.error,
+                      isDestructive: true,
                       onPressed: () async {
                         await ref.read(usersProvider.notifier).delete(user);
                         if (context.mounted) {

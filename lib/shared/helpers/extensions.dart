@@ -47,16 +47,6 @@ extension StringExtensions on String {
   }
 }
 
-extension PreciseDuration on Duration {
-  double get inPreciseSeconds =>
-      inMicroseconds / Duration.microsecondsPerSecond;
-
-  static Duration fromPreciseSeconds(double preciseSeconds) {
-    final microseconds = preciseSeconds * Duration.microsecondsPerSecond;
-    return Duration(microseconds: microseconds.truncate());
-  }
-}
-
 extension LogLevelX on LogLevel {
   Color color(ColorScheme scheme) {
     return switch (this) {

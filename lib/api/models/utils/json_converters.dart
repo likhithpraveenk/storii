@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:storii/api/models/utils/extensions.dart';
 import 'package:storii/api/models/utils/filter.dart';
+import 'package:storii/api/models/utils/sort.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 const _converters = <JsonConverter<dynamic, dynamic>>[
@@ -89,6 +91,17 @@ class FilterConverter implements JsonConverter<Filter, String> {
 
   @override
   String toJson(Filter filter) => filter.toString();
+}
+
+class SortConverter implements JsonConverter<LibraryItemSort?, String?> {
+  const SortConverter();
+
+  @override
+  LibraryItemSort? fromJson(String? json) =>
+      LibraryItemSort.values.firstWhereOrNull((e) => e.value == json);
+
+  @override
+  String? toJson(LibraryItemSort? sort) => sort?.value;
 }
 
 Object? readSeries(Map json, String key) {

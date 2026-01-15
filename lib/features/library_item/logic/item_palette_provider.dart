@@ -1,21 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:palette_generator_master/palette_generator_master.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/features/library/logic/cover_url_provider.dart';
 
-final itemPaletteProvider =
-    FutureProvider.family<PaletteGeneratorMaster, String?>((
-      ref,
-      imageUrl,
-    ) async {
-      if (imageUrl == null) return Future.error('imageUrl is null');
-      final imageProvider = NetworkImage(imageUrl);
-      return await PaletteGeneratorMaster.fromImageProvider(
-        imageProvider,
-        maximumColorCount: 10,
-        size: const Size(100, 100),
-      );
-    });
+part 'item_palette_provider.g.dart';
 
-Color getTextColor(Color background) {
-  return background.computeLuminance() > 0.5 ? Colors.black : Colors.white;
+@riverpod
+class ItemPaletteNotifier extends _$ItemPaletteNotifier {
+  @override
+  Future<PaletteGeneratorMaster> build(String id) async {
+    final url = ref.watch(coverUrlProvider(id, type: .item));
+    if (url == null) throw Exception('Could not resolve cover URL');
+
+    final imageProvider = NetworkImage(url);
+    final palette = await PaletteGeneratorMaster.fromImageProvider(
+      imageProvider,
+      colorSpace: .lab,
+      filters: [
+        (HSLColor color) {
+          return color.lightness > 0.15 && color.lightness < 0.95;
+        },
+      ],
+    );
+    return palette;
+  }
+
+  Color getBackgroundColor(Color fallback) {
+    final palette = state.value;
+    return palette?.dominantColor?.color ?? fallback;
+  }
+
+  Color getForegroundColor(ThemeData theme) {
+    final background = getBackgroundColor(theme.colorScheme.onSurface);
+    return background.computeLuminance() < 0.45
+        ? theme.colorScheme.onSurface
+        : theme.colorScheme.onInverseSurface;
+  }
 }

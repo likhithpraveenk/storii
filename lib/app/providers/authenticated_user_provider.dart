@@ -16,10 +16,13 @@ Future<User> authenticatedUser(Ref ref) async {
     return user;
   } catch (e) {
     final error = AppError.resolve(e);
-    final errMsg = 'Error validating user session: $error';
     ref
         .read(logsProvider.notifier)
-        .log(errMsg, source: 'AuthenticatedUserProvider', level: .error);
+        .log(
+          'Error validating user session: $error',
+          source: 'AuthenticatedUserProvider',
+          level: .error,
+        );
     throw error;
   }
 }

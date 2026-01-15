@@ -24,20 +24,12 @@ class MyApp extends ConsumerWidget {
     final fontFamily = ref.watch(fontFamilyProvider);
     final fontScale = ref.watch(fontScaleProvider);
     final localeCode = ref.watch(localeCodeProvider);
-    // TODO: theme is messed up. fix it along with fontScale
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       themeMode: appTheme.themeMode,
-      theme: appTheme.build(
-        brightness: Brightness.light,
-        fontFamily: fontFamily,
-        fontScale: fontScale,
-      ),
-      darkTheme: appTheme.build(
-        brightness: Brightness.dark,
-        fontFamily: fontFamily,
-        fontScale: fontScale,
-      ),
+      theme: appTheme.lightTheme.build(fontFamily),
+      darkTheme: appTheme.darkTheme.build(fontFamily),
       routerConfig: router,
       title: AppConstants.appName,
       locale: Locale(localeCode),
@@ -47,6 +39,14 @@ class MyApp extends ConsumerWidget {
         dragDevices: {.mouse, .touch, .trackpad, .stylus},
         scrollbars: false,
       ),
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(
+            context,
+          ).copyWith(textScaler: TextScaler.linear(fontScale)),
+          child: child ?? const SizedBox.shrink(),
+        );
+      },
     );
   }
 }

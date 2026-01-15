@@ -1,9 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/features/library/logic/library_author_provider.dart';
+import 'package:storii/features/library/logic/library_authors_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
+import 'package:storii/features/library/ui/author_card.dart';
 import 'package:storii/features/library/ui/library_filter_bar.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/app_refresh_indicator.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -13,31 +15,20 @@ class LibraryAuthorsTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final seriesAsync = ref.watch(libraryAuthorProvider);
-    final filterState = ref.watch(libraryFiltersProvider);
+    final authorsAsync = ref.watch(libraryAuthorsProvider);
+    final filterState = ref.watch(libraryFiltersProvider(.authors));
     final l = AppLocalizations.of(context)!;
 
     return CustomScrollView(
       controller: controller,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        const LibraryFilterBar(),
-        CupertinoSliverRefreshControl(
-          refreshTriggerPullDistance: 160,
-          refreshIndicatorExtent: 60,
+        const LibraryFilterBar(.authors),
+        AppRefreshIndicator(
           onRefresh: () =>
-              ref.read(libraryAuthorProvider.notifier).manualSync(),
-          builder: (_, _, pulledExtent, _, refreshIndicatorExtent) {
-            final opacity = Curves.easeIn.transform(
-              (pulledExtent / refreshIndicatorExtent).clamp(0.0, 1.0),
-            );
-            return Opacity(
-              opacity: opacity,
-              child: const Center(child: RandomWaveform()),
-            );
-          },
+              ref.read(libraryAuthorsProvider.notifier).manualSync(),
         ),
-        seriesAsync.when(
+        authorsAsync.when(
           data: (authors) {
             if (authors.isEmpty) {
               return SliverFillRemaining(child: Center(child: Text(l.empty)));
@@ -48,19 +39,18 @@ class LibraryAuthorsTab extends ConsumerWidget {
                 (width - (crossAxisSpacing * (filterState.gridCount - 1))) /
                 filterState.gridCount;
             final dynamicRatio = columnWidth / (columnWidth + 60);
-            // TODO: fix grid count to be only 1 here
             if (filterState.gridCount == 1) {
               return SliverList.builder(
                 itemCount: authors.length,
                 itemBuilder: (context, index) {
-                  return Center(
+                  return AuthorCardListView(
                     key: ValueKey(authors[index].id),
-                    child: Text(authors[index].name),
+                    authors[index],
                   );
                 },
               );
             }
-            // TODO: author item card
+
             return SliverPadding(
               padding: const .fromLTRB(16, 0, 16, 24),
               sliver: SliverGrid.builder(
@@ -72,9 +62,9 @@ class LibraryAuthorsTab extends ConsumerWidget {
                   childAspectRatio: dynamicRatio,
                 ),
                 itemBuilder: (context, index) {
-                  return Center(
+                  return AuthorCard(
                     key: ValueKey(authors[index].id),
-                    child: Text(authors[index].name),
+                    authors[index],
                   );
                 },
               ),
@@ -84,7 +74,7 @@ class LibraryAuthorsTab extends ConsumerWidget {
               const SliverFillRemaining(child: Center(child: RandomWaveform())),
           error: (error, _) => SliverErrorRetryWidget(
             '$error',
-            onRetry: () => ref.invalidate(libraryAuthorProvider),
+            onRetry: () => ref.invalidate(libraryAuthorsProvider),
           ),
         ),
       ],

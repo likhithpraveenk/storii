@@ -9,7 +9,9 @@ class Authors extends Table {
       text().references(Libraries, #id, onDelete: KeyAction.cascade)();
   TextColumn get name => text()();
   TextColumn get description => text().nullable()();
+  DateTimeColumn get addedAt => dateTime().nullable()();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
 
   @override
-  Set<Column<Object>>? get primaryKey => {id};
+  Set<Column<Object>>? get primaryKey => {id, libraryId};
 }

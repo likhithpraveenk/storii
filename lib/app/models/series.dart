@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:storii/app/models/library_item.dart';
 
 part 'series.freezed.dart';
 
@@ -10,8 +11,10 @@ sealed class Series with _$Series {
     required String libraryId,
     String? nameIgnorePrefix,
     String? description,
-    required DateTime addedAt,
-    required DateTime updatedAt,
+    DateTime? addedAt,
+    DateTime? updatedAt,
     @Default(false) bool isFinished,
+    List<LibraryItem>? books,
+    List<String>? libraryItemIdsFinished,
   }) = _Series;
 }

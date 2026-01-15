@@ -34,7 +34,7 @@ class DeleteServerDialog extends ConsumerWidget {
         const SizedBox(height: 8),
         AppFilledButton(
           text: l.delete,
-          color: Theme.of(context).colorScheme.error,
+          isDestructive: true,
           onPressed: () async {
             await ref.read(serversProvider.notifier).delete(server);
             if (context.mounted) {

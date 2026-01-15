@@ -29,7 +29,6 @@ class _ServerTileState extends ConsumerState<ServerTile>
   Widget build(BuildContext context) {
     final usersAsync = ref.watch(usersOfServerProvider(widget.server.url));
     final color = widget.server.url.color;
-    final scheme = Theme.of(context).colorScheme;
     final l = AppLocalizations.of(context)!;
 
     return Column(
@@ -104,7 +103,7 @@ class _ServerTileState extends ConsumerState<ServerTile>
                               child: AppOutlinedButton(
                                 icon: const Icon(Icons.delete_forever),
                                 text: l.deleteServer,
-                                color: scheme.error,
+                                isDestructive: true,
                                 onPressed: () {
                                   showDialog(
                                     context: context,

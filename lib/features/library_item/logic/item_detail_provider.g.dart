@@ -64,7 +64,7 @@ final class ItemDetailProvider
   }
 }
 
-String _$itemDetailHash() => r'8da46c404ab29deef32906ebf7af2d4f450d8a1a';
+String _$itemDetailHash() => r'b75485fa93d80ab7276590e1fb90efea6c8e55cf';
 
 final class ItemDetailFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<LibraryItem>, String> {
@@ -82,4 +82,78 @@ final class ItemDetailFamily extends $Family
 
   @override
   String toString() => r'itemDetailProvider';
+}
+
+@ProviderFor(item)
+final itemProvider = ItemFamily._();
+
+final class ItemProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<LibraryItem>,
+          LibraryItem,
+          FutureOr<LibraryItem>
+        >
+    with $FutureModifier<LibraryItem>, $FutureProvider<LibraryItem> {
+  ItemProvider._({
+    required ItemFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'itemProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$itemHash();
+
+  @override
+  String toString() {
+    return r'itemProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<LibraryItem> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<LibraryItem> create(Ref ref) {
+    final argument = this.argument as String;
+    return item(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ItemProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$itemHash() => r'3dd5766b686f17c8788bb3d4a1c8904469cb5da1';
+
+final class ItemFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<LibraryItem>, String> {
+  ItemFamily._()
+    : super(
+        retry: null,
+        name: r'itemProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  ItemProvider call(String id) => ItemProvider._(argument: id, from: this);
+
+  @override
+  String toString() => r'itemProvider';
 }

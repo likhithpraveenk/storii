@@ -12,11 +12,14 @@ sealed class Author with _$Author {
   const factory Author({
     required String id,
     required String name,
+    String? lastFirst,
+    String? libraryId,
     String? asin,
     String? description,
     String? imagePath,
     DateTime? addedAt,
     DateTime? updatedAt,
+    int? numBooks,
     List<LibraryItem>? libraryItems,
     List<Series>? series,
   }) = _Author;

@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/library/logic/library_items_provider.dart';
 import 'package:storii/features/library/ui/library_filter_bar.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/app_refresh_indicator.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -16,27 +17,16 @@ class LibraryAllTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final itemsAsync = ref.watch(libraryItemsProvider);
-    final filterState = ref.watch(libraryFiltersProvider);
+    final filterState = ref.watch(libraryFiltersProvider(.all));
     final l = AppLocalizations.of(context)!;
 
     return CustomScrollView(
       controller: controller,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        const LibraryFilterBar(),
-        CupertinoSliverRefreshControl(
-          refreshTriggerPullDistance: 160,
-          refreshIndicatorExtent: 60,
+        const LibraryFilterBar(.all),
+        AppRefreshIndicator(
           onRefresh: () => ref.read(libraryItemsProvider.notifier).manualSync(),
-          builder: (_, _, pulledExtent, _, refreshIndicatorExtent) {
-            final opacity = Curves.easeIn.transform(
-              (pulledExtent / refreshIndicatorExtent).clamp(0.0, 1.0),
-            );
-            return Opacity(
-              opacity: opacity,
-              child: const Center(child: RandomWaveform()),
-            );
-          },
         ),
         itemsAsync.when(
           data: (items) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:storii/app/config/app_styles.dart';
 
 enum AppTheme {
   system('System'),
@@ -18,8 +17,8 @@ abstract class AppColors {
   static const white = Color(0xFFF4F4FF);
 }
 
-class AppThemes {
-  static final light = ThemeData(
+class CustomThemes {
+  static final lightTheme = ThemeData(
     colorScheme: ColorScheme.fromSeed(
       brightness: Brightness.light,
       seedColor: AppColors.primary,
@@ -27,7 +26,7 @@ class AppThemes {
     ),
   );
 
-  static final dark = ThemeData(
+  static final darkTheme = ThemeData(
     colorScheme: ColorScheme.fromSeed(
       brightness: Brightness.dark,
       seedColor: AppColors.primary,
@@ -36,12 +35,13 @@ class AppThemes {
   );
 
   // it might be better to manually make this
-  static final amoled = ThemeData(
+  static final amoledTheme = ThemeData(
     visualDensity: .adaptivePlatformDensity,
     colorScheme: ColorScheme.fromSeed(
       brightness: Brightness.dark,
       seedColor: AppColors.primary,
       surface: Colors.black,
+      onPrimary: Colors.black,
       onSurface: Colors.white,
       surfaceContainer: Colors.black,
       contrastLevel: 1,
@@ -50,46 +50,36 @@ class AppThemes {
 }
 
 extension AppThemeExtension on AppTheme {
-  ThemeData get lightTheme => AppThemes.light;
+  ThemeData get lightTheme => CustomThemes.lightTheme;
 
   ThemeData get darkTheme {
     switch (this) {
-      case AppTheme.amoled:
-        return AppThemes.amoled;
+      case .amoled:
+        return CustomThemes.amoledTheme;
       default:
-        return AppThemes.dark;
+        return CustomThemes.darkTheme;
     }
   }
 
   ThemeMode get themeMode {
     switch (this) {
-      case AppTheme.light:
-        return ThemeMode.light;
-      case AppTheme.dark:
-      case AppTheme.amoled:
-        return ThemeMode.dark;
-      case AppTheme.system:
-        return ThemeMode.system;
+      case .light:
+        return .light;
+      case .dark:
+      case .amoled:
+        return .dark;
+      case .system:
+        return .system;
     }
   }
+}
 
-  ThemeData build({
-    required Brightness brightness,
-    String? fontFamily,
-    required double fontScale,
-  }) {
-    final base = brightness == .light ? lightTheme : darkTheme;
-    final textTheme = base.customTextTheme(fontFamily, fontScale);
-
-    return base.copyWith(
+extension ThemeDataX on ThemeData {
+  ThemeData build(String? fontFamily) {
+    return copyWith(
       textTheme: fontFamily != null
-          ? GoogleFonts.getTextTheme(fontFamily, textTheme)
-          : textTheme,
-      primaryTextTheme: fontFamily != null
           ? GoogleFonts.getTextTheme(fontFamily, textTheme)
           : textTheme,
     );
   }
-
-  String get displayName => name[0].toUpperCase() + name.substring(1);
 }

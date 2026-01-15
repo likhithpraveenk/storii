@@ -1,13 +1,13 @@
 {
   "files.watcherExclude": {
-    "**/.dart_tool/**": true,
-    "**/build/**": true,
+    ".dart_tool/**": true,
+    "build/**": true,
     "**/*.freezed.dart": true,
     "**/*.g.dart": true
   },
   "search.exclude": {
-    "**/build/**": true,
-    "**/.dart_tool/**": true
+    "build/**": true,
+    ".dart_tool/**": true
   },
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,

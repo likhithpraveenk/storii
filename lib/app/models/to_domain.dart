@@ -53,14 +53,12 @@ extension LibraryItemToDomain on dto.LibraryItem {
         genres: m.metadata.genres,
         language: m.metadata.language,
         narrators: m.metadata.mapOrNull(book: (m) => m.narrators) ?? [],
-        authorName: m.metadata.mapOrNull(
-          book: (m) {
-            if (m.authors == null && m.authorName != null) {
-              return m.authorName;
-            }
-            return m.authors?.first.name;
-          },
-        ),
+        authors:
+            m.metadata.mapOrNull(
+              book: (m) =>
+                  m.authors?.map((a) => a.toDomain(libraryId)).toList(),
+            ) ??
+            [],
         tracks: m.tracks ?? [],
         tags: m.tags,
         hideFromContinueListening:
@@ -97,7 +95,7 @@ extension LibraryItemToDomain on dto.LibraryItem {
 }
 
 extension ShelfToDomain on dto.Shelf {
-  Shelf toDomain() {
+  Shelf toDomain(String libraryId) {
     return switch (this) {
       final dto.LibraryItemsShelf l => LibraryItemsShelf(
         id: id,
@@ -109,13 +107,13 @@ extension ShelfToDomain on dto.Shelf {
         id: id,
         label: label,
         type: type,
-        series: s.entities.map((e) => e.name).toList(),
+        series: s.entities.map((e) => e.toDomain(libraryId)).toList(),
       ),
       final dto.AuthorShelf a => AuthorShelf(
         id: id,
         label: label,
         type: type,
-        authors: a.entities.map((e) => e.name).toList(),
+        authors: a.entities.map((e) => e.toDomain(libraryId)).toList(),
       ),
     };
   }
@@ -139,16 +137,18 @@ extension ProgressToDomain on dto.MediaProgress {
 }
 
 extension SeriesX on dto.Series {
-  Series toDomain() {
+  Series toDomain(String libraryId) {
     return Series(
       id: id,
       name: name,
-      libraryId: libraryId,
+      libraryId: this.libraryId ?? libraryId,
       addedAt: addedAt,
       updatedAt: updatedAt,
       description: description,
       isFinished: progress?.isFinished ?? false,
       nameIgnorePrefix: nameIgnorePrefix,
+      books: books.map((b) => b.toDomain()).toList(),
+      libraryItemIdsFinished: progress?.libraryItemIdsFinished,
     );
   }
 }
@@ -158,8 +158,13 @@ extension AuthorX on dto.Author {
     return Author(
       id: id,
       name: name,
-      libraryId: libraryId,
+      libraryId: this.libraryId ?? libraryId,
       description: description,
+      updatedAt: updatedAt,
+      addedAt: addedAt,
+      numBooks: numBooks,
+      libraryItems: libraryItems?.map((i) => i.toDomain()).toList(),
+      series: series?.map((s) => s.toDomain(libraryId)).toList(),
     );
   }
 }

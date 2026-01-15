@@ -9,7 +9,7 @@ enum NavTarget {
   search,
   downloads,
   collections,
-  settings;
+  more;
 
   NavItem get item => switch (this) {
     .home => const NavItem(
@@ -37,10 +37,10 @@ enum NavTarget {
       icon: Icons.collections_bookmark_outlined,
       selectedIcon: Icons.collections_bookmark,
     ),
-    .settings => const NavItem(
-      route: AppRoute.settings,
-      icon: Icons.settings_outlined,
-      selectedIcon: Icons.settings,
+    .more => const NavItem(
+      route: AppRoute.more,
+      icon: Icons.more_horiz_outlined,
+      selectedIcon: Icons.more_horiz,
     ),
   };
 
@@ -52,7 +52,7 @@ enum NavTarget {
       .search => l.search,
       .downloads => l.downloads,
       .collections => l.collections,
-      .settings => l.settings,
+      .more => l.more,
     };
   }
 }
@@ -62,5 +62,5 @@ const defaultNavTargets = <NavTarget>[
   .library,
   .search,
   .downloads,
-  .settings,
+  .more,
 ];

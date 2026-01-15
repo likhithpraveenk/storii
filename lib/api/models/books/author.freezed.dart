@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Author {
 
- String get id; String get name; String? get asin; String? get description; String? get imagePath; DateTime? get addedAt; DateTime? get updatedAt; List<LibraryItem>? get libraryItems; List<Series>? get series;
+ String get id; String get name; String? get lastFirst; String? get libraryId; String? get asin; String? get description; String? get imagePath; DateTime? get addedAt; DateTime? get updatedAt; int? get numBooks; List<LibraryItem>? get libraryItems; List<Series>? get series;
 /// Create a copy of Author
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AuthorCopyWith<Author> get copyWith => _$AuthorCopyWithImpl<Author>(this as Aut
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Author&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.asin, asin) || other.asin == asin)&&(identical(other.description, description) || other.description == description)&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&const DeepCollectionEquality().equals(other.libraryItems, libraryItems)&&const DeepCollectionEquality().equals(other.series, series));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Author&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.lastFirst, lastFirst) || other.lastFirst == lastFirst)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.asin, asin) || other.asin == asin)&&(identical(other.description, description) || other.description == description)&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.numBooks, numBooks) || other.numBooks == numBooks)&&const DeepCollectionEquality().equals(other.libraryItems, libraryItems)&&const DeepCollectionEquality().equals(other.series, series));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,asin,description,imagePath,addedAt,updatedAt,const DeepCollectionEquality().hash(libraryItems),const DeepCollectionEquality().hash(series));
+int get hashCode => Object.hash(runtimeType,id,name,lastFirst,libraryId,asin,description,imagePath,addedAt,updatedAt,numBooks,const DeepCollectionEquality().hash(libraryItems),const DeepCollectionEquality().hash(series));
 
 @override
 String toString() {
-  return 'Author(id: $id, name: $name, asin: $asin, description: $description, imagePath: $imagePath, addedAt: $addedAt, updatedAt: $updatedAt, libraryItems: $libraryItems, series: $series)';
+  return 'Author(id: $id, name: $name, lastFirst: $lastFirst, libraryId: $libraryId, asin: $asin, description: $description, imagePath: $imagePath, addedAt: $addedAt, updatedAt: $updatedAt, numBooks: $numBooks, libraryItems: $libraryItems, series: $series)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AuthorCopyWith<$Res>  {
   factory $AuthorCopyWith(Author value, $Res Function(Author) _then) = _$AuthorCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String? asin, String? description, String? imagePath, DateTime? addedAt, DateTime? updatedAt, List<LibraryItem>? libraryItems, List<Series>? series
+ String id, String name, String? lastFirst, String? libraryId, String? asin, String? description, String? imagePath, DateTime? addedAt, DateTime? updatedAt, int? numBooks, List<LibraryItem>? libraryItems, List<Series>? series
 });
 
 
@@ -65,16 +65,19 @@ class _$AuthorCopyWithImpl<$Res>
 
 /// Create a copy of Author
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? asin = freezed,Object? description = freezed,Object? imagePath = freezed,Object? addedAt = freezed,Object? updatedAt = freezed,Object? libraryItems = freezed,Object? series = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? lastFirst = freezed,Object? libraryId = freezed,Object? asin = freezed,Object? description = freezed,Object? imagePath = freezed,Object? addedAt = freezed,Object? updatedAt = freezed,Object? numBooks = freezed,Object? libraryItems = freezed,Object? series = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,asin: freezed == asin ? _self.asin : asin // ignore: cast_nullable_to_non_nullable
+as String,lastFirst: freezed == lastFirst ? _self.lastFirst : lastFirst // ignore: cast_nullable_to_non_nullable
+as String?,libraryId: freezed == libraryId ? _self.libraryId : libraryId // ignore: cast_nullable_to_non_nullable
+as String?,asin: freezed == asin ? _self.asin : asin // ignore: cast_nullable_to_non_nullable
 as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,imagePath: freezed == imagePath ? _self.imagePath : imagePath // ignore: cast_nullable_to_non_nullable
 as String?,addedAt: freezed == addedAt ? _self.addedAt : addedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,libraryItems: freezed == libraryItems ? _self.libraryItems : libraryItems // ignore: cast_nullable_to_non_nullable
+as DateTime?,numBooks: freezed == numBooks ? _self.numBooks : numBooks // ignore: cast_nullable_to_non_nullable
+as int?,libraryItems: freezed == libraryItems ? _self.libraryItems : libraryItems // ignore: cast_nullable_to_non_nullable
 as List<LibraryItem>?,series: freezed == series ? _self.series : series // ignore: cast_nullable_to_non_nullable
 as List<Series>?,
   ));
@@ -158,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? asin,  String? description,  String? imagePath,  DateTime? addedAt,  DateTime? updatedAt,  List<LibraryItem>? libraryItems,  List<Series>? series)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? lastFirst,  String? libraryId,  String? asin,  String? description,  String? imagePath,  DateTime? addedAt,  DateTime? updatedAt,  int? numBooks,  List<LibraryItem>? libraryItems,  List<Series>? series)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Author() when $default != null:
-return $default(_that.id,_that.name,_that.asin,_that.description,_that.imagePath,_that.addedAt,_that.updatedAt,_that.libraryItems,_that.series);case _:
+return $default(_that.id,_that.name,_that.lastFirst,_that.libraryId,_that.asin,_that.description,_that.imagePath,_that.addedAt,_that.updatedAt,_that.numBooks,_that.libraryItems,_that.series);case _:
   return orElse();
 
 }
@@ -179,10 +182,10 @@ return $default(_that.id,_that.name,_that.asin,_that.description,_that.imagePath
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? asin,  String? description,  String? imagePath,  DateTime? addedAt,  DateTime? updatedAt,  List<LibraryItem>? libraryItems,  List<Series>? series)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? lastFirst,  String? libraryId,  String? asin,  String? description,  String? imagePath,  DateTime? addedAt,  DateTime? updatedAt,  int? numBooks,  List<LibraryItem>? libraryItems,  List<Series>? series)  $default,) {final _that = this;
 switch (_that) {
 case _Author():
-return $default(_that.id,_that.name,_that.asin,_that.description,_that.imagePath,_that.addedAt,_that.updatedAt,_that.libraryItems,_that.series);}
+return $default(_that.id,_that.name,_that.lastFirst,_that.libraryId,_that.asin,_that.description,_that.imagePath,_that.addedAt,_that.updatedAt,_that.numBooks,_that.libraryItems,_that.series);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -196,10 +199,10 @@ return $default(_that.id,_that.name,_that.asin,_that.description,_that.imagePath
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? asin,  String? description,  String? imagePath,  DateTime? addedAt,  DateTime? updatedAt,  List<LibraryItem>? libraryItems,  List<Series>? series)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? lastFirst,  String? libraryId,  String? asin,  String? description,  String? imagePath,  DateTime? addedAt,  DateTime? updatedAt,  int? numBooks,  List<LibraryItem>? libraryItems,  List<Series>? series)?  $default,) {final _that = this;
 switch (_that) {
 case _Author() when $default != null:
-return $default(_that.id,_that.name,_that.asin,_that.description,_that.imagePath,_that.addedAt,_that.updatedAt,_that.libraryItems,_that.series);case _:
+return $default(_that.id,_that.name,_that.lastFirst,_that.libraryId,_that.asin,_that.description,_that.imagePath,_that.addedAt,_that.updatedAt,_that.numBooks,_that.libraryItems,_that.series);case _:
   return null;
 
 }
@@ -211,16 +214,19 @@ return $default(_that.id,_that.name,_that.asin,_that.description,_that.imagePath
 @JsonSerializable()
 @DateTimeEpochConverter()
 class _Author implements Author {
-  const _Author({required this.id, required this.name, this.asin, this.description, this.imagePath, this.addedAt, this.updatedAt, final  List<LibraryItem>? libraryItems, final  List<Series>? series}): _libraryItems = libraryItems,_series = series;
+  const _Author({required this.id, required this.name, this.lastFirst, this.libraryId, this.asin, this.description, this.imagePath, this.addedAt, this.updatedAt, this.numBooks, final  List<LibraryItem>? libraryItems, final  List<Series>? series}): _libraryItems = libraryItems,_series = series;
   factory _Author.fromJson(Map<String, dynamic> json) => _$AuthorFromJson(json);
 
 @override final  String id;
 @override final  String name;
+@override final  String? lastFirst;
+@override final  String? libraryId;
 @override final  String? asin;
 @override final  String? description;
 @override final  String? imagePath;
 @override final  DateTime? addedAt;
 @override final  DateTime? updatedAt;
+@override final  int? numBooks;
  final  List<LibraryItem>? _libraryItems;
 @override List<LibraryItem>? get libraryItems {
   final value = _libraryItems;
@@ -253,16 +259,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Author&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.asin, asin) || other.asin == asin)&&(identical(other.description, description) || other.description == description)&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&const DeepCollectionEquality().equals(other._libraryItems, _libraryItems)&&const DeepCollectionEquality().equals(other._series, _series));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Author&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.lastFirst, lastFirst) || other.lastFirst == lastFirst)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.asin, asin) || other.asin == asin)&&(identical(other.description, description) || other.description == description)&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.numBooks, numBooks) || other.numBooks == numBooks)&&const DeepCollectionEquality().equals(other._libraryItems, _libraryItems)&&const DeepCollectionEquality().equals(other._series, _series));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,asin,description,imagePath,addedAt,updatedAt,const DeepCollectionEquality().hash(_libraryItems),const DeepCollectionEquality().hash(_series));
+int get hashCode => Object.hash(runtimeType,id,name,lastFirst,libraryId,asin,description,imagePath,addedAt,updatedAt,numBooks,const DeepCollectionEquality().hash(_libraryItems),const DeepCollectionEquality().hash(_series));
 
 @override
 String toString() {
-  return 'Author(id: $id, name: $name, asin: $asin, description: $description, imagePath: $imagePath, addedAt: $addedAt, updatedAt: $updatedAt, libraryItems: $libraryItems, series: $series)';
+  return 'Author(id: $id, name: $name, lastFirst: $lastFirst, libraryId: $libraryId, asin: $asin, description: $description, imagePath: $imagePath, addedAt: $addedAt, updatedAt: $updatedAt, numBooks: $numBooks, libraryItems: $libraryItems, series: $series)';
 }
 
 
@@ -273,7 +279,7 @@ abstract mixin class _$AuthorCopyWith<$Res> implements $AuthorCopyWith<$Res> {
   factory _$AuthorCopyWith(_Author value, $Res Function(_Author) _then) = __$AuthorCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String? asin, String? description, String? imagePath, DateTime? addedAt, DateTime? updatedAt, List<LibraryItem>? libraryItems, List<Series>? series
+ String id, String name, String? lastFirst, String? libraryId, String? asin, String? description, String? imagePath, DateTime? addedAt, DateTime? updatedAt, int? numBooks, List<LibraryItem>? libraryItems, List<Series>? series
 });
 
 
@@ -290,16 +296,19 @@ class __$AuthorCopyWithImpl<$Res>
 
 /// Create a copy of Author
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? asin = freezed,Object? description = freezed,Object? imagePath = freezed,Object? addedAt = freezed,Object? updatedAt = freezed,Object? libraryItems = freezed,Object? series = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? lastFirst = freezed,Object? libraryId = freezed,Object? asin = freezed,Object? description = freezed,Object? imagePath = freezed,Object? addedAt = freezed,Object? updatedAt = freezed,Object? numBooks = freezed,Object? libraryItems = freezed,Object? series = freezed,}) {
   return _then(_Author(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,asin: freezed == asin ? _self.asin : asin // ignore: cast_nullable_to_non_nullable
+as String,lastFirst: freezed == lastFirst ? _self.lastFirst : lastFirst // ignore: cast_nullable_to_non_nullable
+as String?,libraryId: freezed == libraryId ? _self.libraryId : libraryId // ignore: cast_nullable_to_non_nullable
+as String?,asin: freezed == asin ? _self.asin : asin // ignore: cast_nullable_to_non_nullable
 as String?,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String?,imagePath: freezed == imagePath ? _self.imagePath : imagePath // ignore: cast_nullable_to_non_nullable
 as String?,addedAt: freezed == addedAt ? _self.addedAt : addedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,libraryItems: freezed == libraryItems ? _self._libraryItems : libraryItems // ignore: cast_nullable_to_non_nullable
+as DateTime?,numBooks: freezed == numBooks ? _self.numBooks : numBooks // ignore: cast_nullable_to_non_nullable
+as int?,libraryItems: freezed == libraryItems ? _self._libraryItems : libraryItems // ignore: cast_nullable_to_non_nullable
 as List<LibraryItem>?,series: freezed == series ? _self._series : series // ignore: cast_nullable_to_non_nullable
 as List<Series>?,
   ));

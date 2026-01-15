@@ -16,22 +16,24 @@ class ErrorRetryScreen extends StatelessWidget {
       appBar: AppBar(automaticallyImplyLeading: true),
       body: Padding(
         padding: const .all(24),
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [
-            Text(
-              message,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(color: scheme.error),
-              textAlign: .center,
-            ),
-            const SizedBox(height: 16),
-            AppFilledButton(
-              text: AppLocalizations.of(context)!.retry,
-              onPressed: onRetry,
-            ),
-          ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: .center,
+            children: [
+              Text(
+                message,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(color: scheme.error),
+                textAlign: .center,
+              ),
+              const SizedBox(height: 16),
+              AppFilledButton(
+                text: AppLocalizations.of(context)!.retry,
+                onPressed: onRetry,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -13,18 +12,12 @@ class AboutTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Theme.of(
-        context,
-      ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-      shape: AppStyles.roundedRect,
-      child: ListTile(
-        leading: const Icon(Icons.info_outline),
-        title: Text(AppLocalizations.of(context)!.about),
-        onTap: () {
-          context.push(AppRoute.about.path);
-        },
-      ),
+    return ListTile(
+      leading: const Icon(Icons.info_outline),
+      title: Text(AppLocalizations.of(context)!.about),
+      onTap: () {
+        context.push(AppRoute.about.path);
+      },
     );
   }
 }
@@ -42,11 +35,11 @@ class AboutScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => context.pop(),
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios_new),
         ),
         title: Text(l.about, style: textTheme.titleLarge),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const .all(24),
         child: Center(
           child: Column(
@@ -68,15 +61,14 @@ class AboutScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Copyright (C) 2025-2026 Likhith Praveen K'
-                '\nLicensed under the GNU General Public License v3.0',
+                'Licensed under the GNU General Public License v3.0',
                 style: textTheme.titleSmall?.copyWith(
                   color: scheme.outline,
                   fontWeight: .w500,
                 ),
                 textAlign: .center,
               ),
-              const Spacer(),
+              const SizedBox(height: 16),
               Builder(
                 builder: (context) {
                   return AppOutlinedButton(

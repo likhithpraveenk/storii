@@ -1421,7 +1421,7 @@ class $AudiobooksTable extends Audiobooks
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {id, libraryId};
   @override
   Audiobook map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -1459,10 +1459,6 @@ class $AudiobooksTable extends Audiobooks
       title: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}title'],
-      ),
-      authorName: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}author_name'],
       ),
       description: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -2274,7 +2270,7 @@ class $PodcastsTable extends Podcasts with TableInfo<$PodcastsTable, Podcast> {
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {id, libraryId};
   @override
   Podcast map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -3244,9 +3240,9 @@ class $SeriesTableTable extends SeriesTable
   late final GeneratedColumn<DateTime> addedAt = GeneratedColumn<DateTime>(
     'added_at',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _updatedAtMeta = const VerificationMeta(
     'updatedAt',
@@ -3255,9 +3251,9 @@ class $SeriesTableTable extends SeriesTable
   late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
     'updated_at',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.dateTime,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _isFinishedMeta = const VerificationMeta(
     'isFinished',
@@ -3341,16 +3337,12 @@ class $SeriesTableTable extends SeriesTable
         _addedAtMeta,
         addedAt.isAcceptableOrUnknown(data['added_at']!, _addedAtMeta),
       );
-    } else if (isInserting) {
-      context.missing(_addedAtMeta);
     }
     if (data.containsKey('updated_at')) {
       context.handle(
         _updatedAtMeta,
         updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
       );
-    } else if (isInserting) {
-      context.missing(_updatedAtMeta);
     }
     if (data.containsKey('is_finished')) {
       context.handle(
@@ -3362,7 +3354,7 @@ class $SeriesTableTable extends SeriesTable
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {id, libraryId};
   @override
   Series map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -3390,11 +3382,11 @@ class $SeriesTableTable extends SeriesTable
       addedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}added_at'],
-      )!,
+      ),
       updatedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}updated_at'],
-      )!,
+      ),
       isFinished: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}is_finished'],
@@ -3414,8 +3406,8 @@ class SeriesTableCompanion extends UpdateCompanion<Series> {
   final Value<String> name;
   final Value<String?> nameIgnorePrefix;
   final Value<String?> description;
-  final Value<DateTime> addedAt;
-  final Value<DateTime> updatedAt;
+  final Value<DateTime?> addedAt;
+  final Value<DateTime?> updatedAt;
   final Value<bool> isFinished;
   final Value<int> rowid;
   const SeriesTableCompanion({
@@ -3435,15 +3427,13 @@ class SeriesTableCompanion extends UpdateCompanion<Series> {
     required String name,
     this.nameIgnorePrefix = const Value.absent(),
     this.description = const Value.absent(),
-    required DateTime addedAt,
-    required DateTime updatedAt,
+    this.addedAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.isFinished = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        libraryId = Value(libraryId),
-       name = Value(name),
-       addedAt = Value(addedAt),
-       updatedAt = Value(updatedAt);
+       name = Value(name);
   static Insertable<Series> custom({
     Expression<String>? id,
     Expression<String>? libraryId,
@@ -3474,8 +3464,8 @@ class SeriesTableCompanion extends UpdateCompanion<Series> {
     Value<String>? name,
     Value<String?>? nameIgnorePrefix,
     Value<String?>? description,
-    Value<DateTime>? addedAt,
-    Value<DateTime>? updatedAt,
+    Value<DateTime?>? addedAt,
+    Value<DateTime?>? updatedAt,
     Value<bool>? isFinished,
     Value<int>? rowid,
   }) {
@@ -3567,7 +3557,7 @@ extension SeriesToInsertable on Series {
 }
 
 class $AudiobookSeriesTable extends AudiobookSeries
-    with TableInfo<$AudiobookSeriesTable, AudiobookSery> {
+    with TableInfo<$AudiobookSeriesTable, AudiobookSeriesLink> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -3600,19 +3590,22 @@ class $AudiobookSeriesTable extends AudiobookSeries
       'REFERENCES series_table (id)',
     ),
   );
-  static const VerificationMeta _sequenceMeta = const VerificationMeta(
-    'sequence',
+  static const VerificationMeta _libraryIdMeta = const VerificationMeta(
+    'libraryId',
   );
   @override
-  late final GeneratedColumn<String> sequence = GeneratedColumn<String>(
-    'sequence',
+  late final GeneratedColumn<String> libraryId = GeneratedColumn<String>(
+    'library_id',
     aliasedName,
-    true,
+    false,
     type: DriftSqlType.string,
-    requiredDuringInsert: false,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES libraries (id) ON DELETE CASCADE',
+    ),
   );
   @override
-  List<GeneratedColumn> get $columns => [audiobookId, seriesId, sequence];
+  List<GeneratedColumn> get $columns => [audiobookId, seriesId, libraryId];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -3620,7 +3613,7 @@ class $AudiobookSeriesTable extends AudiobookSeries
   static const String $name = 'audiobook_series';
   @override
   VerificationContext validateIntegrity(
-    Insertable<AudiobookSery> instance, {
+    Insertable<AudiobookSeriesLink> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -3644,21 +3637,23 @@ class $AudiobookSeriesTable extends AudiobookSeries
     } else if (isInserting) {
       context.missing(_seriesIdMeta);
     }
-    if (data.containsKey('sequence')) {
+    if (data.containsKey('library_id')) {
       context.handle(
-        _sequenceMeta,
-        sequence.isAcceptableOrUnknown(data['sequence']!, _sequenceMeta),
+        _libraryIdMeta,
+        libraryId.isAcceptableOrUnknown(data['library_id']!, _libraryIdMeta),
       );
+    } else if (isInserting) {
+      context.missing(_libraryIdMeta);
     }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {audiobookId, seriesId};
+  Set<GeneratedColumn> get $primaryKey => {audiobookId, seriesId, libraryId};
   @override
-  AudiobookSery map(Map<String, dynamic> data, {String? tablePrefix}) {
+  AudiobookSeriesLink map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return AudiobookSery(
+    return AudiobookSeriesLink(
       audiobookId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}audiobook_id'],
@@ -3667,10 +3662,10 @@ class $AudiobookSeriesTable extends AudiobookSeries
         DriftSqlType.string,
         data['${effectivePrefix}series_id'],
       )!,
-      sequence: attachedDatabase.typeMapping.read(
+      libraryId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}sequence'],
-      ),
+        data['${effectivePrefix}library_id'],
+      )!,
     );
   }
 
@@ -3680,23 +3675,22 @@ class $AudiobookSeriesTable extends AudiobookSeries
   }
 }
 
-class AudiobookSery extends DataClass implements Insertable<AudiobookSery> {
+class AudiobookSeriesLink extends DataClass
+    implements Insertable<AudiobookSeriesLink> {
   final String audiobookId;
   final String seriesId;
-  final String? sequence;
-  const AudiobookSery({
+  final String libraryId;
+  const AudiobookSeriesLink({
     required this.audiobookId,
     required this.seriesId,
-    this.sequence,
+    required this.libraryId,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['audiobook_id'] = Variable<String>(audiobookId);
     map['series_id'] = Variable<String>(seriesId);
-    if (!nullToAbsent || sequence != null) {
-      map['sequence'] = Variable<String>(sequence);
-    }
+    map['library_id'] = Variable<String>(libraryId);
     return map;
   }
 
@@ -3704,21 +3698,19 @@ class AudiobookSery extends DataClass implements Insertable<AudiobookSery> {
     return AudiobookSeriesCompanion(
       audiobookId: Value(audiobookId),
       seriesId: Value(seriesId),
-      sequence: sequence == null && nullToAbsent
-          ? const Value.absent()
-          : Value(sequence),
+      libraryId: Value(libraryId),
     );
   }
 
-  factory AudiobookSery.fromJson(
+  factory AudiobookSeriesLink.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return AudiobookSery(
+    return AudiobookSeriesLink(
       audiobookId: serializer.fromJson<String>(json['audiobookId']),
       seriesId: serializer.fromJson<String>(json['seriesId']),
-      sequence: serializer.fromJson<String?>(json['sequence']),
+      libraryId: serializer.fromJson<String>(json['libraryId']),
     );
   }
   @override
@@ -3727,78 +3719,79 @@ class AudiobookSery extends DataClass implements Insertable<AudiobookSery> {
     return <String, dynamic>{
       'audiobookId': serializer.toJson<String>(audiobookId),
       'seriesId': serializer.toJson<String>(seriesId),
-      'sequence': serializer.toJson<String?>(sequence),
+      'libraryId': serializer.toJson<String>(libraryId),
     };
   }
 
-  AudiobookSery copyWith({
+  AudiobookSeriesLink copyWith({
     String? audiobookId,
     String? seriesId,
-    Value<String?> sequence = const Value.absent(),
-  }) => AudiobookSery(
+    String? libraryId,
+  }) => AudiobookSeriesLink(
     audiobookId: audiobookId ?? this.audiobookId,
     seriesId: seriesId ?? this.seriesId,
-    sequence: sequence.present ? sequence.value : this.sequence,
+    libraryId: libraryId ?? this.libraryId,
   );
-  AudiobookSery copyWithCompanion(AudiobookSeriesCompanion data) {
-    return AudiobookSery(
+  AudiobookSeriesLink copyWithCompanion(AudiobookSeriesCompanion data) {
+    return AudiobookSeriesLink(
       audiobookId: data.audiobookId.present
           ? data.audiobookId.value
           : this.audiobookId,
       seriesId: data.seriesId.present ? data.seriesId.value : this.seriesId,
-      sequence: data.sequence.present ? data.sequence.value : this.sequence,
+      libraryId: data.libraryId.present ? data.libraryId.value : this.libraryId,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('AudiobookSery(')
+    return (StringBuffer('AudiobookSeriesLink(')
           ..write('audiobookId: $audiobookId, ')
           ..write('seriesId: $seriesId, ')
-          ..write('sequence: $sequence')
+          ..write('libraryId: $libraryId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(audiobookId, seriesId, sequence);
+  int get hashCode => Object.hash(audiobookId, seriesId, libraryId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is AudiobookSery &&
+      (other is AudiobookSeriesLink &&
           other.audiobookId == this.audiobookId &&
           other.seriesId == this.seriesId &&
-          other.sequence == this.sequence);
+          other.libraryId == this.libraryId);
 }
 
-class AudiobookSeriesCompanion extends UpdateCompanion<AudiobookSery> {
+class AudiobookSeriesCompanion extends UpdateCompanion<AudiobookSeriesLink> {
   final Value<String> audiobookId;
   final Value<String> seriesId;
-  final Value<String?> sequence;
+  final Value<String> libraryId;
   final Value<int> rowid;
   const AudiobookSeriesCompanion({
     this.audiobookId = const Value.absent(),
     this.seriesId = const Value.absent(),
-    this.sequence = const Value.absent(),
+    this.libraryId = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   AudiobookSeriesCompanion.insert({
     required String audiobookId,
     required String seriesId,
-    this.sequence = const Value.absent(),
+    required String libraryId,
     this.rowid = const Value.absent(),
   }) : audiobookId = Value(audiobookId),
-       seriesId = Value(seriesId);
-  static Insertable<AudiobookSery> custom({
+       seriesId = Value(seriesId),
+       libraryId = Value(libraryId);
+  static Insertable<AudiobookSeriesLink> custom({
     Expression<String>? audiobookId,
     Expression<String>? seriesId,
-    Expression<String>? sequence,
+    Expression<String>? libraryId,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (audiobookId != null) 'audiobook_id': audiobookId,
       if (seriesId != null) 'series_id': seriesId,
-      if (sequence != null) 'sequence': sequence,
+      if (libraryId != null) 'library_id': libraryId,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -3806,13 +3799,13 @@ class AudiobookSeriesCompanion extends UpdateCompanion<AudiobookSery> {
   AudiobookSeriesCompanion copyWith({
     Value<String>? audiobookId,
     Value<String>? seriesId,
-    Value<String?>? sequence,
+    Value<String>? libraryId,
     Value<int>? rowid,
   }) {
     return AudiobookSeriesCompanion(
       audiobookId: audiobookId ?? this.audiobookId,
       seriesId: seriesId ?? this.seriesId,
-      sequence: sequence ?? this.sequence,
+      libraryId: libraryId ?? this.libraryId,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -3826,8 +3819,8 @@ class AudiobookSeriesCompanion extends UpdateCompanion<AudiobookSery> {
     if (seriesId.present) {
       map['series_id'] = Variable<String>(seriesId.value);
     }
-    if (sequence.present) {
-      map['sequence'] = Variable<String>(sequence.value);
+    if (libraryId.present) {
+      map['library_id'] = Variable<String>(libraryId.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -3840,7 +3833,7 @@ class AudiobookSeriesCompanion extends UpdateCompanion<AudiobookSery> {
     return (StringBuffer('AudiobookSeriesCompanion(')
           ..write('audiobookId: $audiobookId, ')
           ..write('seriesId: $seriesId, ')
-          ..write('sequence: $sequence, ')
+          ..write('libraryId: $libraryId, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -3895,8 +3888,37 @@ class $AuthorsTable extends Authors with TableInfo<$AuthorsTable, Author> {
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _addedAtMeta = const VerificationMeta(
+    'addedAt',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, libraryId, name, description];
+  late final GeneratedColumn<DateTime> addedAt = GeneratedColumn<DateTime>(
+    'added_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    libraryId,
+    name,
+    description,
+    addedAt,
+    updatedAt,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -3939,11 +3961,23 @@ class $AuthorsTable extends Authors with TableInfo<$AuthorsTable, Author> {
         ),
       );
     }
+    if (data.containsKey('added_at')) {
+      context.handle(
+        _addedAtMeta,
+        addedAt.isAcceptableOrUnknown(data['added_at']!, _addedAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => {id, libraryId};
   @override
   Author map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -3964,6 +3998,14 @@ class $AuthorsTable extends Authors with TableInfo<$AuthorsTable, Author> {
         DriftSqlType.string,
         data['${effectivePrefix}description'],
       ),
+      addedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}added_at'],
+      ),
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      ),
     );
   }
 
@@ -3978,12 +4020,16 @@ class AuthorsCompanion extends UpdateCompanion<Author> {
   final Value<String> libraryId;
   final Value<String> name;
   final Value<String?> description;
+  final Value<DateTime?> addedAt;
+  final Value<DateTime?> updatedAt;
   final Value<int> rowid;
   const AuthorsCompanion({
     this.id = const Value.absent(),
     this.libraryId = const Value.absent(),
     this.name = const Value.absent(),
     this.description = const Value.absent(),
+    this.addedAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   AuthorsCompanion.insert({
@@ -3991,6 +4037,8 @@ class AuthorsCompanion extends UpdateCompanion<Author> {
     required String libraryId,
     required String name,
     this.description = const Value.absent(),
+    this.addedAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        libraryId = Value(libraryId),
@@ -4000,6 +4048,8 @@ class AuthorsCompanion extends UpdateCompanion<Author> {
     Expression<String>? libraryId,
     Expression<String>? name,
     Expression<String>? description,
+    Expression<DateTime>? addedAt,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -4007,6 +4057,8 @@ class AuthorsCompanion extends UpdateCompanion<Author> {
       if (libraryId != null) 'library_id': libraryId,
       if (name != null) 'name': name,
       if (description != null) 'description': description,
+      if (addedAt != null) 'added_at': addedAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -4016,6 +4068,8 @@ class AuthorsCompanion extends UpdateCompanion<Author> {
     Value<String>? libraryId,
     Value<String>? name,
     Value<String?>? description,
+    Value<DateTime?>? addedAt,
+    Value<DateTime?>? updatedAt,
     Value<int>? rowid,
   }) {
     return AuthorsCompanion(
@@ -4023,6 +4077,8 @@ class AuthorsCompanion extends UpdateCompanion<Author> {
       libraryId: libraryId ?? this.libraryId,
       name: name ?? this.name,
       description: description ?? this.description,
+      addedAt: addedAt ?? this.addedAt,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -4042,6 +4098,12 @@ class AuthorsCompanion extends UpdateCompanion<Author> {
     if (description.present) {
       map['description'] = Variable<String>(description.value);
     }
+    if (addedAt.present) {
+      map['added_at'] = Variable<DateTime>(addedAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -4055,6 +4117,8 @@ class AuthorsCompanion extends UpdateCompanion<Author> {
           ..write('libraryId: $libraryId, ')
           ..write('name: $name, ')
           ..write('description: $description, ')
+          ..write('addedAt: $addedAt, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -4071,6 +4135,8 @@ class _$AuthorInsertable implements Insertable<Author> {
       libraryId: Value(_object.libraryId),
       name: Value(_object.name),
       description: Value(_object.description),
+      addedAt: Value(_object.addedAt),
+      updatedAt: Value(_object.updatedAt),
     ).toColumns(false);
   }
 }
@@ -4082,7 +4148,7 @@ extension AuthorToInsertable on Author {
 }
 
 class $AudiobookAuthorsTable extends AudiobookAuthors
-    with TableInfo<$AudiobookAuthorsTable, AudiobookAuthor> {
+    with TableInfo<$AudiobookAuthorsTable, AudiobookAuthorsLink> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -4115,8 +4181,22 @@ class $AudiobookAuthorsTable extends AudiobookAuthors
       'REFERENCES authors (id)',
     ),
   );
+  static const VerificationMeta _libraryIdMeta = const VerificationMeta(
+    'libraryId',
+  );
   @override
-  List<GeneratedColumn> get $columns => [audiobookId, authorId];
+  late final GeneratedColumn<String> libraryId = GeneratedColumn<String>(
+    'library_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES libraries (id) ON DELETE CASCADE',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [audiobookId, authorId, libraryId];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -4124,7 +4204,7 @@ class $AudiobookAuthorsTable extends AudiobookAuthors
   static const String $name = 'audiobook_authors';
   @override
   VerificationContext validateIntegrity(
-    Insertable<AudiobookAuthor> instance, {
+    Insertable<AudiobookAuthorsLink> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -4148,15 +4228,23 @@ class $AudiobookAuthorsTable extends AudiobookAuthors
     } else if (isInserting) {
       context.missing(_authorIdMeta);
     }
+    if (data.containsKey('library_id')) {
+      context.handle(
+        _libraryIdMeta,
+        libraryId.isAcceptableOrUnknown(data['library_id']!, _libraryIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_libraryIdMeta);
+    }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {audiobookId, authorId};
+  Set<GeneratedColumn> get $primaryKey => {audiobookId, authorId, libraryId};
   @override
-  AudiobookAuthor map(Map<String, dynamic> data, {String? tablePrefix}) {
+  AudiobookAuthorsLink map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return AudiobookAuthor(
+    return AudiobookAuthorsLink(
       audiobookId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}audiobook_id'],
@@ -4164,6 +4252,10 @@ class $AudiobookAuthorsTable extends AudiobookAuthors
       authorId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}author_id'],
+      )!,
+      libraryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}library_id'],
       )!,
     );
   }
@@ -4174,15 +4266,22 @@ class $AudiobookAuthorsTable extends AudiobookAuthors
   }
 }
 
-class AudiobookAuthor extends DataClass implements Insertable<AudiobookAuthor> {
+class AudiobookAuthorsLink extends DataClass
+    implements Insertable<AudiobookAuthorsLink> {
   final String audiobookId;
   final String authorId;
-  const AudiobookAuthor({required this.audiobookId, required this.authorId});
+  final String libraryId;
+  const AudiobookAuthorsLink({
+    required this.audiobookId,
+    required this.authorId,
+    required this.libraryId,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['audiobook_id'] = Variable<String>(audiobookId);
     map['author_id'] = Variable<String>(authorId);
+    map['library_id'] = Variable<String>(libraryId);
     return map;
   }
 
@@ -4190,17 +4289,19 @@ class AudiobookAuthor extends DataClass implements Insertable<AudiobookAuthor> {
     return AudiobookAuthorsCompanion(
       audiobookId: Value(audiobookId),
       authorId: Value(authorId),
+      libraryId: Value(libraryId),
     );
   }
 
-  factory AudiobookAuthor.fromJson(
+  factory AudiobookAuthorsLink.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return AudiobookAuthor(
+    return AudiobookAuthorsLink(
       audiobookId: serializer.fromJson<String>(json['audiobookId']),
       authorId: serializer.fromJson<String>(json['authorId']),
+      libraryId: serializer.fromJson<String>(json['libraryId']),
     );
   }
   @override
@@ -4209,65 +4310,79 @@ class AudiobookAuthor extends DataClass implements Insertable<AudiobookAuthor> {
     return <String, dynamic>{
       'audiobookId': serializer.toJson<String>(audiobookId),
       'authorId': serializer.toJson<String>(authorId),
+      'libraryId': serializer.toJson<String>(libraryId),
     };
   }
 
-  AudiobookAuthor copyWith({String? audiobookId, String? authorId}) =>
-      AudiobookAuthor(
-        audiobookId: audiobookId ?? this.audiobookId,
-        authorId: authorId ?? this.authorId,
-      );
-  AudiobookAuthor copyWithCompanion(AudiobookAuthorsCompanion data) {
-    return AudiobookAuthor(
+  AudiobookAuthorsLink copyWith({
+    String? audiobookId,
+    String? authorId,
+    String? libraryId,
+  }) => AudiobookAuthorsLink(
+    audiobookId: audiobookId ?? this.audiobookId,
+    authorId: authorId ?? this.authorId,
+    libraryId: libraryId ?? this.libraryId,
+  );
+  AudiobookAuthorsLink copyWithCompanion(AudiobookAuthorsCompanion data) {
+    return AudiobookAuthorsLink(
       audiobookId: data.audiobookId.present
           ? data.audiobookId.value
           : this.audiobookId,
       authorId: data.authorId.present ? data.authorId.value : this.authorId,
+      libraryId: data.libraryId.present ? data.libraryId.value : this.libraryId,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('AudiobookAuthor(')
+    return (StringBuffer('AudiobookAuthorsLink(')
           ..write('audiobookId: $audiobookId, ')
-          ..write('authorId: $authorId')
+          ..write('authorId: $authorId, ')
+          ..write('libraryId: $libraryId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(audiobookId, authorId);
+  int get hashCode => Object.hash(audiobookId, authorId, libraryId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is AudiobookAuthor &&
+      (other is AudiobookAuthorsLink &&
           other.audiobookId == this.audiobookId &&
-          other.authorId == this.authorId);
+          other.authorId == this.authorId &&
+          other.libraryId == this.libraryId);
 }
 
-class AudiobookAuthorsCompanion extends UpdateCompanion<AudiobookAuthor> {
+class AudiobookAuthorsCompanion extends UpdateCompanion<AudiobookAuthorsLink> {
   final Value<String> audiobookId;
   final Value<String> authorId;
+  final Value<String> libraryId;
   final Value<int> rowid;
   const AudiobookAuthorsCompanion({
     this.audiobookId = const Value.absent(),
     this.authorId = const Value.absent(),
+    this.libraryId = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   AudiobookAuthorsCompanion.insert({
     required String audiobookId,
     required String authorId,
+    required String libraryId,
     this.rowid = const Value.absent(),
   }) : audiobookId = Value(audiobookId),
-       authorId = Value(authorId);
-  static Insertable<AudiobookAuthor> custom({
+       authorId = Value(authorId),
+       libraryId = Value(libraryId);
+  static Insertable<AudiobookAuthorsLink> custom({
     Expression<String>? audiobookId,
     Expression<String>? authorId,
+    Expression<String>? libraryId,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (audiobookId != null) 'audiobook_id': audiobookId,
       if (authorId != null) 'author_id': authorId,
+      if (libraryId != null) 'library_id': libraryId,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -4275,11 +4390,13 @@ class AudiobookAuthorsCompanion extends UpdateCompanion<AudiobookAuthor> {
   AudiobookAuthorsCompanion copyWith({
     Value<String>? audiobookId,
     Value<String>? authorId,
+    Value<String>? libraryId,
     Value<int>? rowid,
   }) {
     return AudiobookAuthorsCompanion(
       audiobookId: audiobookId ?? this.audiobookId,
       authorId: authorId ?? this.authorId,
+      libraryId: libraryId ?? this.libraryId,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -4293,6 +4410,9 @@ class AudiobookAuthorsCompanion extends UpdateCompanion<AudiobookAuthor> {
     if (authorId.present) {
       map['author_id'] = Variable<String>(authorId.value);
     }
+    if (libraryId.present) {
+      map['library_id'] = Variable<String>(libraryId.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -4304,6 +4424,7 @@ class AudiobookAuthorsCompanion extends UpdateCompanion<AudiobookAuthor> {
     return (StringBuffer('AudiobookAuthorsCompanion(')
           ..write('audiobookId: $audiobookId, ')
           ..write('authorId: $authorId, ')
+          ..write('libraryId: $libraryId, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -4407,7 +4528,21 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         'libraries',
         limitUpdateKind: UpdateKind.delete,
       ),
+      result: [TableUpdate('audiobook_series', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'libraries',
+        limitUpdateKind: UpdateKind.delete,
+      ),
       result: [TableUpdate('authors', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'libraries',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('audiobook_authors', kind: UpdateKind.delete)],
     ),
   ]);
 }
@@ -5526,6 +5661,29 @@ final class $$LibrariesTableReferences
     );
   }
 
+  static MultiTypedResultKey<$AudiobookSeriesTable, List<AudiobookSeriesLink>>
+  _audiobookSeriesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.audiobookSeries,
+    aliasName: $_aliasNameGenerator(
+      db.libraries.id,
+      db.audiobookSeries.libraryId,
+    ),
+  );
+
+  $$AudiobookSeriesTableProcessedTableManager get audiobookSeriesRefs {
+    final manager = $$AudiobookSeriesTableTableManager(
+      $_db,
+      $_db.audiobookSeries,
+    ).filter((f) => f.libraryId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _audiobookSeriesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
   static MultiTypedResultKey<$AuthorsTable, List<Author>> _authorsRefsTable(
     _$AppDatabase db,
   ) => MultiTypedResultKey.fromTable(
@@ -5540,6 +5698,29 @@ final class $$LibrariesTableReferences
     ).filter((f) => f.libraryId.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_authorsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$AudiobookAuthorsTable, List<AudiobookAuthorsLink>>
+  _audiobookAuthorsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.audiobookAuthors,
+    aliasName: $_aliasNameGenerator(
+      db.libraries.id,
+      db.audiobookAuthors.libraryId,
+    ),
+  );
+
+  $$AudiobookAuthorsTableProcessedTableManager get audiobookAuthorsRefs {
+    final manager = $$AudiobookAuthorsTableTableManager(
+      $_db,
+      $_db.audiobookAuthors,
+    ).filter((f) => f.libraryId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _audiobookAuthorsRefsTable($_db),
+    );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -5669,6 +5850,31 @@ class $$LibrariesTableFilterComposer
     return f(composer);
   }
 
+  Expression<bool> audiobookSeriesRefs(
+    Expression<bool> Function($$AudiobookSeriesTableFilterComposer f) f,
+  ) {
+    final $$AudiobookSeriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.audiobookSeries,
+      getReferencedColumn: (t) => t.libraryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudiobookSeriesTableFilterComposer(
+            $db: $db,
+            $table: $db.audiobookSeries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<bool> authorsRefs(
     Expression<bool> Function($$AuthorsTableFilterComposer f) f,
   ) {
@@ -5685,6 +5891,31 @@ class $$LibrariesTableFilterComposer
           }) => $$AuthorsTableFilterComposer(
             $db: $db,
             $table: $db.authors,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> audiobookAuthorsRefs(
+    Expression<bool> Function($$AudiobookAuthorsTableFilterComposer f) f,
+  ) {
+    final $$AudiobookAuthorsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.audiobookAuthors,
+      getReferencedColumn: (t) => t.libraryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudiobookAuthorsTableFilterComposer(
+            $db: $db,
+            $table: $db.audiobookAuthors,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -5862,6 +6093,31 @@ class $$LibrariesTableAnnotationComposer
     return f(composer);
   }
 
+  Expression<T> audiobookSeriesRefs<T extends Object>(
+    Expression<T> Function($$AudiobookSeriesTableAnnotationComposer a) f,
+  ) {
+    final $$AudiobookSeriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.audiobookSeries,
+      getReferencedColumn: (t) => t.libraryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudiobookSeriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.audiobookSeries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<T> authorsRefs<T extends Object>(
     Expression<T> Function($$AuthorsTableAnnotationComposer a) f,
   ) {
@@ -5878,6 +6134,31 @@ class $$LibrariesTableAnnotationComposer
           }) => $$AuthorsTableAnnotationComposer(
             $db: $db,
             $table: $db.authors,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> audiobookAuthorsRefs<T extends Object>(
+    Expression<T> Function($$AudiobookAuthorsTableAnnotationComposer a) f,
+  ) {
+    final $$AudiobookAuthorsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.audiobookAuthors,
+      getReferencedColumn: (t) => t.libraryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AudiobookAuthorsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.audiobookAuthors,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -5906,7 +6187,9 @@ class $$LibrariesTableTableManager
             bool audiobooksRefs,
             bool podcastsRefs,
             bool seriesTableRefs,
+            bool audiobookSeriesRefs,
             bool authorsRefs,
+            bool audiobookAuthorsRefs,
           })
         > {
   $$LibrariesTableTableManager(_$AppDatabase db, $LibrariesTable table)
@@ -5962,7 +6245,9 @@ class $$LibrariesTableTableManager
                 audiobooksRefs = false,
                 podcastsRefs = false,
                 seriesTableRefs = false,
+                audiobookSeriesRefs = false,
                 authorsRefs = false,
+                audiobookAuthorsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -5970,7 +6255,9 @@ class $$LibrariesTableTableManager
                     if (audiobooksRefs) db.audiobooks,
                     if (podcastsRefs) db.podcasts,
                     if (seriesTableRefs) db.seriesTable,
+                    if (audiobookSeriesRefs) db.audiobookSeries,
                     if (authorsRefs) db.authors,
+                    if (audiobookAuthorsRefs) db.audiobookAuthors,
                   ],
                   addJoins:
                       <
@@ -6069,6 +6356,27 @@ class $$LibrariesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (audiobookSeriesRefs)
+                        await $_getPrefetchedData<
+                          Library,
+                          $LibrariesTable,
+                          AudiobookSeriesLink
+                        >(
+                          currentTable: table,
+                          referencedTable: $$LibrariesTableReferences
+                              ._audiobookSeriesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$LibrariesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).audiobookSeriesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.libraryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                       if (authorsRefs)
                         await $_getPrefetchedData<
                           Library,
@@ -6084,6 +6392,27 @@ class $$LibrariesTableTableManager
                                 table,
                                 p0,
                               ).authorsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.libraryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (audiobookAuthorsRefs)
+                        await $_getPrefetchedData<
+                          Library,
+                          $LibrariesTable,
+                          AudiobookAuthorsLink
+                        >(
+                          currentTable: table,
+                          referencedTable: $$LibrariesTableReferences
+                              ._audiobookAuthorsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$LibrariesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).audiobookAuthorsRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.libraryId == item.id,
@@ -6115,7 +6444,9 @@ typedef $$LibrariesTableProcessedTableManager =
         bool audiobooksRefs,
         bool podcastsRefs,
         bool seriesTableRefs,
+        bool audiobookSeriesRefs,
         bool authorsRefs,
+        bool audiobookAuthorsRefs,
       })
     >;
 typedef $$AudiobooksTableCreateCompanionBuilder =
@@ -6216,7 +6547,7 @@ final class $$AudiobooksTableReferences
     );
   }
 
-  static MultiTypedResultKey<$AudiobookSeriesTable, List<AudiobookSery>>
+  static MultiTypedResultKey<$AudiobookSeriesTable, List<AudiobookSeriesLink>>
   _audiobookSeriesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.audiobookSeries,
     aliasName: $_aliasNameGenerator(
@@ -6239,7 +6570,7 @@ final class $$AudiobooksTableReferences
     );
   }
 
-  static MultiTypedResultKey<$AudiobookAuthorsTable, List<AudiobookAuthor>>
+  static MultiTypedResultKey<$AudiobookAuthorsTable, List<AudiobookAuthorsLink>>
   _audiobookAuthorsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.audiobookAuthors,
     aliasName: $_aliasNameGenerator(
@@ -7000,7 +7331,7 @@ class $$AudiobooksTableTableManager
                         await $_getPrefetchedData<
                           Audiobook,
                           $AudiobooksTable,
-                          AudiobookSery
+                          AudiobookSeriesLink
                         >(
                           currentTable: table,
                           referencedTable: $$AudiobooksTableReferences
@@ -7021,7 +7352,7 @@ class $$AudiobooksTableTableManager
                         await $_getPrefetchedData<
                           Audiobook,
                           $AudiobooksTable,
-                          AudiobookAuthor
+                          AudiobookAuthorsLink
                         >(
                           currentTable: table,
                           referencedTable: $$AudiobooksTableReferences
@@ -8225,8 +8556,8 @@ typedef $$SeriesTableTableCreateCompanionBuilder =
       required String name,
       Value<String?> nameIgnorePrefix,
       Value<String?> description,
-      required DateTime addedAt,
-      required DateTime updatedAt,
+      Value<DateTime?> addedAt,
+      Value<DateTime?> updatedAt,
       Value<bool> isFinished,
       Value<int> rowid,
     });
@@ -8237,8 +8568,8 @@ typedef $$SeriesTableTableUpdateCompanionBuilder =
       Value<String> name,
       Value<String?> nameIgnorePrefix,
       Value<String?> description,
-      Value<DateTime> addedAt,
-      Value<DateTime> updatedAt,
+      Value<DateTime?> addedAt,
+      Value<DateTime?> updatedAt,
       Value<bool> isFinished,
       Value<int> rowid,
     });
@@ -8266,7 +8597,7 @@ final class $$SeriesTableTableReferences
     );
   }
 
-  static MultiTypedResultKey<$AudiobookSeriesTable, List<AudiobookSery>>
+  static MultiTypedResultKey<$AudiobookSeriesTable, List<AudiobookSeriesLink>>
   _audiobookSeriesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.audiobookSeries,
     aliasName: $_aliasNameGenerator(
@@ -8569,8 +8900,8 @@ class $$SeriesTableTableTableManager
                 Value<String> name = const Value.absent(),
                 Value<String?> nameIgnorePrefix = const Value.absent(),
                 Value<String?> description = const Value.absent(),
-                Value<DateTime> addedAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> addedAt = const Value.absent(),
+                Value<DateTime?> updatedAt = const Value.absent(),
                 Value<bool> isFinished = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SeriesTableCompanion(
@@ -8591,8 +8922,8 @@ class $$SeriesTableTableTableManager
                 required String name,
                 Value<String?> nameIgnorePrefix = const Value.absent(),
                 Value<String?> description = const Value.absent(),
-                required DateTime addedAt,
-                required DateTime updatedAt,
+                Value<DateTime?> addedAt = const Value.absent(),
+                Value<DateTime?> updatedAt = const Value.absent(),
                 Value<bool> isFinished = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SeriesTableCompanion.insert(
@@ -8661,7 +8992,7 @@ class $$SeriesTableTableTableManager
                         await $_getPrefetchedData<
                           Series,
                           $SeriesTableTable,
-                          AudiobookSery
+                          AudiobookSeriesLink
                         >(
                           currentTable: table,
                           referencedTable: $$SeriesTableTableReferences
@@ -8704,20 +9035,24 @@ typedef $$AudiobookSeriesTableCreateCompanionBuilder =
     AudiobookSeriesCompanion Function({
       required String audiobookId,
       required String seriesId,
-      Value<String?> sequence,
+      required String libraryId,
       Value<int> rowid,
     });
 typedef $$AudiobookSeriesTableUpdateCompanionBuilder =
     AudiobookSeriesCompanion Function({
       Value<String> audiobookId,
       Value<String> seriesId,
-      Value<String?> sequence,
+      Value<String> libraryId,
       Value<int> rowid,
     });
 
 final class $$AudiobookSeriesTableReferences
     extends
-        BaseReferences<_$AppDatabase, $AudiobookSeriesTable, AudiobookSery> {
+        BaseReferences<
+          _$AppDatabase,
+          $AudiobookSeriesTable,
+          AudiobookSeriesLink
+        > {
   $$AudiobookSeriesTableReferences(
     super.$_db,
     super.$_table,
@@ -8761,6 +9096,25 @@ final class $$AudiobookSeriesTableReferences
       manager.$state.copyWith(prefetchedData: [item]),
     );
   }
+
+  static $LibrariesTable _libraryIdTable(_$AppDatabase db) =>
+      db.libraries.createAlias(
+        $_aliasNameGenerator(db.audiobookSeries.libraryId, db.libraries.id),
+      );
+
+  $$LibrariesTableProcessedTableManager get libraryId {
+    final $_column = $_itemColumn<String>('library_id')!;
+
+    final manager = $$LibrariesTableTableManager(
+      $_db,
+      $_db.libraries,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_libraryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
 }
 
 class $$AudiobookSeriesTableFilterComposer
@@ -8772,11 +9126,6 @@ class $$AudiobookSeriesTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<String> get sequence => $composableBuilder(
-    column: $table.sequence,
-    builder: (column) => ColumnFilters(column),
-  );
-
   $$AudiobooksTableFilterComposer get audiobookId {
     final $$AudiobooksTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -8822,6 +9171,29 @@ class $$AudiobookSeriesTableFilterComposer
     );
     return composer;
   }
+
+  $$LibrariesTableFilterComposer get libraryId {
+    final $$LibrariesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.libraryId,
+      referencedTable: $db.libraries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LibrariesTableFilterComposer(
+            $db: $db,
+            $table: $db.libraries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$AudiobookSeriesTableOrderingComposer
@@ -8833,11 +9205,6 @@ class $$AudiobookSeriesTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<String> get sequence => $composableBuilder(
-    column: $table.sequence,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   $$AudiobooksTableOrderingComposer get audiobookId {
     final $$AudiobooksTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -8883,6 +9250,29 @@ class $$AudiobookSeriesTableOrderingComposer
     );
     return composer;
   }
+
+  $$LibrariesTableOrderingComposer get libraryId {
+    final $$LibrariesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.libraryId,
+      referencedTable: $db.libraries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LibrariesTableOrderingComposer(
+            $db: $db,
+            $table: $db.libraries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$AudiobookSeriesTableAnnotationComposer
@@ -8894,9 +9284,6 @@ class $$AudiobookSeriesTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<String> get sequence =>
-      $composableBuilder(column: $table.sequence, builder: (column) => column);
-
   $$AudiobooksTableAnnotationComposer get audiobookId {
     final $$AudiobooksTableAnnotationComposer composer = $composerBuilder(
       composer: this,
@@ -8942,6 +9329,29 @@ class $$AudiobookSeriesTableAnnotationComposer
     );
     return composer;
   }
+
+  $$LibrariesTableAnnotationComposer get libraryId {
+    final $$LibrariesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.libraryId,
+      referencedTable: $db.libraries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LibrariesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.libraries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$AudiobookSeriesTableTableManager
@@ -8949,15 +9359,19 @@ class $$AudiobookSeriesTableTableManager
         RootTableManager<
           _$AppDatabase,
           $AudiobookSeriesTable,
-          AudiobookSery,
+          AudiobookSeriesLink,
           $$AudiobookSeriesTableFilterComposer,
           $$AudiobookSeriesTableOrderingComposer,
           $$AudiobookSeriesTableAnnotationComposer,
           $$AudiobookSeriesTableCreateCompanionBuilder,
           $$AudiobookSeriesTableUpdateCompanionBuilder,
-          (AudiobookSery, $$AudiobookSeriesTableReferences),
-          AudiobookSery,
-          PrefetchHooks Function({bool audiobookId, bool seriesId})
+          (AudiobookSeriesLink, $$AudiobookSeriesTableReferences),
+          AudiobookSeriesLink,
+          PrefetchHooks Function({
+            bool audiobookId,
+            bool seriesId,
+            bool libraryId,
+          })
         > {
   $$AudiobookSeriesTableTableManager(
     _$AppDatabase db,
@@ -8976,24 +9390,24 @@ class $$AudiobookSeriesTableTableManager
               ({
                 Value<String> audiobookId = const Value.absent(),
                 Value<String> seriesId = const Value.absent(),
-                Value<String?> sequence = const Value.absent(),
+                Value<String> libraryId = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => AudiobookSeriesCompanion(
                 audiobookId: audiobookId,
                 seriesId: seriesId,
-                sequence: sequence,
+                libraryId: libraryId,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
                 required String audiobookId,
                 required String seriesId,
-                Value<String?> sequence = const Value.absent(),
+                required String libraryId,
                 Value<int> rowid = const Value.absent(),
               }) => AudiobookSeriesCompanion.insert(
                 audiobookId: audiobookId,
                 seriesId: seriesId,
-                sequence: sequence,
+                libraryId: libraryId,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -9004,64 +9418,80 @@ class $$AudiobookSeriesTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({audiobookId = false, seriesId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (audiobookId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.audiobookId,
-                                referencedTable:
-                                    $$AudiobookSeriesTableReferences
-                                        ._audiobookIdTable(db),
-                                referencedColumn:
-                                    $$AudiobookSeriesTableReferences
-                                        ._audiobookIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (seriesId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.seriesId,
-                                referencedTable:
-                                    $$AudiobookSeriesTableReferences
-                                        ._seriesIdTable(db),
-                                referencedColumn:
-                                    $$AudiobookSeriesTableReferences
-                                        ._seriesIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({audiobookId = false, seriesId = false, libraryId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (audiobookId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.audiobookId,
+                                    referencedTable:
+                                        $$AudiobookSeriesTableReferences
+                                            ._audiobookIdTable(db),
+                                    referencedColumn:
+                                        $$AudiobookSeriesTableReferences
+                                            ._audiobookIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (seriesId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.seriesId,
+                                    referencedTable:
+                                        $$AudiobookSeriesTableReferences
+                                            ._seriesIdTable(db),
+                                    referencedColumn:
+                                        $$AudiobookSeriesTableReferences
+                                            ._seriesIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (libraryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.libraryId,
+                                    referencedTable:
+                                        $$AudiobookSeriesTableReferences
+                                            ._libraryIdTable(db),
+                                    referencedColumn:
+                                        $$AudiobookSeriesTableReferences
+                                            ._libraryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -9070,15 +9500,15 @@ typedef $$AudiobookSeriesTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $AudiobookSeriesTable,
-      AudiobookSery,
+      AudiobookSeriesLink,
       $$AudiobookSeriesTableFilterComposer,
       $$AudiobookSeriesTableOrderingComposer,
       $$AudiobookSeriesTableAnnotationComposer,
       $$AudiobookSeriesTableCreateCompanionBuilder,
       $$AudiobookSeriesTableUpdateCompanionBuilder,
-      (AudiobookSery, $$AudiobookSeriesTableReferences),
-      AudiobookSery,
-      PrefetchHooks Function({bool audiobookId, bool seriesId})
+      (AudiobookSeriesLink, $$AudiobookSeriesTableReferences),
+      AudiobookSeriesLink,
+      PrefetchHooks Function({bool audiobookId, bool seriesId, bool libraryId})
     >;
 typedef $$AuthorsTableCreateCompanionBuilder =
     AuthorsCompanion Function({
@@ -9086,6 +9516,8 @@ typedef $$AuthorsTableCreateCompanionBuilder =
       required String libraryId,
       required String name,
       Value<String?> description,
+      Value<DateTime?> addedAt,
+      Value<DateTime?> updatedAt,
       Value<int> rowid,
     });
 typedef $$AuthorsTableUpdateCompanionBuilder =
@@ -9094,6 +9526,8 @@ typedef $$AuthorsTableUpdateCompanionBuilder =
       Value<String> libraryId,
       Value<String> name,
       Value<String?> description,
+      Value<DateTime?> addedAt,
+      Value<DateTime?> updatedAt,
       Value<int> rowid,
     });
 
@@ -9118,7 +9552,7 @@ final class $$AuthorsTableReferences
     );
   }
 
-  static MultiTypedResultKey<$AudiobookAuthorsTable, List<AudiobookAuthor>>
+  static MultiTypedResultKey<$AudiobookAuthorsTable, List<AudiobookAuthorsLink>>
   _audiobookAuthorsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.audiobookAuthors,
     aliasName: $_aliasNameGenerator(
@@ -9163,6 +9597,16 @@ class $$AuthorsTableFilterComposer
 
   ColumnFilters<String> get description => $composableBuilder(
     column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get addedAt => $composableBuilder(
+    column: $table.addedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -9239,6 +9683,16 @@ class $$AuthorsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get addedAt => $composableBuilder(
+    column: $table.addedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$LibrariesTableOrderingComposer get libraryId {
     final $$LibrariesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -9282,6 +9736,12 @@ class $$AuthorsTableAnnotationComposer
     column: $table.description,
     builder: (column) => column,
   );
+
+  GeneratedColumn<DateTime> get addedAt =>
+      $composableBuilder(column: $table.addedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   $$LibrariesTableAnnotationComposer get libraryId {
     final $$LibrariesTableAnnotationComposer composer = $composerBuilder(
@@ -9364,12 +9824,16 @@ class $$AuthorsTableTableManager
                 Value<String> libraryId = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<String?> description = const Value.absent(),
+                Value<DateTime?> addedAt = const Value.absent(),
+                Value<DateTime?> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => AuthorsCompanion(
                 id: id,
                 libraryId: libraryId,
                 name: name,
                 description: description,
+                addedAt: addedAt,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -9378,12 +9842,16 @@ class $$AuthorsTableTableManager
                 required String libraryId,
                 required String name,
                 Value<String?> description = const Value.absent(),
+                Value<DateTime?> addedAt = const Value.absent(),
+                Value<DateTime?> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => AuthorsCompanion.insert(
                 id: id,
                 libraryId: libraryId,
                 name: name,
                 description: description,
+                addedAt: addedAt,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -9439,7 +9907,7 @@ class $$AuthorsTableTableManager
                         await $_getPrefetchedData<
                           Author,
                           $AuthorsTable,
-                          AudiobookAuthor
+                          AudiobookAuthorsLink
                         >(
                           currentTable: table,
                           referencedTable: $$AuthorsTableReferences
@@ -9482,18 +9950,24 @@ typedef $$AudiobookAuthorsTableCreateCompanionBuilder =
     AudiobookAuthorsCompanion Function({
       required String audiobookId,
       required String authorId,
+      required String libraryId,
       Value<int> rowid,
     });
 typedef $$AudiobookAuthorsTableUpdateCompanionBuilder =
     AudiobookAuthorsCompanion Function({
       Value<String> audiobookId,
       Value<String> authorId,
+      Value<String> libraryId,
       Value<int> rowid,
     });
 
 final class $$AudiobookAuthorsTableReferences
     extends
-        BaseReferences<_$AppDatabase, $AudiobookAuthorsTable, AudiobookAuthor> {
+        BaseReferences<
+          _$AppDatabase,
+          $AudiobookAuthorsTable,
+          AudiobookAuthorsLink
+        > {
   $$AudiobookAuthorsTableReferences(
     super.$_db,
     super.$_table,
@@ -9532,6 +10006,25 @@ final class $$AudiobookAuthorsTableReferences
       $_db.authors,
     ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_authorIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $LibrariesTable _libraryIdTable(_$AppDatabase db) =>
+      db.libraries.createAlias(
+        $_aliasNameGenerator(db.audiobookAuthors.libraryId, db.libraries.id),
+      );
+
+  $$LibrariesTableProcessedTableManager get libraryId {
+    final $_column = $_itemColumn<String>('library_id')!;
+
+    final manager = $$LibrariesTableTableManager(
+      $_db,
+      $_db.libraries,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_libraryIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -9585,6 +10078,29 @@ class $$AudiobookAuthorsTableFilterComposer
           }) => $$AuthorsTableFilterComposer(
             $db: $db,
             $table: $db.authors,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$LibrariesTableFilterComposer get libraryId {
+    final $$LibrariesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.libraryId,
+      referencedTable: $db.libraries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LibrariesTableFilterComposer(
+            $db: $db,
+            $table: $db.libraries,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -9649,6 +10165,29 @@ class $$AudiobookAuthorsTableOrderingComposer
     );
     return composer;
   }
+
+  $$LibrariesTableOrderingComposer get libraryId {
+    final $$LibrariesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.libraryId,
+      referencedTable: $db.libraries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LibrariesTableOrderingComposer(
+            $db: $db,
+            $table: $db.libraries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$AudiobookAuthorsTableAnnotationComposer
@@ -9705,6 +10244,29 @@ class $$AudiobookAuthorsTableAnnotationComposer
     );
     return composer;
   }
+
+  $$LibrariesTableAnnotationComposer get libraryId {
+    final $$LibrariesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.libraryId,
+      referencedTable: $db.libraries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LibrariesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.libraries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$AudiobookAuthorsTableTableManager
@@ -9712,15 +10274,19 @@ class $$AudiobookAuthorsTableTableManager
         RootTableManager<
           _$AppDatabase,
           $AudiobookAuthorsTable,
-          AudiobookAuthor,
+          AudiobookAuthorsLink,
           $$AudiobookAuthorsTableFilterComposer,
           $$AudiobookAuthorsTableOrderingComposer,
           $$AudiobookAuthorsTableAnnotationComposer,
           $$AudiobookAuthorsTableCreateCompanionBuilder,
           $$AudiobookAuthorsTableUpdateCompanionBuilder,
-          (AudiobookAuthor, $$AudiobookAuthorsTableReferences),
-          AudiobookAuthor,
-          PrefetchHooks Function({bool audiobookId, bool authorId})
+          (AudiobookAuthorsLink, $$AudiobookAuthorsTableReferences),
+          AudiobookAuthorsLink,
+          PrefetchHooks Function({
+            bool audiobookId,
+            bool authorId,
+            bool libraryId,
+          })
         > {
   $$AudiobookAuthorsTableTableManager(
     _$AppDatabase db,
@@ -9739,20 +10305,24 @@ class $$AudiobookAuthorsTableTableManager
               ({
                 Value<String> audiobookId = const Value.absent(),
                 Value<String> authorId = const Value.absent(),
+                Value<String> libraryId = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => AudiobookAuthorsCompanion(
                 audiobookId: audiobookId,
                 authorId: authorId,
+                libraryId: libraryId,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
                 required String audiobookId,
                 required String authorId,
+                required String libraryId,
                 Value<int> rowid = const Value.absent(),
               }) => AudiobookAuthorsCompanion.insert(
                 audiobookId: audiobookId,
                 authorId: authorId,
+                libraryId: libraryId,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -9763,64 +10333,80 @@ class $$AudiobookAuthorsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({audiobookId = false, authorId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (audiobookId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.audiobookId,
-                                referencedTable:
-                                    $$AudiobookAuthorsTableReferences
-                                        ._audiobookIdTable(db),
-                                referencedColumn:
-                                    $$AudiobookAuthorsTableReferences
-                                        ._audiobookIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (authorId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.authorId,
-                                referencedTable:
-                                    $$AudiobookAuthorsTableReferences
-                                        ._authorIdTable(db),
-                                referencedColumn:
-                                    $$AudiobookAuthorsTableReferences
-                                        ._authorIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({audiobookId = false, authorId = false, libraryId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (audiobookId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.audiobookId,
+                                    referencedTable:
+                                        $$AudiobookAuthorsTableReferences
+                                            ._audiobookIdTable(db),
+                                    referencedColumn:
+                                        $$AudiobookAuthorsTableReferences
+                                            ._audiobookIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (authorId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.authorId,
+                                    referencedTable:
+                                        $$AudiobookAuthorsTableReferences
+                                            ._authorIdTable(db),
+                                    referencedColumn:
+                                        $$AudiobookAuthorsTableReferences
+                                            ._authorIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (libraryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.libraryId,
+                                    referencedTable:
+                                        $$AudiobookAuthorsTableReferences
+                                            ._libraryIdTable(db),
+                                    referencedColumn:
+                                        $$AudiobookAuthorsTableReferences
+                                            ._libraryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -9829,15 +10415,15 @@ typedef $$AudiobookAuthorsTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $AudiobookAuthorsTable,
-      AudiobookAuthor,
+      AudiobookAuthorsLink,
       $$AudiobookAuthorsTableFilterComposer,
       $$AudiobookAuthorsTableOrderingComposer,
       $$AudiobookAuthorsTableAnnotationComposer,
       $$AudiobookAuthorsTableCreateCompanionBuilder,
       $$AudiobookAuthorsTableUpdateCompanionBuilder,
-      (AudiobookAuthor, $$AudiobookAuthorsTableReferences),
-      AudiobookAuthor,
-      PrefetchHooks Function({bool audiobookId, bool authorId})
+      (AudiobookAuthorsLink, $$AudiobookAuthorsTableReferences),
+      AudiobookAuthorsLink,
+      PrefetchHooks Function({bool audiobookId, bool authorId, bool libraryId})
     >;
 
 class $AppDatabaseManager {

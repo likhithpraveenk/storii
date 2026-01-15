@@ -34,8 +34,6 @@ sealed class AppSettings with _$AppSettings {
     @Default(AppFonts.defaultFont) String? fontFamily,
 
     @Default(1) double fontScale,
-
-    @Default(2) int gridCount,
   }) = _AppSettings;
 
   factory AppSettings.fromJson(Map<String, dynamic> json) =>
@@ -48,6 +46,16 @@ sealed class UserSettings with _$UserSettings {
     @noCodeGen required String userId,
 
     String? currentLibraryId,
+
+    String? currentItemId,
+
+    @Default(false) bool isFullySynced, 
+
+    @Default(2) int allGridCount,
+
+    @Default(1) int seriesGridCount,
+
+    @Default(2) int authorsGridCount,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>
@@ -80,7 +88,7 @@ class AppSettingsNotifier extends _$AppSettingsNotifier {
         .delete();
   }
 
-  Future<void> reset() => _save(const AppSettings());
+  Future<void> reset() => _save(AppSettings(currentUser: state.currentUser));
 }
 
 @Riverpod(keepAlive: true)
@@ -108,5 +116,11 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
     state = UserSettings(userId: userId);
   }
 
-  Future<void> reset() => _save(UserSettings(userId: state.userId));
+  Future<void> reset() => _save(
+    UserSettings(
+      userId: state.userId,
+      currentLibraryId: state.currentLibraryId,
+      isFullySynced: state.isFullySynced,
+    ),
+  );
 }

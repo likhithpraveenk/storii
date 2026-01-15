@@ -155,7 +155,7 @@ return authors(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  String label,  ShelfType type,  List<LibraryItem> items)?  libraryItems,TResult Function( String id,  String label,  ShelfType type,  List<String> series)?  series,TResult Function( String id,  String label,  ShelfType type,  List<String> authors)?  authors,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  String label,  ShelfType type,  List<LibraryItem> items)?  libraryItems,TResult Function( String id,  String label,  ShelfType type,  List<Series> series)?  series,TResult Function( String id,  String label,  ShelfType type,  List<Author> authors)?  authors,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LibraryItemsShelf() when libraryItems != null:
 return libraryItems(_that.id,_that.label,_that.type,_that.items);case SeriesShelf() when series != null:
@@ -178,7 +178,7 @@ return authors(_that.id,_that.label,_that.type,_that.authors);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  String label,  ShelfType type,  List<LibraryItem> items)  libraryItems,required TResult Function( String id,  String label,  ShelfType type,  List<String> series)  series,required TResult Function( String id,  String label,  ShelfType type,  List<String> authors)  authors,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  String label,  ShelfType type,  List<LibraryItem> items)  libraryItems,required TResult Function( String id,  String label,  ShelfType type,  List<Series> series)  series,required TResult Function( String id,  String label,  ShelfType type,  List<Author> authors)  authors,}) {final _that = this;
 switch (_that) {
 case LibraryItemsShelf():
 return libraryItems(_that.id,_that.label,_that.type,_that.items);case SeriesShelf():
@@ -197,7 +197,7 @@ return authors(_that.id,_that.label,_that.type,_that.authors);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  String label,  ShelfType type,  List<LibraryItem> items)?  libraryItems,TResult? Function( String id,  String label,  ShelfType type,  List<String> series)?  series,TResult? Function( String id,  String label,  ShelfType type,  List<String> authors)?  authors,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  String label,  ShelfType type,  List<LibraryItem> items)?  libraryItems,TResult? Function( String id,  String label,  ShelfType type,  List<Series> series)?  series,TResult? Function( String id,  String label,  ShelfType type,  List<Author> authors)?  authors,}) {final _that = this;
 switch (_that) {
 case LibraryItemsShelf() when libraryItems != null:
 return libraryItems(_that.id,_that.label,_that.type,_that.items);case SeriesShelf() when series != null:
@@ -292,14 +292,14 @@ as List<LibraryItem>,
 
 
 class SeriesShelf extends Shelf {
-  const SeriesShelf({required this.id, required this.label, required this.type, required final  List<String> series}): _series = series,super._();
+  const SeriesShelf({required this.id, required this.label, required this.type, required final  List<Series> series}): _series = series,super._();
   
 
 @override final  String id;
 @override final  String label;
 @override final  ShelfType type;
- final  List<String> _series;
- List<String> get series {
+ final  List<Series> _series;
+ List<Series> get series {
   if (_series is EqualUnmodifiableListView) return _series;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_series);
@@ -336,7 +336,7 @@ abstract mixin class $SeriesShelfCopyWith<$Res> implements $ShelfCopyWith<$Res> 
   factory $SeriesShelfCopyWith(SeriesShelf value, $Res Function(SeriesShelf) _then) = _$SeriesShelfCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String label, ShelfType type, List<String> series
+ String id, String label, ShelfType type, List<Series> series
 });
 
 
@@ -359,7 +359,7 @@ id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ShelfType,series: null == series ? _self._series : series // ignore: cast_nullable_to_non_nullable
-as List<String>,
+as List<Series>,
   ));
 }
 
@@ -370,14 +370,14 @@ as List<String>,
 
 
 class AuthorShelf extends Shelf {
-  const AuthorShelf({required this.id, required this.label, required this.type, required final  List<String> authors}): _authors = authors,super._();
+  const AuthorShelf({required this.id, required this.label, required this.type, required final  List<Author> authors}): _authors = authors,super._();
   
 
 @override final  String id;
 @override final  String label;
 @override final  ShelfType type;
- final  List<String> _authors;
- List<String> get authors {
+ final  List<Author> _authors;
+ List<Author> get authors {
   if (_authors is EqualUnmodifiableListView) return _authors;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_authors);
@@ -414,7 +414,7 @@ abstract mixin class $AuthorShelfCopyWith<$Res> implements $ShelfCopyWith<$Res> 
   factory $AuthorShelfCopyWith(AuthorShelf value, $Res Function(AuthorShelf) _then) = _$AuthorShelfCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String label, ShelfType type, List<String> authors
+ String id, String label, ShelfType type, List<Author> authors
 });
 
 
@@ -437,7 +437,7 @@ id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ShelfType,authors: null == authors ? _self._authors : authors // ignore: cast_nullable_to_non_nullable
-as List<String>,
+as List<Author>,
   ));
 }
 

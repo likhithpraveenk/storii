@@ -34,7 +34,7 @@ final class LibrarySeriesNotifierProvider
 }
 
 String _$librarySeriesNotifierHash() =>
-    r'0b904d1a8719fb56593c87fb882abcd68d3bc172';
+    r'7c331ffed6954c5a7fd3cd7b2c071db67603b884';
 
 abstract class _$LibrarySeriesNotifier extends $StreamNotifier<List<Series>> {
   Stream<List<Series>> build();

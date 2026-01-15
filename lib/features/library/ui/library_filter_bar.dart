@@ -6,12 +6,14 @@ import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 
 class LibraryFilterBar extends ConsumerWidget {
-  const LibraryFilterBar({super.key});
+  const LibraryFilterBar(this.tab, {super.key});
+
+  final FiltersTab tab;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final filterState = ref.watch(libraryFiltersProvider);
-    final notifier = ref.read(libraryFiltersProvider.notifier);
+    final filterState = ref.watch(libraryFiltersProvider(tab));
+    final notifier = ref.read(libraryFiltersProvider(tab).notifier);
     final textTheme = Theme.of(context).textTheme;
     final l = AppLocalizations.of(context)!;
 
@@ -57,7 +59,6 @@ class LibraryFilterBar extends ConsumerWidget {
                             } else {
                               notifier.setSortType(type);
                             }
-                            Navigator.pop(context);
                           },
                         ),
                       ),
@@ -87,7 +88,7 @@ class LibraryFilterBar extends ConsumerWidget {
             const Spacer(),
             IconButton(
               icon: Icon(
-                filterState.gridCount != 1
+                filterState.gridCount == 1
                     ? Icons.list_rounded
                     : Icons.grid_view,
               ),

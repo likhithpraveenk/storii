@@ -7,11 +7,14 @@ class ItemApi {
   final ApiClient api;
   const ItemApi(this.api);
 
-  Future<LibraryItem> get(String libraryItemId) async {
+  Future<LibraryItem> get(
+    String libraryItemId, {
+    bool isExpanded = true,
+  }) async {
     final response = await api.request(
       ApiRoutes.itemById(libraryItemId),
       method: .get,
-      query: {'expanded': 1, 'include': 'progress'},
+      query: isExpanded ? {'expanded': 1, 'include': 'progress'} : null,
     );
     return fromJson(response.data, LibraryItem.fromJson);
   }

@@ -54,6 +54,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen>
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            // TODO: library switcher bottom sheet
             SliverPersistentHeader(
               pinned: true,
               delegate: _SliverTabDelegate(
