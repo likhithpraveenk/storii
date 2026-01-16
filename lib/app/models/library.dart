@@ -5,14 +5,14 @@ part 'library.freezed.dart';
 part 'library.g.dart';
 
 @freezed
-sealed class Library with _$Library {
-  const factory Library({
+sealed class LibraryDomain with _$LibraryDomain {
+  const factory LibraryDomain({
     required String id,
     required Uri serverUrl,
     required String name,
     required MediaContent mediaContent,
   }) = _Library;
 
-  factory Library.fromJson(Map<String, dynamic> json) =>
-      _$LibraryFromJson(json);
+  factory LibraryDomain.fromJson(Map<String, dynamic> json) =>
+      _$LibraryDomainFromJson(json);
 }

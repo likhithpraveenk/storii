@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppSettings {
 
- AppTheme get theme; String get localeCode; User? get currentUser; Duration get logRetention; String get dateTimeFormat; List<NavTarget> get navTargets; String? get fontFamily; double get fontScale;
+ AppTheme get theme; String get localeCode; UserDomain? get currentUser; Duration get logRetention; String get dateTimeFormat; List<NavTarget> get navTargets; String? get fontFamily; double get fontScale; int get defaultItemsLimit; int get defaultSeriesLimit;
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AppSettingsCopyWith<AppSettings> get copyWith => _$AppSettingsCopyWithImpl<AppS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.localeCode, localeCode) || other.localeCode == localeCode)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.logRetention, logRetention) || other.logRetention == logRetention)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&const DeepCollectionEquality().equals(other.navTargets, navTargets)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.localeCode, localeCode) || other.localeCode == localeCode)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.logRetention, logRetention) || other.logRetention == logRetention)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&const DeepCollectionEquality().equals(other.navTargets, navTargets)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.defaultItemsLimit, defaultItemsLimit) || other.defaultItemsLimit == defaultItemsLimit)&&(identical(other.defaultSeriesLimit, defaultSeriesLimit) || other.defaultSeriesLimit == defaultSeriesLimit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,theme,localeCode,currentUser,logRetention,dateTimeFormat,const DeepCollectionEquality().hash(navTargets),fontFamily,fontScale);
+int get hashCode => Object.hash(runtimeType,theme,localeCode,currentUser,logRetention,dateTimeFormat,const DeepCollectionEquality().hash(navTargets),fontFamily,fontScale,defaultItemsLimit,defaultSeriesLimit);
 
 @override
 String toString() {
-  return 'AppSettings(theme: $theme, localeCode: $localeCode, currentUser: $currentUser, logRetention: $logRetention, dateTimeFormat: $dateTimeFormat, navTargets: $navTargets, fontFamily: $fontFamily, fontScale: $fontScale)';
+  return 'AppSettings(theme: $theme, localeCode: $localeCode, currentUser: $currentUser, logRetention: $logRetention, dateTimeFormat: $dateTimeFormat, navTargets: $navTargets, fontFamily: $fontFamily, fontScale: $fontScale, defaultItemsLimit: $defaultItemsLimit, defaultSeriesLimit: $defaultSeriesLimit)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $AppSettingsCopyWith<$Res>  {
   factory $AppSettingsCopyWith(AppSettings value, $Res Function(AppSettings) _then) = _$AppSettingsCopyWithImpl;
 @useResult
 $Res call({
- AppTheme theme, String localeCode, User? currentUser, Duration logRetention, String dateTimeFormat, List<NavTarget> navTargets, String? fontFamily, double fontScale
+ AppTheme theme, String localeCode, UserDomain? currentUser, Duration logRetention, String dateTimeFormat, List<NavTarget> navTargets, String? fontFamily, double fontScale, int defaultItemsLimit, int defaultSeriesLimit
 });
 
 
-$UserCopyWith<$Res>? get currentUser;
+$UserDomainCopyWith<$Res>? get currentUser;
 
 }
 /// @nodoc
@@ -65,29 +65,31 @@ class _$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? theme = null,Object? localeCode = null,Object? currentUser = freezed,Object? logRetention = null,Object? dateTimeFormat = null,Object? navTargets = null,Object? fontFamily = freezed,Object? fontScale = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? theme = null,Object? localeCode = null,Object? currentUser = freezed,Object? logRetention = null,Object? dateTimeFormat = null,Object? navTargets = null,Object? fontFamily = freezed,Object? fontScale = null,Object? defaultItemsLimit = null,Object? defaultSeriesLimit = null,}) {
   return _then(_self.copyWith(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
 as AppTheme,localeCode: null == localeCode ? _self.localeCode : localeCode // ignore: cast_nullable_to_non_nullable
 as String,currentUser: freezed == currentUser ? _self.currentUser : currentUser // ignore: cast_nullable_to_non_nullable
-as User?,logRetention: null == logRetention ? _self.logRetention : logRetention // ignore: cast_nullable_to_non_nullable
+as UserDomain?,logRetention: null == logRetention ? _self.logRetention : logRetention // ignore: cast_nullable_to_non_nullable
 as Duration,dateTimeFormat: null == dateTimeFormat ? _self.dateTimeFormat : dateTimeFormat // ignore: cast_nullable_to_non_nullable
 as String,navTargets: null == navTargets ? _self.navTargets : navTargets // ignore: cast_nullable_to_non_nullable
 as List<NavTarget>,fontFamily: freezed == fontFamily ? _self.fontFamily : fontFamily // ignore: cast_nullable_to_non_nullable
 as String?,fontScale: null == fontScale ? _self.fontScale : fontScale // ignore: cast_nullable_to_non_nullable
-as double,
+as double,defaultItemsLimit: null == defaultItemsLimit ? _self.defaultItemsLimit : defaultItemsLimit // ignore: cast_nullable_to_non_nullable
+as int,defaultSeriesLimit: null == defaultSeriesLimit ? _self.defaultSeriesLimit : defaultSeriesLimit // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserCopyWith<$Res>? get currentUser {
+$UserDomainCopyWith<$Res>? get currentUser {
     if (_self.currentUser == null) {
     return null;
   }
 
-  return $UserCopyWith<$Res>(_self.currentUser!, (value) {
+  return $UserDomainCopyWith<$Res>(_self.currentUser!, (value) {
     return _then(_self.copyWith(currentUser: value));
   });
 }
@@ -169,10 +171,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppTheme theme,  String localeCode,  User? currentUser,  Duration logRetention,  String dateTimeFormat,  List<NavTarget> navTargets,  String? fontFamily,  double fontScale)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppTheme theme,  String localeCode,  UserDomain? currentUser,  Duration logRetention,  String dateTimeFormat,  List<NavTarget> navTargets,  String? fontFamily,  double fontScale,  int defaultItemsLimit,  int defaultSeriesLimit)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetention,_that.dateTimeFormat,_that.navTargets,_that.fontFamily,_that.fontScale);case _:
+return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetention,_that.dateTimeFormat,_that.navTargets,_that.fontFamily,_that.fontScale,_that.defaultItemsLimit,_that.defaultSeriesLimit);case _:
   return orElse();
 
 }
@@ -190,10 +192,10 @@ return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetentio
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppTheme theme,  String localeCode,  User? currentUser,  Duration logRetention,  String dateTimeFormat,  List<NavTarget> navTargets,  String? fontFamily,  double fontScale)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppTheme theme,  String localeCode,  UserDomain? currentUser,  Duration logRetention,  String dateTimeFormat,  List<NavTarget> navTargets,  String? fontFamily,  double fontScale,  int defaultItemsLimit,  int defaultSeriesLimit)  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings():
-return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetention,_that.dateTimeFormat,_that.navTargets,_that.fontFamily,_that.fontScale);}
+return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetention,_that.dateTimeFormat,_that.navTargets,_that.fontFamily,_that.fontScale,_that.defaultItemsLimit,_that.defaultSeriesLimit);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -207,10 +209,10 @@ return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetentio
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppTheme theme,  String localeCode,  User? currentUser,  Duration logRetention,  String dateTimeFormat,  List<NavTarget> navTargets,  String? fontFamily,  double fontScale)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppTheme theme,  String localeCode,  UserDomain? currentUser,  Duration logRetention,  String dateTimeFormat,  List<NavTarget> navTargets,  String? fontFamily,  double fontScale,  int defaultItemsLimit,  int defaultSeriesLimit)?  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetention,_that.dateTimeFormat,_that.navTargets,_that.fontFamily,_that.fontScale);case _:
+return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetention,_that.dateTimeFormat,_that.navTargets,_that.fontFamily,_that.fontScale,_that.defaultItemsLimit,_that.defaultSeriesLimit);case _:
   return null;
 
 }
@@ -222,12 +224,12 @@ return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetentio
 @JsonSerializable()
 
 class _AppSettings implements AppSettings {
-  const _AppSettings({this.theme = AppTheme.system, this.localeCode = 'en', this.currentUser, this.logRetention = const Duration(days: 2), this.dateTimeFormat = 'dd MMM y', final  List<NavTarget> navTargets = defaultNavTargets, this.fontFamily = AppFonts.defaultFont, this.fontScale = 1}): _navTargets = navTargets;
+  const _AppSettings({this.theme = AppTheme.system, this.localeCode = 'en', this.currentUser, this.logRetention = const Duration(days: 2), this.dateTimeFormat = 'dd MMM y', final  List<NavTarget> navTargets = defaultNavTargets, this.fontFamily = AppFonts.defaultFont, this.fontScale = 1, this.defaultItemsLimit = 50, this.defaultSeriesLimit = 20}): _navTargets = navTargets;
   factory _AppSettings.fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);
 
 @override@JsonKey() final  AppTheme theme;
 @override@JsonKey() final  String localeCode;
-@override final  User? currentUser;
+@override final  UserDomain? currentUser;
 @override@JsonKey() final  Duration logRetention;
 @override@JsonKey() final  String dateTimeFormat;
  final  List<NavTarget> _navTargets;
@@ -239,6 +241,8 @@ class _AppSettings implements AppSettings {
 
 @override@JsonKey() final  String? fontFamily;
 @override@JsonKey() final  double fontScale;
+@override@JsonKey() final  int defaultItemsLimit;
+@override@JsonKey() final  int defaultSeriesLimit;
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
@@ -253,16 +257,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.localeCode, localeCode) || other.localeCode == localeCode)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.logRetention, logRetention) || other.logRetention == logRetention)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&const DeepCollectionEquality().equals(other._navTargets, _navTargets)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.localeCode, localeCode) || other.localeCode == localeCode)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.logRetention, logRetention) || other.logRetention == logRetention)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&const DeepCollectionEquality().equals(other._navTargets, _navTargets)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.defaultItemsLimit, defaultItemsLimit) || other.defaultItemsLimit == defaultItemsLimit)&&(identical(other.defaultSeriesLimit, defaultSeriesLimit) || other.defaultSeriesLimit == defaultSeriesLimit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,theme,localeCode,currentUser,logRetention,dateTimeFormat,const DeepCollectionEquality().hash(_navTargets),fontFamily,fontScale);
+int get hashCode => Object.hash(runtimeType,theme,localeCode,currentUser,logRetention,dateTimeFormat,const DeepCollectionEquality().hash(_navTargets),fontFamily,fontScale,defaultItemsLimit,defaultSeriesLimit);
 
 @override
 String toString() {
-  return 'AppSettings(theme: $theme, localeCode: $localeCode, currentUser: $currentUser, logRetention: $logRetention, dateTimeFormat: $dateTimeFormat, navTargets: $navTargets, fontFamily: $fontFamily, fontScale: $fontScale)';
+  return 'AppSettings(theme: $theme, localeCode: $localeCode, currentUser: $currentUser, logRetention: $logRetention, dateTimeFormat: $dateTimeFormat, navTargets: $navTargets, fontFamily: $fontFamily, fontScale: $fontScale, defaultItemsLimit: $defaultItemsLimit, defaultSeriesLimit: $defaultSeriesLimit)';
 }
 
 
@@ -273,11 +277,11 @@ abstract mixin class _$AppSettingsCopyWith<$Res> implements $AppSettingsCopyWith
   factory _$AppSettingsCopyWith(_AppSettings value, $Res Function(_AppSettings) _then) = __$AppSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- AppTheme theme, String localeCode, User? currentUser, Duration logRetention, String dateTimeFormat, List<NavTarget> navTargets, String? fontFamily, double fontScale
+ AppTheme theme, String localeCode, UserDomain? currentUser, Duration logRetention, String dateTimeFormat, List<NavTarget> navTargets, String? fontFamily, double fontScale, int defaultItemsLimit, int defaultSeriesLimit
 });
 
 
-@override $UserCopyWith<$Res>? get currentUser;
+@override $UserDomainCopyWith<$Res>? get currentUser;
 
 }
 /// @nodoc
@@ -290,17 +294,19 @@ class __$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? theme = null,Object? localeCode = null,Object? currentUser = freezed,Object? logRetention = null,Object? dateTimeFormat = null,Object? navTargets = null,Object? fontFamily = freezed,Object? fontScale = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? theme = null,Object? localeCode = null,Object? currentUser = freezed,Object? logRetention = null,Object? dateTimeFormat = null,Object? navTargets = null,Object? fontFamily = freezed,Object? fontScale = null,Object? defaultItemsLimit = null,Object? defaultSeriesLimit = null,}) {
   return _then(_AppSettings(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
 as AppTheme,localeCode: null == localeCode ? _self.localeCode : localeCode // ignore: cast_nullable_to_non_nullable
 as String,currentUser: freezed == currentUser ? _self.currentUser : currentUser // ignore: cast_nullable_to_non_nullable
-as User?,logRetention: null == logRetention ? _self.logRetention : logRetention // ignore: cast_nullable_to_non_nullable
+as UserDomain?,logRetention: null == logRetention ? _self.logRetention : logRetention // ignore: cast_nullable_to_non_nullable
 as Duration,dateTimeFormat: null == dateTimeFormat ? _self.dateTimeFormat : dateTimeFormat // ignore: cast_nullable_to_non_nullable
 as String,navTargets: null == navTargets ? _self._navTargets : navTargets // ignore: cast_nullable_to_non_nullable
 as List<NavTarget>,fontFamily: freezed == fontFamily ? _self.fontFamily : fontFamily // ignore: cast_nullable_to_non_nullable
 as String?,fontScale: null == fontScale ? _self.fontScale : fontScale // ignore: cast_nullable_to_non_nullable
-as double,
+as double,defaultItemsLimit: null == defaultItemsLimit ? _self.defaultItemsLimit : defaultItemsLimit // ignore: cast_nullable_to_non_nullable
+as int,defaultSeriesLimit: null == defaultSeriesLimit ? _self.defaultSeriesLimit : defaultSeriesLimit // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -308,12 +314,12 @@ as double,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserCopyWith<$Res>? get currentUser {
+$UserDomainCopyWith<$Res>? get currentUser {
     if (_self.currentUser == null) {
     return null;
   }
 
-  return $UserCopyWith<$Res>(_self.currentUser!, (value) {
+  return $UserDomainCopyWith<$Res>(_self.currentUser!, (value) {
     return _then(_self.copyWith(currentUser: value));
   });
 }

@@ -10,16 +10,16 @@ class CollectionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: fromMore,
-        leading: fromMore
-            ? IconButton(
+      appBar: fromMore
+          ? AppBar(
+              automaticallyImplyLeading: true,
+              leading: IconButton(
                 onPressed: () => context.pop(),
-                icon: const Icon(Icons.arrow_back_ios_new),
-              )
-            : null,
-        title: Text(AppLocalizations.of(context)!.collections),
-      ),
+                icon: const Icon(Icons.arrow_back),
+              ),
+              title: Text(AppLocalizations.of(context)!.collections),
+            )
+          : null,
       body: const CustomScrollView(
         slivers: [
           SliverFillRemaining(

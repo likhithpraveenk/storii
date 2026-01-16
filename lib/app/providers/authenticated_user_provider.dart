@@ -8,7 +8,7 @@ import 'package:storii/shared/helpers/app_error.dart';
 part 'authenticated_user_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-Future<User> authenticatedUser(Ref ref) async {
+Future<UserDomain> authenticatedUser(Ref ref) async {
   final user = ref.watch(currentUserProvider);
   if (user == null) throw StateError('No current user');
   try {

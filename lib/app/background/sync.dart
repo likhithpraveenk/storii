@@ -1,10 +1,7 @@
 import 'package:drift/drift.dart';
-import 'package:storii/api/client/api_client.dart';
-import 'package:storii/api/endpoints/author_api.dart';
-import 'package:storii/api/endpoints/library_api.dart';
-import 'package:storii/api/models/requests/series_request_params.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/sync_config.dart';
-import 'package:storii/app/models/library_item.dart';
+import 'package:storii/app/models/item.dart';
 import 'package:storii/app/models/to_domain.dart';
 import 'package:storii/storage/drift/database.dart';
 
@@ -61,7 +58,7 @@ class SyncManager {
         libraryId,
         const SeriesRequestParams(limit: 9999),
       );
-      final authorsFuture = libraryApi.getAuthors(libraryId);
+      final authorsFuture = libraryApi.getAuthors(libraryId, null);
       final seriesL = (await seriesFuture).results.map(
         (e) => e.toDomain(libraryId),
       );
@@ -71,7 +68,7 @@ class SyncManager {
 
       final audiobookSeriesLinks = <AudiobookSeriesLink>[];
       for (final s in seriesL) {
-        for (final book in s.books ?? <LibraryItem>[]) {
+        for (final book in s.books ?? <ItemDomain>[]) {
           audiobookSeriesLinks.add(
             AudiobookSeriesLink(
               seriesId: s.id,
@@ -84,7 +81,7 @@ class SyncManager {
 
       final audiobookAuthorLinks = <AudiobookAuthorsLink>[];
       for (final a in authorsList) {
-        for (final book in a.libraryItems ?? <LibraryItem>[]) {
+        for (final book in a.books ?? <ItemDomain>[]) {
           audiobookAuthorLinks.add(
             AudiobookAuthorsLink(
               authorId: a.id,

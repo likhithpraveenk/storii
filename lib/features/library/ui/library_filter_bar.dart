@@ -17,127 +17,120 @@ class LibraryFilterBar extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     final l = AppLocalizations.of(context)!;
 
-    return SliverAppBar(
-      primary: false,
-      automaticallyImplyLeading: false,
-      titleSpacing: 0,
-      title: Container(
-        padding: const .symmetric(horizontal: 8, vertical: 4),
-        child: Row(
-          children: [
-            InkWell(
-              borderRadius: AppStyles.circularRadius,
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) => Column(
-                    mainAxisSize: .min,
-                    crossAxisAlignment: .start,
-                    children: [
-                      Padding(
-                        padding: const .only(left: 20, top: 16, bottom: 12),
-                        child: Text(l.ascDesc, style: textTheme.bodyMedium),
-                      ),
-                      ...LibrarySortType.values.map(
-                        (type) => ListTile(
-                          title: Text(type.getDisplayString(context)),
-                          trailing: filterState.sortType == type
-                              ? Icon(
-                                  filterState.sortAscending
-                                      ? Icons.arrow_upward
-                                      : Icons.arrow_downward,
-                                )
-                              : null,
-                          tileColor: filterState.sortType == type
-                              ? Theme.of(
-                                  context,
-                                ).colorScheme.surfaceContainerHighest
-                              : null,
-                          onTap: () {
-                            if (filterState.sortType == type) {
-                              notifier.setSortAscending();
-                            } else {
-                              notifier.setSortType(type);
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              child: Padding(
-                padding: const .symmetric(horizontal: 10, vertical: 4),
-                child: Row(
+    return Padding(
+      padding: const .symmetric(horizontal: 8, vertical: 4),
+      child: Row(
+        children: [
+          InkWell(
+            borderRadius: AppStyles.circularRadius,
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => Column(
+                  mainAxisSize: .min,
+                  crossAxisAlignment: .start,
                   children: [
-                    Text(
-                      filterState.sortType.getDisplayString(context),
-                      style: textTheme.titleSmall,
+                    Padding(
+                      padding: const .only(left: 20, top: 16, bottom: 12),
+                      child: Text(l.ascDesc, style: textTheme.bodyMedium),
                     ),
-                    const SizedBox(width: 4),
-                    Icon(
-                      filterState.sortAscending
-                          ? Icons.arrow_upward
-                          : Icons.arrow_downward,
-                      size: 16,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const Spacer(),
-            IconButton(
-              icon: Icon(
-                filterState.gridCount == 1
-                    ? Icons.list_rounded
-                    : Icons.grid_view,
-              ),
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) => Column(
-                    mainAxisSize: .min,
-                    crossAxisAlignment: .start,
-                    children: [
-                      Padding(
-                        padding: const .only(left: 20, top: 16, bottom: 12),
-                        child: Text(l.gridCount, style: textTheme.titleMedium),
-                      ),
-                      ListTile(
-                        leading: const Icon(Icons.list_rounded),
-                        tileColor: filterState.gridCount == 1
+                    ...LibrarySortType.values.map(
+                      (type) => ListTile(
+                        title: Text(type.getDisplayString(context)),
+                        trailing: filterState.sortType == type
+                            ? Icon(
+                                filterState.sortAscending
+                                    ? Icons.arrow_upward
+                                    : Icons.arrow_downward,
+                              )
+                            : null,
+                        tileColor: filterState.sortType == type
                             ? Theme.of(
                                 context,
                               ).colorScheme.surfaceContainerHighest
                             : null,
-                        title: const Text('1'),
                         onTap: () {
-                          notifier.setGridCount(1);
+                          if (filterState.sortType == type) {
+                            notifier.setSortAscending();
+                          } else {
+                            notifier.setSortType(type);
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            child: Padding(
+              padding: const .symmetric(horizontal: 10, vertical: 4),
+              child: Row(
+                children: [
+                  Text(
+                    filterState.sortType.getDisplayString(context),
+                    style: textTheme.titleSmall,
+                  ),
+                  const SizedBox(width: 4),
+                  Icon(
+                    filterState.sortAscending
+                        ? Icons.arrow_upward
+                        : Icons.arrow_downward,
+                    size: 16,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const Spacer(),
+          IconButton(
+            icon: Icon(
+              filterState.gridCount == 1 ? Icons.list_rounded : Icons.grid_view,
+            ),
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => Column(
+                  mainAxisSize: .min,
+                  crossAxisAlignment: .start,
+                  children: [
+                    Padding(
+                      padding: const .only(left: 20, top: 16, bottom: 12),
+                      child: Text(l.gridCount, style: textTheme.titleMedium),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.list_rounded),
+                      tileColor: filterState.gridCount == 1
+                          ? Theme.of(
+                              context,
+                            ).colorScheme.surfaceContainerHighest
+                          : null,
+                      title: const Text('1'),
+                      onTap: () {
+                        notifier.setGridCount(1);
+                        Navigator.pop(context);
+                      },
+                    ),
+                    ...[2, 3].map(
+                      (count) => ListTile(
+                        leading: const Icon(Icons.grid_on),
+                        tileColor: filterState.gridCount == count
+                            ? Theme.of(
+                                context,
+                              ).colorScheme.surfaceContainerHighest
+                            : null,
+                        title: Text('$count'),
+                        onTap: () {
+                          notifier.setGridCount(count);
                           Navigator.pop(context);
                         },
                       ),
-                      ...[2, 3].map(
-                        (count) => ListTile(
-                          leading: const Icon(Icons.grid_on),
-                          tileColor: filterState.gridCount == count
-                              ? Theme.of(
-                                  context,
-                                ).colorScheme.surfaceContainerHighest
-                              : null,
-                          title: Text('$count'),
-                          onTap: () {
-                            notifier.setGridCount(count);
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

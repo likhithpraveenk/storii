@@ -12,7 +12,7 @@ class DeleteServerDialog extends ConsumerWidget {
   const DeleteServerDialog(this.server, this.users, {super.key});
 
   final Server server;
-  final List<User> users;
+  final List<UserDomain> users;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

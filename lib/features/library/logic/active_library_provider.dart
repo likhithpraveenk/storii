@@ -7,7 +7,7 @@ import 'package:storii/shared/helpers/extensions.dart';
 part 'active_library_provider.g.dart';
 
 @riverpod
-Future<Library> activeLibrary(Ref ref) async {
+Future<LibraryDomain> activeLibrary(Ref ref) async {
   final user = ref.watch(currentUserProvider);
   if (user == null) throw StateError('No current user');
 

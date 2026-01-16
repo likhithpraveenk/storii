@@ -23,7 +23,7 @@ sealed class AppSettings with _$AppSettings {
 
     @Default('en') String localeCode,
 
-    User? currentUser,
+    UserDomain? currentUser,
 
     @Default(Duration(days: 2)) Duration logRetention,
 
@@ -34,6 +34,10 @@ sealed class AppSettings with _$AppSettings {
     @Default(AppFonts.defaultFont) String? fontFamily,
 
     @Default(1) double fontScale,
+
+    @Default(50) int defaultItemsLimit,
+
+    @Default(20) int defaultSeriesLimit,
   }) = _AppSettings;
 
   factory AppSettings.fromJson(Map<String, dynamic> json) =>
@@ -49,7 +53,7 @@ sealed class UserSettings with _$UserSettings {
 
     String? currentItemId,
 
-    @Default(false) bool isFullySynced, 
+    @Default(false) bool isFullySynced,
 
     @Default(2) int allGridCount,
 

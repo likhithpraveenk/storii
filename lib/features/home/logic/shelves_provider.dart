@@ -6,19 +6,18 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 
 part 'shelves_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class ShelvesNotifier extends _$ShelvesNotifier {
   @override
-  Future<List<Shelf>> build() async {
+  Future<List<ShelfDomain>> build() async {
     final library = await ref.watch(activeLibraryProvider.future);
     return _fetchShelves(library.id);
   }
 
-  Future<List<Shelf>> _fetchShelves(String libraryId) async {
+  Future<List<ShelfDomain>> _fetchShelves(String libraryId) async {
     final user = await ref.read(authenticatedUserProvider.future);
     try {
       final response = await ref
@@ -32,7 +31,7 @@ class ShelvesNotifier extends _$ShelvesNotifier {
           .read(logsProvider.notifier)
           .log(
             'Error getting personalized home: $error',
-            stackTrace: s.toLimitedString(),
+            stackTrace: s,
             level: .error,
           );
       throw error;

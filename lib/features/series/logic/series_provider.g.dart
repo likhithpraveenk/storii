@@ -13,8 +13,13 @@ part of 'series_provider.dart';
 final seriesProvider = SeriesFamily._();
 
 final class SeriesProvider
-    extends $FunctionalProvider<AsyncValue<Series>, Series, FutureOr<Series>>
-    with $FutureModifier<Series>, $FutureProvider<Series> {
+    extends
+        $FunctionalProvider<
+          AsyncValue<SeriesDomain>,
+          SeriesDomain,
+          FutureOr<SeriesDomain>
+        >
+    with $FutureModifier<SeriesDomain>, $FutureProvider<SeriesDomain> {
   SeriesProvider._({
     required SeriesFamily super.from,
     required String super.argument,
@@ -38,11 +43,12 @@ final class SeriesProvider
 
   @$internal
   @override
-  $FutureProviderElement<Series> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
+  $FutureProviderElement<SeriesDomain> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<Series> create(Ref ref) {
+  FutureOr<SeriesDomain> create(Ref ref) {
     final argument = this.argument as String;
     return series(ref, argument);
   }
@@ -58,10 +64,10 @@ final class SeriesProvider
   }
 }
 
-String _$seriesHash() => r'29da816a45551159e970452124718230ec3db53f';
+String _$seriesHash() => r'1572c7cc48367bbaca057e50df24b946c4b100cc';
 
 final class SeriesFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<Series>, String> {
+    with $FunctionalFamilyOverride<FutureOr<SeriesDomain>, String> {
   SeriesFamily._()
     : super(
         retry: null,

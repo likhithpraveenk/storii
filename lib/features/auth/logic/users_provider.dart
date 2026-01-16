@@ -14,18 +14,15 @@ class UsersNotifier extends _$UsersNotifier {
   AppDatabase get _db => ref.read(databaseProvider);
 
   @override
-  Stream<List<User>> build() {
+  Stream<List<UserDomain>> build() {
     return _db.managers.users.watch();
   }
 
-  Future<void> upsert(User user) async {
-    await _db.managers.users.create(
-      (_) => user.toInsertable(),
-      mode: .insertOrReplace,
-    );
+  Future<void> upsert(UserDomain user) async {
+    await _db.into(_db.users).insertOnConflictUpdate(user.toInsertable());
   }
 
-  Future<void> delete(User user) async {
+  Future<void> delete(UserDomain user) async {
     await _db.managers.users.filter((f) => f.id.equals(user.id)).delete();
     await ref.read(userSettingsProvider(user.id).notifier).delete();
     ref
@@ -35,7 +32,7 @@ class UsersNotifier extends _$UsersNotifier {
 }
 
 @riverpod
-AsyncValue<List<User>> usersOfServer(Ref ref, Uri url) {
+AsyncValue<List<UserDomain>> usersOfServer(Ref ref, Uri url) {
   return ref
       .watch(usersProvider)
       .whenData((users) => users.where((u) => u.serverUrl == url).toList());

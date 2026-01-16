@@ -11,24 +11,31 @@ part of 'library.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+LibraryDomain _$LibraryDomainFromJson(
+  Map<String, dynamic> json
+) {
+    return _Library.fromJson(
+      json
+    );
+}
 
 /// @nodoc
-mixin _$Library {
+mixin _$LibraryDomain {
 
  String get id; Uri get serverUrl; String get name; MediaContent get mediaContent;
-/// Create a copy of Library
+/// Create a copy of LibraryDomain
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$LibraryCopyWith<Library> get copyWith => _$LibraryCopyWithImpl<Library>(this as Library, _$identity);
+$LibraryDomainCopyWith<LibraryDomain> get copyWith => _$LibraryDomainCopyWithImpl<LibraryDomain>(this as LibraryDomain, _$identity);
 
-  /// Serializes this Library to a JSON map.
+  /// Serializes this LibraryDomain to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Library&&(identical(other.id, id) || other.id == id)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.name, name) || other.name == name)&&(identical(other.mediaContent, mediaContent) || other.mediaContent == mediaContent));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryDomain&&(identical(other.id, id) || other.id == id)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.name, name) || other.name == name)&&(identical(other.mediaContent, mediaContent) || other.mediaContent == mediaContent));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +44,15 @@ int get hashCode => Object.hash(runtimeType,id,serverUrl,name,mediaContent);
 
 @override
 String toString() {
-  return 'Library(id: $id, serverUrl: $serverUrl, name: $name, mediaContent: $mediaContent)';
+  return 'LibraryDomain(id: $id, serverUrl: $serverUrl, name: $name, mediaContent: $mediaContent)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $LibraryCopyWith<$Res>  {
-  factory $LibraryCopyWith(Library value, $Res Function(Library) _then) = _$LibraryCopyWithImpl;
+abstract mixin class $LibraryDomainCopyWith<$Res>  {
+  factory $LibraryDomainCopyWith(LibraryDomain value, $Res Function(LibraryDomain) _then) = _$LibraryDomainCopyWithImpl;
 @useResult
 $Res call({
  String id, Uri serverUrl, String name, MediaContent mediaContent
@@ -56,14 +63,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$LibraryCopyWithImpl<$Res>
-    implements $LibraryCopyWith<$Res> {
-  _$LibraryCopyWithImpl(this._self, this._then);
+class _$LibraryDomainCopyWithImpl<$Res>
+    implements $LibraryDomainCopyWith<$Res> {
+  _$LibraryDomainCopyWithImpl(this._self, this._then);
 
-  final Library _self;
-  final $Res Function(Library) _then;
+  final LibraryDomain _self;
+  final $Res Function(LibraryDomain) _then;
 
-/// Create a copy of Library
+/// Create a copy of LibraryDomain
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? serverUrl = null,Object? name = null,Object? mediaContent = null,}) {
   return _then(_self.copyWith(
@@ -78,8 +85,8 @@ as MediaContent,
 }
 
 
-/// Adds pattern-matching-related methods to [Library].
-extension LibraryPatterns on Library {
+/// Adds pattern-matching-related methods to [LibraryDomain].
+extension LibraryDomainPatterns on LibraryDomain {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -205,7 +212,7 @@ return $default(_that.id,_that.serverUrl,_that.name,_that.mediaContent);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _Library implements Library {
+class _Library implements LibraryDomain {
   const _Library({required this.id, required this.serverUrl, required this.name, required this.mediaContent});
   factory _Library.fromJson(Map<String, dynamic> json) => _$LibraryFromJson(json);
 
@@ -214,7 +221,7 @@ class _Library implements Library {
 @override final  String name;
 @override final  MediaContent mediaContent;
 
-/// Create a copy of Library
+/// Create a copy of LibraryDomain
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -236,14 +243,14 @@ int get hashCode => Object.hash(runtimeType,id,serverUrl,name,mediaContent);
 
 @override
 String toString() {
-  return 'Library(id: $id, serverUrl: $serverUrl, name: $name, mediaContent: $mediaContent)';
+  return 'LibraryDomain(id: $id, serverUrl: $serverUrl, name: $name, mediaContent: $mediaContent)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$LibraryCopyWith<$Res> implements $LibraryCopyWith<$Res> {
+abstract mixin class _$LibraryCopyWith<$Res> implements $LibraryDomainCopyWith<$Res> {
   factory _$LibraryCopyWith(_Library value, $Res Function(_Library) _then) = __$LibraryCopyWithImpl;
 @override @useResult
 $Res call({
@@ -262,7 +269,7 @@ class __$LibraryCopyWithImpl<$Res>
   final _Library _self;
   final $Res Function(_Library) _then;
 
-/// Create a copy of Library
+/// Create a copy of LibraryDomain
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? serverUrl = null,Object? name = null,Object? mediaContent = null,}) {
   return _then(_Library(

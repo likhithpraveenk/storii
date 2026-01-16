@@ -66,7 +66,7 @@ class _NavSettingScreenState extends ConsumerState<NavSettingScreen> {
   }
 
   void _onToggle(NavTarget target, bool isEnabled) {
-    if (target == .library || target == .more) return;
+    if (target == .home || target == .library || target == .more) return;
     setState(() {
       if (isEnabled) {
         if (_activeDraft.length < 5) {
@@ -83,6 +83,7 @@ class _NavSettingScreenState extends ConsumerState<NavSettingScreen> {
         if (_activeDraft.length > 3) {
           _activeDraft.remove(target);
         } else {
+          // never runs
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(AppLocalizations.of(context)!.mustSelect3),
@@ -103,7 +104,7 @@ class _NavSettingScreenState extends ConsumerState<NavSettingScreen> {
           onPressed: () {
             context.pop();
           },
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(Icons.arrow_back),
         ),
         titleSpacing: 0,
         title: Text(

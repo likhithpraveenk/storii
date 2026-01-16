@@ -13,8 +13,13 @@ part of 'author_provider.dart';
 final authorProvider = AuthorFamily._();
 
 final class AuthorProvider
-    extends $FunctionalProvider<AsyncValue<Author>, Author, FutureOr<Author>>
-    with $FutureModifier<Author>, $FutureProvider<Author> {
+    extends
+        $FunctionalProvider<
+          AsyncValue<AuthorDomain>,
+          AuthorDomain,
+          FutureOr<AuthorDomain>
+        >
+    with $FutureModifier<AuthorDomain>, $FutureProvider<AuthorDomain> {
   AuthorProvider._({
     required AuthorFamily super.from,
     required String super.argument,
@@ -38,11 +43,12 @@ final class AuthorProvider
 
   @$internal
   @override
-  $FutureProviderElement<Author> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
+  $FutureProviderElement<AuthorDomain> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<Author> create(Ref ref) {
+  FutureOr<AuthorDomain> create(Ref ref) {
     final argument = this.argument as String;
     return author(ref, argument);
   }
@@ -58,10 +64,10 @@ final class AuthorProvider
   }
 }
 
-String _$authorHash() => r'ab0f44324e3499b18e106710111b938f78ddc382';
+String _$authorHash() => r'd866ec50bdfab7bb9c61b60573ed0b97d5c297be';
 
 final class AuthorFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<Author>, String> {
+    with $FunctionalFamilyOverride<FutureOr<AuthorDomain>, String> {
   AuthorFamily._()
     : super(
         retry: null,

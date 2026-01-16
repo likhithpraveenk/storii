@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/app/models/library_item.dart';
+import 'package:storii/app/models/item.dart';
 import 'package:storii/app/providers/database_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/widgets/expandable_player.dart';
@@ -17,7 +17,7 @@ class CurrentItemNotifier extends _$CurrentItemNotifier {
   AppDatabase get _db => ref.read(databaseProvider);
 
   @override
-  Stream<LibraryItem?> build() async* {
+  Stream<ItemDomain?> build() async* {
     final user = ref.watch(currentUserProvider);
     if (user == null) {
       yield null;

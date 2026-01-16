@@ -6,9 +6,10 @@ import 'package:storii/l10n/l10n.dart';
 enum NavTarget {
   home,
   library,
-  search,
+  series,
   downloads,
   collections,
+  authors,
   more;
 
   NavItem get item => switch (this) {
@@ -22,10 +23,10 @@ enum NavTarget {
       icon: Icons.library_books_outlined,
       selectedIcon: Icons.library_books,
     ),
-    .search => const NavItem(
-      route: AppRoute.search,
-      icon: Icons.search,
-      selectedIcon: Icons.search_rounded,
+    .series => const NavItem(
+      route: AppRoute.series,
+      icon: Icons.stacked_bar_chart_outlined,
+      selectedIcon: Icons.stacked_bar_chart,
     ),
     .downloads => const NavItem(
       route: AppRoute.downloads,
@@ -36,6 +37,11 @@ enum NavTarget {
       route: AppRoute.collections,
       icon: Icons.collections_bookmark_outlined,
       selectedIcon: Icons.collections_bookmark,
+    ),
+    .authors => const NavItem(
+      route: AppRoute.authors,
+      icon: Icons.person_outline,
+      selectedIcon: Icons.person,
     ),
     .more => const NavItem(
       route: AppRoute.more,
@@ -49,9 +55,10 @@ enum NavTarget {
     return switch (this) {
       .home => l.home,
       .library => l.library,
-      .search => l.search,
+      .series => l.series,
       .downloads => l.downloads,
       .collections => l.collections,
+      .authors => l.authors,
       .more => l.more,
     };
   }
@@ -60,7 +67,7 @@ enum NavTarget {
 const defaultNavTargets = <NavTarget>[
   .home,
   .library,
-  .search,
+  .series,
   .downloads,
   .more,
 ];

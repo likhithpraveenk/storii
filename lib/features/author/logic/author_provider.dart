@@ -6,12 +6,11 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 
 part 'author_provider.g.dart';
 
 @riverpod
-Future<Author> author(Ref ref, String authorId) async {
+Future<AuthorDomain> author(Ref ref, String authorId) async {
   final user = await ref.watch(authenticatedUserProvider.future);
   final libraryId = (await ref.watch(activeLibraryProvider.future)).id;
   final api = ref.read(authorApiProvider(user));
@@ -26,7 +25,7 @@ Future<Author> author(Ref ref, String authorId) async {
           'Error fetching author: $error',
           source: 'authorProvider',
           level: .error,
-          stackTrace: s.toLimitedString(),
+          stackTrace: s,
         );
     throw error;
   }

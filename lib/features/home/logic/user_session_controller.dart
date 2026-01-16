@@ -6,7 +6,6 @@ import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 
 part 'user_session_controller.g.dart';
 
@@ -17,7 +16,7 @@ class UserSessionController extends _$UserSessionController {
   @override
   UsesSessionState build() => .idle;
 
-  Future<void> logout(User user) async {
+  Future<void> logout(UserDomain user) async {
     state = .loading;
     final logger = ref.read(logsProvider.notifier);
     try {
@@ -29,17 +28,17 @@ class UserSessionController extends _$UserSessionController {
       await _clearLocalSession(user.id);
     } catch (e, st) {
       logger.log(
-        'Unexpected error during logout for user ${user.username}',
+        'Unexpected error during logout for user ${user.username}:$e',
         source: 'UserSessionController',
         level: .error,
-        stackTrace: '$e\n${st.toLimitedString()}',
+        stackTrace: st,
       );
       await _clearLocalSession(user.id);
     }
     state = .success;
   }
 
-  Future<void> forceLogout(User user, {String? reason}) async {
+  Future<void> forceLogout(UserDomain user, {String? reason}) async {
     state = .loading;
 
     final logger = ref.read(logsProvider.notifier);
@@ -49,11 +48,11 @@ class UserSessionController extends _$UserSessionController {
         source: 'UserSessionController',
       );
       await _clearLocalSession(user.id);
-    } catch (e, _) {
+    } catch (e, st) {
       logger.log(
-        'Unexpected error during force logout for user ${user.username}',
+        'Unexpected error during force logout for user ${user.username}: $e',
         source: 'UserSessionController',
-        stackTrace: 'Error: $e',
+        stackTrace: st,
       );
       await _clearLocalSession(user.id);
     }

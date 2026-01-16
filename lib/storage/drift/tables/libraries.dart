@@ -4,7 +4,7 @@ import 'package:storii/app/models/library.dart';
 import 'package:storii/storage/drift/converters.dart';
 import 'package:storii/storage/drift/tables/servers.dart';
 
-@UseRowClass(Library, generateInsertable: true)
+@UseRowClass(LibraryDomain, generateInsertable: true)
 class Libraries extends Table {
   TextColumn get id => text()();
   TextColumn get serverUrl => text()

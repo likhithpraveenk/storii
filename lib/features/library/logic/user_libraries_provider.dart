@@ -5,12 +5,11 @@ import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 
 part 'user_libraries_provider.g.dart';
 
 @riverpod
-Future<List<Library>> userLibraries(Ref ref) async {
+Future<List<LibraryDomain>> userLibraries(Ref ref) async {
   final user = await ref.watch(authenticatedUserProvider.future);
   final api = ref.read(libraryApiProvider(user));
 
@@ -25,7 +24,7 @@ Future<List<Library>> userLibraries(Ref ref) async {
           'Error fetching user libraries: ${error.message}',
           source: 'UserLibrariesProvider',
           level: .error,
-          stackTrace: st.toLimitedString(),
+          stackTrace: st,
         );
     throw error;
   }

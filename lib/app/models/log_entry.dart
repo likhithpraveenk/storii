@@ -2,14 +2,14 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'log_entry.freezed.dart';
 
-enum LogLevel { info, warning, error }
+enum LogLevelDomain { info, warning, error }
 
 @freezed
 sealed class LogEntry with _$LogEntry {
   const factory LogEntry({
     required DateTime timestamp,
     required String message,
-    required LogLevel level,
+    required LogLevelDomain level,
     String? source,
     String? stackTrace,
   }) = _LogEntry;

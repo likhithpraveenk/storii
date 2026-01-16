@@ -1,28 +1,22 @@
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:drift_flutter/drift_flutter.dart';
-import 'package:storii/api/models/audio/audio_file.dart';
-import 'package:storii/api/models/audio/audio_track.dart';
-import 'package:storii/api/models/books/book_chapter.dart';
-import 'package:storii/api/models/podcasts/podcast_episode.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/models/author.dart';
 import 'package:storii/app/models/enums.dart';
+import 'package:storii/app/models/item.dart';
 import 'package:storii/app/models/library.dart';
-import 'package:storii/app/models/library_item.dart';
 import 'package:storii/app/models/log_entry.dart';
-import 'package:storii/app/models/media_progress.dart';
 import 'package:storii/app/models/series.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/storage/drift/converters.dart';
-import 'package:storii/storage/drift/dao/media_progress_dao.dart';
 import 'package:storii/storage/drift/tables/app_logs.dart';
 import 'package:storii/storage/drift/tables/audiobook_authors.dart';
 import 'package:storii/storage/drift/tables/audiobook_series.dart';
 import 'package:storii/storage/drift/tables/authors.dart';
+import 'package:storii/storage/drift/tables/items.dart';
 import 'package:storii/storage/drift/tables/libraries.dart';
-import 'package:storii/storage/drift/tables/library_items.dart';
-import 'package:storii/storage/drift/tables/media_progress_table.dart';
 import 'package:storii/storage/drift/tables/series_table.dart';
 import 'package:storii/storage/drift/tables/servers.dart';
 import 'package:storii/storage/drift/tables/settings.dart';
@@ -39,13 +33,11 @@ part 'database.g.dart';
     Libraries,
     Audiobooks,
     Podcasts,
-    MediaProgressTable,
     SeriesTable,
     AudiobookSeries,
     Authors,
     AudiobookAuthors,
   ],
-  daos: [MediaProgressDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());

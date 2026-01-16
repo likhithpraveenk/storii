@@ -4,17 +4,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/models/series.dart';
 import 'package:storii/app/navigation/nav_bar/nav_bar.dart';
+import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/ui/server_list_screen.dart';
-import 'package:storii/features/author/ui/author_screen.dart';
+import 'package:storii/features/author/ui/author_detail_screen.dart';
+import 'package:storii/features/author/ui/authors_screen.dart';
 import 'package:storii/features/collections/ui/collections_screen.dart';
 import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/features/home/ui/home_screen.dart';
+import 'package:storii/features/item/ui/item_detail_screen.dart';
 import 'package:storii/features/library/ui/library_screen.dart';
-import 'package:storii/features/library_item/ui/item_detail_screen.dart';
 import 'package:storii/features/logs/ui/logs_screen.dart';
 import 'package:storii/features/more/ui/more_screen.dart';
+import 'package:storii/features/profile/ui/profile_screen.dart';
 import 'package:storii/features/search/ui/search_screen.dart';
+import 'package:storii/features/series/ui/series_detail_screen.dart';
 import 'package:storii/features/series/ui/series_screen.dart';
 import 'package:storii/features/settings/ui/about_screen.dart';
 import 'package:storii/features/settings/ui/nav_setting_screen.dart';
@@ -28,18 +32,19 @@ enum AppRoute {
   library('/library'),
   search('/search'),
   collections('/collections'),
-  collectionsPush('/collections-push'),
   more('/more'),
   settings('/settings'),
   // player('/player'),
   logs('/logs'),
   downloads('/downloads'),
-  downloadsPush('/downloadsPush'),
   about('/about'),
   navigationSettings('/settings/navigation'),
-  item('/item/:id'),
-  series('/series/:id'),
-  authors('/authors/:id');
+  item('/library/:id'),
+  series('/series'),
+  seriesId('/series/:id'),
+  authors('/authors'),
+  authorsId('/authors/:id'),
+  profile('/profile');
 
   final String path;
   const AppRoute(this.path);
@@ -52,6 +57,9 @@ final publicRoutes = [AppRoute.logs.path, AppRoute.about.path, AppRoute.login];
 final routerProvider = Provider<GoRouter>((ref) {
   final user = ref.watch(currentUserProvider);
   final navTargets = ref.watch(navTargetsProvider);
+  final remainingTargets = NavTarget.values
+      .where((target) => !navTargets.contains(target))
+      .toList();
 
   return GoRouter(
     initialLocation: AppRoute.home.path,
@@ -106,15 +114,30 @@ final routerProvider = Provider<GoRouter>((ref) {
               child: switch (target) {
                 .home => const HomeScreen(),
                 .library => const LibraryScreen(),
-                .search => const SearchScreen(),
+                .series => const SeriesScreen(),
                 .downloads => const DownloadsScreen(),
                 .collections => const CollectionsScreen(),
+                .authors => const AuthorsScreen(),
                 .more => const MoreScreen(),
               },
             ),
           );
         }).toList(),
       ),
+      ...remainingTargets.map((target) {
+        return GoRoute(
+          path: target.item.route.path,
+          pageBuilder: (context, state) => NoTransitionPage(
+            child: switch (target) {
+              .series => const SeriesScreen(fromMore: true),
+              .downloads => const DownloadsScreen(fromMore: true),
+              .collections => const CollectionsScreen(fromMore: true),
+              .authors => const AuthorsScreen(fromMore: true),
+              _ => throw StateError('invalid go route $target'),
+            },
+          ),
+        );
+      }),
       GoRoute(
         path: AppRoute.settings.path,
         builder: (context, state) => const SettingsScreen(),
@@ -126,12 +149,8 @@ final routerProvider = Provider<GoRouter>((ref) {
         ],
       ),
       GoRoute(
-        path: AppRoute.collectionsPush.path,
-        builder: (context, state) => const CollectionsScreen(fromMore: true),
-      ),
-      GoRoute(
-        path: AppRoute.downloadsPush.path,
-        builder: (context, state) => const DownloadsScreen(pushed: true),
+        path: AppRoute.search.path,
+        builder: (context, state) => const SearchScreen(),
       ),
       GoRoute(
         path: AppRoute.about.path,
@@ -154,24 +173,28 @@ final routerProvider = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
-        path: AppRoute.authors.path,
+        path: AppRoute.authorsId.path,
         builder: (context, state) {
           final id = state.pathParameters['id'];
           if (id == null) {
             throw StateError('path parameter to authors not passed');
           }
-          return AuthorScreen(id: id);
+          return AuthorDetailScreen(id: id);
         },
       ),
       GoRoute(
-        path: AppRoute.series.path,
+        path: AppRoute.seriesId.path,
         builder: (context, state) {
-          final series = state.extra as Series?;
+          final series = state.extra as SeriesDomain?;
           if (series == null) {
             throw StateError('series not passed');
           }
-          return SeriesScreen(series: series);
+          return SeriesDetailScreen(series: series);
         },
+      ),
+      GoRoute(
+        path: AppRoute.profile.path,
+        builder: (context, state) => const ProfileScreen(),
       ),
     ],
   );

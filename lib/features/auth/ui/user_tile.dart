@@ -15,7 +15,7 @@ import 'package:storii/shared/widgets/app_buttons.dart';
 class UserTile extends ConsumerWidget {
   const UserTile({super.key, required this.user, required this.server});
 
-  final User user;
+  final UserDomain user;
   final Server server;
 
   @override

@@ -12,20 +12,20 @@ part of 'shelf.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$Shelf {
+mixin _$ShelfDomain {
 
  String get id; String get label; ShelfType get type;
-/// Create a copy of Shelf
+/// Create a copy of ShelfDomain
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$ShelfCopyWith<Shelf> get copyWith => _$ShelfCopyWithImpl<Shelf>(this as Shelf, _$identity);
+$ShelfDomainCopyWith<ShelfDomain> get copyWith => _$ShelfDomainCopyWithImpl<ShelfDomain>(this as ShelfDomain, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Shelf&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.type, type) || other.type == type));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ShelfDomain&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.type, type) || other.type == type));
 }
 
 
@@ -34,15 +34,15 @@ int get hashCode => Object.hash(runtimeType,id,label,type);
 
 @override
 String toString() {
-  return 'Shelf(id: $id, label: $label, type: $type)';
+  return 'ShelfDomain(id: $id, label: $label, type: $type)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $ShelfCopyWith<$Res>  {
-  factory $ShelfCopyWith(Shelf value, $Res Function(Shelf) _then) = _$ShelfCopyWithImpl;
+abstract mixin class $ShelfDomainCopyWith<$Res>  {
+  factory $ShelfDomainCopyWith(ShelfDomain value, $Res Function(ShelfDomain) _then) = _$ShelfDomainCopyWithImpl;
 @useResult
 $Res call({
  String id, String label, ShelfType type
@@ -53,14 +53,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$ShelfCopyWithImpl<$Res>
-    implements $ShelfCopyWith<$Res> {
-  _$ShelfCopyWithImpl(this._self, this._then);
+class _$ShelfDomainCopyWithImpl<$Res>
+    implements $ShelfDomainCopyWith<$Res> {
+  _$ShelfDomainCopyWithImpl(this._self, this._then);
 
-  final Shelf _self;
-  final $Res Function(Shelf) _then;
+  final ShelfDomain _self;
+  final $Res Function(ShelfDomain) _then;
 
-/// Create a copy of Shelf
+/// Create a copy of ShelfDomain
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? label = null,Object? type = null,}) {
   return _then(_self.copyWith(
@@ -74,8 +74,8 @@ as ShelfType,
 }
 
 
-/// Adds pattern-matching-related methods to [Shelf].
-extension ShelfPatterns on Shelf {
+/// Adds pattern-matching-related methods to [ShelfDomain].
+extension ShelfDomainPatterns on ShelfDomain {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -88,12 +88,12 @@ extension ShelfPatterns on Shelf {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LibraryItemsShelf value)?  libraryItems,TResult Function( SeriesShelf value)?  series,TResult Function( AuthorShelf value)?  authors,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( ItemShelfDomain value)?  libraryItems,TResult Function( SeriesShelfDomain value)?  series,TResult Function( AuthorShelfDomain value)?  authors,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case LibraryItemsShelf() when libraryItems != null:
-return libraryItems(_that);case SeriesShelf() when series != null:
-return series(_that);case AuthorShelf() when authors != null:
+case ItemShelfDomain() when libraryItems != null:
+return libraryItems(_that);case SeriesShelfDomain() when series != null:
+return series(_that);case AuthorShelfDomain() when authors != null:
 return authors(_that);case _:
   return orElse();
 
@@ -112,12 +112,12 @@ return authors(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LibraryItemsShelf value)  libraryItems,required TResult Function( SeriesShelf value)  series,required TResult Function( AuthorShelf value)  authors,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( ItemShelfDomain value)  libraryItems,required TResult Function( SeriesShelfDomain value)  series,required TResult Function( AuthorShelfDomain value)  authors,}){
 final _that = this;
 switch (_that) {
-case LibraryItemsShelf():
-return libraryItems(_that);case SeriesShelf():
-return series(_that);case AuthorShelf():
+case ItemShelfDomain():
+return libraryItems(_that);case SeriesShelfDomain():
+return series(_that);case AuthorShelfDomain():
 return authors(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -132,12 +132,12 @@ return authors(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LibraryItemsShelf value)?  libraryItems,TResult? Function( SeriesShelf value)?  series,TResult? Function( AuthorShelf value)?  authors,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( ItemShelfDomain value)?  libraryItems,TResult? Function( SeriesShelfDomain value)?  series,TResult? Function( AuthorShelfDomain value)?  authors,}){
 final _that = this;
 switch (_that) {
-case LibraryItemsShelf() when libraryItems != null:
-return libraryItems(_that);case SeriesShelf() when series != null:
-return series(_that);case AuthorShelf() when authors != null:
+case ItemShelfDomain() when libraryItems != null:
+return libraryItems(_that);case SeriesShelfDomain() when series != null:
+return series(_that);case AuthorShelfDomain() when authors != null:
 return authors(_that);case _:
   return null;
 
@@ -155,11 +155,11 @@ return authors(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  String label,  ShelfType type,  List<LibraryItem> items)?  libraryItems,TResult Function( String id,  String label,  ShelfType type,  List<Series> series)?  series,TResult Function( String id,  String label,  ShelfType type,  List<Author> authors)?  authors,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  String label,  ShelfType type,  List<ItemDomain> items)?  libraryItems,TResult Function( String id,  String label,  ShelfType type,  List<SeriesDomain> series)?  series,TResult Function( String id,  String label,  ShelfType type,  List<AuthorDomain> authors)?  authors,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case LibraryItemsShelf() when libraryItems != null:
-return libraryItems(_that.id,_that.label,_that.type,_that.items);case SeriesShelf() when series != null:
-return series(_that.id,_that.label,_that.type,_that.series);case AuthorShelf() when authors != null:
+case ItemShelfDomain() when libraryItems != null:
+return libraryItems(_that.id,_that.label,_that.type,_that.items);case SeriesShelfDomain() when series != null:
+return series(_that.id,_that.label,_that.type,_that.series);case AuthorShelfDomain() when authors != null:
 return authors(_that.id,_that.label,_that.type,_that.authors);case _:
   return orElse();
 
@@ -178,11 +178,11 @@ return authors(_that.id,_that.label,_that.type,_that.authors);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  String label,  ShelfType type,  List<LibraryItem> items)  libraryItems,required TResult Function( String id,  String label,  ShelfType type,  List<Series> series)  series,required TResult Function( String id,  String label,  ShelfType type,  List<Author> authors)  authors,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  String label,  ShelfType type,  List<ItemDomain> items)  libraryItems,required TResult Function( String id,  String label,  ShelfType type,  List<SeriesDomain> series)  series,required TResult Function( String id,  String label,  ShelfType type,  List<AuthorDomain> authors)  authors,}) {final _that = this;
 switch (_that) {
-case LibraryItemsShelf():
-return libraryItems(_that.id,_that.label,_that.type,_that.items);case SeriesShelf():
-return series(_that.id,_that.label,_that.type,_that.series);case AuthorShelf():
+case ItemShelfDomain():
+return libraryItems(_that.id,_that.label,_that.type,_that.items);case SeriesShelfDomain():
+return series(_that.id,_that.label,_that.type,_that.series);case AuthorShelfDomain():
 return authors(_that.id,_that.label,_that.type,_that.authors);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -197,11 +197,11 @@ return authors(_that.id,_that.label,_that.type,_that.authors);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  String label,  ShelfType type,  List<LibraryItem> items)?  libraryItems,TResult? Function( String id,  String label,  ShelfType type,  List<Series> series)?  series,TResult? Function( String id,  String label,  ShelfType type,  List<Author> authors)?  authors,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  String label,  ShelfType type,  List<ItemDomain> items)?  libraryItems,TResult? Function( String id,  String label,  ShelfType type,  List<SeriesDomain> series)?  series,TResult? Function( String id,  String label,  ShelfType type,  List<AuthorDomain> authors)?  authors,}) {final _that = this;
 switch (_that) {
-case LibraryItemsShelf() when libraryItems != null:
-return libraryItems(_that.id,_that.label,_that.type,_that.items);case SeriesShelf() when series != null:
-return series(_that.id,_that.label,_that.type,_that.series);case AuthorShelf() when authors != null:
+case ItemShelfDomain() when libraryItems != null:
+return libraryItems(_that.id,_that.label,_that.type,_that.items);case SeriesShelfDomain() when series != null:
+return series(_that.id,_that.label,_that.type,_that.series);case AuthorShelfDomain() when authors != null:
 return authors(_that.id,_that.label,_that.type,_that.authors);case _:
   return null;
 
@@ -213,32 +213,32 @@ return authors(_that.id,_that.label,_that.type,_that.authors);case _:
 /// @nodoc
 
 
-class LibraryItemsShelf extends Shelf {
-  const LibraryItemsShelf({required this.id, required this.label, required this.type, required final  List<LibraryItem> items}): _items = items,super._();
+class ItemShelfDomain extends ShelfDomain {
+  const ItemShelfDomain({required this.id, required this.label, required this.type, required final  List<ItemDomain> items}): _items = items,super._();
   
 
 @override final  String id;
 @override final  String label;
 @override final  ShelfType type;
- final  List<LibraryItem> _items;
- List<LibraryItem> get items {
+ final  List<ItemDomain> _items;
+ List<ItemDomain> get items {
   if (_items is EqualUnmodifiableListView) return _items;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_items);
 }
 
 
-/// Create a copy of Shelf
+/// Create a copy of ShelfDomain
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$LibraryItemsShelfCopyWith<LibraryItemsShelf> get copyWith => _$LibraryItemsShelfCopyWithImpl<LibraryItemsShelf>(this, _$identity);
+$ItemShelfDomainCopyWith<ItemShelfDomain> get copyWith => _$ItemShelfDomainCopyWithImpl<ItemShelfDomain>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItemsShelf&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other._items, _items));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ItemShelfDomain&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other._items, _items));
 }
 
 
@@ -247,18 +247,18 @@ int get hashCode => Object.hash(runtimeType,id,label,type,const DeepCollectionEq
 
 @override
 String toString() {
-  return 'Shelf.libraryItems(id: $id, label: $label, type: $type, items: $items)';
+  return 'ShelfDomain.libraryItems(id: $id, label: $label, type: $type, items: $items)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $LibraryItemsShelfCopyWith<$Res> implements $ShelfCopyWith<$Res> {
-  factory $LibraryItemsShelfCopyWith(LibraryItemsShelf value, $Res Function(LibraryItemsShelf) _then) = _$LibraryItemsShelfCopyWithImpl;
+abstract mixin class $ItemShelfDomainCopyWith<$Res> implements $ShelfDomainCopyWith<$Res> {
+  factory $ItemShelfDomainCopyWith(ItemShelfDomain value, $Res Function(ItemShelfDomain) _then) = _$ItemShelfDomainCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String label, ShelfType type, List<LibraryItem> items
+ String id, String label, ShelfType type, List<ItemDomain> items
 });
 
 
@@ -266,22 +266,22 @@ $Res call({
 
 }
 /// @nodoc
-class _$LibraryItemsShelfCopyWithImpl<$Res>
-    implements $LibraryItemsShelfCopyWith<$Res> {
-  _$LibraryItemsShelfCopyWithImpl(this._self, this._then);
+class _$ItemShelfDomainCopyWithImpl<$Res>
+    implements $ItemShelfDomainCopyWith<$Res> {
+  _$ItemShelfDomainCopyWithImpl(this._self, this._then);
 
-  final LibraryItemsShelf _self;
-  final $Res Function(LibraryItemsShelf) _then;
+  final ItemShelfDomain _self;
+  final $Res Function(ItemShelfDomain) _then;
 
-/// Create a copy of Shelf
+/// Create a copy of ShelfDomain
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? label = null,Object? type = null,Object? items = null,}) {
-  return _then(LibraryItemsShelf(
+  return _then(ItemShelfDomain(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ShelfType,items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
-as List<LibraryItem>,
+as List<ItemDomain>,
   ));
 }
 
@@ -291,32 +291,32 @@ as List<LibraryItem>,
 /// @nodoc
 
 
-class SeriesShelf extends Shelf {
-  const SeriesShelf({required this.id, required this.label, required this.type, required final  List<Series> series}): _series = series,super._();
+class SeriesShelfDomain extends ShelfDomain {
+  const SeriesShelfDomain({required this.id, required this.label, required this.type, required final  List<SeriesDomain> series}): _series = series,super._();
   
 
 @override final  String id;
 @override final  String label;
 @override final  ShelfType type;
- final  List<Series> _series;
- List<Series> get series {
+ final  List<SeriesDomain> _series;
+ List<SeriesDomain> get series {
   if (_series is EqualUnmodifiableListView) return _series;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_series);
 }
 
 
-/// Create a copy of Shelf
+/// Create a copy of ShelfDomain
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SeriesShelfCopyWith<SeriesShelf> get copyWith => _$SeriesShelfCopyWithImpl<SeriesShelf>(this, _$identity);
+$SeriesShelfDomainCopyWith<SeriesShelfDomain> get copyWith => _$SeriesShelfDomainCopyWithImpl<SeriesShelfDomain>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeriesShelf&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other._series, _series));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeriesShelfDomain&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other._series, _series));
 }
 
 
@@ -325,18 +325,18 @@ int get hashCode => Object.hash(runtimeType,id,label,type,const DeepCollectionEq
 
 @override
 String toString() {
-  return 'Shelf.series(id: $id, label: $label, type: $type, series: $series)';
+  return 'ShelfDomain.series(id: $id, label: $label, type: $type, series: $series)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $SeriesShelfCopyWith<$Res> implements $ShelfCopyWith<$Res> {
-  factory $SeriesShelfCopyWith(SeriesShelf value, $Res Function(SeriesShelf) _then) = _$SeriesShelfCopyWithImpl;
+abstract mixin class $SeriesShelfDomainCopyWith<$Res> implements $ShelfDomainCopyWith<$Res> {
+  factory $SeriesShelfDomainCopyWith(SeriesShelfDomain value, $Res Function(SeriesShelfDomain) _then) = _$SeriesShelfDomainCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String label, ShelfType type, List<Series> series
+ String id, String label, ShelfType type, List<SeriesDomain> series
 });
 
 
@@ -344,22 +344,22 @@ $Res call({
 
 }
 /// @nodoc
-class _$SeriesShelfCopyWithImpl<$Res>
-    implements $SeriesShelfCopyWith<$Res> {
-  _$SeriesShelfCopyWithImpl(this._self, this._then);
+class _$SeriesShelfDomainCopyWithImpl<$Res>
+    implements $SeriesShelfDomainCopyWith<$Res> {
+  _$SeriesShelfDomainCopyWithImpl(this._self, this._then);
 
-  final SeriesShelf _self;
-  final $Res Function(SeriesShelf) _then;
+  final SeriesShelfDomain _self;
+  final $Res Function(SeriesShelfDomain) _then;
 
-/// Create a copy of Shelf
+/// Create a copy of ShelfDomain
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? label = null,Object? type = null,Object? series = null,}) {
-  return _then(SeriesShelf(
+  return _then(SeriesShelfDomain(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ShelfType,series: null == series ? _self._series : series // ignore: cast_nullable_to_non_nullable
-as List<Series>,
+as List<SeriesDomain>,
   ));
 }
 
@@ -369,32 +369,32 @@ as List<Series>,
 /// @nodoc
 
 
-class AuthorShelf extends Shelf {
-  const AuthorShelf({required this.id, required this.label, required this.type, required final  List<Author> authors}): _authors = authors,super._();
+class AuthorShelfDomain extends ShelfDomain {
+  const AuthorShelfDomain({required this.id, required this.label, required this.type, required final  List<AuthorDomain> authors}): _authors = authors,super._();
   
 
 @override final  String id;
 @override final  String label;
 @override final  ShelfType type;
- final  List<Author> _authors;
- List<Author> get authors {
+ final  List<AuthorDomain> _authors;
+ List<AuthorDomain> get authors {
   if (_authors is EqualUnmodifiableListView) return _authors;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_authors);
 }
 
 
-/// Create a copy of Shelf
+/// Create a copy of ShelfDomain
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$AuthorShelfCopyWith<AuthorShelf> get copyWith => _$AuthorShelfCopyWithImpl<AuthorShelf>(this, _$identity);
+$AuthorShelfDomainCopyWith<AuthorShelfDomain> get copyWith => _$AuthorShelfDomainCopyWithImpl<AuthorShelfDomain>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthorShelf&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other._authors, _authors));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthorShelfDomain&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other._authors, _authors));
 }
 
 
@@ -403,18 +403,18 @@ int get hashCode => Object.hash(runtimeType,id,label,type,const DeepCollectionEq
 
 @override
 String toString() {
-  return 'Shelf.authors(id: $id, label: $label, type: $type, authors: $authors)';
+  return 'ShelfDomain.authors(id: $id, label: $label, type: $type, authors: $authors)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $AuthorShelfCopyWith<$Res> implements $ShelfCopyWith<$Res> {
-  factory $AuthorShelfCopyWith(AuthorShelf value, $Res Function(AuthorShelf) _then) = _$AuthorShelfCopyWithImpl;
+abstract mixin class $AuthorShelfDomainCopyWith<$Res> implements $ShelfDomainCopyWith<$Res> {
+  factory $AuthorShelfDomainCopyWith(AuthorShelfDomain value, $Res Function(AuthorShelfDomain) _then) = _$AuthorShelfDomainCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String label, ShelfType type, List<Author> authors
+ String id, String label, ShelfType type, List<AuthorDomain> authors
 });
 
 
@@ -422,22 +422,22 @@ $Res call({
 
 }
 /// @nodoc
-class _$AuthorShelfCopyWithImpl<$Res>
-    implements $AuthorShelfCopyWith<$Res> {
-  _$AuthorShelfCopyWithImpl(this._self, this._then);
+class _$AuthorShelfDomainCopyWithImpl<$Res>
+    implements $AuthorShelfDomainCopyWith<$Res> {
+  _$AuthorShelfDomainCopyWithImpl(this._self, this._then);
 
-  final AuthorShelf _self;
-  final $Res Function(AuthorShelf) _then;
+  final AuthorShelfDomain _self;
+  final $Res Function(AuthorShelfDomain) _then;
 
-/// Create a copy of Shelf
+/// Create a copy of ShelfDomain
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? label = null,Object? type = null,Object? authors = null,}) {
-  return _then(AuthorShelf(
+  return _then(AuthorShelfDomain(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ShelfType,authors: null == authors ? _self._authors : authors // ignore: cast_nullable_to_non_nullable
-as List<Author>,
+as List<AuthorDomain>,
   ));
 }
 

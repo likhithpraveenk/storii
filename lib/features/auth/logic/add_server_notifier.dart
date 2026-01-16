@@ -1,5 +1,4 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/api/endpoints/errors.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
@@ -33,8 +32,6 @@ class AddServerNotifier extends _$AddServerNotifier {
             source: 'AddServerNotifier',
           );
       state = const ServerState(status: .available);
-    } on UnsupportedScheme catch (e) {
-      state = ServerState(status: .unavailable, message: e.message);
     } catch (e, st) {
       final error = AppError.resolve(e);
       ref
@@ -43,7 +40,7 @@ class AddServerNotifier extends _$AddServerNotifier {
             'Server validated failed: ${url.normalizedUri}',
             source: 'AddServerNotifier',
             level: .error,
-            stackTrace: st.toLimitedString(),
+            stackTrace: st,
           );
       state = ServerState(status: .unavailable, message: error.message);
     }

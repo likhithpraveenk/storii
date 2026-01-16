@@ -1,14 +1,12 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/models/to_domain.dart';
 import 'package:storii/app/providers/api_providers.dart';
-import 'package:storii/app/providers/database_provider.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 
 part 'add_user_notifier.g.dart';
 
@@ -57,14 +55,6 @@ class AddUserNotifier extends _$AddUserNotifier {
       await ref
           .read(userSettingsProvider(response.user.id).notifier)
           .setCurrentLibraryId(response.userDefaultLibraryId);
-      await ref
-          .read(databaseProvider)
-          .mediaProgressDao
-          .batchSyncFromLogin(
-            response.user.mediaProgress
-                .map((m) => m.toDomain(response.user.id))
-                .toList(),
-          );
       ref
           .read(logsProvider.notifier)
           .log('Logged in as ${storeUser.username}', source: 'AddUserNotifier');
@@ -78,7 +68,7 @@ class AddUserNotifier extends _$AddUserNotifier {
             'Error while adding $username',
             source: 'AddUserNotifier',
             level: .error,
-            stackTrace: st.toLimitedString(),
+            stackTrace: st,
           );
       state = state.copyWith(status: .error, message: error.message);
     }

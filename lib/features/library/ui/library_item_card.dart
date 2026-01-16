@@ -1,31 +1,19 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/config/image_cache.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/app/models/library_item.dart';
-import 'package:storii/features/library/logic/cover_url_provider.dart';
-import 'package:storii/features/library/ui/placeholder_image.dart';
+import 'package:storii/app/models/item.dart';
+import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
 
 class LibraryItemCard extends ConsumerWidget {
   const LibraryItemCard(this.item, {super.key});
-  final LibraryItem item;
+  final ItemDomain item;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
     final l = AppLocalizations.of(context)!;
-    final coverUrl = ref.watch(
-      coverUrlProvider(
-        item.id,
-        type: .item,
-        updatedAt: item.updatedAt,
-        width: 400,
-      ),
-    );
 
     return Column(
       mainAxisSize: .min,
@@ -49,23 +37,11 @@ class LibraryItemCard extends ConsumerWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  coverUrl != null
-                      ? CachedNetworkImage(
-                          cacheManager: imageCacheManager,
-                          imageUrl: coverUrl,
-                          fit: BoxFit.cover,
-                          placeholder: (_, _) => const PlaceholderImage(),
-                          errorWidget: (context, url, error) {
-                            if (kDebugMode) {
-                              debugPrint('CachedNetworkImage: $error');
-                            }
-                            if (error.toString().contains('404')) {
-                              return PlaceholderImage(label: l.noImage);
-                            }
-                            return PlaceholderImage(label: l.errorImage);
-                          },
-                        )
-                      : PlaceholderImage(label: l.noImage),
+                  ImageWidget(
+                    id: item.id,
+                    type: .item,
+                    updatedAt: item.updatedAt,
+                  ),
                   if (item.progress > 0)
                     Align(
                       alignment: Alignment.bottomCenter,
@@ -129,46 +105,27 @@ class LibraryItemCard extends ConsumerWidget {
 
 class LibraryItemCardListView extends ConsumerWidget {
   const LibraryItemCardListView(this.item, {super.key});
-  final LibraryItem item;
+  final ItemDomain item;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
     final l = AppLocalizations.of(context)!;
-    final coverUrl = ref.watch(
-      coverUrlProvider(
-        item.id,
-        type: .item,
-        updatedAt: item.updatedAt,
-        width: 72,
-      ),
-    );
+
     return Padding(
       padding: const .symmetric(vertical: 8),
       child: ListTile(
         onTap: () => context.push(AppRoute.item.withId(item.id)),
         leading: AspectRatio(
           aspectRatio: 1,
-          child: coverUrl != null
-              ? ClipRRect(
-                  borderRadius: .circular(4),
-                  child: CachedNetworkImage(
-                    cacheManager: imageCacheManager,
-                    imageUrl: coverUrl,
-                    fit: BoxFit.cover,
-                    placeholder: (_, _) => const PlaceholderImage(),
-                    errorWidget: (context, url, error) {
-                      if (kDebugMode) {
-                        debugPrint('CachedNetworkImage: $error');
-                      }
-                      if (error.toString().contains('404')) {
-                        return PlaceholderImage(label: l.noImage);
-                      }
-                      return PlaceholderImage(label: l.errorImage);
-                    },
-                  ),
-                )
-              : PlaceholderImage(label: l.noImage),
+          child: ClipRRect(
+            borderRadius: .circular(4),
+            child: ImageWidget(
+              id: item.id,
+              type: .item,
+              updatedAt: item.updatedAt,
+            ),
+          ),
         ),
         title: Padding(
           padding: const .only(top: 8, left: 4),

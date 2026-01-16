@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:storii/app/models/author.dart';
 import 'package:storii/storage/drift/tables/libraries.dart';
 
-@UseRowClass(Author, generateInsertable: true)
+@UseRowClass(AuthorDomain, generateInsertable: true)
 class Authors extends Table {
   TextColumn get id => text()();
   TextColumn get libraryId =>

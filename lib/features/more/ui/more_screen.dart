@@ -14,14 +14,28 @@ class MoreScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final navTargets = ref.watch(navTargetsProvider);
+    final remainingTargets = NavTarget.values
+        .where((target) => !navTargets.contains(target))
+        .toList();
+
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: .start,
           children: [
-            // TODO: profile page
-            const SizedBox(height: 48),
-            Center(
+            Container(
+              alignment: .centerRight,
+              width: double.infinity,
+              child: IconButton(
+                onPressed: () => context.push(AppRoute.profile.path),
+                icon: const Icon(Icons.query_stats),
+                tooltip: AppLocalizations.of(context)!.profile,
+              ),
+            ),
+            const SizedBox(height: 24),
+            Container(
+              alignment: .center,
+              width: double.infinity,
               child: Image.asset(
                 ImagePaths.appForeground,
                 width: 100,
@@ -29,20 +43,17 @@ class MoreScreen extends ConsumerWidget {
                 color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
-            const SizedBox(height: 48),
+            const SizedBox(height: 24),
             const Divider(),
-            if (!navTargets.contains(NavTarget.downloads))
-              ListTile(
-                onTap: () => context.push(AppRoute.downloadsPush.path),
-                leading: const Icon(Icons.download),
-                title: Text(AppLocalizations.of(context)!.downloads),
-              ),
-            if (!navTargets.contains(NavTarget.collections))
-              ListTile(
-                onTap: () => context.push(AppRoute.collectionsPush.path),
-                leading: const Icon(Icons.collections_bookmark),
-                title: Text(AppLocalizations.of(context)!.collections),
-              ),
+            ...remainingTargets.map((target) {
+              return ListTile(
+                onTap: () {
+                  context.push(target.item.route.path);
+                },
+                leading: Icon(target.item.selectedIcon),
+                title: Text(target.label(context)),
+              );
+            }),
             const Divider(),
             ListTile(
               onTap: () => context.push(AppRoute.settings.path),

@@ -12,20 +12,20 @@ part of 'series.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$Series {
+mixin _$SeriesDomain {
 
- String get id; String get name; String get libraryId; String? get nameIgnorePrefix; String? get description; DateTime? get addedAt; DateTime? get updatedAt; bool get isFinished; List<LibraryItem>? get books; List<String>? get libraryItemIdsFinished;
-/// Create a copy of Series
+ String get id; String get name; String get libraryId; String? get nameIgnorePrefix; String? get description; DateTime? get addedAt; DateTime? get updatedAt; bool get isFinished; List<ItemDomain>? get books; List<String>? get libraryItemIdsFinished;
+/// Create a copy of SeriesDomain
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SeriesCopyWith<Series> get copyWith => _$SeriesCopyWithImpl<Series>(this as Series, _$identity);
+$SeriesDomainCopyWith<SeriesDomain> get copyWith => _$SeriesDomainCopyWithImpl<SeriesDomain>(this as SeriesDomain, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Series&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.nameIgnorePrefix, nameIgnorePrefix) || other.nameIgnorePrefix == nameIgnorePrefix)&&(identical(other.description, description) || other.description == description)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&const DeepCollectionEquality().equals(other.books, books)&&const DeepCollectionEquality().equals(other.libraryItemIdsFinished, libraryItemIdsFinished));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeriesDomain&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.nameIgnorePrefix, nameIgnorePrefix) || other.nameIgnorePrefix == nameIgnorePrefix)&&(identical(other.description, description) || other.description == description)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&const DeepCollectionEquality().equals(other.books, books)&&const DeepCollectionEquality().equals(other.libraryItemIdsFinished, libraryItemIdsFinished));
 }
 
 
@@ -34,18 +34,18 @@ int get hashCode => Object.hash(runtimeType,id,name,libraryId,nameIgnorePrefix,d
 
 @override
 String toString() {
-  return 'Series(id: $id, name: $name, libraryId: $libraryId, nameIgnorePrefix: $nameIgnorePrefix, description: $description, addedAt: $addedAt, updatedAt: $updatedAt, isFinished: $isFinished, books: $books, libraryItemIdsFinished: $libraryItemIdsFinished)';
+  return 'SeriesDomain(id: $id, name: $name, libraryId: $libraryId, nameIgnorePrefix: $nameIgnorePrefix, description: $description, addedAt: $addedAt, updatedAt: $updatedAt, isFinished: $isFinished, books: $books, libraryItemIdsFinished: $libraryItemIdsFinished)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $SeriesCopyWith<$Res>  {
-  factory $SeriesCopyWith(Series value, $Res Function(Series) _then) = _$SeriesCopyWithImpl;
+abstract mixin class $SeriesDomainCopyWith<$Res>  {
+  factory $SeriesDomainCopyWith(SeriesDomain value, $Res Function(SeriesDomain) _then) = _$SeriesDomainCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String libraryId, String? nameIgnorePrefix, String? description, DateTime? addedAt, DateTime? updatedAt, bool isFinished, List<LibraryItem>? books, List<String>? libraryItemIdsFinished
+ String id, String name, String libraryId, String? nameIgnorePrefix, String? description, DateTime? addedAt, DateTime? updatedAt, bool isFinished, List<ItemDomain>? books, List<String>? libraryItemIdsFinished
 });
 
 
@@ -53,14 +53,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$SeriesCopyWithImpl<$Res>
-    implements $SeriesCopyWith<$Res> {
-  _$SeriesCopyWithImpl(this._self, this._then);
+class _$SeriesDomainCopyWithImpl<$Res>
+    implements $SeriesDomainCopyWith<$Res> {
+  _$SeriesDomainCopyWithImpl(this._self, this._then);
 
-  final Series _self;
-  final $Res Function(Series) _then;
+  final SeriesDomain _self;
+  final $Res Function(SeriesDomain) _then;
 
-/// Create a copy of Series
+/// Create a copy of SeriesDomain
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? libraryId = null,Object? nameIgnorePrefix = freezed,Object? description = freezed,Object? addedAt = freezed,Object? updatedAt = freezed,Object? isFinished = null,Object? books = freezed,Object? libraryItemIdsFinished = freezed,}) {
   return _then(_self.copyWith(
@@ -73,7 +73,7 @@ as String?,addedAt: freezed == addedAt ? _self.addedAt : addedAt // ignore: cast
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,isFinished: null == isFinished ? _self.isFinished : isFinished // ignore: cast_nullable_to_non_nullable
 as bool,books: freezed == books ? _self.books : books // ignore: cast_nullable_to_non_nullable
-as List<LibraryItem>?,libraryItemIdsFinished: freezed == libraryItemIdsFinished ? _self.libraryItemIdsFinished : libraryItemIdsFinished // ignore: cast_nullable_to_non_nullable
+as List<ItemDomain>?,libraryItemIdsFinished: freezed == libraryItemIdsFinished ? _self.libraryItemIdsFinished : libraryItemIdsFinished // ignore: cast_nullable_to_non_nullable
 as List<String>?,
   ));
 }
@@ -81,8 +81,8 @@ as List<String>?,
 }
 
 
-/// Adds pattern-matching-related methods to [Series].
-extension SeriesPatterns on Series {
+/// Adds pattern-matching-related methods to [SeriesDomain].
+extension SeriesDomainPatterns on SeriesDomain {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -95,10 +95,10 @@ extension SeriesPatterns on Series {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Series value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SeriesDomain value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Series() when $default != null:
+case _SeriesDomain() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -117,10 +117,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Series value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SeriesDomain value)  $default,){
 final _that = this;
 switch (_that) {
-case _Series():
+case _SeriesDomain():
 return $default(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -135,10 +135,10 @@ return $default(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Series value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SeriesDomain value)?  $default,){
 final _that = this;
 switch (_that) {
-case _Series() when $default != null:
+case _SeriesDomain() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -156,9 +156,9 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String libraryId,  String? nameIgnorePrefix,  String? description,  DateTime? addedAt,  DateTime? updatedAt,  bool isFinished,  List<LibraryItem>? books,  List<String>? libraryItemIdsFinished)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String libraryId,  String? nameIgnorePrefix,  String? description,  DateTime? addedAt,  DateTime? updatedAt,  bool isFinished,  List<ItemDomain>? books,  List<String>? libraryItemIdsFinished)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Series() when $default != null:
+case _SeriesDomain() when $default != null:
 return $default(_that.id,_that.name,_that.libraryId,_that.nameIgnorePrefix,_that.description,_that.addedAt,_that.updatedAt,_that.isFinished,_that.books,_that.libraryItemIdsFinished);case _:
   return orElse();
 
@@ -177,9 +177,9 @@ return $default(_that.id,_that.name,_that.libraryId,_that.nameIgnorePrefix,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String libraryId,  String? nameIgnorePrefix,  String? description,  DateTime? addedAt,  DateTime? updatedAt,  bool isFinished,  List<LibraryItem>? books,  List<String>? libraryItemIdsFinished)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String libraryId,  String? nameIgnorePrefix,  String? description,  DateTime? addedAt,  DateTime? updatedAt,  bool isFinished,  List<ItemDomain>? books,  List<String>? libraryItemIdsFinished)  $default,) {final _that = this;
 switch (_that) {
-case _Series():
+case _SeriesDomain():
 return $default(_that.id,_that.name,_that.libraryId,_that.nameIgnorePrefix,_that.description,_that.addedAt,_that.updatedAt,_that.isFinished,_that.books,_that.libraryItemIdsFinished);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -194,9 +194,9 @@ return $default(_that.id,_that.name,_that.libraryId,_that.nameIgnorePrefix,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String libraryId,  String? nameIgnorePrefix,  String? description,  DateTime? addedAt,  DateTime? updatedAt,  bool isFinished,  List<LibraryItem>? books,  List<String>? libraryItemIdsFinished)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String libraryId,  String? nameIgnorePrefix,  String? description,  DateTime? addedAt,  DateTime? updatedAt,  bool isFinished,  List<ItemDomain>? books,  List<String>? libraryItemIdsFinished)?  $default,) {final _that = this;
 switch (_that) {
-case _Series() when $default != null:
+case _SeriesDomain() when $default != null:
 return $default(_that.id,_that.name,_that.libraryId,_that.nameIgnorePrefix,_that.description,_that.addedAt,_that.updatedAt,_that.isFinished,_that.books,_that.libraryItemIdsFinished);case _:
   return null;
 
@@ -208,8 +208,8 @@ return $default(_that.id,_that.name,_that.libraryId,_that.nameIgnorePrefix,_that
 /// @nodoc
 
 
-class _Series implements Series {
-  const _Series({required this.id, required this.name, required this.libraryId, this.nameIgnorePrefix, this.description, this.addedAt, this.updatedAt, this.isFinished = false, final  List<LibraryItem>? books, final  List<String>? libraryItemIdsFinished}): _books = books,_libraryItemIdsFinished = libraryItemIdsFinished;
+class _SeriesDomain implements SeriesDomain {
+  const _SeriesDomain({required this.id, required this.name, required this.libraryId, this.nameIgnorePrefix, this.description, this.addedAt, this.updatedAt, this.isFinished = false, final  List<ItemDomain>? books, final  List<String>? libraryItemIdsFinished}): _books = books,_libraryItemIdsFinished = libraryItemIdsFinished;
   
 
 @override final  String id;
@@ -220,8 +220,8 @@ class _Series implements Series {
 @override final  DateTime? addedAt;
 @override final  DateTime? updatedAt;
 @override@JsonKey() final  bool isFinished;
- final  List<LibraryItem>? _books;
-@override List<LibraryItem>? get books {
+ final  List<ItemDomain>? _books;
+@override List<ItemDomain>? get books {
   final value = _books;
   if (value == null) return null;
   if (_books is EqualUnmodifiableListView) return _books;
@@ -239,17 +239,17 @@ class _Series implements Series {
 }
 
 
-/// Create a copy of Series
+/// Create a copy of SeriesDomain
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SeriesCopyWith<_Series> get copyWith => __$SeriesCopyWithImpl<_Series>(this, _$identity);
+_$SeriesDomainCopyWith<_SeriesDomain> get copyWith => __$SeriesDomainCopyWithImpl<_SeriesDomain>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Series&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.nameIgnorePrefix, nameIgnorePrefix) || other.nameIgnorePrefix == nameIgnorePrefix)&&(identical(other.description, description) || other.description == description)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&const DeepCollectionEquality().equals(other._books, _books)&&const DeepCollectionEquality().equals(other._libraryItemIdsFinished, _libraryItemIdsFinished));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeriesDomain&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.nameIgnorePrefix, nameIgnorePrefix) || other.nameIgnorePrefix == nameIgnorePrefix)&&(identical(other.description, description) || other.description == description)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&const DeepCollectionEquality().equals(other._books, _books)&&const DeepCollectionEquality().equals(other._libraryItemIdsFinished, _libraryItemIdsFinished));
 }
 
 
@@ -258,18 +258,18 @@ int get hashCode => Object.hash(runtimeType,id,name,libraryId,nameIgnorePrefix,d
 
 @override
 String toString() {
-  return 'Series(id: $id, name: $name, libraryId: $libraryId, nameIgnorePrefix: $nameIgnorePrefix, description: $description, addedAt: $addedAt, updatedAt: $updatedAt, isFinished: $isFinished, books: $books, libraryItemIdsFinished: $libraryItemIdsFinished)';
+  return 'SeriesDomain(id: $id, name: $name, libraryId: $libraryId, nameIgnorePrefix: $nameIgnorePrefix, description: $description, addedAt: $addedAt, updatedAt: $updatedAt, isFinished: $isFinished, books: $books, libraryItemIdsFinished: $libraryItemIdsFinished)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SeriesCopyWith<$Res> implements $SeriesCopyWith<$Res> {
-  factory _$SeriesCopyWith(_Series value, $Res Function(_Series) _then) = __$SeriesCopyWithImpl;
+abstract mixin class _$SeriesDomainCopyWith<$Res> implements $SeriesDomainCopyWith<$Res> {
+  factory _$SeriesDomainCopyWith(_SeriesDomain value, $Res Function(_SeriesDomain) _then) = __$SeriesDomainCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String libraryId, String? nameIgnorePrefix, String? description, DateTime? addedAt, DateTime? updatedAt, bool isFinished, List<LibraryItem>? books, List<String>? libraryItemIdsFinished
+ String id, String name, String libraryId, String? nameIgnorePrefix, String? description, DateTime? addedAt, DateTime? updatedAt, bool isFinished, List<ItemDomain>? books, List<String>? libraryItemIdsFinished
 });
 
 
@@ -277,17 +277,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$SeriesCopyWithImpl<$Res>
-    implements _$SeriesCopyWith<$Res> {
-  __$SeriesCopyWithImpl(this._self, this._then);
+class __$SeriesDomainCopyWithImpl<$Res>
+    implements _$SeriesDomainCopyWith<$Res> {
+  __$SeriesDomainCopyWithImpl(this._self, this._then);
 
-  final _Series _self;
-  final $Res Function(_Series) _then;
+  final _SeriesDomain _self;
+  final $Res Function(_SeriesDomain) _then;
 
-/// Create a copy of Series
+/// Create a copy of SeriesDomain
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? libraryId = null,Object? nameIgnorePrefix = freezed,Object? description = freezed,Object? addedAt = freezed,Object? updatedAt = freezed,Object? isFinished = null,Object? books = freezed,Object? libraryItemIdsFinished = freezed,}) {
-  return _then(_Series(
+  return _then(_SeriesDomain(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,libraryId: null == libraryId ? _self.libraryId : libraryId // ignore: cast_nullable_to_non_nullable
@@ -297,7 +297,7 @@ as String?,addedAt: freezed == addedAt ? _self.addedAt : addedAt // ignore: cast
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,isFinished: null == isFinished ? _self.isFinished : isFinished // ignore: cast_nullable_to_non_nullable
 as bool,books: freezed == books ? _self._books : books // ignore: cast_nullable_to_non_nullable
-as List<LibraryItem>?,libraryItemIdsFinished: freezed == libraryItemIdsFinished ? _self._libraryItemIdsFinished : libraryItemIdsFinished // ignore: cast_nullable_to_non_nullable
+as List<ItemDomain>?,libraryItemIdsFinished: freezed == libraryItemIdsFinished ? _self._libraryItemIdsFinished : libraryItemIdsFinished // ignore: cast_nullable_to_non_nullable
 as List<String>?,
   ));
 }

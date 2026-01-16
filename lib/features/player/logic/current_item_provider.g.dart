@@ -13,7 +13,7 @@ part of 'current_item_provider.dart';
 final currentItemProvider = CurrentItemNotifierProvider._();
 
 final class CurrentItemNotifierProvider
-    extends $StreamNotifierProvider<CurrentItemNotifier, LibraryItem?> {
+    extends $StreamNotifierProvider<CurrentItemNotifier, ItemDomain?> {
   CurrentItemNotifierProvider._()
     : super(
         from: null,
@@ -34,19 +34,19 @@ final class CurrentItemNotifierProvider
 }
 
 String _$currentItemNotifierHash() =>
-    r'c8f33761aeed78507308fa0a710f80f72d15beab';
+    r'50ca86cb4f1d14bcdeb8a9c0651e2d134dd82bb8';
 
-abstract class _$CurrentItemNotifier extends $StreamNotifier<LibraryItem?> {
-  Stream<LibraryItem?> build();
+abstract class _$CurrentItemNotifier extends $StreamNotifier<ItemDomain?> {
+  Stream<ItemDomain?> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<LibraryItem?>, LibraryItem?>;
+    final ref = this.ref as $Ref<AsyncValue<ItemDomain?>, ItemDomain?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<LibraryItem?>, LibraryItem?>,
-              AsyncValue<LibraryItem?>,
+              AnyNotifier<AsyncValue<ItemDomain?>, ItemDomain?>,
+              AsyncValue<ItemDomain?>,
               Object?,
               Object?
             >;

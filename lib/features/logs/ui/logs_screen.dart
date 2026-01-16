@@ -26,7 +26,7 @@ class LogsScreen extends ConsumerWidget {
         title: Text(l.logs, style: textTheme.titleLarge),
         leading: IconButton(
           onPressed: () => context.pop(),
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(Icons.arrow_back),
         ),
         actions: [
           IconButton(

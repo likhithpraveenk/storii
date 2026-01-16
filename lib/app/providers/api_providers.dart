@@ -1,15 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/api/client/api_client.dart';
-import 'package:storii/api/client/base_api_client.dart';
-import 'package:storii/api/endpoints/auth_api.dart';
-import 'package:storii/api/endpoints/author_api.dart';
-import 'package:storii/api/endpoints/item_api.dart';
-import 'package:storii/api/endpoints/library_api.dart';
-import 'package:storii/api/endpoints/me_api.dart';
-import 'package:storii/api/endpoints/server_api.dart';
-import 'package:storii/api/endpoints/sessions_api.dart';
-import 'package:storii/api/endpoints/socket_api.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
@@ -18,7 +9,7 @@ import 'package:storii/features/home/logic/user_session_controller.dart';
 part 'api_providers.g.dart';
 
 @Riverpod(keepAlive: true)
-ApiClient apiClient(Ref ref, User user) {
+ApiClient apiClient(Ref ref, UserDomain user) {
   final tokenService = ref.watch(tokenProvider);
   final logNotifier = ref.read(logsProvider.notifier);
 
@@ -72,43 +63,43 @@ AuthApi authApi(Ref ref, Uri baseUrl) {
 }
 
 @Riverpod(keepAlive: true)
-ServerApi serverApi(Ref ref, User user) {
+ServerApi serverApi(Ref ref, UserDomain user) {
   final apiClient = ref.watch(apiClientProvider(user));
   return ServerApi(apiClient);
 }
 
 @Riverpod(keepAlive: true)
-LibraryApi libraryApi(Ref ref, User user) {
+LibraryApi libraryApi(Ref ref, UserDomain user) {
   final apiClient = ref.watch(apiClientProvider(user));
   return LibraryApi(apiClient);
 }
 
 @Riverpod(keepAlive: true)
-ItemApi itemApi(Ref ref, User user) {
+ItemApi itemApi(Ref ref, UserDomain user) {
   final apiClient = ref.watch(apiClientProvider(user));
   return ItemApi(apiClient);
 }
 
 @Riverpod(keepAlive: true)
-AuthorApi authorApi(Ref ref, User user) {
+AuthorApi authorApi(Ref ref, UserDomain user) {
   final apiClient = ref.watch(apiClientProvider(user));
   return AuthorApi(apiClient);
 }
 
 @Riverpod(keepAlive: true)
-MeApi meApi(Ref ref, User user) {
+MeApi meApi(Ref ref, UserDomain user) {
   final apiClient = ref.watch(apiClientProvider(user));
   return MeApi(apiClient);
 }
 
 @Riverpod(keepAlive: true)
-SessionsApi sessionsApi(Ref ref, User user) {
+SessionsApi sessionsApi(Ref ref, UserDomain user) {
   final apiClient = ref.watch(apiClientProvider(user));
   return SessionsApi(apiClient);
 }
 
 @Riverpod(keepAlive: true)
-Future<SocketApi> socketApi(Ref ref, User user) async {
+Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
   final apiClient = ref.watch(apiClientProvider(user));
   final token = await apiClient.getAccessToken?.call();
   if (token != null) {

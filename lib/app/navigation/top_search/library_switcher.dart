@@ -10,7 +10,7 @@ import 'package:storii/shared/widgets/waveform.dart';
 class LibrarySwitcher extends ConsumerWidget {
   const LibrarySwitcher({super.key, required this.user});
 
-  final User user;
+  final UserDomain user;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

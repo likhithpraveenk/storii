@@ -35,7 +35,7 @@ class AboutScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => context.pop(),
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(Icons.arrow_back),
         ),
         title: Text(l.about, style: textTheme.titleLarge),
       ),

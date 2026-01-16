@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:storii/storage/drift/tables/authors.dart';
+import 'package:storii/storage/drift/tables/items.dart';
 import 'package:storii/storage/drift/tables/libraries.dart';
-import 'package:storii/storage/drift/tables/library_items.dart';
 
 @DataClassName('AudiobookAuthorsLink')
 class AudiobookAuthors extends Table {

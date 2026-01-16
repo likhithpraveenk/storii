@@ -41,17 +41,20 @@ class LogsNotifier extends _$LogsNotifier {
   Future<void> log(
     String message, {
     String? source,
-    LogLevel level = .info,
-    String? stackTrace,
+    LogLevelDomain level = .info,
+    StackTrace? stackTrace,
   }) async {
     try {
+      if (kDebugMode) {
+        debugPrint('LogsNotifier: $message, $source\n$stackTrace');
+      }
       await _db.managers.appLogs.create(
         (_) => LogEntry(
           timestamp: DateTime.now(),
           message: message,
           source: source,
           level: level,
-          stackTrace: stackTrace,
+          stackTrace: stackTrace?.toLimitedString(),
         ).toInsertable(),
       );
     } catch (_) {}
@@ -66,7 +69,7 @@ class LogsNotifier extends _$LogsNotifier {
           details.exceptionAsString(),
           level: .error,
           source: 'FlutterError',
-          stackTrace: details.stack?.toLimitedString(),
+          stackTrace: details.stack,
         );
         if (kDebugMode) {
           consoleLogger.f(
@@ -81,7 +84,7 @@ class LogsNotifier extends _$LogsNotifier {
         log(
           e.toString(),
           level: .error,
-          stackTrace: s.toLimitedString(),
+          stackTrace: s,
           source: 'PlatformDispatcher',
         );
         if (kDebugMode) {

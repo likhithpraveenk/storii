@@ -66,18 +66,12 @@ class _ExpandableHtmlState extends State<ExpandableHtml> {
                 ? null
                 : widget.collapsedHeight,
             width: double.infinity,
-            child: GestureDetector(
-              onTap: () => setState(() => isExpanded = !isExpanded),
-              child: Html(
-                key: _contentKey,
-                data: widget.data,
-                style: {
-                  'body': Style(
-                    margin: Margins.zero,
-                    padding: HtmlPaddings.zero,
-                  ),
-                },
-              ),
+            child: Html(
+              key: _contentKey,
+              data: widget.data,
+              style: {
+                'body': Style(margin: Margins.zero, padding: HtmlPaddings.zero),
+              },
             ),
           ),
         ),

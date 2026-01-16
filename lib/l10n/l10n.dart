@@ -561,6 +561,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Books'**
   String get books;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
 }
 
 class _AppLocalizationsDelegate

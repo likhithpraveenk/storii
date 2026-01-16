@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:storii/app/models/library_item.dart';
+import 'package:storii/app/models/item.dart';
 import 'package:storii/l10n/l10n.dart';
 
 class MiniPlayer extends StatelessWidget {
   const MiniPlayer({super.key, required this.item});
 
-  final LibraryItem item;
+  final ItemDomain item;
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;

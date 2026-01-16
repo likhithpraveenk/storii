@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/models/library_item.dart';
+import 'package:storii/app/models/item.dart';
 import 'package:storii/l10n/l10n.dart';
 
 class FullPlayer extends ConsumerWidget {
   const FullPlayer({super.key, required this.item, required this.ratio});
 
-  final LibraryItem item;
+  final ItemDomain item;
   final double ratio;
 
   @override

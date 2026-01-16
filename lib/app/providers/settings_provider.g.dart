@@ -12,7 +12,7 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
   localeCode: json['localeCode'] as String? ?? 'en',
   currentUser: json['currentUser'] == null
       ? null
-      : User.fromJson(json['currentUser'] as Map<String, dynamic>),
+      : UserDomain.fromJson(json['currentUser'] as Map<String, dynamic>),
   logRetention: json['logRetention'] == null
       ? const Duration(days: 2)
       : Duration(microseconds: (json['logRetention'] as num).toInt()),
@@ -24,6 +24,8 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
       defaultNavTargets,
   fontFamily: json['fontFamily'] as String? ?? AppFonts.defaultFont,
   fontScale: (json['fontScale'] as num?)?.toDouble() ?? 1,
+  defaultItemsLimit: (json['defaultItemsLimit'] as num?)?.toInt() ?? 50,
+  defaultSeriesLimit: (json['defaultSeriesLimit'] as num?)?.toInt() ?? 20,
 );
 
 Map<String, dynamic> _$AppSettingsToJson(
@@ -31,12 +33,14 @@ Map<String, dynamic> _$AppSettingsToJson(
 ) => <String, dynamic>{
   'theme': _$AppThemeEnumMap[instance.theme]!,
   'localeCode': instance.localeCode,
-  'currentUser': instance.currentUser?.toJson(),
+  'currentUser': ?instance.currentUser?.toJson(),
   'logRetention': instance.logRetention.inMicroseconds,
   'dateTimeFormat': instance.dateTimeFormat,
   'navTargets': instance.navTargets.map((e) => _$NavTargetEnumMap[e]!).toList(),
-  'fontFamily': instance.fontFamily,
+  'fontFamily': ?instance.fontFamily,
   'fontScale': instance.fontScale,
+  'defaultItemsLimit': instance.defaultItemsLimit,
+  'defaultSeriesLimit': instance.defaultSeriesLimit,
 };
 
 const _$AppThemeEnumMap = {
@@ -49,9 +53,10 @@ const _$AppThemeEnumMap = {
 const _$NavTargetEnumMap = {
   NavTarget.home: 'home',
   NavTarget.library: 'library',
-  NavTarget.search: 'search',
+  NavTarget.series: 'series',
   NavTarget.downloads: 'downloads',
   NavTarget.collections: 'collections',
+  NavTarget.authors: 'authors',
   NavTarget.more: 'more',
 };
 
@@ -69,8 +74,8 @@ _UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$UserSettingsToJson(_UserSettings instance) =>
     <String, dynamic>{
       'userId': instance.userId,
-      'currentLibraryId': instance.currentLibraryId,
-      'currentItemId': instance.currentItemId,
+      'currentLibraryId': ?instance.currentLibraryId,
+      'currentItemId': ?instance.currentItemId,
       'isFullySynced': instance.isFullySynced,
       'allGridCount': instance.allGridCount,
       'seriesGridCount': instance.seriesGridCount,
@@ -245,7 +250,7 @@ extension AppSettingsSetters on AppSettingsNotifier {
   Future<void> setLocaleCode(String value) =>
       _save(state.copyWith(localeCode: value));
 
-  Future<void> setCurrentUser(User? value) =>
+  Future<void> setCurrentUser(UserDomain? value) =>
       _save(state.copyWith(currentUser: value));
 
   Future<void> setLogRetention(Duration value) =>
@@ -262,6 +267,12 @@ extension AppSettingsSetters on AppSettingsNotifier {
 
   Future<void> setFontScale(double value) =>
       _save(state.copyWith(fontScale: value));
+
+  Future<void> setDefaultItemsLimit(int value) =>
+      _save(state.copyWith(defaultItemsLimit: value));
+
+  Future<void> setDefaultSeriesLimit(int value) =>
+      _save(state.copyWith(defaultSeriesLimit: value));
 }
 
 final themeProvider = Provider<AppTheme>(
@@ -272,7 +283,7 @@ final localeCodeProvider = Provider<String>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.localeCode)),
 );
 
-final currentUserProvider = Provider<User?>(
+final currentUserProvider = Provider<UserDomain?>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.currentUser)),
 );
 
@@ -294,6 +305,14 @@ final fontFamilyProvider = Provider<String?>(
 
 final fontScaleProvider = Provider<double>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.fontScale)),
+);
+
+final defaultItemsLimitProvider = Provider<int>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.defaultItemsLimit)),
+);
+
+final defaultSeriesLimitProvider = Provider<int>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.defaultSeriesLimit)),
 );
 
 // **************************************************************************

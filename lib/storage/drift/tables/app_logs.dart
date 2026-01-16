@@ -6,7 +6,7 @@ class AppLogs extends Table {
   DateTimeColumn get timestamp => dateTime()();
   TextColumn get message => text()();
   TextColumn get level =>
-      text().map(const EnumNameConverter(LogLevel.values))();
+      text().map(const EnumNameConverter(LogLevelDomain.values))();
   TextColumn get source => text().nullable()();
   TextColumn get stackTrace => text().nullable()();
 

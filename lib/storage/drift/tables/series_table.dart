@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:storii/app/models/series.dart';
 import 'package:storii/storage/drift/tables/libraries.dart';
 
-@UseRowClass(Series, generateInsertable: true)
+@UseRowClass(SeriesDomain, generateInsertable: true)
 class SeriesTable extends Table {
   TextColumn get id => text()();
   TextColumn get libraryId =>

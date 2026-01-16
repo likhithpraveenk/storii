@@ -4,13 +4,14 @@ targets:
       json_serializable:
         options:
           explicit_to_json: true
+          include_if_null: false
         generate_for:
-          - lib/api/models/**
+          - lib/abs_api/models/**
           - lib/app/models/**
           - lib/**/settings_provider.dart
       freezed:
         generate_for:
-          - lib/api/models/**
+          - lib/abs_api/models/**
           - lib/app/models/**
           - lib/features/**/logic/**
           - lib/**/settings_provider.dart

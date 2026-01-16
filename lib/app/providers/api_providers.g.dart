@@ -17,7 +17,7 @@ final class ApiClientProvider
     with $Provider<ApiClient> {
   ApiClientProvider._({
     required ApiClientFamily super.from,
-    required User super.argument,
+    required UserDomain super.argument,
   }) : super(
          retry: null,
          name: r'apiClientProvider',
@@ -43,7 +43,7 @@ final class ApiClientProvider
 
   @override
   ApiClient create(Ref ref) {
-    final argument = this.argument as User;
+    final argument = this.argument as UserDomain;
     return apiClient(ref, argument);
   }
 
@@ -66,10 +66,10 @@ final class ApiClientProvider
   }
 }
 
-String _$apiClientHash() => r'4b39ad64c15792e3494cf2c6984424be448ae90b';
+String _$apiClientHash() => r'36daf31a9d7fa79aa0dff8e8c9e9230a1aae5046';
 
 final class ApiClientFamily extends $Family
-    with $FunctionalFamilyOverride<ApiClient, User> {
+    with $FunctionalFamilyOverride<ApiClient, UserDomain> {
   ApiClientFamily._()
     : super(
         retry: null,
@@ -79,7 +79,7 @@ final class ApiClientFamily extends $Family
         isAutoDispose: false,
       );
 
-  ApiClientProvider call(User user) =>
+  ApiClientProvider call(UserDomain user) =>
       ApiClientProvider._(argument: user, from: this);
 
   @override
@@ -171,7 +171,7 @@ final class ServerApiProvider
     with $Provider<ServerApi> {
   ServerApiProvider._({
     required ServerApiFamily super.from,
-    required User super.argument,
+    required UserDomain super.argument,
   }) : super(
          retry: null,
          name: r'serverApiProvider',
@@ -197,7 +197,7 @@ final class ServerApiProvider
 
   @override
   ServerApi create(Ref ref) {
-    final argument = this.argument as User;
+    final argument = this.argument as UserDomain;
     return serverApi(ref, argument);
   }
 
@@ -220,10 +220,10 @@ final class ServerApiProvider
   }
 }
 
-String _$serverApiHash() => r'e24d5c40d6ce240fdaf91cd211acf38a43703287';
+String _$serverApiHash() => r'74fc036dcd617bb5c9d388375448dca4fc33aaad';
 
 final class ServerApiFamily extends $Family
-    with $FunctionalFamilyOverride<ServerApi, User> {
+    with $FunctionalFamilyOverride<ServerApi, UserDomain> {
   ServerApiFamily._()
     : super(
         retry: null,
@@ -233,7 +233,7 @@ final class ServerApiFamily extends $Family
         isAutoDispose: false,
       );
 
-  ServerApiProvider call(User user) =>
+  ServerApiProvider call(UserDomain user) =>
       ServerApiProvider._(argument: user, from: this);
 
   @override
@@ -248,7 +248,7 @@ final class LibraryApiProvider
     with $Provider<LibraryApi> {
   LibraryApiProvider._({
     required LibraryApiFamily super.from,
-    required User super.argument,
+    required UserDomain super.argument,
   }) : super(
          retry: null,
          name: r'libraryApiProvider',
@@ -274,7 +274,7 @@ final class LibraryApiProvider
 
   @override
   LibraryApi create(Ref ref) {
-    final argument = this.argument as User;
+    final argument = this.argument as UserDomain;
     return libraryApi(ref, argument);
   }
 
@@ -297,10 +297,10 @@ final class LibraryApiProvider
   }
 }
 
-String _$libraryApiHash() => r'788dc29edaee27afbda7cbf60d9c0c50375d6eb4';
+String _$libraryApiHash() => r'74ac2fa849095d406f54b4afe4b416d57611f767';
 
 final class LibraryApiFamily extends $Family
-    with $FunctionalFamilyOverride<LibraryApi, User> {
+    with $FunctionalFamilyOverride<LibraryApi, UserDomain> {
   LibraryApiFamily._()
     : super(
         retry: null,
@@ -310,7 +310,7 @@ final class LibraryApiFamily extends $Family
         isAutoDispose: false,
       );
 
-  LibraryApiProvider call(User user) =>
+  LibraryApiProvider call(UserDomain user) =>
       LibraryApiProvider._(argument: user, from: this);
 
   @override
@@ -325,7 +325,7 @@ final class ItemApiProvider
     with $Provider<ItemApi> {
   ItemApiProvider._({
     required ItemApiFamily super.from,
-    required User super.argument,
+    required UserDomain super.argument,
   }) : super(
          retry: null,
          name: r'itemApiProvider',
@@ -351,7 +351,7 @@ final class ItemApiProvider
 
   @override
   ItemApi create(Ref ref) {
-    final argument = this.argument as User;
+    final argument = this.argument as UserDomain;
     return itemApi(ref, argument);
   }
 
@@ -374,10 +374,10 @@ final class ItemApiProvider
   }
 }
 
-String _$itemApiHash() => r'3cb2a516a26ec3c3ded3d7542862f41837348668';
+String _$itemApiHash() => r'd054bf2cab1918995ecd40fbb99a193690583744';
 
 final class ItemApiFamily extends $Family
-    with $FunctionalFamilyOverride<ItemApi, User> {
+    with $FunctionalFamilyOverride<ItemApi, UserDomain> {
   ItemApiFamily._()
     : super(
         retry: null,
@@ -387,7 +387,7 @@ final class ItemApiFamily extends $Family
         isAutoDispose: false,
       );
 
-  ItemApiProvider call(User user) =>
+  ItemApiProvider call(UserDomain user) =>
       ItemApiProvider._(argument: user, from: this);
 
   @override
@@ -402,7 +402,7 @@ final class AuthorApiProvider
     with $Provider<AuthorApi> {
   AuthorApiProvider._({
     required AuthorApiFamily super.from,
-    required User super.argument,
+    required UserDomain super.argument,
   }) : super(
          retry: null,
          name: r'authorApiProvider',
@@ -428,7 +428,7 @@ final class AuthorApiProvider
 
   @override
   AuthorApi create(Ref ref) {
-    final argument = this.argument as User;
+    final argument = this.argument as UserDomain;
     return authorApi(ref, argument);
   }
 
@@ -451,10 +451,10 @@ final class AuthorApiProvider
   }
 }
 
-String _$authorApiHash() => r'c65a725bb168a106f4e66be39d617912e1d93045';
+String _$authorApiHash() => r'c64c6a14bf160c9571d050aafb4688ce1c95d2d4';
 
 final class AuthorApiFamily extends $Family
-    with $FunctionalFamilyOverride<AuthorApi, User> {
+    with $FunctionalFamilyOverride<AuthorApi, UserDomain> {
   AuthorApiFamily._()
     : super(
         retry: null,
@@ -464,7 +464,7 @@ final class AuthorApiFamily extends $Family
         isAutoDispose: false,
       );
 
-  AuthorApiProvider call(User user) =>
+  AuthorApiProvider call(UserDomain user) =>
       AuthorApiProvider._(argument: user, from: this);
 
   @override
@@ -478,7 +478,7 @@ final class MeApiProvider extends $FunctionalProvider<MeApi, MeApi, MeApi>
     with $Provider<MeApi> {
   MeApiProvider._({
     required MeApiFamily super.from,
-    required User super.argument,
+    required UserDomain super.argument,
   }) : super(
          retry: null,
          name: r'meApiProvider',
@@ -504,7 +504,7 @@ final class MeApiProvider extends $FunctionalProvider<MeApi, MeApi, MeApi>
 
   @override
   MeApi create(Ref ref) {
-    final argument = this.argument as User;
+    final argument = this.argument as UserDomain;
     return meApi(ref, argument);
   }
 
@@ -527,10 +527,10 @@ final class MeApiProvider extends $FunctionalProvider<MeApi, MeApi, MeApi>
   }
 }
 
-String _$meApiHash() => r'd39c593938b64da081203e633bf139c5dafdba24';
+String _$meApiHash() => r'9866bf41ab3d901c65134ea6064e768cc9fb0dfd';
 
 final class MeApiFamily extends $Family
-    with $FunctionalFamilyOverride<MeApi, User> {
+    with $FunctionalFamilyOverride<MeApi, UserDomain> {
   MeApiFamily._()
     : super(
         retry: null,
@@ -540,7 +540,8 @@ final class MeApiFamily extends $Family
         isAutoDispose: false,
       );
 
-  MeApiProvider call(User user) => MeApiProvider._(argument: user, from: this);
+  MeApiProvider call(UserDomain user) =>
+      MeApiProvider._(argument: user, from: this);
 
   @override
   String toString() => r'meApiProvider';
@@ -554,7 +555,7 @@ final class SessionsApiProvider
     with $Provider<SessionsApi> {
   SessionsApiProvider._({
     required SessionsApiFamily super.from,
-    required User super.argument,
+    required UserDomain super.argument,
   }) : super(
          retry: null,
          name: r'sessionsApiProvider',
@@ -580,7 +581,7 @@ final class SessionsApiProvider
 
   @override
   SessionsApi create(Ref ref) {
-    final argument = this.argument as User;
+    final argument = this.argument as UserDomain;
     return sessionsApi(ref, argument);
   }
 
@@ -603,10 +604,10 @@ final class SessionsApiProvider
   }
 }
 
-String _$sessionsApiHash() => r'5165a3e8a5a1f62fbd2cf24b9fcca0b09adc1a8d';
+String _$sessionsApiHash() => r'b9ceb2e72ac399fbbdbaccbb59dd296e23621746';
 
 final class SessionsApiFamily extends $Family
-    with $FunctionalFamilyOverride<SessionsApi, User> {
+    with $FunctionalFamilyOverride<SessionsApi, UserDomain> {
   SessionsApiFamily._()
     : super(
         retry: null,
@@ -616,7 +617,7 @@ final class SessionsApiFamily extends $Family
         isAutoDispose: false,
       );
 
-  SessionsApiProvider call(User user) =>
+  SessionsApiProvider call(UserDomain user) =>
       SessionsApiProvider._(argument: user, from: this);
 
   @override
@@ -636,7 +637,7 @@ final class SocketApiProvider
     with $FutureModifier<SocketApi>, $FutureProvider<SocketApi> {
   SocketApiProvider._({
     required SocketApiFamily super.from,
-    required User super.argument,
+    required UserDomain super.argument,
   }) : super(
          retry: null,
          name: r'socketApiProvider',
@@ -662,7 +663,7 @@ final class SocketApiProvider
 
   @override
   FutureOr<SocketApi> create(Ref ref) {
-    final argument = this.argument as User;
+    final argument = this.argument as UserDomain;
     return socketApi(ref, argument);
   }
 
@@ -677,10 +678,10 @@ final class SocketApiProvider
   }
 }
 
-String _$socketApiHash() => r'c8c19dbc7b428c405cdba1316781eb64efc140ba';
+String _$socketApiHash() => r'bf44444c6d713539bb6dd45eff31d24507a3e8f1';
 
 final class SocketApiFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<SocketApi>, User> {
+    with $FunctionalFamilyOverride<FutureOr<SocketApi>, UserDomain> {
   SocketApiFamily._()
     : super(
         retry: null,
@@ -690,7 +691,7 @@ final class SocketApiFamily extends $Family
         isAutoDispose: false,
       );
 
-  SocketApiProvider call(User user) =>
+  SocketApiProvider call(UserDomain user) =>
       SocketApiProvider._(argument: user, from: this);
 
   @override

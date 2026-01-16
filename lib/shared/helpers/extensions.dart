@@ -47,7 +47,7 @@ extension StringExtensions on String {
   }
 }
 
-extension LogLevelX on LogLevel {
+extension LogLevelX on LogLevelDomain {
   Color color(ColorScheme scheme) {
     return switch (this) {
       .info => scheme.primary,

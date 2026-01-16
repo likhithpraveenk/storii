@@ -1,35 +1,35 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:storii/api/models/utils/enums.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/models/author.dart';
-import 'package:storii/app/models/library_item.dart';
+import 'package:storii/app/models/item.dart';
 import 'package:storii/app/models/series.dart';
 
 part 'shelf.freezed.dart';
 
 @freezed
-sealed class Shelf with _$Shelf {
-  const Shelf._();
+sealed class ShelfDomain with _$ShelfDomain {
+  const ShelfDomain._();
 
-  const factory Shelf.libraryItems({
+  const factory ShelfDomain.libraryItems({
     required String id,
     required String label,
     required ShelfType type,
-    required List<LibraryItem> items,
-  }) = LibraryItemsShelf;
+    required List<ItemDomain> items,
+  }) = ItemShelfDomain;
 
-  const factory Shelf.series({
+  const factory ShelfDomain.series({
     required String id,
     required String label,
     required ShelfType type,
-    required List<Series> series,
-  }) = SeriesShelf;
+    required List<SeriesDomain> series,
+  }) = SeriesShelfDomain;
 
-  const factory Shelf.authors({
+  const factory ShelfDomain.authors({
     required String id,
     required String label,
     required ShelfType type,
-    required List<Author> authors,
-  }) = AuthorShelf;
+    required List<AuthorDomain> authors,
+  }) = AuthorShelfDomain;
 
   ShelfIdentity? get identity => ShelfIdentity.fromId(id);
 }

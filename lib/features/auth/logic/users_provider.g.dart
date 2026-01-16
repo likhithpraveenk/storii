@@ -13,7 +13,7 @@ part of 'users_provider.dart';
 final usersProvider = UsersNotifierProvider._();
 
 final class UsersNotifierProvider
-    extends $StreamNotifierProvider<UsersNotifier, List<User>> {
+    extends $StreamNotifierProvider<UsersNotifier, List<UserDomain>> {
   UsersNotifierProvider._()
     : super(
         from: null,
@@ -33,19 +33,20 @@ final class UsersNotifierProvider
   UsersNotifier create() => UsersNotifier();
 }
 
-String _$usersNotifierHash() => r'757822be6d285fccdeaef760d8505fbc4e504632';
+String _$usersNotifierHash() => r'626f8ecd7cc8e94383c6795f25b57e2f22cc11c4';
 
-abstract class _$UsersNotifier extends $StreamNotifier<List<User>> {
-  Stream<List<User>> build();
+abstract class _$UsersNotifier extends $StreamNotifier<List<UserDomain>> {
+  Stream<List<UserDomain>> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<List<User>>, List<User>>;
+    final ref =
+        this.ref as $Ref<AsyncValue<List<UserDomain>>, List<UserDomain>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<List<User>>, List<User>>,
-              AsyncValue<List<User>>,
+              AnyNotifier<AsyncValue<List<UserDomain>>, List<UserDomain>>,
+              AsyncValue<List<UserDomain>>,
               Object?,
               Object?
             >;
@@ -59,11 +60,11 @@ final usersOfServerProvider = UsersOfServerFamily._();
 final class UsersOfServerProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<User>>,
-          AsyncValue<List<User>>,
-          AsyncValue<List<User>>
+          AsyncValue<List<UserDomain>>,
+          AsyncValue<List<UserDomain>>,
+          AsyncValue<List<UserDomain>>
         >
-    with $Provider<AsyncValue<List<User>>> {
+    with $Provider<AsyncValue<List<UserDomain>>> {
   UsersOfServerProvider._({
     required UsersOfServerFamily super.from,
     required Uri super.argument,
@@ -87,21 +88,21 @@ final class UsersOfServerProvider
 
   @$internal
   @override
-  $ProviderElement<AsyncValue<List<User>>> $createElement(
+  $ProviderElement<AsyncValue<List<UserDomain>>> $createElement(
     $ProviderPointer pointer,
   ) => $ProviderElement(pointer);
 
   @override
-  AsyncValue<List<User>> create(Ref ref) {
+  AsyncValue<List<UserDomain>> create(Ref ref) {
     final argument = this.argument as Uri;
     return usersOfServer(ref, argument);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(AsyncValue<List<User>> value) {
+  Override overrideWithValue(AsyncValue<List<UserDomain>> value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<AsyncValue<List<User>>>(value),
+      providerOverride: $SyncValueProvider<AsyncValue<List<UserDomain>>>(value),
     );
   }
 
@@ -116,10 +117,10 @@ final class UsersOfServerProvider
   }
 }
 
-String _$usersOfServerHash() => r'a013bc800a15d361672ed55047804d25b2e2b57f';
+String _$usersOfServerHash() => r'10366ba3062e4d0708649fbe44779b7d9860f9c8';
 
 final class UsersOfServerFamily extends $Family
-    with $FunctionalFamilyOverride<AsyncValue<List<User>>, Uri> {
+    with $FunctionalFamilyOverride<AsyncValue<List<UserDomain>>, Uri> {
   UsersOfServerFamily._()
     : super(
         retry: null,

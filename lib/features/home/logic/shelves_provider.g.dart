@@ -13,7 +13,7 @@ part of 'shelves_provider.dart';
 final shelvesProvider = ShelvesNotifierProvider._();
 
 final class ShelvesNotifierProvider
-    extends $AsyncNotifierProvider<ShelvesNotifier, List<Shelf>> {
+    extends $AsyncNotifierProvider<ShelvesNotifier, List<ShelfDomain>> {
   ShelvesNotifierProvider._()
     : super(
         from: null,
@@ -33,19 +33,20 @@ final class ShelvesNotifierProvider
   ShelvesNotifier create() => ShelvesNotifier();
 }
 
-String _$shelvesNotifierHash() => r'5b69e157a0c2ae67213ea625ccacfd283c8c5433';
+String _$shelvesNotifierHash() => r'157fa809e538e29265a1af9d94c56aff053d9afc';
 
-abstract class _$ShelvesNotifier extends $AsyncNotifier<List<Shelf>> {
-  FutureOr<List<Shelf>> build();
+abstract class _$ShelvesNotifier extends $AsyncNotifier<List<ShelfDomain>> {
+  FutureOr<List<ShelfDomain>> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<List<Shelf>>, List<Shelf>>;
+    final ref =
+        this.ref as $Ref<AsyncValue<List<ShelfDomain>>, List<ShelfDomain>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<List<Shelf>>, List<Shelf>>,
-              AsyncValue<List<Shelf>>,
+              AnyNotifier<AsyncValue<List<ShelfDomain>>, List<ShelfDomain>>,
+              AsyncValue<List<ShelfDomain>>,
               Object?,
               Object?
             >;

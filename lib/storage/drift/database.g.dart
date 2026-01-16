@@ -109,7 +109,7 @@ extension ServerToInsertable on Server {
   }
 }
 
-class $UsersTable extends Users with TableInfo<$UsersTable, User> {
+class $UsersTable extends Users with TableInfo<$UsersTable, UserDomain> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -166,7 +166,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   static const String $name = 'users';
   @override
   VerificationContext validateIntegrity(
-    Insertable<User> instance, {
+    Insertable<UserDomain> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -198,9 +198,9 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  User map(Map<String, dynamic> data, {String? tablePrefix}) {
+  UserDomain map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return User(
+    return UserDomain(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -230,7 +230,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   static TypeConverter<Uri, String> $converterserverUrl = const UriConverter();
 }
 
-class UsersCompanion extends UpdateCompanion<User> {
+class UsersCompanion extends UpdateCompanion<UserDomain> {
   final Value<String> id;
   final Value<String> username;
   final Value<String> userType;
@@ -253,7 +253,7 @@ class UsersCompanion extends UpdateCompanion<User> {
        username = Value(username),
        userType = Value(userType),
        serverUrl = Value(serverUrl);
-  static Insertable<User> custom({
+  static Insertable<UserDomain> custom({
     Expression<String>? id,
     Expression<String>? username,
     Expression<String>? userType,
@@ -321,9 +321,9 @@ class UsersCompanion extends UpdateCompanion<User> {
   }
 }
 
-class _$UserInsertable implements Insertable<User> {
-  User _object;
-  _$UserInsertable(this._object);
+class _$UserDomainInsertable implements Insertable<UserDomain> {
+  UserDomain _object;
+  _$UserDomainInsertable(this._object);
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     return UsersCompanion(
@@ -335,9 +335,9 @@ class _$UserInsertable implements Insertable<User> {
   }
 }
 
-extension UserToInsertable on User {
-  _$UserInsertable toInsertable() {
-    return _$UserInsertable(this);
+extension UserDomainToInsertable on UserDomain {
+  _$UserDomainInsertable toInsertable() {
+    return _$UserDomainInsertable(this);
   }
 }
 
@@ -369,14 +369,14 @@ class $AppLogsTable extends AppLogs with TableInfo<$AppLogsTable, LogEntry> {
     requiredDuringInsert: true,
   );
   @override
-  late final GeneratedColumnWithTypeConverter<LogLevel, String> level =
+  late final GeneratedColumnWithTypeConverter<LogLevelDomain, String> level =
       GeneratedColumn<String>(
         'level',
         aliasedName,
         false,
         type: DriftSqlType.string,
         requiredDuringInsert: true,
-      ).withConverter<LogLevel>($AppLogsTable.$converterlevel);
+      ).withConverter<LogLevelDomain>($AppLogsTable.$converterlevel);
   static const VerificationMeta _sourceMeta = const VerificationMeta('source');
   @override
   late final GeneratedColumn<String> source = GeneratedColumn<String>(
@@ -484,14 +484,14 @@ class $AppLogsTable extends AppLogs with TableInfo<$AppLogsTable, LogEntry> {
     return $AppLogsTable(attachedDatabase, alias);
   }
 
-  static JsonTypeConverter2<LogLevel, String, String> $converterlevel =
-      const EnumNameConverter(LogLevel.values);
+  static JsonTypeConverter2<LogLevelDomain, String, String> $converterlevel =
+      const EnumNameConverter(LogLevelDomain.values);
 }
 
 class AppLogsCompanion extends UpdateCompanion<LogEntry> {
   final Value<DateTime> timestamp;
   final Value<String> message;
-  final Value<LogLevel> level;
+  final Value<LogLevelDomain> level;
   final Value<String?> source;
   final Value<String?> stackTrace;
   final Value<int> rowid;
@@ -506,7 +506,7 @@ class AppLogsCompanion extends UpdateCompanion<LogEntry> {
   AppLogsCompanion.insert({
     required DateTime timestamp,
     required String message,
-    required LogLevel level,
+    required LogLevelDomain level,
     this.source = const Value.absent(),
     this.stackTrace = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -534,7 +534,7 @@ class AppLogsCompanion extends UpdateCompanion<LogEntry> {
   AppLogsCompanion copyWith({
     Value<DateTime>? timestamp,
     Value<String>? message,
-    Value<LogLevel>? level,
+    Value<LogLevelDomain>? level,
     Value<String?>? source,
     Value<String?>? stackTrace,
     Value<int>? rowid,
@@ -819,7 +819,7 @@ class SettingsCompanion extends UpdateCompanion<SettingsEntry> {
 }
 
 class $LibrariesTable extends Libraries
-    with TableInfo<$LibrariesTable, Library> {
+    with TableInfo<$LibrariesTable, LibraryDomain> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -872,7 +872,7 @@ class $LibrariesTable extends Libraries
   static const String $name = 'libraries';
   @override
   VerificationContext validateIntegrity(
-    Insertable<Library> instance, {
+    Insertable<LibraryDomain> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -896,9 +896,9 @@ class $LibrariesTable extends Libraries
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Library map(Map<String, dynamic> data, {String? tablePrefix}) {
+  LibraryDomain map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Library(
+    return LibraryDomain(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -932,7 +932,7 @@ class $LibrariesTable extends Libraries
   $convertermediaContent = const EnumNameConverter(MediaContent.values);
 }
 
-class LibrariesCompanion extends UpdateCompanion<Library> {
+class LibrariesCompanion extends UpdateCompanion<LibraryDomain> {
   final Value<String> id;
   final Value<Uri> serverUrl;
   final Value<String> name;
@@ -955,7 +955,7 @@ class LibrariesCompanion extends UpdateCompanion<Library> {
        serverUrl = Value(serverUrl),
        name = Value(name),
        mediaContent = Value(mediaContent);
-  static Insertable<Library> custom({
+  static Insertable<LibraryDomain> custom({
     Expression<String>? id,
     Expression<String>? serverUrl,
     Expression<String>? name,
@@ -1025,9 +1025,9 @@ class LibrariesCompanion extends UpdateCompanion<Library> {
   }
 }
 
-class _$LibraryInsertable implements Insertable<Library> {
-  Library _object;
-  _$LibraryInsertable(this._object);
+class _$LibraryDomainInsertable implements Insertable<LibraryDomain> {
+  LibraryDomain _object;
+  _$LibraryDomainInsertable(this._object);
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     return LibrariesCompanion(
@@ -1039,9 +1039,9 @@ class _$LibraryInsertable implements Insertable<Library> {
   }
 }
 
-extension LibraryToInsertable on Library {
-  _$LibraryInsertable toInsertable() {
-    return _$LibraryInsertable(this);
+extension LibraryDomainToInsertable on LibraryDomain {
+  _$LibraryDomainInsertable toInsertable() {
+    return _$LibraryDomainInsertable(this);
   }
 }
 
@@ -2701,480 +2701,8 @@ extension PodcastToInsertable on Podcast {
   }
 }
 
-class $MediaProgressTableTable extends MediaProgressTable
-    with TableInfo<$MediaProgressTableTable, MediaProgress> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $MediaProgressTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _libraryItemIdMeta = const VerificationMeta(
-    'libraryItemId',
-  );
-  @override
-  late final GeneratedColumn<String> libraryItemId = GeneratedColumn<String>(
-    'library_item_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES audiobooks (id) ON DELETE CASCADE',
-    ),
-  );
-  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
-  @override
-  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
-    'user_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES users (id) ON DELETE CASCADE',
-    ),
-  );
-  @override
-  late final GeneratedColumnWithTypeConverter<Duration, int> duration =
-      GeneratedColumn<int>(
-        'duration',
-        aliasedName,
-        false,
-        type: DriftSqlType.int,
-        requiredDuringInsert: true,
-      ).withConverter<Duration>($MediaProgressTableTable.$converterduration);
-  static const VerificationMeta _progressMeta = const VerificationMeta(
-    'progress',
-  );
-  @override
-  late final GeneratedColumn<double> progress = GeneratedColumn<double>(
-    'progress',
-    aliasedName,
-    false,
-    type: DriftSqlType.double,
-    requiredDuringInsert: true,
-  );
-  @override
-  late final GeneratedColumnWithTypeConverter<Duration?, int> currentDuration =
-      GeneratedColumn<int>(
-        'current_duration',
-        aliasedName,
-        true,
-        type: DriftSqlType.int,
-        requiredDuringInsert: false,
-      ).withConverter<Duration?>(
-        $MediaProgressTableTable.$convertercurrentDurationn,
-      );
-  static const VerificationMeta _isFinishedMeta = const VerificationMeta(
-    'isFinished',
-  );
-  @override
-  late final GeneratedColumn<bool> isFinished = GeneratedColumn<bool>(
-    'is_finished',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_finished" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
-  static const VerificationMeta _hideFromContinueListeningMeta =
-      const VerificationMeta('hideFromContinueListening');
-  @override
-  late final GeneratedColumn<bool> hideFromContinueListening =
-      GeneratedColumn<bool>(
-        'hide_from_continue_listening',
-        aliasedName,
-        false,
-        type: DriftSqlType.bool,
-        requiredDuringInsert: false,
-        defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'CHECK ("hide_from_continue_listening" IN (0, 1))',
-        ),
-        defaultValue: const Constant(false),
-      );
-  static const VerificationMeta _lastUpdateMeta = const VerificationMeta(
-    'lastUpdate',
-  );
-  @override
-  late final GeneratedColumn<DateTime> lastUpdate = GeneratedColumn<DateTime>(
-    'last_update',
-    aliasedName,
-    true,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _startedAtMeta = const VerificationMeta(
-    'startedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> startedAt = GeneratedColumn<DateTime>(
-    'started_at',
-    aliasedName,
-    true,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _finishedAtMeta = const VerificationMeta(
-    'finishedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> finishedAt = GeneratedColumn<DateTime>(
-    'finished_at',
-    aliasedName,
-    true,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    libraryItemId,
-    userId,
-    duration,
-    progress,
-    currentDuration,
-    isFinished,
-    hideFromContinueListening,
-    lastUpdate,
-    startedAt,
-    finishedAt,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'media_progress_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<MediaProgress> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('library_item_id')) {
-      context.handle(
-        _libraryItemIdMeta,
-        libraryItemId.isAcceptableOrUnknown(
-          data['library_item_id']!,
-          _libraryItemIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_libraryItemIdMeta);
-    }
-    if (data.containsKey('user_id')) {
-      context.handle(
-        _userIdMeta,
-        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_userIdMeta);
-    }
-    if (data.containsKey('progress')) {
-      context.handle(
-        _progressMeta,
-        progress.isAcceptableOrUnknown(data['progress']!, _progressMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_progressMeta);
-    }
-    if (data.containsKey('is_finished')) {
-      context.handle(
-        _isFinishedMeta,
-        isFinished.isAcceptableOrUnknown(data['is_finished']!, _isFinishedMeta),
-      );
-    }
-    if (data.containsKey('hide_from_continue_listening')) {
-      context.handle(
-        _hideFromContinueListeningMeta,
-        hideFromContinueListening.isAcceptableOrUnknown(
-          data['hide_from_continue_listening']!,
-          _hideFromContinueListeningMeta,
-        ),
-      );
-    }
-    if (data.containsKey('last_update')) {
-      context.handle(
-        _lastUpdateMeta,
-        lastUpdate.isAcceptableOrUnknown(data['last_update']!, _lastUpdateMeta),
-      );
-    }
-    if (data.containsKey('started_at')) {
-      context.handle(
-        _startedAtMeta,
-        startedAt.isAcceptableOrUnknown(data['started_at']!, _startedAtMeta),
-      );
-    }
-    if (data.containsKey('finished_at')) {
-      context.handle(
-        _finishedAtMeta,
-        finishedAt.isAcceptableOrUnknown(data['finished_at']!, _finishedAtMeta),
-      );
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {userId, libraryItemId};
-  @override
-  MediaProgress map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return MediaProgress(
-      libraryItemId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}library_item_id'],
-      )!,
-      userId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}user_id'],
-      )!,
-      duration: $MediaProgressTableTable.$converterduration.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.int,
-          data['${effectivePrefix}duration'],
-        )!,
-      ),
-      progress: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}progress'],
-      )!,
-      currentDuration: $MediaProgressTableTable.$convertercurrentDurationn
-          .fromSql(
-            attachedDatabase.typeMapping.read(
-              DriftSqlType.int,
-              data['${effectivePrefix}current_duration'],
-            ),
-          ),
-      isFinished: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_finished'],
-      )!,
-      hideFromContinueListening: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}hide_from_continue_listening'],
-      )!,
-      lastUpdate: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}last_update'],
-      ),
-      startedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}started_at'],
-      ),
-      finishedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}finished_at'],
-      ),
-    );
-  }
-
-  @override
-  $MediaProgressTableTable createAlias(String alias) {
-    return $MediaProgressTableTable(attachedDatabase, alias);
-  }
-
-  static TypeConverter<Duration, int> $converterduration =
-      const DurationConverter();
-  static TypeConverter<Duration, int> $convertercurrentDuration =
-      const DurationConverter();
-  static TypeConverter<Duration?, int?> $convertercurrentDurationn =
-      NullAwareTypeConverter.wrap($convertercurrentDuration);
-}
-
-class MediaProgressTableCompanion extends UpdateCompanion<MediaProgress> {
-  final Value<String> libraryItemId;
-  final Value<String> userId;
-  final Value<Duration> duration;
-  final Value<double> progress;
-  final Value<Duration?> currentDuration;
-  final Value<bool> isFinished;
-  final Value<bool> hideFromContinueListening;
-  final Value<DateTime?> lastUpdate;
-  final Value<DateTime?> startedAt;
-  final Value<DateTime?> finishedAt;
-  final Value<int> rowid;
-  const MediaProgressTableCompanion({
-    this.libraryItemId = const Value.absent(),
-    this.userId = const Value.absent(),
-    this.duration = const Value.absent(),
-    this.progress = const Value.absent(),
-    this.currentDuration = const Value.absent(),
-    this.isFinished = const Value.absent(),
-    this.hideFromContinueListening = const Value.absent(),
-    this.lastUpdate = const Value.absent(),
-    this.startedAt = const Value.absent(),
-    this.finishedAt = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  MediaProgressTableCompanion.insert({
-    required String libraryItemId,
-    required String userId,
-    required Duration duration,
-    required double progress,
-    this.currentDuration = const Value.absent(),
-    this.isFinished = const Value.absent(),
-    this.hideFromContinueListening = const Value.absent(),
-    this.lastUpdate = const Value.absent(),
-    this.startedAt = const Value.absent(),
-    this.finishedAt = const Value.absent(),
-    this.rowid = const Value.absent(),
-  }) : libraryItemId = Value(libraryItemId),
-       userId = Value(userId),
-       duration = Value(duration),
-       progress = Value(progress);
-  static Insertable<MediaProgress> custom({
-    Expression<String>? libraryItemId,
-    Expression<String>? userId,
-    Expression<int>? duration,
-    Expression<double>? progress,
-    Expression<int>? currentDuration,
-    Expression<bool>? isFinished,
-    Expression<bool>? hideFromContinueListening,
-    Expression<DateTime>? lastUpdate,
-    Expression<DateTime>? startedAt,
-    Expression<DateTime>? finishedAt,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (libraryItemId != null) 'library_item_id': libraryItemId,
-      if (userId != null) 'user_id': userId,
-      if (duration != null) 'duration': duration,
-      if (progress != null) 'progress': progress,
-      if (currentDuration != null) 'current_duration': currentDuration,
-      if (isFinished != null) 'is_finished': isFinished,
-      if (hideFromContinueListening != null)
-        'hide_from_continue_listening': hideFromContinueListening,
-      if (lastUpdate != null) 'last_update': lastUpdate,
-      if (startedAt != null) 'started_at': startedAt,
-      if (finishedAt != null) 'finished_at': finishedAt,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  MediaProgressTableCompanion copyWith({
-    Value<String>? libraryItemId,
-    Value<String>? userId,
-    Value<Duration>? duration,
-    Value<double>? progress,
-    Value<Duration?>? currentDuration,
-    Value<bool>? isFinished,
-    Value<bool>? hideFromContinueListening,
-    Value<DateTime?>? lastUpdate,
-    Value<DateTime?>? startedAt,
-    Value<DateTime?>? finishedAt,
-    Value<int>? rowid,
-  }) {
-    return MediaProgressTableCompanion(
-      libraryItemId: libraryItemId ?? this.libraryItemId,
-      userId: userId ?? this.userId,
-      duration: duration ?? this.duration,
-      progress: progress ?? this.progress,
-      currentDuration: currentDuration ?? this.currentDuration,
-      isFinished: isFinished ?? this.isFinished,
-      hideFromContinueListening:
-          hideFromContinueListening ?? this.hideFromContinueListening,
-      lastUpdate: lastUpdate ?? this.lastUpdate,
-      startedAt: startedAt ?? this.startedAt,
-      finishedAt: finishedAt ?? this.finishedAt,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (libraryItemId.present) {
-      map['library_item_id'] = Variable<String>(libraryItemId.value);
-    }
-    if (userId.present) {
-      map['user_id'] = Variable<String>(userId.value);
-    }
-    if (duration.present) {
-      map['duration'] = Variable<int>(
-        $MediaProgressTableTable.$converterduration.toSql(duration.value),
-      );
-    }
-    if (progress.present) {
-      map['progress'] = Variable<double>(progress.value);
-    }
-    if (currentDuration.present) {
-      map['current_duration'] = Variable<int>(
-        $MediaProgressTableTable.$convertercurrentDurationn.toSql(
-          currentDuration.value,
-        ),
-      );
-    }
-    if (isFinished.present) {
-      map['is_finished'] = Variable<bool>(isFinished.value);
-    }
-    if (hideFromContinueListening.present) {
-      map['hide_from_continue_listening'] = Variable<bool>(
-        hideFromContinueListening.value,
-      );
-    }
-    if (lastUpdate.present) {
-      map['last_update'] = Variable<DateTime>(lastUpdate.value);
-    }
-    if (startedAt.present) {
-      map['started_at'] = Variable<DateTime>(startedAt.value);
-    }
-    if (finishedAt.present) {
-      map['finished_at'] = Variable<DateTime>(finishedAt.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('MediaProgressTableCompanion(')
-          ..write('libraryItemId: $libraryItemId, ')
-          ..write('userId: $userId, ')
-          ..write('duration: $duration, ')
-          ..write('progress: $progress, ')
-          ..write('currentDuration: $currentDuration, ')
-          ..write('isFinished: $isFinished, ')
-          ..write('hideFromContinueListening: $hideFromContinueListening, ')
-          ..write('lastUpdate: $lastUpdate, ')
-          ..write('startedAt: $startedAt, ')
-          ..write('finishedAt: $finishedAt, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class _$MediaProgressInsertable implements Insertable<MediaProgress> {
-  MediaProgress _object;
-  _$MediaProgressInsertable(this._object);
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    return MediaProgressTableCompanion(
-      libraryItemId: Value(_object.libraryItemId),
-      userId: Value(_object.userId),
-      duration: Value(_object.duration),
-      progress: Value(_object.progress),
-      currentDuration: Value(_object.currentDuration),
-      isFinished: Value(_object.isFinished),
-      hideFromContinueListening: Value(_object.hideFromContinueListening),
-      lastUpdate: Value(_object.lastUpdate),
-      startedAt: Value(_object.startedAt),
-      finishedAt: Value(_object.finishedAt),
-    ).toColumns(false);
-  }
-}
-
-extension MediaProgressToInsertable on MediaProgress {
-  _$MediaProgressInsertable toInsertable() {
-    return _$MediaProgressInsertable(this);
-  }
-}
-
 class $SeriesTableTable extends SeriesTable
-    with TableInfo<$SeriesTableTable, Series> {
+    with TableInfo<$SeriesTableTable, SeriesDomain> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -3288,7 +2816,7 @@ class $SeriesTableTable extends SeriesTable
   static const String $name = 'series_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<Series> instance, {
+    Insertable<SeriesDomain> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -3356,9 +2884,9 @@ class $SeriesTableTable extends SeriesTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id, libraryId};
   @override
-  Series map(Map<String, dynamic> data, {String? tablePrefix}) {
+  SeriesDomain map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Series(
+    return SeriesDomain(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -3400,7 +2928,7 @@ class $SeriesTableTable extends SeriesTable
   }
 }
 
-class SeriesTableCompanion extends UpdateCompanion<Series> {
+class SeriesTableCompanion extends UpdateCompanion<SeriesDomain> {
   final Value<String> id;
   final Value<String> libraryId;
   final Value<String> name;
@@ -3434,7 +2962,7 @@ class SeriesTableCompanion extends UpdateCompanion<Series> {
   }) : id = Value(id),
        libraryId = Value(libraryId),
        name = Value(name);
-  static Insertable<Series> custom({
+  static Insertable<SeriesDomain> custom({
     Expression<String>? id,
     Expression<String>? libraryId,
     Expression<String>? name,
@@ -3532,9 +3060,9 @@ class SeriesTableCompanion extends UpdateCompanion<Series> {
   }
 }
 
-class _$SeriesInsertable implements Insertable<Series> {
-  Series _object;
-  _$SeriesInsertable(this._object);
+class _$SeriesDomainInsertable implements Insertable<SeriesDomain> {
+  SeriesDomain _object;
+  _$SeriesDomainInsertable(this._object);
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     return SeriesTableCompanion(
@@ -3550,9 +3078,9 @@ class _$SeriesInsertable implements Insertable<Series> {
   }
 }
 
-extension SeriesToInsertable on Series {
-  _$SeriesInsertable toInsertable() {
-    return _$SeriesInsertable(this);
+extension SeriesDomainToInsertable on SeriesDomain {
+  _$SeriesDomainInsertable toInsertable() {
+    return _$SeriesDomainInsertable(this);
   }
 }
 
@@ -3840,7 +3368,8 @@ class AudiobookSeriesCompanion extends UpdateCompanion<AudiobookSeriesLink> {
   }
 }
 
-class $AuthorsTable extends Authors with TableInfo<$AuthorsTable, Author> {
+class $AuthorsTable extends Authors
+    with TableInfo<$AuthorsTable, AuthorDomain> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -3926,7 +3455,7 @@ class $AuthorsTable extends Authors with TableInfo<$AuthorsTable, Author> {
   static const String $name = 'authors';
   @override
   VerificationContext validateIntegrity(
-    Insertable<Author> instance, {
+    Insertable<AuthorDomain> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -3979,9 +3508,9 @@ class $AuthorsTable extends Authors with TableInfo<$AuthorsTable, Author> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id, libraryId};
   @override
-  Author map(Map<String, dynamic> data, {String? tablePrefix}) {
+  AuthorDomain map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Author(
+    return AuthorDomain(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -4015,7 +3544,7 @@ class $AuthorsTable extends Authors with TableInfo<$AuthorsTable, Author> {
   }
 }
 
-class AuthorsCompanion extends UpdateCompanion<Author> {
+class AuthorsCompanion extends UpdateCompanion<AuthorDomain> {
   final Value<String> id;
   final Value<String> libraryId;
   final Value<String> name;
@@ -4043,7 +3572,7 @@ class AuthorsCompanion extends UpdateCompanion<Author> {
   }) : id = Value(id),
        libraryId = Value(libraryId),
        name = Value(name);
-  static Insertable<Author> custom({
+  static Insertable<AuthorDomain> custom({
     Expression<String>? id,
     Expression<String>? libraryId,
     Expression<String>? name,
@@ -4125,9 +3654,9 @@ class AuthorsCompanion extends UpdateCompanion<Author> {
   }
 }
 
-class _$AuthorInsertable implements Insertable<Author> {
-  Author _object;
-  _$AuthorInsertable(this._object);
+class _$AuthorDomainInsertable implements Insertable<AuthorDomain> {
+  AuthorDomain _object;
+  _$AuthorDomainInsertable(this._object);
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     return AuthorsCompanion(
@@ -4141,9 +3670,9 @@ class _$AuthorInsertable implements Insertable<Author> {
   }
 }
 
-extension AuthorToInsertable on Author {
-  _$AuthorInsertable toInsertable() {
-    return _$AuthorInsertable(this);
+extension AuthorDomainToInsertable on AuthorDomain {
+  _$AuthorDomainInsertable toInsertable() {
+    return _$AuthorDomainInsertable(this);
   }
 }
 
@@ -4441,8 +3970,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $LibrariesTable libraries = $LibrariesTable(this);
   late final $AudiobooksTable audiobooks = $AudiobooksTable(this);
   late final $PodcastsTable podcasts = $PodcastsTable(this);
-  late final $MediaProgressTableTable mediaProgressTable =
-      $MediaProgressTableTable(this);
   late final $SeriesTableTable seriesTable = $SeriesTableTable(this);
   late final $AudiobookSeriesTable audiobookSeries = $AudiobookSeriesTable(
     this,
@@ -4450,9 +3977,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $AuthorsTable authors = $AuthorsTable(this);
   late final $AudiobookAuthorsTable audiobookAuthors = $AudiobookAuthorsTable(
     this,
-  );
-  late final MediaProgressDao mediaProgressDao = MediaProgressDao(
-    this as AppDatabase,
   );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -4466,7 +3990,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     libraries,
     audiobooks,
     podcasts,
-    mediaProgressTable,
     seriesTable,
     audiobookSeries,
     authors,
@@ -4501,20 +4024,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [TableUpdate('podcasts', kind: UpdateKind.delete)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'audiobooks',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [TableUpdate('media_progress_table', kind: UpdateKind.delete)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'users',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [TableUpdate('media_progress_table', kind: UpdateKind.delete)],
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
@@ -4556,7 +4065,7 @@ final class $$ServersTableReferences
     extends BaseReferences<_$AppDatabase, $ServersTable, Server> {
   $$ServersTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static MultiTypedResultKey<$UsersTable, List<User>> _usersRefsTable(
+  static MultiTypedResultKey<$UsersTable, List<UserDomain>> _usersRefsTable(
     _$AppDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.users,
@@ -4575,7 +4084,7 @@ final class $$ServersTableReferences
     );
   }
 
-  static MultiTypedResultKey<$LibrariesTable, List<Library>>
+  static MultiTypedResultKey<$LibrariesTable, List<LibraryDomain>>
   _librariesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.libraries,
     aliasName: $_aliasNameGenerator(db.servers.url, db.libraries.serverUrl),
@@ -4791,7 +4300,11 @@ class $$ServersTableTableManager
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (usersRefs)
-                    await $_getPrefetchedData<Server, $ServersTable, User>(
+                    await $_getPrefetchedData<
+                      Server,
+                      $ServersTable,
+                      UserDomain
+                    >(
                       currentTable: table,
                       referencedTable: $$ServersTableReferences._usersRefsTable(
                         db,
@@ -4803,7 +4316,11 @@ class $$ServersTableTableManager
                       typedResults: items,
                     ),
                   if (librariesRefs)
-                    await $_getPrefetchedData<Server, $ServersTable, Library>(
+                    await $_getPrefetchedData<
+                      Server,
+                      $ServersTable,
+                      LibraryDomain
+                    >(
                       currentTable: table,
                       referencedTable: $$ServersTableReferences
                           ._librariesRefsTable(db),
@@ -4853,7 +4370,7 @@ typedef $$UsersTableUpdateCompanionBuilder =
     });
 
 final class $$UsersTableReferences
-    extends BaseReferences<_$AppDatabase, $UsersTable, User> {
+    extends BaseReferences<_$AppDatabase, $UsersTable, UserDomain> {
   $$UsersTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $ServersTable _serverUrlTable(_$AppDatabase db) => db.servers
@@ -4870,30 +4387,6 @@ final class $$UsersTableReferences
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static MultiTypedResultKey<$MediaProgressTableTable, List<MediaProgress>>
-  _mediaProgressTableRefsTable(_$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(
-        db.mediaProgressTable,
-        aliasName: $_aliasNameGenerator(
-          db.users.id,
-          db.mediaProgressTable.userId,
-        ),
-      );
-
-  $$MediaProgressTableTableProcessedTableManager get mediaProgressTableRefs {
-    final manager = $$MediaProgressTableTableTableManager(
-      $_db,
-      $_db.mediaProgressTable,
-    ).filter((f) => f.userId.id.sqlEquals($_itemColumn<String>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _mediaProgressTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
     );
   }
 }
@@ -4942,31 +4435,6 @@ class $$UsersTableFilterComposer extends Composer<_$AppDatabase, $UsersTable> {
           ),
     );
     return composer;
-  }
-
-  Expression<bool> mediaProgressTableRefs(
-    Expression<bool> Function($$MediaProgressTableTableFilterComposer f) f,
-  ) {
-    final $$MediaProgressTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.mediaProgressTable,
-      getReferencedColumn: (t) => t.userId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$MediaProgressTableTableFilterComposer(
-            $db: $db,
-            $table: $db.mediaProgressTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
   }
 }
 
@@ -5058,32 +4526,6 @@ class $$UsersTableAnnotationComposer
     );
     return composer;
   }
-
-  Expression<T> mediaProgressTableRefs<T extends Object>(
-    Expression<T> Function($$MediaProgressTableTableAnnotationComposer a) f,
-  ) {
-    final $$MediaProgressTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.mediaProgressTable,
-          getReferencedColumn: (t) => t.userId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$MediaProgressTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.mediaProgressTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
 }
 
 class $$UsersTableTableManager
@@ -5091,15 +4533,15 @@ class $$UsersTableTableManager
         RootTableManager<
           _$AppDatabase,
           $UsersTable,
-          User,
+          UserDomain,
           $$UsersTableFilterComposer,
           $$UsersTableOrderingComposer,
           $$UsersTableAnnotationComposer,
           $$UsersTableCreateCompanionBuilder,
           $$UsersTableUpdateCompanionBuilder,
-          (User, $$UsersTableReferences),
-          User,
-          PrefetchHooks Function({bool serverUrl, bool mediaProgressTableRefs})
+          (UserDomain, $$UsersTableReferences),
+          UserDomain,
+          PrefetchHooks Function({bool serverUrl})
         > {
   $$UsersTableTableManager(_$AppDatabase db, $UsersTable table)
     : super(
@@ -5146,72 +4588,47 @@ class $$UsersTableTableManager
                     (e.readTable(table), $$UsersTableReferences(db, table, e)),
               )
               .toList(),
-          prefetchHooksCallback:
-              ({serverUrl = false, mediaProgressTableRefs = false}) {
-                return PrefetchHooks(
-                  db: db,
-                  explicitlyWatchedTables: [
-                    if (mediaProgressTableRefs) db.mediaProgressTable,
-                  ],
-                  addJoins:
-                      <
-                        T extends TableManagerState<
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic
-                        >
-                      >(state) {
-                        if (serverUrl) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.serverUrl,
-                                    referencedTable: $$UsersTableReferences
-                                        ._serverUrlTable(db),
-                                    referencedColumn: $$UsersTableReferences
-                                        ._serverUrlTable(db)
-                                        .url,
-                                  )
-                                  as T;
-                        }
+          prefetchHooksCallback: ({serverUrl = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (serverUrl) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.serverUrl,
+                                referencedTable: $$UsersTableReferences
+                                    ._serverUrlTable(db),
+                                referencedColumn: $$UsersTableReferences
+                                    ._serverUrlTable(db)
+                                    .url,
+                              )
+                              as T;
+                    }
 
-                        return state;
-                      },
-                  getPrefetchedDataCallback: (items) async {
-                    return [
-                      if (mediaProgressTableRefs)
-                        await $_getPrefetchedData<
-                          User,
-                          $UsersTable,
-                          MediaProgress
-                        >(
-                          currentTable: table,
-                          referencedTable: $$UsersTableReferences
-                              ._mediaProgressTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$UsersTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).mediaProgressTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.userId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                    ];
+                    return state;
                   },
-                );
+              getPrefetchedDataCallback: (items) async {
+                return [];
               },
+            );
+          },
         ),
       );
 }
@@ -5220,21 +4637,21 @@ typedef $$UsersTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $UsersTable,
-      User,
+      UserDomain,
       $$UsersTableFilterComposer,
       $$UsersTableOrderingComposer,
       $$UsersTableAnnotationComposer,
       $$UsersTableCreateCompanionBuilder,
       $$UsersTableUpdateCompanionBuilder,
-      (User, $$UsersTableReferences),
-      User,
-      PrefetchHooks Function({bool serverUrl, bool mediaProgressTableRefs})
+      (UserDomain, $$UsersTableReferences),
+      UserDomain,
+      PrefetchHooks Function({bool serverUrl})
     >;
 typedef $$AppLogsTableCreateCompanionBuilder =
     AppLogsCompanion Function({
       required DateTime timestamp,
       required String message,
-      required LogLevel level,
+      required LogLevelDomain level,
       Value<String?> source,
       Value<String?> stackTrace,
       Value<int> rowid,
@@ -5243,7 +4660,7 @@ typedef $$AppLogsTableUpdateCompanionBuilder =
     AppLogsCompanion Function({
       Value<DateTime> timestamp,
       Value<String> message,
-      Value<LogLevel> level,
+      Value<LogLevelDomain> level,
       Value<String?> source,
       Value<String?> stackTrace,
       Value<int> rowid,
@@ -5268,11 +4685,11 @@ class $$AppLogsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<LogLevel, LogLevel, String> get level =>
-      $composableBuilder(
-        column: $table.level,
-        builder: (column) => ColumnWithTypeConverterFilters(column),
-      );
+  ColumnWithTypeConverterFilters<LogLevelDomain, LogLevelDomain, String>
+  get level => $composableBuilder(
+    column: $table.level,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
 
   ColumnFilters<String> get source => $composableBuilder(
     column: $table.source,
@@ -5335,7 +4752,7 @@ class $$AppLogsTableAnnotationComposer
   GeneratedColumn<String> get message =>
       $composableBuilder(column: $table.message, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<LogLevel, String> get level =>
+  GeneratedColumnWithTypeConverter<LogLevelDomain, String> get level =>
       $composableBuilder(column: $table.level, builder: (column) => column);
 
   GeneratedColumn<String> get source =>
@@ -5377,7 +4794,7 @@ class $$AppLogsTableTableManager
               ({
                 Value<DateTime> timestamp = const Value.absent(),
                 Value<String> message = const Value.absent(),
-                Value<LogLevel> level = const Value.absent(),
+                Value<LogLevelDomain> level = const Value.absent(),
                 Value<String?> source = const Value.absent(),
                 Value<String?> stackTrace = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -5393,7 +4810,7 @@ class $$AppLogsTableTableManager
               ({
                 required DateTime timestamp,
                 required String message,
-                required LogLevel level,
+                required LogLevelDomain level,
                 Value<String?> source = const Value.absent(),
                 Value<String?> stackTrace = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -5584,7 +5001,7 @@ typedef $$LibrariesTableUpdateCompanionBuilder =
     });
 
 final class $$LibrariesTableReferences
-    extends BaseReferences<_$AppDatabase, $LibrariesTable, Library> {
+    extends BaseReferences<_$AppDatabase, $LibrariesTable, LibraryDomain> {
   $$LibrariesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $ServersTable _serverUrlTable(_$AppDatabase db) =>
@@ -5643,7 +5060,7 @@ final class $$LibrariesTableReferences
     );
   }
 
-  static MultiTypedResultKey<$SeriesTableTable, List<Series>>
+  static MultiTypedResultKey<$SeriesTableTable, List<SeriesDomain>>
   _seriesTableRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.seriesTable,
     aliasName: $_aliasNameGenerator(db.libraries.id, db.seriesTable.libraryId),
@@ -5684,9 +5101,8 @@ final class $$LibrariesTableReferences
     );
   }
 
-  static MultiTypedResultKey<$AuthorsTable, List<Author>> _authorsRefsTable(
-    _$AppDatabase db,
-  ) => MultiTypedResultKey.fromTable(
+  static MultiTypedResultKey<$AuthorsTable, List<AuthorDomain>>
+  _authorsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.authors,
     aliasName: $_aliasNameGenerator(db.libraries.id, db.authors.libraryId),
   );
@@ -6174,14 +5590,14 @@ class $$LibrariesTableTableManager
         RootTableManager<
           _$AppDatabase,
           $LibrariesTable,
-          Library,
+          LibraryDomain,
           $$LibrariesTableFilterComposer,
           $$LibrariesTableOrderingComposer,
           $$LibrariesTableAnnotationComposer,
           $$LibrariesTableCreateCompanionBuilder,
           $$LibrariesTableUpdateCompanionBuilder,
-          (Library, $$LibrariesTableReferences),
-          Library,
+          (LibraryDomain, $$LibrariesTableReferences),
+          LibraryDomain,
           PrefetchHooks Function({
             bool serverUrl,
             bool audiobooksRefs,
@@ -6295,7 +5711,7 @@ class $$LibrariesTableTableManager
                     return [
                       if (audiobooksRefs)
                         await $_getPrefetchedData<
-                          Library,
+                          LibraryDomain,
                           $LibrariesTable,
                           Audiobook
                         >(
@@ -6316,7 +5732,7 @@ class $$LibrariesTableTableManager
                         ),
                       if (podcastsRefs)
                         await $_getPrefetchedData<
-                          Library,
+                          LibraryDomain,
                           $LibrariesTable,
                           Podcast
                         >(
@@ -6337,9 +5753,9 @@ class $$LibrariesTableTableManager
                         ),
                       if (seriesTableRefs)
                         await $_getPrefetchedData<
-                          Library,
+                          LibraryDomain,
                           $LibrariesTable,
-                          Series
+                          SeriesDomain
                         >(
                           currentTable: table,
                           referencedTable: $$LibrariesTableReferences
@@ -6358,7 +5774,7 @@ class $$LibrariesTableTableManager
                         ),
                       if (audiobookSeriesRefs)
                         await $_getPrefetchedData<
-                          Library,
+                          LibraryDomain,
                           $LibrariesTable,
                           AudiobookSeriesLink
                         >(
@@ -6379,9 +5795,9 @@ class $$LibrariesTableTableManager
                         ),
                       if (authorsRefs)
                         await $_getPrefetchedData<
-                          Library,
+                          LibraryDomain,
                           $LibrariesTable,
-                          Author
+                          AuthorDomain
                         >(
                           currentTable: table,
                           referencedTable: $$LibrariesTableReferences
@@ -6400,7 +5816,7 @@ class $$LibrariesTableTableManager
                         ),
                       if (audiobookAuthorsRefs)
                         await $_getPrefetchedData<
-                          Library,
+                          LibraryDomain,
                           $LibrariesTable,
                           AudiobookAuthorsLink
                         >(
@@ -6431,14 +5847,14 @@ typedef $$LibrariesTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $LibrariesTable,
-      Library,
+      LibraryDomain,
       $$LibrariesTableFilterComposer,
       $$LibrariesTableOrderingComposer,
       $$LibrariesTableAnnotationComposer,
       $$LibrariesTableCreateCompanionBuilder,
       $$LibrariesTableUpdateCompanionBuilder,
-      (Library, $$LibrariesTableReferences),
-      Library,
+      (LibraryDomain, $$LibrariesTableReferences),
+      LibraryDomain,
       PrefetchHooks Function({
         bool serverUrl,
         bool audiobooksRefs,
@@ -6520,30 +5936,6 @@ final class $$AudiobooksTableReferences
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static MultiTypedResultKey<$MediaProgressTableTable, List<MediaProgress>>
-  _mediaProgressTableRefsTable(_$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(
-        db.mediaProgressTable,
-        aliasName: $_aliasNameGenerator(
-          db.audiobooks.id,
-          db.mediaProgressTable.libraryItemId,
-        ),
-      );
-
-  $$MediaProgressTableTableProcessedTableManager get mediaProgressTableRefs {
-    final manager = $$MediaProgressTableTableTableManager(
-      $_db,
-      $_db.mediaProgressTable,
-    ).filter((f) => f.libraryItemId.id.sqlEquals($_itemColumn<String>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _mediaProgressTableRefsTable($_db),
-    );
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
     );
   }
 
@@ -6731,31 +6123,6 @@ class $$AudiobooksTableFilterComposer
           ),
     );
     return composer;
-  }
-
-  Expression<bool> mediaProgressTableRefs(
-    Expression<bool> Function($$MediaProgressTableTableFilterComposer f) f,
-  ) {
-    final $$MediaProgressTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.mediaProgressTable,
-      getReferencedColumn: (t) => t.libraryItemId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$MediaProgressTableTableFilterComposer(
-            $db: $db,
-            $table: $db.mediaProgressTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
   }
 
   Expression<bool> audiobookSeriesRefs(
@@ -7045,32 +6412,6 @@ class $$AudiobooksTableAnnotationComposer
     return composer;
   }
 
-  Expression<T> mediaProgressTableRefs<T extends Object>(
-    Expression<T> Function($$MediaProgressTableTableAnnotationComposer a) f,
-  ) {
-    final $$MediaProgressTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.mediaProgressTable,
-          getReferencedColumn: (t) => t.libraryItemId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$MediaProgressTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.mediaProgressTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return f(composer);
-  }
-
   Expression<T> audiobookSeriesRefs<T extends Object>(
     Expression<T> Function($$AudiobookSeriesTableAnnotationComposer a) f,
   ) {
@@ -7137,7 +6478,6 @@ class $$AudiobooksTableTableManager
           Audiobook,
           PrefetchHooks Function({
             bool libraryId,
-            bool mediaProgressTableRefs,
             bool audiobookSeriesRefs,
             bool audiobookAuthorsRefs,
           })
@@ -7260,14 +6600,12 @@ class $$AudiobooksTableTableManager
           prefetchHooksCallback:
               ({
                 libraryId = false,
-                mediaProgressTableRefs = false,
                 audiobookSeriesRefs = false,
                 audiobookAuthorsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
-                    if (mediaProgressTableRefs) db.mediaProgressTable,
                     if (audiobookSeriesRefs) db.audiobookSeries,
                     if (audiobookAuthorsRefs) db.audiobookAuthors,
                   ],
@@ -7306,27 +6644,6 @@ class $$AudiobooksTableTableManager
                       },
                   getPrefetchedDataCallback: (items) async {
                     return [
-                      if (mediaProgressTableRefs)
-                        await $_getPrefetchedData<
-                          Audiobook,
-                          $AudiobooksTable,
-                          MediaProgress
-                        >(
-                          currentTable: table,
-                          referencedTable: $$AudiobooksTableReferences
-                              ._mediaProgressTableRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$AudiobooksTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).mediaProgressTableRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.libraryItemId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
                       if (audiobookSeriesRefs)
                         await $_getPrefetchedData<
                           Audiobook,
@@ -7391,7 +6708,6 @@ typedef $$AudiobooksTableProcessedTableManager =
       Audiobook,
       PrefetchHooks Function({
         bool libraryId,
-        bool mediaProgressTableRefs,
         bool audiobookSeriesRefs,
         bool audiobookAuthorsRefs,
       })
@@ -8018,537 +7334,6 @@ typedef $$PodcastsTableProcessedTableManager =
       Podcast,
       PrefetchHooks Function({bool libraryId})
     >;
-typedef $$MediaProgressTableTableCreateCompanionBuilder =
-    MediaProgressTableCompanion Function({
-      required String libraryItemId,
-      required String userId,
-      required Duration duration,
-      required double progress,
-      Value<Duration?> currentDuration,
-      Value<bool> isFinished,
-      Value<bool> hideFromContinueListening,
-      Value<DateTime?> lastUpdate,
-      Value<DateTime?> startedAt,
-      Value<DateTime?> finishedAt,
-      Value<int> rowid,
-    });
-typedef $$MediaProgressTableTableUpdateCompanionBuilder =
-    MediaProgressTableCompanion Function({
-      Value<String> libraryItemId,
-      Value<String> userId,
-      Value<Duration> duration,
-      Value<double> progress,
-      Value<Duration?> currentDuration,
-      Value<bool> isFinished,
-      Value<bool> hideFromContinueListening,
-      Value<DateTime?> lastUpdate,
-      Value<DateTime?> startedAt,
-      Value<DateTime?> finishedAt,
-      Value<int> rowid,
-    });
-
-final class $$MediaProgressTableTableReferences
-    extends
-        BaseReferences<_$AppDatabase, $MediaProgressTableTable, MediaProgress> {
-  $$MediaProgressTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $AudiobooksTable _libraryItemIdTable(_$AppDatabase db) =>
-      db.audiobooks.createAlias(
-        $_aliasNameGenerator(
-          db.mediaProgressTable.libraryItemId,
-          db.audiobooks.id,
-        ),
-      );
-
-  $$AudiobooksTableProcessedTableManager get libraryItemId {
-    final $_column = $_itemColumn<String>('library_item_id')!;
-
-    final manager = $$AudiobooksTableTableManager(
-      $_db,
-      $_db.audiobooks,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_libraryItemIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $UsersTable _userIdTable(_$AppDatabase db) => db.users.createAlias(
-    $_aliasNameGenerator(db.mediaProgressTable.userId, db.users.id),
-  );
-
-  $$UsersTableProcessedTableManager get userId {
-    final $_column = $_itemColumn<String>('user_id')!;
-
-    final manager = $$UsersTableTableManager(
-      $_db,
-      $_db.users,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_userIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$MediaProgressTableTableFilterComposer
-    extends Composer<_$AppDatabase, $MediaProgressTableTable> {
-  $$MediaProgressTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnWithTypeConverterFilters<Duration, Duration, int> get duration =>
-      $composableBuilder(
-        column: $table.duration,
-        builder: (column) => ColumnWithTypeConverterFilters(column),
-      );
-
-  ColumnFilters<double> get progress => $composableBuilder(
-    column: $table.progress,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnWithTypeConverterFilters<Duration?, Duration, int>
-  get currentDuration => $composableBuilder(
-    column: $table.currentDuration,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
-  );
-
-  ColumnFilters<bool> get isFinished => $composableBuilder(
-    column: $table.isFinished,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get hideFromContinueListening => $composableBuilder(
-    column: $table.hideFromContinueListening,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get lastUpdate => $composableBuilder(
-    column: $table.lastUpdate,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get startedAt => $composableBuilder(
-    column: $table.startedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get finishedAt => $composableBuilder(
-    column: $table.finishedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$AudiobooksTableFilterComposer get libraryItemId {
-    final $$AudiobooksTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.libraryItemId,
-      referencedTable: $db.audiobooks,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$AudiobooksTableFilterComposer(
-            $db: $db,
-            $table: $db.audiobooks,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$UsersTableFilterComposer get userId {
-    final $$UsersTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.userId,
-      referencedTable: $db.users,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$UsersTableFilterComposer(
-            $db: $db,
-            $table: $db.users,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$MediaProgressTableTableOrderingComposer
-    extends Composer<_$AppDatabase, $MediaProgressTableTable> {
-  $$MediaProgressTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get duration => $composableBuilder(
-    column: $table.duration,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get progress => $composableBuilder(
-    column: $table.progress,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get currentDuration => $composableBuilder(
-    column: $table.currentDuration,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isFinished => $composableBuilder(
-    column: $table.isFinished,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get hideFromContinueListening => $composableBuilder(
-    column: $table.hideFromContinueListening,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get lastUpdate => $composableBuilder(
-    column: $table.lastUpdate,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get startedAt => $composableBuilder(
-    column: $table.startedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get finishedAt => $composableBuilder(
-    column: $table.finishedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$AudiobooksTableOrderingComposer get libraryItemId {
-    final $$AudiobooksTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.libraryItemId,
-      referencedTable: $db.audiobooks,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$AudiobooksTableOrderingComposer(
-            $db: $db,
-            $table: $db.audiobooks,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$UsersTableOrderingComposer get userId {
-    final $$UsersTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.userId,
-      referencedTable: $db.users,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$UsersTableOrderingComposer(
-            $db: $db,
-            $table: $db.users,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$MediaProgressTableTableAnnotationComposer
-    extends Composer<_$AppDatabase, $MediaProgressTableTable> {
-  $$MediaProgressTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumnWithTypeConverter<Duration, int> get duration =>
-      $composableBuilder(column: $table.duration, builder: (column) => column);
-
-  GeneratedColumn<double> get progress =>
-      $composableBuilder(column: $table.progress, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<Duration?, int> get currentDuration =>
-      $composableBuilder(
-        column: $table.currentDuration,
-        builder: (column) => column,
-      );
-
-  GeneratedColumn<bool> get isFinished => $composableBuilder(
-    column: $table.isFinished,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<bool> get hideFromContinueListening => $composableBuilder(
-    column: $table.hideFromContinueListening,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<DateTime> get lastUpdate => $composableBuilder(
-    column: $table.lastUpdate,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<DateTime> get startedAt =>
-      $composableBuilder(column: $table.startedAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get finishedAt => $composableBuilder(
-    column: $table.finishedAt,
-    builder: (column) => column,
-  );
-
-  $$AudiobooksTableAnnotationComposer get libraryItemId {
-    final $$AudiobooksTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.libraryItemId,
-      referencedTable: $db.audiobooks,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$AudiobooksTableAnnotationComposer(
-            $db: $db,
-            $table: $db.audiobooks,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$UsersTableAnnotationComposer get userId {
-    final $$UsersTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.userId,
-      referencedTable: $db.users,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$UsersTableAnnotationComposer(
-            $db: $db,
-            $table: $db.users,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$MediaProgressTableTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $MediaProgressTableTable,
-          MediaProgress,
-          $$MediaProgressTableTableFilterComposer,
-          $$MediaProgressTableTableOrderingComposer,
-          $$MediaProgressTableTableAnnotationComposer,
-          $$MediaProgressTableTableCreateCompanionBuilder,
-          $$MediaProgressTableTableUpdateCompanionBuilder,
-          (MediaProgress, $$MediaProgressTableTableReferences),
-          MediaProgress,
-          PrefetchHooks Function({bool libraryItemId, bool userId})
-        > {
-  $$MediaProgressTableTableTableManager(
-    _$AppDatabase db,
-    $MediaProgressTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$MediaProgressTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$MediaProgressTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$MediaProgressTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<String> libraryItemId = const Value.absent(),
-                Value<String> userId = const Value.absent(),
-                Value<Duration> duration = const Value.absent(),
-                Value<double> progress = const Value.absent(),
-                Value<Duration?> currentDuration = const Value.absent(),
-                Value<bool> isFinished = const Value.absent(),
-                Value<bool> hideFromContinueListening = const Value.absent(),
-                Value<DateTime?> lastUpdate = const Value.absent(),
-                Value<DateTime?> startedAt = const Value.absent(),
-                Value<DateTime?> finishedAt = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => MediaProgressTableCompanion(
-                libraryItemId: libraryItemId,
-                userId: userId,
-                duration: duration,
-                progress: progress,
-                currentDuration: currentDuration,
-                isFinished: isFinished,
-                hideFromContinueListening: hideFromContinueListening,
-                lastUpdate: lastUpdate,
-                startedAt: startedAt,
-                finishedAt: finishedAt,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String libraryItemId,
-                required String userId,
-                required Duration duration,
-                required double progress,
-                Value<Duration?> currentDuration = const Value.absent(),
-                Value<bool> isFinished = const Value.absent(),
-                Value<bool> hideFromContinueListening = const Value.absent(),
-                Value<DateTime?> lastUpdate = const Value.absent(),
-                Value<DateTime?> startedAt = const Value.absent(),
-                Value<DateTime?> finishedAt = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => MediaProgressTableCompanion.insert(
-                libraryItemId: libraryItemId,
-                userId: userId,
-                duration: duration,
-                progress: progress,
-                currentDuration: currentDuration,
-                isFinished: isFinished,
-                hideFromContinueListening: hideFromContinueListening,
-                lastUpdate: lastUpdate,
-                startedAt: startedAt,
-                finishedAt: finishedAt,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$MediaProgressTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({libraryItemId = false, userId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (libraryItemId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.libraryItemId,
-                                referencedTable:
-                                    $$MediaProgressTableTableReferences
-                                        ._libraryItemIdTable(db),
-                                referencedColumn:
-                                    $$MediaProgressTableTableReferences
-                                        ._libraryItemIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (userId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.userId,
-                                referencedTable:
-                                    $$MediaProgressTableTableReferences
-                                        ._userIdTable(db),
-                                referencedColumn:
-                                    $$MediaProgressTableTableReferences
-                                        ._userIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$MediaProgressTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $MediaProgressTableTable,
-      MediaProgress,
-      $$MediaProgressTableTableFilterComposer,
-      $$MediaProgressTableTableOrderingComposer,
-      $$MediaProgressTableTableAnnotationComposer,
-      $$MediaProgressTableTableCreateCompanionBuilder,
-      $$MediaProgressTableTableUpdateCompanionBuilder,
-      (MediaProgress, $$MediaProgressTableTableReferences),
-      MediaProgress,
-      PrefetchHooks Function({bool libraryItemId, bool userId})
-    >;
 typedef $$SeriesTableTableCreateCompanionBuilder =
     SeriesTableCompanion Function({
       required String id,
@@ -8575,7 +7360,7 @@ typedef $$SeriesTableTableUpdateCompanionBuilder =
     });
 
 final class $$SeriesTableTableReferences
-    extends BaseReferences<_$AppDatabase, $SeriesTableTable, Series> {
+    extends BaseReferences<_$AppDatabase, $SeriesTableTable, SeriesDomain> {
   $$SeriesTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $LibrariesTable _libraryIdTable(_$AppDatabase db) =>
@@ -8872,14 +7657,14 @@ class $$SeriesTableTableTableManager
         RootTableManager<
           _$AppDatabase,
           $SeriesTableTable,
-          Series,
+          SeriesDomain,
           $$SeriesTableTableFilterComposer,
           $$SeriesTableTableOrderingComposer,
           $$SeriesTableTableAnnotationComposer,
           $$SeriesTableTableCreateCompanionBuilder,
           $$SeriesTableTableUpdateCompanionBuilder,
-          (Series, $$SeriesTableTableReferences),
-          Series,
+          (SeriesDomain, $$SeriesTableTableReferences),
+          SeriesDomain,
           PrefetchHooks Function({bool libraryId, bool audiobookSeriesRefs})
         > {
   $$SeriesTableTableTableManager(_$AppDatabase db, $SeriesTableTable table)
@@ -8990,7 +7775,7 @@ class $$SeriesTableTableTableManager
                     return [
                       if (audiobookSeriesRefs)
                         await $_getPrefetchedData<
-                          Series,
+                          SeriesDomain,
                           $SeriesTableTable,
                           AudiobookSeriesLink
                         >(
@@ -9021,14 +7806,14 @@ typedef $$SeriesTableTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $SeriesTableTable,
-      Series,
+      SeriesDomain,
       $$SeriesTableTableFilterComposer,
       $$SeriesTableTableOrderingComposer,
       $$SeriesTableTableAnnotationComposer,
       $$SeriesTableTableCreateCompanionBuilder,
       $$SeriesTableTableUpdateCompanionBuilder,
-      (Series, $$SeriesTableTableReferences),
-      Series,
+      (SeriesDomain, $$SeriesTableTableReferences),
+      SeriesDomain,
       PrefetchHooks Function({bool libraryId, bool audiobookSeriesRefs})
     >;
 typedef $$AudiobookSeriesTableCreateCompanionBuilder =
@@ -9532,7 +8317,7 @@ typedef $$AuthorsTableUpdateCompanionBuilder =
     });
 
 final class $$AuthorsTableReferences
-    extends BaseReferences<_$AppDatabase, $AuthorsTable, Author> {
+    extends BaseReferences<_$AppDatabase, $AuthorsTable, AuthorDomain> {
   $$AuthorsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $LibrariesTable _libraryIdTable(_$AppDatabase db) => db.libraries
@@ -9797,14 +8582,14 @@ class $$AuthorsTableTableManager
         RootTableManager<
           _$AppDatabase,
           $AuthorsTable,
-          Author,
+          AuthorDomain,
           $$AuthorsTableFilterComposer,
           $$AuthorsTableOrderingComposer,
           $$AuthorsTableAnnotationComposer,
           $$AuthorsTableCreateCompanionBuilder,
           $$AuthorsTableUpdateCompanionBuilder,
-          (Author, $$AuthorsTableReferences),
-          Author,
+          (AuthorDomain, $$AuthorsTableReferences),
+          AuthorDomain,
           PrefetchHooks Function({bool libraryId, bool audiobookAuthorsRefs})
         > {
   $$AuthorsTableTableManager(_$AppDatabase db, $AuthorsTable table)
@@ -9905,7 +8690,7 @@ class $$AuthorsTableTableManager
                     return [
                       if (audiobookAuthorsRefs)
                         await $_getPrefetchedData<
-                          Author,
+                          AuthorDomain,
                           $AuthorsTable,
                           AudiobookAuthorsLink
                         >(
@@ -9936,14 +8721,14 @@ typedef $$AuthorsTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $AuthorsTable,
-      Author,
+      AuthorDomain,
       $$AuthorsTableFilterComposer,
       $$AuthorsTableOrderingComposer,
       $$AuthorsTableAnnotationComposer,
       $$AuthorsTableCreateCompanionBuilder,
       $$AuthorsTableUpdateCompanionBuilder,
-      (Author, $$AuthorsTableReferences),
-      Author,
+      (AuthorDomain, $$AuthorsTableReferences),
+      AuthorDomain,
       PrefetchHooks Function({bool libraryId, bool audiobookAuthorsRefs})
     >;
 typedef $$AudiobookAuthorsTableCreateCompanionBuilder =
@@ -10443,8 +9228,6 @@ class $AppDatabaseManager {
       $$AudiobooksTableTableManager(_db, _db.audiobooks);
   $$PodcastsTableTableManager get podcasts =>
       $$PodcastsTableTableManager(_db, _db.podcasts);
-  $$MediaProgressTableTableTableManager get mediaProgressTable =>
-      $$MediaProgressTableTableTableManager(_db, _db.mediaProgressTable);
   $$SeriesTableTableTableManager get seriesTable =>
       $$SeriesTableTableTableManager(_db, _db.seriesTable);
   $$AudiobookSeriesTableTableManager get audiobookSeries =>

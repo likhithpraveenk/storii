@@ -11,24 +11,31 @@ part of 'user.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+UserDomain _$UserDomainFromJson(
+  Map<String, dynamic> json
+) {
+    return _User.fromJson(
+      json
+    );
+}
 
 /// @nodoc
-mixin _$User {
+mixin _$UserDomain {
 
  String get id; String get username; String get userType; Uri get serverUrl;
-/// Create a copy of User
+/// Create a copy of UserDomain
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$UserCopyWith<User> get copyWith => _$UserCopyWithImpl<User>(this as User, _$identity);
+$UserDomainCopyWith<UserDomain> get copyWith => _$UserDomainCopyWithImpl<UserDomain>(this as UserDomain, _$identity);
 
-  /// Serializes this User to a JSON map.
+  /// Serializes this UserDomain to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.userType, userType) || other.userType == userType)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserDomain&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.userType, userType) || other.userType == userType)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +44,15 @@ int get hashCode => Object.hash(runtimeType,id,username,userType,serverUrl);
 
 @override
 String toString() {
-  return 'User(id: $id, username: $username, userType: $userType, serverUrl: $serverUrl)';
+  return 'UserDomain(id: $id, username: $username, userType: $userType, serverUrl: $serverUrl)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $UserCopyWith<$Res>  {
-  factory $UserCopyWith(User value, $Res Function(User) _then) = _$UserCopyWithImpl;
+abstract mixin class $UserDomainCopyWith<$Res>  {
+  factory $UserDomainCopyWith(UserDomain value, $Res Function(UserDomain) _then) = _$UserDomainCopyWithImpl;
 @useResult
 $Res call({
  String id, String username, String userType, Uri serverUrl
@@ -56,14 +63,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$UserCopyWithImpl<$Res>
-    implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._self, this._then);
+class _$UserDomainCopyWithImpl<$Res>
+    implements $UserDomainCopyWith<$Res> {
+  _$UserDomainCopyWithImpl(this._self, this._then);
 
-  final User _self;
-  final $Res Function(User) _then;
+  final UserDomain _self;
+  final $Res Function(UserDomain) _then;
 
-/// Create a copy of User
+/// Create a copy of UserDomain
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? userType = null,Object? serverUrl = null,}) {
   return _then(_self.copyWith(
@@ -78,8 +85,8 @@ as Uri,
 }
 
 
-/// Adds pattern-matching-related methods to [User].
-extension UserPatterns on User {
+/// Adds pattern-matching-related methods to [UserDomain].
+extension UserDomainPatterns on UserDomain {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -205,7 +212,7 @@ return $default(_that.id,_that.username,_that.userType,_that.serverUrl);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _User implements User {
+class _User implements UserDomain {
   const _User({required this.id, required this.username, required this.userType, required this.serverUrl});
   factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
@@ -214,7 +221,7 @@ class _User implements User {
 @override final  String userType;
 @override final  Uri serverUrl;
 
-/// Create a copy of User
+/// Create a copy of UserDomain
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
@@ -236,14 +243,14 @@ int get hashCode => Object.hash(runtimeType,id,username,userType,serverUrl);
 
 @override
 String toString() {
-  return 'User(id: $id, username: $username, userType: $userType, serverUrl: $serverUrl)';
+  return 'UserDomain(id: $id, username: $username, userType: $userType, serverUrl: $serverUrl)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
+abstract mixin class _$UserCopyWith<$Res> implements $UserDomainCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) _then) = __$UserCopyWithImpl;
 @override @useResult
 $Res call({
@@ -262,7 +269,7 @@ class __$UserCopyWithImpl<$Res>
   final _User _self;
   final $Res Function(_User) _then;
 
-/// Create a copy of User
+/// Create a copy of UserDomain
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,Object? userType = null,Object? serverUrl = null,}) {
   return _then(_User(

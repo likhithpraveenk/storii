@@ -6,12 +6,11 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 
 part 'series_provider.g.dart';
 
 @riverpod
-Future<Series> series(Ref ref, String seriesId) async {
+Future<SeriesDomain> series(Ref ref, String seriesId) async {
   final user = await ref.watch(authenticatedUserProvider.future);
   final libraryId = (await ref.watch(activeLibraryProvider.future)).id;
   final api = ref.read(libraryApiProvider(user));
@@ -26,7 +25,7 @@ Future<Series> series(Ref ref, String seriesId) async {
           'Error fetching series: $error',
           source: 'seriesProvider',
           level: .error,
-          stackTrace: s.toLimitedString(),
+          stackTrace: s,
         );
     throw error;
   }

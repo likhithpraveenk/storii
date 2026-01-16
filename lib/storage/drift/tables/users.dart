@@ -3,7 +3,7 @@ import 'package:storii/app/models/user.dart';
 import 'package:storii/storage/drift/converters.dart';
 import 'package:storii/storage/drift/tables/servers.dart';
 
-@UseRowClass(User, generateInsertable: true)
+@UseRowClass(UserDomain, generateInsertable: true)
 class Users extends Table {
   TextColumn get id => text()();
   TextColumn get username => text()();

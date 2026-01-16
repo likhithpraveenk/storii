@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:storii/api/endpoints/api_exception.dart';
+import 'package:storii/abs_api/abs_api.dart';
 
 class AppError implements Exception {
   final String message;

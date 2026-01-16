@@ -13,8 +13,13 @@ part of 'authenticated_user_provider.dart';
 final authenticatedUserProvider = AuthenticatedUserProvider._();
 
 final class AuthenticatedUserProvider
-    extends $FunctionalProvider<AsyncValue<User>, User, FutureOr<User>>
-    with $FutureModifier<User>, $FutureProvider<User> {
+    extends
+        $FunctionalProvider<
+          AsyncValue<UserDomain>,
+          UserDomain,
+          FutureOr<UserDomain>
+        >
+    with $FutureModifier<UserDomain>, $FutureProvider<UserDomain> {
   AuthenticatedUserProvider._()
     : super(
         from: null,
@@ -31,13 +36,13 @@ final class AuthenticatedUserProvider
 
   @$internal
   @override
-  $FutureProviderElement<User> $createElement($ProviderPointer pointer) =>
+  $FutureProviderElement<UserDomain> $createElement($ProviderPointer pointer) =>
       $FutureProviderElement(pointer);
 
   @override
-  FutureOr<User> create(Ref ref) {
+  FutureOr<UserDomain> create(Ref ref) {
     return authenticatedUser(ref);
   }
 }
 
-String _$authenticatedUserHash() => r'39e8ee0d3b773c865cbddf3874d1281b080317ef';
+String _$authenticatedUserHash() => r'25e461b9640c0ba1aea254c1994de91cfc2e36f6';

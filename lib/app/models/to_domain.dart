@@ -1,16 +1,15 @@
-import 'package:storii/api/models/models.dart' as dto;
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/models/author.dart';
 import 'package:storii/app/models/enums.dart';
+import 'package:storii/app/models/item.dart';
 import 'package:storii/app/models/library.dart';
-import 'package:storii/app/models/library_item.dart';
-import 'package:storii/app/models/media_progress.dart';
 import 'package:storii/app/models/series.dart';
 import 'package:storii/app/models/shelf.dart';
 import 'package:storii/app/models/user.dart';
 
-extension UserToDomain on dto.User {
-  User toDomain(Uri url) {
-    return User(
+extension UserToDomain on User {
+  UserDomain toDomain(Uri url) {
+    return UserDomain(
       id: id,
       username: username,
       userType: type.name,
@@ -19,13 +18,13 @@ extension UserToDomain on dto.User {
   }
 }
 
-extension LibraryToDomain on dto.Library {
-  Library toDomain(Uri url) {
+extension LibraryToDomain on Library {
+  LibraryDomain toDomain(Uri url) {
     final mediaContent = switch (mediaType) {
       .book => MediaContent.audiobook,
       .podcast => MediaContent.podcast,
     };
-    return Library(
+    return LibraryDomain(
       id: id,
       mediaContent: mediaContent,
       name: name,
@@ -34,10 +33,10 @@ extension LibraryToDomain on dto.Library {
   }
 }
 
-extension LibraryItemToDomain on dto.LibraryItem {
-  LibraryItem toDomain() {
+extension LibraryItemToDomain on LibraryItem {
+  ItemDomain toDomain() {
     return switch (media) {
-      final dto.BookMedia m => Audiobook(
+      final BookMedia m => Audiobook(
         id: id,
         libraryId: libraryId,
         addedAt: addedAt,
@@ -67,7 +66,7 @@ extension LibraryItemToDomain on dto.LibraryItem {
         isFinished: userMediaProgress?.isFinished ?? false,
       ),
 
-      final dto.PodcastMedia m => Podcast(
+      final PodcastMedia m => Podcast(
         id: id,
         libraryId: libraryId,
         addedAt: addedAt,
@@ -94,22 +93,22 @@ extension LibraryItemToDomain on dto.LibraryItem {
   }
 }
 
-extension ShelfToDomain on dto.Shelf {
-  Shelf toDomain(String libraryId) {
+extension ShelfToDomain on Shelf {
+  ShelfDomain toDomain(String libraryId) {
     return switch (this) {
-      final dto.LibraryItemsShelf l => LibraryItemsShelf(
+      final LibraryItemsShelf l => ItemShelfDomain(
         id: id,
         label: label,
         type: type,
         items: l.entities.map((e) => e.toDomain()).toList(),
       ),
-      final dto.SeriesShelf s => SeriesShelf(
+      final SeriesShelf s => SeriesShelfDomain(
         id: id,
         label: label,
         type: type,
         series: s.entities.map((e) => e.toDomain(libraryId)).toList(),
       ),
-      final dto.AuthorShelf a => AuthorShelf(
+      final AuthorShelf a => AuthorShelfDomain(
         id: id,
         label: label,
         type: type,
@@ -119,26 +118,9 @@ extension ShelfToDomain on dto.Shelf {
   }
 }
 
-extension ProgressToDomain on dto.MediaProgress {
-  MediaProgress toDomain(String userId) {
-    return MediaProgress(
-      libraryItemId: libraryItemId,
-      userId: userId,
-      duration: duration,
-      currentDuration: currentTime,
-      hideFromContinueListening: hideFromContinueListening,
-      isFinished: isFinished,
-      lastUpdate: lastUpdate,
-      finishedAt: finishedAt,
-      progress: progress ?? 0,
-      startedAt: startedAt,
-    );
-  }
-}
-
-extension SeriesX on dto.Series {
-  Series toDomain(String libraryId) {
-    return Series(
+extension SeriesX on Series {
+  SeriesDomain toDomain(String libraryId) {
+    return SeriesDomain(
       id: id,
       name: name,
       libraryId: this.libraryId ?? libraryId,
@@ -153,9 +135,9 @@ extension SeriesX on dto.Series {
   }
 }
 
-extension AuthorX on dto.Author {
-  Author toDomain(String libraryId) {
-    return Author(
+extension AuthorX on Author {
+  AuthorDomain toDomain(String libraryId) {
+    return AuthorDomain(
       id: id,
       name: name,
       libraryId: this.libraryId ?? libraryId,
@@ -163,7 +145,7 @@ extension AuthorX on dto.Author {
       updatedAt: updatedAt,
       addedAt: addedAt,
       numBooks: numBooks,
-      libraryItems: libraryItems?.map((i) => i.toDomain()).toList(),
+      books: libraryItems?.map((i) => i.toDomain()).cast<Audiobook>().toList(),
       series: series?.map((s) => s.toDomain(libraryId)).toList(),
     );
   }

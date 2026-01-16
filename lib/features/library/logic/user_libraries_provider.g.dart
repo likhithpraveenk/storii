@@ -15,11 +15,13 @@ final userLibrariesProvider = UserLibrariesProvider._();
 final class UserLibrariesProvider
     extends
         $FunctionalProvider<
-          AsyncValue<List<Library>>,
-          List<Library>,
-          FutureOr<List<Library>>
+          AsyncValue<List<LibraryDomain>>,
+          List<LibraryDomain>,
+          FutureOr<List<LibraryDomain>>
         >
-    with $FutureModifier<List<Library>>, $FutureProvider<List<Library>> {
+    with
+        $FutureModifier<List<LibraryDomain>>,
+        $FutureProvider<List<LibraryDomain>> {
   UserLibrariesProvider._()
     : super(
         from: null,
@@ -36,14 +38,14 @@ final class UserLibrariesProvider
 
   @$internal
   @override
-  $FutureProviderElement<List<Library>> $createElement(
+  $FutureProviderElement<List<LibraryDomain>> $createElement(
     $ProviderPointer pointer,
   ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<List<Library>> create(Ref ref) {
+  FutureOr<List<LibraryDomain>> create(Ref ref) {
     return userLibraries(ref);
   }
 }
 
-String _$userLibrariesHash() => r'cae2df5008a29ff7bfaec5758f4d288294267253';
+String _$userLibrariesHash() => r'922d01aedafd78fcb70086d64338e56abe29684d';

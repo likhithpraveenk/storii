@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LogEntry {
 
- DateTime get timestamp; String get message; LogLevel get level; String? get source; String? get stackTrace;
+ DateTime get timestamp; String get message; LogLevelDomain get level; String? get source; String? get stackTrace;
 /// Create a copy of LogEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $LogEntryCopyWith<$Res>  {
   factory $LogEntryCopyWith(LogEntry value, $Res Function(LogEntry) _then) = _$LogEntryCopyWithImpl;
 @useResult
 $Res call({
- DateTime timestamp, String message, LogLevel level, String? source, String? stackTrace
+ DateTime timestamp, String message, LogLevelDomain level, String? source, String? stackTrace
 });
 
 
@@ -67,7 +67,7 @@ class _$LogEntryCopyWithImpl<$Res>
 timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
 as DateTime,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,level: null == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
-as LogLevel,source: freezed == source ? _self.source : source // ignore: cast_nullable_to_non_nullable
+as LogLevelDomain,source: freezed == source ? _self.source : source // ignore: cast_nullable_to_non_nullable
 as String?,stackTrace: freezed == stackTrace ? _self.stackTrace : stackTrace // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -151,7 +151,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime timestamp,  String message,  LogLevel level,  String? source,  String? stackTrace)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime timestamp,  String message,  LogLevelDomain level,  String? source,  String? stackTrace)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LogEntry() when $default != null:
 return $default(_that.timestamp,_that.message,_that.level,_that.source,_that.stackTrace);case _:
@@ -172,7 +172,7 @@ return $default(_that.timestamp,_that.message,_that.level,_that.source,_that.sta
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime timestamp,  String message,  LogLevel level,  String? source,  String? stackTrace)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime timestamp,  String message,  LogLevelDomain level,  String? source,  String? stackTrace)  $default,) {final _that = this;
 switch (_that) {
 case _LogEntry():
 return $default(_that.timestamp,_that.message,_that.level,_that.source,_that.stackTrace);}
@@ -189,7 +189,7 @@ return $default(_that.timestamp,_that.message,_that.level,_that.source,_that.sta
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime timestamp,  String message,  LogLevel level,  String? source,  String? stackTrace)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime timestamp,  String message,  LogLevelDomain level,  String? source,  String? stackTrace)?  $default,) {final _that = this;
 switch (_that) {
 case _LogEntry() when $default != null:
 return $default(_that.timestamp,_that.message,_that.level,_that.source,_that.stackTrace);case _:
@@ -209,7 +209,7 @@ class _LogEntry implements LogEntry {
 
 @override final  DateTime timestamp;
 @override final  String message;
-@override final  LogLevel level;
+@override final  LogLevelDomain level;
 @override final  String? source;
 @override final  String? stackTrace;
 
@@ -243,7 +243,7 @@ abstract mixin class _$LogEntryCopyWith<$Res> implements $LogEntryCopyWith<$Res>
   factory _$LogEntryCopyWith(_LogEntry value, $Res Function(_LogEntry) _then) = __$LogEntryCopyWithImpl;
 @override @useResult
 $Res call({
- DateTime timestamp, String message, LogLevel level, String? source, String? stackTrace
+ DateTime timestamp, String message, LogLevelDomain level, String? source, String? stackTrace
 });
 
 
@@ -265,7 +265,7 @@ class __$LogEntryCopyWithImpl<$Res>
 timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
 as DateTime,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,level: null == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
-as LogLevel,source: freezed == source ? _self.source : source // ignore: cast_nullable_to_non_nullable
+as LogLevelDomain,source: freezed == source ? _self.source : source // ignore: cast_nullable_to_non_nullable
 as String?,stackTrace: freezed == stackTrace ? _self.stackTrace : stackTrace // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
