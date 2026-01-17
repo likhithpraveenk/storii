@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/models/series.dart';
 import 'package:storii/app/navigation/nav_bar/nav_bar.dart';
 import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/ui/server_list_screen.dart';
 import 'package:storii/features/author/ui/author_detail_screen.dart';
-import 'package:storii/features/author/ui/authors_screen.dart';
+import 'package:storii/features/author/ui/author_list_screen.dart';
 import 'package:storii/features/collections/ui/collections_screen.dart';
 import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/features/home/ui/home_screen.dart';
@@ -19,7 +18,7 @@ import 'package:storii/features/more/ui/more_screen.dart';
 import 'package:storii/features/profile/ui/profile_screen.dart';
 import 'package:storii/features/search/ui/search_screen.dart';
 import 'package:storii/features/series/ui/series_detail_screen.dart';
-import 'package:storii/features/series/ui/series_screen.dart';
+import 'package:storii/features/series/ui/series_list_screen.dart';
 import 'package:storii/features/settings/ui/about_screen.dart';
 import 'package:storii/features/settings/ui/nav_setting_screen.dart';
 import 'package:storii/features/settings/ui/settings_screen.dart';
@@ -41,9 +40,9 @@ enum AppRoute {
   navigationSettings('/settings/navigation'),
   item('/library/:id'),
   series('/series'),
-  seriesId('/series/:id'),
+  seriesDetail('/series/:id'),
   authors('/authors'),
-  authorsId('/authors/:id'),
+  authorDetail('/authors/:id'),
   profile('/profile');
 
   final String path;
@@ -114,10 +113,10 @@ final routerProvider = Provider<GoRouter>((ref) {
               child: switch (target) {
                 .home => const HomeScreen(),
                 .library => const LibraryScreen(),
-                .series => const SeriesScreen(),
+                .series => const SeriesListScreen(),
                 .downloads => const DownloadsScreen(),
                 .collections => const CollectionsScreen(),
-                .authors => const AuthorsScreen(),
+                .authors => const AuthorListScreen(),
                 .more => const MoreScreen(),
               },
             ),
@@ -129,10 +128,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           path: target.item.route.path,
           pageBuilder: (context, state) => NoTransitionPage(
             child: switch (target) {
-              .series => const SeriesScreen(fromMore: true),
+              .series => const SeriesListScreen(fromMore: true),
               .downloads => const DownloadsScreen(fromMore: true),
               .collections => const CollectionsScreen(fromMore: true),
-              .authors => const AuthorsScreen(fromMore: true),
+              .authors => const AuthorListScreen(fromMore: true),
               _ => throw StateError('invalid go route $target'),
             },
           ),
@@ -173,23 +172,29 @@ final routerProvider = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
-        path: AppRoute.authorsId.path,
+        path: AppRoute.authorDetail.path,
         builder: (context, state) {
           final id = state.pathParameters['id'];
           if (id == null) {
             throw StateError('path parameter to authors not passed');
           }
-          return AuthorDetailScreen(id: id);
+          return AuthorDetailScreen(
+            key: ValueKey('author-$id-${state.pageKey}'),
+            id: id,
+          );
         },
       ),
       GoRoute(
-        path: AppRoute.seriesId.path,
+        path: AppRoute.seriesDetail.path,
         builder: (context, state) {
-          final series = state.extra as SeriesDomain?;
-          if (series == null) {
-            throw StateError('series not passed');
+          final id = state.pathParameters['id'];
+          if (id == null) {
+            throw StateError('path parameter to series not passed');
           }
-          return SeriesDetailScreen(series: series);
+          return SeriesDetailScreen(
+            key: ValueKey('series-$id-${state.pageKey}'),
+            id: id,
+          );
         },
       ),
       GoRoute(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/models/author.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
+import 'package:storii/shared/widgets/stack_badge.dart';
 
 class AuthorCard extends ConsumerWidget {
   const AuthorCard(this.author, {super.key});
@@ -11,61 +13,49 @@ class AuthorCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return Column(
-      mainAxisSize: .min,
-      crossAxisAlignment: .start,
+    return Stack(
       children: [
-        AspectRatio(
-          aspectRatio: 1,
-          child: ClipRRect(
-            borderRadius: .circular(200),
-            child: Stack(
-              fit: StackFit.expand,
+        Column(
+          mainAxisSize: .min,
+          children: [
+            Stack(
               children: [
-                ImageWidget(
-                  id: author.id,
-                  type: .author,
-                  updatedAt: author.updatedAt,
-                ),
-                Positioned.fill(
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: .circular(12),
-                      onTap: () =>
-                          context.push(AppRoute.authorsId.withId(author.id)),
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: ClipRRect(
+                    borderRadius: .circular(200),
+                    child: ImageWidget(
+                      id: author.id,
+                      type: .author,
+                      updatedAt: author.updatedAt,
                     ),
                   ),
                 ),
+                if (author.numBooks != null)
+                  Positioned(
+                    top: 4,
+                    right: 4,
+                    child: StackBadge(author.numBooks!),
+                  ),
               ],
             ),
-          ),
+            Text(
+              author.name,
+              maxLines: 2,
+              overflow: .ellipsis,
+              style: Theme.of(context).textTheme.titleSmall,
+              textAlign: .center,
+            ),
+          ],
         ),
-        Padding(
-          padding: const .only(top: 8, left: 4),
-          child: Column(
-            crossAxisAlignment: .start,
-            children: [
-              Text(
-                author.name,
-                maxLines: 1,
-                overflow: .ellipsis,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleSmall?.copyWith(fontSize: 14),
-              ),
-              const SizedBox(height: 2),
-              if (author.numBooks != null)
-                Text(
-                  author.numBooks!.toString(),
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: 12,
-                    color: scheme.onSurfaceVariant,
-                  ),
-                ),
-            ],
+        Positioned.fill(
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: AppStyles.circularRadius,
+              onTap: () =>
+                  context.push(AppRoute.authorDetail.withId(author.id)),
+            ),
           ),
         ),
       ],
@@ -81,48 +71,37 @@ class AuthorCardListView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
 
-    return Padding(
-      padding: const .symmetric(vertical: 8),
-      child: ListTile(
-        onTap: () => context.push(AppRoute.authors.withId(author.id)),
-        leading: AspectRatio(
-          aspectRatio: 1,
-          child: ClipRRect(
-            borderRadius: .circular(50),
-            child: ImageWidget(
-              id: author.id,
-              type: .author,
-              updatedAt: author.updatedAt,
-            ),
-          ),
-        ),
-        titleAlignment: .top,
-        title: Padding(
-          padding: const .only(top: 8, left: 4),
-          child: Column(
-            crossAxisAlignment: .start,
-            children: [
-              Text(
-                author.name,
-                maxLines: 1,
-                overflow: .ellipsis,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleSmall?.copyWith(fontSize: 14),
-              ),
-              const SizedBox(height: 2),
-              if (author.numBooks != null)
-                Text(
-                  author.numBooks!.toString(),
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: 12,
-                    color: scheme.onSurfaceVariant,
-                  ),
-                ),
-            ],
+    return ListTile(
+      shape: AppStyles.roundedRect,
+      contentPadding: const .fromLTRB(16, 8, 16, 8),
+      onTap: () => context.push(AppRoute.authors.withId(author.id)),
+      leading: AspectRatio(
+        aspectRatio: 1,
+        child: ClipRRect(
+          borderRadius: .circular(50),
+          child: ImageWidget(
+            id: author.id,
+            type: .author,
+            updatedAt: author.updatedAt,
           ),
         ),
       ),
+      titleAlignment: .center,
+      title: Text(
+        author.name,
+        maxLines: 2,
+        overflow: .ellipsis,
+        style: Theme.of(context).textTheme.titleSmall,
+      ),
+      trailing: author.numBooks != null
+          ? Text(
+              author.numBooks!.toString(),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontSize: 12,
+                color: scheme.onSurfaceVariant,
+              ),
+            )
+          : null,
     );
   }
 }

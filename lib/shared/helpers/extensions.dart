@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:storii/app/models/item.dart';
 import 'package:storii/app/models/log_entry.dart';
 
 extension IterableExtensions<T> on Iterable<T> {
@@ -69,6 +70,27 @@ extension LocalFormatterX on DateTime {
 }
 
 extension StackTraceX on StackTrace {
-  String toLimitedString({int lines = 5}) =>
+  String toLimitedString({int lines = 10}) =>
       toString().split('\n').take(lines).join('\n');
+}
+
+extension AudiobookSortX on Iterable<ItemDomain> {
+  List<ItemDomain> sortedBySequence() {
+    return toList()..sort((a, b) {
+      double parseSequence(String? seq) {
+        if (seq == null || seq.isEmpty) return 0.0;
+        final numericPart = seq.replaceAll(RegExp(r'[^0-9.]'), '');
+        return double.tryParse(numericPart) ?? 0.0;
+      }
+
+      final aVal = parseSequence(
+        a.mapOrNull(audiobook: (x) => x.seriesSequence),
+      );
+      final bVal = parseSequence(
+        b.mapOrNull(audiobook: (x) => x.seriesSequence),
+      );
+
+      return aVal.compareTo(bVal);
+    });
+  }
 }

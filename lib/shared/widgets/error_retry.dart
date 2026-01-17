@@ -13,7 +13,7 @@ class ErrorRetryScreen extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: true),
+      appBar: AppBar(automaticallyImplyLeading: true, titleSpacing: 0),
       body: Padding(
         padding: const .all(24),
         child: Center(

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/router.dart';
+import 'package:storii/app/models/item.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/logic/item_palette_provider.dart';
 import 'package:storii/features/item/ui/cover_image.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/dashed_underline.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/expandable_text.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -37,7 +42,66 @@ class ItemDetailScreen extends ConsumerWidget {
               CoverImage(item),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const .all(24),
+                  padding: const .fromLTRB(16, 12, 16, 0),
+                  child: switch (item) {
+                    final Audiobook a => Wrap(
+                      spacing: 8,
+                      runSpacing: 0,
+                      alignment: .center,
+                      children: a.authors
+                          .map(
+                            (author) => InkWell(
+                              onTap: () {
+                                context.push(
+                                  AppRoute.authorDetail.withId(author.id),
+                                );
+                              },
+                              borderRadius: AppStyles.circularRadius,
+                              child: Padding(
+                                padding: const .all(4),
+                                child: CustomPaint(
+                                  painter: DashedUnderlinePainter(
+                                    color: scheme.onSurfaceVariant,
+                                  ),
+                                  child: Text(
+                                    author.name,
+                                    style: textTheme.titleSmall,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    final Podcast _ => CustomPaint(
+                      painter: DashedUnderlinePainter(
+                        color: scheme.onSurfaceVariant,
+                      ),
+                      child: Padding(
+                        padding: const .only(bottom: 2),
+                        child: Text(
+                          item.authorName ?? l.noAuthor,
+                          style: textTheme.titleSmall?.copyWith(
+                            color: scheme.onSurface,
+                            shadows: [
+                              Shadow(
+                                color: scheme.onSurfaceVariant.withValues(
+                                  alpha: 0.25,
+                                ),
+                                blurRadius: 4,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  },
+                ),
+              ),
+              // TODO: add series list
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const .all(16),
                   child: Column(
                     children: [
                       if (item.progress > 0) ...[
@@ -69,10 +133,7 @@ class ItemDetailScreen extends ConsumerWidget {
                             )
                             .toList(),
                       ),
-                      ExpandableHtml(
-                        title: l.description,
-                        data: item.description ?? l.noDescription,
-                      ),
+                      ExpandableHtml(data: item.description ?? l.noDescription),
                       const SizedBox(height: 200),
                     ],
                   ),

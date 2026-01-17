@@ -52,10 +52,18 @@ extension LibraryItemToDomain on LibraryItem {
         genres: m.metadata.genres,
         language: m.metadata.language,
         narrators: m.metadata.mapOrNull(book: (m) => m.narrators) ?? [],
+        authorName:
+            m.metadata.mapOrNull(book: (m) => m.authorName) ??
+            m.metadata.mapOrNull(book: (m) => m.authors?.firstOrNull?.name),
         authors:
             m.metadata.mapOrNull(
               book: (m) =>
                   m.authors?.map((a) => a.toDomain(libraryId)).toList(),
+            ) ??
+            [],
+        series:
+            m.metadata.mapOrNull(
+              book: (m) => m.series?.map((s) => s.toDomain(libraryId)).toList(),
             ) ??
             [],
         tracks: m.tracks ?? [],
@@ -124,6 +132,7 @@ extension SeriesX on Series {
       id: id,
       name: name,
       libraryId: this.libraryId ?? libraryId,
+      sequence: sequence,
       addedAt: addedAt,
       updatedAt: updatedAt,
       description: description,

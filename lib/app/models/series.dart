@@ -9,6 +9,7 @@ sealed class SeriesDomain with _$SeriesDomain {
     required String id,
     required String name,
     required String libraryId,
+    String? sequence,
     String? nameIgnorePrefix,
     String? description,
     DateTime? addedAt,

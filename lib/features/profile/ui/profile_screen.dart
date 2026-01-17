@@ -9,6 +9,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 0,
         automaticallyImplyLeading: true,
         leading: IconButton(
           onPressed: () => context.pop(),

@@ -11,6 +11,7 @@ class DownloadsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 0,
         title: Text(AppLocalizations.of(context)!.downloads),
         automaticallyImplyLeading: fromMore,
         leading: fromMore

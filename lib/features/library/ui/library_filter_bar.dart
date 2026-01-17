@@ -8,14 +8,13 @@ import 'package:storii/l10n/l10n.dart';
 class LibraryFilterBar extends ConsumerWidget {
   const LibraryFilterBar(this.tab, {super.key});
 
-  final FiltersTab tab;
+  final FiltersScreen tab;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final filterState = ref.watch(libraryFiltersProvider(tab));
     final notifier = ref.read(libraryFiltersProvider(tab).notifier);
     final textTheme = Theme.of(context).textTheme;
-    final l = AppLocalizations.of(context)!;
 
     return Padding(
       padding: const .symmetric(horizontal: 8, vertical: 4),
@@ -26,39 +25,46 @@ class LibraryFilterBar extends ConsumerWidget {
             onTap: () {
               showModalBottomSheet(
                 context: context,
-                builder: (context) => Column(
-                  mainAxisSize: .min,
-                  crossAxisAlignment: .start,
-                  children: [
-                    Padding(
-                      padding: const .only(left: 20, top: 16, bottom: 12),
-                      child: Text(l.ascDesc, style: textTheme.bodyMedium),
-                    ),
-                    ...LibrarySortType.values.map(
-                      (type) => ListTile(
-                        title: Text(type.getDisplayString(context)),
-                        trailing: filterState.sortType == type
-                            ? Icon(
-                                filterState.sortAscending
-                                    ? Icons.arrow_upward
-                                    : Icons.arrow_downward,
-                              )
-                            : null,
-                        tileColor: filterState.sortType == type
-                            ? Theme.of(
-                                context,
-                              ).colorScheme.surfaceContainerHighest
-                            : null,
-                        onTap: () {
-                          if (filterState.sortType == type) {
-                            notifier.setSortAscending();
-                          } else {
-                            notifier.setSortType(type);
-                          }
-                        },
-                      ),
-                    ),
-                  ],
+                builder: (context) => Consumer(
+                  builder: (context, ref, _) {
+                    final filterState = ref.watch(libraryFiltersProvider(tab));
+                    final l = AppLocalizations.of(context)!;
+
+                    return Column(
+                      mainAxisSize: .min,
+                      crossAxisAlignment: .start,
+                      children: [
+                        Padding(
+                          padding: const .only(left: 20, top: 16, bottom: 12),
+                          child: Text(l.ascDesc, style: textTheme.bodyMedium),
+                        ),
+                        ...LibrarySortType.values.map(
+                          (type) => ListTile(
+                            title: Text(type.getDisplayString(context)),
+                            trailing: filterState.sortType == type
+                                ? Icon(
+                                    filterState.sortAscending
+                                        ? Icons.arrow_upward
+                                        : Icons.arrow_downward,
+                                  )
+                                : null,
+                            tileColor: filterState.sortType == type
+                                ? Theme.of(
+                                    context,
+                                  ).colorScheme.surfaceContainerHighest
+                                : null,
+                            onTap: () {
+                              if (filterState.sortType == type) {
+                                notifier.setSortAscending();
+                              } else {
+                                notifier.setSortType(type);
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               );
             },
@@ -84,51 +90,9 @@ class LibraryFilterBar extends ConsumerWidget {
           const Spacer(),
           IconButton(
             icon: Icon(
-              filterState.gridCount == 1 ? Icons.list_rounded : Icons.grid_view,
+              filterState.isGridView ? Icons.list_rounded : Icons.grid_view,
             ),
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) => Column(
-                  mainAxisSize: .min,
-                  crossAxisAlignment: .start,
-                  children: [
-                    Padding(
-                      padding: const .only(left: 20, top: 16, bottom: 12),
-                      child: Text(l.gridCount, style: textTheme.titleMedium),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.list_rounded),
-                      tileColor: filterState.gridCount == 1
-                          ? Theme.of(
-                              context,
-                            ).colorScheme.surfaceContainerHighest
-                          : null,
-                      title: const Text('1'),
-                      onTap: () {
-                        notifier.setGridCount(1);
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ...[2, 3].map(
-                      (count) => ListTile(
-                        leading: const Icon(Icons.grid_on),
-                        tileColor: filterState.gridCount == count
-                            ? Theme.of(
-                                context,
-                              ).colorScheme.surfaceContainerHighest
-                            : null,
-                        title: Text('$count'),
-                        onTap: () {
-                          notifier.setGridCount(count);
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
+            onPressed: notifier.setIsGridView,
           ),
         ],
       ),

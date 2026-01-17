@@ -43,15 +43,6 @@ class ApiClient {
 
   Future<Response> handleUnauthorized(RequestOptions failedRequest) async {
     return _refreshLock.synchronized(() async {
-      final latestToken = await getAccessToken?.call();
-      final oldToken = failedRequest.headers['Authorization']
-          ?.toString()
-          .replaceFirst('Bearer ', '');
-
-      if (latestToken != null && latestToken != oldToken) {
-        return _dio.fetch(failedRequest.copyWith());
-      }
-
       if (failedRequest.extra['__retried'] == true) {
         throw const ApiException('Session expired', statusCode: 401);
       }
@@ -74,7 +65,11 @@ class ApiClient {
     if (refreshToken == null) return false;
 
     try {
-      final refreshDio = Dio(BaseOptions(baseUrl: _dio.options.baseUrl));
+      final refreshDio = Dio(BaseOptions(baseUrl: baseUrl.toString()));
+
+      if (kDebugMode) {
+        refreshDio.interceptors.add(PrettyDioLogger());
+      }
 
       final res = await refreshDio.post(
         ApiRoutes.authRefresh,

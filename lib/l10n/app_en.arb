@@ -113,5 +113,7 @@
   "authors": "Authors",
   "more": "More",
   "books": "Books",
-  "profile": "Profile"
+  "profile": "Profile",
+  "viewAll": "View All",
+  "standaloneBooks": "Standalone Books"
 }

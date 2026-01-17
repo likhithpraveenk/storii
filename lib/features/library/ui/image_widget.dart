@@ -31,7 +31,7 @@ class ImageWidget extends ConsumerWidget {
     return CachedNetworkImage(
       cacheManager: imageCacheManager,
       imageUrl: coverUrl,
-      fit: BoxFit.cover,
+      fit: .cover,
       placeholder: (_, _) => const PlaceholderImage(),
       errorWidget: (context, url, error) {
         if (kDebugMode) {

@@ -37,7 +37,6 @@ class MyApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {.mouse, .touch, .trackpad, .stylus},
-        scrollbars: false,
       ),
       builder: (context, child) {
         return MediaQuery(

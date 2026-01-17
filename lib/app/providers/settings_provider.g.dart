@@ -26,6 +26,9 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
   fontScale: (json['fontScale'] as num?)?.toDouble() ?? 1,
   defaultItemsLimit: (json['defaultItemsLimit'] as num?)?.toInt() ?? 50,
   defaultSeriesLimit: (json['defaultSeriesLimit'] as num?)?.toInt() ?? 20,
+  showTitleForItem: json['showTitleForItem'] as bool? ?? true,
+  stackTitleOnImage: json['stackTitleOnImage'] as bool? ?? false,
+  showAuthorForItem: json['showAuthorForItem'] as bool? ?? true,
 );
 
 Map<String, dynamic> _$AppSettingsToJson(
@@ -41,6 +44,9 @@ Map<String, dynamic> _$AppSettingsToJson(
   'fontScale': instance.fontScale,
   'defaultItemsLimit': instance.defaultItemsLimit,
   'defaultSeriesLimit': instance.defaultSeriesLimit,
+  'showTitleForItem': instance.showTitleForItem,
+  'stackTitleOnImage': instance.stackTitleOnImage,
+  'showAuthorForItem': instance.showAuthorForItem,
 };
 
 const _$AppThemeEnumMap = {
@@ -66,9 +72,9 @@ _UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>
       currentLibraryId: json['currentLibraryId'] as String?,
       currentItemId: json['currentItemId'] as String?,
       isFullySynced: json['isFullySynced'] as bool? ?? false,
-      allGridCount: (json['allGridCount'] as num?)?.toInt() ?? 2,
-      seriesGridCount: (json['seriesGridCount'] as num?)?.toInt() ?? 1,
-      authorsGridCount: (json['authorsGridCount'] as num?)?.toInt() ?? 2,
+      isItemsGridView: json['isItemsGridView'] as bool? ?? true,
+      isSeriesGridView: json['isSeriesGridView'] as bool? ?? true,
+      isAuthorsGridView: json['isAuthorsGridView'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$UserSettingsToJson(_UserSettings instance) =>
@@ -77,9 +83,9 @@ Map<String, dynamic> _$UserSettingsToJson(_UserSettings instance) =>
       'currentLibraryId': ?instance.currentLibraryId,
       'currentItemId': ?instance.currentItemId,
       'isFullySynced': instance.isFullySynced,
-      'allGridCount': instance.allGridCount,
-      'seriesGridCount': instance.seriesGridCount,
-      'authorsGridCount': instance.authorsGridCount,
+      'isItemsGridView': instance.isItemsGridView,
+      'isSeriesGridView': instance.isSeriesGridView,
+      'isAuthorsGridView': instance.isAuthorsGridView,
     };
 
 // **************************************************************************
@@ -273,6 +279,15 @@ extension AppSettingsSetters on AppSettingsNotifier {
 
   Future<void> setDefaultSeriesLimit(int value) =>
       _save(state.copyWith(defaultSeriesLimit: value));
+
+  Future<void> setShowTitleForItem(bool value) =>
+      _save(state.copyWith(showTitleForItem: value));
+
+  Future<void> setStackTitleOnImage(bool value) =>
+      _save(state.copyWith(stackTitleOnImage: value));
+
+  Future<void> setShowAuthorForItem(bool value) =>
+      _save(state.copyWith(showAuthorForItem: value));
 }
 
 final themeProvider = Provider<AppTheme>(
@@ -315,6 +330,18 @@ final defaultSeriesLimitProvider = Provider<int>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.defaultSeriesLimit)),
 );
 
+final showTitleForItemProvider = Provider<bool>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.showTitleForItem)),
+);
+
+final stackTitleOnImageProvider = Provider<bool>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.stackTitleOnImage)),
+);
+
+final showAuthorForItemProvider = Provider<bool>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.showAuthorForItem)),
+);
+
 // **************************************************************************
 // _UserSettingsGenerator
 // **************************************************************************
@@ -329,14 +356,14 @@ extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setIsFullySynced(bool value) =>
       _save(state.copyWith(isFullySynced: value));
 
-  Future<void> setAllGridCount(int value) =>
-      _save(state.copyWith(allGridCount: value));
+  Future<void> setIsItemsGridView(bool value) =>
+      _save(state.copyWith(isItemsGridView: value));
 
-  Future<void> setSeriesGridCount(int value) =>
-      _save(state.copyWith(seriesGridCount: value));
+  Future<void> setIsSeriesGridView(bool value) =>
+      _save(state.copyWith(isSeriesGridView: value));
 
-  Future<void> setAuthorsGridCount(int value) =>
-      _save(state.copyWith(authorsGridCount: value));
+  Future<void> setIsAuthorsGridView(bool value) =>
+      _save(state.copyWith(isAuthorsGridView: value));
 }
 
 final currentLibraryIdProvider = Provider.family<String?, String>(
@@ -354,17 +381,18 @@ final isFullySyncedProvider = Provider.family<bool, String>(
       ref.watch(userSettingsProvider(userId).select((s) => s.isFullySynced)),
 );
 
-final allGridCountProvider = Provider.family<int, String>(
+final isItemsGridViewProvider = Provider.family<bool, String>(
   (ref, userId) =>
-      ref.watch(userSettingsProvider(userId).select((s) => s.allGridCount)),
+      ref.watch(userSettingsProvider(userId).select((s) => s.isItemsGridView)),
 );
 
-final seriesGridCountProvider = Provider.family<int, String>(
+final isSeriesGridViewProvider = Provider.family<bool, String>(
   (ref, userId) =>
-      ref.watch(userSettingsProvider(userId).select((s) => s.seriesGridCount)),
+      ref.watch(userSettingsProvider(userId).select((s) => s.isSeriesGridView)),
 );
 
-final authorsGridCountProvider = Provider.family<int, String>(
-  (ref, userId) =>
-      ref.watch(userSettingsProvider(userId).select((s) => s.authorsGridCount)),
+final isAuthorsGridViewProvider = Provider.family<bool, String>(
+  (ref, userId) => ref.watch(
+    userSettingsProvider(userId).select((s) => s.isAuthorsGridView),
+  ),
 );

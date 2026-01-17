@@ -6,19 +6,21 @@ import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/library/ui/library_filter_bar.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
-class AuthorsScreen extends ConsumerStatefulWidget {
-  const AuthorsScreen({super.key, this.fromMore = false});
+class AuthorListScreen extends ConsumerStatefulWidget {
+  const AuthorListScreen({super.key, this.fromMore = false});
 
   final bool fromMore;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AuthorsScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _AuthorListScreenState();
 }
 
-class _AuthorsScreenState extends ConsumerState<AuthorsScreen> {
+class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
   final _scrollController = ScrollController();
   bool _showBackToTopButton = false;
 
@@ -78,14 +80,8 @@ class _AuthorsScreenState extends ConsumerState<AuthorsScreen> {
                       child: Center(child: Text(l.empty)),
                     );
                   }
-                  final width = MediaQuery.of(context).size.width;
-                  final crossAxisSpacing = 16.0;
-                  final columnWidth =
-                      (width -
-                          (crossAxisSpacing * (filterState.gridCount - 1))) /
-                      filterState.gridCount;
-                  final dynamicRatio = columnWidth / (columnWidth + 60);
-                  if (filterState.gridCount == 1) {
+
+                  if (!filterState.isGridView) {
                     return ListView.builder(
                       controller: _scrollController,
                       itemCount: authors.length,
@@ -98,24 +94,25 @@ class _AuthorsScreenState extends ConsumerState<AuthorsScreen> {
                     );
                   }
 
-                  return Padding(
-                    padding: const .fromLTRB(16, 0, 16, 24),
-                    child: GridView.builder(
-                      controller: _scrollController,
-                      itemCount: authors.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: filterState.gridCount,
-                        mainAxisSpacing: 8,
-                        crossAxisSpacing: 16,
-                        childAspectRatio: dynamicRatio,
+                  return GridView.builder(
+                    controller: _scrollController,
+                    itemCount: authors.length,
+                    padding: const .symmetric(horizontal: 16),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: calculateGridCount(context),
+                      mainAxisSpacing: 8,
+                      crossAxisSpacing: 16,
+                      childAspectRatio: calculateGridRatio(
+                        context,
+                        showAuthor: false,
                       ),
-                      itemBuilder: (context, index) {
-                        return AuthorCard(
-                          key: ValueKey(authors[index].id),
-                          authors[index],
-                        );
-                      },
                     ),
+                    itemBuilder: (context, index) {
+                      return AuthorCard(
+                        key: ValueKey(authors[index].id),
+                        authors[index],
+                      );
+                    },
                   );
                 },
                 loading: () => const Center(child: RandomWaveform()),

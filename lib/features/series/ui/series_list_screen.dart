@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/library/ui/library_filter_bar.dart';
 import 'package:storii/features/series/logic/series_list_provider.dart';
 import 'package:storii/features/series/ui/series.card.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
-class SeriesScreen extends ConsumerStatefulWidget {
-  const SeriesScreen({super.key, this.fromMore = false});
+class SeriesListScreen extends ConsumerStatefulWidget {
+  const SeriesListScreen({super.key, this.fromMore = false});
 
   final bool fromMore;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SeriesScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _SeriesListScreenState();
 }
 
-class _SeriesScreenState extends ConsumerState<SeriesScreen> {
+class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
   final _scrollController = ScrollController();
   bool _showBackToTopButton = false;
 
@@ -62,7 +65,7 @@ class _SeriesScreenState extends ConsumerState<SeriesScreen> {
                 onPressed: () => context.pop(),
                 icon: const Icon(Icons.arrow_back),
               ),
-              title: Text(AppLocalizations.of(context)!.series),
+              title: Text(l.series),
             )
           : null,
       body: RefreshIndicator(
@@ -76,14 +79,6 @@ class _SeriesScreenState extends ConsumerState<SeriesScreen> {
                   if (seriesState.series.isEmpty) {
                     return Center(child: Text(l.empty));
                   }
-                  final width = MediaQuery.of(context).size.width;
-                  final crossAxisSpacing = 16.0;
-                  final columnWidth =
-                      (width -
-                          (crossAxisSpacing * (filterState.gridCount - 1))) /
-                      filterState.gridCount;
-                  final dynamicRatio = columnWidth / (columnWidth + 60);
-
                   return NotificationListener<ScrollNotification>(
                     onNotification: (notification) {
                       if (notification is! ScrollUpdateNotification) {
@@ -95,32 +90,37 @@ class _SeriesScreenState extends ConsumerState<SeriesScreen> {
                       }
                       return false;
                     },
-                    child: filterState.gridCount > 1
-                        ? Padding(
-                            padding: const .fromLTRB(16, 0, 16, 0),
-                            child: GridView.builder(
-                              controller: _scrollController,
-                              itemCount: seriesState.series.length,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: filterState.gridCount,
-                                    mainAxisSpacing: 8,
-                                    crossAxisSpacing: 16,
-                                    childAspectRatio: dynamicRatio,
-                                  ),
-                              itemBuilder: (context, index) {
-                                return SeriesCard(
-                                  key: ValueKey(seriesState.series[index].id),
-                                  seriesState.series[index],
-                                );
-                              },
-                            ),
+                    child: filterState.isGridView
+                        ? GridView.builder(
+                            controller: _scrollController,
+                            padding: const .symmetric(horizontal: 16),
+                            itemCount: seriesState.series.length,
+                            gridDelegate:
+                                SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent:
+                                      AppStyles.maxSeriesCardWidth + 32,
+                                  mainAxisExtent:
+                                      (AppStyles.maxSeriesCardWidth * 0.5) +
+                                      calculateMetadataHeight(
+                                        context,
+                                        showTitle: true,
+                                        showAuthor: true,
+                                      ),
+                                  crossAxisSpacing: 16,
+                                  mainAxisSpacing: 0,
+                                ),
+                            itemBuilder: (context, index) {
+                              return SeriesCard(
+                                key: ValueKey(seriesState.series[index].id),
+                                seriesState.series[index],
+                              );
+                            },
                           )
                         : ListView.builder(
                             controller: _scrollController,
                             itemCount: seriesState.series.length,
                             itemBuilder: (context, index) {
-                              return SeriesCard(
+                              return SeriesCardListView(
                                 key: ValueKey(seriesState.series[index].id),
                                 seriesState.series[index],
                               );
@@ -135,8 +135,6 @@ class _SeriesScreenState extends ConsumerState<SeriesScreen> {
                 ),
               ),
             ),
-            if (seriesStateAsync.value?.isLoadingMore == true)
-              const Center(child: RandomWaveform()),
             if (seriesStateAsync.value?.error != null)
               ErrorRetryWidget(
                 '${seriesStateAsync.value?.error}',

@@ -68,6 +68,6 @@ const defaultNavTargets = <NavTarget>[
   .home,
   .library,
   .series,
-  .downloads,
+  .authors,
   .more,
 ];

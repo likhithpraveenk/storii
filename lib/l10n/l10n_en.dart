@@ -255,4 +255,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profile => 'Profile';
+
+  @override
+  String get viewAll => 'View All';
+
+  @override
+  String get standaloneBooks => 'Standalone Books';
 }

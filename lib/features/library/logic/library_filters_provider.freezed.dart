@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$FilterState {
 
- LibrarySortType get sortType; bool get sortAscending; int get gridCount;
+ LibrarySortType get sortType; bool get sortAscending; bool get isGridView;
 /// Create a copy of FilterState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $FilterStateCopyWith<FilterState> get copyWith => _$FilterStateCopyWithImpl<Filt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FilterState&&(identical(other.sortType, sortType) || other.sortType == sortType)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending)&&(identical(other.gridCount, gridCount) || other.gridCount == gridCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FilterState&&(identical(other.sortType, sortType) || other.sortType == sortType)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending)&&(identical(other.isGridView, isGridView) || other.isGridView == isGridView));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sortType,sortAscending,gridCount);
+int get hashCode => Object.hash(runtimeType,sortType,sortAscending,isGridView);
 
 @override
 String toString() {
-  return 'FilterState(sortType: $sortType, sortAscending: $sortAscending, gridCount: $gridCount)';
+  return 'FilterState(sortType: $sortType, sortAscending: $sortAscending, isGridView: $isGridView)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $FilterStateCopyWith<$Res>  {
   factory $FilterStateCopyWith(FilterState value, $Res Function(FilterState) _then) = _$FilterStateCopyWithImpl;
 @useResult
 $Res call({
- LibrarySortType sortType, bool sortAscending, int gridCount
+ LibrarySortType sortType, bool sortAscending, bool isGridView
 });
 
 
@@ -62,12 +62,12 @@ class _$FilterStateCopyWithImpl<$Res>
 
 /// Create a copy of FilterState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? sortType = null,Object? sortAscending = null,Object? gridCount = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? sortType = null,Object? sortAscending = null,Object? isGridView = null,}) {
   return _then(_self.copyWith(
 sortType: null == sortType ? _self.sortType : sortType // ignore: cast_nullable_to_non_nullable
 as LibrarySortType,sortAscending: null == sortAscending ? _self.sortAscending : sortAscending // ignore: cast_nullable_to_non_nullable
-as bool,gridCount: null == gridCount ? _self.gridCount : gridCount // ignore: cast_nullable_to_non_nullable
-as int,
+as bool,isGridView: null == isGridView ? _self.isGridView : isGridView // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -149,10 +149,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( LibrarySortType sortType,  bool sortAscending,  int gridCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( LibrarySortType sortType,  bool sortAscending,  bool isGridView)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FilterState() when $default != null:
-return $default(_that.sortType,_that.sortAscending,_that.gridCount);case _:
+return $default(_that.sortType,_that.sortAscending,_that.isGridView);case _:
   return orElse();
 
 }
@@ -170,10 +170,10 @@ return $default(_that.sortType,_that.sortAscending,_that.gridCount);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( LibrarySortType sortType,  bool sortAscending,  int gridCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( LibrarySortType sortType,  bool sortAscending,  bool isGridView)  $default,) {final _that = this;
 switch (_that) {
 case _FilterState():
-return $default(_that.sortType,_that.sortAscending,_that.gridCount);}
+return $default(_that.sortType,_that.sortAscending,_that.isGridView);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -187,10 +187,10 @@ return $default(_that.sortType,_that.sortAscending,_that.gridCount);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( LibrarySortType sortType,  bool sortAscending,  int gridCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( LibrarySortType sortType,  bool sortAscending,  bool isGridView)?  $default,) {final _that = this;
 switch (_that) {
 case _FilterState() when $default != null:
-return $default(_that.sortType,_that.sortAscending,_that.gridCount);case _:
+return $default(_that.sortType,_that.sortAscending,_that.isGridView);case _:
   return null;
 
 }
@@ -202,12 +202,12 @@ return $default(_that.sortType,_that.sortAscending,_that.gridCount);case _:
 
 
 class _FilterState implements FilterState {
-  const _FilterState({this.sortType = LibrarySortType.title, this.sortAscending = true, this.gridCount = 2});
+  const _FilterState({this.sortType = LibrarySortType.title, this.sortAscending = true, this.isGridView = true});
   
 
 @override@JsonKey() final  LibrarySortType sortType;
 @override@JsonKey() final  bool sortAscending;
-@override@JsonKey() final  int gridCount;
+@override@JsonKey() final  bool isGridView;
 
 /// Create a copy of FilterState
 /// with the given fields replaced by the non-null parameter values.
@@ -219,16 +219,16 @@ _$FilterStateCopyWith<_FilterState> get copyWith => __$FilterStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FilterState&&(identical(other.sortType, sortType) || other.sortType == sortType)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending)&&(identical(other.gridCount, gridCount) || other.gridCount == gridCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FilterState&&(identical(other.sortType, sortType) || other.sortType == sortType)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending)&&(identical(other.isGridView, isGridView) || other.isGridView == isGridView));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sortType,sortAscending,gridCount);
+int get hashCode => Object.hash(runtimeType,sortType,sortAscending,isGridView);
 
 @override
 String toString() {
-  return 'FilterState(sortType: $sortType, sortAscending: $sortAscending, gridCount: $gridCount)';
+  return 'FilterState(sortType: $sortType, sortAscending: $sortAscending, isGridView: $isGridView)';
 }
 
 
@@ -239,7 +239,7 @@ abstract mixin class _$FilterStateCopyWith<$Res> implements $FilterStateCopyWith
   factory _$FilterStateCopyWith(_FilterState value, $Res Function(_FilterState) _then) = __$FilterStateCopyWithImpl;
 @override @useResult
 $Res call({
- LibrarySortType sortType, bool sortAscending, int gridCount
+ LibrarySortType sortType, bool sortAscending, bool isGridView
 });
 
 
@@ -256,12 +256,12 @@ class __$FilterStateCopyWithImpl<$Res>
 
 /// Create a copy of FilterState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? sortType = null,Object? sortAscending = null,Object? gridCount = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? sortType = null,Object? sortAscending = null,Object? isGridView = null,}) {
   return _then(_FilterState(
 sortType: null == sortType ? _self.sortType : sortType // ignore: cast_nullable_to_non_nullable
 as LibrarySortType,sortAscending: null == sortAscending ? _self.sortAscending : sortAscending // ignore: cast_nullable_to_non_nullable
-as bool,gridCount: null == gridCount ? _self.gridCount : gridCount // ignore: cast_nullable_to_non_nullable
-as int,
+as bool,isGridView: null == isGridView ? _self.isGridView : isGridView // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

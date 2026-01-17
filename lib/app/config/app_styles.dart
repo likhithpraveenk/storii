@@ -8,4 +8,7 @@ abstract class AppStyles {
   static final roundedRect = RoundedRectangleBorder(
     borderRadius: circularRadius,
   );
+
+  static final maxCardWidth = 180.0;
+  static final maxSeriesCardWidth = 360.0;
 }

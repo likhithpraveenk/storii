@@ -567,6 +567,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile'**
   String get profile;
+
+  /// No description provided for @viewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get viewAll;
+
+  /// No description provided for @standaloneBooks.
+  ///
+  /// In en, this message translates to:
+  /// **'Standalone Books'**
+  String get standaloneBooks;
 }
 
 class _AppLocalizationsDelegate

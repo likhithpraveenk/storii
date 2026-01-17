@@ -38,6 +38,12 @@ sealed class AppSettings with _$AppSettings {
     @Default(50) int defaultItemsLimit,
 
     @Default(20) int defaultSeriesLimit,
+
+    @Default(true) bool showTitleForItem,
+
+    @Default(false) bool stackTitleOnImage,
+
+    @Default(true) bool showAuthorForItem,
   }) = _AppSettings;
 
   factory AppSettings.fromJson(Map<String, dynamic> json) =>
@@ -55,11 +61,11 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(false) bool isFullySynced,
 
-    @Default(2) int allGridCount,
+    @Default(true) bool isItemsGridView,
 
-    @Default(1) int seriesGridCount,
+    @Default(true) bool isSeriesGridView,
 
-    @Default(2) int authorsGridCount,
+    @Default(true) bool isAuthorsGridView,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

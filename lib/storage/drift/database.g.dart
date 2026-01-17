@@ -1460,6 +1460,10 @@ class $AudiobooksTable extends Audiobooks
         DriftSqlType.string,
         data['${effectivePrefix}title'],
       ),
+      authorName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}author_name'],
+      ),
       description: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}description'],

@@ -28,6 +28,7 @@ class SettingsScreen extends StatelessWidget {
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
         ),
+        titleSpacing: 0,
         actions: [
           const ResetSettingsAction(),
           Consumer(

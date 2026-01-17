@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/library/logic/library_items_provider.dart';
 import 'package:storii/features/library/ui/library_filter_bar.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -63,14 +65,9 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                   if (itemsState.items.isEmpty) {
                     return Center(child: Text(l.empty));
                   }
-
-                  final width = MediaQuery.of(context).size.width;
-                  final crossAxisSpacing = 16.0;
-                  final columnWidth =
-                      (width -
-                          (crossAxisSpacing * (filterState.gridCount - 1))) /
-                      filterState.gridCount;
-                  final dynamicRatio = columnWidth / (columnWidth + 60);
+                  final showTitle = ref.watch(showTitleForItemProvider);
+                  final stackTitle = ref.watch(stackTitleOnImageProvider);
+                  final showAuthor = ref.watch(showAuthorForItemProvider);
 
                   return NotificationListener<ScrollNotification>(
                     onNotification: (notification) {
@@ -83,26 +80,32 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                       }
                       return false;
                     },
-                    child: filterState.gridCount > 1
-                        ? Padding(
+                    child: filterState.isGridView
+                        ? GridView.builder(
+                            controller: _scrollController,
                             padding: const .symmetric(horizontal: 16),
-                            child: GridView.builder(
-                              controller: _scrollController,
-                              itemCount: itemsState.items.length,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: filterState.gridCount,
-                                    mainAxisSpacing: 8,
-                                    crossAxisSpacing: 16,
-                                    childAspectRatio: dynamicRatio,
+                            itemCount: itemsState.items.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: calculateGridCount(context),
+                                  mainAxisSpacing: 8,
+                                  crossAxisSpacing: 16,
+                                  childAspectRatio: calculateGridRatio(
+                                    context,
+                                    showTitle: showTitle,
+                                    stackTitle: stackTitle,
+                                    showAuthor: showAuthor,
                                   ),
-                              itemBuilder: (context, index) {
-                                return LibraryItemCard(
-                                  key: ValueKey(itemsState.items[index].id),
-                                  itemsState.items[index],
-                                );
-                              },
-                            ),
+                                ),
+                            itemBuilder: (context, index) {
+                              return LibraryItemCard(
+                                key: ValueKey(itemsState.items[index].id),
+                                itemsState.items[index],
+                                showTitle: showTitle,
+                                stackTitle: stackTitle,
+                                showAuthor: showAuthor,
+                              );
+                            },
                           )
                         : ListView.builder(
                             controller: _scrollController,
@@ -123,8 +126,6 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                 ),
               ),
             ),
-            if (itemsStateAsync.value?.isLoadingMore == true)
-              const Center(child: RandomWaveform()),
             if (itemsStateAsync.value?.error != null)
               ErrorRetryWidget(
                 '${itemsStateAsync.value?.error}',

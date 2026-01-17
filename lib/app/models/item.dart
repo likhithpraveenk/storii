@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/models/author.dart';
+import 'package:storii/app/models/series.dart';
 
 part 'item.freezed.dart';
 
@@ -19,6 +20,9 @@ sealed class ItemDomain with _$ItemDomain {
 
     String? title,
     @Default([]) List<AuthorDomain> authors,
+    String? authorName,
+    @Default([]) List<SeriesDomain> series,
+    String? seriesSequence,
     String? description,
     String? language,
     @Default(false) bool explicit,
@@ -60,9 +64,4 @@ sealed class ItemDomain with _$ItemDomain {
     @Default(false) bool isFinished,
     @Default(false) bool hideFromContinueListening,
   }) = Podcast;
-
-  String? get authorName => switch (this) {
-    final Audiobook a => a.authors.firstOrNull?.name,
-    final Podcast p => p.authorName,
-  };
 }

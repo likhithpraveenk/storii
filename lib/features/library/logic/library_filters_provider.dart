@@ -6,29 +6,29 @@ import 'package:storii/app/providers/settings_provider.dart';
 part 'library_filters_provider.freezed.dart';
 part 'library_filters_provider.g.dart';
 
-enum FiltersTab { authors, all, series }
+enum FiltersScreen { authors, all, series }
 
 @freezed
 sealed class FilterState with _$FilterState {
   const factory FilterState({
     @Default(LibrarySortType.title) LibrarySortType sortType,
     @Default(true) bool sortAscending,
-    @Default(2) int gridCount,
+    @Default(true) bool isGridView,
   }) = _FilterState;
 }
 
 @riverpod
 class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
   @override
-  FilterState build(FiltersTab tab) {
+  FilterState build(FiltersScreen tab) {
     final userId = ref.watch(currentUserProvider)?.id;
     if (userId == null) throw StateError('No current user');
-    final count = switch (tab) {
-      .all => ref.watch(allGridCountProvider(userId)),
-      .authors => ref.watch(authorsGridCountProvider(userId)),
-      .series => ref.watch(seriesGridCountProvider(userId)),
+    final isGridView = switch (tab) {
+      .all => ref.watch(isItemsGridViewProvider(userId)),
+      .authors => ref.watch(isAuthorsGridViewProvider(userId)),
+      .series => ref.watch(isSeriesGridViewProvider(userId)),
     };
-    return FilterState(gridCount: count);
+    return FilterState(isGridView: isGridView);
   }
 
   void setSortType(LibrarySortType type) {
@@ -39,18 +39,19 @@ class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
     state = state.copyWith(sortAscending: !state.sortAscending);
   }
 
-  void setGridCount(int count) {
-    state = state.copyWith(gridCount: count);
+  void setIsGridView() {
+    final isGridView = !state.isGridView;
+    state = state.copyWith(isGridView: isGridView);
     final userId = ref.watch(currentUserProvider)?.id;
     if (userId == null) throw StateError('No current user');
     final notifier = ref.read(userSettingsProvider(userId).notifier);
     switch (tab) {
       case .all:
-        notifier.setAllGridCount(count);
+        notifier.setIsItemsGridView(isGridView);
       case .authors:
-        notifier.setAuthorsGridCount(count);
+        notifier.setIsAuthorsGridView(isGridView);
       case .series:
-        notifier.setSeriesGridCount(count);
+        notifier.setIsSeriesGridView(isGridView);
     }
   }
 }
