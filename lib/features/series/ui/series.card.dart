@@ -207,7 +207,7 @@ class SeriesCardListView extends StatelessWidget {
         children: [
           Text(
             series.name,
-            maxLines: 2,
+            maxLines: 1,
             overflow: .ellipsis,
             style: theme.textTheme.titleSmall,
           ),

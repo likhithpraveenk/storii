@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/item.dart';
@@ -22,94 +23,101 @@ class ItemDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final itemAsync = ref.watch(itemDetailProvider(id));
     final l = AppLocalizations.of(context)!;
 
-    return itemAsync.when(
+    final itemAsync = ref.watch(itemDetailProvider(id));
+
+    final backgroundColor = itemAsync.maybeWhen(
       data: (item) {
-        ref.watch(itemPaletteProvider(item.id));
-        final notifier = ref.read(itemPaletteProvider(item.id).notifier);
+        final notifier = ref.watch(itemPaletteProvider(item.id).notifier);
         final themeColor = notifier.getBackgroundColor(
           scheme.surfaceContainerHighest,
         );
+        return Color.alphaBlend(
+          themeColor.withValues(alpha: 0.1),
+          scheme.surface,
+        );
+      },
+      orElse: () => scheme.surface,
+    );
 
-        return Scaffold(
-          backgroundColor: Color.alphaBlend(
-            themeColor.withValues(alpha: 0.1),
-            scheme.surface,
-          ),
-          body: CustomScrollView(
-            slivers: [
-              CoverImage(item),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const .all(16),
-                  child: Column(
-                    children: [
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      body: itemAsync.when(
+        loading: () => const Center(child: RandomWaveform()),
+        error: (e, s) => ErrorRetryWidget(
+          '$e',
+          onRetry: () => ref.invalidate(itemDetailProvider(id)),
+        ),
+        data: (item) => CustomScrollView(
+          slivers: [
+            CoverImage(item),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const .all(16),
+                child: Column(
+                  children: [
+                    Text(
+                      item.title ?? l.noTitle,
+                      style: textTheme.titleLarge,
+                      textAlign: .center,
+                    ),
+                    const SizedBox(height: 4),
+                    _AuthorsSeriesChips(item),
+                    const SizedBox(height: 4),
+                    if (item.progress > 0) ...[
+                      LinearProgressIndicator(
+                        value: item.progress,
+                        borderRadius: AppStyles.circularRadius,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          item.isFinished ? AppColors.green : AppColors.red,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
                       Text(
-                        item.title ?? l.noTitle,
-                        style: textTheme.titleLarge,
-                        textAlign: .center,
+                        l.percentCompleted(
+                          (item.progress * 100).toStringAsFixed(1),
+                        ),
+                        style: textTheme.labelSmall,
                       ),
                       const SizedBox(height: 4),
-                      _AuthorsSeriesChips(item),
-                      const SizedBox(height: 4),
-                      if (item.progress > 0) ...[
-                        LinearProgressIndicator(
-                          value: item.progress,
-                          borderRadius: .circular(12),
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            item.isFinished ? AppColors.green : AppColors.red,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          l.percentCompleted(
-                            (item.progress * 100).toStringAsFixed(1),
-                          ),
-                          style: textTheme.labelSmall,
-                        ),
-                        const SizedBox(height: 4),
-                      ],
-                      Wrap(
-                        spacing: 8,
-                        alignment: WrapAlignment.center,
-                        children: item.genres.map((g) {
-                          return Consumer(
-                            builder: (context, ref, _) {
-                              return ActionChip(
-                                avatar: const Icon(Icons.category_outlined),
-                                label: Text(g, style: textTheme.labelSmall),
-                                onPressed: () {
-                                  final FiltersScreen screen = switch (item) {
-                                    Audiobook() => .audiobook,
-                                    Podcast() => .podcast,
-                                  };
-                                  ref
-                                      .read(
-                                        libraryFiltersProvider(screen).notifier,
-                                      )
-                                      .setFilter(GenreFilter(g));
-                                  context.go(AppRoute.library.path);
-                                },
-                                visualDensity: .compact,
-                                side: .none,
-                              );
-                            },
-                          );
-                        }).toList(),
-                      ),
-                      ExpandableHtml(data: item.description ?? l.noDescription),
-                      const SizedBox(height: 200),
                     ],
-                  ),
+                    Wrap(
+                      spacing: 8,
+                      alignment: .center,
+                      children: item.genres.map((g) {
+                        return ActionChip(
+                          avatar: const Icon(Icons.category_outlined),
+                          label: Text(g, style: textTheme.labelSmall),
+                          onPressed: () {
+                            ref
+                                .read(libraryFiltersProvider(.library).notifier)
+                                .setFilter(GenreFilter(g));
+                            context.go(AppRoute.library.path);
+                          },
+                          visualDensity: .compact,
+                          side: .none,
+                        );
+                      }).toList(),
+                    ),
+                    ExpandableHtml(data: item.description ?? l.noDescription),
+                    const SizedBox(height: 200),
+                  ],
                 ),
               ),
-            ],
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: Container(
+            ),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: .centerFloat,
+      floatingActionButton: itemAsync.maybeWhen(
+        data: (item) {
+          final notifier = ref.watch(itemPaletteProvider(item.id).notifier);
+          final themeColor = notifier.getBackgroundColor(
+            scheme.surfaceContainerHighest,
+          );
+
+          return Container(
             height: 48,
             margin: const EdgeInsets.symmetric(horizontal: 16),
             child: FloatingActionButton.extended(
@@ -133,15 +141,9 @@ class ItemDetailScreen extends ConsumerWidget {
                 ),
               ),
             ),
-          ),
-        );
-      },
-      loading: () => const Center(child: RandomWaveform()),
-      error: (e, s) => ErrorRetryScreen(
-        e.toString(),
-        onRetry: () {
-          ref.invalidate(itemDetailProvider(id));
+          );
         },
+        orElse: () => null,
       ),
     );
   }

@@ -66,20 +66,22 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
                 icon: const Icon(Icons.arrow_back),
               ),
               title: Text(l.series),
+              actions: [const FiltersButton(.series)],
             )
           : null,
       body: RefreshIndicator(
         onRefresh: () => ref.read(seriesListProvider.notifier).manualSync(),
         child: Column(
           children: [
-            const FiltersButton(.series),
             Expanded(
               child: seriesStateAsync.when(
                 data: (seriesState) {
-                  final height = ref.watch(seriesGridHeightProvider);
                   if (seriesState.series.isEmpty) {
                     return Center(child: Text(l.empty));
                   }
+
+                  final height = ref.watch(seriesGridHeightProvider);
+
                   return NotificationListener<ScrollNotification>(
                     onNotification: (notification) {
                       if (notification is! ScrollUpdateNotification) {

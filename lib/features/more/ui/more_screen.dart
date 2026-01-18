@@ -24,20 +24,10 @@ class MoreScreen extends ConsumerWidget {
           crossAxisAlignment: .start,
           children: [
             Container(
-              alignment: .centerRight,
-              width: double.infinity,
-              child: IconButton(
-                onPressed: () => context.push(AppRoute.profile.path),
-                icon: const Icon(Icons.query_stats),
-                tooltip: AppLocalizations.of(context)!.profile,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Container(
               alignment: .center,
               width: double.infinity,
               child: Image.asset(
-                ImagePaths.appForeground,
+                LocalAssets.appForeground,
                 width: 100,
                 height: 100,
                 color: Theme.of(context).colorScheme.onSurface,

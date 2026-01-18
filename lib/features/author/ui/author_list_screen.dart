@@ -54,7 +54,7 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
   @override
   Widget build(BuildContext context) {
     final authorsAsync = ref.watch(authorsListProvider);
-    final filterState = ref.watch(libraryFiltersProvider(.author));
+    final filterState = ref.watch(libraryFiltersProvider(.authors));
     final l = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -66,8 +66,9 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
                 icon: const Icon(Icons.arrow_back),
               ),
               title: Text(AppLocalizations.of(context)!.authors),
+              actions: const [FiltersButton(.authors)],
             )
-          : AppBar(actions: [const FiltersButton(.author)]),
+          : null,
       body: RefreshIndicator(
         onRefresh: () => ref.read(authorsListProvider.notifier).manualSync(),
         child: Column(

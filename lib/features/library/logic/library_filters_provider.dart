@@ -8,7 +8,7 @@ import 'package:storii/features/library/logic/grid_height_provider.dart';
 part 'library_filters_provider.freezed.dart';
 part 'library_filters_provider.g.dart';
 
-enum FiltersScreen { author, audiobook, series, podcast }
+enum FiltersScreen { authors, library, series }
 
 @freezed
 sealed class FilterState with _$FilterState {
@@ -26,22 +26,20 @@ sealed class FilterState with _$FilterState {
 @riverpod
 class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
   @override
-  FilterState build(FiltersScreen tab) {
+  FilterState build(FiltersScreen screen) {
     final userId = ref.watch(currentUserProvider)?.id;
     if (userId == null) throw StateError('No current user');
 
-    final isGridView = switch (tab) {
-      .audiobook => ref.watch(isItemsGridViewProvider(userId)),
-      .author => ref.watch(isAuthorsGridViewProvider(userId)),
+    final isGridView = switch (screen) {
+      .library => ref.watch(isItemsGridViewProvider(userId)),
+      .authors => ref.watch(isAuthorsGridViewProvider(userId)),
       .series => ref.watch(isSeriesGridViewProvider(userId)),
-      .podcast => ref.watch(isItemsGridViewProvider(userId)),
     };
 
-    final EnumHasValue initialSort = switch (tab) {
-      .audiobook => AudiobookSort.title,
-      .author => AuthorSort.name,
+    final EnumHasValue initialSort = switch (screen) {
+      .library => AudiobookSort.title,
+      .authors => AuthorSort.name,
       .series => SeriesSort.name,
-      .podcast => PodcastSort.title,
     };
 
     final stackTitle = ref.watch(stackTitleOnImageProvider);
@@ -74,11 +72,10 @@ class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
     if (userId == null) throw StateError('No current user');
 
     final notifier = ref.read(userSettingsProvider(userId).notifier);
-    switch (tab) {
-      case .audiobook:
-      case .podcast:
+    switch (screen) {
+      case .library:
         notifier.setIsItemsGridView(isGridView);
-      case .author:
+      case .authors:
         notifier.setIsAuthorsGridView(isGridView);
       case .series:
         notifier.setIsSeriesGridView(isGridView);

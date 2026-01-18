@@ -47,7 +47,11 @@ class ServerListScreen extends ConsumerWidget {
             mainAxisAlignment: .center,
             children: [
               Center(
-                child: Image.asset(ImagePaths.appIcon, width: 150, height: 150),
+                child: Image.asset(
+                  LocalAssets.appIcon,
+                  width: 150,
+                  height: 150,
+                ),
               ),
               Padding(
                 padding: const .symmetric(vertical: 16),
@@ -75,7 +79,7 @@ class ServerListScreen extends ConsumerWidget {
                             height: 120,
                             child: Center(
                               child: Text(
-                                '--',
+                                '-',
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                             ),

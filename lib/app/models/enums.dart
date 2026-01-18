@@ -2,7 +2,19 @@ import 'package:flutter/widgets.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/l10n/l10n.dart';
 
-enum MediaContent { audiobook, podcast }
+enum MediaContent {
+  audiobooks,
+  podcasts;
+
+  String getDisplayString(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return switch (this) {
+      .audiobooks => l10n.audiobooks,
+      .podcasts => l10n.podcasts,
+    };
+  }
+}
 
 enum Languages {
   en('English');

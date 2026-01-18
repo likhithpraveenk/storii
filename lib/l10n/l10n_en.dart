@@ -157,6 +157,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get audiobooks => 'Audiobooks';
+
+  @override
+  String get podcasts => 'Podcasts';
+
+  @override
   String get search => 'Search';
 
   @override
@@ -191,9 +197,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mustSelect3 => 'You must select at least 3 items';
-
-  @override
-  String get maxSelect5 => 'You can select a maximum of 5 items';
 
   @override
   String get theme => 'Theme';
@@ -432,4 +435,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get listView => 'List View';
+
+  @override
+  String get licenses => 'Licenses';
+
+  @override
+  String get sourceCode => 'Source Code';
+
+  @override
+  String couldNotUrl(String url) {
+    return 'Could not launch $url';
+  }
+
+  @override
+  String get licensedUnder =>
+      'Licensed under the GNU General Public License v3.0';
+
+  @override
+  String errorText(String text) {
+    return 'Error: $text';
+  }
+
+  @override
+  String versionText(String text) {
+    return 'Version: $text';
+  }
+
+  @override
+  String buildNumber(String text) {
+    return 'Build Number: $text';
+  }
 }

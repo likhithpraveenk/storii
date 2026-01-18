@@ -16,9 +16,9 @@ enum DisplayMode {
     required bool showTitle,
     required bool stackTitle,
   }) {
-    if (!showTitle) return DisplayMode.coverOnly;
-    if (stackTitle) return DisplayMode.compact;
-    return DisplayMode.comfortable;
+    if (!showTitle) return .coverOnly;
+    if (stackTitle) return .compact;
+    return .comfortable;
   }
 }
 
@@ -40,7 +40,7 @@ double gridHeight(Ref ref) {
       final scaledTitleHeight = scaler.scale(titleFontSize) * 2 * 1.25;
       final scaledAuthorHeight = scaler.scale(authorFontSize) * 1.25;
 
-      final metadataHeight = scaledTitleHeight + scaledAuthorHeight;
+      final metadataHeight = scaledTitleHeight + 8 + scaledAuthorHeight;
 
       return AppStyles.maxCardWidth + metadataHeight;
     }(),

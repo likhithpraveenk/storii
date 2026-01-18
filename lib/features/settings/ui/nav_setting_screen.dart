@@ -69,16 +69,7 @@ class _NavSettingScreenState extends ConsumerState<NavSettingScreen> {
     if (target == .home || target == .library || target == .more) return;
     setState(() {
       if (isEnabled) {
-        if (_activeDraft.length < 5) {
-          _activeDraft.add(target);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(AppLocalizations.of(context)!.maxSelect5),
-              duration: const Duration(seconds: 1),
-            ),
-          );
-        }
+        _activeDraft.add(target);
       } else {
         if (_activeDraft.length > 3) {
           _activeDraft.remove(target);

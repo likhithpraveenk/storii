@@ -21,6 +21,6 @@ Map<String, dynamic> _$LibraryToJson(_Library instance) => <String, dynamic>{
 };
 
 const _$MediaContentEnumMap = {
-  MediaContent.audiobook: 'audiobook',
-  MediaContent.podcast: 'podcast',
+  MediaContent.audiobooks: 'audiobooks',
+  MediaContent.podcasts: 'podcasts',
 };

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/library/logic/library_items_provider.dart';
-import 'package:storii/features/library/ui/filters_button.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -49,11 +48,10 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     final itemsStateAsync = ref.watch(libraryItemsProvider);
-    final filterState = ref.watch(libraryFiltersProvider(.audiobook));
+    final filterState = ref.watch(libraryFiltersProvider(.library));
     final l = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(actions: [const FiltersButton(.audiobook)]),
       body: RefreshIndicator(
         onRefresh: () => ref.read(libraryItemsProvider.notifier).manualSync(),
         child: Column(

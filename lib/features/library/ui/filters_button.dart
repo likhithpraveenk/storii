@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/abs_api/models/utils/filter.dart';
 import 'package:storii/app/models/enums.dart';
+import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -34,6 +35,9 @@ class _FilterBottomSheet extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final filterState = ref.watch(libraryFiltersProvider(tab));
     final notifier = ref.read(libraryFiltersProvider(tab).notifier);
+    final mediaContent =
+        ref.watch(activeLibraryProvider).value?.mediaContent ??
+        MediaContent.audiobooks;
 
     return DefaultTabController(
       length: 3,
@@ -51,8 +55,18 @@ class _FilterBottomSheet extends ConsumerWidget {
             height: MediaQuery.of(context).size.height * 0.5,
             child: TabBarView(
               children: [
-                _FilterTab(tab: tab, state: filterState, notifier: notifier),
-                _SortTab(tab: tab, state: filterState, notifier: notifier),
+                _FilterTab(
+                  tab: tab,
+                  state: filterState,
+                  notifier: notifier,
+                  mediaContent: mediaContent,
+                ),
+                _SortTab(
+                  tab: tab,
+                  state: filterState,
+                  notifier: notifier,
+                  mediaContent: mediaContent,
+                ),
                 _DisplayTab(state: filterState, notifier: notifier),
               ],
             ),
@@ -68,10 +82,12 @@ class _FilterTab extends StatelessWidget {
     required this.tab,
     required this.state,
     required this.notifier,
+    required this.mediaContent,
   });
   final FiltersScreen tab;
   final FilterState state;
   final LibraryFiltersNotifier notifier;
+  final MediaContent mediaContent;
 
   @override
   Widget build(BuildContext context) {
@@ -105,17 +121,21 @@ class _SortTab extends StatelessWidget {
     required this.tab,
     required this.state,
     required this.notifier,
+    required this.mediaContent,
   });
   final FiltersScreen tab;
   final FilterState state;
   final LibraryFiltersNotifier notifier;
+  final MediaContent mediaContent;
 
   @override
   Widget build(BuildContext context) {
     final List<EnumHasValue> sortValues = switch (tab) {
-      .audiobook => AudiobookSort.values,
-      .podcast => PodcastSort.values,
-      .author => AuthorSort.values,
+      .library => switch (mediaContent) {
+        .audiobooks => AudiobookSort.values,
+        .podcasts => PodcastSort.values,
+      },
+      .authors => AuthorSort.values,
       .series => SeriesSort.values,
     };
 

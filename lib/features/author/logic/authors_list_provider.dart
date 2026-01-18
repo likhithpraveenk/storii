@@ -18,7 +18,7 @@ class AuthorsListNotifier extends _$AuthorsListNotifier {
     final library = await ref.watch(activeLibraryProvider.future);
 
     final params = ref.watch(
-      libraryFiltersProvider(.author).select((s) => s.toAuthorParams()),
+      libraryFiltersProvider(.authors).select((s) => s.toAuthorParams()),
     );
 
     final user = await ref.read(authenticatedUserProvider.future);
@@ -34,7 +34,7 @@ class AuthorsListNotifier extends _$AuthorsListNotifier {
   }
 
   Future<void> manualSync() async {
-    ref.invalidate(libraryFiltersProvider(.author));
+    ref.invalidate(libraryFiltersProvider(.authors));
     ref.invalidateSelf();
     await future;
   }

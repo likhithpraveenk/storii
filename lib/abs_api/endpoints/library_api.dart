@@ -25,7 +25,7 @@ class LibraryApi {
     final response = await api.request(
       ApiRoutes.libraryById(libraryId),
       method: .get,
-      query:  {'include': 'filterdata'}
+      query: {'include': 'filterdata'},
     );
     return fromJson(response.data, LibraryResponse.fromJson);
   }

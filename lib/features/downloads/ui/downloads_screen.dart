@@ -21,7 +21,7 @@ class DownloadsScreen extends StatelessWidget {
               )
             : null,
       ),
-      body: const Center(child: Text('--')),
+      body: const Center(child: Text('-')),
     );
   }
 }

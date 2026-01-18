@@ -21,8 +21,8 @@ extension UserToDomain on User {
 extension LibraryToDomain on Library {
   LibraryDomain toDomain(Uri url) {
     final mediaContent = switch (mediaType) {
-      .book => MediaContent.audiobook,
-      .podcast => MediaContent.podcast,
+      .book => MediaContent.audiobooks,
+      .podcast => MediaContent.podcasts,
     };
     return LibraryDomain(
       id: id,

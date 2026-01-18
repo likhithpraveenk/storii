@@ -53,10 +53,14 @@ class HomeScreen extends ConsumerWidget {
                           mainAxisSize: .min,
                           crossAxisAlignment: .start,
                           children: [
-                            Text(
-                              shelf.label,
-                              style: Theme.of(context).textTheme.titleMedium,
+                            Padding(
+                              padding: const .symmetric(horizontal: 16),
+                              child: Text(
+                                shelf.label,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
                             ),
+                            const SizedBox(height: 8),
                             SizedBox(
                               height: height,
                               child: ListView.builder(
@@ -115,4 +119,3 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 }
-

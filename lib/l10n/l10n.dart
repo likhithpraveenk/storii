@@ -370,6 +370,18 @@ abstract class AppLocalizations {
   /// **'Delete {count} logs?'**
   String deleteLogsQ(int count);
 
+  /// No description provided for @audiobooks.
+  ///
+  /// In en, this message translates to:
+  /// **'Audiobooks'**
+  String get audiobooks;
+
+  /// No description provided for @podcasts.
+  ///
+  /// In en, this message translates to:
+  /// **'Podcasts'**
+  String get podcasts;
+
   /// No description provided for @search.
   ///
   /// In en, this message translates to:
@@ -441,12 +453,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You must select at least 3 items'**
   String get mustSelect3;
-
-  /// No description provided for @maxSelect5.
-  ///
-  /// In en, this message translates to:
-  /// **'You can select a maximum of 5 items'**
-  String get maxSelect5;
 
   /// No description provided for @theme.
   ///
@@ -921,6 +927,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'List View'**
   String get listView;
+
+  /// No description provided for @licenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Licenses'**
+  String get licenses;
+
+  /// No description provided for @sourceCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Source Code'**
+  String get sourceCode;
+
+  /// No description provided for @couldNotUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not launch {url}'**
+  String couldNotUrl(String url);
+
+  /// No description provided for @licensedUnder.
+  ///
+  /// In en, this message translates to:
+  /// **'Licensed under the GNU General Public License v3.0'**
+  String get licensedUnder;
+
+  /// No description provided for @errorText.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {text}'**
+  String errorText(String text);
+
+  /// No description provided for @versionText.
+  ///
+  /// In en, this message translates to:
+  /// **'Version: {text}'**
+  String versionText(String text);
+
+  /// No description provided for @buildNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Build Number: {text}'**
+  String buildNumber(String text);
 }
 
 class _AppLocalizationsDelegate

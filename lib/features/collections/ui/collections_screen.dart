@@ -24,7 +24,7 @@ class CollectionsScreen extends StatelessWidget {
         slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
-            child: Center(child: Text('Collections Screen')),
+            child: Center(child: Text('-')),
           ),
         ],
       ),

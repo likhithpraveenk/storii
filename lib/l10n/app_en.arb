@@ -81,6 +81,8 @@
       }
     }
   },
+  "audiobooks": "Audiobooks",
+  "podcasts": "Podcasts",
   "search": "Search",
   "dateFormat": "Date Format",
   "custom": "Custom",
@@ -93,7 +95,6 @@
   "language": "Language",
   "configNav": "Configure Navigation",
   "mustSelect3": "You must select at least 3 items",
-  "maxSelect5": "You can select a maximum of 5 items",
   "theme": "Theme",
   "reset": "Reset",
   "resetSettingsQ": "Reset Settings?",
@@ -172,5 +173,40 @@
   "coverOnly": "Cover Only",
   "ascending": "Ascending",
   "descending": "Descending",
-  "listView": "List View"
+  "listView": "List View",
+  "licenses": "Licenses",
+  "sourceCode": "Source Code",
+  "couldNotUrl": "Could not launch {url}",
+  "@couldNotUrl": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "licensedUnder": "Licensed under the GNU General Public License v3.0",
+  "errorText": "Error: {text}",
+  "@errorText": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "versionText": "Version: {text}",
+  "@versionText": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "buildNumber": "Build Number: {text}",
+  "@buildNumber": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  }
 }

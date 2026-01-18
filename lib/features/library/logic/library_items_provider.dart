@@ -31,7 +31,7 @@ class LibraryItemsNotifier extends _$LibraryItemsNotifier {
   Future<LibraryItemsState> build() async {
     final library = await ref.watch(activeLibraryProvider.future);
     final params = ref.watch(
-      libraryFiltersProvider(.audiobook).select((s) => s.toItemParams()),
+      libraryFiltersProvider(.library).select((s) => s.toItemParams()),
     );
 
     final result = await _fetchPage(0, params: params, libId: library.id);
@@ -55,7 +55,7 @@ class LibraryItemsNotifier extends _$LibraryItemsNotifier {
 
     final library = await ref.read(activeLibraryProvider.future);
     final params = ref.watch(
-      libraryFiltersProvider(.audiobook).select((s) => s.toItemParams()),
+      libraryFiltersProvider(.library).select((s) => s.toItemParams()),
     );
     final limit = ref.read(defaultItemsLimitProvider);
     final nextPage = (currentState.items.length / limit).ceil();

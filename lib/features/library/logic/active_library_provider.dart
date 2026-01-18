@@ -29,6 +29,6 @@ Future<LibraryDomain> activeLibrary(Ref ref) async {
   final response = await api.get(library.id);
 
   ref.read(filterDataProvider.notifier).set(response.filterData);
-  
+
   return response.library.toDomain(user.serverUrl);
 }

@@ -104,6 +104,7 @@ class TitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: !inStack ? const .only(top: 8) : const .all(8),
       decoration: inStack
@@ -112,18 +113,11 @@ class TitleWidget extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Theme.of(context).colorScheme.surface.withValues(alpha: 0.0),
-                  Theme.of(context).colorScheme.surface.withValues(alpha: 0.8),
-                  Theme.of(context).colorScheme.surface.withValues(alpha: 1.0),
+                  Colors.transparent,
+                  Colors.black.withValues(alpha: 0.6),
+                  Colors.black.withValues(alpha: 0.8),
                 ],
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.1),
-                  blurRadius: 10,
-                  offset: const Offset(0, -5),
-                ),
-              ],
             )
           : null,
       child: Column(
@@ -134,15 +128,22 @@ class TitleWidget extends StatelessWidget {
             item.title ?? AppLocalizations.of(context)!.noTitle,
             maxLines: 2,
             overflow: .ellipsis,
-            style: Theme.of(
-              context,
-            ).textTheme.titleSmall?.copyWith(fontWeight: .bold),
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              fontWeight: .bold,
+              color: theme.brightness == .light
+                  ? theme.colorScheme.onInverseSurface
+                  : theme.colorScheme.onSurface,
+            ),
           ),
           Text(
             item.authorName ?? AppLocalizations.of(context)!.noAuthor,
             maxLines: 1,
             overflow: .ellipsis,
-            style: Theme.of(context).textTheme.labelSmall,
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+              color: theme.brightness == .light
+                  ? theme.colorScheme.onInverseSurface
+                  : theme.colorScheme.onSurface,
+            ),
           ),
         ],
       ),
