@@ -3,23 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/item.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class LibraryItemCard extends ConsumerWidget {
-  const LibraryItemCard(
-    this.item, {
-    super.key,
-    this.showAuthor = true,
-    this.showTitle = true,
-    this.stackTitle = false,
-  });
+  const LibraryItemCard(this.item, {super.key});
   final ItemDomain item;
-  final bool showAuthor;
-  final bool showTitle;
-  final bool stackTitle;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,6 +20,9 @@ class LibraryItemCard extends ConsumerWidget {
         ? (item as Audiobook).seriesSequence
         : null;
     final scheme = Theme.of(context).colorScheme;
+    final stackTitle = ref.watch(stackTitleOnImageProvider);
+    final showTitle = ref.watch(showTitleForItemProvider);
+
     return Stack(
       children: [
         Column(
@@ -45,22 +41,19 @@ class LibraryItemCard extends ConsumerWidget {
                       type: .item,
                       updatedAt: item.updatedAt,
                     ),
-                    if (stackTitle && showTitle)
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: TitleWidget(
-                          item: item,
-                          showAuthor: true,
-                          inStack: true,
-                        ),
-                      ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: stackTitle && showTitle
+                          ? TitleWidget(item: item, inStack: true)
+                          : const SizedBox.shrink(),
+                    ),
                     if (item.progress > 0)
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: SizedBox(
-                          height: 6,
+                          height: 3,
                           child: LinearProgressIndicator(
                             value: item.progress,
                             borderRadius: AppStyles.circularRadius,
@@ -68,7 +61,7 @@ class LibraryItemCard extends ConsumerWidget {
                               alpha: 0.2,
                             ),
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              item.isFinished ? scheme.primary : scheme.error,
+                              item.isFinished ? AppColors.green : AppColors.red,
                             ),
                           ),
                         ),
@@ -84,7 +77,9 @@ class LibraryItemCard extends ConsumerWidget {
               ),
             ),
             if (!stackTitle && showTitle)
-              TitleWidget(item: item, showAuthor: showAuthor),
+              TitleWidget(item: item)
+            else
+              const SizedBox.shrink(),
           ],
         ),
         Positioned.fill(
@@ -102,15 +97,9 @@ class LibraryItemCard extends ConsumerWidget {
 }
 
 class TitleWidget extends StatelessWidget {
-  const TitleWidget({
-    super.key,
-    required this.item,
-    required this.showAuthor,
-    this.inStack = false,
-  });
+  const TitleWidget({super.key, required this.item, this.inStack = false});
 
   final ItemDomain item;
-  final bool showAuthor;
   final bool inStack;
 
   @override
@@ -149,13 +138,12 @@ class TitleWidget extends StatelessWidget {
               context,
             ).textTheme.titleSmall?.copyWith(fontWeight: .bold),
           ),
-          if (showAuthor)
-            Text(
-              item.authorName ?? AppLocalizations.of(context)!.noAuthor,
-              maxLines: 1,
-              overflow: .ellipsis,
-              style: Theme.of(context).textTheme.labelSmall,
-            ),
+          Text(
+            item.authorName ?? AppLocalizations.of(context)!.noAuthor,
+            maxLines: 1,
+            overflow: .ellipsis,
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
         ],
       ),
     );

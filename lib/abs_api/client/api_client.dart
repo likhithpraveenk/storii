@@ -42,7 +42,19 @@ class ApiClient {
   }
 
   Future<Response> handleUnauthorized(RequestOptions failedRequest) async {
+    final failedToken = failedRequest.headers['Authorization']
+        ?.toString()
+        .replaceFirst('Bearer ', '');
+
     return _refreshLock.synchronized(() async {
+      final currentToken = await getAccessToken?.call();
+      if (currentToken != null && currentToken != failedToken) {
+        debugPrint(
+          'Token was refreshed by another request, retrying with new token.',
+        );
+        return _retryRequest(failedRequest, currentToken);
+      }
+
       if (failedRequest.extra['__retried'] == true) {
         throw const ApiException('Session expired', statusCode: 401);
       }
@@ -56,8 +68,15 @@ class ApiClient {
           statusCode: 401,
         );
       }
-      return _dio.fetch(failedRequest.copyWith());
+
+      final newToken = await getAccessToken?.call();
+      return _retryRequest(failedRequest, newToken!);
     });
+  }
+
+  Future<Response> _retryRequest(RequestOptions options, String token) {
+    options.headers['Authorization'] = 'Bearer $token';
+    return _dio.fetch(options);
   }
 
   Future<bool> _refreshAccessToken() async {

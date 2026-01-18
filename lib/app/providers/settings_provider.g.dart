@@ -28,7 +28,6 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
   defaultSeriesLimit: (json['defaultSeriesLimit'] as num?)?.toInt() ?? 20,
   showTitleForItem: json['showTitleForItem'] as bool? ?? true,
   stackTitleOnImage: json['stackTitleOnImage'] as bool? ?? false,
-  showAuthorForItem: json['showAuthorForItem'] as bool? ?? true,
 );
 
 Map<String, dynamic> _$AppSettingsToJson(
@@ -46,7 +45,6 @@ Map<String, dynamic> _$AppSettingsToJson(
   'defaultSeriesLimit': instance.defaultSeriesLimit,
   'showTitleForItem': instance.showTitleForItem,
   'stackTitleOnImage': instance.stackTitleOnImage,
-  'showAuthorForItem': instance.showAuthorForItem,
 };
 
 const _$AppThemeEnumMap = {
@@ -285,9 +283,6 @@ extension AppSettingsSetters on AppSettingsNotifier {
 
   Future<void> setStackTitleOnImage(bool value) =>
       _save(state.copyWith(stackTitleOnImage: value));
-
-  Future<void> setShowAuthorForItem(bool value) =>
-      _save(state.copyWith(showAuthorForItem: value));
 }
 
 final themeProvider = Provider<AppTheme>(
@@ -336,10 +331,6 @@ final showTitleForItemProvider = Provider<bool>(
 
 final stackTitleOnImageProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.stackTitleOnImage)),
-);
-
-final showAuthorForItemProvider = Provider<bool>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.showAuthorForItem)),
 );
 
 // **************************************************************************

@@ -5,11 +5,10 @@ import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/models/item.dart';
 import 'package:storii/app/models/series.dart';
-import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/ui/standalone_books.dart';
+import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/helpers/helpers.dart';
 
 class AuthorContent extends StatelessWidget {
   const AuthorContent({
@@ -163,36 +162,19 @@ class HorizontalBooksCarousel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final showTitle = ref.watch(showTitleForItemProvider);
-    final stackTitle = ref.watch(stackTitleOnImageProvider);
-    final cardWidth = calculateCarouselCardWidth(context);
-    final totalHeight =
-        cardWidth +
-        calculateMetadataHeight(
-          context,
-          showTitle: showTitle,
-          showAuthor: false,
-        );
+    final height = ref.watch(shelfHeightProvider(.book));
 
     return SizedBox(
-      height: totalHeight,
+      height: height,
       child: ListView.builder(
         scrollDirection: .horizontal,
         padding: const .symmetric(horizontal: 16),
         itemCount: books.length,
         itemBuilder: (context, index) {
           return Container(
-            width: cardWidth,
+            width: AppStyles.maxCardWidth,
             margin: const .only(right: 12),
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: LibraryItemCard(
-                books[index],
-                showAuthor: false,
-                showTitle: showTitle,
-                stackTitle: stackTitle,
-              ),
-            ),
+            child: LibraryItemCard(books[index]),
           );
         },
       ),

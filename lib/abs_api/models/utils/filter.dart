@@ -19,30 +19,22 @@ sealed class Filter {
       value = '';
     }
 
-    switch (group) {
-      case .genres:
-        return GenreFilter(value);
-      case .tags:
-        return TagFilter(value);
-      case .series:
-        return SeriesFilter(value);
-      case .authors:
-        return AuthorFilter(value);
-      case .progress:
-        return ProgressFilter(ProgressFilterValue.byName[value]!);
-      case .narrators:
-        return NarratorFilter(value);
-      case .missing:
-        return MissingFilter(MissingFilterValue.values.byName(value));
-      case .languages:
-        return LanguageFilter(value);
-      case .tracks:
-        return TracksFilter(TracksFilterValue.values.byName(value));
-      case .issues:
-        return const IssuesFilter();
-      case .feedOpen:
-        return const FeedOpenFilter();
-    }
+    return switch (group) {
+      .all => const NoFilter(),
+      .genres => GenreFilter(value),
+      .tags => TagFilter(value),
+      .series => SeriesFilter(value),
+      .authors => AuthorFilter(value),
+      .progress => ProgressFilter(ProgressFilterValue.byName[value]!),
+      .narrators => NarratorFilter(value),
+      .missing => MissingFilter(MissingFilterValue.values.byName(value)),
+      .languages => LanguageFilter(value),
+      .tracks => TracksFilter(TracksFilterValue.values.byName(value)),
+      .issues => const IssuesFilter(),
+      .feedOpen => const FeedOpenFilter(),
+      .explicit => const ExplicitFilter(),
+      .abridged => const AbridgedFilter(),
+    };
   }
 
   @override
@@ -61,6 +53,7 @@ sealed class Filter {
 }
 
 enum FilterGroup {
+  all('all'),
   genres('genres'),
   tags('tags'),
   series('series'),
@@ -71,7 +64,9 @@ enum FilterGroup {
   languages('languages'),
   tracks('tracks'),
   issues('issues'),
-  feedOpen('feed-open');
+  feedOpen('feed-open'),
+  abridged('abridged'),
+  explicit('explicit');
 
   static final byName = {
     for (final value in FilterGroup.values) value.name: value,
@@ -82,25 +77,28 @@ enum FilterGroup {
   const FilterGroup(this.name);
 }
 
+class NoFilter extends Filter {
+  const NoFilter() : super(.all);
+}
+
 class GenreFilter extends Filter {
-  const GenreFilter(String genre) : super(FilterGroup.genres, genre);
+  const GenreFilter(String genre) : super(.genres, genre);
 }
 
 class TagFilter extends Filter {
-  const TagFilter(String tag) : super(FilterGroup.tags, tag);
+  const TagFilter(String tag) : super(.tags, tag);
 }
 
 class SeriesFilter extends Filter {
-  const SeriesFilter(String seriesId) : super(FilterGroup.series, seriesId);
+  const SeriesFilter(String seriesId) : super(.series, seriesId);
 }
 
 class AuthorFilter extends Filter {
-  const AuthorFilter(String authorId) : super(FilterGroup.authors, authorId);
+  const AuthorFilter(String authorId) : super(.authors, authorId);
 }
 
 class ProgressFilter extends Filter {
-  ProgressFilter(ProgressFilterValue value)
-    : super(FilterGroup.progress, value.name);
+  ProgressFilter(ProgressFilterValue value) : super(.progress, value.name);
 }
 
 enum ProgressFilterValue {
@@ -119,13 +117,11 @@ enum ProgressFilterValue {
 }
 
 class NarratorFilter extends Filter {
-  const NarratorFilter(String narrator)
-    : super(FilterGroup.narrators, narrator);
+  const NarratorFilter(String narrator) : super(.narrators, narrator);
 }
 
 class MissingFilter extends Filter {
-  MissingFilter(MissingFilterValue value)
-    : super(FilterGroup.missing, value.name);
+  MissingFilter(MissingFilterValue value) : super(.missing, value.name);
 }
 
 enum MissingFilterValue {
@@ -144,20 +140,27 @@ enum MissingFilterValue {
 }
 
 class LanguageFilter extends Filter {
-  const LanguageFilter(String language)
-    : super(FilterGroup.languages, language);
+  const LanguageFilter(String language) : super(.languages, language);
 }
 
 class TracksFilter extends Filter {
-  TracksFilter(TracksFilterValue value) : super(FilterGroup.tracks, value.name);
+  TracksFilter(TracksFilterValue value) : super(.tracks, value.name);
 }
 
 enum TracksFilterValue { single, multi }
 
 class IssuesFilter extends Filter {
-  const IssuesFilter() : super(FilterGroup.issues);
+  const IssuesFilter() : super(.issues);
 }
 
 class FeedOpenFilter extends Filter {
-  const FeedOpenFilter() : super(FilterGroup.feedOpen);
+  const FeedOpenFilter() : super(.feedOpen);
+}
+
+class AbridgedFilter extends Filter {
+  const AbridgedFilter() : super(.abridged);
+}
+
+class ExplicitFilter extends Filter {
+  const ExplicitFilter() : super(.explicit);
 }

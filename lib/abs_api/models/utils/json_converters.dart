@@ -1,8 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:storii/abs_api/models/utils/extensions.dart';
 import 'package:storii/abs_api/models/utils/filter.dart';
-import 'package:storii/abs_api/models/utils/sort.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 
 const _converters = <JsonConverter<dynamic, dynamic>>[
   DateTimeEpochConverter(),
@@ -91,22 +89,6 @@ class FilterConverter implements JsonConverter<Filter?, String?> {
 
   @override
   String? toJson(Filter? filter) => filter?.toString();
-}
-
-class EnumValueConverter<E extends HasValue>
-    implements JsonConverter<E?, String?> {
-  final Iterable<E> values;
-
-  const EnumValueConverter(this.values);
-
-  @override
-  E? fromJson(String? json) {
-    if (json == null) return null;
-    return values.firstWhereOrNull((e) => e.value == json);
-  }
-
-  @override
-  String? toJson(E? object) => object?.value;
 }
 
 Object? readSeries(Map json, String key) {

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/item.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/logic/item_palette_provider.dart';
 import 'package:storii/features/item/ui/cover_image.dart';
+import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/widgets/dashed_underline.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/expandable_text.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -42,96 +43,61 @@ class ItemDetailScreen extends ConsumerWidget {
               CoverImage(item),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const .fromLTRB(16, 12, 16, 0),
-                  child: switch (item) {
-                    final Audiobook a => Wrap(
-                      spacing: 8,
-                      runSpacing: 0,
-                      alignment: .center,
-                      children: a.authors
-                          .map(
-                            (author) => InkWell(
-                              onTap: () {
-                                context.push(
-                                  AppRoute.authorDetail.withId(author.id),
-                                );
-                              },
-                              borderRadius: AppStyles.circularRadius,
-                              child: Padding(
-                                padding: const .all(4),
-                                child: CustomPaint(
-                                  painter: DashedUnderlinePainter(
-                                    color: scheme.onSurfaceVariant,
-                                  ),
-                                  child: Text(
-                                    author.name,
-                                    style: textTheme.titleSmall,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                    final Podcast _ => CustomPaint(
-                      painter: DashedUnderlinePainter(
-                        color: scheme.onSurfaceVariant,
-                      ),
-                      child: Padding(
-                        padding: const .only(bottom: 2),
-                        child: Text(
-                          item.authorName ?? l.noAuthor,
-                          style: textTheme.titleSmall?.copyWith(
-                            color: scheme.onSurface,
-                            shadows: [
-                              Shadow(
-                                color: scheme.onSurfaceVariant.withValues(
-                                  alpha: 0.25,
-                                ),
-                                blurRadius: 4,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  },
-                ),
-              ),
-              // TODO: add series list
-              SliverToBoxAdapter(
-                child: Padding(
                   padding: const .all(16),
                   child: Column(
                     children: [
+                      Text(
+                        item.title ?? l.noTitle,
+                        style: textTheme.titleLarge,
+                        textAlign: .center,
+                      ),
+                      const SizedBox(height: 4),
+                      _AuthorsSeriesChips(item),
+                      const SizedBox(height: 4),
                       if (item.progress > 0) ...[
                         LinearProgressIndicator(
                           value: item.progress,
                           borderRadius: .circular(12),
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            item.isFinished ? scheme.primary : scheme.error,
+                            item.isFinished ? AppColors.green : AppColors.red,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 4),
                         Text(
                           l.percentCompleted(
                             (item.progress * 100).toStringAsFixed(1),
                           ),
                           style: textTheme.labelSmall,
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 4),
                       ],
                       Wrap(
                         spacing: 8,
-                        alignment: .center,
-                        children: item.genres
-                            .map(
-                              (g) => Chip(
+                        alignment: WrapAlignment.center,
+                        children: item.genres.map((g) {
+                          return Consumer(
+                            builder: (context, ref, _) {
+                              return ActionChip(
+                                avatar: const Icon(Icons.category_outlined),
                                 label: Text(g, style: textTheme.labelSmall),
-                                visualDensity: VisualDensity.compact,
-                              ),
-                            )
-                            .toList(),
+                                onPressed: () {
+                                  final FiltersScreen screen = switch (item) {
+                                    Audiobook() => .audiobook,
+                                    Podcast() => .podcast,
+                                  };
+                                  ref
+                                      .read(
+                                        libraryFiltersProvider(screen).notifier,
+                                      )
+                                      .setFilter(GenreFilter(g));
+                                  context.go(AppRoute.library.path);
+                                },
+                                visualDensity: .compact,
+                                side: .none,
+                              );
+                            },
+                          );
+                        }).toList(),
                       ),
                       ExpandableHtml(data: item.description ?? l.noDescription),
                       const SizedBox(height: 200),
@@ -153,13 +119,15 @@ class ItemDetailScreen extends ConsumerWidget {
                 // TODO: playback
               },
               icon: Icon(
-                item.progress > 0
-                    ? Icons.play_arrow_rounded
-                    : Icons.play_circle_fill_rounded,
+                Icons.play_arrow_rounded,
                 color: notifier.getForegroundColor(Theme.of(context)),
               ),
               label: Text(
-                item.progress > 0 ? l.resume : l.play,
+                item.progress > 0
+                    ? item.progress == 1.0
+                          ? l.replay
+                          : l.resume
+                    : l.play,
                 style: textTheme.labelLarge?.copyWith(
                   color: notifier.getForegroundColor(Theme.of(context)),
                 ),
@@ -176,5 +144,57 @@ class ItemDetailScreen extends ConsumerWidget {
         },
       ),
     );
+  }
+}
+
+class _AuthorsSeriesChips extends StatelessWidget {
+  const _AuthorsSeriesChips(this.item);
+
+  final ItemDomain item;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    final textStyle = Theme.of(context).textTheme.labelLarge;
+    final List<Widget> children = [];
+
+    switch (item) {
+      case final Audiobook a:
+        children.addAll(
+          a.authors.map(
+            (author) => ActionChip(
+              avatar: const Icon(Icons.person_2_outlined),
+              label: Text(author.name, style: textStyle),
+              onPressed: () =>
+                  context.push(AppRoute.authorDetail.withId(author.id)),
+              visualDensity: .compact,
+              side: .none,
+            ),
+          ),
+        );
+        children.addAll(
+          a.series.map(
+            (series) => ActionChip(
+              avatar: const Icon(Icons.stacked_bar_chart_outlined),
+              label: Text(series.name, style: textStyle),
+              onPressed: () =>
+                  context.push(AppRoute.seriesDetail.withId(series.id)),
+              visualDensity: .compact,
+              side: .none,
+            ),
+          ),
+        );
+      case Podcast _:
+        children.add(
+          Chip(
+            avatar: const Icon(Icons.person_2_outlined),
+            label: Text(item.authorName ?? l.noAuthor, style: textStyle),
+            visualDensity: .compact,
+            side: .none,
+          ),
+        );
+    }
+
+    return Wrap(spacing: 8, alignment: .center, children: children);
   }
 }

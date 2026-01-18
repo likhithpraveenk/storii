@@ -42,8 +42,6 @@ sealed class AppSettings with _$AppSettings {
     @Default(true) bool showTitleForItem,
 
     @Default(false) bool stackTitleOnImage,
-
-    @Default(true) bool showAuthorForItem,
   }) = _AppSettings;
 
   factory AppSettings.fromJson(Map<String, dynamic> json) =>

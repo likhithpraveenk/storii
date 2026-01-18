@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/models/item.dart';
 import 'package:storii/app/models/log_entry.dart';
+import 'package:storii/l10n/l10n.dart';
 
 extension IterableExtensions<T> on Iterable<T> {
   T? firstWhereOrNull(bool Function(T element) test) {
@@ -92,5 +94,69 @@ extension AudiobookSortX on Iterable<ItemDomain> {
 
       return aVal.compareTo(bVal);
     });
+  }
+}
+
+extension MissingFilterValueX on MissingFilterValue {
+  String getDisplayString(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return switch (this) {
+      .asin => l.missingAsin,
+      .isbn => l.missingIsbn,
+      .subtitle => l.missingSubtitle,
+      .authors => l.missingAuthors,
+      .publishedYear => l.missingPublishedYear,
+      .series => l.missingSeries,
+      .description => l.missingDescription,
+      .genres => l.missingGenres,
+      .tags => l.missingTags,
+      .narrators => l.missingNarrators,
+      .publisher => l.missingPublisher,
+      .language => l.missingLanguage,
+    };
+  }
+}
+
+extension ProgressFilterValueX on ProgressFilterValue {
+  String getDisplayString(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return switch (this) {
+      .finished => l.statusFinished,
+      .notStarted => l.statusNotStarted,
+      .inProgress => l.statusInProgress,
+      .notFinished => l.statusNotFinished,
+    };
+  }
+}
+
+extension TracksFilterValueX on TracksFilterValue {
+  String getDisplayString(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return switch (this) {
+      .single => l.singleTrack,
+      .multi => l.multipleTracks,
+    };
+  }
+}
+
+extension FilterGroupX on FilterGroup {
+  String getDisplayString(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return switch (this) {
+      .all => l.all,
+      .genres => l.filterGenre,
+      .tags => l.filterTag,
+      .series => l.filterSeries,
+      .authors => l.filterAuthor,
+      .progress => l.filterStatus,
+      .narrators => l.filterNarrator,
+      .languages => l.filterLanguage,
+      .tracks => l.filterTracks,
+      .missing => l.filterMissing,
+      .issues => l.issuesFound,
+      .feedOpen => l.feedOpen,
+      .abridged => l.abridged,
+      .explicit => l.explicit,
+    };
   }
 }

@@ -13,123 +13,85 @@ class CoverImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
     final l = AppLocalizations.of(context)!;
     final size = MediaQuery.sizeOf(context);
 
     return SliverAppBar(
-      expandedHeight: (size.height * 0.54).clamp(450.0, 600.0),
+      expandedHeight: (size.width * 0.8).clamp(320.0, 480.0),
       pinned: true,
-      stretch: true,
       leading: IconButton(
         onPressed: () => context.pop(),
         icon: const Icon(Icons.arrow_back),
       ),
-      flexibleSpace: LayoutBuilder(
+      title: LayoutBuilder(
         builder: (context, constraints) {
           final settings = context
-              .dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>()!;
-
-          final deltaExtent = settings.maxExtent - settings.minExtent;
-          final rawT =
-              ((settings.currentExtent - settings.minExtent) / deltaExtent)
+              .dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>();
+          final deltaExtent = settings!.maxExtent - settings.minExtent;
+          final t =
+              (1.0 -
+                      (settings.currentExtent - settings.minExtent) /
+                          deltaExtent)
                   .clamp(0.0, 1.0);
-          final fadeT = rawT > 0.1 ? 0.0 : (1 - rawT);
+          final isCollapsed = t == 1;
 
-          return FlexibleSpaceBar(
-            titlePadding: const .only(left: 54, bottom: 16),
-            centerTitle: false,
-            title: SafeArea(
-              child: IgnorePointer(
-                child: Opacity(
-                  opacity: fadeT,
-                  child: Text(
-                    item.title ?? l.noTitle,
-                    style: textTheme.titleMedium,
+          return AnimatedOpacity(
+            duration: const Duration(milliseconds: 200),
+            opacity: isCollapsed ? 1.0 : 0.0,
+            child: Text(
+              item.title ?? l.noTitle,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          );
+        },
+      ),
+      titleSpacing: 0,
+      flexibleSpace: FlexibleSpaceBar(
+        stretchModes: const [.zoomBackground],
+        background: Stack(
+          fit: .expand,
+          children: [
+            ImageFiltered(
+              imageFilter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+              child: ImageWidget(
+                id: item.id,
+                type: .item,
+                updatedAt: item.updatedAt,
+              ),
+            ),
+            Center(
+              child: SafeArea(
+                child: Padding(
+                  padding: const .symmetric(vertical: 24),
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: Container(
+                      margin: const .all(16),
+                      decoration: BoxDecoration(
+                        borderRadius: AppStyles.circularRadius,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.25),
+                            blurRadius: 15,
+                            offset: const Offset(0, 8),
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: AppStyles.circularRadius,
+                        child: ImageWidget(
+                          id: item.id,
+                          type: .item,
+                          updatedAt: item.updatedAt,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-            background: Stack(
-              fit: .expand,
-              children: [
-                ImageFiltered(
-                  imageFilter: ImageFilter.blur(
-                    sigmaX: 30,
-                    sigmaY: 30,
-                    tileMode: .clamp,
-                  ),
-                  child: ImageWidget(
-                    id: item.id,
-                    type: .item,
-                    updatedAt: item.updatedAt,
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: .topCenter,
-                      end: .bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        scheme.surface.withValues(alpha: 0.3),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const .symmetric(vertical: 24),
-                  child: Column(
-                    mainAxisAlignment: .end,
-                    children: [
-                      SizedBox(
-                        width: (size.width * 0.8).clamp(0.0, 360),
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: ClipRRect(
-                            borderRadius: AppStyles.circularRadius,
-                            child: ImageWidget(
-                              id: item.id,
-                              type: .item,
-                              updatedAt: item.updatedAt,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Padding(
-                        padding: const .symmetric(horizontal: 24),
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxHeight: size.height * 0.1,
-                          ),
-                          child: SingleChildScrollView(
-                            child: Text(
-                              item.title ?? l.noTitle,
-                              style: textTheme.titleLarge?.copyWith(
-                                shadows: [
-                                  Shadow(
-                                    color: scheme.onSurfaceVariant.withValues(
-                                      alpha: 0.25,
-                                    ),
-                                    blurRadius: 4,
-                                  ),
-                                ],
-                              ),
-                              textAlign: .center,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }

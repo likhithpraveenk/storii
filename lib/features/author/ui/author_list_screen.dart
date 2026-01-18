@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/author/logic/authors_list_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
+import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
-import 'package:storii/features/library/ui/library_filter_bar.dart';
+import 'package:storii/features/library/ui/filters_button.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -53,7 +54,7 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
   @override
   Widget build(BuildContext context) {
     final authorsAsync = ref.watch(authorsListProvider);
-    final filterState = ref.watch(libraryFiltersProvider(.authors));
+    final filterState = ref.watch(libraryFiltersProvider(.author));
     final l = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -66,12 +67,11 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
               ),
               title: Text(AppLocalizations.of(context)!.authors),
             )
-          : null,
+          : AppBar(actions: [const FiltersButton(.author)]),
       body: RefreshIndicator(
         onRefresh: () => ref.read(authorsListProvider.notifier).manualSync(),
         child: Column(
           children: [
-            const LibraryFilterBar(.authors),
             Expanded(
               child: authorsAsync.when(
                 data: (authors) {
@@ -93,19 +93,16 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
                       },
                     );
                   }
+                  final height = ref.watch(authorsGridHeightProvider);
 
                   return GridView.builder(
                     controller: _scrollController,
                     itemCount: authors.length,
                     padding: const .symmetric(horizontal: 16),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: calculateGridCount(context),
-                      mainAxisSpacing: 8,
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: AppStyles.maxCardWidth,
+                      mainAxisExtent: height,
                       crossAxisSpacing: 16,
-                      childAspectRatio: calculateGridRatio(
-                        context,
-                        showAuthor: false,
-                      ),
                     ),
                     itemBuilder: (context, index) {
                       return AuthorCard(

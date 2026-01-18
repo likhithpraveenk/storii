@@ -34,7 +34,7 @@ final class LibraryItemsNotifierProvider
 }
 
 String _$libraryItemsNotifierHash() =>
-    r'85b9b23d02f36cab4917e7a04ad30e4c1dc1da3c';
+    r'0a785bf3032d28bc07c66d122da8ba410b2b533a';
 
 abstract class _$LibraryItemsNotifier
     extends $AsyncNotifier<LibraryItemsState> {

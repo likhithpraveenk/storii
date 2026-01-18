@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/models/shelf.dart';
-import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
+import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/features/series/ui/series.card.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -41,47 +41,24 @@ class HomeScreen extends ConsumerWidget {
                       itemCount: displayList.length,
                       itemBuilder: (context, index) {
                         final shelf = displayList[index];
-                        final stackTitle = ref.watch(stackTitleOnImageProvider);
-                        final showTitle = ref.watch(showTitleForItemProvider);
-                        final showAuthor = ref.watch(showAuthorForItemProvider);
-                        final cardWidth = calculateCarouselCardWidth(context);
-                        final totalHeight = switch (shelf) {
-                          SeriesShelfDomain() =>
-                            (AppStyles.maxSeriesCardWidth * 0.5) +
-                                calculateMetadataHeight(
-                                  context,
-                                  stackTitle: stackTitle,
-                                  showTitle: showTitle,
-                                  showAuthor: false,
-                                ),
-                          _ =>
-                            calculateCarouselCardWidth(context) +
-                                calculateMetadataHeight(
-                                  context,
-                                  stackTitle: stackTitle,
-                                  showTitle: showTitle,
-                                  showAuthor: showAuthor,
-                                ),
+                        final ShelfType type = switch (shelf) {
+                          SeriesShelfDomain() => .series,
+                          AuthorShelfDomain() => .authors,
+                          ItemShelfDomain() => .book,
                         };
+
+                        final height = ref.watch(shelfHeightProvider(type));
 
                         return Column(
                           mainAxisSize: .min,
                           crossAxisAlignment: .start,
                           children: [
-                            ListTile(
-                              title: Text(
-                                shelf.label,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              trailing: Text(
-                                shelf.maybeMap(
-                                  libraryItems: (s) => '${s.items.length}',
-                                  orElse: () => '',
-                                ),
-                              ),
+                            Text(
+                              shelf.label,
+                              style: Theme.of(context).textTheme.titleMedium,
                             ),
                             SizedBox(
-                              height: totalHeight,
+                              height: height,
                               child: ListView.builder(
                                 scrollDirection: .horizontal,
                                 padding: const .symmetric(horizontal: 16),
@@ -91,23 +68,31 @@ class HomeScreen extends ConsumerWidget {
                                   authors: (s) => s.authors.length,
                                 ),
                                 itemBuilder: (context, i) {
-                                  return switch (shelf) {
-                                    ItemShelfDomain() => Container(
-                                      width: cardWidth,
-                                      margin: const .only(right: 12),
-                                      child: LibraryItemCard(shelf.items[i]),
+                                  final (
+                                    double width,
+                                    Widget card,
+                                  ) = switch (shelf) {
+                                    ItemShelfDomain s => (
+                                      AppStyles.maxCardWidth,
+                                      LibraryItemCard(s.items[i]),
                                     ),
-                                    AuthorShelfDomain() => Container(
-                                      width: cardWidth,
-                                      margin: const .only(right: 12),
-                                      child: AuthorCard(shelf.authors[i]),
+                                    AuthorShelfDomain s => (
+                                      AppStyles.maxCardWidth,
+                                      AuthorCard(s.authors[i]),
                                     ),
-                                    SeriesShelfDomain() => Container(
-                                      width: AppStyles.maxSeriesCardWidth,
-                                      margin: const .only(right: 12),
-                                      child: SeriesCard(shelf.series[i]),
+                                    SeriesShelfDomain s => (
+                                      AppStyles.maxSeriesCardWidth,
+                                      SeriesCard(s.series[i]),
                                     ),
                                   };
+
+                                  return SizedBox(
+                                    width: width,
+                                    child: Padding(
+                                      padding: const .only(right: 12),
+                                      child: card,
+                                    ),
+                                  );
                                 },
                               ),
                             ),
@@ -130,3 +115,4 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 }
+

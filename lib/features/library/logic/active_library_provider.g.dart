@@ -26,7 +26,7 @@ final class ActiveLibraryProvider
         argument: null,
         retry: null,
         name: r'activeLibraryProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -46,4 +46,4 @@ final class ActiveLibraryProvider
   }
 }
 
-String _$activeLibraryHash() => r'516dade11cccf69d80aaa5416f8b59278d859781';
+String _$activeLibraryHash() => r'e0080dc72f62be08428299807e5639ba91fdb689';

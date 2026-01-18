@@ -8,6 +8,7 @@ import 'package:storii/abs_api/models/requests/authors_request_params.dart';
 import 'package:storii/abs_api/models/requests/library_items_request_params.dart';
 import 'package:storii/abs_api/models/requests/series_request_params.dart';
 import 'package:storii/abs_api/models/responses/library_items_response.dart';
+import 'package:storii/abs_api/models/responses/library_response.dart';
 import 'package:storii/abs_api/models/responses/series_response.dart';
 import 'package:storii/abs_api/models/utils/json_helpers.dart';
 
@@ -20,12 +21,13 @@ class LibraryApi {
     return listFromJsonKey(response.data, 'libraries', Library.fromJson);
   }
 
-  Future<Library> get(String libraryId) async {
+  Future<LibraryResponse> get(String libraryId) async {
     final response = await api.request(
       ApiRoutes.libraryById(libraryId),
       method: .get,
+      query:  {'include': 'filterdata'}
     );
-    return fromJson(response.data, Library.fromJson);
+    return fromJson(response.data, LibraryResponse.fromJson);
   }
 
   Future<LibraryItemsResponse> getItems(

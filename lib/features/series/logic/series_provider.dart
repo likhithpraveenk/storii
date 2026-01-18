@@ -41,6 +41,7 @@ Future<SeriesDomain> series(Ref ref, String seriesId) async {
               progress: series.libraryItemIdsFinished?.contains(i.id) == true
                   ? 1
                   : 0,
+              isFinished: series.libraryItemIdsFinished?.contains(i.id) == true,
             ),
           )
           .toList(),

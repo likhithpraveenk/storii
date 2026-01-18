@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/library/logic/library_items_provider.dart';
-import 'package:storii/features/library/ui/library_filter_bar.dart';
+import 'package:storii/features/library/ui/filters_button.dart';
+import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -50,25 +49,21 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     final itemsStateAsync = ref.watch(libraryItemsProvider);
-    final filterState = ref.watch(libraryFiltersProvider(.all));
+    final filterState = ref.watch(libraryFiltersProvider(.audiobook));
     final l = AppLocalizations.of(context)!;
 
     return Scaffold(
+      appBar: AppBar(actions: [const FiltersButton(.audiobook)]),
       body: RefreshIndicator(
         onRefresh: () => ref.read(libraryItemsProvider.notifier).manualSync(),
         child: Column(
           children: [
-            const LibraryFilterBar(.all),
             Expanded(
               child: itemsStateAsync.when(
                 data: (itemsState) {
                   if (itemsState.items.isEmpty) {
                     return Center(child: Text(l.empty));
                   }
-                  final showTitle = ref.watch(showTitleForItemProvider);
-                  final stackTitle = ref.watch(stackTitleOnImageProvider);
-                  final showAuthor = ref.watch(showAuthorForItemProvider);
-
                   return NotificationListener<ScrollNotification>(
                     onNotification: (notification) {
                       if (notification is! ScrollUpdateNotification) {
@@ -81,31 +76,9 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                       return false;
                     },
                     child: filterState.isGridView
-                        ? GridView.builder(
-                            controller: _scrollController,
-                            padding: const .symmetric(horizontal: 16),
-                            itemCount: itemsState.items.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: calculateGridCount(context),
-                                  mainAxisSpacing: 8,
-                                  crossAxisSpacing: 16,
-                                  childAspectRatio: calculateGridRatio(
-                                    context,
-                                    showTitle: showTitle,
-                                    stackTitle: stackTitle,
-                                    showAuthor: showAuthor,
-                                  ),
-                                ),
-                            itemBuilder: (context, index) {
-                              return LibraryItemCard(
-                                key: ValueKey(itemsState.items[index].id),
-                                itemsState.items[index],
-                                showTitle: showTitle,
-                                stackTitle: stackTitle,
-                                showAuthor: showAuthor,
-                              );
-                            },
+                        ? ItemsGridView(
+                            scrollController: _scrollController,
+                            itemsState.items,
                           )
                         : ListView.builder(
                             controller: _scrollController,

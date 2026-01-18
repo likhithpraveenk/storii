@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
@@ -8,6 +9,7 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
+import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
 part 'library_items_provider.g.dart';
@@ -25,42 +27,19 @@ abstract class LibraryItemsState with _$LibraryItemsState {
 
 @Riverpod(keepAlive: true)
 class LibraryItemsNotifier extends _$LibraryItemsNotifier {
-  LibraryItemsRequestParams _currentParams = LibraryItemsRequestParams(
-    sort: AudiobookSort.title.value,
-    desc: false,
-  );
-  int _currentPage = 0;
-
   @override
   Future<LibraryItemsState> build() async {
     final library = await ref.watch(activeLibraryProvider.future);
-    _currentPage = 0;
-    final result = await _fetchPage(
-      0,
-      params: _currentParams,
-      libId: library.id,
+    final params = ref.watch(
+      libraryFiltersProvider(.audiobook).select((s) => s.toItemParams()),
     );
 
-    return LibraryItemsState(items: result.items, hasMore: result.hasMore);
-  }
+    final result = await _fetchPage(0, params: params, libId: library.id);
 
-  Future<({List<ItemDomain> items, bool hasMore})> _fetchPage(
-    int page, {
-    required LibraryItemsRequestParams params,
-    required String libId,
-  }) async {
-    final limit = ref.read(defaultItemsLimitProvider);
-    final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(libraryApiProvider(user));
-
-    final response = await api.getItems(
-      libId,
-      params.copyWith(limit: limit, page: page),
-    );
-
-    return (
-      items: response.results.map((i) => i.toDomain()).toList(),
-      hasMore: ((page * limit) + response.results.length) < response.total,
+    return LibraryItemsState(
+      items: result.items,
+      hasMore: result.hasMore,
+      error: result.error,
     );
   }
 
@@ -73,52 +52,73 @@ class LibraryItemsNotifier extends _$LibraryItemsNotifier {
     }
 
     state = AsyncData(currentState.copyWith(isLoadingMore: true, error: null));
-    try {
-      final libraryId = (await ref.read(activeLibraryProvider.future)).id;
-      _currentPage++;
 
-      final result = await _fetchPage(
-        _currentPage,
-        params: _currentParams,
-        libId: libraryId,
+    final library = await ref.read(activeLibraryProvider.future);
+    final params = ref.watch(
+      libraryFiltersProvider(.audiobook).select((s) => s.toItemParams()),
+    );
+    final limit = ref.read(defaultItemsLimitProvider);
+    final nextPage = (currentState.items.length / limit).ceil();
+
+    final result = await _fetchPage(
+      nextPage,
+      params: params,
+      libId: library.id,
+    );
+
+    state = AsyncData(
+      currentState.copyWith(
+        items: [...currentState.items, ...result.items],
+        isLoadingMore: false,
+        hasMore: result.hasMore && result.items.isNotEmpty,
+        error: result.error,
+      ),
+    );
+  }
+
+  Future<void> manualSync() async {
+    ref.invalidateSelf();
+    await future;
+  }
+
+  Future<({List<ItemDomain> items, bool hasMore, Object? error})> _fetchPage(
+    int page, {
+    required LibraryItemsRequestParams params,
+    required String libId,
+  }) async {
+    try {
+      final limit = ref.read(defaultItemsLimitProvider);
+      final user = await ref.read(authenticatedUserProvider.future);
+      final api = ref.read(libraryApiProvider(user));
+
+      final response = await api.getItems(
+        libId,
+        params.copyWith(limit: limit, page: page),
       );
 
-      state = AsyncData(
-        currentState.copyWith(
-          items: [...currentState.items, ...result.items],
-          isLoadingMore: false,
-          hasMore: result.hasMore,
-        ),
+      return (
+        items: response.results.map((i) => i.toDomain()).toList(),
+        hasMore: ((page * limit) + response.results.length) < response.total,
+        error: null,
       );
     } catch (e, st) {
-      _currentPage--;
-      final error = AppError.resolve(e);
-      ref
-          .read(logsProvider.notifier)
-          .log(
-            'error getting library items: $error',
-            level: .error,
-            source: 'LibraryItemsNotifier',
-            stackTrace: st,
-          );
-      state = AsyncData(
-        currentState.copyWith(isLoadingMore: false, error: error),
+      _logError('fetchPage(page: $page)', e, st);
+      return (
+        items: <ItemDomain>[],
+        hasMore: false,
+        error: AppError.resolve(e),
       );
     }
   }
 
-  Future<void> filterItems(LibraryItemsRequestParams params) async {
-    _currentParams = params;
-    ref.invalidateSelf();
-    await future;
-  }
-
-  Future<void> manualSync() async {
-    _currentParams = LibraryItemsRequestParams(
-      sort: AudiobookSort.title.value,
-      desc: false,
-    );
-    ref.invalidateSelf();
-    await future;
+  void _logError(String action, Object e, StackTrace st) {
+    ref
+        .read(logsProvider.notifier)
+        .log(
+          'Error during $action: ${AppError.resolve(e)}',
+          level: .error,
+          source: 'LibraryItemsNotifier',
+          stackTrace: st,
+        );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
+import 'package:storii/app/providers/app_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/init.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -22,7 +23,7 @@ class MyApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     final appTheme = ref.watch(themeProvider);
     final fontFamily = ref.watch(fontFamilyProvider);
-    final fontScale = ref.watch(fontScaleProvider);
+    final textScaler = ref.watch(textScalerProvider);
     final localeCode = ref.watch(localeCodeProvider);
 
     return MaterialApp.router(
@@ -40,9 +41,7 @@ class MyApp extends ConsumerWidget {
       ),
       builder: (context, child) {
         return MediaQuery(
-          data: MediaQuery.of(
-            context,
-          ).copyWith(textScaler: TextScaler.linear(fontScale)),
+          data: MediaQuery.of(context).copyWith(textScaler: textScaler),
           child: child ?? const SizedBox.shrink(),
         );
       },

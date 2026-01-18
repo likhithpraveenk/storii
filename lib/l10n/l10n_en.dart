@@ -96,27 +96,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorImage => 'Error loading image';
 
   @override
-  String get sortTitle => 'Title';
-
-  @override
-  String get sortAuthor => 'Author';
-
-  @override
-  String get sortAddedAt => 'Date Added';
-
-  @override
-  String get sortUpdatedAt => 'Date Updated';
-
-  @override
-  String get sortSize => 'Size';
-
-  @override
-  String get sortDuration => 'Duration';
-
-  @override
-  String get sortPublishedYear => 'Year';
-
-  @override
   String get downloads => 'Downloads';
 
   @override
@@ -168,6 +147,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get play => 'Play';
+
+  @override
+  String get replay => 'Replay';
 
   @override
   String deleteLogsQ(int count) {
@@ -261,4 +243,193 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get standaloneBooks => 'Standalone Books';
+
+  @override
+  String get sortTitle => 'Title';
+
+  @override
+  String get sortAuthor => 'Author';
+
+  @override
+  String get sortAuthorLastFirst => 'Author (Last, First)';
+
+  @override
+  String get sortAddedAt => 'Date Added';
+
+  @override
+  String get sortPublishedYear => 'Published Year';
+
+  @override
+  String get sortSize => 'Size';
+
+  @override
+  String get sortDuration => 'Duration';
+
+  @override
+  String get sortFileBirthtime => 'File Created Date';
+
+  @override
+  String get sortFileModified => 'File Modified Date';
+
+  @override
+  String get sortProgressUpdated => 'Last Played';
+
+  @override
+  String get sortProgressStarted => 'Date Started';
+
+  @override
+  String get sortProgressFinished => 'Date Finished';
+
+  @override
+  String get sortRandom => 'Random';
+
+  @override
+  String get sortNumBooks => 'Number of Books';
+
+  @override
+  String get sortName => 'Name';
+
+  @override
+  String get sortLastBookAdded => 'Last Book Added';
+
+  @override
+  String get sortLastBookUpdated => 'Last Book Updated';
+
+  @override
+  String get sortLastFirst => 'Last Name, First Name';
+
+  @override
+  String get sortUpdatedAt => 'Last Updated';
+
+  @override
+  String get sortNumEpisodes => 'Number of Episodes';
+
+  @override
+  String get filter => 'Filter';
+
+  @override
+  String get sort => 'Sort';
+
+  @override
+  String get display => 'Display';
+
+  @override
+  String get gridView => 'Grid View';
+
+  @override
+  String get filterGenre => 'Genre';
+
+  @override
+  String get filterTag => 'Tag';
+
+  @override
+  String get filterAuthor => 'Author';
+
+  @override
+  String get filterSeries => 'Series';
+
+  @override
+  String get filterStatus => 'Status';
+
+  @override
+  String get filterNarrator => 'Narrator';
+
+  @override
+  String get filterLanguage => 'Language';
+
+  @override
+  String get filterTracks => 'Tracks';
+
+  @override
+  String get filterMissing => 'Missing Metadata';
+
+  @override
+  String get clearFilter => 'Clear Filter';
+
+  @override
+  String get statusFinished => 'Finished';
+
+  @override
+  String get statusNotStarted => 'Not Started';
+
+  @override
+  String get statusInProgress => 'In Progress';
+
+  @override
+  String get statusNotFinished => 'Not Finished';
+
+  @override
+  String get missingAsin => 'Missing ASIN';
+
+  @override
+  String get missingIsbn => 'Missing ISBN';
+
+  @override
+  String get missingSubtitle => 'Missing Subtitle';
+
+  @override
+  String get missingAuthors => 'Missing Authors';
+
+  @override
+  String get missingPublishedYear => 'Missing Year';
+
+  @override
+  String get missingSeries => 'Missing Series';
+
+  @override
+  String get missingDescription => 'Missing Description';
+
+  @override
+  String get missingGenres => 'Missing Genres';
+
+  @override
+  String get missingTags => 'Missing Tags';
+
+  @override
+  String get missingNarrators => 'Missing Narrators';
+
+  @override
+  String get missingPublisher => 'Missing Publisher';
+
+  @override
+  String get missingLanguage => 'Missing Language';
+
+  @override
+  String get singleTrack => 'Single Track';
+
+  @override
+  String get multipleTracks => 'Multiple Tracks';
+
+  @override
+  String get issuesFound => 'Items with Issues';
+
+  @override
+  String get feedOpen => 'Open Podcast Feed';
+
+  @override
+  String get explicit => 'Explicit';
+
+  @override
+  String get abridged => 'Abridged';
+
+  @override
+  String get displayMode => 'Display Mode';
+
+  @override
+  String get comfortable => 'Comfortable';
+
+  @override
+  String get compact => 'Compact';
+
+  @override
+  String get coverOnly => 'Cover Only';
+
+  @override
+  String get ascending => 'Ascending';
+
+  @override
+  String get descending => 'Descending';
+
+  @override
+  String get listView => 'List View';
 }

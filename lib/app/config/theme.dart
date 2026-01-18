@@ -15,6 +15,8 @@ abstract class AppColors {
   static const primary = Color(0xFFAAAAFF);
   static const black = Color(0xFF111122);
   static const white = Color(0xFFF4F4FF);
+  static const red = Color(0xFFF80F30);
+  static const green = Color(0xFF0FF830);
 }
 
 class CustomThemes {

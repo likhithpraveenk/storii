@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
-import 'package:storii/features/library/ui/library_filter_bar.dart';
+import 'package:storii/features/library/ui/filters_button.dart';
 import 'package:storii/features/series/logic/series_list_provider.dart';
 import 'package:storii/features/series/ui/series.card.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -72,10 +72,11 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
         onRefresh: () => ref.read(seriesListProvider.notifier).manualSync(),
         child: Column(
           children: [
-            const LibraryFilterBar(.series),
+            const FiltersButton(.series),
             Expanded(
               child: seriesStateAsync.when(
                 data: (seriesState) {
+                  final height = ref.watch(seriesGridHeightProvider);
                   if (seriesState.series.isEmpty) {
                     return Center(child: Text(l.empty));
                   }
@@ -98,16 +99,10 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
                             gridDelegate:
                                 SliverGridDelegateWithMaxCrossAxisExtent(
                                   maxCrossAxisExtent:
-                                      AppStyles.maxSeriesCardWidth + 32,
-                                  mainAxisExtent:
-                                      (AppStyles.maxSeriesCardWidth * 0.5) +
-                                      calculateMetadataHeight(
-                                        context,
-                                        showTitle: true,
-                                        showAuthor: true,
-                                      ),
+                                      AppStyles.maxSeriesCardWidth,
+                                  mainAxisExtent: height,
+                                  mainAxisSpacing: 16,
                                   crossAxisSpacing: 16,
-                                  mainAxisSpacing: 0,
                                 ),
                             itemBuilder: (context, index) {
                               return SeriesCard(

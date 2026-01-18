@@ -12,7 +12,7 @@ class StackBadge extends StatelessWidget {
       alignment: .center,
       padding: const .all(4),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: .circular(6),
         boxShadow: [
           BoxShadow(
@@ -26,7 +26,7 @@ class StackBadge extends StatelessWidget {
         '$value',
         style: Theme.of(context).textTheme.labelMedium?.copyWith(
           fontWeight: .bold,
-          color: Theme.of(context).colorScheme.onSurface,
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
         ),
       ),
     );
