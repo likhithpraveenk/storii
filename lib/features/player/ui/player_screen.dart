@@ -3,18 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/player/logic/current_item_provider.dart';
 import 'package:storii/features/player/ui/full_player.dart';
 import 'package:storii/features/player/ui/mini_player.dart';
-import 'package:storii/shared/widgets/expandable_player.dart';
+import 'package:storii/shared/widgets/player.dart';
 
-class Player extends ConsumerWidget {
-  const Player({super.key});
+class PlayerScreen extends ConsumerWidget {
+  const PlayerScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ExpandablePlayer(
+    return Player(
       playerController: ref.watch(playerControllerProvider),
       minHeight: 70,
       maxHeight: MediaQuery.of(context).size.height,
-      builder: (context, height, ratio) {
+      builder: (context, ratio) {
         return Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surfaceContainerHigh,

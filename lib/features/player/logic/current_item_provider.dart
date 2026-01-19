@@ -3,14 +3,12 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/models/item.dart';
 import 'package:storii/app/providers/database_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/shared/widgets/expandable_player.dart';
+import 'package:storii/shared/widgets/player.dart';
 import 'package:storii/storage/drift/database.dart';
 
 part 'current_item_provider.g.dart';
 
-final playerControllerProvider = Provider(
-  (ref) => ExpandablePlayerController(),
-);
+final playerControllerProvider = Provider((ref) => PlayerController());
 
 @riverpod
 class CurrentItemNotifier extends _$CurrentItemNotifier {
