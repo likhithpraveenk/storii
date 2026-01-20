@@ -13,5 +13,5 @@ class Authors extends Table {
   DateTimeColumn get updatedAt => dateTime().nullable()();
 
   @override
-  Set<Column<Object>>? get primaryKey => {id, libraryId};
+  Set<Column<Object>>? get primaryKey => {id};
 }

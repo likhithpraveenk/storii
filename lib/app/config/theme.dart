@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:storii/app/config/fonts.dart';
 
 enum AppTheme {
   system('System'),
@@ -78,10 +78,11 @@ extension AppThemeExtension on AppTheme {
 
 extension ThemeDataX on ThemeData {
   ThemeData build(String? fontFamily) {
+    if (fontFamily == null) return this;
+
+    final builder = AppFonts.available[fontFamily];
     return copyWith(
-      textTheme: fontFamily != null
-          ? GoogleFonts.getTextTheme(fontFamily, textTheme)
-          : textTheme,
+      textTheme: builder != null ? builder(textTheme) : textTheme,
     );
   }
 }

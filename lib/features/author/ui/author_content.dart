@@ -172,7 +172,7 @@ class HorizontalBooksCarousel extends ConsumerWidget {
         itemCount: books.length,
         itemBuilder: (context, index) {
           return Container(
-            width: AppStyles.maxCardWidth,
+            width: AppStyles.maxCardWidthInGrid,
             margin: const .only(right: 12),
             child: LibraryItemCard(books[index]),
           );

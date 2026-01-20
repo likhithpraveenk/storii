@@ -18,8 +18,17 @@ class MoreScreen extends ConsumerWidget {
         .where((target) => !navTargets.contains(target))
         .toList();
 
-    return SafeArea(
-      child: SingleChildScrollView(
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () => context.push(AppRoute.profile.path),
+            icon: const Icon(Icons.query_stats),
+            tooltip: AppLocalizations.of(context)!.profile,
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: .start,
           children: [
@@ -34,16 +43,18 @@ class MoreScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const Divider(),
-            ...remainingTargets.map((target) {
-              return ListTile(
-                onTap: () {
-                  context.push(target.item.route.path);
-                },
-                leading: Icon(target.item.selectedIcon),
-                title: Text(target.label(context)),
-              );
-            }),
+            if (remainingTargets.isNotEmpty) ...[
+              const Divider(),
+              ...remainingTargets.map((target) {
+                return ListTile(
+                  onTap: () {
+                    context.push(target.item.route.path);
+                  },
+                  leading: Icon(target.item.selectedIcon),
+                  title: Text(target.label(context)),
+                );
+              }),
+            ],
             const Divider(),
             ListTile(
               onTap: () => context.push(AppRoute.settings.path),

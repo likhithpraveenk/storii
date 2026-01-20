@@ -34,7 +34,7 @@ final class CurrentItemNotifierProvider
 }
 
 String _$currentItemNotifierHash() =>
-    r'50ca86cb4f1d14bcdeb8a9c0651e2d134dd82bb8';
+    r'50e0865cda1c8601d648cf54617cdbc7534156e0';
 
 abstract class _$CurrentItemNotifier extends $StreamNotifier<ItemDomain?> {
   Stream<ItemDomain?> build();

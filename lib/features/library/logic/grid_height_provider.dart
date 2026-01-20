@@ -22,6 +22,9 @@ enum DisplayMode {
   }
 }
 
+const _titleFactor = 1.4;
+const _smallFactor = 1.3;
+
 @riverpod
 double gridHeight(Ref ref) {
   final mode = DisplayMode.fromSettings(
@@ -37,15 +40,15 @@ double gridHeight(Ref ref) {
       final titleFontSize = theme.textTheme.titleSmall?.fontSize ?? 14.0;
       final authorFontSize = theme.textTheme.bodySmall?.fontSize ?? 12.0;
 
-      final scaledTitleHeight = scaler.scale(titleFontSize) * 2 * 1.25;
-      final scaledAuthorHeight = scaler.scale(authorFontSize) * 1.25;
+      final scaledTitleHeight = scaler.scale(titleFontSize) * 2 * _titleFactor;
+      final scaledAuthorHeight = scaler.scale(authorFontSize) * _smallFactor;
 
-      final metadataHeight = scaledTitleHeight + 8 + scaledAuthorHeight;
+      final metadataHeight = scaledTitleHeight + 12 + scaledAuthorHeight;
 
-      return AppStyles.maxCardWidth + metadataHeight;
+      return AppStyles.maxCardWidthInGrid + metadataHeight;
     }(),
 
-    .compact || .coverOnly => AppStyles.maxCardWidth,
+    .compact || .coverOnly => AppStyles.maxCardWidthInGrid,
 
     .listView => throw StateError('Do not use grid for listview'),
   };
@@ -57,9 +60,9 @@ double authorsGridHeight(Ref ref) {
   final scaler = ref.watch(textScalerProvider);
 
   final titleFontSize = theme.textTheme.titleSmall?.fontSize ?? 14.0;
-  final scaledTitleHeight = scaler.scale(titleFontSize) * 2 * 1.2;
+  final scaledTitleHeight = scaler.scale(titleFontSize) * 2 * _titleFactor;
 
-  return AppStyles.maxCardWidth + scaledTitleHeight;
+  return AppStyles.maxCardWidthInGrid + scaledTitleHeight + 12;
 }
 
 @riverpod
@@ -70,12 +73,12 @@ double seriesGridHeight(Ref ref) {
   final titleFontSize = theme.textTheme.titleSmall?.fontSize ?? 14.0;
   final authorFontSize = theme.textTheme.bodySmall?.fontSize ?? 12.0;
 
-  final scaledTitleHeight = scaler.scale(titleFontSize) * 1.25;
-  final scaledAuthorHeight = scaler.scale(authorFontSize) * 1.25;
+  final scaledTitleHeight = scaler.scale(titleFontSize) * _titleFactor;
+  final scaledAuthorHeight = scaler.scale(authorFontSize) * _smallFactor;
 
   final metadataHeight = scaledTitleHeight + scaledAuthorHeight;
 
-  return (AppStyles.maxSeriesCardWidth * 0.5) + metadataHeight;
+  return (AppStyles.maxSeriesCardWidthInGrid * 0.5) + metadataHeight;
 }
 
 @riverpod
@@ -86,8 +89,8 @@ double shelfHeight(Ref ref, ShelfType type) {
   );
 
   final cardWidth = switch (type) {
-    .series => AppStyles.maxSeriesCardWidth,
-    _ => AppStyles.maxCardWidth,
+    .series => AppStyles.maxSeriesCardWidthInGrid,
+    _ => AppStyles.maxCardWidthInGrid,
   };
 
   final imageBaseHeight = switch (type) {
@@ -102,14 +105,16 @@ double shelfHeight(Ref ref, ShelfType type) {
 
   final theme = ref.watch(themeDataProvider);
   final scaler = ref.watch(textScalerProvider);
-  const leading = 1.25;
 
   final titleH =
-      scaler.scale(theme.textTheme.titleSmall?.fontSize ?? 14.0) * 2 * leading;
+      scaler.scale(theme.textTheme.titleSmall?.fontSize ?? 14.0) *
+      2 *
+      _titleFactor;
   final showSub = type != .authors && type != .series;
   final subH = showSub
-      ? (scaler.scale(theme.textTheme.bodySmall?.fontSize ?? 12.0) * leading)
+      ? (scaler.scale(theme.textTheme.bodySmall?.fontSize ?? 12.0) *
+            _smallFactor)
       : 0.0;
 
-  return imageBaseHeight + titleH + subH + (isBook ? 4 : 0);
+  return imageBaseHeight + titleH + subH + (isBook ? 8 : 0);
 }

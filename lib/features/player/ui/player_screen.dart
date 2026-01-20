@@ -1,44 +1,99 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/player/logic/current_item_provider.dart';
 import 'package:storii/features/player/ui/full_player.dart';
+import 'package:storii/features/player/ui/hero_cover.dart';
 import 'package:storii/features/player/ui/mini_player.dart';
-import 'package:storii/shared/widgets/player.dart';
+import 'package:storii/features/player/ui/player.dart';
 
 class PlayerScreen extends ConsumerWidget {
   const PlayerScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final item = ref.watch(currentItemProvider).value;
+    if (item == null) return const SizedBox.shrink();
+    final controller = ref.read(playerControllerProvider);
+
+    ref.listen(currentItemProvider, ((prev, next) {
+      if (next.value != null) {
+        controller.toFull();
+      }
+    }));
+
+    final size = MediaQuery.sizeOf(context);
+    final screenWidth = size.width;
+    final screenHeight = size.height;
+
+    final maxImgSize = (screenWidth - 32).clamp(
+      0.0,
+      AppStyles.maxImgSizeInFullPlayer,
+    );
+    final maxImgLeft = (screenWidth - maxImgSize) / 2;
+    final maxImgTop = screenHeight * 0.1;
+
+    final imgSizeDelta = maxImgSize - AppStyles.imgSizeInMiniPlayer;
+    final imgLeftDelta = maxImgLeft - AppStyles.imgLeftPaddingInMiniPlayer;
+    final imgTopDelta = maxImgTop - AppStyles.imgLeftPaddingInMiniPlayer;
+
+    const miniInterval = Interval(0.0, 0.3);
+    const fullInterval = Interval(0.6, 1.0);
+
     return Player(
-      playerController: ref.watch(playerControllerProvider),
+      playerController: controller,
       minHeight: 70,
-      maxHeight: MediaQuery.of(context).size.height,
-      builder: (context, ratio) {
-        return Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surfaceContainerHigh,
-            boxShadow: [const BoxShadow(blurRadius: 10, color: Colors.black26)],
-          ),
-          child: Stack(
-            children: [
-              if (ratio < 0.8)
-                Opacity(
-                  opacity: (1 - (ratio * 5)).clamp(0, 1),
-                  child: MiniPlayer(
-                    item: ref.watch(currentItemProvider).value!,
+      maxHeight: screenHeight,
+      builder: (context, f) {
+        final miniOpacity = 1 - miniInterval.transform(f);
+        final fullOpacity = fullInterval.transform(f);
+
+        final imgSize = AppStyles.imgSizeInMiniPlayer + (imgSizeDelta * f);
+        final imgLeft =
+            AppStyles.imgLeftPaddingInMiniPlayer + (imgLeftDelta * f);
+        final imgTop = AppStyles.imgLeftPaddingInMiniPlayer + (imgTopDelta * f);
+
+        return Stack(
+          children: [
+            Positioned.fill(
+              child: ColoredBox(color: Theme.of(context).colorScheme.surface),
+            ),
+            if (f > 0.6)
+              Positioned(
+                top: imgTop + imgSize + 16,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Opacity(
+                  opacity: fullOpacity,
+                  child: IgnorePointer(
+                    ignoring: f < 0.9,
+                    child: FullPlayer(item: item, expandFactor: f),
                   ),
                 ),
-              if (ratio > 0.2)
-                Opacity(
-                  opacity: ((ratio - 0.2) * 1.25).clamp(0, 1),
-                  child: FullPlayer(
-                    item: ref.watch(currentItemProvider).value!,
-                    ratio: ratio,
+              ),
+            if (f < 0.3)
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                height: 70,
+                child: Opacity(
+                  opacity: miniOpacity,
+                  child: IgnorePointer(
+                    ignoring: f > 0.05,
+                    child: MiniPlayer(item: item),
                   ),
                 ),
-            ],
-          ),
+              ),
+            Positioned(
+              top: imgTop,
+              left: imgLeft,
+              width: imgSize,
+              height: imgSize,
+              child: HeroCover(expandFactor: f),
+            ),
+          ],
         );
       },
     );

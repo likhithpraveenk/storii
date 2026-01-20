@@ -30,10 +30,8 @@ class CoverImage extends StatelessWidget {
           final deltaExtent = settings!.maxExtent - settings.minExtent;
           final t =
               (1.0 -
-                      (settings.currentExtent - settings.minExtent) /
-                          deltaExtent)
-                  .clamp(0.0, 1.0);
-          final isCollapsed = t == 1;
+              (settings.currentExtent - settings.minExtent) / deltaExtent);
+          final isCollapsed = t >= 1;
 
           return AnimatedOpacity(
             duration: const Duration(milliseconds: 200),

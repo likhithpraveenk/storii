@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/fonts.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -14,6 +13,7 @@ class FontPickerSetting extends ConsumerWidget {
     final fontFamily = ref.watch(fontFamilyProvider);
     final notifier = ref.read(appSettingsProvider.notifier);
     final l = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return Card(
       color: Theme.of(
@@ -22,13 +22,10 @@ class FontPickerSetting extends ConsumerWidget {
       shape: AppStyles.roundedRect,
       child: ListTile(
         leading: const Icon(Icons.font_download_outlined),
-        title: Text(
-          l.fontFamily,
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
+        title: Text(l.fontFamily, style: theme.textTheme.titleSmall),
         subtitle: Text(
           fontFamily ?? l.system,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: theme.textTheme.bodyMedium,
         ),
         trailing: const Icon(Icons.chevron_right),
         shape: AppStyles.roundedRect,
@@ -48,7 +45,7 @@ class FontPickerSetting extends ConsumerWidget {
                       padding: const .all(16),
                       child: Text(
                         l.fontFamily,
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: theme.textTheme.titleLarge,
                       ),
                     ),
                     const Divider(height: 1),
@@ -73,23 +70,30 @@ class FontPickerSetting extends ConsumerWidget {
                               Navigator.pop(context);
                             },
                           ),
-                          ...AppFonts.availableFonts.map((font) {
-                            final isSelected = fontFamily == font;
+                          ...AppFonts.available.entries.map((entry) {
+                            final key = entry.key;
+                            final builder = entry.value;
+
+                            final isSelected = fontFamily == key;
+                            final previewTheme = builder(theme.textTheme);
 
                             return ListTile(
                               title: Text(
-                                font,
-                                style: GoogleFonts.getFont(font, fontSize: 18),
+                                key,
+                                style: previewTheme.titleMedium?.copyWith(
+                                  fontSize: 18,
+                                ),
                               ),
                               trailing: isSelected
-                                  ? const Icon(
+                                  ? Icon(
                                       Icons.check_circle,
-                                      color: Colors.blue,
+                                      color:
+                                          theme.colorScheme.onPrimaryContainer,
                                     )
                                   : null,
                               selected: isSelected,
                               onTap: () {
-                                notifier.setFontFamily(font);
+                                notifier.setFontFamily(key);
                                 Navigator.pop(context);
                               },
                             );

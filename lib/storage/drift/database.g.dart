@@ -1421,7 +1421,7 @@ class $AudiobooksTable extends Audiobooks
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id, libraryId};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Audiobook map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -2274,7 +2274,7 @@ class $PodcastsTable extends Podcasts with TableInfo<$PodcastsTable, Podcast> {
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id, libraryId};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Podcast map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -2886,7 +2886,7 @@ class $SeriesTableTable extends SeriesTable
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id, libraryId};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   SeriesDomain map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -3510,7 +3510,7 @@ class $AuthorsTable extends Authors
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id, libraryId};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   AuthorDomain map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';

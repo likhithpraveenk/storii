@@ -9,14 +9,21 @@ part of 'item_palette_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(ItemPaletteNotifier)
-final itemPaletteProvider = ItemPaletteNotifierFamily._();
+@ProviderFor(itemPalette)
+final itemPaletteProvider = ItemPaletteFamily._();
 
-final class ItemPaletteNotifierProvider
+final class ItemPaletteProvider
     extends
-        $AsyncNotifierProvider<ItemPaletteNotifier, PaletteGeneratorMaster> {
-  ItemPaletteNotifierProvider._({
-    required ItemPaletteNotifierFamily super.from,
+        $FunctionalProvider<
+          AsyncValue<PaletteGeneratorMaster>,
+          PaletteGeneratorMaster,
+          FutureOr<PaletteGeneratorMaster>
+        >
+    with
+        $FutureModifier<PaletteGeneratorMaster>,
+        $FutureProvider<PaletteGeneratorMaster> {
+  ItemPaletteProvider._({
+    required ItemPaletteFamily super.from,
     required String super.argument,
   }) : super(
          retry: null,
@@ -27,7 +34,7 @@ final class ItemPaletteNotifierProvider
        );
 
   @override
-  String debugGetCreateSourceHash() => _$itemPaletteNotifierHash();
+  String debugGetCreateSourceHash() => _$itemPaletteHash();
 
   @override
   String toString() {
@@ -38,11 +45,19 @@ final class ItemPaletteNotifierProvider
 
   @$internal
   @override
-  ItemPaletteNotifier create() => ItemPaletteNotifier();
+  $FutureProviderElement<PaletteGeneratorMaster> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<PaletteGeneratorMaster> create(Ref ref) {
+    final argument = this.argument as String;
+    return itemPalette(ref, argument);
+  }
 
   @override
   bool operator ==(Object other) {
-    return other is ItemPaletteNotifierProvider && other.argument == argument;
+    return other is ItemPaletteProvider && other.argument == argument;
   }
 
   @override
@@ -51,19 +66,11 @@ final class ItemPaletteNotifierProvider
   }
 }
 
-String _$itemPaletteNotifierHash() =>
-    r'69e3a26d37c3255e3407fdeec22b3f733bcdc24c';
+String _$itemPaletteHash() => r'e8da0ef1d875e2953301813d7ec75fc2c837dc8f';
 
-final class ItemPaletteNotifierFamily extends $Family
-    with
-        $ClassFamilyOverride<
-          ItemPaletteNotifier,
-          AsyncValue<PaletteGeneratorMaster>,
-          PaletteGeneratorMaster,
-          FutureOr<PaletteGeneratorMaster>,
-          String
-        > {
-  ItemPaletteNotifierFamily._()
+final class ItemPaletteFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<PaletteGeneratorMaster>, String> {
+  ItemPaletteFamily._()
     : super(
         retry: null,
         name: r'itemPaletteProvider',
@@ -72,36 +79,9 @@ final class ItemPaletteNotifierFamily extends $Family
         isAutoDispose: true,
       );
 
-  ItemPaletteNotifierProvider call(String id) =>
-      ItemPaletteNotifierProvider._(argument: id, from: this);
+  ItemPaletteProvider call(String id) =>
+      ItemPaletteProvider._(argument: id, from: this);
 
   @override
   String toString() => r'itemPaletteProvider';
-}
-
-abstract class _$ItemPaletteNotifier
-    extends $AsyncNotifier<PaletteGeneratorMaster> {
-  late final _$args = ref.$arg as String;
-  String get id => _$args;
-
-  FutureOr<PaletteGeneratorMaster> build(String id);
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final ref =
-        this.ref
-            as $Ref<AsyncValue<PaletteGeneratorMaster>, PaletteGeneratorMaster>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<
-                AsyncValue<PaletteGeneratorMaster>,
-                PaletteGeneratorMaster
-              >,
-              AsyncValue<PaletteGeneratorMaster>,
-              Object?,
-              Object?
-            >;
-    element.handleCreate(ref, () => build(_$args));
-  }
 }

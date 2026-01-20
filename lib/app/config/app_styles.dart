@@ -9,6 +9,10 @@ abstract class AppStyles {
     borderRadius: circularRadius,
   );
 
-  static final maxCardWidth = 180.0;
-  static final maxSeriesCardWidth = 360.0;
+  static const maxCardWidthInGrid = 180.0;
+  static const maxSeriesCardWidthInGrid = 360.0;
+
+  static const imgSizeInMiniPlayer = 54.0;
+  static const imgLeftPaddingInMiniPlayer = 8.0;
+  static const maxImgSizeInFullPlayer = 360.0;
 }

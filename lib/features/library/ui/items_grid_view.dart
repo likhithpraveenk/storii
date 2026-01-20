@@ -14,14 +14,14 @@ class ItemsGridView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final height = ref.watch(gridHeightProvider);
-    final isSquare = height == AppStyles.maxCardWidth;
+    final isSquare = height == AppStyles.maxCardWidthInGrid;
 
     return GridView.builder(
       controller: scrollController,
       padding: const .symmetric(horizontal: 16),
       itemCount: items.length,
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: AppStyles.maxCardWidth,
+        maxCrossAxisExtent: AppStyles.maxCardWidthInGrid,
         mainAxisExtent: isSquare ? null : height,
         mainAxisSpacing: isSquare ? 16 : 4,
         crossAxisSpacing: 16,

@@ -87,7 +87,7 @@ class LibraryItemCard extends ConsumerWidget {
             color: Colors.transparent,
             child: InkWell(
               borderRadius: AppStyles.circularRadius,
-              onTap: () => context.push(AppRoute.item.withId(item.id)),
+              onTap: () => context.push(AppRoute.libraryItem.withId(item.id)),
             ),
           ),
         ),
@@ -161,7 +161,7 @@ class LibraryItemCardListView extends StatelessWidget {
     final theme = Theme.of(context);
 
     return ListTile(
-      onTap: () => context.push(AppRoute.item.withId(item.id)),
+      onTap: () => context.push(AppRoute.libraryItem.withId(item.id)),
       shape: AppStyles.roundedRect,
       contentPadding: const .fromLTRB(16, 8, 16, 8),
       leading: AspectRatio(

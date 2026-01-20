@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/models/item.dart';
 import 'package:storii/app/providers/database_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/shared/widgets/player.dart';
+import 'package:storii/features/player/ui/player.dart';
 import 'package:storii/storage/drift/database.dart';
 
 part 'current_item_provider.g.dart';
@@ -26,5 +26,10 @@ class CurrentItemNotifier extends _$CurrentItemNotifier {
           .getSingleOrNull();
       yield audiobook;
     }
+  }
+
+  // TODO: helper
+  void setItem(ItemDomain item) {
+    state = AsyncValue.data(item);
   }
 }

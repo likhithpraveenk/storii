@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$User {
 
- String get id; String get username; String? get email; UserType get type; List<MediaProgress> get mediaProgress; List<String> get seriesHideFromContinueListening; List<Bookmark> get bookmarks; bool get isActive; bool get isLocked; DateTime? get lastSeen; DateTime get createdAt; UserPermissions get permissions; List<String> get librariesAccessible; List<String> get itemTagsSelected; bool get hasOpenIDLink; String get accessToken; String get refreshToken;
+ String get id; String get username; String? get email; UserType get type; List<MediaProgress> get mediaProgress; List<String> get seriesHideFromContinueListening; List<Bookmark> get bookmarks; bool get isActive; bool get isLocked; DateTime? get lastSeen; DateTime get createdAt; UserPermissions get permissions; List<String> get librariesAccessible; List<String> get itemTagsSelected; bool get hasOpenIDLink; String get accessToken; String? get refreshToken;
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $UserCopyWith<$Res>  {
   factory $UserCopyWith(User value, $Res Function(User) _then) = _$UserCopyWithImpl;
 @useResult
 $Res call({
- String id, String username, String? email, UserType type, List<MediaProgress> mediaProgress, List<String> seriesHideFromContinueListening, List<Bookmark> bookmarks, bool isActive, bool isLocked, DateTime? lastSeen, DateTime createdAt, UserPermissions permissions, List<String> librariesAccessible, List<String> itemTagsSelected, bool hasOpenIDLink, String accessToken, String refreshToken
+ String id, String username, String? email, UserType type, List<MediaProgress> mediaProgress, List<String> seriesHideFromContinueListening, List<Bookmark> bookmarks, bool isActive, bool isLocked, DateTime? lastSeen, DateTime createdAt, UserPermissions permissions, List<String> librariesAccessible, List<String> itemTagsSelected, bool hasOpenIDLink, String accessToken, String? refreshToken
 });
 
 
@@ -65,7 +65,7 @@ class _$UserCopyWithImpl<$Res>
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? email = freezed,Object? type = null,Object? mediaProgress = null,Object? seriesHideFromContinueListening = null,Object? bookmarks = null,Object? isActive = null,Object? isLocked = null,Object? lastSeen = freezed,Object? createdAt = null,Object? permissions = null,Object? librariesAccessible = null,Object? itemTagsSelected = null,Object? hasOpenIDLink = null,Object? accessToken = null,Object? refreshToken = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? email = freezed,Object? type = null,Object? mediaProgress = null,Object? seriesHideFromContinueListening = null,Object? bookmarks = null,Object? isActive = null,Object? isLocked = null,Object? lastSeen = freezed,Object? createdAt = null,Object? permissions = null,Object? librariesAccessible = null,Object? itemTagsSelected = null,Object? hasOpenIDLink = null,Object? accessToken = null,Object? refreshToken = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
@@ -83,8 +83,8 @@ as UserPermissions,librariesAccessible: null == librariesAccessible ? _self.libr
 as List<String>,itemTagsSelected: null == itemTagsSelected ? _self.itemTagsSelected : itemTagsSelected // ignore: cast_nullable_to_non_nullable
 as List<String>,hasOpenIDLink: null == hasOpenIDLink ? _self.hasOpenIDLink : hasOpenIDLink // ignore: cast_nullable_to_non_nullable
 as bool,accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
-as String,refreshToken: null == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
-as String,
+as String,refreshToken: freezed == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of User
@@ -175,7 +175,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String username,  String? email,  UserType type,  List<MediaProgress> mediaProgress,  List<String> seriesHideFromContinueListening,  List<Bookmark> bookmarks,  bool isActive,  bool isLocked,  DateTime? lastSeen,  DateTime createdAt,  UserPermissions permissions,  List<String> librariesAccessible,  List<String> itemTagsSelected,  bool hasOpenIDLink,  String accessToken,  String refreshToken)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String username,  String? email,  UserType type,  List<MediaProgress> mediaProgress,  List<String> seriesHideFromContinueListening,  List<Bookmark> bookmarks,  bool isActive,  bool isLocked,  DateTime? lastSeen,  DateTime createdAt,  UserPermissions permissions,  List<String> librariesAccessible,  List<String> itemTagsSelected,  bool hasOpenIDLink,  String accessToken,  String? refreshToken)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _User() when $default != null:
 return $default(_that.id,_that.username,_that.email,_that.type,_that.mediaProgress,_that.seriesHideFromContinueListening,_that.bookmarks,_that.isActive,_that.isLocked,_that.lastSeen,_that.createdAt,_that.permissions,_that.librariesAccessible,_that.itemTagsSelected,_that.hasOpenIDLink,_that.accessToken,_that.refreshToken);case _:
@@ -196,7 +196,7 @@ return $default(_that.id,_that.username,_that.email,_that.type,_that.mediaProgre
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String username,  String? email,  UserType type,  List<MediaProgress> mediaProgress,  List<String> seriesHideFromContinueListening,  List<Bookmark> bookmarks,  bool isActive,  bool isLocked,  DateTime? lastSeen,  DateTime createdAt,  UserPermissions permissions,  List<String> librariesAccessible,  List<String> itemTagsSelected,  bool hasOpenIDLink,  String accessToken,  String refreshToken)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String username,  String? email,  UserType type,  List<MediaProgress> mediaProgress,  List<String> seriesHideFromContinueListening,  List<Bookmark> bookmarks,  bool isActive,  bool isLocked,  DateTime? lastSeen,  DateTime createdAt,  UserPermissions permissions,  List<String> librariesAccessible,  List<String> itemTagsSelected,  bool hasOpenIDLink,  String accessToken,  String? refreshToken)  $default,) {final _that = this;
 switch (_that) {
 case _User():
 return $default(_that.id,_that.username,_that.email,_that.type,_that.mediaProgress,_that.seriesHideFromContinueListening,_that.bookmarks,_that.isActive,_that.isLocked,_that.lastSeen,_that.createdAt,_that.permissions,_that.librariesAccessible,_that.itemTagsSelected,_that.hasOpenIDLink,_that.accessToken,_that.refreshToken);}
@@ -213,7 +213,7 @@ return $default(_that.id,_that.username,_that.email,_that.type,_that.mediaProgre
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String username,  String? email,  UserType type,  List<MediaProgress> mediaProgress,  List<String> seriesHideFromContinueListening,  List<Bookmark> bookmarks,  bool isActive,  bool isLocked,  DateTime? lastSeen,  DateTime createdAt,  UserPermissions permissions,  List<String> librariesAccessible,  List<String> itemTagsSelected,  bool hasOpenIDLink,  String accessToken,  String refreshToken)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String username,  String? email,  UserType type,  List<MediaProgress> mediaProgress,  List<String> seriesHideFromContinueListening,  List<Bookmark> bookmarks,  bool isActive,  bool isLocked,  DateTime? lastSeen,  DateTime createdAt,  UserPermissions permissions,  List<String> librariesAccessible,  List<String> itemTagsSelected,  bool hasOpenIDLink,  String accessToken,  String? refreshToken)?  $default,) {final _that = this;
 switch (_that) {
 case _User() when $default != null:
 return $default(_that.id,_that.username,_that.email,_that.type,_that.mediaProgress,_that.seriesHideFromContinueListening,_that.bookmarks,_that.isActive,_that.isLocked,_that.lastSeen,_that.createdAt,_that.permissions,_that.librariesAccessible,_that.itemTagsSelected,_that.hasOpenIDLink,_that.accessToken,_that.refreshToken);case _:
@@ -277,7 +277,7 @@ class _User implements User {
 
 @override final  bool hasOpenIDLink;
 @override final  String accessToken;
-@override final  String refreshToken;
+@override final  String? refreshToken;
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
@@ -312,7 +312,7 @@ abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) _then) = __$UserCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String username, String? email, UserType type, List<MediaProgress> mediaProgress, List<String> seriesHideFromContinueListening, List<Bookmark> bookmarks, bool isActive, bool isLocked, DateTime? lastSeen, DateTime createdAt, UserPermissions permissions, List<String> librariesAccessible, List<String> itemTagsSelected, bool hasOpenIDLink, String accessToken, String refreshToken
+ String id, String username, String? email, UserType type, List<MediaProgress> mediaProgress, List<String> seriesHideFromContinueListening, List<Bookmark> bookmarks, bool isActive, bool isLocked, DateTime? lastSeen, DateTime createdAt, UserPermissions permissions, List<String> librariesAccessible, List<String> itemTagsSelected, bool hasOpenIDLink, String accessToken, String? refreshToken
 });
 
 
@@ -329,7 +329,7 @@ class __$UserCopyWithImpl<$Res>
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,Object? email = freezed,Object? type = null,Object? mediaProgress = null,Object? seriesHideFromContinueListening = null,Object? bookmarks = null,Object? isActive = null,Object? isLocked = null,Object? lastSeen = freezed,Object? createdAt = null,Object? permissions = null,Object? librariesAccessible = null,Object? itemTagsSelected = null,Object? hasOpenIDLink = null,Object? accessToken = null,Object? refreshToken = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,Object? email = freezed,Object? type = null,Object? mediaProgress = null,Object? seriesHideFromContinueListening = null,Object? bookmarks = null,Object? isActive = null,Object? isLocked = null,Object? lastSeen = freezed,Object? createdAt = null,Object? permissions = null,Object? librariesAccessible = null,Object? itemTagsSelected = null,Object? hasOpenIDLink = null,Object? accessToken = null,Object? refreshToken = freezed,}) {
   return _then(_User(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
@@ -347,8 +347,8 @@ as UserPermissions,librariesAccessible: null == librariesAccessible ? _self._lib
 as List<String>,itemTagsSelected: null == itemTagsSelected ? _self._itemTagsSelected : itemTagsSelected // ignore: cast_nullable_to_non_nullable
 as List<String>,hasOpenIDLink: null == hasOpenIDLink ? _self.hasOpenIDLink : hasOpenIDLink // ignore: cast_nullable_to_non_nullable
 as bool,accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
-as String,refreshToken: null == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
-as String,
+as String,refreshToken: freezed == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

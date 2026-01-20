@@ -155,10 +155,8 @@ class SeriesCard extends StatelessWidget {
             color: Colors.transparent,
             child: InkWell(
               borderRadius: AppStyles.circularRadius,
-              onTap: () => context.push(
-                AppRoute.seriesDetail.withId(series.id),
-                extra: series,
-              ),
+              onTap: () =>
+                  context.push(AppRoute.seriesDetail.withId(series.id)),
             ),
           ),
         ),
@@ -181,7 +179,7 @@ class SeriesCardListView extends StatelessWidget {
         ? 0
         : (series.libraryItemIdsFinished?.length ?? 0) / series.books!.length;
     return ListTile(
-      onTap: () => context.push(AppRoute.item.withId(series.id)),
+      onTap: () => context.push(AppRoute.libraryItem.withId(series.id)),
       shape: AppStyles.roundedRect,
       contentPadding: const .fromLTRB(16, 8, 16, 8),
       leading: AspectRatio(

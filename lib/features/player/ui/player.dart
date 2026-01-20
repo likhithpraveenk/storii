@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 
 typedef PlayerBuilder =
-    Widget Function(BuildContext context, double heightProgress);
+    Widget Function(BuildContext context, double expandFactor);
 
 enum PlayerSwipeDirection { left, right }
 
@@ -19,8 +20,9 @@ abstract class PlayerHandle {
 
   PlayerViewState get state;
   Stream<PlayerSwipeDirection> get swipeStream;
+  ValueNotifier<double> get heightListenable;
 
-  void snapTo(double height);
+  void snapTo(PlayerViewState newState);
 }
 
 class PlayerController extends ChangeNotifier {
@@ -28,11 +30,21 @@ class PlayerController extends ChangeNotifier {
 
   PlayerViewState? get state => _handle?.state;
 
+  ValueNotifier<double>? get factorListenable =>
+      _handle?.heightListenable.map(_expandFactor);
+
   Stream<PlayerSwipeDirection>? get swipeStream => _handle?.swipeStream;
 
-  void expand() => _handle?.snapTo(_handle!.maxHeight);
-  void collapse() => _handle?.snapTo(_handle!.minHeight);
-  void hide() => _handle?.snapTo(0);
+  void toFull() => _handle?.snapTo(.full);
+  void toMini() => _handle?.snapTo(.mini);
+  void hide() => _handle?.snapTo(.hidden);
+
+  double _expandFactor(double height) {
+    if (_handle == null) return 0.0;
+    return ((height - _handle!.minHeight) /
+            (_handle!.maxHeight - _handle!.minHeight))
+        .clamp(0.0, 1.0);
+  }
 
   void _attach(PlayerHandle handle) {
     _handle = handle;
@@ -80,7 +92,7 @@ class _PlayerState extends State<Player>
 
   final _swipeController = StreamController<PlayerSwipeDirection>.broadcast();
 
-  PlayerViewState _state = .mini;
+  PlayerViewState _state = .hidden;
 
   @override
   PlayerViewState get state => _state;
@@ -95,12 +107,15 @@ class _PlayerState extends State<Player>
   double get maxHeight => widget.maxHeight;
 
   @override
-  void snapTo(double height) => _snapTo(height);
+  ValueNotifier<double> get heightListenable => _currentHeight;
+
+  @override
+  void snapTo(PlayerViewState newState) => _snapTo(newState);
 
   @override
   void initState() {
     super.initState();
-    _currentHeight = ValueNotifier(widget.minHeight);
+    _currentHeight = ValueNotifier(minHeight);
 
     _controller = AnimationController(
       vsync: this,
@@ -136,7 +151,13 @@ class _PlayerState extends State<Player>
     _currentHeight.value = _heightTween.transform(curvedValue);
   }
 
-  void _snapTo(double targetHeight) {
+  void _snapTo(PlayerViewState newState) {
+    final targetHeight = switch (newState) {
+      .full => maxHeight,
+      .mini => minHeight,
+      .hidden => 0.0,
+    };
+
     if (isHidden && targetHeight > 0) {
       setState(() => isHidden = false);
     }
@@ -162,9 +183,9 @@ class _PlayerState extends State<Player>
   }
 
   void _animationCompleteCallback() {
-    if ((_targetHeight - widget.maxHeight).abs() < _heightEpsilon) {
+    if ((_targetHeight - maxHeight).abs() < _heightEpsilon) {
       _setViewState(.full);
-    } else if ((_targetHeight - widget.minHeight).abs() < _heightEpsilon) {
+    } else if ((_targetHeight - minHeight).abs() < _heightEpsilon) {
       _setViewState(.mini);
     } else if (_targetHeight.abs() < _heightEpsilon && !isHidden) {
       _setViewState(.hidden);
@@ -178,7 +199,7 @@ class _PlayerState extends State<Player>
     if (isHidden) return;
     _currentHeight.value = (_currentHeight.value - details.delta.dy).clamp(
       0,
-      widget.maxHeight,
+      maxHeight,
     );
   }
 
@@ -190,20 +211,20 @@ class _PlayerState extends State<Player>
 
     if (velocityY.abs() > _verticalVelocityThreshold) {
       if (velocityY < 0) {
-        _snapTo(widget.maxHeight);
+        _snapTo(.full);
       } else {
-        if (h < widget.minHeight) {
-          _snapTo(0);
+        if (h < minHeight) {
+          _snapTo(.hidden);
         } else {
-          _snapTo(widget.minHeight);
+          _snapTo(.mini);
         }
       }
       return;
     }
 
-    final mid = (widget.minHeight + widget.maxHeight) / 2;
+    final mid = (minHeight + maxHeight) / 2;
 
-    _snapTo(h > mid ? widget.maxHeight : widget.minHeight);
+    _snapTo(h > mid ? .full : .mini);
   }
 
   void _onHorizontalDragEnd(DragEndDetails details) {
@@ -222,31 +243,30 @@ class _PlayerState extends State<Player>
   Widget build(BuildContext context) {
     if (isHidden) return const SizedBox.shrink();
 
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (_, _) {
-        if (_currentHeight.value > widget.minHeight) {
-          _snapTo(widget.minHeight);
+    return BackButtonListener(
+      onBackButtonPressed: () async {
+        if (_currentHeight.value > minHeight) {
+          _snapTo(.mini);
+          return true;
         }
+        return false;
       },
       child: ValueListenableBuilder(
         valueListenable: _currentHeight,
         builder: (context, height, _) {
-          final heightProgress =
-              ((height - widget.minHeight) /
-                      (widget.maxHeight - widget.minHeight))
-                  .clamp(0.0, 1.0);
+          final expandFactor = ((height - minHeight) / (maxHeight - minHeight))
+              .clamp(0.0, 1.0);
 
           return Align(
-            alignment: Alignment.bottomCenter,
+            alignment: .bottomCenter,
             child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
+              behavior: .translucent,
               onVerticalDragUpdate: _onVerticalDragUpdate,
               onVerticalDragEnd: _onVerticalDragEnd,
               onHorizontalDragEnd: _onHorizontalDragEnd,
               child: SizedBox(
                 height: height,
-                child: widget.builder(context, heightProgress),
+                child: widget.builder(context, expandFactor),
               ),
             ),
           );

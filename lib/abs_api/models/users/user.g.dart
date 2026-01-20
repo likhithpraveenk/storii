@@ -41,7 +41,7 @@ _User _$UserFromJson(Map<String, dynamic> json) => _User(
       .toList(),
   hasOpenIDLink: json['hasOpenIDLink'] as bool,
   accessToken: json['accessToken'] as String,
-  refreshToken: json['refreshToken'] as String,
+  refreshToken: json['refreshToken'] as String?,
 );
 
 Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
@@ -64,7 +64,7 @@ Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
   'itemTagsSelected': instance.itemTagsSelected,
   'hasOpenIDLink': instance.hasOpenIDLink,
   'accessToken': instance.accessToken,
-  'refreshToken': instance.refreshToken,
+  'refreshToken': ?instance.refreshToken,
 };
 
 const _$UserTypeEnumMap = {

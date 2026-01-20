@@ -17,5 +17,5 @@ class SeriesTable extends Table {
   BoolColumn get isFinished => boolean().withDefault(const Constant(false))();
 
   @override
-  Set<Column> get primaryKey => {id, libraryId};
+  Set<Column> get primaryKey => {id};
 }

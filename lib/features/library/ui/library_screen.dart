@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/library/logic/library_items_provider.dart';
+import 'package:storii/features/library/ui/filters_button.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
+import 'package:storii/shared/widgets/library_switcher.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class LibraryScreen extends ConsumerStatefulWidget {
@@ -52,6 +54,13 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
     final l = AppLocalizations.of(context)!;
 
     return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 0,
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 0,
+        title: const LibrarySwitcher(),
+        actions: [const FiltersButton(.library)],
+      ),
       body: RefreshIndicator(
         onRefresh: () => ref.read(libraryItemsProvider.notifier).manualSync(),
         child: Column(

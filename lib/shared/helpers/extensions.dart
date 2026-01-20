@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:storii/abs_api/abs_api.dart';
@@ -158,5 +159,13 @@ extension FilterGroupX on FilterGroup {
       .abridged => l.abridged,
       .explicit => l.explicit,
     };
+  }
+}
+
+extension ValueListenableMapper<T> on ValueListenable<T> {
+  ValueNotifier<R> map<R>(R Function(T value) transform) {
+    final notifier = ValueNotifier<R>(transform(value));
+    addListener(() => notifier.value = transform(value));
+    return notifier;
   }
 }

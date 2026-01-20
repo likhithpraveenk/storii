@@ -37,7 +37,7 @@ class Audiobooks extends Table {
       boolean().withDefault(const Constant(false))();
 
   @override
-  Set<Column> get primaryKey => {id, libraryId};
+  Set<Column> get primaryKey => {id};
 }
 
 @UseRowClass(Podcast, generateInsertable: true)
@@ -70,5 +70,5 @@ class Podcasts extends Table {
       boolean().withDefault(const Constant(false))();
 
   @override
-  Set<Column> get primaryKey => {id, libraryId};
+  Set<Column> get primaryKey => {id};
 }

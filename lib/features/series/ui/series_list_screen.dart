@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
@@ -12,9 +11,7 @@ import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class SeriesListScreen extends ConsumerStatefulWidget {
-  const SeriesListScreen({super.key, this.fromMore = false});
-
-  final bool fromMore;
+  const SeriesListScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -58,17 +55,10 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
     final l = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: widget.fromMore
-          ? AppBar(
-              automaticallyImplyLeading: true,
-              leading: IconButton(
-                onPressed: () => context.pop(),
-                icon: const Icon(Icons.arrow_back),
-              ),
-              title: Text(l.series),
-              actions: [const FiltersButton(.series)],
-            )
-          : null,
+      appBar: AppBar(
+        title: Text(l.series, style: Theme.of(context).textTheme.titleLarge),
+        actions: [const FiltersButton(.series)],
+      ),
       body: RefreshIndicator(
         onRefresh: () => ref.read(seriesListProvider.notifier).manualSync(),
         child: Column(
@@ -101,7 +91,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
                             gridDelegate:
                                 SliverGridDelegateWithMaxCrossAxisExtent(
                                   maxCrossAxisExtent:
-                                      AppStyles.maxSeriesCardWidth,
+                                      AppStyles.maxSeriesCardWidthInGrid,
                                   mainAxisExtent: height,
                                   mainAxisSpacing: 16,
                                   crossAxisSpacing: 16,

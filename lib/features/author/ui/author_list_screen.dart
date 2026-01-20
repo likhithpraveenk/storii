@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/author/logic/authors_list_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
@@ -12,9 +11,7 @@ import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class AuthorListScreen extends ConsumerStatefulWidget {
-  const AuthorListScreen({super.key, this.fromMore = false});
-
-  final bool fromMore;
+  const AuthorListScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -58,17 +55,13 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
     final l = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: widget.fromMore
-          ? AppBar(
-              automaticallyImplyLeading: true,
-              leading: IconButton(
-                onPressed: () => context.pop(),
-                icon: const Icon(Icons.arrow_back),
-              ),
-              title: Text(AppLocalizations.of(context)!.authors),
-              actions: const [FiltersButton(.authors)],
-            )
-          : null,
+      appBar: AppBar(
+        title: Text(
+          AppLocalizations.of(context)!.authors,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        actions: const [FiltersButton(.authors)],
+      ),
       body: RefreshIndicator(
         onRefresh: () => ref.read(authorsListProvider.notifier).manualSync(),
         child: Column(
@@ -101,7 +94,7 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
                     itemCount: authors.length,
                     padding: const .symmetric(horizontal: 16),
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: AppStyles.maxCardWidth,
+                      maxCrossAxisExtent: AppStyles.maxCardWidthInGrid,
                       mainAxisExtent: height,
                       crossAxisSpacing: 16,
                     ),

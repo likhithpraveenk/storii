@@ -10,6 +10,7 @@ import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/logic/item_palette_provider.dart';
 import 'package:storii/features/item/ui/cover_image.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
+import 'package:storii/features/player/logic/current_item_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/expandable_text.dart';
@@ -29,10 +30,10 @@ class ItemDetailScreen extends ConsumerWidget {
 
     final backgroundColor = itemAsync.maybeWhen(
       data: (item) {
-        final notifier = ref.watch(itemPaletteProvider(item.id).notifier);
-        final themeColor = notifier.getBackgroundColor(
-          scheme.surfaceContainerHighest,
-        );
+        final palette = ref.watch(itemPaletteProvider(item.id)).value;
+        final themeColor =
+            palette?.dominantColor?.color ?? scheme.surfaceContainerHighest;
+
         return Color.alphaBlend(
           themeColor.withValues(alpha: 0.1),
           scheme.surface,
@@ -112,33 +113,29 @@ class ItemDetailScreen extends ConsumerWidget {
       floatingActionButtonLocation: .centerFloat,
       floatingActionButton: itemAsync.maybeWhen(
         data: (item) {
-          final notifier = ref.watch(itemPaletteProvider(item.id).notifier);
-          final themeColor = notifier.getBackgroundColor(
-            scheme.surfaceContainerHighest,
-          );
+          final palette = ref.watch(itemPaletteProvider(item.id)).value;
+          final themeColor = getBackgroundColor(palette, scheme.surface);
+          final textColor = getForegroundColor(palette, scheme);
 
           return Container(
             height: 48,
-            margin: const EdgeInsets.symmetric(horizontal: 16),
+            margin: const .fromLTRB(16, 0, 16, 0),
             child: FloatingActionButton.extended(
               backgroundColor: themeColor,
               elevation: 4,
               onPressed: () {
                 // TODO: playback
+                // ! remove
+                ref.read(currentItemProvider.notifier).setItem(item);
               },
-              icon: Icon(
-                Icons.play_arrow_rounded,
-                color: notifier.getForegroundColor(Theme.of(context)),
-              ),
+              icon: Icon(Icons.play_arrow_rounded, color: textColor),
               label: Text(
                 item.progress > 0
                     ? item.progress == 1.0
                           ? l.replay
                           : l.resume
                     : l.play,
-                style: textTheme.labelLarge?.copyWith(
-                  color: notifier.getForegroundColor(Theme.of(context)),
-                ),
+                style: textTheme.labelLarge?.copyWith(color: textColor),
               ),
             ),
           );
