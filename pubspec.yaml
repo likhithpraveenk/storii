@@ -44,7 +44,6 @@ dev_dependencies:
   analyzer: ^8.4.0
   build: ^4.0.4
   build_runner: ^2.10.5
-  custom_lint: ^0.8.1
   drift_dev: ^2.30.1
   flutter_lints: ^6.0.0
   flutter_test:
@@ -53,7 +52,6 @@ dev_dependencies:
   freezed_lint: ^0.0.12
   json_serializable: ^6.11.2
   riverpod_generator: ^4.0.0+1
-  riverpod_lint: ^3.1.0
   source_gen: ^4.2.0
 
 flutter:

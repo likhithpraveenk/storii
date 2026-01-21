@@ -15,8 +15,10 @@ class HeroCover extends ConsumerWidget {
     final itemAsync = ref.watch(currentItemProvider);
     final imageRadius = lerpDouble(4, 12, expandFactor)!;
     return itemAsync.maybeWhen(
-      data: (item) => ClipRRect(
+      data: (item) => Material(
+        // elevation: lerpDouble(0, 8, expandFactor)!,
         borderRadius: .circular(imageRadius),
+        clipBehavior: .antiAlias,
         child: item != null
             ? ImageWidget(id: item.id, type: .item)
             : const SizedBox.shrink(),

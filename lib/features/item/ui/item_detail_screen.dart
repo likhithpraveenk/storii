@@ -121,6 +121,7 @@ class ItemDetailScreen extends ConsumerWidget {
             height: 48,
             margin: const .fromLTRB(16, 0, 16, 0),
             child: FloatingActionButton.extended(
+              heroTag: 'item_detail_screen',
               backgroundColor: themeColor,
               elevation: 4,
               onPressed: () {

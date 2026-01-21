@@ -27,13 +27,10 @@ sealed class FilterState with _$FilterState {
 class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
   @override
   FilterState build(FiltersScreen screen) {
-    final userId = ref.watch(currentUserProvider)?.id;
-    if (userId == null) throw StateError('No current user');
-
     final isGridView = switch (screen) {
-      .library => ref.watch(isItemsGridViewProvider(userId)),
-      .authors => ref.watch(isAuthorsGridViewProvider(userId)),
-      .series => ref.watch(isSeriesGridViewProvider(userId)),
+      .library => ref.watch(isItemsGridViewProvider),
+      .authors => ref.watch(isAuthorsGridViewProvider),
+      .series => ref.watch(isSeriesGridViewProvider),
     };
 
     final EnumHasValue initialSort = switch (screen) {
@@ -67,11 +64,7 @@ class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
 
   void setGridView(bool isGridView) {
     if (isGridView == state.isGridView) return;
-
-    final userId = ref.watch(currentUserProvider)?.id;
-    if (userId == null) throw StateError('No current user');
-
-    final notifier = ref.read(userSettingsProvider(userId).notifier);
+    final notifier = ref.read(userSettingsProvider.notifier);
     switch (screen) {
       case .library:
         notifier.setIsItemsGridView(isGridView);

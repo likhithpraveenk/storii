@@ -16,14 +16,12 @@ Future<LibraryDomain> activeLibrary(Ref ref) async {
   final libraries = await ref.watch(userLibrariesProvider.future);
   if (libraries.isEmpty) throw StateError('No libraries found');
 
-  final currentLibraryId = ref.watch(currentLibraryIdProvider(user.id));
+  final currentLibraryId = ref.watch(currentLibraryIdProvider);
   final library =
       libraries.firstWhereOrNull((l) => l.id == currentLibraryId) ??
       libraries.first;
   if (currentLibraryId != library.id) {
-    ref
-        .read(userSettingsProvider(user.id).notifier)
-        .setCurrentLibraryId(library.id);
+    ref.read(userSettingsProvider.notifier).setCurrentLibraryId(library.id);
   }
   final api = ref.read(libraryApiProvider(user));
   final response = await api.get(library.id);

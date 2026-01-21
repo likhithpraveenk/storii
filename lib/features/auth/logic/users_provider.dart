@@ -24,7 +24,7 @@ class UsersNotifier extends _$UsersNotifier {
 
   Future<void> delete(UserDomain user) async {
     await _db.managers.users.filter((f) => f.id.equals(user.id)).delete();
-    await ref.read(userSettingsProvider(user.id).notifier).delete();
+    await ref.read(appSettingsProvider.notifier).deleteUserSettings(user.id);
     ref
         .read(logsProvider.notifier)
         .log('User deleted: ${user.username}', source: 'UsersNotifier');

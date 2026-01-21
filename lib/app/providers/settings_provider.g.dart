@@ -126,7 +126,7 @@ final class AppSettingsNotifierProvider
 }
 
 String _$appSettingsNotifierHash() =>
-    r'a5c7f813e00ee1dc3f10436d0cd6bf47c4e58d93';
+    r'34ec5cb8dd60321941abb30ed83417dc8e60285d';
 
 abstract class _$AppSettingsNotifier extends $Notifier<AppSettings> {
   AppSettings build();
@@ -147,30 +147,23 @@ abstract class _$AppSettingsNotifier extends $Notifier<AppSettings> {
 }
 
 @ProviderFor(UserSettingsNotifier)
-final userSettingsProvider = UserSettingsNotifierFamily._();
+final userSettingsProvider = UserSettingsNotifierProvider._();
 
 final class UserSettingsNotifierProvider
     extends $NotifierProvider<UserSettingsNotifier, UserSettings> {
-  UserSettingsNotifierProvider._({
-    required UserSettingsNotifierFamily super.from,
-    required String super.argument,
-  }) : super(
-         retry: null,
-         name: r'userSettingsProvider',
-         isAutoDispose: false,
-         dependencies: null,
-         $allTransitiveDependencies: null,
-       );
+  UserSettingsNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'userSettingsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$userSettingsNotifierHash();
-
-  @override
-  String toString() {
-    return r'userSettingsProvider'
-        ''
-        '($argument)';
-  }
 
   @$internal
   @override
@@ -183,51 +176,13 @@ final class UserSettingsNotifierProvider
       providerOverride: $SyncValueProvider<UserSettings>(value),
     );
   }
-
-  @override
-  bool operator ==(Object other) {
-    return other is UserSettingsNotifierProvider && other.argument == argument;
-  }
-
-  @override
-  int get hashCode {
-    return argument.hashCode;
-  }
 }
 
 String _$userSettingsNotifierHash() =>
-    r'15ce0f4a58b79c20f3641f8a7065f726d4d1970c';
-
-final class UserSettingsNotifierFamily extends $Family
-    with
-        $ClassFamilyOverride<
-          UserSettingsNotifier,
-          UserSettings,
-          UserSettings,
-          UserSettings,
-          String
-        > {
-  UserSettingsNotifierFamily._()
-    : super(
-        retry: null,
-        name: r'userSettingsProvider',
-        dependencies: null,
-        $allTransitiveDependencies: null,
-        isAutoDispose: false,
-      );
-
-  UserSettingsNotifierProvider call(String userId) =>
-      UserSettingsNotifierProvider._(argument: userId, from: this);
-
-  @override
-  String toString() => r'userSettingsProvider';
-}
+    r'44fff6e1494585baaeb841137c9e791d32e6501a';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings> {
-  late final _$args = ref.$arg as String;
-  String get userId => _$args;
-
-  UserSettings build(String userId);
+  UserSettings build();
   @$mustCallSuper
   @override
   void runBuild() {
@@ -240,7 +195,7 @@ abstract class _$UserSettingsNotifier extends $Notifier<UserSettings> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, () => build(_$args));
+    element.handleCreate(ref, build);
   }
 }
 
@@ -357,33 +312,26 @@ extension UserSettingsSetters on UserSettingsNotifier {
       _save(state.copyWith(isAuthorsGridView: value));
 }
 
-final currentLibraryIdProvider = Provider.family<String?, String>(
-  (ref, userId) =>
-      ref.watch(userSettingsProvider(userId).select((s) => s.currentLibraryId)),
+final currentLibraryIdProvider = Provider<String?>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.currentLibraryId)),
 );
 
-final currentItemIdProvider = Provider.family<String?, String>(
-  (ref, userId) =>
-      ref.watch(userSettingsProvider(userId).select((s) => s.currentItemId)),
+final currentItemIdProvider = Provider<String?>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.currentItemId)),
 );
 
-final isFullySyncedProvider = Provider.family<bool, String>(
-  (ref, userId) =>
-      ref.watch(userSettingsProvider(userId).select((s) => s.isFullySynced)),
+final isFullySyncedProvider = Provider<bool>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.isFullySynced)),
 );
 
-final isItemsGridViewProvider = Provider.family<bool, String>(
-  (ref, userId) =>
-      ref.watch(userSettingsProvider(userId).select((s) => s.isItemsGridView)),
+final isItemsGridViewProvider = Provider<bool>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.isItemsGridView)),
 );
 
-final isSeriesGridViewProvider = Provider.family<bool, String>(
-  (ref, userId) =>
-      ref.watch(userSettingsProvider(userId).select((s) => s.isSeriesGridView)),
+final isSeriesGridViewProvider = Provider<bool>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.isSeriesGridView)),
 );
 
-final isAuthorsGridViewProvider = Provider.family<bool, String>(
-  (ref, userId) => ref.watch(
-    userSettingsProvider(userId).select((s) => s.isAuthorsGridView),
-  ),
+final isAuthorsGridViewProvider = Provider<bool>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.isAuthorsGridView)),
 );

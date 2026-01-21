@@ -48,12 +48,17 @@ android {
     buildTypes {
         release {
             if (keystorePropertiesFile.exists()) {
+                isMinifyEnabled = true
+                isShrinkResources = true
                 signingConfig = signingConfigs.getByName("release")
+                resValue("string", "app_name", "Storii")
             }
         }
         debug {
+            applicationIdSuffix = ".debug"
             signingConfig = signingConfigs.getByName("debug")
             isDebuggable = true
+            resValue("string", "app_name", "Storii (Debug)")
         }
     }
 }

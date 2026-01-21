@@ -134,6 +134,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
         scale: _showBackToTopButton ? 1.0 : 0.0,
         duration: const Duration(milliseconds: 200),
         child: FloatingActionButton(
+          heroTag: 'series_list_screen',
           onPressed: _scrollToTop,
           mini: true,
           child: const Icon(Icons.arrow_upward),

@@ -38,9 +38,6 @@ class LibrarySwitcher extends ConsumerWidget {
   }
 
   void _showPicker(BuildContext context, WidgetRef ref) {
-    final user = ref.read(currentUserProvider);
-    if (user == null) return;
-
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -71,7 +68,7 @@ class LibrarySwitcher extends ConsumerWidget {
                       ),
                       onTap: () {
                         ref
-                            .read(userSettingsProvider(user.id).notifier)
+                            .read(userSettingsProvider.notifier)
                             .setCurrentLibraryId(lib.id);
                         Navigator.pop(context);
                       },

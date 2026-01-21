@@ -1,3 +1,4 @@
+# Scoped to improve build_runner performance on slower hardware (like my laptop)
 targets:
   $default:
     builders:
@@ -6,13 +7,11 @@ targets:
           explicit_to_json: true
           include_if_null: false
         generate_for:
-          - lib/abs_api/models/**
-          - lib/app/models/**
+          - lib/**/models/**
           - lib/**/settings_provider.dart
       freezed:
         generate_for:
-          - lib/abs_api/models/**
-          - lib/app/models/**
+          - lib/**/models/**
           - lib/features/**/logic/**
           - lib/**/settings_provider.dart
       storii:settings_generator:

@@ -12,7 +12,6 @@ import 'package:storii/features/item/ui/item_detail_screen.dart';
 import 'package:storii/features/library/ui/library_screen.dart';
 import 'package:storii/features/logs/ui/logs_screen.dart';
 import 'package:storii/features/more/ui/more_screen.dart';
-import 'package:storii/features/player/logic/current_item_provider.dart';
 import 'package:storii/features/profile/ui/profile_screen.dart';
 import 'package:storii/features/search/ui/search_screen.dart';
 import 'package:storii/features/series/ui/series_detail_screen.dart';
@@ -42,7 +41,8 @@ enum AppRoute {
   more('/more'),
   settings('/more/settings'),
   navigationSettings('/more/settings/navigation'),
-  profile('/more/profile');
+  profile('/more/profile'),
+  player('/player/:id');
 
   final String path;
   const AppRoute(this.path);
@@ -56,17 +56,13 @@ final shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'shell');
 final publicRoutes = [AppRoute.logs.path, AppRoute.about.path, AppRoute.login];
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final refreshNotifier = RouterRefreshNotifier(ref);
-  final playerController = ref.read(playerControllerProvider);
+  final user = ref.watch(currentUserProvider);
 
   return GoRouter(
     initialLocation: AppRoute.home.path,
     navigatorKey: rootNavigatorKey,
-    refreshListenable: refreshNotifier,
     redirect: (context, state) {
       final isPublic = publicRoutes.contains(state.matchedLocation);
-      final user = ref.read(currentUserProvider);
-
       if (user == null && !isPublic) {
         return AppRoute.login.path;
       }
@@ -91,7 +87,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
-          return ShellScaffold(navigationShell, controller: playerController);
+          return ShellScaffold(navigationShell);
         },
         branches: [
           StatefulShellBranch(
@@ -100,11 +96,8 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.home.path,
                 pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: CustomPopScope(
-                      controller: playerController,
-                      child: const HomeScreen(),
-                    ),
+                  return const NoTransitionPage(
+                    child: CustomPopScope(child: HomeScreen()),
                   );
                 },
               ),
@@ -116,11 +109,8 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.library.path,
                 pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: CustomPopScope(
-                      controller: playerController,
-                      child: const LibraryScreen(),
-                    ),
+                  return const NoTransitionPage(
+                    child: CustomPopScope(child: LibraryScreen()),
                   );
                 },
                 routes: [
@@ -141,11 +131,8 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.series.path,
                 pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: CustomPopScope(
-                      controller: playerController,
-                      child: const SeriesListScreen(),
-                    ),
+                  return const NoTransitionPage(
+                    child: CustomPopScope(child: SeriesListScreen()),
                   );
                 },
                 routes: [
@@ -166,11 +153,8 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.downloads.path,
                 pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: CustomPopScope(
-                      controller: playerController,
-                      child: const DownloadsScreen(),
-                    ),
+                  return const NoTransitionPage(
+                    child: CustomPopScope(child: DownloadsScreen()),
                   );
                 },
               ),
@@ -182,11 +166,8 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.authors.path,
                 pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: CustomPopScope(
-                      controller: playerController,
-                      child: const AuthorListScreen(),
-                    ),
+                  return const NoTransitionPage(
+                    child: CustomPopScope(child: AuthorListScreen()),
                   );
                 },
                 routes: [
@@ -207,11 +188,8 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.collections.path,
                 pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: CustomPopScope(
-                      controller: playerController,
-                      child: const CollectionsScreen(),
-                    ),
+                  return const NoTransitionPage(
+                    child: CustomPopScope(child: CollectionsScreen()),
                   );
                 },
               ),
@@ -223,11 +201,8 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.more.path,
                 pageBuilder: (context, state) {
-                  return NoTransitionPage(
-                    child: CustomPopScope(
-                      controller: playerController,
-                      child: const MoreScreen(),
-                    ),
+                  return const NoTransitionPage(
+                    child: CustomPopScope(child: MoreScreen()),
                   );
                 },
                 routes: [
@@ -258,14 +233,17 @@ final routerProvider = Provider<GoRouter>((ref) {
               ),
             ],
           ),
+          StatefulShellBranch(
+            initialLocation: AppRoute.player.path,
+            routes: [
+              GoRoute(
+                path: AppRoute.player.path,
+                builder: (context, state) => const SizedBox.shrink(),
+              ),
+            ],
+          ),
         ],
       ),
     ],
   );
 });
-
-class RouterRefreshNotifier extends ChangeNotifier {
-  RouterRefreshNotifier(Ref ref) {
-    ref.listen(currentUserProvider, (_, _) => notifyListeners());
-  }
-}

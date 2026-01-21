@@ -60,7 +60,7 @@ final class LibraryFiltersNotifierProvider
 }
 
 String _$libraryFiltersNotifierHash() =>
-    r'04e784c3dfcf05cfd197ad2ca40653d3fd3b09fa';
+    r'8b5cc494681687d5ed18d593b2f9eec0216f24c4';
 
 final class LibraryFiltersNotifierFamily extends $Family
     with

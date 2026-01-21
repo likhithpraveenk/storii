@@ -64,9 +64,9 @@ Future<ProviderContainer> setupProviders() async {
       databaseProvider.overrideWithValue(db),
       appSettingsProvider.overrideWith(() => AppSettingsNotifier(appSettings)),
       if (userId != null && userSettings != null)
-        userSettingsProvider(
-          userId,
-        ).overrideWith(() => UserSettingsNotifier(userSettings)),
+        userSettingsProvider.overrideWith(
+          () => UserSettingsNotifier(userSettings),
+        ),
       audioHandlerProvider.overrideWithValue(audioHandler),
     ]),
   );

@@ -90,10 +90,23 @@ class AppSettingsNotifier extends _$AppSettingsNotifier {
     );
   }
 
-  Future<void> deleteUsers() async {
+  Future<void> deleteSettings(Uri url) async {
+    final associatedUsers = await _db.managers.users
+        .filter((f) => f.serverUrl.url.equals(url))
+        .get();
+    final userIds = associatedUsers.map((u) => u.id).toList();
+
+    if (userIds.isNotEmpty) {
+      await _db.managers.settings.filter((f) => f.key.isIn(userIds)).delete();
+    }
+
     await _db.managers.settings
-        .filter((f) => f.key.not.equals(appSettingsKey))
+        .filter((f) => f.key.equals(appSettingsKey))
         .delete();
+  }
+
+  Future<void> deleteUserSettings(String userId) async {
+    await _db.managers.settings.filter((f) => f.key.equals(userId)).delete();
   }
 
   Future<void> reset() => _save(AppSettings(currentUser: state.currentUser));
@@ -106,22 +119,34 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
   UserSettingsNotifier([this._initial]);
 
   @override
-  UserSettings build(String userId) {
-    return _initial ?? UserSettings(userId: userId);
+  UserSettings build() {
+    if (_initial != null) return _initial;
+    final user = ref.watch(currentUserProvider);
+    if (user == null) {
+      throw StateError(
+        'UserSettingsNotifier accessed while currentUser is null',
+      );
+    }
+    final settings = _initial ?? UserSettings(userId: user.id);
+    _db.managers.settings
+        .filter((f) => f.key.equals(user.id))
+        .getSingleOrNull()
+        .then((data) {
+          if (data != null) {
+            state = UserSettings.fromJson(jsonDecode(data.value));
+          }
+        });
+
+    return settings;
   }
 
   Future<void> _save(UserSettings s) async {
     if (s == state) return;
     state = s;
     await _db.managers.settings.create(
-      (companion) => companion(key: userId, value: jsonEncode(s)),
+      (companion) => companion(key: s.userId, value: jsonEncode(s)),
       mode: .insertOrReplace,
     );
-  }
-
-  Future<void> delete() async {
-    await _db.managers.settings.filter((f) => f.key.equals(userId)).delete();
-    state = UserSettings(userId: userId);
   }
 
   Future<void> reset() => _save(

@@ -88,7 +88,7 @@ final class PlaybackStateStreamProvider
 }
 
 String _$playbackStateStreamHash() =>
-    r'90ccbf0a979cc52e9b6ff70393aaaddd0cfbf7f7';
+    r'0bd0ed6420a2cb0b16bcab8d6fa934f7e7cdff5a';
 
 @ProviderFor(SaveProgress)
 final saveProgressProvider = SaveProgressProvider._();
@@ -114,7 +114,7 @@ final class SaveProgressProvider
   SaveProgress create() => SaveProgress();
 }
 
-String _$saveProgressHash() => r'84d2a498e2746f6c9c1dd0f32069f68be3893486';
+String _$saveProgressHash() => r'c433bc97f8405f6272bafcb68450043c295c6bb3';
 
 abstract class _$SaveProgress extends $AsyncNotifier<void> {
   FutureOr<void> build();

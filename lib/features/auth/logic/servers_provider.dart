@@ -27,7 +27,7 @@ class ServersNotifier extends _$ServersNotifier {
 
   Future<void> delete(Server server) async {
     await _db.managers.servers.filter((f) => f.url.equals(server.url)).delete();
-    await ref.read(appSettingsProvider.notifier).deleteUsers();
+    await ref.read(appSettingsProvider.notifier).deleteSettings(server.url);
     ref
         .read(logsProvider.notifier)
         .log('Server deleted: ${server.url}', source: 'ServersNotifier');

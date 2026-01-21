@@ -49,8 +49,8 @@ extension AppSettingsSetters on AppSettingsNotifier {
   Future<void> $methodName($type value) => _save(state.copyWith($name: value));
 ''');
       providers.writeln('''
-final $providerName = Provider<$type>((ref) =>
-    ref.watch(appSettingsProvider.select((s) => s.$name))
+final $providerName = Provider<$type>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.$name))
 );
 ''');
     }
@@ -105,8 +105,8 @@ class _UserSettingsGenerator extends Generator {
   Future<void> $methodName($type value) => _save(state.copyWith($name: value));
 ''');
       providers.writeln('''
-final $providerName = Provider.family<$type, String>(
-  (ref, userId) => ref.watch(userSettingsProvider(userId).select((s) => s.$name)),
+final $providerName = Provider<$type>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.$name)),
 );
 ''');
     }

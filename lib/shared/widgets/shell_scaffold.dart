@@ -1,128 +1,91 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/navigation/nav_bar/nav_bar.dart';
 import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/player/ui/player.dart';
+import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/ui/player_screen.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 class ShellScaffold extends ConsumerWidget {
-  const ShellScaffold(
-    this.navigationShell, {
-    super.key,
-    required this.controller,
-  });
+  const ShellScaffold(this.navigationShell, {super.key});
 
   final StatefulNavigationShell navigationShell;
-  final PlayerController controller;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final routerState = GoRouter.of(context).state;
+    final path = routerState.matchedLocation;
+
     final navTargets = ref.watch(navTargetsProvider);
-    final path = GoRouter.of(context).state.matchedLocation;
     final target = navTargets.firstWhereOrNull(
       (t) => t.item.route.path == path,
     );
 
-    final isPlayerFull = controller.state == .full;
-    final showNav = target != null && !isPlayerFull;
-
-    return SafeArea(
-      top: false,
-      child: Scaffold(
-        extendBody: true,
-        bottomNavigationBar: Column(
-          mainAxisSize: .min,
-          children: [
-            const PlayerScreen(),
-            _ShellBottomBar(
-              showNav: showNav,
-              target: target,
-              navTargets: navTargets,
-              factorListenable: controller.factorListenable,
-            ),
-          ],
-        ),
-        body: navigationShell,
+    return Scaffold(
+      extendBody: true,
+      bottomNavigationBar: Column(
+        mainAxisSize: .min,
+        children: [
+          const PlayerScreen(),
+          _ShellBottomBar(
+            target: target,
+            navTargets: navTargets,
+            goBranch: navigationShell.goBranch,
+          ),
+        ],
       ),
+      body: navigationShell,
     );
   }
 }
 
-class _ShellBottomBar extends StatelessWidget {
+final lastNavIndexProvider = StateProvider<int>((ref) => 0);
+
+class _ShellBottomBar extends ConsumerWidget {
   const _ShellBottomBar({
-    required this.showNav,
     required this.target,
     required this.navTargets,
-    this.factorListenable,
+    required this.goBranch,
   });
 
-  final bool showNav;
   final NavTarget? target;
   final List<NavTarget> navTargets;
-  final ValueListenable<double>? factorListenable;
-
+  final void Function(int index) goBranch;
   @override
-  Widget build(BuildContext context) {
-    if (factorListenable == null) {
-      return AnimatedAlign(
-        duration: const Duration(milliseconds: 200),
-        heightFactor: showNav ? 1.0 : 0.0,
-        alignment: .topCenter,
-        child: _AnimatedNavBar(target: target, navTargets: navTargets),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final factor = ref.watch(playerExpandFactorProvider); 
+
+    if (target != null) {
+      final index = navTargets.indexOf(target!);
+      Future.microtask(
+        () => ref.read(lastNavIndexProvider.notifier).state = index,
       );
     }
+    final displayIndex = ref.watch(lastNavIndexProvider);
 
-    return ValueListenableBuilder<double>(
-      valueListenable: factorListenable!,
-      builder: (context, factor, child) {
-        if (!showNav || factor >= 0.2) {
-          return const SizedBox.shrink();
-        }
+    if (factor >= 0.4) return const SizedBox.shrink();
 
-        final f = factor.clamp(0.0, 0.2);
+    final isTargetNull = target == null;
+    final factorVisibility = (1.0 - (factor / 0.3)).clamp(0.0, 1.0);
+    final targetHeightFactor = isTargetNull ? 0.0 : factorVisibility;
 
-        return ClipRect(
-          child: Align(
-            alignment: .topCenter,
-            heightFactor: (1.0 - (f / 0.2)).clamp(0.0, 1.0),
-            child: FractionalTranslation(
-              translation: Offset(0, f),
-              child: child,
-            ),
-          ),
-        );
-      },
-      child: _AnimatedNavBar(target: target, navTargets: navTargets),
-    );
-  }
-}
-
-class _AnimatedNavBar extends StatelessWidget {
-  const _AnimatedNavBar({required this.target, required this.navTargets});
-
-  final NavTarget? target;
-  final List<NavTarget> navTargets;
-
-  @override
-  Widget build(BuildContext context) {
-    final visible = target != null;
-
-    return AnimatedSlide(
-      duration: const Duration(milliseconds: 250),
+    return AnimatedAlign(
+      alignment: .topCenter,
+      heightFactor: targetHeightFactor,
+      duration: (factor > 0)
+          ? Duration.zero
+          : const Duration(milliseconds: 300),
       curve: Curves.easeOutCubic,
-      offset: visible ? Offset.zero : const Offset(0, 1),
       child: AnimatedOpacity(
+        opacity: isTargetNull ? 0.0 : 1.0,
         duration: const Duration(milliseconds: 200),
-        opacity: visible ? 1 : 0,
-        child: IgnorePointer(
-          ignoring: !visible,
+        child: RepaintBoundary(
           child: NavBar(
-            currentIndex: visible ? navTargets.indexOf(target!) : 0,
-            onTap: (i) => context.go(navTargets[i].item.route.path),
+            currentIndex: displayIndex,
+            onTap: (i) => goBranch(navTargets[i].item.indexInRouter),
           ),
         ),
       ),

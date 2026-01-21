@@ -12,7 +12,7 @@ abstract class AppStyles {
   static const maxCardWidthInGrid = 180.0;
   static const maxSeriesCardWidthInGrid = 360.0;
 
-  static const imgSizeInMiniPlayer = 54.0;
+  static const imgSizeInMiniPlayer = 64.0;
   static const imgLeftPaddingInMiniPlayer = 8.0;
   static const maxImgSizeInFullPlayer = 360.0;
 }

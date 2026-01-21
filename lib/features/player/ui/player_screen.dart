@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/player/logic/current_item_provider.dart';
+import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/ui/full_player.dart';
 import 'package:storii/features/player/ui/hero_cover.dart';
 import 'package:storii/features/player/ui/mini_player.dart';
-import 'package:storii/features/player/ui/player.dart';
+import 'package:storii/features/player/ui/player_builder.dart';
 
 class PlayerScreen extends ConsumerWidget {
   const PlayerScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final item = ref.watch(currentItemProvider).value;
-    if (item == null) return const SizedBox.shrink();
-    final controller = ref.read(playerControllerProvider);
+    final controller = ref.read(playerEventProvider.notifier);
 
-    ref.listen(currentItemProvider, ((prev, next) {
-      if (next.value != null) {
+    ref.listen(currentItemProvider, ((_, next) {
+      if (next.hasValue && next.value != null) {
         controller.toFull();
       }
     }));
@@ -40,9 +39,7 @@ class PlayerScreen extends ConsumerWidget {
     const miniInterval = Interval(0.0, 0.3);
     const fullInterval = Interval(0.6, 1.0);
 
-    return Player(
-      playerController: controller,
-      minHeight: 70,
+    return PlayerBuilder(
       maxHeight: screenHeight,
       builder: (context, f) {
         final miniOpacity = 1 - miniInterval.transform(f);
@@ -68,7 +65,7 @@ class PlayerScreen extends ConsumerWidget {
                   opacity: fullOpacity,
                   child: IgnorePointer(
                     ignoring: f < 0.9,
-                    child: FullPlayer(item: item, expandFactor: f),
+                    child: const FullPlayer(),
                   ),
                 ),
               ),
@@ -77,12 +74,12 @@ class PlayerScreen extends ConsumerWidget {
                 top: 0,
                 left: 0,
                 right: 0,
-                height: 70,
+                height: 80,
                 child: Opacity(
                   opacity: miniOpacity,
                   child: IgnorePointer(
                     ignoring: f > 0.05,
-                    child: MiniPlayer(item: item),
+                    child: const MiniPlayer(),
                   ),
                 ),
               ),

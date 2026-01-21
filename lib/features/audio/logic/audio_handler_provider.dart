@@ -30,7 +30,7 @@ class SaveProgress extends _$SaveProgress {
   }
 
   Future<void> _saveProgressToDrift(Duration pos) async {
-    // final db = 
+    // final db =
     ref.read(databaseProvider);
     // await db.updateProgress(currentBookId, pos);
   }
