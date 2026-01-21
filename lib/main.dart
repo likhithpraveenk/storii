@@ -5,13 +5,14 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/providers/app_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/init.dart';
+import 'package:storii/init.dart' as init;
 import 'package:storii/l10n/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initLicenses();
-  final container = await initProviders();
+  await init.setupLicenses();
+  init.setSystemUIOverlay();
+  final container = await init.setupProviders();
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 }
 

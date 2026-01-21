@@ -1,13 +1,19 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/background/audio_handler.dart';
 import 'package:storii/app/providers/database_provider.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/audio/logic/audio_handler_provider.dart';
 import 'package:storii/storage/drift/database.dart';
 
-Future<void> initLicenses() async {
+Future<void> setupLicenses() async {
   LicenseRegistry.addLicense(() async* {
     final ofl = await rootBundle.loadString('google_fonts/OFL.txt');
     final apacheV2 = await rootBundle.loadString('google_fonts/apache_2_0.txt');
@@ -46,12 +52,13 @@ Future<void> initLicenses() async {
   });
 }
 
-Future<ProviderContainer> initProviders() async {
+Future<ProviderContainer> setupProviders() async {
   final db = AppDatabase();
 
   final appSettings = await loadSettingsFromDB(db);
   final userId = appSettings.currentUser?.id;
   final userSettings = await loadUserSettingsFromDB(db, userId);
+  final audioHandler = await setupAudioService();
   final container = ProviderContainer(
     overrides: ([
       databaseProvider.overrideWithValue(db),
@@ -60,6 +67,7 @@ Future<ProviderContainer> initProviders() async {
         userSettingsProvider(
           userId,
         ).overrideWith(() => UserSettingsNotifier(userSettings)),
+      audioHandlerProvider.overrideWithValue(audioHandler),
     ]),
   );
 
@@ -90,4 +98,24 @@ Future<UserSettings?> loadUserSettingsFromDB(
   return entry != null
       ? UserSettings.fromJson(jsonDecode(entry.value))
       : UserSettings(userId: userId);
+}
+
+void setSystemUIOverlay() async {
+  if (Platform.isAndroid) {
+    unawaited(SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge));
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent),
+    );
+  }
+}
+
+Future<AudioHandler> setupAudioService() async {
+  return await AudioService.init(
+    builder: MyAudioHandler.new,
+    config: const AudioServiceConfig(
+      androidNotificationChannelId: 'com.likhithpraveenk.storii.audio',
+      androidNotificationChannelName: 'Playback',
+      androidNotificationOngoing: true,
+    ),
+  );
 }
