@@ -116,7 +116,6 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
   @override
   Widget build(BuildContext context) {
     ref.listen(playerEventProvider, (_, next) {
-      debugPrint('[PlayerWidget]: ${next.value}');
       next.whenData(_snapTo);
     });
 
@@ -127,9 +126,8 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
 
     return BackButtonListener(
       onBackButtonPressed: () async {
-        if (height > widget.minHeight) {
+        if (height > widget.minHeight + epsilon) {
           _snapTo(.mini);
-          debugPrint('[PopScope]: PlayerWidget handled it');
           return true;
         }
         return false;

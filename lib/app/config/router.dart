@@ -20,7 +20,6 @@ import 'package:storii/features/settings/ui/about_screen.dart';
 import 'package:storii/features/settings/ui/nav_setting_screen.dart';
 import 'package:storii/features/settings/ui/settings_screen.dart';
 import 'package:storii/shared/splash_screen.dart';
-import 'package:storii/shared/widgets/custom_pop_scope.dart';
 import 'package:storii/shared/widgets/shell_scaffold.dart';
 
 enum AppRoute {
@@ -96,9 +95,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.home.path,
                 pageBuilder: (context, state) {
-                  return const NoTransitionPage(
-                    child: CustomPopScope(child: HomeScreen()),
-                  );
+                  return const NoTransitionPage(child: HomeScreen());
                 },
               ),
             ],
@@ -109,9 +106,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.library.path,
                 pageBuilder: (context, state) {
-                  return const NoTransitionPage(
-                    child: CustomPopScope(child: LibraryScreen()),
-                  );
+                  return const NoTransitionPage(child: LibraryScreen());
                 },
                 routes: [
                   GoRoute(
@@ -131,9 +126,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.series.path,
                 pageBuilder: (context, state) {
-                  return const NoTransitionPage(
-                    child: CustomPopScope(child: SeriesListScreen()),
-                  );
+                  return const NoTransitionPage(child: SeriesListScreen());
                 },
                 routes: [
                   GoRoute(
@@ -153,9 +146,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.downloads.path,
                 pageBuilder: (context, state) {
-                  return const NoTransitionPage(
-                    child: CustomPopScope(child: DownloadsScreen()),
-                  );
+                  return const NoTransitionPage(child: DownloadsScreen());
                 },
               ),
             ],
@@ -166,9 +157,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.authors.path,
                 pageBuilder: (context, state) {
-                  return const NoTransitionPage(
-                    child: CustomPopScope(child: AuthorListScreen()),
-                  );
+                  return const NoTransitionPage(child: AuthorListScreen());
                 },
                 routes: [
                   GoRoute(
@@ -188,9 +177,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.collections.path,
                 pageBuilder: (context, state) {
-                  return const NoTransitionPage(
-                    child: CustomPopScope(child: CollectionsScreen()),
-                  );
+                  return const NoTransitionPage(child: CollectionsScreen());
                 },
               ),
             ],
@@ -201,9 +188,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.more.path,
                 pageBuilder: (context, state) {
-                  return const NoTransitionPage(
-                    child: CustomPopScope(child: MoreScreen()),
-                  );
+                  return const NoTransitionPage(child: MoreScreen());
                 },
                 routes: [
                   GoRoute(

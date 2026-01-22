@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/app/config/router.dart';
 import 'package:storii/app/navigation/nav_bar/nav_bar.dart';
 import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -24,20 +26,37 @@ class ShellScaffold extends ConsumerWidget {
       (t) => t.item.route.path == path,
     );
 
-    return Scaffold(
-      extendBody: true,
-      bottomNavigationBar: Column(
-        mainAxisSize: .min,
-        children: [
-          const PlayerScreen(),
-          _ShellBottomBar(
-            target: target,
-            navTargets: navTargets,
-            goBranch: navigationShell.goBranch,
-          ),
-        ],
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) async {
+        if (didPop) return;
+
+        if (context.canPop()) {
+          context.pop();
+          return;
+        }
+
+        if (path == AppRoute.home.path) {
+          await SystemNavigator.pop();
+        } else {
+          context.go(AppRoute.home.path);
+        }
+      },
+      child: Scaffold(
+        extendBody: true,
+        bottomNavigationBar: Column(
+          mainAxisSize: .min,
+          children: [
+            const PlayerScreen(),
+            _ShellBottomBar(
+              target: target,
+              navTargets: navTargets,
+              goBranch: navigationShell.goBranch,
+            ),
+          ],
+        ),
+        body: navigationShell,
       ),
-      body: navigationShell,
     );
   }
 }
@@ -54,9 +73,10 @@ class _ShellBottomBar extends ConsumerWidget {
   final NavTarget? target;
   final List<NavTarget> navTargets;
   final void Function(int index) goBranch;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final factor = ref.watch(playerExpandFactorProvider); 
+    final factor = ref.watch(playerExpandFactorProvider);
 
     if (target != null) {
       final index = navTargets.indexOf(target!);
