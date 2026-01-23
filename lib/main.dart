@@ -10,6 +10,7 @@ import 'package:storii/l10n/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await init.setupHive();
   await init.setupLicenses();
   init.setSystemUIOverlay();
   final container = await init.setupProviders();

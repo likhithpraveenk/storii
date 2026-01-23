@@ -26,6 +26,8 @@ dependencies:
   freezed_annotation: ^3.1.0
   go_router: ^17.0.1
   google_fonts: ^7.1.0
+  hive_ce: ^2.19.1
+  hive_ce_flutter: ^2.3.4
   intl: ^0.20.2
   json_annotation: ^4.9.0
   just_audio: ^0.10.5
@@ -44,6 +46,7 @@ dev_dependencies:
   analyzer: ^8.4.0
   build: ^4.0.4
   build_runner: ^2.10.5
+  custom_lint: ^0.8.1
   drift_dev: ^2.30.1
   flutter_lints: ^6.0.0
   flutter_test:
@@ -52,6 +55,7 @@ dev_dependencies:
   freezed_lint: ^0.0.12
   json_serializable: ^6.11.2
   riverpod_generator: ^4.0.0+1
+  riverpod_lint: ^3.1.0
   source_gen: ^4.2.0
 
 flutter:

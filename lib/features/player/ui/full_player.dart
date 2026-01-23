@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/features/player/logic/audio_player_provider.dart';
 import 'package:storii/features/player/logic/current_item_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
@@ -12,17 +13,29 @@ class FullPlayer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context)!;
     final itemAsync = ref.watch(currentItemProvider);
+    ref.listen(currentItemProvider, (prev, next) {
+      next.whenData((item) {
+        if (item != null) {
+          ref.read(audioPlayerProvider.notifier).play(item);
+        }
+      });
+    });
+    final playbackState = ref.watch(audioPlayerProvider).value;
 
     return Container(
       decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
-      padding: const .all(16.0),
+      padding: const .all(16),
       child: itemAsync.when(
         loading: () => const Center(child: RandomWaveform()),
         error: (e, stackTrace) => ErrorRetryWidget('$e'),
         data: (item) {
-          if (item == null) {
-            return const SizedBox.shrink();
-          }
+          if (item == null) return const SizedBox.shrink();
+
+          final isPlaying = playbackState?.playing ?? false;
+          final position = playbackState?.updatePosition ?? Duration.zero;
+
+          final totalDuration = item.totalDuration;
+
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -34,21 +47,64 @@ class FullPlayer extends ConsumerWidget {
                   item.authorName ?? l.noAuthor,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
-                Slider(value: 0.4, onChanged: (v) {}),
+                const SizedBox(height: 32),
+                Slider(
+                  value: position.inSeconds.toDouble().clamp(
+                    0,
+                    totalDuration.inSeconds.toDouble(),
+                  ),
+                  max: totalDuration.inSeconds.toDouble() > 0
+                      ? totalDuration.inSeconds.toDouble()
+                      : 1.0,
+                  onChanged: (v) {
+                    ref.read(audioPlayerProvider.notifier).seek(v.toInt());
+                  },
+                ),
+                Padding(
+                  padding: const .symmetric(horizontal: 24),
+                  child: Row(
+                    mainAxisAlignment: .spaceBetween,
+                    children: [
+                      Text(_formatDuration(position)),
+                      Text(_formatDuration(totalDuration)),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: .spaceEvenly,
                   children: [
                     IconButton(
                       icon: const Icon(Icons.skip_previous, size: 36),
-                      onPressed: () {},
+                      onPressed: ref
+                          .read(audioPlayerProvider.notifier)
+                          .skipToStartOfChapter,
                     ),
                     IconButton(
-                      icon: const Icon(Icons.play_circle_filled, size: 72),
-                      onPressed: () {},
+                      icon: const Icon(Icons.replay_10, size: 36),
+                      onPressed: ref.read(audioPlayerProvider.notifier).rewind,
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        isPlaying
+                            ? Icons.pause_circle_filled
+                            : Icons.play_circle_filled,
+                        size: 72,
+                      ),
+                      onPressed: () =>
+                          ref.read(audioPlayerProvider.notifier).togglePlay(),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.forward_10, size: 36),
+                      onPressed: ref
+                          .read(audioPlayerProvider.notifier)
+                          .fastForward,
                     ),
                     IconButton(
                       icon: const Icon(Icons.skip_next, size: 36),
-                      onPressed: () {},
+                      onPressed: ref
+                          .read(audioPlayerProvider.notifier)
+                          .skipToNextChapter,
                     ),
                   ],
                 ),
@@ -58,5 +114,11 @@ class FullPlayer extends ConsumerWidget {
         },
       ),
     );
+  }
+
+  String _formatDuration(Duration d) {
+    final minutes = d.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final seconds = d.inSeconds.remainder(60).toString().padLeft(2, '0');
+    return '${d.inHours}:$minutes:$seconds';
   }
 }

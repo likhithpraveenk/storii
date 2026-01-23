@@ -9,12 +9,18 @@ part of 'current_item_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(CurrentItemNotifier)
-final currentItemProvider = CurrentItemNotifierProvider._();
+@ProviderFor(currentItem)
+final currentItemProvider = CurrentItemProvider._();
 
-final class CurrentItemNotifierProvider
-    extends $StreamNotifierProvider<CurrentItemNotifier, ItemDomain?> {
-  CurrentItemNotifierProvider._()
+final class CurrentItemProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<ItemDomain?>,
+          ItemDomain?,
+          FutureOr<ItemDomain?>
+        >
+    with $FutureModifier<ItemDomain?>, $FutureProvider<ItemDomain?> {
+  CurrentItemProvider._()
     : super(
         from: null,
         argument: null,
@@ -26,30 +32,18 @@ final class CurrentItemNotifierProvider
       );
 
   @override
-  String debugGetCreateSourceHash() => _$currentItemNotifierHash();
+  String debugGetCreateSourceHash() => _$currentItemHash();
 
   @$internal
   @override
-  CurrentItemNotifier create() => CurrentItemNotifier();
-}
+  $FutureProviderElement<ItemDomain?> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
 
-String _$currentItemNotifierHash() =>
-    r'e7da1ce1694e06eb48f855ad4249549d3ab108ac';
-
-abstract class _$CurrentItemNotifier extends $StreamNotifier<ItemDomain?> {
-  Stream<ItemDomain?> build();
-  @$mustCallSuper
   @override
-  void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<ItemDomain?>, ItemDomain?>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<AsyncValue<ItemDomain?>, ItemDomain?>,
-              AsyncValue<ItemDomain?>,
-              Object?,
-              Object?
-            >;
-    element.handleCreate(ref, build);
+  FutureOr<ItemDomain?> create(Ref ref) {
+    return currentItem(ref);
   }
 }
+
+String _$currentItemHash() => r'70735b4667045dc33b8474c54f82ef0da9d15c02';

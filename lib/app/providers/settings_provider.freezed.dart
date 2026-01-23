@@ -13,7 +13,7 @@ part of 'settings_provider.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$AppSettings {
+mixin _$AppSettings implements DiagnosticableTreeMixin {
 
  AppTheme get theme; String get localeCode; UserDomain? get currentUser; Duration get logRetention; String get dateTimeFormat; List<NavTarget> get navTargets; String? get fontFamily; double get fontScale; int get defaultItemsLimit; int get defaultSeriesLimit; bool get showTitleForItem; bool get stackTitleOnImage;
 /// Create a copy of AppSettings
@@ -25,6 +25,12 @@ $AppSettingsCopyWith<AppSettings> get copyWith => _$AppSettingsCopyWithImpl<AppS
   /// Serializes this AppSettings to a JSON map.
   Map<String, dynamic> toJson();
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'AppSettings'))
+    ..add(DiagnosticsProperty('theme', theme))..add(DiagnosticsProperty('localeCode', localeCode))..add(DiagnosticsProperty('currentUser', currentUser))..add(DiagnosticsProperty('logRetention', logRetention))..add(DiagnosticsProperty('dateTimeFormat', dateTimeFormat))..add(DiagnosticsProperty('navTargets', navTargets))..add(DiagnosticsProperty('fontFamily', fontFamily))..add(DiagnosticsProperty('fontScale', fontScale))..add(DiagnosticsProperty('defaultItemsLimit', defaultItemsLimit))..add(DiagnosticsProperty('defaultSeriesLimit', defaultSeriesLimit))..add(DiagnosticsProperty('showTitleForItem', showTitleForItem))..add(DiagnosticsProperty('stackTitleOnImage', stackTitleOnImage));
+}
 
 @override
 bool operator ==(Object other) {
@@ -36,7 +42,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,theme,localeCode,currentUser,logRetention,dateTimeFormat,const DeepCollectionEquality().hash(navTargets),fontFamily,fontScale,defaultItemsLimit,defaultSeriesLimit,showTitleForItem,stackTitleOnImage);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'AppSettings(theme: $theme, localeCode: $localeCode, currentUser: $currentUser, logRetention: $logRetention, dateTimeFormat: $dateTimeFormat, navTargets: $navTargets, fontFamily: $fontFamily, fontScale: $fontScale, defaultItemsLimit: $defaultItemsLimit, defaultSeriesLimit: $defaultSeriesLimit, showTitleForItem: $showTitleForItem, stackTitleOnImage: $stackTitleOnImage)';
 }
 
@@ -225,7 +231,7 @@ return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetentio
 /// @nodoc
 @JsonSerializable()
 
-class _AppSettings implements AppSettings {
+class _AppSettings with DiagnosticableTreeMixin implements AppSettings {
   const _AppSettings({this.theme = AppTheme.system, this.localeCode = 'en', this.currentUser, this.logRetention = const Duration(days: 2), this.dateTimeFormat = 'dd MMM y', final  List<NavTarget> navTargets = defaultNavTargets, this.fontFamily = AppFonts.defaultFont, this.fontScale = 1, this.defaultItemsLimit = 50, this.defaultSeriesLimit = 20, this.showTitleForItem = true, this.stackTitleOnImage = false}): _navTargets = navTargets;
   factory _AppSettings.fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);
 
@@ -258,6 +264,12 @@ _$AppSettingsCopyWith<_AppSettings> get copyWith => __$AppSettingsCopyWithImpl<_
 Map<String, dynamic> toJson() {
   return _$AppSettingsToJson(this, );
 }
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'AppSettings'))
+    ..add(DiagnosticsProperty('theme', theme))..add(DiagnosticsProperty('localeCode', localeCode))..add(DiagnosticsProperty('currentUser', currentUser))..add(DiagnosticsProperty('logRetention', logRetention))..add(DiagnosticsProperty('dateTimeFormat', dateTimeFormat))..add(DiagnosticsProperty('navTargets', navTargets))..add(DiagnosticsProperty('fontFamily', fontFamily))..add(DiagnosticsProperty('fontScale', fontScale))..add(DiagnosticsProperty('defaultItemsLimit', defaultItemsLimit))..add(DiagnosticsProperty('defaultSeriesLimit', defaultSeriesLimit))..add(DiagnosticsProperty('showTitleForItem', showTitleForItem))..add(DiagnosticsProperty('stackTitleOnImage', stackTitleOnImage));
+}
 
 @override
 bool operator ==(Object other) {
@@ -269,7 +281,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,theme,localeCode,currentUser,logRetention,dateTimeFormat,const DeepCollectionEquality().hash(_navTargets),fontFamily,fontScale,defaultItemsLimit,defaultSeriesLimit,showTitleForItem,stackTitleOnImage);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'AppSettings(theme: $theme, localeCode: $localeCode, currentUser: $currentUser, logRetention: $logRetention, dateTimeFormat: $dateTimeFormat, navTargets: $navTargets, fontFamily: $fontFamily, fontScale: $fontScale, defaultItemsLimit: $defaultItemsLimit, defaultSeriesLimit: $defaultSeriesLimit, showTitleForItem: $showTitleForItem, stackTitleOnImage: $stackTitleOnImage)';
 }
 
@@ -333,7 +345,7 @@ $UserDomainCopyWith<$Res>? get currentUser {
 
 
 /// @nodoc
-mixin _$UserSettings {
+mixin _$UserSettings implements DiagnosticableTreeMixin {
 
 @noCodeGen String get userId; String? get currentLibraryId; String? get currentItemId; bool get isFullySynced; bool get isItemsGridView; bool get isSeriesGridView; bool get isAuthorsGridView;
 /// Create a copy of UserSettings
@@ -345,6 +357,12 @@ $UserSettingsCopyWith<UserSettings> get copyWith => _$UserSettingsCopyWithImpl<U
   /// Serializes this UserSettings to a JSON map.
   Map<String, dynamic> toJson();
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserSettings'))
+    ..add(DiagnosticsProperty('userId', userId))..add(DiagnosticsProperty('currentLibraryId', currentLibraryId))..add(DiagnosticsProperty('currentItemId', currentItemId))..add(DiagnosticsProperty('isFullySynced', isFullySynced))..add(DiagnosticsProperty('isItemsGridView', isItemsGridView))..add(DiagnosticsProperty('isSeriesGridView', isSeriesGridView))..add(DiagnosticsProperty('isAuthorsGridView', isAuthorsGridView));
+}
 
 @override
 bool operator ==(Object other) {
@@ -356,7 +374,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,userId,currentLibraryId,currentItemId,isFullySynced,isItemsGridView,isSeriesGridView,isAuthorsGridView);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserSettings(userId: $userId, currentLibraryId: $currentLibraryId, currentItemId: $currentItemId, isFullySynced: $isFullySynced, isItemsGridView: $isItemsGridView, isSeriesGridView: $isSeriesGridView, isAuthorsGridView: $isAuthorsGridView)';
 }
 
@@ -528,7 +546,7 @@ return $default(_that.userId,_that.currentLibraryId,_that.currentItemId,_that.is
 /// @nodoc
 @JsonSerializable()
 
-class _UserSettings implements UserSettings {
+class _UserSettings with DiagnosticableTreeMixin implements UserSettings {
   const _UserSettings({@noCodeGen required this.userId, this.currentLibraryId, this.currentItemId, this.isFullySynced = false, this.isItemsGridView = true, this.isSeriesGridView = true, this.isAuthorsGridView = true});
   factory _UserSettings.fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);
 
@@ -550,6 +568,12 @@ _$UserSettingsCopyWith<_UserSettings> get copyWith => __$UserSettingsCopyWithImp
 Map<String, dynamic> toJson() {
   return _$UserSettingsToJson(this, );
 }
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserSettings'))
+    ..add(DiagnosticsProperty('userId', userId))..add(DiagnosticsProperty('currentLibraryId', currentLibraryId))..add(DiagnosticsProperty('currentItemId', currentItemId))..add(DiagnosticsProperty('isFullySynced', isFullySynced))..add(DiagnosticsProperty('isItemsGridView', isItemsGridView))..add(DiagnosticsProperty('isSeriesGridView', isSeriesGridView))..add(DiagnosticsProperty('isAuthorsGridView', isAuthorsGridView));
+}
 
 @override
 bool operator ==(Object other) {
@@ -561,7 +585,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,userId,currentLibraryId,currentItemId,isFullySynced,isItemsGridView,isSeriesGridView,isAuthorsGridView);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserSettings(userId: $userId, currentLibraryId: $currentLibraryId, currentItemId: $currentItemId, isFullySynced: $isFullySynced, isItemsGridView: $isItemsGridView, isSeriesGridView: $isSeriesGridView, isAuthorsGridView: $isAuthorsGridView)';
 }
 

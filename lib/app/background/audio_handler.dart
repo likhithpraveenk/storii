@@ -25,17 +25,25 @@ class MyAudioHandler extends BaseAudioHandler with SeekHandler {
     await session.configure(const AudioSessionConfiguration.speech());
   }
 
-  Future<void> loadBook(
-    List<MediaItem> items,
-    int initialIndex,
-    Duration initialPos,
-  ) async {
+  Future<void> loadBook({
+    required List<MediaItem> items,
+    required int initialIndex,
+    required Duration initialPosition,
+    required Uri serverUrl,
+    required String? token,
+  }) async {
     await _player.setAudioSources(
       items
-          .map((item) => AudioSource.uri(Uri.parse(item.id), tag: item))
+          .map(
+            (item) => AudioSource.uri(
+              serverUrl.resolve(item.id),
+              headers: {'Authorization': 'Bearer $token'},
+              tag: item,
+            ),
+          )
           .toList(),
       initialIndex: initialIndex,
-      initialPosition: initialPos,
+      initialPosition: initialPosition,
     );
 
     queue.add(items);
@@ -46,6 +54,13 @@ class MyAudioHandler extends BaseAudioHandler with SeekHandler {
 
   @override
   Future<void> pause() => _player.pause();
+
+  @override
+  Future<void> fastForward() =>
+      seek(_player.position + const Duration(seconds: 10));
+
+  @override
+  Future<void> rewind() => seek(_player.position - const Duration(seconds: 10));
 
   @override
   Future<void> seek(Duration position) => _player.seek(position);
@@ -82,13 +97,13 @@ class MyAudioHandler extends BaseAudioHandler with SeekHandler {
         ],
         systemActions: const {.seek, .seekForward, .seekBackward},
         androidCompactActionIndices: const [0, 1, 2],
-        processingState: const {
-          ProcessingState.idle: AudioProcessingState.idle,
-          ProcessingState.loading: AudioProcessingState.loading,
-          ProcessingState.buffering: AudioProcessingState.buffering,
-          ProcessingState.ready: AudioProcessingState.ready,
-          ProcessingState.completed: AudioProcessingState.completed,
-        }[_player.processingState]!,
+        processingState: switch (_player.processingState) {
+          .idle => .idle,
+          .loading => .loading,
+          .buffering => .buffering,
+          .completed => .completed,
+          .ready => .ready,
+        },
         playing: _player.playing,
         updatePosition: _player.position,
         bufferedPosition: _player.bufferedPosition,

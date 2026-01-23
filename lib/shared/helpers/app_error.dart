@@ -14,7 +14,7 @@ class AppError implements Exception {
 
     if (error is TypeError) {
       if (kDebugMode) {
-        debugPrint('DEVELOPER ALERT: $error\n$stack');
+        debugPrint('TypeError: $error\n$stack');
       }
       return AppError(
         'Data processing error: ${error.toString().split('\n').first}',

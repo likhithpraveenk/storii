@@ -610,214 +610,6 @@ extension LogEntryToInsertable on LogEntry {
   }
 }
 
-class $SettingsTable extends Settings
-    with TableInfo<$SettingsTable, SettingsEntry> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $SettingsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _keyMeta = const VerificationMeta('key');
-  @override
-  late final GeneratedColumn<String> key = GeneratedColumn<String>(
-    'key',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _valueMeta = const VerificationMeta('value');
-  @override
-  late final GeneratedColumn<String> value = GeneratedColumn<String>(
-    'value',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [key, value];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'settings';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<SettingsEntry> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('key')) {
-      context.handle(
-        _keyMeta,
-        key.isAcceptableOrUnknown(data['key']!, _keyMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_keyMeta);
-    }
-    if (data.containsKey('value')) {
-      context.handle(
-        _valueMeta,
-        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_valueMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {key};
-  @override
-  SettingsEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return SettingsEntry(
-      key: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}key'],
-      )!,
-      value: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}value'],
-      )!,
-    );
-  }
-
-  @override
-  $SettingsTable createAlias(String alias) {
-    return $SettingsTable(attachedDatabase, alias);
-  }
-}
-
-class SettingsEntry extends DataClass implements Insertable<SettingsEntry> {
-  final String key;
-  final String value;
-  const SettingsEntry({required this.key, required this.value});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['key'] = Variable<String>(key);
-    map['value'] = Variable<String>(value);
-    return map;
-  }
-
-  SettingsCompanion toCompanion(bool nullToAbsent) {
-    return SettingsCompanion(key: Value(key), value: Value(value));
-  }
-
-  factory SettingsEntry.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return SettingsEntry(
-      key: serializer.fromJson<String>(json['key']),
-      value: serializer.fromJson<String>(json['value']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'key': serializer.toJson<String>(key),
-      'value': serializer.toJson<String>(value),
-    };
-  }
-
-  SettingsEntry copyWith({String? key, String? value}) =>
-      SettingsEntry(key: key ?? this.key, value: value ?? this.value);
-  SettingsEntry copyWithCompanion(SettingsCompanion data) {
-    return SettingsEntry(
-      key: data.key.present ? data.key.value : this.key,
-      value: data.value.present ? data.value.value : this.value,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('SettingsEntry(')
-          ..write('key: $key, ')
-          ..write('value: $value')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(key, value);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is SettingsEntry &&
-          other.key == this.key &&
-          other.value == this.value);
-}
-
-class SettingsCompanion extends UpdateCompanion<SettingsEntry> {
-  final Value<String> key;
-  final Value<String> value;
-  final Value<int> rowid;
-  const SettingsCompanion({
-    this.key = const Value.absent(),
-    this.value = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  SettingsCompanion.insert({
-    required String key,
-    required String value,
-    this.rowid = const Value.absent(),
-  }) : key = Value(key),
-       value = Value(value);
-  static Insertable<SettingsEntry> custom({
-    Expression<String>? key,
-    Expression<String>? value,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (key != null) 'key': key,
-      if (value != null) 'value': value,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  SettingsCompanion copyWith({
-    Value<String>? key,
-    Value<String>? value,
-    Value<int>? rowid,
-  }) {
-    return SettingsCompanion(
-      key: key ?? this.key,
-      value: value ?? this.value,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (key.present) {
-      map['key'] = Variable<String>(key.value);
-    }
-    if (value.present) {
-      map['value'] = Variable<String>(value.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('SettingsCompanion(')
-          ..write('key: $key, ')
-          ..write('value: $value, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $LibrariesTable extends Libraries
     with TableInfo<$LibrariesTable, LibraryDomain> {
   @override
@@ -1213,32 +1005,23 @@ class $AudiobooksTable extends Audiobooks
         requiredDuringInsert: true,
       ).withConverter<List<String>>($AudiobooksTable.$convertertags);
   @override
-  late final GeneratedColumnWithTypeConverter<List<AudioFile>, String>
-  audioFiles = GeneratedColumn<String>(
-    'audio_files',
+  late final GeneratedColumnWithTypeConverter<List<AudioTrackDomain>, String>
+  tracks = GeneratedColumn<String>(
+    'tracks',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-  ).withConverter<List<AudioFile>>($AudiobooksTable.$converteraudioFiles);
+  ).withConverter<List<AudioTrackDomain>>($AudiobooksTable.$convertertracks);
   @override
-  late final GeneratedColumnWithTypeConverter<List<AudioTrack>, String> tracks =
-      GeneratedColumn<String>(
-        'tracks',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-        requiredDuringInsert: true,
-      ).withConverter<List<AudioTrack>>($AudiobooksTable.$convertertracks);
-  @override
-  late final GeneratedColumnWithTypeConverter<List<BookChapter>, String>
+  late final GeneratedColumnWithTypeConverter<List<ChapterDomain>, String>
   chapters = GeneratedColumn<String>(
     'chapters',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-  ).withConverter<List<BookChapter>>($AudiobooksTable.$converterchapters);
+  ).withConverter<List<ChapterDomain>>($AudiobooksTable.$converterchapters);
   static const VerificationMeta _progressMeta = const VerificationMeta(
     'progress',
   );
@@ -1297,7 +1080,6 @@ class $AudiobooksTable extends Audiobooks
     narrators,
     genres,
     tags,
-    audioFiles,
     tracks,
     chapters,
     progress,
@@ -1494,12 +1276,6 @@ class $AudiobooksTable extends Audiobooks
           data['${effectivePrefix}tags'],
         )!,
       ),
-      audioFiles: $AudiobooksTable.$converteraudioFiles.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.string,
-          data['${effectivePrefix}audio_files'],
-        )!,
-      ),
       tracks: $AudiobooksTable.$convertertracks.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
@@ -1540,12 +1316,10 @@ class $AudiobooksTable extends Audiobooks
       const ListConverter<String>();
   static TypeConverter<List<String>, String> $convertertags =
       const ListConverter<String>();
-  static TypeConverter<List<AudioFile>, String> $converteraudioFiles =
-      const JsonListConverter(fromJson: AudioFile.fromJson);
-  static TypeConverter<List<AudioTrack>, String> $convertertracks =
-      const JsonListConverter(fromJson: AudioTrack.fromJson);
-  static TypeConverter<List<BookChapter>, String> $converterchapters =
-      const JsonListConverter(fromJson: BookChapter.fromJson);
+  static TypeConverter<List<AudioTrackDomain>, String> $convertertracks =
+      const JsonListConverter(fromJson: AudioTrackDomain.fromJson);
+  static TypeConverter<List<ChapterDomain>, String> $converterchapters =
+      const JsonListConverter(fromJson: ChapterDomain.fromJson);
 }
 
 class AudiobooksCompanion extends UpdateCompanion<Audiobook> {
@@ -1564,9 +1338,8 @@ class AudiobooksCompanion extends UpdateCompanion<Audiobook> {
   final Value<List<String>> narrators;
   final Value<List<String>> genres;
   final Value<List<String>> tags;
-  final Value<List<AudioFile>> audioFiles;
-  final Value<List<AudioTrack>> tracks;
-  final Value<List<BookChapter>> chapters;
+  final Value<List<AudioTrackDomain>> tracks;
+  final Value<List<ChapterDomain>> chapters;
   final Value<double> progress;
   final Value<bool> isFinished;
   final Value<bool> hideFromContinueListening;
@@ -1587,7 +1360,6 @@ class AudiobooksCompanion extends UpdateCompanion<Audiobook> {
     this.narrators = const Value.absent(),
     this.genres = const Value.absent(),
     this.tags = const Value.absent(),
-    this.audioFiles = const Value.absent(),
     this.tracks = const Value.absent(),
     this.chapters = const Value.absent(),
     this.progress = const Value.absent(),
@@ -1611,9 +1383,8 @@ class AudiobooksCompanion extends UpdateCompanion<Audiobook> {
     required List<String> narrators,
     required List<String> genres,
     required List<String> tags,
-    required List<AudioFile> audioFiles,
-    required List<AudioTrack> tracks,
-    required List<BookChapter> chapters,
+    required List<AudioTrackDomain> tracks,
+    required List<ChapterDomain> chapters,
     required double progress,
     this.isFinished = const Value.absent(),
     this.hideFromContinueListening = const Value.absent(),
@@ -1628,7 +1399,6 @@ class AudiobooksCompanion extends UpdateCompanion<Audiobook> {
        narrators = Value(narrators),
        genres = Value(genres),
        tags = Value(tags),
-       audioFiles = Value(audioFiles),
        tracks = Value(tracks),
        chapters = Value(chapters),
        progress = Value(progress);
@@ -1648,7 +1418,6 @@ class AudiobooksCompanion extends UpdateCompanion<Audiobook> {
     Expression<String>? narrators,
     Expression<String>? genres,
     Expression<String>? tags,
-    Expression<String>? audioFiles,
     Expression<String>? tracks,
     Expression<String>? chapters,
     Expression<double>? progress,
@@ -1672,7 +1441,6 @@ class AudiobooksCompanion extends UpdateCompanion<Audiobook> {
       if (narrators != null) 'narrators': narrators,
       if (genres != null) 'genres': genres,
       if (tags != null) 'tags': tags,
-      if (audioFiles != null) 'audio_files': audioFiles,
       if (tracks != null) 'tracks': tracks,
       if (chapters != null) 'chapters': chapters,
       if (progress != null) 'progress': progress,
@@ -1699,9 +1467,8 @@ class AudiobooksCompanion extends UpdateCompanion<Audiobook> {
     Value<List<String>>? narrators,
     Value<List<String>>? genres,
     Value<List<String>>? tags,
-    Value<List<AudioFile>>? audioFiles,
-    Value<List<AudioTrack>>? tracks,
-    Value<List<BookChapter>>? chapters,
+    Value<List<AudioTrackDomain>>? tracks,
+    Value<List<ChapterDomain>>? chapters,
     Value<double>? progress,
     Value<bool>? isFinished,
     Value<bool>? hideFromContinueListening,
@@ -1723,7 +1490,6 @@ class AudiobooksCompanion extends UpdateCompanion<Audiobook> {
       narrators: narrators ?? this.narrators,
       genres: genres ?? this.genres,
       tags: tags ?? this.tags,
-      audioFiles: audioFiles ?? this.audioFiles,
       tracks: tracks ?? this.tracks,
       chapters: chapters ?? this.chapters,
       progress: progress ?? this.progress,
@@ -1790,11 +1556,6 @@ class AudiobooksCompanion extends UpdateCompanion<Audiobook> {
         $AudiobooksTable.$convertertags.toSql(tags.value),
       );
     }
-    if (audioFiles.present) {
-      map['audio_files'] = Variable<String>(
-        $AudiobooksTable.$converteraudioFiles.toSql(audioFiles.value),
-      );
-    }
     if (tracks.present) {
       map['tracks'] = Variable<String>(
         $AudiobooksTable.$convertertracks.toSql(tracks.value),
@@ -1840,7 +1601,6 @@ class AudiobooksCompanion extends UpdateCompanion<Audiobook> {
           ..write('narrators: $narrators, ')
           ..write('genres: $genres, ')
           ..write('tags: $tags, ')
-          ..write('audioFiles: $audioFiles, ')
           ..write('tracks: $tracks, ')
           ..write('chapters: $chapters, ')
           ..write('progress: $progress, ')
@@ -1873,7 +1633,6 @@ class _$AudiobookInsertable implements Insertable<Audiobook> {
       narrators: Value(_object.narrators),
       genres: Value(_object.genres),
       tags: Value(_object.tags),
-      audioFiles: Value(_object.audioFiles),
       tracks: Value(_object.tracks),
       chapters: Value(_object.chapters),
       progress: Value(_object.progress),
@@ -2049,14 +1808,20 @@ class $PodcastsTable extends Podcasts with TableInfo<$PodcastsTable, Podcast> {
         requiredDuringInsert: true,
       ).withConverter<List<String>>($PodcastsTable.$convertertags);
   @override
-  late final GeneratedColumnWithTypeConverter<List<PodcastEpisode>, String>
-  episodes = GeneratedColumn<String>(
-    'episodes',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  ).withConverter<List<PodcastEpisode>>($PodcastsTable.$converterepisodes);
+  late final GeneratedColumnWithTypeConverter<
+    List<PodcastEpisodeDomain>,
+    String
+  >
+  episodes =
+      GeneratedColumn<String>(
+        'episodes',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<List<PodcastEpisodeDomain>>(
+        $PodcastsTable.$converterepisodes,
+      );
   @override
   late final GeneratedColumnWithTypeConverter<Uri?, String> feedUrl =
       GeneratedColumn<String>(
@@ -2379,8 +2144,8 @@ class $PodcastsTable extends Podcasts with TableInfo<$PodcastsTable, Podcast> {
       const ListConverter<String>();
   static TypeConverter<List<String>, String> $convertertags =
       const ListConverter<String>();
-  static TypeConverter<List<PodcastEpisode>, String> $converterepisodes =
-      const JsonListConverter(fromJson: PodcastEpisode.fromJson);
+  static TypeConverter<List<PodcastEpisodeDomain>, String> $converterepisodes =
+      const JsonListConverter(fromJson: PodcastEpisodeDomain.fromJson);
   static TypeConverter<Uri, String> $converterfeedUrl = const UriConverter();
   static TypeConverter<Uri?, String?> $converterfeedUrln =
       NullAwareTypeConverter.wrap($converterfeedUrl);
@@ -2401,7 +2166,7 @@ class PodcastsCompanion extends UpdateCompanion<Podcast> {
   final Value<bool> explicit;
   final Value<List<String>> genres;
   final Value<List<String>> tags;
-  final Value<List<PodcastEpisode>> episodes;
+  final Value<List<PodcastEpisodeDomain>> episodes;
   final Value<Uri?> feedUrl;
   final Value<DateTime?> lastEpisodeCheck;
   final Value<double> progress;
@@ -2446,7 +2211,7 @@ class PodcastsCompanion extends UpdateCompanion<Podcast> {
     this.explicit = const Value.absent(),
     required List<String> genres,
     required List<String> tags,
-    required List<PodcastEpisode> episodes,
+    required List<PodcastEpisodeDomain> episodes,
     this.feedUrl = const Value.absent(),
     this.lastEpisodeCheck = const Value.absent(),
     required double progress,
@@ -2527,7 +2292,7 @@ class PodcastsCompanion extends UpdateCompanion<Podcast> {
     Value<bool>? explicit,
     Value<List<String>>? genres,
     Value<List<String>>? tags,
-    Value<List<PodcastEpisode>>? episodes,
+    Value<List<PodcastEpisodeDomain>>? episodes,
     Value<Uri?>? feedUrl,
     Value<DateTime?>? lastEpisodeCheck,
     Value<double>? progress,
@@ -3970,7 +3735,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ServersTable servers = $ServersTable(this);
   late final $UsersTable users = $UsersTable(this);
   late final $AppLogsTable appLogs = $AppLogsTable(this);
-  late final $SettingsTable settings = $SettingsTable(this);
   late final $LibrariesTable libraries = $LibrariesTable(this);
   late final $AudiobooksTable audiobooks = $AudiobooksTable(this);
   late final $PodcastsTable podcasts = $PodcastsTable(this);
@@ -3990,7 +3754,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     servers,
     users,
     appLogs,
-    settings,
     libraries,
     audiobooks,
     podcasts,
@@ -4846,145 +4609,6 @@ typedef $$AppLogsTableProcessedTableManager =
       $$AppLogsTableUpdateCompanionBuilder,
       (LogEntry, BaseReferences<_$AppDatabase, $AppLogsTable, LogEntry>),
       LogEntry,
-      PrefetchHooks Function()
-    >;
-typedef $$SettingsTableCreateCompanionBuilder =
-    SettingsCompanion Function({
-      required String key,
-      required String value,
-      Value<int> rowid,
-    });
-typedef $$SettingsTableUpdateCompanionBuilder =
-    SettingsCompanion Function({
-      Value<String> key,
-      Value<String> value,
-      Value<int> rowid,
-    });
-
-class $$SettingsTableFilterComposer
-    extends Composer<_$AppDatabase, $SettingsTable> {
-  $$SettingsTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get key => $composableBuilder(
-    column: $table.key,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get value => $composableBuilder(
-    column: $table.value,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $$SettingsTableOrderingComposer
-    extends Composer<_$AppDatabase, $SettingsTable> {
-  $$SettingsTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get key => $composableBuilder(
-    column: $table.key,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get value => $composableBuilder(
-    column: $table.value,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$SettingsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $SettingsTable> {
-  $$SettingsTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get key =>
-      $composableBuilder(column: $table.key, builder: (column) => column);
-
-  GeneratedColumn<String> get value =>
-      $composableBuilder(column: $table.value, builder: (column) => column);
-}
-
-class $$SettingsTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $SettingsTable,
-          SettingsEntry,
-          $$SettingsTableFilterComposer,
-          $$SettingsTableOrderingComposer,
-          $$SettingsTableAnnotationComposer,
-          $$SettingsTableCreateCompanionBuilder,
-          $$SettingsTableUpdateCompanionBuilder,
-          (
-            SettingsEntry,
-            BaseReferences<_$AppDatabase, $SettingsTable, SettingsEntry>,
-          ),
-          SettingsEntry,
-          PrefetchHooks Function()
-        > {
-  $$SettingsTableTableManager(_$AppDatabase db, $SettingsTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$SettingsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$SettingsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$SettingsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> key = const Value.absent(),
-                Value<String> value = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => SettingsCompanion(key: key, value: value, rowid: rowid),
-          createCompanionCallback:
-              ({
-                required String key,
-                required String value,
-                Value<int> rowid = const Value.absent(),
-              }) => SettingsCompanion.insert(
-                key: key,
-                value: value,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $$SettingsTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $SettingsTable,
-      SettingsEntry,
-      $$SettingsTableFilterComposer,
-      $$SettingsTableOrderingComposer,
-      $$SettingsTableAnnotationComposer,
-      $$SettingsTableCreateCompanionBuilder,
-      $$SettingsTableUpdateCompanionBuilder,
-      (
-        SettingsEntry,
-        BaseReferences<_$AppDatabase, $SettingsTable, SettingsEntry>,
-      ),
-      SettingsEntry,
       PrefetchHooks Function()
     >;
 typedef $$LibrariesTableCreateCompanionBuilder =
@@ -5886,9 +5510,8 @@ typedef $$AudiobooksTableCreateCompanionBuilder =
       required List<String> narrators,
       required List<String> genres,
       required List<String> tags,
-      required List<AudioFile> audioFiles,
-      required List<AudioTrack> tracks,
-      required List<BookChapter> chapters,
+      required List<AudioTrackDomain> tracks,
+      required List<ChapterDomain> chapters,
       required double progress,
       Value<bool> isFinished,
       Value<bool> hideFromContinueListening,
@@ -5911,9 +5534,8 @@ typedef $$AudiobooksTableUpdateCompanionBuilder =
       Value<List<String>> narrators,
       Value<List<String>> genres,
       Value<List<String>> tags,
-      Value<List<AudioFile>> audioFiles,
-      Value<List<AudioTrack>> tracks,
-      Value<List<BookChapter>> chapters,
+      Value<List<AudioTrackDomain>> tracks,
+      Value<List<ChapterDomain>> chapters,
       Value<double> progress,
       Value<bool> isFinished,
       Value<bool> hideFromContinueListening,
@@ -6073,19 +5695,21 @@ class $$AudiobooksTableFilterComposer
         builder: (column) => ColumnWithTypeConverterFilters(column),
       );
 
-  ColumnWithTypeConverterFilters<List<AudioFile>, List<AudioFile>, String>
-  get audioFiles => $composableBuilder(
-    column: $table.audioFiles,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
-  );
-
-  ColumnWithTypeConverterFilters<List<AudioTrack>, List<AudioTrack>, String>
+  ColumnWithTypeConverterFilters<
+    List<AudioTrackDomain>,
+    List<AudioTrackDomain>,
+    String
+  >
   get tracks => $composableBuilder(
     column: $table.tracks,
     builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<List<BookChapter>, List<BookChapter>, String>
+  ColumnWithTypeConverterFilters<
+    List<ChapterDomain>,
+    List<ChapterDomain>,
+    String
+  >
   get chapters => $composableBuilder(
     column: $table.chapters,
     builder: (column) => ColumnWithTypeConverterFilters(column),
@@ -6259,11 +5883,6 @@ class $$AudiobooksTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get audioFiles => $composableBuilder(
-    column: $table.audioFiles,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get tracks => $composableBuilder(
     column: $table.tracks,
     builder: (column) => ColumnOrderings(column),
@@ -6368,16 +5987,10 @@ class $$AudiobooksTableAnnotationComposer
   GeneratedColumnWithTypeConverter<List<String>, String> get tags =>
       $composableBuilder(column: $table.tags, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<List<AudioFile>, String> get audioFiles =>
-      $composableBuilder(
-        column: $table.audioFiles,
-        builder: (column) => column,
-      );
-
-  GeneratedColumnWithTypeConverter<List<AudioTrack>, String> get tracks =>
+  GeneratedColumnWithTypeConverter<List<AudioTrackDomain>, String> get tracks =>
       $composableBuilder(column: $table.tracks, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<List<BookChapter>, String> get chapters =>
+  GeneratedColumnWithTypeConverter<List<ChapterDomain>, String> get chapters =>
       $composableBuilder(column: $table.chapters, builder: (column) => column);
 
   GeneratedColumn<double> get progress =>
@@ -6514,9 +6127,8 @@ class $$AudiobooksTableTableManager
                 Value<List<String>> narrators = const Value.absent(),
                 Value<List<String>> genres = const Value.absent(),
                 Value<List<String>> tags = const Value.absent(),
-                Value<List<AudioFile>> audioFiles = const Value.absent(),
-                Value<List<AudioTrack>> tracks = const Value.absent(),
-                Value<List<BookChapter>> chapters = const Value.absent(),
+                Value<List<AudioTrackDomain>> tracks = const Value.absent(),
+                Value<List<ChapterDomain>> chapters = const Value.absent(),
                 Value<double> progress = const Value.absent(),
                 Value<bool> isFinished = const Value.absent(),
                 Value<bool> hideFromContinueListening = const Value.absent(),
@@ -6537,7 +6149,6 @@ class $$AudiobooksTableTableManager
                 narrators: narrators,
                 genres: genres,
                 tags: tags,
-                audioFiles: audioFiles,
                 tracks: tracks,
                 chapters: chapters,
                 progress: progress,
@@ -6562,9 +6173,8 @@ class $$AudiobooksTableTableManager
                 required List<String> narrators,
                 required List<String> genres,
                 required List<String> tags,
-                required List<AudioFile> audioFiles,
-                required List<AudioTrack> tracks,
-                required List<BookChapter> chapters,
+                required List<AudioTrackDomain> tracks,
+                required List<ChapterDomain> chapters,
                 required double progress,
                 Value<bool> isFinished = const Value.absent(),
                 Value<bool> hideFromContinueListening = const Value.absent(),
@@ -6585,7 +6195,6 @@ class $$AudiobooksTableTableManager
                 narrators: narrators,
                 genres: genres,
                 tags: tags,
-                audioFiles: audioFiles,
                 tracks: tracks,
                 chapters: chapters,
                 progress: progress,
@@ -6732,7 +6341,7 @@ typedef $$PodcastsTableCreateCompanionBuilder =
       Value<bool> explicit,
       required List<String> genres,
       required List<String> tags,
-      required List<PodcastEpisode> episodes,
+      required List<PodcastEpisodeDomain> episodes,
       Value<Uri?> feedUrl,
       Value<DateTime?> lastEpisodeCheck,
       required double progress,
@@ -6756,7 +6365,7 @@ typedef $$PodcastsTableUpdateCompanionBuilder =
       Value<bool> explicit,
       Value<List<String>> genres,
       Value<List<String>> tags,
-      Value<List<PodcastEpisode>> episodes,
+      Value<List<PodcastEpisodeDomain>> episodes,
       Value<Uri?> feedUrl,
       Value<DateTime?> lastEpisodeCheck,
       Value<double> progress,
@@ -6866,8 +6475,8 @@ class $$PodcastsTableFilterComposer
       );
 
   ColumnWithTypeConverterFilters<
-    List<PodcastEpisode>,
-    List<PodcastEpisode>,
+    List<PodcastEpisodeDomain>,
+    List<PodcastEpisodeDomain>,
     String
   >
   get episodes => $composableBuilder(
@@ -7105,7 +6714,8 @@ class $$PodcastsTableAnnotationComposer
   GeneratedColumnWithTypeConverter<List<String>, String> get tags =>
       $composableBuilder(column: $table.tags, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<List<PodcastEpisode>, String> get episodes =>
+  GeneratedColumnWithTypeConverter<List<PodcastEpisodeDomain>, String>
+  get episodes =>
       $composableBuilder(column: $table.episodes, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<Uri?, String> get feedUrl =>
@@ -7195,7 +6805,8 @@ class $$PodcastsTableTableManager
                 Value<bool> explicit = const Value.absent(),
                 Value<List<String>> genres = const Value.absent(),
                 Value<List<String>> tags = const Value.absent(),
-                Value<List<PodcastEpisode>> episodes = const Value.absent(),
+                Value<List<PodcastEpisodeDomain>> episodes =
+                    const Value.absent(),
                 Value<Uri?> feedUrl = const Value.absent(),
                 Value<DateTime?> lastEpisodeCheck = const Value.absent(),
                 Value<double> progress = const Value.absent(),
@@ -7241,7 +6852,7 @@ class $$PodcastsTableTableManager
                 Value<bool> explicit = const Value.absent(),
                 required List<String> genres,
                 required List<String> tags,
-                required List<PodcastEpisode> episodes,
+                required List<PodcastEpisodeDomain> episodes,
                 Value<Uri?> feedUrl = const Value.absent(),
                 Value<DateTime?> lastEpisodeCheck = const Value.absent(),
                 required double progress,
@@ -9224,8 +8835,6 @@ class $AppDatabaseManager {
       $$UsersTableTableManager(_db, _db.users);
   $$AppLogsTableTableManager get appLogs =>
       $$AppLogsTableTableManager(_db, _db.appLogs);
-  $$SettingsTableTableManager get settings =>
-      $$SettingsTableTableManager(_db, _db.settings);
   $$LibrariesTableTableManager get libraries =>
       $$LibrariesTableTableManager(_db, _db.libraries);
   $$AudiobooksTableTableManager get audiobooks =>

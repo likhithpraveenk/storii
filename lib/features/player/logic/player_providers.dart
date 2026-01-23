@@ -1,35 +1,41 @@
-import 'dart:async';
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 
 part 'player_providers.g.dart';
 
 enum PlayerSwipeDirection { left, right }
 
-enum PlayerState { hidden, mini, full }
+enum PlayerViewState { hidden, mini, full }
 
 const double velocityThreshold = 100;
 const double epsilon = 0.5;
 
-@Riverpod(keepAlive: true)
-class PlayerEvent extends _$PlayerEvent {
-  final _controller = StreamController<PlayerState>.broadcast();
-  // final _swipeController = StreamController<PlayerSwipeDirection>.broadcast();
-
+@riverpod
+class PlayerController extends _$PlayerController {
   @override
-  Stream<PlayerState> build() {
-    ref.onDispose(_controller.close);
-    return _controller.stream;
+  PlayerViewState build() {
+    ref.listen(currentItemIdProvider, (prev, next) {
+      if (next == null) {
+        state = .hidden;
+      } else {
+        state = .mini;
+      }
+    });
+
+    return .hidden;
   }
 
-  void toFull() => _controller.add(.full);
-  void toMini() => _controller.add(.mini);
-  void hide() => _controller.add(.hidden);
+  void toFull() {
+    state = .full;
+  }
 
-  // void reportSwipe(PlayerSwipeDirection direction) =>
-  //     _swipeController.add(direction);
+  void toMini() {
+    state = .mini;
+  }
 
-  // Stream<PlayerSwipeDirection> get swipeStream => _swipeController.stream;
+  void toHidden() {
+    state = .hidden;
+  }
 }
 
 @riverpod
@@ -39,7 +45,7 @@ class PlayerHeight extends _$PlayerHeight {
 
   void set(double value) => state = value;
 
-  void snapTo(PlayerState viewState) {
+  void snapTo(PlayerViewState viewState) {
     final bounds = ref.read(playerBoundsProvider);
     state = switch (viewState) {
       .full => bounds.max,
@@ -67,7 +73,7 @@ double playerExpandFactor(Ref ref) {
 }
 
 @riverpod
-PlayerState playerState(Ref ref) {
+PlayerViewState playerViewState(Ref ref) {
   final height = ref.watch(playerHeightProvider);
   final bounds = ref.watch(playerBoundsProvider);
 

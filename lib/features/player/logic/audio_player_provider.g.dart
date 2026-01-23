@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'servers_provider.dart';
+part of 'audio_player_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,43 +9,43 @@ part of 'servers_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(ServersNotifier)
-final serversProvider = ServersNotifierProvider._();
+@ProviderFor(AudioPlayer)
+final audioPlayerProvider = AudioPlayerProvider._();
 
-final class ServersNotifierProvider
-    extends $StreamNotifierProvider<ServersNotifier, List<Server>> {
-  ServersNotifierProvider._()
+final class AudioPlayerProvider
+    extends $StreamNotifierProvider<AudioPlayer, PlaybackState> {
+  AudioPlayerProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'serversProvider',
+        name: r'audioPlayerProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$serversNotifierHash();
+  String debugGetCreateSourceHash() => _$audioPlayerHash();
 
   @$internal
   @override
-  ServersNotifier create() => ServersNotifier();
+  AudioPlayer create() => AudioPlayer();
 }
 
-String _$serversNotifierHash() => r'5e870461b435a6d2bd6f0cfd36f5b003178d5fe2';
+String _$audioPlayerHash() => r'11e0a0023532f3f33e4bce5bf53c4dcca3d69735';
 
-abstract class _$ServersNotifier extends $StreamNotifier<List<Server>> {
-  Stream<List<Server>> build();
+abstract class _$AudioPlayer extends $StreamNotifier<PlaybackState> {
+  Stream<PlaybackState> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<List<Server>>, List<Server>>;
+    final ref = this.ref as $Ref<AsyncValue<PlaybackState>, PlaybackState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<List<Server>>, List<Server>>,
-              AsyncValue<List<Server>>,
+              AnyNotifier<AsyncValue<PlaybackState>, PlaybackState>,
+              AsyncValue<PlaybackState>,
               Object?,
               Object?
             >;

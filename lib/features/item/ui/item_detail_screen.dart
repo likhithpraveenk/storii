@@ -6,11 +6,12 @@ import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/item.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/logic/item_palette_provider.dart';
 import 'package:storii/features/item/ui/cover_image.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
-import 'package:storii/features/player/logic/current_item_provider.dart';
+import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/expandable_text.dart';
@@ -116,18 +117,19 @@ class ItemDetailScreen extends ConsumerWidget {
           final palette = ref.watch(itemPaletteProvider(item.id)).value;
           final themeColor = getBackgroundColor(palette, scheme.surface);
           final textColor = getForegroundColor(palette, scheme);
+          final bounds = ref.read(playerBoundsProvider);
+          final playerHeight = ref
+              .watch(playerHeightProvider)
+              .clamp(0.0, bounds.min);
 
           return Container(
             height: 48,
-            margin: const .fromLTRB(16, 0, 16, 0),
+            margin: .fromLTRB(16, 0, 16, playerHeight),
             child: FloatingActionButton.extended(
-              heroTag: 'item_detail_screen',
               backgroundColor: themeColor,
               elevation: 4,
               onPressed: () {
-                // TODO: playback
-                // ! remove
-                ref.read(currentItemProvider.notifier).setItem(item);
+                ref.read(userSettingsProvider.notifier).setCurrentItemId(id);
               },
               icon: Icon(Icons.play_arrow_rounded, color: textColor),
               label: Text(

@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/app_styles.dart';
-import 'package:storii/features/player/logic/current_item_provider.dart';
-import 'package:storii/features/player/logic/player_providers.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/ui/full_player.dart';
 import 'package:storii/features/player/ui/hero_cover.dart';
 import 'package:storii/features/player/ui/mini_player.dart';
 import 'package:storii/features/player/ui/player_builder.dart';
 
-class PlayerScreen extends ConsumerWidget {
+class PlayerScreen extends ConsumerStatefulWidget {
   const PlayerScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.read(playerEventProvider.notifier);
+  ConsumerState<ConsumerStatefulWidget> createState() => _PlayerScreenState();
+}
 
-    ref.listen(currentItemProvider, ((_, next) {
-      if (next.hasValue && next.value != null) {
-        controller.toFull();
-      }
-    }));
-
+class _PlayerScreenState extends ConsumerState<PlayerScreen> {
+  @override
+  Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final screenWidth = size.width;
     final screenHeight = size.height;
@@ -41,6 +37,9 @@ class PlayerScreen extends ConsumerWidget {
 
     return PlayerBuilder(
       maxHeight: screenHeight,
+      onDismiss: () {
+        ref.read(userSettingsProvider.notifier).setCurrentItemId(null);
+      },
       builder: (context, f) {
         final miniOpacity = 1 - miniInterval.transform(f);
         final fullOpacity = fullInterval.transform(f);

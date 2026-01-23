@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 
 typedef PlayerWidgetBuilder =
@@ -11,6 +12,7 @@ class PlayerBuilder extends ConsumerStatefulWidget {
     required this.builder,
     this.minHeight = 80,
     required this.maxHeight,
+    required this.onDismiss,
   }) : assert(minHeight < maxHeight, 'minHeight must be less than maxHeight'),
        assert(minHeight > 0, 'minHeight must be positive'),
        assert(maxHeight > 0, 'maxHeight must be positive');
@@ -18,6 +20,7 @@ class PlayerBuilder extends ConsumerStatefulWidget {
   final double minHeight;
   final double maxHeight;
   final PlayerWidgetBuilder builder;
+  final VoidCallback onDismiss;
 
   @override
   ConsumerState<PlayerBuilder> createState() => _PlayerBuilderState();
@@ -41,6 +44,10 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
       ref
           .read(playerBoundsProvider.notifier)
           .update(widget.minHeight, widget.maxHeight);
+      final id = ref.read(currentItemIdProvider);
+      if (id != null) {
+        _snapTo(.mini);
+      }
     });
   }
 
@@ -53,11 +60,12 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
 
   void _animationListener() {
     if (!mounted) return;
-    final newValue = _heightTween.transform(_controller.value);
+    final curvedValue = Curves.easeOutCubic.transform(_controller.value);
+    final newValue = _heightTween.transform(curvedValue);
     ref.read(playerHeightProvider.notifier).set(newValue);
   }
 
-  void _snapTo(PlayerState newState) {
+  void _snapTo(PlayerViewState newState) {
     final targetHeight = switch (newState) {
       .full => widget.maxHeight,
       .mini => widget.minHeight,
@@ -69,7 +77,11 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
     _controller.stop();
     _heightTween = Tween(begin: currentHeight, end: targetHeight);
     _controller.reset();
-    _controller.forward();
+    _controller.forward().whenComplete(() {
+      if (targetHeight == 0.0) {
+        widget.onDismiss();
+      }
+    });
   }
 
   void _onVerticalDragUpdate(DragUpdateDetails details) {
@@ -87,13 +99,13 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
     final velocityY = details.velocity.pixelsPerSecond.dy;
     final height = ref.read(playerHeightProvider);
 
-    PlayerState target;
+    PlayerViewState target;
 
     if (velocityY.abs() > velocityThreshold) {
       if (velocityY < 0) {
         target = .full;
       } else {
-        target = (height < (widget.minHeight / 2)) ? .hidden : .mini;
+        target = (height < (widget.minHeight * 0.8)) ? .hidden : .mini;
       }
     } else {
       final mid = (widget.minHeight + widget.maxHeight) / 2;
@@ -102,21 +114,10 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
     _snapTo(target);
   }
 
-  //   void _onHorizontalDragEnd(DragEndDetails details) {
-  //     final velocityX = details.velocity.pixelsPerSecond.dx;
-  //     final notifier = ref.read(playerEventProvider.notifier);
-
-  //     if (velocityX > velocityThreshold) {
-  //       notifier.reportSwipe(.right);
-  //     } else if (velocityX < -velocityThreshold) {
-  //       notifier.reportSwipe(.left);
-  //     }
-  //   }
-
   @override
   Widget build(BuildContext context) {
-    ref.listen(playerEventProvider, (_, next) {
-      next.whenData(_snapTo);
+    ref.listen(playerControllerProvider, (_, next) {
+      _snapTo(next);
     });
 
     final height = ref.watch(playerHeightProvider);
@@ -139,7 +140,6 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
           onTap: () => _snapTo(.full),
           onVerticalDragUpdate: _onVerticalDragUpdate,
           onVerticalDragEnd: _onVerticalDragEnd,
-          // onHorizontalDragEnd: _onHorizontalDragEnd,
           child: SizedBox(
             height: height,
             child: RepaintBoundary(

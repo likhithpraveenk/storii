@@ -34,12 +34,10 @@ _PodcastEpisode _$PodcastEpisodeFromJson(Map<String, dynamic> json) =>
       updatedAt: const DateTimeEpochConverter().fromJson(
         (json['updatedAt'] as num).toInt(),
       ),
-      audioTrack: json['audioTrack'] == null
-          ? null
-          : AudioTrack.fromJson(json['audioTrack'] as Map<String, dynamic>),
-      duration: json['duration'] == null
-          ? null
-          : Duration(microseconds: (json['duration'] as num).toInt()),
+      audioTrack: AudioTrack.fromJson(
+        json['audioTrack'] as Map<String, dynamic>,
+      ),
+      duration: Duration(microseconds: (json['duration'] as num).toInt()),
       size: (json['size'] as num?)?.toInt(),
     );
 
@@ -62,7 +60,7 @@ Map<String, dynamic> _$PodcastEpisodeToJson(
   'publishedAt': const DateTimeEpochConverter().toJson(instance.publishedAt),
   'addedAt': const DateTimeEpochConverter().toJson(instance.addedAt),
   'updatedAt': const DateTimeEpochConverter().toJson(instance.updatedAt),
-  'audioTrack': ?instance.audioTrack?.toJson(),
-  'duration': ?instance.duration?.inMicroseconds,
+  'audioTrack': instance.audioTrack.toJson(),
+  'duration': instance.duration.inMicroseconds,
   'size': ?instance.size,
 };

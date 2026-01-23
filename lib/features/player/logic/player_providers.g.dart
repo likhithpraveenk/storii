@@ -9,43 +9,51 @@ part of 'player_providers.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(PlayerEvent)
-final playerEventProvider = PlayerEventProvider._();
+@ProviderFor(PlayerController)
+final playerControllerProvider = PlayerControllerProvider._();
 
-final class PlayerEventProvider
-    extends $StreamNotifierProvider<PlayerEvent, PlayerState> {
-  PlayerEventProvider._()
+final class PlayerControllerProvider
+    extends $NotifierProvider<PlayerController, PlayerViewState> {
+  PlayerControllerProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'playerEventProvider',
-        isAutoDispose: false,
+        name: r'playerControllerProvider',
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$playerEventHash();
+  String debugGetCreateSourceHash() => _$playerControllerHash();
 
   @$internal
   @override
-  PlayerEvent create() => PlayerEvent();
+  PlayerController create() => PlayerController();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PlayerViewState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PlayerViewState>(value),
+    );
+  }
 }
 
-String _$playerEventHash() => r'5f883e856a9073929be73310ee10d0c24c0a4752';
+String _$playerControllerHash() => r'd7516b90c0e6b7d01743ad7871ae2d091b39ddfe';
 
-abstract class _$PlayerEvent extends $StreamNotifier<PlayerState> {
-  Stream<PlayerState> build();
+abstract class _$PlayerController extends $Notifier<PlayerViewState> {
+  PlayerViewState build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<PlayerState>, PlayerState>;
+    final ref = this.ref as $Ref<PlayerViewState, PlayerViewState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<PlayerState>, PlayerState>,
-              AsyncValue<PlayerState>,
+              AnyNotifier<PlayerViewState, PlayerViewState>,
+              PlayerViewState,
               Object?,
               Object?
             >;
@@ -85,7 +93,7 @@ final class PlayerHeightProvider
   }
 }
 
-String _$playerHeightHash() => r'104ca481cd04c14c1022bcf892018397b445d34d';
+String _$playerHeightHash() => r'5c5706541b1eadcfc79bc54dbe99693e6229d3fa';
 
 abstract class _$PlayerHeight extends $Notifier<double> {
   double build();
@@ -204,43 +212,44 @@ final class PlayerExpandFactorProvider
 String _$playerExpandFactorHash() =>
     r'286f12dba3cd5788ec79aaebf1be9ee9617920eb';
 
-@ProviderFor(playerState)
-final playerStateProvider = PlayerStateProvider._();
+@ProviderFor(playerViewState)
+final playerViewStateProvider = PlayerViewStateProvider._();
 
-final class PlayerStateProvider
-    extends $FunctionalProvider<PlayerState, PlayerState, PlayerState>
-    with $Provider<PlayerState> {
-  PlayerStateProvider._()
+final class PlayerViewStateProvider
+    extends
+        $FunctionalProvider<PlayerViewState, PlayerViewState, PlayerViewState>
+    with $Provider<PlayerViewState> {
+  PlayerViewStateProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'playerStateProvider',
+        name: r'playerViewStateProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$playerStateHash();
+  String debugGetCreateSourceHash() => _$playerViewStateHash();
 
   @$internal
   @override
-  $ProviderElement<PlayerState> $createElement($ProviderPointer pointer) =>
+  $ProviderElement<PlayerViewState> $createElement($ProviderPointer pointer) =>
       $ProviderElement(pointer);
 
   @override
-  PlayerState create(Ref ref) {
-    return playerState(ref);
+  PlayerViewState create(Ref ref) {
+    return playerViewState(ref);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(PlayerState value) {
+  Override overrideWithValue(PlayerViewState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<PlayerState>(value),
+      providerOverride: $SyncValueProvider<PlayerViewState>(value),
     );
   }
 }
 
-String _$playerStateHash() => r'b590551de11ce7ea4e5907d5e5038d13e4b10fb7';
+String _$playerViewStateHash() => r'a2466d5fb7b389b5bc4de519563fa5c99f5054b8';

@@ -40,8 +40,7 @@ enum AppRoute {
   more('/more'),
   settings('/more/settings'),
   navigationSettings('/more/settings/navigation'),
-  profile('/more/profile'),
-  player('/player/:id');
+  profile('/more/profile');
 
   final String path;
   const AppRoute(this.path);
@@ -215,15 +214,6 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.search.path,
                 builder: (context, state) => const SearchScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            initialLocation: AppRoute.player.path,
-            routes: [
-              GoRoute(
-                path: AppRoute.player.path,
-                builder: (context, state) => const SizedBox.shrink(),
               ),
             ],
           ),

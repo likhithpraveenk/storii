@@ -1,6 +1,8 @@
 import 'package:drift/drift.dart';
-import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/models/audio_track.dart';
+import 'package:storii/app/models/chapter.dart';
 import 'package:storii/app/models/item.dart';
+import 'package:storii/app/models/podcast_episode.dart';
 import 'package:storii/storage/drift/converters.dart';
 import 'package:storii/storage/drift/tables/libraries.dart';
 
@@ -24,12 +26,11 @@ class Audiobooks extends Table {
   TextColumn get narrators => text().map(const ListConverter<String>())();
   TextColumn get genres => text().map(const ListConverter<String>())();
   TextColumn get tags => text().map(const ListConverter<String>())();
-  TextColumn get audioFiles =>
-      text().map(const JsonListConverter(fromJson: AudioFile.fromJson))();
-  TextColumn get tracks =>
-      text().map(const JsonListConverter(fromJson: AudioTrack.fromJson))();
+  TextColumn get tracks => text().map(
+    const JsonListConverter(fromJson: AudioTrackDomain.fromJson),
+  )();
   TextColumn get chapters =>
-      text().map(const JsonListConverter(fromJson: BookChapter.fromJson))();
+      text().map(const JsonListConverter(fromJson: ChapterDomain.fromJson))();
 
   RealColumn get progress => real()();
   BoolColumn get isFinished => boolean().withDefault(const Constant(false))();
@@ -59,8 +60,9 @@ class Podcasts extends Table {
 
   TextColumn get genres => text().map(const ListConverter<String>())();
   TextColumn get tags => text().map(const ListConverter<String>())();
-  TextColumn get episodes =>
-      text().map(const JsonListConverter(fromJson: PodcastEpisode.fromJson))();
+  TextColumn get episodes => text().map(
+    const JsonListConverter(fromJson: PodcastEpisodeDomain.fromJson),
+  )();
   TextColumn get feedUrl => text().map(const UriConverter()).nullable()();
 
   DateTimeColumn get lastEpisodeCheck => dateTime().nullable()();

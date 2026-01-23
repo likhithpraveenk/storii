@@ -1,8 +1,11 @@
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/models/audio_track.dart';
 import 'package:storii/app/models/author.dart';
+import 'package:storii/app/models/chapter.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/app/models/item.dart';
 import 'package:storii/app/models/library.dart';
+import 'package:storii/app/models/podcast_episode.dart';
 import 'package:storii/app/models/series.dart';
 import 'package:storii/app/models/shelf.dart';
 import 'package:storii/app/models/user.dart';
@@ -44,8 +47,18 @@ extension LibraryItemToDomain on LibraryItem {
         isMissing: isMissing,
         size: size,
         duration: m.duration,
-        audioFiles: m.audioFiles ?? [],
-        chapters: m.chapters ?? [],
+        chapters:
+            m.chapters
+                ?.map(
+                  (c) => ChapterDomain(
+                    id: c.id,
+                    start: c.start,
+                    end: c.end,
+                    title: c.title,
+                  ),
+                )
+                .toList() ??
+            [],
         title: m.metadata.title,
         description: m.metadata.description,
         explicit: m.metadata.explicit,
@@ -66,11 +79,25 @@ extension LibraryItemToDomain on LibraryItem {
               book: (m) => m.series?.map((s) => s.toDomain(libraryId)).toList(),
             ) ??
             [],
-        tracks: m.tracks ?? [],
+        tracks:
+            m.tracks
+                ?.map(
+                  (t) => AudioTrackDomain(
+                    index: t.index,
+                    startOffset: t.startOffset,
+                    duration: t.duration,
+                    title: t.title,
+                    contentUrl: t.contentUrl,
+                    mimeType: t.mimeType,
+                  ),
+                )
+                .toList() ??
+            [],
         tags: m.tags,
         hideFromContinueListening:
             userMediaProgress?.hideFromContinueListening ?? false,
         progress: userMediaProgress?.progress ?? 0,
+        currentOffset: userMediaProgress?.currentTime ?? Duration.zero,
         isFinished: userMediaProgress?.isFinished ?? false,
       ),
 
@@ -81,7 +108,29 @@ extension LibraryItemToDomain on LibraryItem {
         updatedAt: updatedAt,
         isMissing: isMissing,
         size: size,
-        episodes: m.episodes ?? [],
+        episodes:
+            m.episodes
+                ?.map(
+                  (e) => PodcastEpisodeDomain(
+                    libraryItemId: e.libraryItemId,
+                    podcastId: e.podcastId,
+                    id: e.id,
+                    publishedAt: e.publishedAt,
+                    addedAt: e.addedAt,
+                    updatedAt: e.updatedAt,
+                    audioTrack: AudioTrackDomain(
+                      index: e.audioTrack.index,
+                      startOffset: e.audioTrack.startOffset,
+                      duration: e.audioTrack.duration,
+                      title: e.audioTrack.title,
+                      contentUrl: e.audioTrack.contentUrl,
+                      mimeType: e.audioTrack.mimeType,
+                    ),
+                    duration: e.duration,
+                  ),
+                )
+                .toList() ??
+            [],
         tags: m.tags,
         description: m.metadata.description,
         explicit: m.metadata.explicit,

@@ -49,9 +49,11 @@ class ApiClient {
     return _refreshLock.synchronized(() async {
       final currentToken = await getAccessToken?.call();
       if (currentToken != null && currentToken != failedToken) {
-        debugPrint(
-          'Token was refreshed by another request, retrying with new token.',
-        );
+        if (kDebugMode) {
+          debugPrint(
+            'Token was refreshed by another request, retrying with new token.',
+          );
+        }
         return _retryRequest(failedRequest, currentToken);
       }
 

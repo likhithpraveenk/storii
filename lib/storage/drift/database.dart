@@ -1,12 +1,14 @@
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:drift_flutter/drift_flutter.dart';
-import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/models/audio_track.dart';
 import 'package:storii/app/models/author.dart';
+import 'package:storii/app/models/chapter.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/app/models/item.dart';
 import 'package:storii/app/models/library.dart';
 import 'package:storii/app/models/log_entry.dart';
+import 'package:storii/app/models/podcast_episode.dart';
 import 'package:storii/app/models/series.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
@@ -19,7 +21,6 @@ import 'package:storii/storage/drift/tables/items.dart';
 import 'package:storii/storage/drift/tables/libraries.dart';
 import 'package:storii/storage/drift/tables/series_table.dart';
 import 'package:storii/storage/drift/tables/servers.dart';
-import 'package:storii/storage/drift/tables/settings.dart';
 import 'package:storii/storage/drift/tables/users.dart';
 
 part 'database.g.dart';
@@ -29,7 +30,6 @@ part 'database.g.dart';
     Users,
     Servers,
     AppLogs,
-    Settings,
     Libraries,
     Audiobooks,
     Podcasts,

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PodcastEpisode {
 
- String get libraryItemId; String get podcastId; String get id; int? get index; String? get season; String? get episode; String? get episodeType; String? get title; String? get subtitle; String? get description; PodcastEpisodeEnclosure? get enclosure; String? get pubDate; AudioFile get audioFile; DateTime get publishedAt; DateTime get addedAt; DateTime get updatedAt; AudioTrack? get audioTrack; Duration? get duration; int? get size;
+ String get libraryItemId; String get podcastId; String get id; int? get index; String? get season; String? get episode; String? get episodeType; String? get title; String? get subtitle; String? get description; PodcastEpisodeEnclosure? get enclosure; String? get pubDate; AudioFile get audioFile; DateTime get publishedAt; DateTime get addedAt; DateTime get updatedAt; AudioTrack get audioTrack; Duration get duration; int? get size;
 /// Create a copy of PodcastEpisode
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,11 +48,11 @@ abstract mixin class $PodcastEpisodeCopyWith<$Res>  {
   factory $PodcastEpisodeCopyWith(PodcastEpisode value, $Res Function(PodcastEpisode) _then) = _$PodcastEpisodeCopyWithImpl;
 @useResult
 $Res call({
- String libraryItemId, String podcastId, String id, int? index, String? season, String? episode, String? episodeType, String? title, String? subtitle, String? description, PodcastEpisodeEnclosure? enclosure, String? pubDate, AudioFile audioFile, DateTime publishedAt, DateTime addedAt, DateTime updatedAt, AudioTrack? audioTrack, Duration? duration, int? size
+ String libraryItemId, String podcastId, String id, int? index, String? season, String? episode, String? episodeType, String? title, String? subtitle, String? description, PodcastEpisodeEnclosure? enclosure, String? pubDate, AudioFile audioFile, DateTime publishedAt, DateTime addedAt, DateTime updatedAt, AudioTrack audioTrack, Duration duration, int? size
 });
 
 
-$PodcastEpisodeEnclosureCopyWith<$Res>? get enclosure;$AudioFileCopyWith<$Res> get audioFile;$AudioTrackCopyWith<$Res>? get audioTrack;
+$PodcastEpisodeEnclosureCopyWith<$Res>? get enclosure;$AudioFileCopyWith<$Res> get audioFile;$AudioTrackCopyWith<$Res> get audioTrack;
 
 }
 /// @nodoc
@@ -65,7 +65,7 @@ class _$PodcastEpisodeCopyWithImpl<$Res>
 
 /// Create a copy of PodcastEpisode
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? libraryItemId = null,Object? podcastId = null,Object? id = null,Object? index = freezed,Object? season = freezed,Object? episode = freezed,Object? episodeType = freezed,Object? title = freezed,Object? subtitle = freezed,Object? description = freezed,Object? enclosure = freezed,Object? pubDate = freezed,Object? audioFile = null,Object? publishedAt = null,Object? addedAt = null,Object? updatedAt = null,Object? audioTrack = freezed,Object? duration = freezed,Object? size = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? libraryItemId = null,Object? podcastId = null,Object? id = null,Object? index = freezed,Object? season = freezed,Object? episode = freezed,Object? episodeType = freezed,Object? title = freezed,Object? subtitle = freezed,Object? description = freezed,Object? enclosure = freezed,Object? pubDate = freezed,Object? audioFile = null,Object? publishedAt = null,Object? addedAt = null,Object? updatedAt = null,Object? audioTrack = null,Object? duration = null,Object? size = freezed,}) {
   return _then(_self.copyWith(
 libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
 as String,podcastId: null == podcastId ? _self.podcastId : podcastId // ignore: cast_nullable_to_non_nullable
@@ -83,9 +83,9 @@ as String?,audioFile: null == audioFile ? _self.audioFile : audioFile // ignore:
 as AudioFile,publishedAt: null == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,addedAt: null == addedAt ? _self.addedAt : addedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,audioTrack: freezed == audioTrack ? _self.audioTrack : audioTrack // ignore: cast_nullable_to_non_nullable
-as AudioTrack?,duration: freezed == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
-as Duration?,size: freezed == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
+as DateTime,audioTrack: null == audioTrack ? _self.audioTrack : audioTrack // ignore: cast_nullable_to_non_nullable
+as AudioTrack,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
+as Duration,size: freezed == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
 as int?,
   ));
 }
@@ -114,12 +114,9 @@ $AudioFileCopyWith<$Res> get audioFile {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$AudioTrackCopyWith<$Res>? get audioTrack {
-    if (_self.audioTrack == null) {
-    return null;
-  }
-
-  return $AudioTrackCopyWith<$Res>(_self.audioTrack!, (value) {
+$AudioTrackCopyWith<$Res> get audioTrack {
+  
+  return $AudioTrackCopyWith<$Res>(_self.audioTrack, (value) {
     return _then(_self.copyWith(audioTrack: value));
   });
 }
@@ -201,7 +198,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  PodcastEpisodeEnclosure? enclosure,  String? pubDate,  AudioFile audioFile,  DateTime publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack? audioTrack,  Duration? duration,  int? size)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  PodcastEpisodeEnclosure? enclosure,  String? pubDate,  AudioFile audioFile,  DateTime publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack audioTrack,  Duration duration,  int? size)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PodcastEpisode() when $default != null:
 return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.season,_that.episode,_that.episodeType,_that.title,_that.subtitle,_that.description,_that.enclosure,_that.pubDate,_that.audioFile,_that.publishedAt,_that.addedAt,_that.updatedAt,_that.audioTrack,_that.duration,_that.size);case _:
@@ -222,7 +219,7 @@ return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  PodcastEpisodeEnclosure? enclosure,  String? pubDate,  AudioFile audioFile,  DateTime publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack? audioTrack,  Duration? duration,  int? size)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  PodcastEpisodeEnclosure? enclosure,  String? pubDate,  AudioFile audioFile,  DateTime publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack audioTrack,  Duration duration,  int? size)  $default,) {final _that = this;
 switch (_that) {
 case _PodcastEpisode():
 return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.season,_that.episode,_that.episodeType,_that.title,_that.subtitle,_that.description,_that.enclosure,_that.pubDate,_that.audioFile,_that.publishedAt,_that.addedAt,_that.updatedAt,_that.audioTrack,_that.duration,_that.size);}
@@ -239,7 +236,7 @@ return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  PodcastEpisodeEnclosure? enclosure,  String? pubDate,  AudioFile audioFile,  DateTime publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack? audioTrack,  Duration? duration,  int? size)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  PodcastEpisodeEnclosure? enclosure,  String? pubDate,  AudioFile audioFile,  DateTime publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack audioTrack,  Duration duration,  int? size)?  $default,) {final _that = this;
 switch (_that) {
 case _PodcastEpisode() when $default != null:
 return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.season,_that.episode,_that.episodeType,_that.title,_that.subtitle,_that.description,_that.enclosure,_that.pubDate,_that.audioFile,_that.publishedAt,_that.addedAt,_that.updatedAt,_that.audioTrack,_that.duration,_that.size);case _:
@@ -254,7 +251,7 @@ return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.s
 @JsonSerializable()
 @DateTimeEpochConverter()
 class _PodcastEpisode implements PodcastEpisode {
-  const _PodcastEpisode({required this.libraryItemId, required this.podcastId, required this.id, this.index, this.season, this.episode, this.episodeType, this.title, this.subtitle, this.description, this.enclosure, this.pubDate, required this.audioFile, required this.publishedAt, required this.addedAt, required this.updatedAt, this.audioTrack, this.duration, this.size});
+  const _PodcastEpisode({required this.libraryItemId, required this.podcastId, required this.id, this.index, this.season, this.episode, this.episodeType, this.title, this.subtitle, this.description, this.enclosure, this.pubDate, required this.audioFile, required this.publishedAt, required this.addedAt, required this.updatedAt, required this.audioTrack, required this.duration, this.size});
   factory _PodcastEpisode.fromJson(Map<String, dynamic> json) => _$PodcastEpisodeFromJson(json);
 
 @override final  String libraryItemId;
@@ -273,8 +270,8 @@ class _PodcastEpisode implements PodcastEpisode {
 @override final  DateTime publishedAt;
 @override final  DateTime addedAt;
 @override final  DateTime updatedAt;
-@override final  AudioTrack? audioTrack;
-@override final  Duration? duration;
+@override final  AudioTrack audioTrack;
+@override final  Duration duration;
 @override final  int? size;
 
 /// Create a copy of PodcastEpisode
@@ -310,11 +307,11 @@ abstract mixin class _$PodcastEpisodeCopyWith<$Res> implements $PodcastEpisodeCo
   factory _$PodcastEpisodeCopyWith(_PodcastEpisode value, $Res Function(_PodcastEpisode) _then) = __$PodcastEpisodeCopyWithImpl;
 @override @useResult
 $Res call({
- String libraryItemId, String podcastId, String id, int? index, String? season, String? episode, String? episodeType, String? title, String? subtitle, String? description, PodcastEpisodeEnclosure? enclosure, String? pubDate, AudioFile audioFile, DateTime publishedAt, DateTime addedAt, DateTime updatedAt, AudioTrack? audioTrack, Duration? duration, int? size
+ String libraryItemId, String podcastId, String id, int? index, String? season, String? episode, String? episodeType, String? title, String? subtitle, String? description, PodcastEpisodeEnclosure? enclosure, String? pubDate, AudioFile audioFile, DateTime publishedAt, DateTime addedAt, DateTime updatedAt, AudioTrack audioTrack, Duration duration, int? size
 });
 
 
-@override $PodcastEpisodeEnclosureCopyWith<$Res>? get enclosure;@override $AudioFileCopyWith<$Res> get audioFile;@override $AudioTrackCopyWith<$Res>? get audioTrack;
+@override $PodcastEpisodeEnclosureCopyWith<$Res>? get enclosure;@override $AudioFileCopyWith<$Res> get audioFile;@override $AudioTrackCopyWith<$Res> get audioTrack;
 
 }
 /// @nodoc
@@ -327,7 +324,7 @@ class __$PodcastEpisodeCopyWithImpl<$Res>
 
 /// Create a copy of PodcastEpisode
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? libraryItemId = null,Object? podcastId = null,Object? id = null,Object? index = freezed,Object? season = freezed,Object? episode = freezed,Object? episodeType = freezed,Object? title = freezed,Object? subtitle = freezed,Object? description = freezed,Object? enclosure = freezed,Object? pubDate = freezed,Object? audioFile = null,Object? publishedAt = null,Object? addedAt = null,Object? updatedAt = null,Object? audioTrack = freezed,Object? duration = freezed,Object? size = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? libraryItemId = null,Object? podcastId = null,Object? id = null,Object? index = freezed,Object? season = freezed,Object? episode = freezed,Object? episodeType = freezed,Object? title = freezed,Object? subtitle = freezed,Object? description = freezed,Object? enclosure = freezed,Object? pubDate = freezed,Object? audioFile = null,Object? publishedAt = null,Object? addedAt = null,Object? updatedAt = null,Object? audioTrack = null,Object? duration = null,Object? size = freezed,}) {
   return _then(_PodcastEpisode(
 libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
 as String,podcastId: null == podcastId ? _self.podcastId : podcastId // ignore: cast_nullable_to_non_nullable
@@ -345,9 +342,9 @@ as String?,audioFile: null == audioFile ? _self.audioFile : audioFile // ignore:
 as AudioFile,publishedAt: null == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,addedAt: null == addedAt ? _self.addedAt : addedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,audioTrack: freezed == audioTrack ? _self.audioTrack : audioTrack // ignore: cast_nullable_to_non_nullable
-as AudioTrack?,duration: freezed == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
-as Duration?,size: freezed == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
+as DateTime,audioTrack: null == audioTrack ? _self.audioTrack : audioTrack // ignore: cast_nullable_to_non_nullable
+as AudioTrack,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
+as Duration,size: freezed == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
 as int?,
   ));
 }
@@ -377,12 +374,9 @@ $AudioFileCopyWith<$Res> get audioFile {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$AudioTrackCopyWith<$Res>? get audioTrack {
-    if (_self.audioTrack == null) {
-    return null;
-  }
-
-  return $AudioTrackCopyWith<$Res>(_self.audioTrack!, (value) {
+$AudioTrackCopyWith<$Res> get audioTrack {
+  
+  return $AudioTrackCopyWith<$Res>(_self.audioTrack, (value) {
     return _then(_self.copyWith(audioTrack: value));
   });
 }

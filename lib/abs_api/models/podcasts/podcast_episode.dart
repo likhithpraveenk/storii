@@ -27,8 +27,8 @@ sealed class PodcastEpisode with _$PodcastEpisode {
     required DateTime publishedAt,
     required DateTime addedAt,
     required DateTime updatedAt,
-    AudioTrack? audioTrack,
-    Duration? duration,
+    required AudioTrack audioTrack,
+    required Duration duration,
     int? size,
   }) = _PodcastEpisode;
 

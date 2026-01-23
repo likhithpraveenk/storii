@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/config/fonts.dart';
 import 'package:storii/app/config/theme.dart';
@@ -73,21 +75,27 @@ sealed class UserSettings with _$UserSettings {
 @Riverpod(keepAlive: true)
 class AppSettingsNotifier extends _$AppSettingsNotifier {
   AppDatabase get _db => ref.read(databaseProvider);
-  final AppSettings? _initial;
-  AppSettingsNotifier([this._initial]);
+  final _box = Hive.box<String>('settings');
 
   @override
   AppSettings build() {
-    return _initial ?? const AppSettings();
+    final settingsJson = _box.get(appSettingsKey);
+    if (settingsJson != null) {
+      try {
+        return AppSettings.fromJson(jsonDecode(settingsJson));
+      } catch (e, st) {
+        if (kDebugMode) {
+          debugPrint('Error: decoding app settings $e\n$st');
+        }
+      }
+    }
+    return const AppSettings();
   }
 
   Future<void> _save(AppSettings s) async {
     if (s == state) return;
     state = s;
-    await _db.managers.settings.create(
-      (companion) => companion(key: appSettingsKey, value: jsonEncode(s)),
-      mode: .insertOrReplace,
-    );
+    await _box.put(appSettingsKey, jsonEncode(s));
   }
 
   Future<void> deleteSettings(Uri url) async {
@@ -97,16 +105,14 @@ class AppSettingsNotifier extends _$AppSettingsNotifier {
     final userIds = associatedUsers.map((u) => u.id).toList();
 
     if (userIds.isNotEmpty) {
-      await _db.managers.settings.filter((f) => f.key.isIn(userIds)).delete();
+      await _box.deleteAll(userIds);
     }
 
-    await _db.managers.settings
-        .filter((f) => f.key.equals(appSettingsKey))
-        .delete();
+    await _box.delete(appSettingsKey);
   }
 
   Future<void> deleteUserSettings(String userId) async {
-    await _db.managers.settings.filter((f) => f.key.equals(userId)).delete();
+    await _box.delete(userId);
   }
 
   Future<void> reset() => _save(AppSettings(currentUser: state.currentUser));
@@ -114,39 +120,35 @@ class AppSettingsNotifier extends _$AppSettingsNotifier {
 
 @Riverpod(keepAlive: true)
 class UserSettingsNotifier extends _$UserSettingsNotifier {
-  AppDatabase get _db => ref.read(databaseProvider);
-  final UserSettings? _initial;
-  UserSettingsNotifier([this._initial]);
+  final _box = Hive.box<String>('settings');
 
   @override
   UserSettings build() {
-    if (_initial != null) return _initial;
     final user = ref.watch(currentUserProvider);
     if (user == null) {
       throw StateError(
         'UserSettingsNotifier accessed while currentUser is null',
       );
     }
-    final settings = _initial ?? UserSettings(userId: user.id);
-    _db.managers.settings
-        .filter((f) => f.key.equals(user.id))
-        .getSingleOrNull()
-        .then((data) {
-          if (data != null) {
-            state = UserSettings.fromJson(jsonDecode(data.value));
-          }
-        });
+    final settingsJson = _box.get(user.id);
 
-    return settings;
+    if (settingsJson != null) {
+      try {
+        return UserSettings.fromJson(jsonDecode(settingsJson));
+      } catch (e, st) {
+        if (kDebugMode) {
+          debugPrint('Error: decoding app settings $e\n$st');
+        }
+      }
+    }
+
+    return UserSettings(userId: user.id);
   }
 
   Future<void> _save(UserSettings s) async {
     if (s == state) return;
     state = s;
-    await _db.managers.settings.create(
-      (companion) => companion(key: s.userId, value: jsonEncode(s)),
-      mode: .insertOrReplace,
-    );
+    await _box.put(s.userId, jsonEncode(s));
   }
 
   Future<void> reset() => _save(
