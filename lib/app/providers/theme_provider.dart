@@ -26,9 +26,10 @@ ThemeData themeData(Ref ref, Brightness brightness) {
   }
 
   LogService.log(
-    'getting theme data with fontFamily:$fontFamily '
-    'usePureBlack? $isPureBlack '
-    'useSystemColors? $useDynamic '
+    'getting theme data with\n'
+    'fontFamily:$fontFamily\n'
+    'usePureBlack? $isPureBlack\n'
+    'useSystemColors? $useDynamic\n'
     'hasDynamicScheme? ${dynamicScheme != null}',
     source: 'themeDataProvider',
     level: .debug,

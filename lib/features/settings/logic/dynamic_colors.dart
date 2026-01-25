@@ -10,9 +10,6 @@ part 'dynamic_colors.g.dart';
 @riverpod
 Future<ColorScheme?> dynamicColors(Ref ref, Brightness brightness) async {
   ColorScheme? colorScheme;
-
-  LogService.log('Entering dynamic colors', source: 'dynamicColors');
-
   try {
     final corePalette = await DynamicColorPlugin.getCorePalette();
     final primary = corePalette?.toColorScheme(brightness: brightness).primary;
@@ -21,6 +18,7 @@ Future<ColorScheme?> dynamicColors(Ref ref, Brightness brightness) async {
       LogService.log(
         'found color ${harmonizedPrimary.toHex()} for $brightness',
         source: 'dynamicColors',
+        level: .debug,
       );
       colorScheme = ColorScheme.fromSeed(
         seedColor: harmonizedPrimary,
@@ -42,6 +40,7 @@ Future<ColorScheme?> dynamicColors(Ref ref, Brightness brightness) async {
         LogService.log(
           'found color ${harmonizedPrimary.toHex()} for $brightness',
           source: 'dynamicColors',
+          level: .debug,
         );
         colorScheme = ColorScheme.fromSeed(
           seedColor: harmonizedPrimary,

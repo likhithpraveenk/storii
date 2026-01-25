@@ -486,4 +486,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String buildNumber(String text) {
     return 'Build Number: $text';
   }
+
+  @override
+  String keepLogsFor(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get logHistory => 'Log History';
+
+  @override
+  String get autoDeleteNotice =>
+      'Logs older than this will be automatically deleted.';
+
+  @override
+  String get networkLogs => 'Network Logs';
+
+  @override
+  String get networkLogsDescription => 'Log HTTP requests and responses';
+
+  @override
+  String get networkLogsWarning =>
+      'Logging active. This may increase storage usage';
 }

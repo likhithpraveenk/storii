@@ -1011,6 +1011,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Build Number: {text}'**
   String buildNumber(String text);
+
+  /// No description provided for @keepLogsFor.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day} other{{count} days}}'**
+  String keepLogsFor(int count);
+
+  /// No description provided for @logHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Log History'**
+  String get logHistory;
+
+  /// No description provided for @autoDeleteNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Logs older than this will be automatically deleted.'**
+  String get autoDeleteNotice;
+
+  /// No description provided for @networkLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Network Logs'**
+  String get networkLogs;
+
+  /// No description provided for @networkLogsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Log HTTP requests and responses'**
+  String get networkLogsDescription;
+
+  /// No description provided for @networkLogsWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Logging active. This may increase storage usage'**
+  String get networkLogsWarning;
 }
 
 class _AppLocalizationsDelegate

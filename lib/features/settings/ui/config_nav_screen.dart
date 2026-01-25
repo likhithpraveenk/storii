@@ -8,38 +8,31 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
-class ConfigNavSetting extends StatelessWidget {
-  const ConfigNavSetting({super.key});
+class ConfigNavTile extends StatelessWidget {
+  const ConfigNavTile({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return ListTile(
+      leading: const Icon(Icons.explore),
       shape: AppStyles.roundedRect,
-      color: Theme.of(
-        context,
-      ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-      child: ListTile(
-        leading: const Icon(Icons.explore),
-        title: Text(
-          AppLocalizations.of(context)!.configNav,
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        onTap: () {
-          context.push(AppRoute.navigationSettings.path);
-        },
-      ),
+      trailing: const Icon(Icons.chevron_right),
+      title: Text(AppLocalizations.of(context)!.configNav),
+      onTap: () {
+        context.push(AppRoute.navigationSettings.path);
+      },
     );
   }
 }
 
-class NavSettingScreen extends ConsumerStatefulWidget {
-  const NavSettingScreen({super.key});
+class ConfigNavScreen extends ConsumerStatefulWidget {
+  const ConfigNavScreen({super.key});
 
   @override
-  ConsumerState<NavSettingScreen> createState() => _NavSettingScreenState();
+  ConsumerState<ConfigNavScreen> createState() => _ConfigNavScreenState();
 }
 
-class _NavSettingScreenState extends ConsumerState<NavSettingScreen> {
+class _ConfigNavScreenState extends ConsumerState<ConfigNavScreen> {
   late List<NavTarget> _masterOrder;
   late Set<NavTarget> _activeDraft;
 

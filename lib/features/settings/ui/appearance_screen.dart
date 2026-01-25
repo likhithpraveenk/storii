@@ -6,19 +6,25 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 
-class AppearanceTile extends StatelessWidget {
+class AppearanceTile extends ConsumerWidget {
   const AppearanceTile({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
+    final themeMode = ref.watch(themeModeProvider);
+    final subtitle = switch (themeMode) {
+      .system => l.system,
+      .light => l.light,
+      .dark => l.dark,
+    };
+
     return ListTile(
       shape: AppStyles.roundedRect,
       trailing: const Icon(Icons.chevron_right),
       leading: const Icon(Icons.settings_brightness),
-      title: Text(
-        AppLocalizations.of(context)!.appearance,
-        style: Theme.of(context).textTheme.titleSmall,
-      ),
+      title: Text(l.appearance),
+      subtitle: Text(subtitle),
       onTap: () {
         context.push(AppRoute.appearanceSettings.path);
       },

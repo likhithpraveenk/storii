@@ -18,7 +18,7 @@ import 'package:storii/features/search/ui/search_screen.dart';
 import 'package:storii/features/series/ui/series_detail_screen.dart';
 import 'package:storii/features/series/ui/series_list_screen.dart';
 import 'package:storii/features/settings/ui/appearance_screen.dart';
-import 'package:storii/features/settings/ui/nav_setting_screen.dart';
+import 'package:storii/features/settings/ui/config_nav_screen.dart';
 import 'package:storii/features/settings/ui/settings_screen.dart';
 import 'package:storii/shared/splash_screen.dart';
 import 'package:storii/shared/widgets/shell_scaffold.dart';
@@ -202,7 +202,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                       ),
                       GoRoute(
                         path: 'navigation',
-                        builder: (context, state) => const NavSettingScreen(),
+                        builder: (context, state) => const ConfigNavScreen(),
                       ),
                     ],
                   ),

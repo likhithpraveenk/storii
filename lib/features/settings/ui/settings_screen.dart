@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/features/settings/ui/appearance_screen.dart';
-import 'package:storii/features/settings/ui/datetime_format_setting.dart';
-import 'package:storii/features/settings/ui/font_picker_setting.dart';
-import 'package:storii/features/settings/ui/font_scale_setting.dart';
-import 'package:storii/features/settings/ui/http_logs_setting.dart';
-import 'package:storii/features/settings/ui/language_selector_setting.dart';
-import 'package:storii/features/settings/ui/log_retention_setting.dart';
-import 'package:storii/features/settings/ui/nav_setting_screen.dart';
+import 'package:storii/features/settings/ui/config_nav_screen.dart';
+import 'package:storii/features/settings/ui/datetime_format_tile.dart';
+import 'package:storii/features/settings/ui/font_family.dart';
+import 'package:storii/features/settings/ui/font_scale.dart';
+import 'package:storii/features/settings/ui/http_logs.dart';
+import 'package:storii/features/settings/ui/language_selector.dart';
+import 'package:storii/features/settings/ui/log_retention.dart';
 import 'package:storii/features/settings/ui/reset_settings_action.dart';
 import 'package:storii/l10n/l10n.dart';
 
-// TODO: no more drop downs!
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -29,17 +28,18 @@ class SettingsScreen extends StatelessWidget {
         ),
         titleSpacing: 0,
         actions: [const ResetSettingsAction()],
+        actionsPadding: const .only(right: 16),
       ),
       body: ListView(
         children: [
           const AppearanceTile(),
-          const LanguageSelectorSetting(),
-          const LogRetentionSetting(),
-          const DateTimeFormatSetting(),
-          const ConfigNavSetting(),
-          const FontPickerSetting(),
-          const FontScaleSetting(),
-          const HttpLogsSetting(),
+          const LanguageSelectorTile(),
+          const LogRetentionTile(),
+          const DateTimeFormatTile(),
+          const ConfigNavTile(),
+          const FontFamilyTile(),
+          const FontScaleTile(),
+          const HttpLogsTile(),
         ],
       ),
     );

@@ -215,5 +215,18 @@
         "type": "String"
       }
     }
-  }
+  },
+  "keepLogsFor": "{count, plural, =1{1 day} other{{count} days}}",
+  "@keepLogsFor": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "logHistory": "Log History",
+  "autoDeleteNotice": "Logs older than this will be automatically deleted.",
+  "networkLogs": "Network Logs",
+  "networkLogsDescription": "Log HTTP requests and responses",
+  "networkLogsWarning": "Logging active. This may increase storage usage"
 }
