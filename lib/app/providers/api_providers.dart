@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/logs/logs_interceptor.dart';
 import 'package:storii/app/models/user.dart';
-import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/home/logic/user_session_controller.dart';
 
@@ -11,17 +12,16 @@ part 'api_providers.g.dart';
 @Riverpod(keepAlive: true)
 ApiClient apiClient(Ref ref, UserDomain user) {
   final tokenService = ref.watch(tokenProvider);
-  final logNotifier = ref.read(logsProvider.notifier);
-
   final cancelToken = CancelToken();
 
   final apiClient = ApiClient(
     baseUrl: user.serverUrl,
     cancelToken: cancelToken,
+    interceptors: [LogsInterceptor()],
     getAccessToken: () async {
       final token = await tokenService.getAccessToken(user.id);
       if (token == null) {
-        logNotifier.log(
+        LogService.log(
           'Access token not available for user ${user.username}',
           source: 'API Client',
           level: .error,
@@ -32,7 +32,7 @@ ApiClient apiClient(Ref ref, UserDomain user) {
     getRefreshToken: () async {
       final token = await tokenService.getRefreshToken(user.id);
       if (token == null) {
-        logNotifier.log(
+        LogService.log(
           'Refresh token not available for user ${user.username}',
           source: 'API Client',
           level: .error,
@@ -59,7 +59,9 @@ ApiClient apiClient(Ref ref, UserDomain user) {
 
 @riverpod
 AuthApi authApi(Ref ref, Uri baseUrl) {
-  return AuthApi(BaseApiClient(baseUrl: baseUrl));
+  return AuthApi(
+    BaseApiClient(baseUrl: baseUrl, interceptors: [LogsInterceptor()]),
+  );
 }
 
 @Riverpod(keepAlive: true)

@@ -34,7 +34,7 @@ final class AuthorsListNotifierProvider
 }
 
 String _$authorsListNotifierHash() =>
-    r'30e15ae16f3a0e2ac48abb00c8d30072a423cf84';
+    r'8a0ae79e7b538d5ee22f8bb732632422f958bda9';
 
 abstract class _$AuthorsListNotifier
     extends $StreamNotifier<List<AuthorDomain>> {

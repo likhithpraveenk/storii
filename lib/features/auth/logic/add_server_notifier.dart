@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
-import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
@@ -25,23 +25,19 @@ class AddServerNotifier extends _$AddServerNotifier {
     try {
       final authApi = ref.read(authApiProvider(url.normalizedUri));
       await authApi.healthCheck();
-      ref
-          .read(logsProvider.notifier)
-          .log(
-            'Server validated: ${url.normalizedUri}',
-            source: 'AddServerNotifier',
-          );
+      LogService.log(
+        'Server validated: ${url.normalizedUri}',
+        source: 'AddServerNotifier',
+      );
       state = const ServerState(status: .available);
     } catch (e, st) {
       final error = AppError.resolve(e);
-      ref
-          .read(logsProvider.notifier)
-          .log(
-            'Server validated failed: ${url.normalizedUri}',
-            source: 'AddServerNotifier',
-            level: .error,
-            stackTrace: st,
-          );
+      LogService.log(
+        'Server validated failed: ${url.normalizedUri}',
+        source: 'AddServerNotifier',
+        level: .error,
+        stackTrace: st,
+      );
       state = ServerState(status: .unavailable, message: error.message);
     }
   }

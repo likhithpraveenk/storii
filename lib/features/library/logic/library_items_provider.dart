@@ -2,11 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/item.dart';
 import 'package:storii/app/models/to_domain.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
-import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
@@ -112,13 +112,11 @@ class LibraryItemsNotifier extends _$LibraryItemsNotifier {
   }
 
   void _logError(String action, Object e, StackTrace st) {
-    ref
-        .read(logsProvider.notifier)
-        .log(
-          'Error during $action: ${AppError.resolve(e)}',
-          level: .error,
-          source: 'LibraryItemsNotifier',
-          stackTrace: st,
-        );
+    LogService.log(
+      'Error during $action: ${AppError.resolve(e)}',
+      level: .error,
+      source: 'LibraryItemsNotifier',
+      stackTrace: st,
+    );
   }
 }

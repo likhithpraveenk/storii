@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
@@ -7,14 +8,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:storii/app/background/audio_handler.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/database_provider.dart';
-import 'package:storii/app/providers/logs_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/storage/drift/database.dart';
 
 Future<void> setupHive() async {
   await Hive.initFlutter();
-  await Hive.openBox<String>('settings');
+  await Hive.openBox<String>(settingsBox);
 }
 
 Future<void> setupLicenses() async {
@@ -67,8 +69,22 @@ Future<ProviderContainer> setupProviders() async {
     ]),
   );
 
-  container.read(logsProvider.notifier).initGlobalErrorHandling();
+  setupLogging(db);
   return container;
+}
+
+void setupLogging(AppDatabase db) {
+  final appSettings = getAppSettings();
+  LogService.init(db);
+  LogService.enableHttpLogs = appSettings.enableHttpLogs;
+}
+
+AppSettings getAppSettings() {
+  final settingsJson = Hive.box<String>(settingsBox).get(appSettingsKey);
+  if (settingsJson == null) {
+    return const AppSettings();
+  }
+  return AppSettings.fromJson(jsonDecode(settingsJson));
 }
 
 void setSystemUIOverlay() async {

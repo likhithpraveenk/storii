@@ -1,15 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class BaseApiClient {
   final Dio _dio;
+  final List<Interceptor>? interceptors;
 
-  BaseApiClient({required Uri baseUrl})
+  BaseApiClient({required Uri baseUrl, this.interceptors})
     : _dio = Dio(BaseOptions(baseUrl: baseUrl.toString())) {
-    if (kDebugMode) {
-      _dio.interceptors.add(PrettyDioLogger());
-    }
+    _dio.interceptors.addAll([...?interceptors]);
   }
 
   Dio get dio => _dio;

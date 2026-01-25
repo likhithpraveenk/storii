@@ -63,7 +63,7 @@ final class ItemDetailProvider
   }
 }
 
-String _$itemDetailHash() => r'fb12b19dfdb96175bf2e709fceb268cdbca7717c';
+String _$itemDetailHash() => r'b44280b2cedcfc6574e3927e345407b788b593de';
 
 final class ItemDetailFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ItemDomain>, String> {
@@ -137,7 +137,7 @@ final class ItemProvider
   }
 }
 
-String _$itemHash() => r'b42e6b579f91323fd049ea8e94f41dd525a9cdc4';
+String _$itemHash() => r'73c24211339e03225f5448b90be4a5ef9ec0d5fa';
 
 final class ItemFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ItemDomain>, String> {

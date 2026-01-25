@@ -17,6 +17,7 @@ part 'settings_provider.g.dart';
 part 'settings_provider.freezed.dart';
 
 const appSettingsKey = 'app_settings_key';
+const settingsBox = 'settings';
 
 @freezed
 sealed class AppSettings with _$AppSettings {
@@ -44,6 +45,8 @@ sealed class AppSettings with _$AppSettings {
     @Default(true) bool showTitleForItem,
 
     @Default(false) bool stackTitleOnImage,
+
+    @Default(false) bool enableHttpLogs,
   }) = _AppSettings;
 
   factory AppSettings.fromJson(Map<String, dynamic> json) =>
@@ -75,7 +78,7 @@ sealed class UserSettings with _$UserSettings {
 @Riverpod(keepAlive: true)
 class AppSettingsNotifier extends _$AppSettingsNotifier {
   AppDatabase get _db => ref.read(databaseProvider);
-  final _box = Hive.box<String>('settings');
+  final _box = Hive.box<String>(settingsBox);
 
   @override
   AppSettings build() {
@@ -85,7 +88,7 @@ class AppSettingsNotifier extends _$AppSettingsNotifier {
         return AppSettings.fromJson(jsonDecode(settingsJson));
       } catch (e, st) {
         if (kDebugMode) {
-          debugPrint('Error: decoding app settings $e\n$st');
+          debugPrint('Error: decoding app settings $e Stacktrace: $st');
         }
       }
     }
@@ -137,7 +140,7 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
         return UserSettings.fromJson(jsonDecode(settingsJson));
       } catch (e, st) {
         if (kDebugMode) {
-          debugPrint('Error: decoding app settings $e\n$st');
+          debugPrint('Error: decoding user settings $e Stacktrace: $st');
         }
       }
     }

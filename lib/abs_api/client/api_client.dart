@@ -1,12 +1,11 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:storii/abs_api/client/interceptors.dart';
 import 'package:storii/abs_api/endpoints/api_exception.dart';
 import 'package:storii/abs_api/endpoints/api_routes.dart';
 import 'package:storii/abs_api/models/utils/enums.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:synchronized/synchronized.dart';
 
 class ApiClient {
@@ -16,8 +15,10 @@ class ApiClient {
   final Future<String?> Function()? getRefreshToken;
   final Future<void> Function(String access, String refresh)? onTokensUpdated;
   final Future<void> Function()? onTokensFailure;
-  final Lock _refreshLock = Lock();
   final CancelToken? cancelToken;
+  final List<Interceptor>? interceptors;
+
+  final Lock _refreshLock = Lock();
 
   ApiClient({
     required this.baseUrl,
@@ -26,6 +27,7 @@ class ApiClient {
     this.onTokensUpdated,
     this.onTokensFailure,
     this.cancelToken,
+    this.interceptors,
   }) : _dio = Dio(
          BaseOptions(
            baseUrl: baseUrl.toString(),
@@ -35,10 +37,7 @@ class ApiClient {
          ),
        ) {
     _dio.options.headers = {'Content-Type': 'application/json'};
-    _dio.interceptors.addAll([
-      AuthInterceptor(this),
-      if (kDebugMode) PrettyDioLogger(responseBody: false),
-    ]);
+    _dio.interceptors.addAll([AuthInterceptor(this), ...?interceptors]);
   }
 
   Future<Response> handleUnauthorized(RequestOptions failedRequest) async {
@@ -49,11 +48,11 @@ class ApiClient {
     return _refreshLock.synchronized(() async {
       final currentToken = await getAccessToken?.call();
       if (currentToken != null && currentToken != failedToken) {
-        if (kDebugMode) {
-          debugPrint(
-            'Token was refreshed by another request, retrying with new token.',
-          );
-        }
+        LogService.log(
+          'Token was refreshed by another request, retrying with new token',
+          source: 'handleUnauthorized',
+          level: .debug,
+        );
         return _retryRequest(failedRequest, currentToken);
       }
 
@@ -62,7 +61,7 @@ class ApiClient {
       }
       failedRequest.extra['__retried'] = true;
 
-      final success = await _refreshAccessToken();
+      final success = await refreshAccessToken();
       if (!success) {
         await onTokensFailure?.call();
         throw const ApiException(
@@ -81,16 +80,13 @@ class ApiClient {
     return _dio.fetch(options);
   }
 
-  Future<bool> _refreshAccessToken() async {
+  Future<bool> refreshAccessToken() async {
     final refreshToken = await getRefreshToken?.call();
     if (refreshToken == null) return false;
 
     try {
-      final refreshDio = Dio(BaseOptions(baseUrl: baseUrl.toString()));
-
-      if (kDebugMode) {
-        refreshDio.interceptors.add(PrettyDioLogger());
-      }
+      final refreshDio = Dio(BaseOptions(baseUrl: baseUrl.toString()))
+        ..interceptors.addAll([...?interceptors]);
 
       final res = await refreshDio.post(
         ApiRoutes.authRefresh,
@@ -107,10 +103,13 @@ class ApiClient {
         return true;
       }
       return false;
-    } catch (e) {
-      if (kDebugMode) {
-        debugPrint('Token Refresh Failed: $e');
-      }
+    } catch (e, st) {
+      LogService.log(
+        'Token Refresh Failed: $e',
+        source: 'refreshAccessToken',
+        level: .error,
+        stackTrace: st,
+      );
       return false;
     }
   }

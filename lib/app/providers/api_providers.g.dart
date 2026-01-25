@@ -66,7 +66,7 @@ final class ApiClientProvider
   }
 }
 
-String _$apiClientHash() => r'36daf31a9d7fa79aa0dff8e8c9e9230a1aae5046';
+String _$apiClientHash() => r'3fb9dd56e466ff7466a863c8d934d45c944459f1';
 
 final class ApiClientFamily extends $Family
     with $FunctionalFamilyOverride<ApiClient, UserDomain> {
@@ -143,7 +143,7 @@ final class AuthApiProvider
   }
 }
 
-String _$authApiHash() => r'8a73dbe516419bfb7de51787cb6c1c732c5b465d';
+String _$authApiHash() => r'0256cef66c064bfdfdf72d44b580c7b939aeadf9';
 
 final class AuthApiFamily extends $Family
     with $FunctionalFamilyOverride<AuthApi, Uri> {

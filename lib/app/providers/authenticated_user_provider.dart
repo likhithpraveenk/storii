@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
-import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
@@ -16,13 +16,11 @@ Future<UserDomain> authenticatedUser(Ref ref) async {
     return user;
   } catch (e) {
     final error = AppError.resolve(e);
-    ref
-        .read(logsProvider.notifier)
-        .log(
-          'Error validating user session: $error',
-          source: 'AuthenticatedUserProvider',
-          level: .error,
-        );
+    LogService.log(
+      'Error validating user session: $error',
+      source: 'AuthenticatedUserProvider',
+      level: .error,
+    );
     throw error;
   }
 }

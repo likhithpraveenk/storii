@@ -5,6 +5,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/settings/ui/datetime_format_setting.dart';
 import 'package:storii/features/settings/ui/font_picker_setting.dart';
 import 'package:storii/features/settings/ui/font_scale_setting.dart';
+import 'package:storii/features/settings/ui/http_logs_setting.dart';
 import 'package:storii/features/settings/ui/language_selector_setting.dart';
 import 'package:storii/features/settings/ui/log_retention_setting.dart';
 import 'package:storii/features/settings/ui/nav_setting_screen.dart';
@@ -53,6 +54,7 @@ class SettingsScreen extends StatelessWidget {
           const ConfigNavSetting(),
           const FontPickerSetting(),
           const FontScaleSetting(),
+          const HttpLogsSetting(),
         ],
       ),
     );

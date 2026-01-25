@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/database_provider.dart';
-import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/storage/drift/database.dart';
 
@@ -25,9 +25,7 @@ class UsersNotifier extends _$UsersNotifier {
   Future<void> delete(UserDomain user) async {
     await _db.managers.users.filter((f) => f.id.equals(user.id)).delete();
     await ref.read(appSettingsProvider.notifier).deleteUserSettings(user.id);
-    ref
-        .read(logsProvider.notifier)
-        .log('User deleted: ${user.username}', source: 'UsersNotifier');
+    LogService.log('User deleted: ${user.username}', source: 'UsersNotifier');
   }
 }
 

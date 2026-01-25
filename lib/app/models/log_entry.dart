@@ -2,7 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'log_entry.freezed.dart';
 
-enum LogLevelDomain { info, warning, error }
+enum LogLevelDomain { http, debug, info, warning, error }
 
 @freezed
 sealed class LogEntry with _$LogEntry {

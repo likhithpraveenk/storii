@@ -1,18 +1,15 @@
 import 'dart:async';
 
 import 'package:drift/drift.dart';
-import 'package:flutter/foundation.dart';
-import 'package:logger/logger.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/app/providers/database_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/storage/drift/database.dart';
 
 part 'logs_provider.g.dart';
-
-final consoleLogger = Logger();
 
 @Riverpod(keepAlive: true)
 class LogsNotifier extends _$LogsNotifier {
@@ -20,14 +17,12 @@ class LogsNotifier extends _$LogsNotifier {
 
   @override
   Stream<List<LogEntry>> build() {
-    ref.listen<Duration>(logRetentionProvider, (prev, next) {
-      if (prev != next) _pruneOldLogs(next);
-    });
+    final retention = ref.watch(logRetentionProvider);
+    _pruneOldLogs(retention);
+    final enableHttpLogs = ref.watch(enableHttpLogsProvider);
+    LogService.enableHttpLogs = enableHttpLogs;
 
-    final retention = ref.read(logRetentionProvider);
-    Future.microtask(() => _pruneOldLogs(retention));
-
-    return _db.managers.appLogs.orderBy((o) => o.timestamp.desc()).watch();
+    return _db.managers.appLogs.orderBy((log) => log.timestamp.desc()).watch();
   }
 
   Future<void> _pruneOldLogs(Duration retention) async {
@@ -38,60 +33,9 @@ class LogsNotifier extends _$LogsNotifier {
         .delete();
   }
 
-  Future<void> log(
-    String message, {
-    String? source,
-    LogLevelDomain level = .info,
-    StackTrace? stackTrace,
-  }) async {
-    try {
-      if (kDebugMode) {
-        debugPrint('LogsNotifier: $message, $source\n$stackTrace');
-      }
-      await _db.managers.appLogs.create(
-        (_) => LogEntry(
-          timestamp: DateTime.now(),
-          message: message,
-          source: source,
-          level: level,
-          stackTrace: stackTrace?.toLimitedString(),
-        ).toInsertable(),
-      );
-    } catch (_) {}
-  }
-
   Future<int> clear() => _db.managers.appLogs.delete();
-
-  void initGlobalErrorHandling() {
-    try {
-      FlutterError.onError = (details) {
-        log(
-          details.exceptionAsString(),
-          level: .error,
-          source: 'FlutterError',
-          stackTrace: details.stack,
-        );
-        if (kDebugMode) {
-          consoleLogger.f(
-            'Flutter Error',
-            error: details.exception,
-            stackTrace: details.stack,
-          );
-        }
-      };
-
-      PlatformDispatcher.instance.onError = (e, s) {
-        log(
-          e.toString(),
-          level: .error,
-          stackTrace: s,
-          source: 'PlatformDispatcher',
-        );
-        if (kDebugMode) {
-          consoleLogger.f('PlatformDispatcher', error: e, stackTrace: s);
-        }
-        return true;
-      };
-    } catch (_) {}
-  }
 }
+
+final logFilterProvider = StateProvider<Set<LogLevelDomain>>((ref) {
+  return LogLevelDomain.values.toSet();
+});

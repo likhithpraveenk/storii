@@ -1,9 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/author.dart';
 import 'package:storii/app/models/to_domain.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
-import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
@@ -19,14 +19,12 @@ Future<AuthorDomain> author(Ref ref, String authorId) async {
     return author.toDomain(libraryId);
   } catch (e, s) {
     final error = AppError.resolve(e);
-    ref
-        .read(logsProvider.notifier)
-        .log(
-          'Error fetching author: $error',
-          source: 'authorProvider',
-          level: .error,
-          stackTrace: s,
-        );
+    LogService.log(
+      'Error fetching author: $error',
+      source: 'authorProvider',
+      level: .error,
+      stackTrace: s,
+    );
     throw error;
   }
 }

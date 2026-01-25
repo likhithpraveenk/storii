@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
-import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
 
@@ -18,16 +18,15 @@ class UserSessionController extends _$UserSessionController {
 
   Future<void> logout(UserDomain user) async {
     state = .loading;
-    final logger = ref.read(logsProvider.notifier);
     try {
       await ref.read(serverApiProvider(user)).logout();
-      logger.log(
+      LogService.log(
         'User "${user.username}" logged out',
         source: 'UserSessionController',
       );
       await _clearLocalSession(user.id);
     } catch (e, st) {
-      logger.log(
+      LogService.log(
         'Unexpected error during logout for user ${user.username}:$e',
         source: 'UserSessionController',
         level: .error,
@@ -40,16 +39,14 @@ class UserSessionController extends _$UserSessionController {
 
   Future<void> forceLogout(UserDomain user, {String? reason}) async {
     state = .loading;
-
-    final logger = ref.read(logsProvider.notifier);
     try {
-      logger.log(
+      LogService.log(
         'Forcing logout for user "${user.username}" - $reason',
         source: 'UserSessionController',
       );
       await _clearLocalSession(user.id);
     } catch (e, st) {
-      logger.log(
+      LogService.log(
         'Unexpected error during force logout for user ${user.username}: $e',
         source: 'UserSessionController',
         stackTrace: st,

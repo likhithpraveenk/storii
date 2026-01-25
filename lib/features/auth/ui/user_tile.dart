@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
-import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/user_auth_status.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
@@ -35,9 +35,7 @@ class UserTile extends ConsumerWidget {
             borderRadius: AppStyles.circularRadius,
             onTap: () async {
               if (isActive) {
-                ref
-                    .read(logsProvider.notifier)
-                    .log(l.switchingToUser(user.username));
+                LogService.log(l.switchingToUser(user.username));
                 await ref
                     .read(appSettingsProvider.notifier)
                     .setCurrentUser(user);

@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/to_domain.dart';
 import 'package:storii/app/providers/api_providers.dart';
-import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
@@ -56,20 +56,19 @@ class AddUserNotifier extends _$AddUserNotifier {
       await ref
           .read(userSettingsProvider.notifier)
           .setCurrentLibraryId(response.userDefaultLibraryId);
-      ref
-          .read(logsProvider.notifier)
-          .log('Logged in as ${storeUser.username}', source: 'AddUserNotifier');
+      LogService.log(
+        'Logged in as ${storeUser.username}',
+        source: 'AddUserNotifier',
+      );
       state = state.copyWith(status: .success);
     } catch (e, st) {
       final error = AppError.resolve(e);
-      ref
-          .read(logsProvider.notifier)
-          .log(
-            'Error while adding $username',
-            source: 'AddUserNotifier',
-            level: .error,
-            stackTrace: st,
-          );
+      LogService.log(
+        'Error while adding $username',
+        source: 'AddUserNotifier',
+        level: .error,
+        stackTrace: st,
+      );
       state = state.copyWith(status: .error, message: error.message);
     }
   }

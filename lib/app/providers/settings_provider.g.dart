@@ -28,6 +28,7 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
   defaultSeriesLimit: (json['defaultSeriesLimit'] as num?)?.toInt() ?? 20,
   showTitleForItem: json['showTitleForItem'] as bool? ?? true,
   stackTitleOnImage: json['stackTitleOnImage'] as bool? ?? false,
+  enableHttpLogs: json['enableHttpLogs'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$AppSettingsToJson(
@@ -45,6 +46,7 @@ Map<String, dynamic> _$AppSettingsToJson(
   'defaultSeriesLimit': instance.defaultSeriesLimit,
   'showTitleForItem': instance.showTitleForItem,
   'stackTitleOnImage': instance.stackTitleOnImage,
+  'enableHttpLogs': instance.enableHttpLogs,
 };
 
 const _$AppThemeEnumMap = {
@@ -126,7 +128,7 @@ final class AppSettingsNotifierProvider
 }
 
 String _$appSettingsNotifierHash() =>
-    r'27f8caf56b887214974a16bbc5b15c57b6e960f1';
+    r'7e5a7e2bd26fa4c4ba1365cf7762e570d518b1dd';
 
 abstract class _$AppSettingsNotifier extends $Notifier<AppSettings> {
   AppSettings build();
@@ -179,7 +181,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'd1ac78cb2ddb8524559c0d55dab0e0f07e1c5a57';
+    r'0147fa00f2181d26a85a29998221babdcf3a58c6';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings> {
   UserSettings build();
@@ -238,6 +240,9 @@ extension AppSettingsSetters on AppSettingsNotifier {
 
   Future<void> setStackTitleOnImage(bool value) =>
       _save(state.copyWith(stackTitleOnImage: value));
+
+  Future<void> setEnableHttpLogs(bool value) =>
+      _save(state.copyWith(enableHttpLogs: value));
 }
 
 final themeProvider = Provider<AppTheme>(
@@ -286,6 +291,10 @@ final showTitleForItemProvider = Provider<bool>(
 
 final stackTitleOnImageProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.stackTitleOnImage)),
+);
+
+final enableHttpLogsProvider = Provider<bool>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.enableHttpLogs)),
 );
 
 // **************************************************************************

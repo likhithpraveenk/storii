@@ -36,7 +36,6 @@ dependencies:
   palette_generator_master: ^1.0.1
   path: ^1.9.1
   path_provider: ^2.1.5
-  pretty_dio_logger: ^1.4.0
   riverpod_annotation: ^4.0.0
   socket_io_client: ^3.1.4
   synchronized: ^3.4.0

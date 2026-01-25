@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppSettings implements DiagnosticableTreeMixin {
 
- AppTheme get theme; String get localeCode; UserDomain? get currentUser; Duration get logRetention; String get dateTimeFormat; List<NavTarget> get navTargets; String? get fontFamily; double get fontScale; int get defaultItemsLimit; int get defaultSeriesLimit; bool get showTitleForItem; bool get stackTitleOnImage;
+ AppTheme get theme; String get localeCode; UserDomain? get currentUser; Duration get logRetention; String get dateTimeFormat; List<NavTarget> get navTargets; String? get fontFamily; double get fontScale; int get defaultItemsLimit; int get defaultSeriesLimit; bool get showTitleForItem; bool get stackTitleOnImage; bool get enableHttpLogs;
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,21 +29,21 @@ $AppSettingsCopyWith<AppSettings> get copyWith => _$AppSettingsCopyWithImpl<AppS
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'AppSettings'))
-    ..add(DiagnosticsProperty('theme', theme))..add(DiagnosticsProperty('localeCode', localeCode))..add(DiagnosticsProperty('currentUser', currentUser))..add(DiagnosticsProperty('logRetention', logRetention))..add(DiagnosticsProperty('dateTimeFormat', dateTimeFormat))..add(DiagnosticsProperty('navTargets', navTargets))..add(DiagnosticsProperty('fontFamily', fontFamily))..add(DiagnosticsProperty('fontScale', fontScale))..add(DiagnosticsProperty('defaultItemsLimit', defaultItemsLimit))..add(DiagnosticsProperty('defaultSeriesLimit', defaultSeriesLimit))..add(DiagnosticsProperty('showTitleForItem', showTitleForItem))..add(DiagnosticsProperty('stackTitleOnImage', stackTitleOnImage));
+    ..add(DiagnosticsProperty('theme', theme))..add(DiagnosticsProperty('localeCode', localeCode))..add(DiagnosticsProperty('currentUser', currentUser))..add(DiagnosticsProperty('logRetention', logRetention))..add(DiagnosticsProperty('dateTimeFormat', dateTimeFormat))..add(DiagnosticsProperty('navTargets', navTargets))..add(DiagnosticsProperty('fontFamily', fontFamily))..add(DiagnosticsProperty('fontScale', fontScale))..add(DiagnosticsProperty('defaultItemsLimit', defaultItemsLimit))..add(DiagnosticsProperty('defaultSeriesLimit', defaultSeriesLimit))..add(DiagnosticsProperty('showTitleForItem', showTitleForItem))..add(DiagnosticsProperty('stackTitleOnImage', stackTitleOnImage))..add(DiagnosticsProperty('enableHttpLogs', enableHttpLogs));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.localeCode, localeCode) || other.localeCode == localeCode)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.logRetention, logRetention) || other.logRetention == logRetention)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&const DeepCollectionEquality().equals(other.navTargets, navTargets)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.defaultItemsLimit, defaultItemsLimit) || other.defaultItemsLimit == defaultItemsLimit)&&(identical(other.defaultSeriesLimit, defaultSeriesLimit) || other.defaultSeriesLimit == defaultSeriesLimit)&&(identical(other.showTitleForItem, showTitleForItem) || other.showTitleForItem == showTitleForItem)&&(identical(other.stackTitleOnImage, stackTitleOnImage) || other.stackTitleOnImage == stackTitleOnImage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.localeCode, localeCode) || other.localeCode == localeCode)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.logRetention, logRetention) || other.logRetention == logRetention)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&const DeepCollectionEquality().equals(other.navTargets, navTargets)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.defaultItemsLimit, defaultItemsLimit) || other.defaultItemsLimit == defaultItemsLimit)&&(identical(other.defaultSeriesLimit, defaultSeriesLimit) || other.defaultSeriesLimit == defaultSeriesLimit)&&(identical(other.showTitleForItem, showTitleForItem) || other.showTitleForItem == showTitleForItem)&&(identical(other.stackTitleOnImage, stackTitleOnImage) || other.stackTitleOnImage == stackTitleOnImage)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,theme,localeCode,currentUser,logRetention,dateTimeFormat,const DeepCollectionEquality().hash(navTargets),fontFamily,fontScale,defaultItemsLimit,defaultSeriesLimit,showTitleForItem,stackTitleOnImage);
+int get hashCode => Object.hash(runtimeType,theme,localeCode,currentUser,logRetention,dateTimeFormat,const DeepCollectionEquality().hash(navTargets),fontFamily,fontScale,defaultItemsLimit,defaultSeriesLimit,showTitleForItem,stackTitleOnImage,enableHttpLogs);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AppSettings(theme: $theme, localeCode: $localeCode, currentUser: $currentUser, logRetention: $logRetention, dateTimeFormat: $dateTimeFormat, navTargets: $navTargets, fontFamily: $fontFamily, fontScale: $fontScale, defaultItemsLimit: $defaultItemsLimit, defaultSeriesLimit: $defaultSeriesLimit, showTitleForItem: $showTitleForItem, stackTitleOnImage: $stackTitleOnImage)';
+  return 'AppSettings(theme: $theme, localeCode: $localeCode, currentUser: $currentUser, logRetention: $logRetention, dateTimeFormat: $dateTimeFormat, navTargets: $navTargets, fontFamily: $fontFamily, fontScale: $fontScale, defaultItemsLimit: $defaultItemsLimit, defaultSeriesLimit: $defaultSeriesLimit, showTitleForItem: $showTitleForItem, stackTitleOnImage: $stackTitleOnImage, enableHttpLogs: $enableHttpLogs)';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $AppSettingsCopyWith<$Res>  {
   factory $AppSettingsCopyWith(AppSettings value, $Res Function(AppSettings) _then) = _$AppSettingsCopyWithImpl;
 @useResult
 $Res call({
- AppTheme theme, String localeCode, UserDomain? currentUser, Duration logRetention, String dateTimeFormat, List<NavTarget> navTargets, String? fontFamily, double fontScale, int defaultItemsLimit, int defaultSeriesLimit, bool showTitleForItem, bool stackTitleOnImage
+ AppTheme theme, String localeCode, UserDomain? currentUser, Duration logRetention, String dateTimeFormat, List<NavTarget> navTargets, String? fontFamily, double fontScale, int defaultItemsLimit, int defaultSeriesLimit, bool showTitleForItem, bool stackTitleOnImage, bool enableHttpLogs
 });
 
 
@@ -71,7 +71,7 @@ class _$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? theme = null,Object? localeCode = null,Object? currentUser = freezed,Object? logRetention = null,Object? dateTimeFormat = null,Object? navTargets = null,Object? fontFamily = freezed,Object? fontScale = null,Object? defaultItemsLimit = null,Object? defaultSeriesLimit = null,Object? showTitleForItem = null,Object? stackTitleOnImage = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? theme = null,Object? localeCode = null,Object? currentUser = freezed,Object? logRetention = null,Object? dateTimeFormat = null,Object? navTargets = null,Object? fontFamily = freezed,Object? fontScale = null,Object? defaultItemsLimit = null,Object? defaultSeriesLimit = null,Object? showTitleForItem = null,Object? stackTitleOnImage = null,Object? enableHttpLogs = null,}) {
   return _then(_self.copyWith(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
 as AppTheme,localeCode: null == localeCode ? _self.localeCode : localeCode // ignore: cast_nullable_to_non_nullable
@@ -85,6 +85,7 @@ as double,defaultItemsLimit: null == defaultItemsLimit ? _self.defaultItemsLimit
 as int,defaultSeriesLimit: null == defaultSeriesLimit ? _self.defaultSeriesLimit : defaultSeriesLimit // ignore: cast_nullable_to_non_nullable
 as int,showTitleForItem: null == showTitleForItem ? _self.showTitleForItem : showTitleForItem // ignore: cast_nullable_to_non_nullable
 as bool,stackTitleOnImage: null == stackTitleOnImage ? _self.stackTitleOnImage : stackTitleOnImage // ignore: cast_nullable_to_non_nullable
+as bool,enableHttpLogs: null == enableHttpLogs ? _self.enableHttpLogs : enableHttpLogs // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -179,10 +180,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppTheme theme,  String localeCode,  UserDomain? currentUser,  Duration logRetention,  String dateTimeFormat,  List<NavTarget> navTargets,  String? fontFamily,  double fontScale,  int defaultItemsLimit,  int defaultSeriesLimit,  bool showTitleForItem,  bool stackTitleOnImage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AppTheme theme,  String localeCode,  UserDomain? currentUser,  Duration logRetention,  String dateTimeFormat,  List<NavTarget> navTargets,  String? fontFamily,  double fontScale,  int defaultItemsLimit,  int defaultSeriesLimit,  bool showTitleForItem,  bool stackTitleOnImage,  bool enableHttpLogs)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetention,_that.dateTimeFormat,_that.navTargets,_that.fontFamily,_that.fontScale,_that.defaultItemsLimit,_that.defaultSeriesLimit,_that.showTitleForItem,_that.stackTitleOnImage);case _:
+return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetention,_that.dateTimeFormat,_that.navTargets,_that.fontFamily,_that.fontScale,_that.defaultItemsLimit,_that.defaultSeriesLimit,_that.showTitleForItem,_that.stackTitleOnImage,_that.enableHttpLogs);case _:
   return orElse();
 
 }
@@ -200,10 +201,10 @@ return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetentio
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppTheme theme,  String localeCode,  UserDomain? currentUser,  Duration logRetention,  String dateTimeFormat,  List<NavTarget> navTargets,  String? fontFamily,  double fontScale,  int defaultItemsLimit,  int defaultSeriesLimit,  bool showTitleForItem,  bool stackTitleOnImage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AppTheme theme,  String localeCode,  UserDomain? currentUser,  Duration logRetention,  String dateTimeFormat,  List<NavTarget> navTargets,  String? fontFamily,  double fontScale,  int defaultItemsLimit,  int defaultSeriesLimit,  bool showTitleForItem,  bool stackTitleOnImage,  bool enableHttpLogs)  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings():
-return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetention,_that.dateTimeFormat,_that.navTargets,_that.fontFamily,_that.fontScale,_that.defaultItemsLimit,_that.defaultSeriesLimit,_that.showTitleForItem,_that.stackTitleOnImage);}
+return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetention,_that.dateTimeFormat,_that.navTargets,_that.fontFamily,_that.fontScale,_that.defaultItemsLimit,_that.defaultSeriesLimit,_that.showTitleForItem,_that.stackTitleOnImage,_that.enableHttpLogs);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -217,10 +218,10 @@ return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetentio
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppTheme theme,  String localeCode,  UserDomain? currentUser,  Duration logRetention,  String dateTimeFormat,  List<NavTarget> navTargets,  String? fontFamily,  double fontScale,  int defaultItemsLimit,  int defaultSeriesLimit,  bool showTitleForItem,  bool stackTitleOnImage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AppTheme theme,  String localeCode,  UserDomain? currentUser,  Duration logRetention,  String dateTimeFormat,  List<NavTarget> navTargets,  String? fontFamily,  double fontScale,  int defaultItemsLimit,  int defaultSeriesLimit,  bool showTitleForItem,  bool stackTitleOnImage,  bool enableHttpLogs)?  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetention,_that.dateTimeFormat,_that.navTargets,_that.fontFamily,_that.fontScale,_that.defaultItemsLimit,_that.defaultSeriesLimit,_that.showTitleForItem,_that.stackTitleOnImage);case _:
+return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetention,_that.dateTimeFormat,_that.navTargets,_that.fontFamily,_that.fontScale,_that.defaultItemsLimit,_that.defaultSeriesLimit,_that.showTitleForItem,_that.stackTitleOnImage,_that.enableHttpLogs);case _:
   return null;
 
 }
@@ -232,7 +233,7 @@ return $default(_that.theme,_that.localeCode,_that.currentUser,_that.logRetentio
 @JsonSerializable()
 
 class _AppSettings with DiagnosticableTreeMixin implements AppSettings {
-  const _AppSettings({this.theme = AppTheme.system, this.localeCode = 'en', this.currentUser, this.logRetention = const Duration(days: 2), this.dateTimeFormat = 'dd MMM y', final  List<NavTarget> navTargets = defaultNavTargets, this.fontFamily = AppFonts.defaultFont, this.fontScale = 1, this.defaultItemsLimit = 50, this.defaultSeriesLimit = 20, this.showTitleForItem = true, this.stackTitleOnImage = false}): _navTargets = navTargets;
+  const _AppSettings({this.theme = AppTheme.system, this.localeCode = 'en', this.currentUser, this.logRetention = const Duration(days: 2), this.dateTimeFormat = 'dd MMM y', final  List<NavTarget> navTargets = defaultNavTargets, this.fontFamily = AppFonts.defaultFont, this.fontScale = 1, this.defaultItemsLimit = 50, this.defaultSeriesLimit = 20, this.showTitleForItem = true, this.stackTitleOnImage = false, this.enableHttpLogs = false}): _navTargets = navTargets;
   factory _AppSettings.fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);
 
 @override@JsonKey() final  AppTheme theme;
@@ -253,6 +254,7 @@ class _AppSettings with DiagnosticableTreeMixin implements AppSettings {
 @override@JsonKey() final  int defaultSeriesLimit;
 @override@JsonKey() final  bool showTitleForItem;
 @override@JsonKey() final  bool stackTitleOnImage;
+@override@JsonKey() final  bool enableHttpLogs;
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
@@ -268,21 +270,21 @@ Map<String, dynamic> toJson() {
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'AppSettings'))
-    ..add(DiagnosticsProperty('theme', theme))..add(DiagnosticsProperty('localeCode', localeCode))..add(DiagnosticsProperty('currentUser', currentUser))..add(DiagnosticsProperty('logRetention', logRetention))..add(DiagnosticsProperty('dateTimeFormat', dateTimeFormat))..add(DiagnosticsProperty('navTargets', navTargets))..add(DiagnosticsProperty('fontFamily', fontFamily))..add(DiagnosticsProperty('fontScale', fontScale))..add(DiagnosticsProperty('defaultItemsLimit', defaultItemsLimit))..add(DiagnosticsProperty('defaultSeriesLimit', defaultSeriesLimit))..add(DiagnosticsProperty('showTitleForItem', showTitleForItem))..add(DiagnosticsProperty('stackTitleOnImage', stackTitleOnImage));
+    ..add(DiagnosticsProperty('theme', theme))..add(DiagnosticsProperty('localeCode', localeCode))..add(DiagnosticsProperty('currentUser', currentUser))..add(DiagnosticsProperty('logRetention', logRetention))..add(DiagnosticsProperty('dateTimeFormat', dateTimeFormat))..add(DiagnosticsProperty('navTargets', navTargets))..add(DiagnosticsProperty('fontFamily', fontFamily))..add(DiagnosticsProperty('fontScale', fontScale))..add(DiagnosticsProperty('defaultItemsLimit', defaultItemsLimit))..add(DiagnosticsProperty('defaultSeriesLimit', defaultSeriesLimit))..add(DiagnosticsProperty('showTitleForItem', showTitleForItem))..add(DiagnosticsProperty('stackTitleOnImage', stackTitleOnImage))..add(DiagnosticsProperty('enableHttpLogs', enableHttpLogs));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.localeCode, localeCode) || other.localeCode == localeCode)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.logRetention, logRetention) || other.logRetention == logRetention)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&const DeepCollectionEquality().equals(other._navTargets, _navTargets)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.defaultItemsLimit, defaultItemsLimit) || other.defaultItemsLimit == defaultItemsLimit)&&(identical(other.defaultSeriesLimit, defaultSeriesLimit) || other.defaultSeriesLimit == defaultSeriesLimit)&&(identical(other.showTitleForItem, showTitleForItem) || other.showTitleForItem == showTitleForItem)&&(identical(other.stackTitleOnImage, stackTitleOnImage) || other.stackTitleOnImage == stackTitleOnImage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.theme, theme) || other.theme == theme)&&(identical(other.localeCode, localeCode) || other.localeCode == localeCode)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.logRetention, logRetention) || other.logRetention == logRetention)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&const DeepCollectionEquality().equals(other._navTargets, _navTargets)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.defaultItemsLimit, defaultItemsLimit) || other.defaultItemsLimit == defaultItemsLimit)&&(identical(other.defaultSeriesLimit, defaultSeriesLimit) || other.defaultSeriesLimit == defaultSeriesLimit)&&(identical(other.showTitleForItem, showTitleForItem) || other.showTitleForItem == showTitleForItem)&&(identical(other.stackTitleOnImage, stackTitleOnImage) || other.stackTitleOnImage == stackTitleOnImage)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,theme,localeCode,currentUser,logRetention,dateTimeFormat,const DeepCollectionEquality().hash(_navTargets),fontFamily,fontScale,defaultItemsLimit,defaultSeriesLimit,showTitleForItem,stackTitleOnImage);
+int get hashCode => Object.hash(runtimeType,theme,localeCode,currentUser,logRetention,dateTimeFormat,const DeepCollectionEquality().hash(_navTargets),fontFamily,fontScale,defaultItemsLimit,defaultSeriesLimit,showTitleForItem,stackTitleOnImage,enableHttpLogs);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AppSettings(theme: $theme, localeCode: $localeCode, currentUser: $currentUser, logRetention: $logRetention, dateTimeFormat: $dateTimeFormat, navTargets: $navTargets, fontFamily: $fontFamily, fontScale: $fontScale, defaultItemsLimit: $defaultItemsLimit, defaultSeriesLimit: $defaultSeriesLimit, showTitleForItem: $showTitleForItem, stackTitleOnImage: $stackTitleOnImage)';
+  return 'AppSettings(theme: $theme, localeCode: $localeCode, currentUser: $currentUser, logRetention: $logRetention, dateTimeFormat: $dateTimeFormat, navTargets: $navTargets, fontFamily: $fontFamily, fontScale: $fontScale, defaultItemsLimit: $defaultItemsLimit, defaultSeriesLimit: $defaultSeriesLimit, showTitleForItem: $showTitleForItem, stackTitleOnImage: $stackTitleOnImage, enableHttpLogs: $enableHttpLogs)';
 }
 
 
@@ -293,7 +295,7 @@ abstract mixin class _$AppSettingsCopyWith<$Res> implements $AppSettingsCopyWith
   factory _$AppSettingsCopyWith(_AppSettings value, $Res Function(_AppSettings) _then) = __$AppSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- AppTheme theme, String localeCode, UserDomain? currentUser, Duration logRetention, String dateTimeFormat, List<NavTarget> navTargets, String? fontFamily, double fontScale, int defaultItemsLimit, int defaultSeriesLimit, bool showTitleForItem, bool stackTitleOnImage
+ AppTheme theme, String localeCode, UserDomain? currentUser, Duration logRetention, String dateTimeFormat, List<NavTarget> navTargets, String? fontFamily, double fontScale, int defaultItemsLimit, int defaultSeriesLimit, bool showTitleForItem, bool stackTitleOnImage, bool enableHttpLogs
 });
 
 
@@ -310,7 +312,7 @@ class __$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? theme = null,Object? localeCode = null,Object? currentUser = freezed,Object? logRetention = null,Object? dateTimeFormat = null,Object? navTargets = null,Object? fontFamily = freezed,Object? fontScale = null,Object? defaultItemsLimit = null,Object? defaultSeriesLimit = null,Object? showTitleForItem = null,Object? stackTitleOnImage = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? theme = null,Object? localeCode = null,Object? currentUser = freezed,Object? logRetention = null,Object? dateTimeFormat = null,Object? navTargets = null,Object? fontFamily = freezed,Object? fontScale = null,Object? defaultItemsLimit = null,Object? defaultSeriesLimit = null,Object? showTitleForItem = null,Object? stackTitleOnImage = null,Object? enableHttpLogs = null,}) {
   return _then(_AppSettings(
 theme: null == theme ? _self.theme : theme // ignore: cast_nullable_to_non_nullable
 as AppTheme,localeCode: null == localeCode ? _self.localeCode : localeCode // ignore: cast_nullable_to_non_nullable
@@ -324,6 +326,7 @@ as double,defaultItemsLimit: null == defaultItemsLimit ? _self.defaultItemsLimit
 as int,defaultSeriesLimit: null == defaultSeriesLimit ? _self.defaultSeriesLimit : defaultSeriesLimit // ignore: cast_nullable_to_non_nullable
 as int,showTitleForItem: null == showTitleForItem ? _self.showTitleForItem : showTitleForItem // ignore: cast_nullable_to_non_nullable
 as bool,stackTitleOnImage: null == stackTitleOnImage ? _self.stackTitleOnImage : stackTitleOnImage // ignore: cast_nullable_to_non_nullable
+as bool,enableHttpLogs: null == enableHttpLogs ? _self.enableHttpLogs : enableHttpLogs // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

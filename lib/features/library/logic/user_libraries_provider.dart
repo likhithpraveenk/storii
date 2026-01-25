@@ -1,9 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/library.dart';
 import 'package:storii/app/models/to_domain.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
-import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
 part 'user_libraries_provider.g.dart';
@@ -18,14 +18,12 @@ Future<List<LibraryDomain>> userLibraries(Ref ref) async {
     return librariesDto.map((l) => l.toDomain(user.serverUrl)).toList();
   } catch (e, st) {
     final error = AppError.resolve(e);
-    ref
-        .read(logsProvider.notifier)
-        .log(
-          'Error fetching user libraries: ${error.message}',
-          source: 'UserLibrariesProvider',
-          level: .error,
-          stackTrace: st,
-        );
+    LogService.log(
+      'Error fetching user libraries: ${error.message}',
+      source: 'UserLibrariesProvider',
+      level: .error,
+      stackTrace: st,
+    );
     throw error;
   }
 }

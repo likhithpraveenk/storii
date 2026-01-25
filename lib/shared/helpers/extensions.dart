@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -49,14 +51,26 @@ extension StringExtensions on String {
 
     return uri.replace(host: uri.host.toLowerCase(), path: cleanPath);
   }
+
+  String toPrettyJson() {
+    try {
+      final dynamic decoded = jsonDecode(this);
+      final encoder = const JsonEncoder.withIndent('  ');
+      return encoder.convert(decoded);
+    } catch (_) {
+      return this;
+    }
+  }
 }
 
 extension LogLevelX on LogLevelDomain {
   Color color(ColorScheme scheme) {
     return switch (this) {
+      .debug => Colors.grey,
       .info => scheme.primary,
-      .warning => scheme.tertiary,
-      .error => scheme.error,
+      .warning => Colors.yellow,
+      .error => Colors.red,
+      .http => Colors.green,
     };
   }
 }
@@ -70,11 +84,6 @@ extension LocalFormatterX on DateTime {
     final formatter = _cache.putIfAbsent(pattern, () => DateFormat(pattern));
     return formatter.format(toLocal());
   }
-}
-
-extension StackTraceX on StackTrace {
-  String toLimitedString({int lines = 10}) =>
-      toString().split('\n').take(lines).join('\n');
 }
 
 extension AudiobookSortX on Iterable<ItemDomain> {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/features/logs/ui/log_entry_sheet.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -15,6 +16,7 @@ class LogsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final activeFilters = ref.watch(logFilterProvider);
     final logsAsync = ref.watch(logsProvider);
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
@@ -24,6 +26,37 @@ class LogsScreen extends ConsumerWidget {
       appBar: AppBar(
         titleSpacing: 0,
         title: Text(l.logs, style: textTheme.titleLarge),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(50),
+          child: SizedBox(
+            height: 50,
+            child: ListView(
+              scrollDirection: .horizontal,
+              padding: const .symmetric(horizontal: 16, vertical: 8),
+              children: LogLevelDomain.values.map((level) {
+                final isSelected = activeFilters.contains(level);
+                return Padding(
+                  padding: const .only(right: 8),
+                  child: FilterChip(
+                    label: Text(level.name),
+                    selected: isSelected,
+                    onSelected: (selected) {
+                      final current = {...activeFilters};
+                      if (selected) {
+                        current.add(level);
+                      } else {
+                        if (current.length > 1) current.remove(level);
+                      }
+                      ref.read(logFilterProvider.notifier).state = current;
+                    },
+                    selectedColor: level.color(scheme).withValues(alpha: 0.3),
+                    checkmarkColor: level.color(scheme),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ),
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
@@ -65,7 +98,10 @@ class LogsScreen extends ConsumerWidget {
         ],
       ),
       body: logsAsync.when(
-        data: (logs) {
+        data: (allLogs) {
+          final logs = allLogs
+              .where((entry) => activeFilters.contains(entry.level))
+              .toList();
           if (logs.isEmpty) {
             return Center(child: Text(l.empty, style: textTheme.bodyLarge));
           }

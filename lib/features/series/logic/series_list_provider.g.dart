@@ -34,7 +34,7 @@ final class SeriesListNotifierProvider
 }
 
 String _$seriesListNotifierHash() =>
-    r'f215c7a6f9042ca1b737bac82953d6da16b71bb0';
+    r'38107f6883ba25e27fe68926b94f701467ebfc67';
 
 abstract class _$SeriesListNotifier extends $AsyncNotifier<SeriesListState> {
   FutureOr<SeriesListState> build();

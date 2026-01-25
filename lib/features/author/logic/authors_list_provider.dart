@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/author.dart';
 import 'package:storii/app/models/to_domain.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
-import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
@@ -40,13 +40,11 @@ class AuthorsListNotifier extends _$AuthorsListNotifier {
   }
 
   void _logError(Object e, StackTrace st) {
-    ref
-        .read(logsProvider.notifier)
-        .log(
-          'error getting authors: ${AppError.resolve(e)}',
-          level: .error,
-          source: 'AuthorsListNotifier',
-          stackTrace: st,
-        );
+    LogService.log(
+      'error getting authors: ${AppError.resolve(e)}',
+      level: .error,
+      source: 'AuthorsListNotifier',
+      stackTrace: st,
+    );
   }
 }
