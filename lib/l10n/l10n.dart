@@ -430,6 +430,42 @@ abstract class AppLocalizations {
   /// **'System'**
   String get system;
 
+  /// No description provided for @light.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get light;
+
+  /// No description provided for @dark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get dark;
+
+  /// No description provided for @systemTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'System Theme'**
+  String get systemTheme;
+
+  /// No description provided for @systemThemeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Match device palette'**
+  String get systemThemeSubtitle;
+
+  /// No description provided for @pureBlack.
+  ///
+  /// In en, this message translates to:
+  /// **'Pure Black'**
+  String get pureBlack;
+
+  /// No description provided for @pureBlackSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Use absolute black for OLED screens'**
+  String get pureBlackSubtitle;
+
   /// No description provided for @fontScale.
   ///
   /// In en, this message translates to:
@@ -447,6 +483,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Configure Navigation'**
   String get configNav;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
 
   /// No description provided for @mustSelect3.
   ///

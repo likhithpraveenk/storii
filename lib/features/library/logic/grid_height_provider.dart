@@ -1,8 +1,10 @@
+import 'dart:ui';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/models/utils/enums.dart';
 import 'package:storii/app/config/app_styles.dart';
-import 'package:storii/app/providers/app_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/app/providers/theme_provider.dart';
 
 part 'grid_height_provider.g.dart';
 
@@ -31,10 +33,11 @@ double gridHeight(Ref ref) {
     showTitle: ref.watch(showTitleForItemProvider),
     stackTitle: ref.watch(stackTitleOnImageProvider),
   );
+  final brightness = PlatformDispatcher.instance.platformBrightness;
 
   return switch (mode) {
     .comfortable => () {
-      final theme = ref.watch(themeDataProvider);
+      final theme = ref.watch(themeDataProvider(brightness));
       final scaler = ref.watch(textScalerProvider);
 
       final titleFontSize = theme.textTheme.titleSmall?.fontSize ?? 14.0;
@@ -56,7 +59,8 @@ double gridHeight(Ref ref) {
 
 @riverpod
 double authorsGridHeight(Ref ref) {
-  final theme = ref.watch(themeDataProvider);
+  final brightness = PlatformDispatcher.instance.platformBrightness;
+  final theme = ref.watch(themeDataProvider(brightness));
   final scaler = ref.watch(textScalerProvider);
 
   final titleFontSize = theme.textTheme.titleSmall?.fontSize ?? 14.0;
@@ -67,7 +71,8 @@ double authorsGridHeight(Ref ref) {
 
 @riverpod
 double seriesGridHeight(Ref ref) {
-  final theme = ref.watch(themeDataProvider);
+  final brightness = PlatformDispatcher.instance.platformBrightness;
+  final theme = ref.watch(themeDataProvider(brightness));
   final scaler = ref.watch(textScalerProvider);
 
   final titleFontSize = theme.textTheme.titleSmall?.fontSize ?? 14.0;
@@ -102,8 +107,8 @@ double shelfHeight(Ref ref, ShelfType type) {
   if (isBook && (mode == .compact || mode == .coverOnly)) {
     return imageBaseHeight;
   }
-
-  final theme = ref.watch(themeDataProvider);
+  final brightness = PlatformDispatcher.instance.platformBrightness;
+  final theme = ref.watch(themeDataProvider(brightness));
   final scaler = ref.watch(textScalerProvider);
 
   final titleH =

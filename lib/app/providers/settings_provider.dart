@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/config/fonts.dart';
-import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/app/providers/database_provider.dart';
@@ -22,7 +22,11 @@ const settingsBox = 'settings';
 @freezed
 sealed class AppSettings with _$AppSettings {
   const factory AppSettings({
-    @Default(AppTheme.system) AppTheme theme,
+    @Default(ThemeMode.dark) ThemeMode themeMode,
+
+    @Default(false) bool useDynamicColor,
+
+    @Default(false) bool usePureBlack,
 
     @Default('en') String localeCode,
 

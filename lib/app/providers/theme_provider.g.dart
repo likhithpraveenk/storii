@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_providers.dart';
+part of 'theme_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -10,24 +10,31 @@ part of 'app_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(themeData)
-final themeDataProvider = ThemeDataProvider._();
+final themeDataProvider = ThemeDataFamily._();
 
 final class ThemeDataProvider
     extends $FunctionalProvider<ThemeData, ThemeData, ThemeData>
     with $Provider<ThemeData> {
-  ThemeDataProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'themeDataProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
+  ThemeDataProvider._({
+    required ThemeDataFamily super.from,
+    required Brightness super.argument,
+  }) : super(
+         retry: null,
+         name: r'themeDataProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
   @override
   String debugGetCreateSourceHash() => _$themeDataHash();
+
+  @override
+  String toString() {
+    return r'themeDataProvider'
+        ''
+        '($argument)';
+  }
 
   @$internal
   @override
@@ -36,7 +43,8 @@ final class ThemeDataProvider
 
   @override
   ThemeData create(Ref ref) {
-    return themeData(ref);
+    final argument = this.argument as Brightness;
+    return themeData(ref, argument);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -46,9 +54,37 @@ final class ThemeDataProvider
       providerOverride: $SyncValueProvider<ThemeData>(value),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ThemeDataProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
-String _$themeDataHash() => r'c17bc778f4e6c43bac681bbfdb3520fdb041f605';
+String _$themeDataHash() => r'67fa9a49c82c9d6628297e6124ab7527f1b57021';
+
+final class ThemeDataFamily extends $Family
+    with $FunctionalFamilyOverride<ThemeData, Brightness> {
+  ThemeDataFamily._()
+    : super(
+        retry: null,
+        name: r'themeDataProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  ThemeDataProvider call(Brightness brightness) =>
+      ThemeDataProvider._(argument: brightness, from: this);
+
+  @override
+  String toString() => r'themeDataProvider';
+}
 
 @ProviderFor(textScaler)
 final textScalerProvider = TextScalerProvider._();

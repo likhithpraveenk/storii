@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/settings/ui/appearance_screen.dart';
 import 'package:storii/features/settings/ui/datetime_format_setting.dart';
 import 'package:storii/features/settings/ui/font_picker_setting.dart';
 import 'package:storii/features/settings/ui/font_scale_setting.dart';
@@ -10,7 +9,6 @@ import 'package:storii/features/settings/ui/language_selector_setting.dart';
 import 'package:storii/features/settings/ui/log_retention_setting.dart';
 import 'package:storii/features/settings/ui/nav_setting_screen.dart';
 import 'package:storii/features/settings/ui/reset_settings_action.dart';
-import 'package:storii/features/settings/ui/theme_setting.dart';
 import 'package:storii/l10n/l10n.dart';
 
 // TODO: no more drop downs!
@@ -30,24 +28,11 @@ class SettingsScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
         ),
         titleSpacing: 0,
-        actions: [
-          const ResetSettingsAction(),
-          Consumer(
-            builder: (context, ref, child) {
-              return IconButton(
-                tooltip: AppLocalizations.of(context)!.switchAccount,
-                onPressed: () {
-                  ref.read(appSettingsProvider.notifier).setCurrentUser(null);
-                },
-                icon: const Icon(Icons.switch_account),
-              );
-            },
-          ),
-        ],
+        actions: [const ResetSettingsAction()],
       ),
       body: ListView(
         children: [
-          const ThemeSetting(),
+          const AppearanceTile(),
           const LanguageSelectorSetting(),
           const LogRetentionSetting(),
           const DateTimeFormatSetting(),

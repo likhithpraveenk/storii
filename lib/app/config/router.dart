@@ -11,12 +11,13 @@ import 'package:storii/features/home/ui/home_screen.dart';
 import 'package:storii/features/item/ui/item_detail_screen.dart';
 import 'package:storii/features/library/ui/library_screen.dart';
 import 'package:storii/features/logs/ui/logs_screen.dart';
+import 'package:storii/features/more/ui/about_screen.dart';
 import 'package:storii/features/more/ui/more_screen.dart';
 import 'package:storii/features/profile/ui/profile_screen.dart';
 import 'package:storii/features/search/ui/search_screen.dart';
 import 'package:storii/features/series/ui/series_detail_screen.dart';
 import 'package:storii/features/series/ui/series_list_screen.dart';
-import 'package:storii/features/settings/ui/about_screen.dart';
+import 'package:storii/features/settings/ui/appearance_screen.dart';
 import 'package:storii/features/settings/ui/nav_setting_screen.dart';
 import 'package:storii/features/settings/ui/settings_screen.dart';
 import 'package:storii/shared/splash_screen.dart';
@@ -39,6 +40,7 @@ enum AppRoute {
   downloads('/downloads'),
   more('/more'),
   settings('/more/settings'),
+  appearanceSettings('/more/settings/appearance'),
   navigationSettings('/more/settings/navigation'),
   profile('/more/profile');
 
@@ -194,6 +196,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                     path: 'settings',
                     builder: (context, state) => const SettingsScreen(),
                     routes: [
+                      GoRoute(
+                        path: 'appearance',
+                        builder: (context, state) => const AppearanceScreen(),
+                      ),
                       GoRoute(
                         path: 'navigation',
                         builder: (context, state) => const NavSettingScreen(),

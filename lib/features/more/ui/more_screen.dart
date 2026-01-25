@@ -5,7 +5,8 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/settings/ui/about_screen.dart';
+import 'package:storii/features/more/ui/about_screen.dart';
+import 'package:storii/features/more/ui/logout_tile.dart';
 import 'package:storii/l10n/l10n.dart';
 
 class MoreScreen extends ConsumerWidget {
@@ -65,6 +66,13 @@ class MoreScreen extends ConsumerWidget {
               onTap: () => context.push(AppRoute.logs.path),
               leading: const Icon(Icons.bug_report),
               title: Text(AppLocalizations.of(context)!.logs),
+            ),
+            const LogoutTile(),
+            ListTile(
+              leading: const Icon(Icons.switch_account),
+              title: Text(AppLocalizations.of(context)!.switchAccount),
+              onTap: () =>
+                  ref.read(appSettingsProvider.notifier).setCurrentUser(null),
             ),
             const AboutTile(),
           ],

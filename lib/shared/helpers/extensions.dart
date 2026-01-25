@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:storii/abs_api/abs_api.dart';
@@ -171,10 +170,14 @@ extension FilterGroupX on FilterGroup {
   }
 }
 
-extension ValueListenableMapper<T> on ValueListenable<T> {
-  ValueNotifier<R> map<R>(R Function(T value) transform) {
-    final notifier = ValueNotifier<R>(transform(value));
-    addListener(() => notifier.value = transform(value));
-    return notifier;
+extension ColorExtensions on Color {
+  String toHex() {
+    final int argb = toARGB32();
+    return '#${argb.toRadixString(16).padLeft(8, '0')}';
+  }
+
+  String toHexNoAlpha() {
+    final int argb = toARGB32();
+    return '#${(argb & 0xFFFFFF).toRadixString(16).padLeft(6, '0')}';
   }
 }

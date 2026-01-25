@@ -48,7 +48,7 @@ final class GridHeightProvider
   }
 }
 
-String _$gridHeightHash() => r'0bd43b36431f77d4640708b9f850ab4395022328';
+String _$gridHeightHash() => r'78e949ce48dd0812c622e02ad0d3428493db0530';
 
 @ProviderFor(authorsGridHeight)
 final authorsGridHeightProvider = AuthorsGridHeightProvider._();
@@ -89,7 +89,7 @@ final class AuthorsGridHeightProvider
   }
 }
 
-String _$authorsGridHeightHash() => r'0b718398923939f31e67d3056ae05f0de7885c77';
+String _$authorsGridHeightHash() => r'e49e9a803fde17df0080b78a87d28211abc58b70';
 
 @ProviderFor(seriesGridHeight)
 final seriesGridHeightProvider = SeriesGridHeightProvider._();
@@ -130,7 +130,7 @@ final class SeriesGridHeightProvider
   }
 }
 
-String _$seriesGridHeightHash() => r'5e42b95adb2da02d9d77368beb6f8f0189fe9877';
+String _$seriesGridHeightHash() => r'19fd64a574b9c5cd3f060ae15111fc0974ce8b0b';
 
 @ProviderFor(shelfHeight)
 final shelfHeightProvider = ShelfHeightFamily._();
@@ -189,7 +189,7 @@ final class ShelfHeightProvider
   }
 }
 
-String _$shelfHeightHash() => r'f7d75213a4e4d111b7409cf8eb66f91e3c1f87a1';
+String _$shelfHeightHash() => r'219e0f3fde16dbf4fa68901452e17450a452f708';
 
 final class ShelfHeightFamily extends $Family
     with $FunctionalFamilyOverride<double, ShelfType> {

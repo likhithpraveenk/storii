@@ -187,6 +187,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get system => 'System';
 
   @override
+  String get light => 'Light';
+
+  @override
+  String get dark => 'Dark';
+
+  @override
+  String get systemTheme => 'System Theme';
+
+  @override
+  String get systemThemeSubtitle => 'Match device palette';
+
+  @override
+  String get pureBlack => 'Pure Black';
+
+  @override
+  String get pureBlackSubtitle => 'Use absolute black for OLED screens';
+
+  @override
   String get fontScale => 'Font Scale';
 
   @override
@@ -194,6 +212,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get configNav => 'Configure Navigation';
+
+  @override
+  String get appearance => 'Appearance';
 
   @override
   String get mustSelect3 => 'You must select at least 3 items';

@@ -7,8 +7,11 @@ part of 'settings_provider.dart';
 // **************************************************************************
 
 _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
-  theme:
-      $enumDecodeNullable(_$AppThemeEnumMap, json['theme']) ?? AppTheme.system,
+  themeMode:
+      $enumDecodeNullable(_$ThemeModeEnumMap, json['themeMode']) ??
+      ThemeMode.dark,
+  useDynamicColor: json['useDynamicColor'] as bool? ?? false,
+  usePureBlack: json['usePureBlack'] as bool? ?? false,
   localeCode: json['localeCode'] as String? ?? 'en',
   currentUser: json['currentUser'] == null
       ? null
@@ -34,7 +37,9 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
 Map<String, dynamic> _$AppSettingsToJson(
   _AppSettings instance,
 ) => <String, dynamic>{
-  'theme': _$AppThemeEnumMap[instance.theme]!,
+  'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,
+  'useDynamicColor': instance.useDynamicColor,
+  'usePureBlack': instance.usePureBlack,
   'localeCode': instance.localeCode,
   'currentUser': ?instance.currentUser?.toJson(),
   'logRetention': instance.logRetention.inMicroseconds,
@@ -49,11 +54,10 @@ Map<String, dynamic> _$AppSettingsToJson(
   'enableHttpLogs': instance.enableHttpLogs,
 };
 
-const _$AppThemeEnumMap = {
-  AppTheme.system: 'system',
-  AppTheme.light: 'light',
-  AppTheme.dark: 'dark',
-  AppTheme.amoled: 'amoled',
+const _$ThemeModeEnumMap = {
+  ThemeMode.system: 'system',
+  ThemeMode.light: 'light',
+  ThemeMode.dark: 'dark',
 };
 
 const _$NavTargetEnumMap = {
@@ -206,7 +210,14 @@ abstract class _$UserSettingsNotifier extends $Notifier<UserSettings> {
 // **************************************************************************
 
 extension AppSettingsSetters on AppSettingsNotifier {
-  Future<void> setTheme(AppTheme value) => _save(state.copyWith(theme: value));
+  Future<void> setThemeMode(ThemeMode value) =>
+      _save(state.copyWith(themeMode: value));
+
+  Future<void> setUseDynamicColor(bool value) =>
+      _save(state.copyWith(useDynamicColor: value));
+
+  Future<void> setUsePureBlack(bool value) =>
+      _save(state.copyWith(usePureBlack: value));
 
   Future<void> setLocaleCode(String value) =>
       _save(state.copyWith(localeCode: value));
@@ -245,8 +256,16 @@ extension AppSettingsSetters on AppSettingsNotifier {
       _save(state.copyWith(enableHttpLogs: value));
 }
 
-final themeProvider = Provider<AppTheme>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.theme)),
+final themeModeProvider = Provider<ThemeMode>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.themeMode)),
+);
+
+final useDynamicColorProvider = Provider<bool>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.useDynamicColor)),
+);
+
+final usePureBlackProvider = Provider<bool>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.usePureBlack)),
 );
 
 final localeCodeProvider = Provider<String>(

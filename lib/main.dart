@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/app/config/theme.dart';
-import 'package:storii/app/providers/app_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/app/providers/theme_provider.dart';
 import 'package:storii/init.dart' as init;
 import 'package:storii/l10n/l10n.dart';
 
@@ -23,16 +22,18 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
-    final appTheme = ref.watch(themeProvider);
-    final fontFamily = ref.watch(fontFamilyProvider);
+    final themeMode = ref.watch(themeModeProvider);
     final textScaler = ref.watch(textScalerProvider);
     final localeCode = ref.watch(localeCodeProvider);
 
+    final lightTheme = ref.watch(themeDataProvider(.light));
+    final darkTheme = ref.watch(themeDataProvider(.dark));
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      themeMode: appTheme.themeMode,
-      theme: appTheme.lightTheme.build(fontFamily),
-      darkTheme: appTheme.darkTheme.build(fontFamily),
+      themeMode: themeMode,
+      theme: lightTheme,
+      darkTheme: darkTheme,
       routerConfig: router,
       title: AppConstants.appName,
       locale: Locale(localeCode),
