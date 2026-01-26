@@ -181,3 +181,17 @@ extension ColorExtensions on Color {
     return '#${(argb & 0xFFFFFF).toRadixString(16).padLeft(6, '0')}';
   }
 }
+
+extension AudiobookX on Audiobook {
+  (int, Duration) getIndexAndOffset() {
+    Duration accumulated = Duration.zero;
+    for (int i = 0; i < tracks.length; i++) {
+      final trackLen = tracks[i].duration;
+      if (currentOffset < accumulated + trackLen) {
+        return (i, currentOffset - accumulated);
+      }
+      accumulated += trackLen;
+    }
+    return (0, Duration.zero);
+  }
+}

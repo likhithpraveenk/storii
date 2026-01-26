@@ -12,6 +12,7 @@ extension ItemDomainToMediaItem on ItemDomain {
           artist: a.authorName,
           duration: a.duration,
           artUri: serverUrl.resolve(ApiRoutes.itemCover(id)),
+          extras: {'id': a.id},
         );
       }).toList(),
       final Podcast _ => throw UnimplementedError('Podcasts not supported yet'),

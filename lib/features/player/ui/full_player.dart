@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/features/player/logic/audio_player_provider.dart';
+import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/current_item_provider.dart';
+import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -13,13 +14,6 @@ class FullPlayer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context)!;
     final itemAsync = ref.watch(currentItemProvider);
-    ref.listen(currentItemProvider, (prev, next) {
-      next.whenData((item) {
-        if (item != null) {
-          ref.read(audioPlayerProvider.notifier).play(item);
-        }
-      });
-    });
     final playbackState = ref.watch(audioPlayerProvider).value;
 
     return Container(
@@ -32,9 +26,10 @@ class FullPlayer extends ConsumerWidget {
           if (item == null) return const SizedBox.shrink();
 
           final isPlaying = playbackState?.playing ?? false;
-          final position = playbackState?.updatePosition ?? Duration.zero;
+          final position =
+              ref.watch(globalPositionProvider).value ?? Duration.zero;
 
-          final totalDuration = item.totalDuration;
+          final totalDuration = ref.watch(totalBookDurationProvider);
 
           return SingleChildScrollView(
             child: Column(
@@ -48,18 +43,7 @@ class FullPlayer extends ConsumerWidget {
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 const SizedBox(height: 32),
-                Slider(
-                  value: position.inSeconds.toDouble().clamp(
-                    0,
-                    totalDuration.inSeconds.toDouble(),
-                  ),
-                  max: totalDuration.inSeconds.toDouble() > 0
-                      ? totalDuration.inSeconds.toDouble()
-                      : 1.0,
-                  onChanged: (v) {
-                    ref.read(audioPlayerProvider.notifier).seek(v.toInt());
-                  },
-                ),
+                const BookSlider(),
                 Padding(
                   padding: const .symmetric(horizontal: 24),
                   child: Row(

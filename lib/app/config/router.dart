@@ -50,8 +50,11 @@ enum AppRoute {
   String withId(String id) => path.replaceFirst(':id', id);
 }
 
-final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
-final shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'shell');
+final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'Root');
+final shellNavigatorKey = GlobalKey<StatefulNavigationShellState>(
+  debugLabel: 'StatefulShellRoute',
+);
+final shellScaffoldKey = GlobalKey<ScaffoldState>(debugLabel: 'ShellScaffold');
 
 final publicRoutes = [AppRoute.logs.path, AppRoute.about.path, AppRoute.login];
 
@@ -86,6 +89,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const LogsScreen(),
       ),
       StatefulShellRoute.indexedStack(
+        key: shellNavigatorKey,
         builder: (context, state, navigationShell) {
           return ShellScaffold(navigationShell);
         },

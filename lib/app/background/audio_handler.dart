@@ -3,14 +3,14 @@ import 'package:audio_session/audio_session.dart';
 import 'package:just_audio/just_audio.dart';
 
 class MyAudioHandler extends BaseAudioHandler with SeekHandler {
-  final _player = AudioPlayer();
+  final player = AudioPlayer();
 
   MyAudioHandler() {
-    _player.playbackEventStream.listen(_broadcastState);
+    player.playbackEventStream.listen(_broadcastState);
 
-    _player.currentIndexStream.listen((index) {
-      if (index != null && index < _player.sequence.length) {
-        final source = _player.sequence[index];
+    player.currentIndexStream.listen((index) {
+      if (index != null && index < player.sequence.length) {
+        final source = player.sequence[index];
         if (source.tag is MediaItem) {
           mediaItem.add(source.tag as MediaItem);
         }
@@ -25,62 +25,97 @@ class MyAudioHandler extends BaseAudioHandler with SeekHandler {
     await session.configure(const AudioSessionConfiguration.speech());
   }
 
-  Future<void> loadBook({
-    required List<MediaItem> items,
-    required int initialIndex,
-    required Duration initialPosition,
-    required Uri serverUrl,
-    required String? token,
-  }) async {
-    await _player.setAudioSources(
-      items
-          .map(
-            (item) => AudioSource.uri(
-              serverUrl.resolve(item.id),
-              headers: {'Authorization': 'Bearer $token'},
-              tag: item,
-            ),
-          )
-          .toList(),
-      initialIndex: initialIndex,
-      initialPosition: initialPosition,
-    );
+  @override
+  Future<void> prepareFromUri(Uri uri, [Map<String, dynamic>? extras]) async {
+    final List<MediaItem> items = extras?['items'] ?? [];
+    final index = extras?['initialIndex'] ?? 0;
+    final position = Duration(milliseconds: extras?['initialPositionMs'] ?? 0);
+    final token = extras?['token'];
+
+    final sources = items
+        .map(
+          (item) => AudioSource.uri(
+            uri.resolve(item.id),
+            headers: token != null ? {'Authorization': 'Bearer $token'} : null,
+            tag: item,
+          ),
+        )
+        .toList();
 
     queue.add(items);
+    await player.setAudioSources(
+      sources,
+      initialIndex: index,
+      initialPosition: position,
+    );
   }
 
   @override
-  Future<void> play() => _player.play();
+  Future<void> fastForward() async {
+    const jump = Duration(seconds: 10);
+    final currentPos = player.position;
+    final trackDuration = player.duration ?? Duration.zero;
+
+    if (currentPos + jump <= trackDuration) {
+      return player.seek(currentPos + jump);
+    } else {
+      final index = player.currentIndex;
+      final items = queue.value;
+
+      if (index != null && index < items.length - 1) {
+        final overflow = jump - (trackDuration - currentPos);
+        return player.seek(overflow, index: index + 1);
+      } else {
+        return player.seek(trackDuration);
+      }
+    }
+  }
 
   @override
-  Future<void> pause() => _player.pause();
+  Future<void> rewind() async {
+    const jump = Duration(seconds: 10);
+    final currentPos = player.position;
+
+    if (currentPos >= jump) {
+      return player.seek(currentPos - jump);
+    } else {
+      final index = player.currentIndex;
+      if (index != null && index > 0) {
+        final previousTrackDuration =
+            queue.value[index - 1].duration ?? Duration.zero;
+        final remainingJump = jump - currentPos;
+
+        return player.seek(
+          previousTrackDuration - remainingJump,
+          index: index - 1,
+        );
+      } else {
+        return player.seek(Duration.zero);
+      }
+    }
+  }
 
   @override
-  Future<void> fastForward() =>
-      seek(_player.position + const Duration(seconds: 10));
+  Future<void> seek(Duration position) async {
+    final items = queue.value;
+    Duration accumulated = Duration.zero;
 
-  @override
-  Future<void> rewind() => seek(_player.position - const Duration(seconds: 10));
+    for (int i = 0; i < items.length; i++) {
+      final trackLen = items[i].duration ?? Duration.zero;
+      if (position < accumulated + trackLen) {
+        return player.seek(position - accumulated, index: i);
+      }
+      accumulated += trackLen;
+    }
 
-  @override
-  Future<void> seek(Duration position) => _player.seek(position);
-
-  @override
-  Future<void> skipToQueueItem(int index) =>
-      _player.seek(Duration.zero, index: index);
-
-  @override
-  Future<void> skipToNext() => _player.seekToNext();
-
-  @override
-  Future<void> skipToPrevious() => _player.seekToPrevious();
-
-  @override
-  Future<void> setSpeed(double speed) => _player.setSpeed(speed);
+    if (items.isNotEmpty) {
+      return player.seek(items.last.duration, index: items.length - 1);
+    }
+  }
 
   @override
   Future<void> stop() async {
-    await _player.stop();
+    await player.stop();
     await super.stop();
   }
 
@@ -90,24 +125,24 @@ class MyAudioHandler extends BaseAudioHandler with SeekHandler {
         controls: [
           .rewind,
           .skipToPrevious,
-          _player.playing ? .pause : .play,
+          player.playing ? .pause : .play,
           .stop,
           .skipToNext,
           .fastForward,
         ],
         systemActions: const {.seek, .seekForward, .seekBackward},
         androidCompactActionIndices: const [0, 1, 2],
-        processingState: switch (_player.processingState) {
+        processingState: switch (player.processingState) {
           .idle => .idle,
           .loading => .loading,
           .buffering => .buffering,
           .completed => .completed,
           .ready => .ready,
         },
-        playing: _player.playing,
-        updatePosition: _player.position,
-        bufferedPosition: _player.bufferedPosition,
-        speed: _player.speed,
+        playing: player.playing,
+        updatePosition: player.position,
+        bufferedPosition: player.bufferedPosition,
+        speed: player.speed,
         queueIndex: event.currentIndex,
       ),
     );

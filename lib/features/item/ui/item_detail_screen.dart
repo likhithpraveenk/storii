@@ -8,7 +8,6 @@ import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/item.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
-import 'package:storii/features/item/logic/item_palette_provider.dart';
 import 'package:storii/features/item/ui/cover_image.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
@@ -29,22 +28,8 @@ class ItemDetailScreen extends ConsumerWidget {
 
     final itemAsync = ref.watch(itemDetailProvider(id));
 
-    final backgroundColor = itemAsync.maybeWhen(
-      data: (item) {
-        final palette = ref.watch(itemPaletteProvider(item.id)).value;
-        final themeColor =
-            palette?.dominantColor?.color ?? scheme.surfaceContainerHighest;
-
-        return Color.alphaBlend(
-          themeColor.withValues(alpha: 0.1),
-          scheme.surface,
-        );
-      },
-      orElse: () => scheme.surface,
-    );
-
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: scheme.surface,
       body: itemAsync.when(
         loading: () => const Center(child: RandomWaveform()),
         error: (e, s) => ErrorRetryWidget(
@@ -66,8 +51,8 @@ class ItemDetailScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 4),
                     _AuthorsSeriesChips(item),
-                    const SizedBox(height: 4),
                     if (item.progress > 0) ...[
+                      const SizedBox(height: 4),
                       LinearProgressIndicator(
                         value: item.progress,
                         borderRadius: AppStyles.circularRadius,
@@ -114,9 +99,6 @@ class ItemDetailScreen extends ConsumerWidget {
       floatingActionButtonLocation: .centerFloat,
       floatingActionButton: itemAsync.maybeWhen(
         data: (item) {
-          final palette = ref.watch(itemPaletteProvider(item.id)).value;
-          final themeColor = getBackgroundColor(palette, scheme.surface);
-          final textColor = getForegroundColor(palette, scheme);
           final bounds = ref.read(playerBoundsProvider);
           final playerHeight = ref
               .watch(playerHeightProvider)
@@ -126,19 +108,18 @@ class ItemDetailScreen extends ConsumerWidget {
             height: 48,
             margin: .fromLTRB(16, 0, 16, playerHeight),
             child: FloatingActionButton.extended(
-              backgroundColor: themeColor,
               elevation: 4,
               onPressed: () {
                 ref.read(userSettingsProvider.notifier).setCurrentItemId(id);
               },
-              icon: Icon(Icons.play_arrow_rounded, color: textColor),
+              icon: const Icon(Icons.play_arrow_rounded),
               label: Text(
                 item.progress > 0
                     ? item.progress == 1.0
                           ? l.replay
                           : l.resume
                     : l.play,
-                style: textTheme.labelLarge?.copyWith(color: textColor),
+                style: textTheme.labelLarge,
               ),
             ),
           );

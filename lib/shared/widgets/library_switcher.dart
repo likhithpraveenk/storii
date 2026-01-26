@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/user_libraries_provider.dart';
@@ -16,7 +17,7 @@ class LibrarySwitcher extends ConsumerWidget {
 
     return activeLibraryAsync.when(
       data: (activeLibrary) => TextButton(
-        onPressed: () => _showPicker(context, ref),
+        onPressed: () => _showPicker(ref),
         style: TextButton.styleFrom(
           padding: const .fromLTRB(16, 8, 8, 8),
           shape: RoundedRectangleBorder(borderRadius: .circular(24)),
@@ -37,9 +38,11 @@ class LibrarySwitcher extends ConsumerWidget {
     );
   }
 
-  void _showPicker(BuildContext context, WidgetRef ref) {
+  void _showPicker(WidgetRef ref) {
+    final scaffoldContext = shellScaffoldKey.currentContext;
+    if (scaffoldContext == null) return;
     showModalBottomSheet(
-      context: context,
+      context: scaffoldContext,
       builder: (context) {
         final librariesAsync = ref.watch(userLibrariesProvider);
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/abs_api/models/utils/filter.dart';
+import 'package:storii/app/config/router.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
@@ -16,12 +17,16 @@ class FiltersButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       icon: const Icon(Icons.filter_list),
-      onPressed: () => showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        useSafeArea: true,
-        builder: (context) => _FilterBottomSheet(tab),
-      ),
+      onPressed: () {
+        final scaffoldContext = shellScaffoldKey.currentContext;
+        if (scaffoldContext == null) return;
+        showModalBottomSheet(
+          context: scaffoldContext,
+          isScrollControlled: true,
+          useSafeArea: true,
+          builder: (context) => _FilterBottomSheet(tab),
+        );
+      },
     );
   }
 }
