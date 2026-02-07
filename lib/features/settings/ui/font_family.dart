@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:storii/app/config/app_styles.dart';
-import 'package:storii/app/config/fonts.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/settings/logic/user_fonts.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/waveform.dart';
+import 'package:storii/storage/local/font_service.dart';
 
 class FontFamilyTile extends ConsumerWidget {
   const FontFamilyTile({super.key});
@@ -39,6 +44,7 @@ class FontFamilySheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentFont = ref.watch(fontFamilyProvider);
+    final userFontsAsync = ref.watch(userFontsProvider);
 
     return SingleChildScrollView(
       child: RadioGroup(
@@ -53,6 +59,19 @@ class FontFamilySheet extends ConsumerWidget {
         },
         child: Column(
           children: [
+            ListTile(
+              leading: const Icon(Icons.folder_open),
+              title: const Text('Add Fonts'),
+              onTap: () async {
+                if (Platform.isAndroid) {
+                  await Permission.storage.request();
+                }
+
+                await FontService.importFonts();
+                ref.invalidate(userFontsProvider);
+              },
+            ),
+            const Divider(),
             RadioListTile<String>(
               title: Text(
                 AppLocalizations.of(context)!.system,
@@ -60,19 +79,37 @@ class FontFamilySheet extends ConsumerWidget {
               ),
               value: 'system',
             ),
-            ...AppFonts.available.entries.map((entry) {
-              final key = entry.key;
-              final builder = entry.value;
-
-              final previewStyle = builder(
-                Theme.of(context).textTheme,
-              ).titleMedium?.copyWith(fontSize: 18);
-
-              return RadioListTile<String>(
-                title: Text(key, style: previewStyle),
-                value: key,
-              );
-            }),
+            const RadioListTile<String>(
+              title: Text(
+                'AtkinsonHyperlegibleNext',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontFamily: 'AtkinsonHyperlegibleNext',
+                ),
+              ),
+              value: 'AtkinsonHyperlegibleNext',
+            ),
+            userFontsAsync.when(
+              data: (fonts) {
+                if (fonts.isEmpty) {
+                  return const SizedBox.shrink();
+                }
+                return Column(
+                  mainAxisSize: .min,
+                  children: fonts.map((font) {
+                    return RadioListTile<String>(
+                      title: Text(
+                        font,
+                        style: TextStyle(fontSize: 18, fontFamily: font),
+                      ),
+                      value: font,
+                    );
+                  }).toList(),
+                );
+              },
+              loading: () => const Center(child: RandomWaveform()),
+              error: (_, _) => const SizedBox.shrink(),
+            ),
             const SizedBox(height: 32),
           ],
         ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:storii/app/config/fonts.dart';
 
 abstract class AppColors {
   static const primary = Color(0xFFAAAAFF);
@@ -32,15 +31,4 @@ class CustomSchemes {
     surfaceContainer: Colors.black,
     contrastLevel: 1,
   );
-}
-
-extension ThemeDataX on ThemeData {
-  ThemeData build(String? fontFamily) {
-    if (fontFamily == null) return this;
-
-    final builder = AppFonts.available[fontFamily];
-    return copyWith(
-      textTheme: builder != null ? builder(textTheme) : textTheme,
-    );
-  }
 }

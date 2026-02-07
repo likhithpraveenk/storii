@@ -27,15 +27,21 @@ ThemeData themeData(Ref ref, Brightness brightness) {
 
   LogService.log(
     'getting theme data with\n'
-    'fontFamily:$fontFamily\n'
-    'usePureBlack? $isPureBlack\n'
-    'useSystemColors? $useDynamic\n'
-    'hasDynamicScheme? ${dynamicScheme != null}',
+    'fontFamily: $fontFamily\n'
+    'brightnesss: $brightness\n'
+    'usePureBlack: $isPureBlack\n'
+    'useSystemColors: $useDynamic\n'
+    'hasDynamicScheme: ${dynamicScheme != null}',
     source: 'themeDataProvider',
     level: .debug,
   );
 
-  return ThemeData(colorScheme: colorScheme).build(fontFamily);
+  return ThemeData(
+    useMaterial3: true,
+    brightness: brightness,
+    colorScheme: colorScheme,
+    fontFamily: fontFamily,
+  );
 }
 
 @riverpod

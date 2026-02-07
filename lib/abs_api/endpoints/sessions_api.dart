@@ -19,11 +19,7 @@ class SessionsApi {
     final response = await api.request(
       ApiRoutes.sessions,
       method: .get,
-      query: {
-        if (userId != null) 'user': userId,
-        'itemsPerPage': itemsPerPage,
-        'page': page,
-      },
+      query: {'user': ?userId, 'itemsPerPage': itemsPerPage, 'page': page},
     );
     return fromJson(response.data, SessionsResponse.fromJson);
   }

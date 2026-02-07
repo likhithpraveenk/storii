@@ -235,7 +235,7 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.l
 @JsonSerializable()
 
 class _AppSettings with DiagnosticableTreeMixin implements AppSettings {
-  const _AppSettings({this.themeMode = ThemeMode.dark, this.useDynamicColor = false, this.usePureBlack = false, this.localeCode = 'en', this.currentUser, this.logRetention = const Duration(days: 2), this.dateTimeFormat = 'dd MMM y', final  List<NavTarget> navTargets = defaultNavTargets, this.fontFamily = AppFonts.defaultFont, this.fontScale = 1, this.defaultItemsLimit = 50, this.defaultSeriesLimit = 20, this.showTitleForItem = true, this.stackTitleOnImage = false, this.enableHttpLogs = false}): _navTargets = navTargets;
+  const _AppSettings({this.themeMode = ThemeMode.dark, this.useDynamicColor = false, this.usePureBlack = false, this.localeCode = 'en', this.currentUser, this.logRetention = const Duration(days: 2), this.dateTimeFormat = 'dd MMM y', final  List<NavTarget> navTargets = defaultNavTargets, this.fontFamily = 'AtkinsonHyperlegibleNext', this.fontScale = 1, this.defaultItemsLimit = 50, this.defaultSeriesLimit = 20, this.showTitleForItem = true, this.stackTitleOnImage = false, this.enableHttpLogs = false}): _navTargets = navTargets;
   factory _AppSettings.fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);
 
 @override@JsonKey() final  ThemeMode themeMode;

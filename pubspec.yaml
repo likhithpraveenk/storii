@@ -5,17 +5,18 @@ publish_to: none
 version: 0.1.1+17
 
 environment:
-  sdk: ^3.10.1
+  sdk: ^3.11.0
 
 dependencies:
   audio_service: ^0.18.18
   audio_session: ^0.2.2
   cached_network_image: ^3.4.1
   cupertino_icons: ^1.0.8
-  dio: ^5.9.0
-  drift: ^2.30.1
+  dio: ^5.9.1
+  drift: ^2.31.0
   drift_flutter: ^0.2.8
   dynamic_color: ^1.8.1
+  file_picker: ^10.3.10
   flutter:
       sdk: flutter
   flutter_cache_manager: ^3.4.1
@@ -25,9 +26,8 @@ dependencies:
   flutter_riverpod: ^3.1.0
   flutter_secure_storage: ^10.0.0
   freezed_annotation: ^3.1.0
-  go_router: ^17.0.1
-  google_fonts: ^8.0.0
-  hive_ce: ^2.19.1
+  go_router: ^17.1.0
+  hive_ce: ^2.19.3
   hive_ce_flutter: ^2.3.4
   intl: ^0.20.2
   json_annotation: ^4.9.0
@@ -37,17 +37,19 @@ dependencies:
   palette_generator_master: ^1.0.1
   path: ^1.9.1
   path_provider: ^2.1.5
+  permission_handler: ^12.0.1
   riverpod_annotation: ^4.0.0
   socket_io_client: ^3.1.4
   synchronized: ^3.4.0
+  ttf_metadata: ^0.0.6
   url_launcher: ^6.3.2
 
 dev_dependencies:
   analyzer: ^8.4.0
   build: ^4.0.4
-  build_runner: ^2.10.5
+  build_runner: ^2.11.1
   custom_lint: ^0.8.1
-  drift_dev: ^2.30.1
+  drift_dev: ^2.31.0
   flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
@@ -61,7 +63,17 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  fonts:
+    - family: AtkinsonHyperlegibleNext
+      fonts:
+        - asset: assets/fonts/AtkinsonHyperlegibleNext-Regular.ttf
+        - asset: assets/fonts/AtkinsonHyperlegibleNext-Italic.ttf
+          style: italic
+        - asset: assets/fonts/AtkinsonHyperlegibleNext-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/AtkinsonHyperlegibleNext-Bold.ttf
+          weight: 700
   assets:
     - LICENSE.txt
+    - assets/fonts/OFL.txt
     - assets/icons/
-    - google_fonts/

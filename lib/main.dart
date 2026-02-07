@@ -6,12 +6,14 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/theme_provider.dart';
 import 'package:storii/init.dart' as init;
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/storage/local/font_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await init.setupHive();
   await init.setupLicenses();
-  init.setSystemUIOverlay();
+  await FontService.loadFonts();
+
   final container = await init.setupProviders();
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 }

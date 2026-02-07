@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/app/config/fonts.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/app/providers/database_provider.dart';
@@ -38,7 +37,7 @@ sealed class AppSettings with _$AppSettings {
 
     @Default(defaultNavTargets) List<NavTarget> navTargets,
 
-    @Default(AppFonts.defaultFont) String? fontFamily,
+    @Default('AtkinsonHyperlegibleNext') String? fontFamily,
 
     @Default(1) double fontScale,
 

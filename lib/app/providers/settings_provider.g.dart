@@ -25,7 +25,7 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
           ?.map((e) => $enumDecode(_$NavTargetEnumMap, e))
           .toList() ??
       defaultNavTargets,
-  fontFamily: json['fontFamily'] as String? ?? AppFonts.defaultFont,
+  fontFamily: json['fontFamily'] as String? ?? 'AtkinsonHyperlegibleNext',
   fontScale: (json['fontScale'] as num?)?.toDouble() ?? 1,
   defaultItemsLimit: (json['defaultItemsLimit'] as num?)?.toInt() ?? 50,
   defaultSeriesLimit: (json['defaultSeriesLimit'] as num?)?.toInt() ?? 20,
