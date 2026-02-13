@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -23,7 +22,6 @@ class LanguageSelectorTile extends ConsumerWidget {
       leading: const Icon(Icons.language),
       title: Text(AppLocalizations.of(context)!.language),
       subtitle: Text(currentLanguageLabel),
-      shape: AppStyles.roundedRect,
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
         final scaffoldContext = shellScaffoldKey.currentContext;

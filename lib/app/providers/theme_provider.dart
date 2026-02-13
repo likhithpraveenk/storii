@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -18,11 +19,10 @@ ThemeData themeData(Ref ref, Brightness brightness) {
       : null;
 
   ColorScheme colorScheme =
-      dynamicScheme ??
-      (brightness == .dark ? CustomSchemes.dark : CustomSchemes.light);
+      dynamicScheme ?? (brightness == .dark ? darkScheme : lightScheme);
 
   if (brightness == .dark && isPureBlack) {
-    colorScheme = colorScheme.copyWith(surface: Colors.black);
+    colorScheme = amoledScheme;
   }
 
   LogService.log(
@@ -41,6 +41,44 @@ ThemeData themeData(Ref ref, Brightness brightness) {
     brightness: brightness,
     colorScheme: colorScheme,
     fontFamily: fontFamily,
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(borderRadius: kBorderRadius),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: kBorderRadius,
+        borderSide: BorderSide(color: colorScheme.outline),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: kBorderRadius,
+        borderSide: BorderSide(color: colorScheme.primary, width: 2),
+      ),
+    ),
+    dialogTheme: DialogThemeData(
+      shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+    ),
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+      ),
+    ),
+    bottomSheetTheme: BottomSheetThemeData(
+      shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+      ),
+    ),
+    listTileTheme: ListTileThemeData(
+      shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+    ),
+    buttonTheme: ButtonThemeData(
+      shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+    ),
   );
 }
 

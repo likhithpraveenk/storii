@@ -14,7 +14,7 @@ Future<ColorScheme?> dynamicColors(Ref ref, Brightness brightness) async {
     final corePalette = await DynamicColorPlugin.getCorePalette();
     final primary = corePalette?.toColorScheme(brightness: brightness).primary;
     if (primary != null) {
-      final harmonizedPrimary = primary.harmonizeWith(AppColors.primary);
+      final harmonizedPrimary = primary.harmonizeWith(appPrimaryColor);
       LogService.log(
         'found color ${harmonizedPrimary.toHex()} for $brightness',
         source: 'dynamicColors',
@@ -36,7 +36,7 @@ Future<ColorScheme?> dynamicColors(Ref ref, Brightness brightness) async {
     try {
       final primary = await DynamicColorPlugin.getAccentColor();
       if (primary != null) {
-        final harmonizedPrimary = primary.harmonizeWith(AppColors.primary);
+        final harmonizedPrimary = primary.harmonizeWith(appPrimaryColor);
         LogService.log(
           'found color ${harmonizedPrimary.toHex()} for $brightness',
           source: 'dynamicColors',

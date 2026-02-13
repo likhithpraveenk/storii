@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
@@ -32,7 +31,6 @@ class UserTile extends ConsumerWidget {
       children: [
         Expanded(
           child: InkWell(
-            borderRadius: AppStyles.circularRadius,
             onTap: () async {
               if (isActive) {
                 LogService.log(l.switchingToUser(user.username));
@@ -85,13 +83,11 @@ class UserTile extends ConsumerWidget {
           ),
         ),
         InkWell(
-          borderRadius: AppStyles.circularRadius,
           onTap: () {
             showDialog(
               context: context,
               builder: (context) {
                 return AlertDialog(
-                  shape: AppStyles.roundedRect,
                   actions: [
                     AppTextButton(
                       onPressed: () => Navigator.of(context).pop(),

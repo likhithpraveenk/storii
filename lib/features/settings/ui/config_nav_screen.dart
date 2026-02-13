@@ -15,7 +15,6 @@ class ConfigNavTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(Icons.explore),
-      shape: AppStyles.roundedRect,
       trailing: const Icon(Icons.chevron_right),
       title: Text(AppLocalizations.of(context)!.configNav),
       onTap: () {
@@ -128,7 +127,7 @@ class _ConfigNavScreenState extends ConsumerState<ConfigNavScreen> {
               color: isEnabled
                   ? scheme.surfaceContainerHighest.withValues(alpha: 0.5)
                   : scheme.surface.withValues(alpha: 0.3),
-              borderRadius: AppStyles.circularRadius,
+              borderRadius: kBorderRadius,
               border: Border.all(
                 color: isEnabled
                     ? scheme.outlineVariant.withValues(alpha: 0.5)

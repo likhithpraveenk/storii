@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
 
-abstract class AppColors {
-  static const primary = Color(0xFFAAAAFF);
-  static const slate = Color(0xFF111122);
-  static const white = Color(0xFFF4F4FF);
-  static const red = Color(0xFFF80F30);
-  static const green = Color(0xFF0FF830);
-}
+const appPrimaryColor = Color(0xFFAAAAFF);
+const appSlateColor = Color(0xFF111122);
+const appWhiteColor = Color(0xFFF4F4FF);
+const appRedColor = Color(0xFFF80F30);
+const appGreenColor = Color(0xFF0FF830);
 
-class CustomSchemes {
-  static final light = ColorScheme.fromSeed(
-    brightness: Brightness.light,
-    seedColor: AppColors.primary,
-    onSurface: AppColors.slate,
-  );
+final lightScheme = ColorScheme.fromSeed(
+  brightness: Brightness.light,
+  seedColor: appPrimaryColor,
+  onSurface: appSlateColor,
+);
 
-  static final dark = ColorScheme.fromSeed(
-    brightness: Brightness.dark,
-    seedColor: AppColors.primary,
-    surface: AppColors.slate,
-  );
+final darkScheme = ColorScheme.fromSeed(
+  brightness: Brightness.dark,
+  seedColor: appPrimaryColor,
+  surface: appSlateColor,
+);
 
-  // it might be better to manually make this
-  static final amoled = ColorScheme.fromSeed(
-    brightness: Brightness.dark,
-    seedColor: AppColors.primary,
-    surface: Colors.black,
-    onPrimary: Colors.black,
-    onSurface: Colors.white,
-    surfaceContainer: Colors.black,
-    contrastLevel: 1,
-  );
-}
+// it might be better to manually make this
+final amoledScheme = ColorScheme.fromSeed(
+  brightness: Brightness.dark,
+  seedColor: appPrimaryColor,
+  surface: Colors.black,
+  onPrimary: Colors.black,
+  onSurface: Colors.white,
+  surfaceContainer: Colors.black,
+  contrastLevel: 1,
+);

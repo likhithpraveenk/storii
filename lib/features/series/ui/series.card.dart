@@ -41,7 +41,7 @@ class SeriesCard extends StatelessWidget {
                   width: double.infinity,
                   child: books.isEmpty
                       ? ClipRRect(
-                          borderRadius: AppStyles.circularRadius,
+                          borderRadius: kBorderRadius,
                           child: PlaceholderImage(label: l.noImage),
                         )
                       : Stack(
@@ -74,7 +74,7 @@ class SeriesCard extends StatelessWidget {
                                       width: bookSize,
                                       height: bookSize,
                                       decoration: BoxDecoration(
-                                        borderRadius: AppStyles.circularRadius,
+                                        borderRadius: kBorderRadius,
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.black.withValues(
@@ -88,7 +88,7 @@ class SeriesCard extends StatelessWidget {
                                         ],
                                       ),
                                       child: ClipRRect(
-                                        borderRadius: AppStyles.circularRadius,
+                                        borderRadius: kBorderRadius,
                                         child: ImageWidget(
                                           id: book.id,
                                           type: .item,
@@ -105,7 +105,7 @@ class SeriesCard extends StatelessWidget {
                                 height: 6,
                                 child: LinearProgressIndicator(
                                   value: seriesProgress,
-                                  borderRadius: AppStyles.circularRadius,
+                                  borderRadius: kBorderRadius,
                                   backgroundColor: Theme.of(
                                     context,
                                   ).colorScheme.surface.withValues(alpha: 0.2),
@@ -154,7 +154,6 @@ class SeriesCard extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              borderRadius: AppStyles.circularRadius,
               onTap: () =>
                   context.push(AppRoute.seriesDetail.withId(series.id)),
             ),
@@ -180,17 +179,16 @@ class SeriesCardListView extends StatelessWidget {
         : (series.libraryItemIdsFinished?.length ?? 0) / series.books!.length;
     return ListTile(
       onTap: () => context.push(AppRoute.libraryItem.withId(series.id)),
-      shape: AppStyles.roundedRect,
       contentPadding: const .fromLTRB(16, 8, 16, 8),
       leading: AspectRatio(
         aspectRatio: 1,
         child: books.isEmpty
             ? ClipRRect(
-                borderRadius: AppStyles.circularRadius,
+                borderRadius: kBorderRadius,
                 child: PlaceholderImage(label: l.noImage),
               )
             : ClipRRect(
-                borderRadius: AppStyles.circularRadius,
+                borderRadius: kBorderRadius,
                 child: ImageWidget(
                   id: books.first.id,
                   type: .item,

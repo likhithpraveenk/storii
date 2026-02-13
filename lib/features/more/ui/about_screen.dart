@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -73,7 +72,6 @@ class AboutScreen extends StatelessWidget {
                               );
                             }
                           },
-                          borderRadius: AppStyles.circularRadius,
                           child: Padding(
                             padding: const .fromLTRB(16, 4, 16, 4),
                             child: Text(
@@ -90,7 +88,6 @@ class AboutScreen extends StatelessWidget {
                               );
                             }
                           },
-                          borderRadius: AppStyles.circularRadius,
                           child: Padding(
                             padding: const .fromLTRB(16, 4, 16, 4),
                             child: Text(

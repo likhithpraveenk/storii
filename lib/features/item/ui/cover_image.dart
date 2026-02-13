@@ -66,7 +66,7 @@ class CoverImage extends StatelessWidget {
                     child: Container(
                       margin: const .all(16),
                       decoration: BoxDecoration(
-                        borderRadius: AppStyles.circularRadius,
+                        borderRadius: kBorderRadius,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withValues(alpha: 0.25),
@@ -76,7 +76,7 @@ class CoverImage extends StatelessWidget {
                         ],
                       ),
                       child: ClipRRect(
-                        borderRadius: AppStyles.circularRadius,
+                        borderRadius: kBorderRadius,
                         child: ImageWidget(
                           id: item.id,
                           type: .item,

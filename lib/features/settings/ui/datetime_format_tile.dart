@@ -16,7 +16,6 @@ class DateTimeFormatTile extends ConsumerWidget {
     return ListTile(
       leading: const Icon(Icons.calendar_month),
       title: Text(AppLocalizations.of(context)!.dateFormat),
-      shape: AppStyles.roundedRect,
       subtitle: Text(DateFormat(currentFormat).format(DateTime.now())),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
@@ -116,7 +115,7 @@ class _DateTimeFormatSheetState extends ConsumerState<DateTimeFormatSheet> {
                       color: isValid
                           ? scheme.primaryContainer
                           : scheme.errorContainer,
-                      borderRadius: AppStyles.circularRadius,
+                      borderRadius: kBorderRadius,
                     ),
                     child: Text(
                       isValid
@@ -137,7 +136,6 @@ class _DateTimeFormatSheetState extends ConsumerState<DateTimeFormatSheet> {
                     decoration: InputDecoration(
                       labelText: l.customPattern,
                       hintText: 'e.g. HH:mm:ss',
-                      border: AppStyles.inputBorder,
                       suffixIcon: isValid
                           ? IconButton(
                               icon: const Icon(Icons.save),

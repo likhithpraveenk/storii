@@ -44,7 +44,7 @@ class AuthorDetailScreen extends ConsumerWidget {
                 child: AspectRatio(
                   aspectRatio: 4 / 5,
                   child: ClipRRect(
-                    borderRadius: AppStyles.circularRadius,
+                    borderRadius: kBorderRadius,
                     child: ImageWidget(
                       id: author.id,
                       type: .author,

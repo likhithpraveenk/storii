@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/auth/logic/add_server_notifier.dart';
 import 'package:storii/features/auth/logic/add_user_notifier.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -105,10 +104,7 @@ class _AddServerAndUserSheetState extends ConsumerState<AddServerAndUserSheet> {
         TextField(
           controller: _urlController,
           enabled: !isLoading,
-          decoration: InputDecoration(
-            labelText: l.serverUrl,
-            border: AppStyles.inputBorder,
-          ),
+          decoration: InputDecoration(labelText: l.serverUrl),
           onSubmitted: (_) => _validateServer(),
         ),
         const SizedBox(height: 16),
@@ -141,20 +137,14 @@ class _AddServerAndUserSheetState extends ConsumerState<AddServerAndUserSheet> {
             controller: _usernameController,
             autofocus: true,
             enabled: !isLoading,
-            decoration: InputDecoration(
-              labelText: l.username,
-              border: AppStyles.inputBorder,
-            ),
+            decoration: InputDecoration(labelText: l.username),
           ),
           const SizedBox(height: 16),
           TextField(
             controller: _passwordController,
             obscureText: true,
             enabled: !isLoading,
-            decoration: InputDecoration(
-              labelText: l.password,
-              border: AppStyles.inputBorder,
-            ),
+            decoration: InputDecoration(labelText: l.password),
             onSubmitted: (_) => _login(),
           ),
           const SizedBox(height: 16),

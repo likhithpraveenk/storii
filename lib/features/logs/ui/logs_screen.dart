@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/features/logs/ui/log_entry_sheet.dart';
@@ -69,7 +68,6 @@ class LogsScreen extends ConsumerWidget {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        shape: AppStyles.roundedRect,
                         actions: [
                           AppTextButton(
                             onPressed: () => Navigator.of(context).pop(),

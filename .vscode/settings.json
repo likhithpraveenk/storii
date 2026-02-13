@@ -14,5 +14,7 @@
   "explorer.fileNesting.patterns": {
     "*.dart": "$(capture).g.dart, $(capture).freezed.dart"
   },
-  "arb-editor.suppressedWarnings": ["missing_metadata_for_key"]
+  "arb-editor.suppressedWarnings": [
+    "missing_metadata_for_key"
+  ]
 }

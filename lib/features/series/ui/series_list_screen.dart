@@ -90,8 +90,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
                             itemCount: seriesState.series.length,
                             gridDelegate:
                                 SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent:
-                                      AppStyles.maxSeriesCardWidthInGrid,
+                                  maxCrossAxisExtent: maxSeriesCardWidthInGrid,
                                   mainAxisExtent: height,
                                   mainAxisSpacing: 16,
                                   crossAxisSpacing: 16,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/models/author.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
@@ -52,7 +51,6 @@ class AuthorCard extends ConsumerWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              borderRadius: AppStyles.circularRadius,
               onTap: () =>
                   context.push(AppRoute.authorDetail.withId(author.id)),
             ),
@@ -72,7 +70,6 @@ class AuthorCardListView extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return ListTile(
-      shape: AppStyles.roundedRect,
       contentPadding: const .fromLTRB(16, 8, 16, 8),
       onTap: () => context.push(AppRoute.authors.withId(author.id)),
       leading: AspectRatio(

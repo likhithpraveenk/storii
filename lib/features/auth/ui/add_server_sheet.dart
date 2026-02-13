@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/auth/logic/add_server_notifier.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
@@ -9,7 +8,6 @@ Future<String?> showAddServerSheet(BuildContext context) async {
   return await showModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
-    shape: AppStyles.roundedRect,
     builder: (context) => const AddServerSheet(),
   );
 }
@@ -68,7 +66,6 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
               decoration: InputDecoration(
                 labelText: l.serverUrl,
                 labelStyle: Theme.of(context).textTheme.titleSmall,
-                border: AppStyles.inputBorder,
                 hintText: 'https://abs.example.com',
               ),
             ),

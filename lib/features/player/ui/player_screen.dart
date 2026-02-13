@@ -24,16 +24,13 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     final screenWidth = size.width;
     final screenHeight = size.height;
 
-    final maxImgSize = (screenWidth - 32).clamp(
-      0.0,
-      AppStyles.maxImgSizeInFullPlayer,
-    );
+    final maxImgSize = (screenWidth - 32).clamp(0.0, maxImgSizeInFullPlayer);
     final maxImgLeft = (screenWidth - maxImgSize) / 2;
     final maxImgTop = screenHeight * 0.1;
 
-    final imgSizeDelta = maxImgSize - AppStyles.imgSizeInMiniPlayer;
-    final imgLeftDelta = maxImgLeft - AppStyles.imgLeftPaddingInMiniPlayer;
-    final imgTopDelta = maxImgTop - AppStyles.imgLeftPaddingInMiniPlayer;
+    final imgSizeDelta = maxImgSize - imgSizeInMiniPlayer;
+    final imgLeftDelta = maxImgLeft - imgLeftPaddingInMiniPlayer;
+    final imgTopDelta = maxImgTop - imgLeftPaddingInMiniPlayer;
 
     const miniInterval = Interval(0.0, 0.3);
     const fullInterval = Interval(0.6, 1.0);
@@ -56,10 +53,9 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
         final miniOpacity = 1 - miniInterval.transform(f);
         final fullOpacity = fullInterval.transform(f);
 
-        final imgSize = AppStyles.imgSizeInMiniPlayer + (imgSizeDelta * f);
-        final imgLeft =
-            AppStyles.imgLeftPaddingInMiniPlayer + (imgLeftDelta * f);
-        final imgTop = AppStyles.imgLeftPaddingInMiniPlayer + (imgTopDelta * f);
+        final imgSize = imgSizeInMiniPlayer + (imgSizeDelta * f);
+        final imgLeft = imgLeftPaddingInMiniPlayer + (imgLeftDelta * f);
+        final imgTop = imgLeftPaddingInMiniPlayer + (imgTopDelta * f);
 
         return Stack(
           children: [

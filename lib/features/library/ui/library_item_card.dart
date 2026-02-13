@@ -32,7 +32,7 @@ class LibraryItemCard extends ConsumerWidget {
             AspectRatio(
               aspectRatio: 1,
               child: ClipRRect(
-                borderRadius: AppStyles.circularRadius,
+                borderRadius: kBorderRadius,
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
@@ -56,12 +56,12 @@ class LibraryItemCard extends ConsumerWidget {
                           height: 3,
                           child: LinearProgressIndicator(
                             value: item.progress,
-                            borderRadius: AppStyles.circularRadius,
+                            borderRadius: kBorderRadius,
                             backgroundColor: scheme.surface.withValues(
                               alpha: 0.2,
                             ),
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              item.isFinished ? AppColors.green : AppColors.red,
+                              item.isFinished ? appGreenColor : appRedColor,
                             ),
                           ),
                         ),
@@ -86,7 +86,7 @@ class LibraryItemCard extends ConsumerWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              borderRadius: AppStyles.circularRadius,
+              borderRadius: kBorderRadius,
               onTap: () => context.push(AppRoute.libraryItem.withId(item.id)),
             ),
           ),
@@ -162,7 +162,6 @@ class LibraryItemCardListView extends StatelessWidget {
 
     return ListTile(
       onTap: () => context.push(AppRoute.libraryItem.withId(item.id)),
-      shape: AppStyles.roundedRect,
       contentPadding: const .fromLTRB(16, 8, 16, 8),
       leading: AspectRatio(
         aspectRatio: 1,

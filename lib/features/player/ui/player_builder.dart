@@ -127,7 +127,7 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
 
     return BackButtonListener(
       onBackButtonPressed: () async {
-        if (height > widget.minHeight + epsilon) {
+        if (height > widget.minHeight) {
           _snapTo(.mini);
           return true;
         }

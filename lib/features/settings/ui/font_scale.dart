@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -19,7 +18,6 @@ class FontScaleTile extends ConsumerWidget {
         mainAxisAlignment: .spaceBetween,
         children: [Text(l.fontScale)],
       ),
-      shape: AppStyles.roundedRect,
       subtitle: Text('${(fontScale * 100).toInt()}%'),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {

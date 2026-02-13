@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
@@ -9,7 +8,6 @@ void showLogEntrySheet(BuildContext context, LogEntry entry) {
     isScrollControlled: true,
     useSafeArea: true,
     showDragHandle: true,
-    shape: AppStyles.roundedRect,
     builder: (context) => DraggableScrollableSheet(
       initialChildSize: 0.5,
       minChildSize: 0.5,

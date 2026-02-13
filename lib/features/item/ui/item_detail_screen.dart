@@ -10,8 +10,8 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/ui/cover_image.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
-import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/expandable_text.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -55,9 +55,9 @@ class ItemDetailScreen extends ConsumerWidget {
                       const SizedBox(height: 4),
                       LinearProgressIndicator(
                         value: item.progress,
-                        borderRadius: AppStyles.circularRadius,
+                        borderRadius: kBorderRadius,
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          item.isFinished ? AppColors.green : AppColors.red,
+                          item.isFinished ? appGreenColor : appRedColor,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -69,6 +69,19 @@ class ItemDetailScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 4),
                     ],
+                    AppFilledButton(
+                      onPressed: () {
+                        ref
+                            .read(userSettingsProvider.notifier)
+                            .setCurrentItemId(id);
+                      },
+                      icon: const Icon(Icons.play_arrow_rounded),
+                      text: item.progress > 0
+                          ? item.progress == 1.0
+                                ? l.replay
+                                : l.resume
+                          : l.play,
+                    ),
                     Wrap(
                       spacing: 8,
                       alignment: .center,
@@ -95,36 +108,6 @@ class ItemDetailScreen extends ConsumerWidget {
             ),
           ],
         ),
-      ),
-      floatingActionButtonLocation: .centerFloat,
-      floatingActionButton: itemAsync.maybeWhen(
-        data: (item) {
-          final bounds = ref.read(playerBoundsProvider);
-          final playerHeight = ref
-              .watch(playerHeightProvider)
-              .clamp(0.0, bounds.min);
-
-          return Container(
-            height: 48,
-            margin: .fromLTRB(16, 0, 16, playerHeight),
-            child: FloatingActionButton.extended(
-              elevation: 4,
-              onPressed: () {
-                ref.read(userSettingsProvider.notifier).setCurrentItemId(id);
-              },
-              icon: const Icon(Icons.play_arrow_rounded),
-              label: Text(
-                item.progress > 0
-                    ? item.progress == 1.0
-                          ? l.replay
-                          : l.resume
-                    : l.play,
-                style: textTheme.labelLarge,
-              ),
-            ),
-          );
-        },
-        orElse: () => null,
       ),
     );
   }

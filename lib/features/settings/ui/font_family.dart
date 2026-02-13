@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/settings/logic/user_fonts.dart';
@@ -23,7 +22,6 @@ class FontFamilyTile extends ConsumerWidget {
       title: Text(AppLocalizations.of(context)!.fontFamily),
       subtitle: Text(fontFamily ?? AppLocalizations.of(context)!.system),
       trailing: const Icon(Icons.chevron_right),
-      shape: AppStyles.roundedRect,
       onTap: () {
         final scaffoldContext = shellScaffoldKey.currentContext;
         if (scaffoldContext == null) return;

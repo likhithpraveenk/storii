@@ -48,10 +48,10 @@ double gridHeight(Ref ref) {
 
       final metadataHeight = scaledTitleHeight + 12 + scaledAuthorHeight;
 
-      return AppStyles.maxCardWidthInGrid + metadataHeight;
+      return maxCardWidthInGrid + metadataHeight;
     }(),
 
-    .compact || .coverOnly => AppStyles.maxCardWidthInGrid,
+    .compact || .coverOnly => maxCardWidthInGrid,
 
     .listView => throw StateError('Do not use grid for listview'),
   };
@@ -66,7 +66,7 @@ double authorsGridHeight(Ref ref) {
   final titleFontSize = theme.textTheme.titleSmall?.fontSize ?? 14.0;
   final scaledTitleHeight = scaler.scale(titleFontSize) * 2 * _titleFactor;
 
-  return AppStyles.maxCardWidthInGrid + scaledTitleHeight + 12;
+  return maxCardWidthInGrid + scaledTitleHeight + 12;
 }
 
 @riverpod
@@ -83,7 +83,7 @@ double seriesGridHeight(Ref ref) {
 
   final metadataHeight = scaledTitleHeight + scaledAuthorHeight;
 
-  return (AppStyles.maxSeriesCardWidthInGrid * 0.5) + metadataHeight;
+  return (maxSeriesCardWidthInGrid * 0.5) + metadataHeight;
 }
 
 @riverpod
@@ -94,8 +94,8 @@ double shelfHeight(Ref ref, ShelfType type) {
   );
 
   final cardWidth = switch (type) {
-    .series => AppStyles.maxSeriesCardWidthInGrid,
-    _ => AppStyles.maxCardWidthInGrid,
+    .series => maxSeriesCardWidthInGrid,
+    _ => maxCardWidthInGrid,
   };
 
   final imageBaseHeight = switch (type) {

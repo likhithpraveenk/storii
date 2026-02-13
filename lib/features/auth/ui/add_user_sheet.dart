@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/auth/logic/add_user_notifier.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -15,7 +14,6 @@ Future<void> showAddUserSheet(
     context: context,
     useSafeArea: true,
     isScrollControlled: true,
-    shape: AppStyles.roundedRect,
     builder: (_) => AddUserSheet(serverUrl, username: username),
   );
 }
@@ -79,7 +77,6 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
                 decoration: InputDecoration(
                   labelText: l10n.username,
                   labelStyle: textTheme.titleSmall,
-                  border: AppStyles.inputBorder,
                 ),
               ),
               const SizedBox(height: 16),
@@ -99,7 +96,6 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
                 decoration: InputDecoration(
                   labelText: l10n.password,
                   labelStyle: textTheme.titleSmall,
-                  border: AppStyles.inputBorder,
                 ),
               ),
               const SizedBox(height: 16),

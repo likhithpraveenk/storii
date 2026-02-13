@@ -44,7 +44,6 @@ class ShellScaffold extends ConsumerWidget {
       },
       child: Scaffold(
         key: shellScaffoldKey,
-        extendBody: true,
         bottomNavigationBar: Column(
           mainAxisSize: .min,
           children: [

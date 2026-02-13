@@ -30,7 +30,7 @@ class MiniPlayer extends ConsumerWidget {
           ),
           child: Row(
             children: [
-              const SizedBox(width: AppStyles.imgSizeInMiniPlayer),
+              const SizedBox(width: imgSizeInMiniPlayer),
               const SizedBox(width: 8),
               Expanded(
                 child: Column(

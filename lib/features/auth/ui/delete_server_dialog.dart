@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
@@ -28,7 +27,6 @@ class DeleteServerDialog extends ConsumerWidget {
                   '${users.map((e) => '• ${e.username}').join('\n')}'}',
         style: Theme.of(context).textTheme.bodyLarge,
       ),
-      shape: AppStyles.roundedRect,
       actions: [
         AppTextButton(onPressed: () => Navigator.pop(context), text: l.cancel),
         const SizedBox(height: 8),

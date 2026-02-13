@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class AppFilledButton extends StatelessWidget {
@@ -28,7 +27,6 @@ class AppFilledButton extends StatelessWidget {
         backgroundColor: isDestructive
             ? theme.colorScheme.error
             : theme.colorScheme.primary,
-        shape: AppStyles.roundedRect,
         elevation: loading ? 0 : 6,
       ),
       icon: loading ? null : icon,
@@ -80,7 +78,6 @@ class AppOutlinedButton extends StatelessWidget {
               : theme.colorScheme.primary,
           width: 1.5,
         ),
-        shape: AppStyles.roundedRect,
       ),
       icon: loading ? null : icon,
       label: loading
@@ -110,7 +107,6 @@ class AppTextButton extends StatelessWidget {
       onPressed: onPressed,
       style: TextButton.styleFrom(
         foregroundColor: color ?? Theme.of(context).colorScheme.primary,
-        shape: AppStyles.roundedRect,
       ),
       icon: icon,
       label: Text(

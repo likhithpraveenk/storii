@@ -94,7 +94,7 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
                     itemCount: authors.length,
                     padding: const .symmetric(horizontal: 16),
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: AppStyles.maxCardWidthInGrid,
+                      maxCrossAxisExtent: maxCardWidthInGrid,
                       mainAxisExtent: height,
                       crossAxisSpacing: 16,
                     ),

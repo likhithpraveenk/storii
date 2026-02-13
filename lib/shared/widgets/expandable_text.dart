@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:simple_html_css/simple_html_css.dart';
 
 class ExpandableHtml extends StatefulWidget {
   final String data;
@@ -47,15 +47,7 @@ class _ExpandableHtmlState extends State<ExpandableHtml> {
                   ],
                   stops: const [0.8, 1.0],
                 ).createShader(bounds),
-                child: Html(
-                  data: widget.data,
-                  style: {
-                    'body': Style(
-                      margin: Margins.zero,
-                      padding: HtmlPaddings.zero,
-                    ),
-                  },
-                ),
+                child: RichText(text: HTML.toTextSpan(context, widget.data)),
               ),
             ),
             Icon(

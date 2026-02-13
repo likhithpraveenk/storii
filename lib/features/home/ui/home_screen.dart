@@ -85,15 +85,15 @@ class HomeScreen extends ConsumerWidget {
                                   Widget card,
                                 ) = switch (shelf) {
                                   ItemShelfDomain s => (
-                                    AppStyles.maxCardWidthInGrid,
+                                    maxCardWidthInGrid,
                                     LibraryItemCard(s.items[i]),
                                   ),
                                   AuthorShelfDomain s => (
-                                    AppStyles.maxCardWidthInGrid,
+                                    maxCardWidthInGrid,
                                     AuthorCard(s.authors[i]),
                                   ),
                                   SeriesShelfDomain s => (
-                                    AppStyles.maxSeriesCardWidthInGrid,
+                                    maxSeriesCardWidthInGrid,
                                     SeriesCard(s.series[i]),
                                   ),
                                 };

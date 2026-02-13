@@ -1,18 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-abstract class AppStyles {
-  static final circularRadius = BorderRadius.circular(12);
+final kBorderRadius = BorderRadius.circular(12);
 
-  static final inputBorder = OutlineInputBorder(borderRadius: circularRadius);
+const maxCardWidthInGrid = 180.0;
+const maxSeriesCardWidthInGrid = 360.0;
 
-  static final roundedRect = RoundedRectangleBorder(
-    borderRadius: circularRadius,
-  );
-
-  static const maxCardWidthInGrid = 180.0;
-  static const maxSeriesCardWidthInGrid = 360.0;
-
-  static const imgSizeInMiniPlayer = 64.0;
-  static const imgLeftPaddingInMiniPlayer = 8.0;
-  static const maxImgSizeInFullPlayer = 360.0;
-}
+const imgSizeInMiniPlayer = 64.0;
+const imgLeftPaddingInMiniPlayer = 8.0;
+const maxImgSizeInFullPlayer = 320.0;

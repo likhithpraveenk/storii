@@ -98,7 +98,7 @@ class SectionHeader extends StatelessWidget {
                 padding: const .symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  borderRadius: AppStyles.circularRadius,
+                  borderRadius: kBorderRadius,
                 ),
                 child: Text(
                   count.toString(),
@@ -172,7 +172,7 @@ class HorizontalBooksCarousel extends ConsumerWidget {
         itemCount: books.length,
         itemBuilder: (context, index) {
           return Container(
-            width: AppStyles.maxCardWidthInGrid,
+            width: maxCardWidthInGrid,
             margin: const .only(right: 12),
             child: LibraryItemCard(books[index]),
           );

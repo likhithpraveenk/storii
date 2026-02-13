@@ -42,7 +42,6 @@ class FullPlayer extends ConsumerWidget {
                   item.authorName ?? l.noAuthor,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
-                const SizedBox(height: 32),
                 const BookSlider(),
                 Padding(
                   padding: const .symmetric(horizontal: 24),
@@ -54,7 +53,6 @@ class FullPlayer extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: .spaceEvenly,
                   children: [
