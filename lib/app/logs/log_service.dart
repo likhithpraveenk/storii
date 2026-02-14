@@ -13,7 +13,7 @@ class LogService {
     _setupGlobalHandlers();
   }
 
-  static Future<void> log(
+  static void log(
     String message, {
     String? source,
     LogLevelDomain level = LogLevelDomain.info,

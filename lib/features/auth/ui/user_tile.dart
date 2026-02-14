@@ -38,7 +38,7 @@ class UserTile extends ConsumerWidget {
                     .read(appSettingsProvider.notifier)
                     .setCurrentUser(user);
               } else if (loginNeeded) {
-                showAddUserSheet(context, server.url, user.username);
+                await showAddUserSheet(context, server.url, user.username);
               }
             },
             child: Padding(

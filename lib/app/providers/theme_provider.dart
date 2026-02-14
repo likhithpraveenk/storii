@@ -18,7 +18,7 @@ ThemeData themeData(Ref ref, Brightness brightness) {
       ? ref.watch(dynamicColorsProvider(brightness)).value
       : null;
 
-  ColorScheme colorScheme =
+  var colorScheme =
       dynamicScheme ?? (brightness == .dark ? darkScheme : lightScheme);
 
   if (brightness == .dark && isPureBlack) {

@@ -6,7 +6,7 @@ part 'token_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 TokenStorage token(Ref ref) {
-  final storage = const FlutterSecureStorage();
+  const storage = FlutterSecureStorage();
 
   return TokenStorage(storage);
 }

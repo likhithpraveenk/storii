@@ -16,5 +16,9 @@
   },
   "arb-editor.suppressedWarnings": [
     "missing_metadata_for_key"
-  ]
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  }
 }

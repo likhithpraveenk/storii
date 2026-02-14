@@ -21,7 +21,9 @@ Future<LibraryDomain> activeLibrary(Ref ref) async {
       libraries.firstWhereOrNull((l) => l.id == currentLibraryId) ??
       libraries.first;
   if (currentLibraryId != library.id) {
-    ref.read(userSettingsProvider.notifier).setCurrentLibraryId(library.id);
+    await ref
+        .read(userSettingsProvider.notifier)
+        .setCurrentLibraryId(library.id);
   }
   final api = ref.read(libraryApiProvider(user));
   final response = await api.get(library.id);

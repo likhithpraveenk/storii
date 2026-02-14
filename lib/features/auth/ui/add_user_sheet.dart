@@ -72,7 +72,7 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
                 enabled: !isLoading,
                 textInputAction: .next,
                 keyboardType: .name,
-                autofillHints: [AutofillHints.username],
+                autofillHints: const [AutofillHints.username],
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: l10n.username,
@@ -84,7 +84,7 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
                 controller: _passwordController,
                 enabled: !isLoading,
                 textInputAction: .done,
-                autofillHints: [AutofillHints.password],
+                autofillHints: const [AutofillHints.password],
                 onSubmitted: (_) => ref
                     .read(addUserProvider.notifier)
                     .login(

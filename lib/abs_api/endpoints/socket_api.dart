@@ -14,7 +14,9 @@ class SocketApi {
             .setTransports(['websocket'])
             .disableAutoConnect()
             .build(),
-      );
+      ) {
+    init(token);
+  }
 
   void init(String token) {
     if (_initialized) return;

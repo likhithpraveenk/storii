@@ -96,7 +96,7 @@ class SaveProgress extends _$SaveProgress {
     if (isPlaying && (isHeartbeat || isTrackChanged || isFinished)) {
       _lastSavedSecond = currentSecond;
       _lastTrackId = trackId;
-      _saveProgress(bookId, globalPos);
+      unawaited(_saveProgress(bookId, globalPos));
     }
   }
 

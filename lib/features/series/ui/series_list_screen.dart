@@ -57,7 +57,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l.series, style: Theme.of(context).textTheme.titleLarge),
-        actions: [const FiltersButton(.series)],
+        actions: const [FiltersButton(.series)],
       ),
       body: RefreshIndicator(
         onRefresh: () => ref.read(seriesListProvider.notifier).manualSync(),

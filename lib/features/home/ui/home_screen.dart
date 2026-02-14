@@ -27,7 +27,7 @@ class HomeScreen extends ConsumerWidget {
         surfaceTintColor: Colors.transparent,
         scrolledUnderElevation: 0,
         title: const LibrarySwitcher(),
-        actions: [const FiltersButton(.library)],
+        actions: const [FiltersButton(.library)],
       ),
       body: RefreshIndicator(
         onRefresh: () => ref.read(shelvesProvider.notifier).manualSync(),

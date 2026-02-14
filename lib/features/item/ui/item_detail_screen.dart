@@ -122,7 +122,7 @@ class _AuthorsSeriesChips extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
     final textStyle = Theme.of(context).textTheme.labelLarge;
-    final List<Widget> children = [];
+    final children = <Widget>[];
 
     switch (item) {
       case final Audiobook a:

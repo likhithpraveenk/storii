@@ -10,7 +10,7 @@
     {
       "label": "dart format",
       "type": "shell",
-      "command": "dart format lib",
+      "command": "dart format .",
       "problemMatcher": [],
     },
     {

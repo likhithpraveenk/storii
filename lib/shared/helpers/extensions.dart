@@ -54,7 +54,7 @@ extension StringExtensions on String {
   String toPrettyJson() {
     try {
       final dynamic decoded = jsonDecode(this);
-      final encoder = const JsonEncoder.withIndent('  ');
+      const encoder = JsonEncoder.withIndent('  ');
       return encoder.convert(decoded);
     } catch (_) {
       return this;
@@ -172,20 +172,20 @@ extension FilterGroupX on FilterGroup {
 
 extension ColorExtensions on Color {
   String toHex() {
-    final int argb = toARGB32();
+    final argb = toARGB32();
     return '#${argb.toRadixString(16).padLeft(8, '0')}';
   }
 
   String toHexNoAlpha() {
-    final int argb = toARGB32();
+    final argb = toARGB32();
     return '#${(argb & 0xFFFFFF).toRadixString(16).padLeft(6, '0')}';
   }
 }
 
 extension AudiobookX on Audiobook {
   (int, Duration) getIndexAndOffset() {
-    Duration accumulated = Duration.zero;
-    for (int i = 0; i < tracks.length; i++) {
+    var accumulated = Duration.zero;
+    for (var i = 0; i < tracks.length; i++) {
       final trackLen = tracks[i].duration;
       if (currentOffset < accumulated + trackLen) {
         return (i, currentOffset - accumulated);

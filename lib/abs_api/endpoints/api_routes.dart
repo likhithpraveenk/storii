@@ -1,6 +1,6 @@
 class ApiRoutes {
   static String _build(String template, Map<String, String?> params) {
-    String path = template;
+    var path = template;
     params.forEach((k, v) {
       if (v != null && v.isNotEmpty) {
         path = path.replaceAll(':$k', v);

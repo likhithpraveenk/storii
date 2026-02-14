@@ -2,14 +2,21 @@ include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
-    prefer_final_locals: true
-    prefer_const_constructors: true
-    prefer_single_quotes: true
-    always_use_package_imports: true
-    require_trailing_commas: true
-    directives_ordering: true
-    unnecessary_lambdas: true
-    sort_pub_dependencies: true
+    - prefer_final_locals
+    - prefer_const_constructors
+    - avoid_unused_constructor_parameters
+    - prefer_const_declarations
+    - prefer_const_literals_to_create_immutables
+    - prefer_single_quotes
+    - always_use_package_imports
+    - require_trailing_commas
+    - directives_ordering
+    - unnecessary_lambdas
+    - sort_pub_dependencies
+    - cancel_subscriptions
+    - unawaited_futures
+    - combinators_ordering
+    - avoid_types_on_closure_parameters
 
 analyzer:
   plugins:

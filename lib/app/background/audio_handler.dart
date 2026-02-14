@@ -98,9 +98,9 @@ class MyAudioHandler extends BaseAudioHandler with SeekHandler {
   @override
   Future<void> seek(Duration position) async {
     final items = queue.value;
-    Duration accumulated = Duration.zero;
+    var accumulated = Duration.zero;
 
-    for (int i = 0; i < items.length; i++) {
+    for (var i = 0; i < items.length; i++) {
       final trackLen = items[i].duration ?? Duration.zero;
       if (position < accumulated + trackLen) {
         return player.seek(position - accumulated, index: i);

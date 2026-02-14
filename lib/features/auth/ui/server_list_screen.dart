@@ -108,7 +108,7 @@ class ServerListScreen extends ConsumerWidget {
                   onPressed: () async {
                     final serverUrl = await showAddServerSheet(context);
                     if (serverUrl != null && context.mounted) {
-                      showAddUserSheet(context, serverUrl.normalizedUri);
+                      await showAddUserSheet(context, serverUrl.normalizedUri);
                     }
                   },
                 ),

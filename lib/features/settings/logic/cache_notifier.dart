@@ -25,7 +25,7 @@ class CacheSize extends _$CacheSize {
       final cacheDir = Directory(cachePath);
 
       if (await cacheDir.exists()) {
-        final List<FileSystemEntity> files = cacheDir.listSync(recursive: true);
+        final files = cacheDir.listSync(recursive: true);
         for (final file in files) {
           if (file is File) {
             totalSize += file.lengthSync();

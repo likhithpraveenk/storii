@@ -253,7 +253,7 @@ class _WaveformPainter extends CustomPainter {
     final paint = Paint()..color = color;
     double x = 0;
 
-    for (double height in heights) {
+    for (var height in heights) {
       final barTop = (size.height - height) / 2;
       final barRect = RRect.fromRectAndRadius(
         Rect.fromLTWH(x, barTop, barWidth, height),
