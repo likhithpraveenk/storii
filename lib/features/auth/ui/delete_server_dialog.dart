@@ -27,6 +27,7 @@ class DeleteServerDialog extends ConsumerWidget {
                   '${users.map((e) => '• ${e.username}').join('\n')}'}',
         style: Theme.of(context).textTheme.bodyLarge,
       ),
+      actionsAlignment: .spaceBetween,
       actions: [
         AppTextButton(onPressed: () => Navigator.pop(context), text: l.cancel),
         const SizedBox(height: 8),

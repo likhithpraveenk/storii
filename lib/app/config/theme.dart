@@ -18,13 +18,15 @@ final darkScheme = ColorScheme.fromSeed(
   surface: appSlateColor,
 );
 
-// it might be better to manually make this
-final amoledScheme = ColorScheme.fromSeed(
+final highContrastTheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
   seedColor: appPrimaryColor,
   surface: Colors.black,
-  onPrimary: Colors.black,
   onSurface: Colors.white,
+  primary: Colors.white,
+  onPrimary: Colors.black,
+  secondary: Colors.yellowAccent,
+  onSecondary: Colors.black,
   surfaceContainer: Colors.black,
   contrastLevel: 1,
 );

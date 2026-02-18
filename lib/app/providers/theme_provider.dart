@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/theme.dart';
-import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/settings/logic/dynamic_colors.dart';
 
@@ -22,19 +21,24 @@ ThemeData themeData(Ref ref, Brightness brightness) {
       dynamicScheme ?? (brightness == .dark ? darkScheme : lightScheme);
 
   if (brightness == .dark && isPureBlack) {
-    colorScheme = amoledScheme;
+    colorScheme = colorScheme.copyWith(
+      surface: Colors.black,
+      surfaceContainer: Colors.black,
+      surfaceContainerLow: Colors.black,
+      surfaceContainerLowest: Colors.black,
+    );
   }
 
-  LogService.log(
-    'getting theme data with\n'
-    'fontFamily: $fontFamily\n'
-    'brightnesss: $brightness\n'
-    'usePureBlack: $isPureBlack\n'
-    'useSystemColors: $useDynamic\n'
-    'hasDynamicScheme: ${dynamicScheme != null}',
-    source: 'themeDataProvider',
-    level: .debug,
-  );
+  // LogService.log(
+  //   'getting theme data with\n'
+  //   'fontFamily: $fontFamily\n'
+  //   'brightnesss: $brightness\n'
+  //   'usePureBlack: $isPureBlack\n'
+  //   'useSystemColors: $useDynamic\n'
+  //   'hasDynamicScheme: ${dynamicScheme != null}',
+  //   source: 'themeDataProvider',
+  //   level: .debug,
+  // );
 
   return ThemeData(
     useMaterial3: true,
@@ -57,6 +61,11 @@ ThemeData themeData(Ref ref, Brightness brightness) {
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
       ),
     ),

@@ -18,7 +18,6 @@ class FontFamilyTile extends ConsumerWidget {
     final fontFamily = ref.watch(fontFamilyProvider);
 
     return ListTile(
-      leading: const Icon(Icons.font_download),
       title: Text(AppLocalizations.of(context)!.fontFamily),
       subtitle: Text(fontFamily ?? AppLocalizations.of(context)!.system),
       trailing: const Icon(Icons.chevron_right),
@@ -60,6 +59,8 @@ class FontFamilySheet extends ConsumerWidget {
             ListTile(
               leading: const Icon(Icons.folder_open),
               title: const Text('Add Fonts'),
+              contentPadding: const .symmetric(horizontal: 24),
+              horizontalTitleGap: 24,
               onTap: () async {
                 if (Platform.isAndroid) {
                   await Permission.storage.request();

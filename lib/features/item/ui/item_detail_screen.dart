@@ -69,25 +69,11 @@ class ItemDetailScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 4),
                     ],
-                    AppFilledButton(
-                      onPressed: () {
-                        ref
-                            .read(userSettingsProvider.notifier)
-                            .setCurrentItemId(id);
-                      },
-                      icon: const Icon(Icons.play_arrow_rounded),
-                      text: item.progress > 0
-                          ? item.progress == 1.0
-                                ? l.replay
-                                : l.resume
-                          : l.play,
-                    ),
                     Wrap(
                       spacing: 8,
                       alignment: .center,
                       children: item.genres.map((g) {
                         return ActionChip(
-                          avatar: const Icon(Icons.category_outlined),
                           label: Text(g, style: textTheme.labelSmall),
                           onPressed: () {
                             ref
@@ -96,9 +82,27 @@ class ItemDetailScreen extends ConsumerWidget {
                             context.go(AppRoute.library.path);
                           },
                           visualDensity: .compact,
-                          side: .none,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: kBorderRadius,
+                          ),
                         );
                       }).toList(),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: AppFilledButton(
+                        onPressed: () {
+                          ref
+                              .read(userSettingsProvider.notifier)
+                              .setCurrentItemId(id);
+                        },
+                        icon: const Icon(Icons.play_arrow_rounded),
+                        text: item.progress > 0
+                            ? item.progress == 1.0
+                                  ? l.replay
+                                  : l.resume
+                            : l.play,
+                      ),
                     ),
                     ExpandableHtml(data: item.description ?? l.noDescription),
                     const SizedBox(height: 200),
@@ -133,30 +137,30 @@ class _AuthorsSeriesChips extends StatelessWidget {
               label: Text(author.name, style: textStyle),
               onPressed: () =>
                   context.push(AppRoute.authorDetail.withId(author.id)),
-              visualDensity: .compact,
-              side: .none,
+              shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
             ),
           ),
         );
         children.addAll(
-          a.series.map(
-            (series) => ActionChip(
+          a.series.map((series) {
+            final seriesLabel = series.sequence != null
+                ? '${series.name} #${series.sequence}'
+                : series.name;
+            return ActionChip(
               avatar: const Icon(Icons.stacked_bar_chart_outlined),
-              label: Text(series.name, style: textStyle),
+              label: Text(seriesLabel, style: textStyle),
               onPressed: () =>
                   context.push(AppRoute.seriesDetail.withId(series.id)),
-              visualDensity: .compact,
-              side: .none,
-            ),
-          ),
+              shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+            );
+          }),
         );
       case Podcast _:
         children.add(
           Chip(
             avatar: const Icon(Icons.person_2_outlined),
             label: Text(item.authorName ?? l.noAuthor, style: textStyle),
-            visualDensity: .compact,
-            side: .none,
+            shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
           ),
         );
     }

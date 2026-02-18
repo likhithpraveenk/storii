@@ -23,75 +23,64 @@ class LibraryItemCard extends ConsumerWidget {
     final stackTitle = ref.watch(stackTitleOnImageProvider);
     final showTitle = ref.watch(showTitleForItemProvider);
 
-    return Stack(
-      children: [
-        Column(
-          mainAxisSize: .min,
-          crossAxisAlignment: .start,
-          children: [
-            AspectRatio(
-              aspectRatio: 1,
-              child: ClipRRect(
-                borderRadius: kBorderRadius,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    ImageWidget(
-                      id: item.id,
-                      type: .item,
-                      updatedAt: item.updatedAt,
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: stackTitle && showTitle
-                          ? TitleWidget(item: item, inStack: true)
-                          : const SizedBox.shrink(),
-                    ),
-                    if (item.progress > 0)
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: SizedBox(
-                          height: 3,
-                          child: LinearProgressIndicator(
-                            value: item.progress,
-                            borderRadius: kBorderRadius,
-                            backgroundColor: scheme.surface.withValues(
-                              alpha: 0.2,
-                            ),
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              item.isFinished ? appGreenColor : appRedColor,
-                            ),
+    return InkWell(
+      onTap: () => context.push(AppRoute.itemDetail.withId(item.id)),
+      splashFactory: NoSplash.splashFactory,
+      highlightColor: Colors.transparent,
+      child: Column(
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
+        children: [
+          AspectRatio(
+            aspectRatio: 1,
+            child: ClipRRect(
+              borderRadius: kBorderRadius,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  ImageWidget(
+                    id: item.id,
+                    type: .item,
+                    updatedAt: item.updatedAt,
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: stackTitle && showTitle
+                        ? TitleWidget(item: item, inStack: true)
+                        : const SizedBox.shrink(),
+                  ),
+                  if (item.progress > 0)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SizedBox(
+                        height: 3,
+                        child: LinearProgressIndicator(
+                          value: item.progress,
+                          borderRadius: kBorderRadius,
+                          backgroundColor: scheme.surface.withValues(
+                            alpha: 0.2,
+                          ),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            item.isFinished ? appGreenColor : appRedColor,
                           ),
                         ),
                       ),
-                    if (sequence != null)
-                      Positioned(
-                        top: 4,
-                        right: 4,
-                        child: StackBadge('#$sequence'),
-                      ),
-                  ],
-                ),
+                    ),
+                  if (sequence != null)
+                    Positioned(
+                      top: 4,
+                      right: 4,
+                      child: StackBadge('#$sequence'),
+                    ),
+                ],
               ),
             ),
-            if (!stackTitle && showTitle)
-              TitleWidget(item: item)
-            else
-              const SizedBox.shrink(),
-          ],
-        ),
-        Positioned.fill(
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              borderRadius: kBorderRadius,
-              onTap: () => context.push(AppRoute.libraryItem.withId(item.id)),
-            ),
           ),
-        ),
-      ],
+          if (!stackTitle && showTitle) TitleWidget(item: item),
+        ],
+      ),
     );
   }
 }
@@ -130,7 +119,7 @@ class TitleWidget extends StatelessWidget {
             overflow: .ellipsis,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
               fontWeight: .bold,
-              color: theme.brightness == .light
+              color: theme.brightness == .light && inStack
                   ? theme.colorScheme.onInverseSurface
                   : theme.colorScheme.onSurface,
             ),
@@ -140,7 +129,7 @@ class TitleWidget extends StatelessWidget {
             maxLines: 1,
             overflow: .ellipsis,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: theme.brightness == .light
+              color: theme.brightness == .light && inStack
                   ? theme.colorScheme.onInverseSurface
                   : theme.colorScheme.onSurface,
             ),
@@ -161,7 +150,7 @@ class LibraryItemCardListView extends StatelessWidget {
     final theme = Theme.of(context);
 
     return ListTile(
-      onTap: () => context.push(AppRoute.libraryItem.withId(item.id)),
+      onTap: () => context.push(AppRoute.itemDetail.withId(item.id)),
       contentPadding: const .fromLTRB(16, 8, 16, 8),
       leading: AspectRatio(
         aspectRatio: 1,

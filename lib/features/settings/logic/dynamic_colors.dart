@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/logs/log_service.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 
 part 'dynamic_colors.g.dart';
 
@@ -15,11 +14,11 @@ Future<ColorScheme?> dynamicColors(Ref ref, Brightness brightness) async {
     final primary = corePalette?.toColorScheme(brightness: brightness).primary;
     if (primary != null) {
       final harmonizedPrimary = primary.harmonizeWith(appPrimaryColor);
-      LogService.log(
-        'found color ${harmonizedPrimary.toHex()} for $brightness',
-        source: 'dynamicColors',
-        level: .debug,
-      );
+      // LogService.log(
+      //   'found color ${harmonizedPrimary.toHex()} for $brightness',
+      //   source: 'dynamicColors',
+      //   level: .debug,
+      // );
       colorScheme = ColorScheme.fromSeed(
         seedColor: harmonizedPrimary,
         brightness: brightness,
@@ -37,11 +36,11 @@ Future<ColorScheme?> dynamicColors(Ref ref, Brightness brightness) async {
       final primary = await DynamicColorPlugin.getAccentColor();
       if (primary != null) {
         final harmonizedPrimary = primary.harmonizeWith(appPrimaryColor);
-        LogService.log(
-          'found color ${harmonizedPrimary.toHex()} for $brightness',
-          source: 'dynamicColors',
-          level: .debug,
-        );
+        // LogService.log(
+        //   'found color ${harmonizedPrimary.toHex()} for $brightness',
+        //   source: 'dynamicColors',
+        //   level: .debug,
+        // );
         colorScheme = ColorScheme.fromSeed(
           seedColor: harmonizedPrimary,
           brightness: brightness,

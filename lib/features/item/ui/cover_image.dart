@@ -16,6 +16,10 @@ class CoverImage extends StatelessWidget {
     final l = AppLocalizations.of(context)!;
     final size = MediaQuery.sizeOf(context);
 
+    final backgroundColor = Theme.brightnessOf(context) == .light
+        ? Theme.of(context).colorScheme.inverseSurface
+        : Theme.of(context).colorScheme.surface;
+
     return SliverAppBar(
       expandedHeight: (size.width * 0.8).clamp(320.0, 480.0),
       pinned: true,
@@ -43,18 +47,21 @@ class CoverImage extends StatelessWidget {
           );
         },
       ),
-      titleSpacing: 0,
+
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: const [.zoomBackground],
         background: Stack(
           fit: .expand,
           children: [
-            ImageFiltered(
-              imageFilter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-              child: ImageWidget(
-                id: item.id,
-                type: .item,
-                updatedAt: item.updatedAt,
+            Material(
+              color: backgroundColor,
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                child: ImageWidget(
+                  id: item.id,
+                  type: .item,
+                  updatedAt: item.updatedAt,
+                ),
               ),
             ),
             Center(

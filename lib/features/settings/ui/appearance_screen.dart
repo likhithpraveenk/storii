@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/settings/ui/font_family.dart';
+import 'package:storii/features/settings/ui/font_scale.dart';
 import 'package:storii/l10n/l10n.dart';
 
 class AppearanceTile extends ConsumerWidget {
@@ -20,7 +22,7 @@ class AppearanceTile extends ConsumerWidget {
 
     return ListTile(
       trailing: const Icon(Icons.chevron_right),
-      leading: const Icon(Icons.settings_brightness),
+      leading: const Icon(Icons.settings_brightness_outlined),
       title: Text(l.appearance),
       subtitle: Text(subtitle),
       onTap: () {
@@ -47,7 +49,7 @@ class AppearanceScreen extends ConsumerWidget {
           },
           icon: const Icon(Icons.arrow_back),
         ),
-        titleSpacing: 0,
+
         title: Text(
           AppLocalizations.of(context)!.appearance,
           style: Theme.of(context).textTheme.titleLarge,
@@ -93,6 +95,8 @@ class AppearanceScreen extends ConsumerWidget {
             value: isDynamic,
             onChanged: notifier.setUseDynamicColor,
           ),
+          const FontFamilyTile(),
+          const FontScaleTile(),
         ],
       ),
     );

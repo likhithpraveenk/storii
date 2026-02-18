@@ -14,7 +14,7 @@ class ConfigNavTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: const Icon(Icons.explore),
+      leading: const Icon(Icons.explore_outlined),
       trailing: const Icon(Icons.chevron_right),
       title: Text(AppLocalizations.of(context)!.configNav),
       onTap: () {
@@ -89,7 +89,7 @@ class _ConfigNavScreenState extends ConsumerState<ConfigNavScreen> {
           },
           icon: const Icon(Icons.arrow_back),
         ),
-        titleSpacing: 0,
+
         title: Text(
           AppLocalizations.of(context)!.configNav,
           style: Theme.of(context).textTheme.titleLarge,
@@ -103,6 +103,9 @@ class _ConfigNavScreenState extends ConsumerState<ConfigNavScreen> {
               await ref
                   .read(appSettingsProvider.notifier)
                   .setNavTargets(finalOrder);
+              if (context.mounted) {
+                context.pop();
+              }
             },
             text: AppLocalizations.of(context)!.save,
           ),

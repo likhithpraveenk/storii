@@ -105,11 +105,14 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
       if (velocityY < 0) {
         target = .full;
       } else {
-        target = (height < (widget.minHeight * 0.8)) ? .hidden : .mini;
+        target = height < widget.minHeight * 0.8 ? .hidden : .mini;
       }
     } else {
       final mid = (widget.minHeight + widget.maxHeight) / 2;
       target = height > mid ? .full : .mini;
+      if (height < widget.minHeight * 0.8) {
+        target = .hidden;
+      }
     }
     _snapTo(target);
   }

@@ -19,7 +19,7 @@ class LanguageSelectorTile extends ConsumerWidget {
         .displayName;
 
     return ListTile(
-      leading: const Icon(Icons.language),
+      leading: const Icon(Icons.language_outlined),
       title: Text(AppLocalizations.of(context)!.language),
       subtitle: Text(currentLanguageLabel),
       trailing: const Icon(Icons.chevron_right),
@@ -47,6 +47,13 @@ class LanguageBottomSheet extends ConsumerWidget {
     return Column(
       mainAxisSize: .min,
       children: [
+        Padding(
+          padding: const .symmetric(horizontal: 16),
+          child: Text(
+            AppLocalizations.of(context)!.language,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
         RadioGroup<String>(
           groupValue: currentLocale,
           onChanged: (value) {

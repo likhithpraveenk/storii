@@ -23,7 +23,6 @@ class LogsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: 0,
         title: Text(l.logs, style: textTheme.titleLarge),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(50),
@@ -68,6 +67,7 @@ class LogsScreen extends ConsumerWidget {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
+                        actionsAlignment: .spaceBetween,
                         actions: [
                           AppTextButton(
                             onPressed: () => Navigator.of(context).pop(),

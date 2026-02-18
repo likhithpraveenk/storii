@@ -13,7 +13,7 @@ class SearchScreen extends StatelessWidget {
         slivers: [
           SliverAppBar(
             automaticallyImplyLeading: false,
-            titleSpacing: 0,
+
             title: Material(
               child: Container(
                 decoration: BoxDecoration(color: scheme.surfaceContainer),

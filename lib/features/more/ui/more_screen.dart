@@ -33,9 +33,8 @@ class MoreScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: .start,
           children: [
-            Container(
+            Align(
               alignment: .center,
-              width: double.infinity,
               child: Image.asset(
                 LocalAssets.appForeground,
                 width: 100,
@@ -71,8 +70,9 @@ class MoreScreen extends ConsumerWidget {
             ListTile(
               leading: const Icon(Icons.switch_account),
               title: Text(AppLocalizations.of(context)!.switchAccount),
-              onTap: () =>
-                  ref.read(appSettingsProvider.notifier).setCurrentUser(null),
+              onTap: () {
+                ref.read(appSettingsProvider.notifier).setCurrentUser(null);
+              },
             ),
             const AboutTile(),
           ],

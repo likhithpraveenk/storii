@@ -27,7 +27,6 @@ class AppFilledButton extends StatelessWidget {
         backgroundColor: isDestructive
             ? theme.colorScheme.error
             : theme.colorScheme.primary,
-        elevation: loading ? 0 : 6,
       ),
       icon: loading ? null : icon,
       label: loading
@@ -76,7 +75,6 @@ class AppOutlinedButton extends StatelessWidget {
               : isDestructive
               ? theme.colorScheme.error
               : theme.colorScheme.primary,
-          width: 1.5,
         ),
       ),
       icon: loading ? null : icon,

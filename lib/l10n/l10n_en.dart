@@ -181,7 +181,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get save => 'Save';
 
   @override
-  String get fontFamily => 'Font Family';
+  String get fontFamily => 'Change Font';
 
   @override
   String get system => 'System';
@@ -202,10 +202,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pureBlack => 'Pure Black';
 
   @override
-  String get pureBlackSubtitle => 'Use absolute black for OLED screens';
+  String get pureBlackSubtitle => 'High contrast theme';
 
   @override
-  String get fontScale => 'Font Scale';
+  String get fontScale => 'Font Size';
 
   @override
   String get language => 'Language';

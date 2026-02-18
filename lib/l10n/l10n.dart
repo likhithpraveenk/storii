@@ -421,7 +421,7 @@ abstract class AppLocalizations {
   /// No description provided for @fontFamily.
   ///
   /// In en, this message translates to:
-  /// **'Font Family'**
+  /// **'Change Font'**
   String get fontFamily;
 
   /// No description provided for @system.
@@ -463,13 +463,13 @@ abstract class AppLocalizations {
   /// No description provided for @pureBlackSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Use absolute black for OLED screens'**
+  /// **'High contrast theme'**
   String get pureBlackSubtitle;
 
   /// No description provided for @fontScale.
   ///
   /// In en, this message translates to:
-  /// **'Font Scale'**
+  /// **'Font Size'**
   String get fontScale;
 
   /// No description provided for @language.

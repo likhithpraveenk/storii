@@ -47,7 +47,14 @@ class _ExpandableHtmlState extends State<ExpandableHtml> {
                   ],
                   stops: const [0.8, 1.0],
                 ).createShader(bounds),
-                child: RichText(text: HTML.toTextSpan(context, widget.data)),
+                child: HTML.toRichText(
+                  context,
+                  widget.data,
+                  defaultTextStyle: Theme.of(context).textTheme.bodyMedium
+                      ?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                ),
               ),
             ),
             Icon(

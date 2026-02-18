@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/player/logic/audio_providers.dart';
-import 'package:storii/features/player/logic/current_item_provider.dart';
 import 'package:storii/features/player/ui/full_player.dart';
 import 'package:storii/features/player/ui/hero_cover.dart';
 import 'package:storii/features/player/ui/mini_player.dart';
@@ -35,18 +33,24 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     const miniInterval = Interval(0.0, 0.3);
     const fullInterval = Interval(0.6, 1.0);
 
-    ref.listen(currentItemProvider, (prev, next) {
-      next.whenData((item) {
-        if (item != null) {
-          LogService.log('listener: ${item.title}', source: 'PlayerScreen');
-          ref.read(audioPlayerProvider.notifier).play(item);
-        }
-      });
-    });
+    // TODO: audio
+    // ref.listen(currentItemProvider, (prev, next) {
+    //   next.whenData((item) {
+    //     if (item != null) {
+    //       LogService.log('listener: ${item.title}', source: 'PlayerScreen');
+    //       ref.read(audioPlayerProvider.notifier).play(item);
+    //     }
+    //   });
+    // });
 
     return PlayerBuilder(
       maxHeight: screenHeight,
       onDismiss: () {
+        LogService.log(
+          'miniPlayerDismissed',
+          level: .debug,
+          source: 'PlayerScreen',
+        );
         ref.read(userSettingsProvider.notifier).setCurrentItemId(null);
       },
       builder: (context, f) {

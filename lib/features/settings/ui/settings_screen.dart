@@ -3,8 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/features/settings/ui/appearance_screen.dart';
 import 'package:storii/features/settings/ui/config_nav_screen.dart';
 import 'package:storii/features/settings/ui/datetime_format_tile.dart';
-import 'package:storii/features/settings/ui/font_family.dart';
-import 'package:storii/features/settings/ui/font_scale.dart';
 import 'package:storii/features/settings/ui/http_logs.dart';
 import 'package:storii/features/settings/ui/language_selector.dart';
 import 'package:storii/features/settings/ui/log_retention.dart';
@@ -26,7 +24,7 @@ class SettingsScreen extends StatelessWidget {
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
         ),
-        titleSpacing: 0,
+
         actions: const [ResetSettingsAction()],
         actionsPadding: const .only(right: 16),
       ),
@@ -37,8 +35,6 @@ class SettingsScreen extends StatelessWidget {
           LogRetentionTile(),
           DateTimeFormatTile(),
           ConfigNavTile(),
-          FontFamilyTile(),
-          FontScaleTile(),
           HttpLogsTile(),
         ],
       ),

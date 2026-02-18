@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
@@ -20,12 +21,11 @@ class ServerListScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final serversAsync = ref.watch(serversProvider);
     final scheme = Theme.of(context).colorScheme;
-    final maxHeight = MediaQuery.sizeOf(context).height * 0.6;
+    final maxHeight = MediaQuery.sizeOf(context).height * 0.5;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        titleSpacing: 0,
         animateColor: false,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
@@ -57,6 +57,7 @@ class ServerListScreen extends ConsumerWidget {
                 child: Material(
                   elevation: 6,
                   color: scheme.secondaryContainer,
+                  borderRadius: kBorderRadius,
                   child: SizedBox(
                     width: double.infinity,
                     child: serversAsync.when(

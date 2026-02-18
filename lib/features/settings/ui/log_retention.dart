@@ -12,7 +12,7 @@ class LogRetentionTile extends ConsumerWidget {
     final days = ref.watch(logRetentionProvider).inDays;
 
     return ListTile(
-      leading: const Icon(Icons.bug_report),
+      leading: const Icon(Icons.bug_report_outlined),
       title: Text(AppLocalizations.of(context)!.logHistory),
       subtitle: Text(AppLocalizations.of(context)!.keepLogsFor(days)),
       trailing: const Icon(Icons.chevron_right),

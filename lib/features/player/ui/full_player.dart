@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:storii/app/config/router.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/current_item_provider.dart';
+import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
@@ -34,9 +37,15 @@ class FullPlayer extends ConsumerWidget {
           return SingleChildScrollView(
             child: Column(
               children: [
-                Text(
-                  item.title ?? l.noTitle,
-                  style: Theme.of(context).textTheme.titleLarge,
+                GestureDetector(
+                  child: Text(
+                    item.title ?? l.noTitle,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  onTap: () {
+                    ref.read(playerHeightProvider.notifier).snapTo(.mini);
+                    context.go(AppRoute.itemDetail.withId(item.id));
+                  },
                 ),
                 Text(
                   item.authorName ?? l.noAuthor,

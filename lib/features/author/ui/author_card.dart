@@ -12,51 +12,43 @@ class AuthorCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Stack(
-      children: [
-        Column(
-          mainAxisSize: .min,
-          children: [
-            Stack(
-              children: [
-                AspectRatio(
-                  aspectRatio: 1,
-                  child: ClipRRect(
-                    borderRadius: .circular(200),
-                    child: ImageWidget(
-                      id: author.id,
-                      type: .author,
-                      updatedAt: author.updatedAt,
-                    ),
+    return InkWell(
+      onTap: () => context.push(AppRoute.authorDetail.withId(author.id)),
+      splashFactory: NoSplash.splashFactory,
+      highlightColor: Colors.transparent,
+      child: Column(
+        mainAxisSize: .min,
+        children: [
+          Stack(
+            children: [
+              AspectRatio(
+                aspectRatio: 1,
+                child: ClipRRect(
+                  borderRadius: .circular(200),
+                  child: ImageWidget(
+                    id: author.id,
+                    type: .author,
+                    updatedAt: author.updatedAt,
                   ),
                 ),
-                if (author.numBooks != null)
-                  Positioned(
-                    top: 4,
-                    right: 4,
-                    child: StackBadge(author.numBooks!),
-                  ),
-              ],
-            ),
-            Text(
-              author.name,
-              maxLines: 2,
-              overflow: .ellipsis,
-              style: Theme.of(context).textTheme.titleSmall,
-              textAlign: .center,
-            ),
-          ],
-        ),
-        Positioned.fill(
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () =>
-                  context.push(AppRoute.authorDetail.withId(author.id)),
-            ),
+              ),
+              if (author.numBooks != null)
+                Positioned(
+                  top: 4,
+                  right: 4,
+                  child: StackBadge(author.numBooks!),
+                ),
+            ],
           ),
-        ),
-      ],
+          Text(
+            author.name,
+            maxLines: 2,
+            overflow: .ellipsis,
+            style: Theme.of(context).textTheme.titleSmall,
+            textAlign: .center,
+          ),
+        ],
+      ),
     );
   }
 }

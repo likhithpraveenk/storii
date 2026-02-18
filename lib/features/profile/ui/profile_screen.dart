@@ -9,7 +9,6 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: 0,
         automaticallyImplyLeading: true,
         leading: IconButton(
           onPressed: () => context.pop(),
@@ -17,7 +16,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         title: Text(AppLocalizations.of(context)!.profile),
       ),
-      body: Center(child: Text(AppLocalizations.of(context)!.profile)),
+      body: const Center(child: Text('todo')),
     );
   }
 }

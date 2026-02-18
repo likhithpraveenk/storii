@@ -35,7 +35,6 @@ class AboutScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: 0,
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
@@ -110,35 +109,27 @@ class AboutScreen extends StatelessWidget {
                 ),
                 textAlign: .center,
               ),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: AppOutlinedButton(
+                  text: l.sourceCode,
+                  icon: const Icon(Icons.open_in_new),
+                  onPressed: () => _launchUrl(context),
+                ),
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: AppOutlinedButton(
+                  text: l.licenses,
+                  icon: const Icon(Icons.gavel_outlined),
+                  onPressed: () => showLicensePage(context: context),
+                ),
+              ),
               const SizedBox(height: 200),
             ],
           ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const .symmetric(horizontal: 24),
-        child: Column(
-          mainAxisSize: .min,
-          children: [
-            SizedBox(
-              width: double.infinity,
-              child: AppOutlinedButton(
-                text: l.sourceCode,
-                icon: const Icon(Icons.open_in_new),
-                onPressed: () => _launchUrl(context),
-              ),
-            ),
-            const SizedBox(height: 12),
-            SizedBox(
-              width: double.infinity,
-              child: AppFilledButton(
-                text: l.licenses,
-                icon: const Icon(Icons.gavel_outlined),
-                onPressed: () => showLicensePage(context: context),
-              ),
-            ),
-          ],
         ),
       ),
     );

@@ -24,7 +24,7 @@ class SeriesDetailScreen extends ConsumerWidget {
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
         ),
-        titleSpacing: 0,
+
         title: Text(
           seriesAsync.value?.name ?? '',
           style: Theme.of(context).textTheme.titleMedium,

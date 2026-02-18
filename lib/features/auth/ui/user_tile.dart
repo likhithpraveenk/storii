@@ -88,6 +88,7 @@ class UserTile extends ConsumerWidget {
               context: context,
               builder: (context) {
                 return AlertDialog(
+                  actionsAlignment: .spaceBetween,
                   actions: [
                     AppTextButton(
                       onPressed: () => Navigator.of(context).pop(),

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/models/utils/enums.dart';
 import 'package:storii/app/config/app_styles.dart';
@@ -24,29 +22,20 @@ enum DisplayMode {
   }
 }
 
-const _titleFactor = 1.4;
-const _smallFactor = 1.3;
-
 @riverpod
 double gridHeight(Ref ref) {
   final mode = DisplayMode.fromSettings(
     showTitle: ref.watch(showTitleForItemProvider),
     stackTitle: ref.watch(stackTitleOnImageProvider),
   );
-  final brightness = PlatformDispatcher.instance.platformBrightness;
 
   return switch (mode) {
     .comfortable => () {
-      final theme = ref.watch(themeDataProvider(brightness));
       final scaler = ref.watch(textScalerProvider);
-
-      final titleFontSize = theme.textTheme.titleSmall?.fontSize ?? 14.0;
-      final authorFontSize = theme.textTheme.bodySmall?.fontSize ?? 12.0;
-
-      final scaledTitleHeight = scaler.scale(titleFontSize) * 2 * _titleFactor;
-      final scaledAuthorHeight = scaler.scale(authorFontSize) * _smallFactor;
-
-      final metadataHeight = scaledTitleHeight + 12 + scaledAuthorHeight;
+      final titleSlot = scaler.scale(32.0);
+      final authorSlot = scaler.scale(20.0);
+      const padding = 12.0;
+      final metadataHeight = titleSlot + padding + authorSlot;
 
       return maxCardWidthInGrid + metadataHeight;
     }(),
@@ -59,29 +48,20 @@ double gridHeight(Ref ref) {
 
 @riverpod
 double authorsGridHeight(Ref ref) {
-  final brightness = PlatformDispatcher.instance.platformBrightness;
-  final theme = ref.watch(themeDataProvider(brightness));
   final scaler = ref.watch(textScalerProvider);
+  final scaledTitleHeight = scaler.scale(32.0);
+  const padding = 12.0;
 
-  final titleFontSize = theme.textTheme.titleSmall?.fontSize ?? 14.0;
-  final scaledTitleHeight = scaler.scale(titleFontSize) * 2 * _titleFactor;
-
-  return maxCardWidthInGrid + scaledTitleHeight + 12;
+  return maxCardWidthInGrid + scaledTitleHeight + padding;
 }
 
 @riverpod
 double seriesGridHeight(Ref ref) {
-  final brightness = PlatformDispatcher.instance.platformBrightness;
-  final theme = ref.watch(themeDataProvider(brightness));
   final scaler = ref.watch(textScalerProvider);
 
-  final titleFontSize = theme.textTheme.titleSmall?.fontSize ?? 14.0;
-  final authorFontSize = theme.textTheme.bodySmall?.fontSize ?? 12.0;
-
-  final scaledTitleHeight = scaler.scale(titleFontSize) * _titleFactor;
-  final scaledAuthorHeight = scaler.scale(authorFontSize) * _smallFactor;
-
-  final metadataHeight = scaledTitleHeight + scaledAuthorHeight;
+  final titleSlot = scaler.scale(32.0);
+  final authorSlot = scaler.scale(20.0);
+  final metadataHeight = titleSlot + authorSlot;
 
   return (maxSeriesCardWidthInGrid * 0.5) + metadataHeight;
 }
@@ -107,19 +87,11 @@ double shelfHeight(Ref ref, ShelfType type) {
   if (isBook && (mode == .compact || mode == .coverOnly)) {
     return imageBaseHeight;
   }
-  final brightness = PlatformDispatcher.instance.platformBrightness;
-  final theme = ref.watch(themeDataProvider(brightness));
   final scaler = ref.watch(textScalerProvider);
 
-  final titleH =
-      scaler.scale(theme.textTheme.titleSmall?.fontSize ?? 14.0) *
-      2 *
-      _titleFactor;
+  final titleH = scaler.scale(32.0);
   final showSub = type != .authors && type != .series;
-  final subH = showSub
-      ? (scaler.scale(theme.textTheme.bodySmall?.fontSize ?? 12.0) *
-            _smallFactor)
-      : 0.0;
+  final subH = showSub ? scaler.scale(20) : 0.0;
 
-  return imageBaseHeight + titleH + subH + (isBook ? 8 : 0);
+  return imageBaseHeight + titleH + subH + 12;
 }

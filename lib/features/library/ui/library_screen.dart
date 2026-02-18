@@ -55,7 +55,6 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: 0,
         surfaceTintColor: Colors.transparent,
         scrolledUnderElevation: 0,
         title: const LibrarySwitcher(),

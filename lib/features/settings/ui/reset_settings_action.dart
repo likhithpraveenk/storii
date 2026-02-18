@@ -19,12 +19,13 @@ class ResetSettingsAction extends ConsumerWidget {
           builder: (context) => AlertDialog(
             title: Text(
               l.resetSettingsQ,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             content: Text(
               l.resetSettingsTxt,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
+            actionsAlignment: .spaceBetween,
             actions: [
               AppTextButton(
                 onPressed: () => Navigator.pop(context, false),

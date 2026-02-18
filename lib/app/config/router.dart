@@ -30,7 +30,7 @@ enum AppRoute {
   logs('/logs'),
   home('/'),
   library('/library'),
-  libraryItem('/library/:id'),
+  itemDetail('/item/:id'),
   search('/search'),
   series('/series'),
   seriesDetail('/series/:id'),
@@ -113,15 +113,6 @@ final routerProvider = Provider<GoRouter>((ref) {
                 pageBuilder: (context, state) {
                   return const NoTransitionPage(child: LibraryScreen());
                 },
-                routes: [
-                  GoRoute(
-                    path: ':id',
-                    builder: (context, state) {
-                      final id = state.pathParameters['id']!;
-                      return ItemDetailScreen(key: ValueKey(id), id: id);
-                    },
-                  ),
-                ],
               ),
             ],
           ),
@@ -224,6 +215,18 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.search.path,
                 builder: (context, state) => const SearchScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            initialLocation: AppRoute.itemDetail.path,
+            routes: [
+              GoRoute(
+                path: AppRoute.itemDetail.path,
+                builder: (context, state) {
+                  final id = state.pathParameters['id']!;
+                  return ItemDetailScreen(key: ValueKey(id), id: id);
+                },
               ),
             ],
           ),

@@ -38,18 +38,14 @@ class AuthorContent extends StatelessWidget {
       children: [
         ...series.map((s) => SeriesSection(series: s)),
         if (standaloneBooks.isNotEmpty) ...[
-          Consumer(
-            builder: (context, ref, _) {
-              return SectionHeader(
-                title: AppLocalizations.of(context)!.standaloneBooks,
-                count: standaloneBooks.length,
-                onViewAll: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => StandaloneBooks(standaloneBooks),
-                    ),
-                  );
-                },
+          SectionHeader(
+            title: AppLocalizations.of(context)!.standaloneBooks,
+            count: standaloneBooks.length,
+            onViewAll: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => StandaloneBooks(standaloneBooks),
+                ),
               );
             },
           ),

@@ -10,13 +10,11 @@ class FontScaleTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fontScale = ref.watch(fontScaleProvider);
-    final l = AppLocalizations.of(context)!;
 
     return ListTile(
-      leading: const Icon(Icons.font_download),
       title: Row(
         mainAxisAlignment: .spaceBetween,
-        children: [Text(l.fontScale)],
+        children: [Text(AppLocalizations.of(context)!.fontScale)],
       ),
       subtitle: Text('${(fontScale * 100).toInt()}%'),
       trailing: const Icon(Icons.chevron_right),
@@ -46,29 +44,40 @@ class _FontScaleSheetState extends ConsumerState<FontScaleSheet> {
   @override
   Widget build(BuildContext context) {
     final fontScale = ref.watch(fontScaleProvider);
-    final displayScale = _currentScale ?? fontScale;
+    final displayScale = _currentScale ?? (fontScale * 20);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          '${(displayScale * 100).toInt()}%',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
+        Padding(
+          padding: const .symmetric(horizontal: 24),
+          child: Row(
+            mainAxisAlignment: .spaceBetween,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.fontScale,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              Text(
+                '${(displayScale * 5).round()}%',
+                style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: .bold,
+                ),
+              ),
+            ],
           ),
         ),
         Slider(
           value: displayScale,
-          min: 0.8,
-          max: 1.5,
-          divisions: 7,
+          min: 16,
+          max: 30,
+          divisions: 14,
           onChanged: (value) {
             setState(() => _currentScale = value);
           },
           onChangeEnd: (value) {
-            ref.read(appSettingsProvider.notifier).setFontScale(value);
+            ref.read(appSettingsProvider.notifier).setFontScale(value / 20);
           },
         ),
         const SizedBox(height: 48),

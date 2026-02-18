@@ -50,25 +50,32 @@ class LibrarySwitcher extends ConsumerWidget {
           child: librariesAsync.when(
             data: (libs) => ListView(
               shrinkWrap: true,
+              padding: const .all(8),
               children: libs
                   .map(
                     (lib) => ListTile(
-                      title: Text(
-                        lib.name,
-                        maxLines: 1,
-                        overflow: .ellipsis,
-                        style: Theme.of(context).textTheme.labelLarge,
+                      title: Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              lib.name,
+                              maxLines: 1,
+                              overflow: .ellipsis,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ),
+                          Text(
+                            ' (${lib.mediaContent.getDisplayString(context)})',
+                            style: Theme.of(context).textTheme.bodySmall,
+                            maxLines: 1,
+                            overflow: .ellipsis,
+                          ),
+                        ],
                       ),
-                      leading:
+                      trailing:
                           ref.read(activeLibraryProvider).value?.id == lib.id
                           ? const Icon(Icons.check)
                           : null,
-                      trailing: Text(
-                        lib.mediaContent.getDisplayString(context),
-                        style: Theme.of(context).textTheme.bodySmall,
-                        maxLines: 1,
-                        overflow: .ellipsis,
-                      ),
                       onTap: () {
                         ref
                             .read(userSettingsProvider.notifier)

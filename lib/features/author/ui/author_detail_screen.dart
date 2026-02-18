@@ -24,7 +24,6 @@ class AuthorDetailScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: 0,
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
@@ -38,17 +37,19 @@ class AuthorDetailScreen extends ConsumerWidget {
         data: (author) {
           return ListView(
             children: [
-              Container(
-                padding: const .all(16),
-                width: (size.width * 0.7).clamp(0.0, 300),
-                child: AspectRatio(
-                  aspectRatio: 4 / 5,
-                  child: ClipRRect(
-                    borderRadius: kBorderRadius,
-                    child: ImageWidget(
-                      id: author.id,
-                      type: .author,
-                      updatedAt: author.updatedAt,
+              Center(
+                child: Container(
+                  padding: const .all(16),
+                  width: (size.width * 0.8).clamp(120, 280),
+                  child: AspectRatio(
+                    aspectRatio: 4 / 5,
+                    child: ClipRRect(
+                      borderRadius: kBorderRadius,
+                      child: ImageWidget(
+                        id: author.id,
+                        type: .author,
+                        updatedAt: author.updatedAt,
+                      ),
                     ),
                   ),
                 ),
