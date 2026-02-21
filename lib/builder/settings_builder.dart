@@ -12,23 +12,10 @@ Builder settingsBuilder(BuilderOptions options) => SharedPartBuilder([
 class _AppSettingsGenerator extends Generator {
   @override
   String generate(LibraryReader library, BuildStep buildStep) {
-    ClassElement? settingsClass;
-    for (final c in library.classes) {
-      if (c.name == 'AppSettings') {
-        settingsClass = c;
-        break;
-      }
-    }
-    if (settingsClass == null) return '';
-
-    ConstructorElement? factoryConstructor;
-    for (final c in settingsClass.constructors) {
-      if (c.isFactory) {
-        factoryConstructor = c;
-        break;
-      }
-    }
-    if (factoryConstructor == null) return '';
+    final settingsClass = library.findType('AppSettings')!;
+    final factoryConstructor = settingsClass.constructors.firstWhere(
+      (c) => c.isFactory,
+    );
 
     final setters = StringBuffer();
     final providers = StringBuffer();
@@ -68,23 +55,10 @@ final $providerName = Provider<$type>(
 class _UserSettingsGenerator extends Generator {
   @override
   String generate(LibraryReader library, BuildStep buildStep) {
-    ClassElement? settingsClass;
-    for (final c in library.classes) {
-      if (c.name == 'UserSettings') {
-        settingsClass = c;
-        break;
-      }
-    }
-    if (settingsClass == null) return '';
-
-    ConstructorElement? factoryConstructor;
-    for (final c in settingsClass.constructors) {
-      if (c.isFactory) {
-        factoryConstructor = c;
-        break;
-      }
-    }
-    if (factoryConstructor == null) return '';
+    final settingsClass = library.findType('UserSettings')!;
+    final factoryConstructor = settingsClass.constructors.firstWhere(
+      (c) => c.isFactory,
+    );
 
     final setters = StringBuffer();
     final providers = StringBuffer();

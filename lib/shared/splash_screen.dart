@@ -12,7 +12,7 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: .center,
           children: [
-            Image.asset(LocalAssets.appIcon, width: 150, height: 150),
+            Image.asset(appIcon, width: 150, height: 150),
             const SizedBox(height: 8),
             const RandomWaveform(
               barCount: 24,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
 import 'package:storii/features/more/ui/logout_tile.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/logo_header.dart';
 
 class MoreScreen extends ConsumerWidget {
   const MoreScreen({super.key});
@@ -20,29 +20,12 @@ class MoreScreen extends ConsumerWidget {
         .toList();
 
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () => context.push(AppRoute.profile.path),
-            icon: const Icon(Icons.query_stats),
-            tooltip: AppLocalizations.of(context)!.profile,
-          ),
-        ],
-      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: .start,
           children: [
-            Align(
-              alignment: .center,
-              child: Image.asset(
-                LocalAssets.appForeground,
-                width: 100,
-                height: 100,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 64),
+            const LogoHeader(),
             if (remainingTargets.isNotEmpty) ...[
               const Divider(),
               ...remainingTargets.map((target) {
@@ -56,6 +39,11 @@ class MoreScreen extends ConsumerWidget {
               }),
             ],
             const Divider(),
+            ListTile(
+              onTap: () => context.push(AppRoute.profile.path),
+              leading: const Icon(Icons.query_stats),
+              title: Text(AppLocalizations.of(context)!.profile),
+            ),
             ListTile(
               onTap: () => context.push(AppRoute.settings.path),
               leading: const Icon(Icons.settings),

@@ -1,94 +1,30 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/models/app_settings.dart';
 import 'package:storii/app/models/user.dart';
+import 'package:storii/app/models/user_settings.dart';
 import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
-import 'package:storii/app/providers/database_provider.dart';
-import 'package:storii/builder/annotations.dart';
-import 'package:storii/storage/drift/database.dart';
+
+export 'package:storii/app/models/app_settings.dart';
+export 'package:storii/app/models/user_settings.dart';
 
 part 'settings_provider.g.dart';
-part 'settings_provider.freezed.dart';
 
 const appSettingsKey = 'app_settings_key';
-const settingsBox = 'settings';
-
-@freezed
-sealed class AppSettings with _$AppSettings {
-  const factory AppSettings({
-    @Default(ThemeMode.dark) ThemeMode themeMode,
-
-    @Default(false) bool useDynamicColor,
-
-    @Default(false) bool usePureBlack,
-
-    @Default('en') String localeCode,
-
-    UserDomain? currentUser,
-
-    @Default(Duration(days: 2)) Duration logRetention,
-
-    @Default('dd MMM y') String dateTimeFormat,
-
-    @Default(defaultNavTargets) List<NavTarget> navTargets,
-
-    @Default('AtkinsonHyperlegibleNext') String? fontFamily,
-
-    @Default(1) double fontScale,
-
-    @Default(50) int defaultItemsLimit,
-
-    @Default(20) int defaultSeriesLimit,
-
-    @Default(true) bool showTitleForItem,
-
-    @Default(false) bool stackTitleOnImage,
-
-    @Default(false) bool enableHttpLogs,
-  }) = _AppSettings;
-
-  factory AppSettings.fromJson(Map<String, dynamic> json) =>
-      _$AppSettingsFromJson(json);
-}
-
-@freezed
-sealed class UserSettings with _$UserSettings {
-  const factory UserSettings({
-    @noCodeGen required String userId,
-
-    String? currentLibraryId,
-
-    String? currentItemId,
-
-    @Default(false) bool isFullySynced,
-
-    @Default(true) bool isItemsGridView,
-
-    @Default(true) bool isSeriesGridView,
-
-    @Default(true) bool isAuthorsGridView,
-  }) = _UserSettings;
-
-  factory UserSettings.fromJson(Map<String, dynamic> json) =>
-      _$UserSettingsFromJson(json);
-}
 
 @Riverpod(keepAlive: true)
 class AppSettingsNotifier extends _$AppSettingsNotifier {
-  AppDatabase get _db => ref.read(databaseProvider);
-  final _box = Hive.box<String>(settingsBox);
+  final _box = Hive.box<Map>('settings');
 
   @override
   AppSettings build() {
     final settingsJson = _box.get(appSettingsKey);
     if (settingsJson != null) {
       try {
-        return AppSettings.fromJson(jsonDecode(settingsJson));
+        return AppSettings.fromJson(Map<String, dynamic>.from(settingsJson));
       } catch (e, st) {
         if (kDebugMode) {
           debugPrint('Error: decoding app settings $e Stacktrace: $st');
@@ -101,17 +37,12 @@ class AppSettingsNotifier extends _$AppSettingsNotifier {
   Future<void> _save(AppSettings s) async {
     if (s == state) return;
     state = s;
-    await _box.put(appSettingsKey, jsonEncode(s));
+    await _box.put(appSettingsKey, s.toJson());
   }
 
-  Future<void> deleteSettings(Uri url) async {
-    final associatedUsers = await _db.managers.users
-        .filter((f) => f.serverUrl.url.equals(url))
-        .get();
-    final userIds = associatedUsers.map((u) => u.id).toList();
-
-    if (userIds.isNotEmpty) {
-      await _box.deleteAll(userIds);
+  Future<void> deleteSettings(List<String> users) async {
+    if (users.isNotEmpty) {
+      await _box.deleteAll(users);
     }
 
     await _box.delete(appSettingsKey);
@@ -126,7 +57,7 @@ class AppSettingsNotifier extends _$AppSettingsNotifier {
 
 @Riverpod(keepAlive: true)
 class UserSettingsNotifier extends _$UserSettingsNotifier {
-  final _box = Hive.box<String>('settings');
+  final _box = Hive.box<Map>('settings');
 
   @override
   UserSettings build() {
@@ -140,7 +71,7 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
 
     if (settingsJson != null) {
       try {
-        return UserSettings.fromJson(jsonDecode(settingsJson));
+        return UserSettings.fromJson(Map<String, dynamic>.from(settingsJson));
       } catch (e, st) {
         if (kDebugMode) {
           debugPrint('Error: decoding user settings $e Stacktrace: $st');
@@ -154,7 +85,7 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
   Future<void> _save(UserSettings s) async {
     if (s == state) return;
     state = s;
-    await _box.put(s.userId, jsonEncode(s));
+    await _box.put(s.userId, s.toJson());
   }
 
   Future<void> reset() => _save(

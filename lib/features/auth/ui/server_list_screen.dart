@@ -45,13 +45,7 @@ class ServerListScreen extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: .center,
             children: [
-              Center(
-                child: Image.asset(
-                  LocalAssets.appIcon,
-                  width: 150,
-                  height: 150,
-                ),
-              ),
+              Center(child: Image.asset(appIcon, width: 150, height: 150)),
               Padding(
                 padding: const .symmetric(vertical: 16),
                 child: Material(
@@ -90,7 +84,7 @@ class ServerListScreen extends ConsumerWidget {
                             padding: .zero,
                             shrinkWrap: true,
                             separatorBuilder: (_, _) =>
-                                Divider(height: 2, color: scheme.secondary),
+                                Divider(height: 1, color: scheme.outline),
                             itemCount: servers.length,
                             itemBuilder: (context, index) =>
                                 ServerTile(servers[index]),

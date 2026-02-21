@@ -165,7 +165,7 @@ return podcast(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  Duration duration,  String? title,  List<AuthorDomain> authors,  String? authorName,  List<SeriesDomain> series,  String? seriesSequence,  String? description,  String? language,  bool explicit,  List<String> narrators,  List<String> genres,  List<String> tags,  List<AudioTrackDomain> tracks,  List<ChapterDomain> chapters,  double progress,  Duration currentOffset,  bool isFinished,  bool hideFromContinueListening)?  audiobook,TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  String? episodeId,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> genres,  List<String> tags,  List<PodcastEpisodeDomain> episodes,  Uri? feedUrl,  DateTime? lastEpisodeCheck,  double progress,  bool isFinished,  bool hideFromContinueListening)?  podcast,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  Duration duration,  String? title,  List<AuthorDomain> authors,  String? authorName,  List<SeriesDomain> series,  String? seriesSequence,  String? description,  String? language,  bool explicit,  List<String> narrators,  List<String> genres,  List<String> tags,  List<AudioTrack> tracks,  List<BookChapter> chapters,  double progress,  Duration currentOffset,  bool isFinished,  bool hideFromContinueListening)?  audiobook,TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  String? episodeId,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> genres,  List<String> tags,  List<PodcastEpisodeDomain> episodes,  Uri? feedUrl,  DateTime? lastEpisodeCheck,  double progress,  bool isFinished,  bool hideFromContinueListening)?  podcast,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case Audiobook() when audiobook != null:
 return audiobook(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.size,_that.duration,_that.title,_that.authors,_that.authorName,_that.series,_that.seriesSequence,_that.description,_that.language,_that.explicit,_that.narrators,_that.genres,_that.tags,_that.tracks,_that.chapters,_that.progress,_that.currentOffset,_that.isFinished,_that.hideFromContinueListening);case Podcast() when podcast != null:
@@ -187,7 +187,7 @@ return podcast(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMi
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  Duration duration,  String? title,  List<AuthorDomain> authors,  String? authorName,  List<SeriesDomain> series,  String? seriesSequence,  String? description,  String? language,  bool explicit,  List<String> narrators,  List<String> genres,  List<String> tags,  List<AudioTrackDomain> tracks,  List<ChapterDomain> chapters,  double progress,  Duration currentOffset,  bool isFinished,  bool hideFromContinueListening)  audiobook,required TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  String? episodeId,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> genres,  List<String> tags,  List<PodcastEpisodeDomain> episodes,  Uri? feedUrl,  DateTime? lastEpisodeCheck,  double progress,  bool isFinished,  bool hideFromContinueListening)  podcast,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  Duration duration,  String? title,  List<AuthorDomain> authors,  String? authorName,  List<SeriesDomain> series,  String? seriesSequence,  String? description,  String? language,  bool explicit,  List<String> narrators,  List<String> genres,  List<String> tags,  List<AudioTrack> tracks,  List<BookChapter> chapters,  double progress,  Duration currentOffset,  bool isFinished,  bool hideFromContinueListening)  audiobook,required TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  String? episodeId,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> genres,  List<String> tags,  List<PodcastEpisodeDomain> episodes,  Uri? feedUrl,  DateTime? lastEpisodeCheck,  double progress,  bool isFinished,  bool hideFromContinueListening)  podcast,}) {final _that = this;
 switch (_that) {
 case Audiobook():
 return audiobook(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.size,_that.duration,_that.title,_that.authors,_that.authorName,_that.series,_that.seriesSequence,_that.description,_that.language,_that.explicit,_that.narrators,_that.genres,_that.tags,_that.tracks,_that.chapters,_that.progress,_that.currentOffset,_that.isFinished,_that.hideFromContinueListening);case Podcast():
@@ -205,7 +205,7 @@ return podcast(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMi
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  Duration duration,  String? title,  List<AuthorDomain> authors,  String? authorName,  List<SeriesDomain> series,  String? seriesSequence,  String? description,  String? language,  bool explicit,  List<String> narrators,  List<String> genres,  List<String> tags,  List<AudioTrackDomain> tracks,  List<ChapterDomain> chapters,  double progress,  Duration currentOffset,  bool isFinished,  bool hideFromContinueListening)?  audiobook,TResult? Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  String? episodeId,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> genres,  List<String> tags,  List<PodcastEpisodeDomain> episodes,  Uri? feedUrl,  DateTime? lastEpisodeCheck,  double progress,  bool isFinished,  bool hideFromContinueListening)?  podcast,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  Duration duration,  String? title,  List<AuthorDomain> authors,  String? authorName,  List<SeriesDomain> series,  String? seriesSequence,  String? description,  String? language,  bool explicit,  List<String> narrators,  List<String> genres,  List<String> tags,  List<AudioTrack> tracks,  List<BookChapter> chapters,  double progress,  Duration currentOffset,  bool isFinished,  bool hideFromContinueListening)?  audiobook,TResult? Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  int size,  String? episodeId,  String? title,  String? authorName,  String? description,  String? language,  bool explicit,  List<String> genres,  List<String> tags,  List<PodcastEpisodeDomain> episodes,  Uri? feedUrl,  DateTime? lastEpisodeCheck,  double progress,  bool isFinished,  bool hideFromContinueListening)?  podcast,}) {final _that = this;
 switch (_that) {
 case Audiobook() when audiobook != null:
 return audiobook(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.size,_that.duration,_that.title,_that.authors,_that.authorName,_that.series,_that.seriesSequence,_that.description,_that.language,_that.explicit,_that.narrators,_that.genres,_that.tags,_that.tracks,_that.chapters,_that.progress,_that.currentOffset,_that.isFinished,_that.hideFromContinueListening);case Podcast() when podcast != null:
@@ -221,7 +221,7 @@ return podcast(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMi
 
 
 class Audiobook extends ItemDomain {
-  const Audiobook({required this.id, required this.libraryId, required this.addedAt, required this.updatedAt, required this.isMissing, required this.size, required this.duration, this.title, final  List<AuthorDomain> authors = const [], this.authorName, final  List<SeriesDomain> series = const [], this.seriesSequence, this.description, this.language, this.explicit = false, final  List<String> narrators = const [], final  List<String> genres = const [], final  List<String> tags = const [], final  List<AudioTrackDomain> tracks = const [], final  List<ChapterDomain> chapters = const [], this.progress = 0, this.currentOffset = Duration.zero, this.isFinished = false, this.hideFromContinueListening = false}): _authors = authors,_series = series,_narrators = narrators,_genres = genres,_tags = tags,_tracks = tracks,_chapters = chapters,super._();
+  const Audiobook({required this.id, required this.libraryId, required this.addedAt, required this.updatedAt, required this.isMissing, required this.size, required this.duration, this.title, final  List<AuthorDomain> authors = const [], this.authorName, final  List<SeriesDomain> series = const [], this.seriesSequence, this.description, this.language, this.explicit = false, final  List<String> narrators = const [], final  List<String> genres = const [], final  List<String> tags = const [], final  List<AudioTrack> tracks = const [], final  List<BookChapter> chapters = const [], this.progress = 0, this.currentOffset = Duration.zero, this.isFinished = false, this.hideFromContinueListening = false}): _authors = authors,_series = series,_narrators = narrators,_genres = genres,_tags = tags,_tracks = tracks,_chapters = chapters,super._();
   
 
 @override final  String id;
@@ -272,15 +272,15 @@ class Audiobook extends ItemDomain {
   return EqualUnmodifiableListView(_tags);
 }
 
- final  List<AudioTrackDomain> _tracks;
-@JsonKey() List<AudioTrackDomain> get tracks {
+ final  List<AudioTrack> _tracks;
+@JsonKey() List<AudioTrack> get tracks {
   if (_tracks is EqualUnmodifiableListView) return _tracks;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_tracks);
 }
 
- final  List<ChapterDomain> _chapters;
-@JsonKey() List<ChapterDomain> get chapters {
+ final  List<BookChapter> _chapters;
+@JsonKey() List<BookChapter> get chapters {
   if (_chapters is EqualUnmodifiableListView) return _chapters;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_chapters);
@@ -321,7 +321,7 @@ abstract mixin class $AudiobookCopyWith<$Res> implements $ItemDomainCopyWith<$Re
   factory $AudiobookCopyWith(Audiobook value, $Res Function(Audiobook) _then) = _$AudiobookCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String libraryId, DateTime addedAt, DateTime updatedAt, bool isMissing, int size, Duration duration, String? title, List<AuthorDomain> authors, String? authorName, List<SeriesDomain> series, String? seriesSequence, String? description, String? language, bool explicit, List<String> narrators, List<String> genres, List<String> tags, List<AudioTrackDomain> tracks, List<ChapterDomain> chapters, double progress, Duration currentOffset, bool isFinished, bool hideFromContinueListening
+ String id, String libraryId, DateTime addedAt, DateTime updatedAt, bool isMissing, int size, Duration duration, String? title, List<AuthorDomain> authors, String? authorName, List<SeriesDomain> series, String? seriesSequence, String? description, String? language, bool explicit, List<String> narrators, List<String> genres, List<String> tags, List<AudioTrack> tracks, List<BookChapter> chapters, double progress, Duration currentOffset, bool isFinished, bool hideFromContinueListening
 });
 
 
@@ -359,8 +359,8 @@ as bool,narrators: null == narrators ? _self._narrators : narrators // ignore: c
 as List<String>,genres: null == genres ? _self._genres : genres // ignore: cast_nullable_to_non_nullable
 as List<String>,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>,tracks: null == tracks ? _self._tracks : tracks // ignore: cast_nullable_to_non_nullable
-as List<AudioTrackDomain>,chapters: null == chapters ? _self._chapters : chapters // ignore: cast_nullable_to_non_nullable
-as List<ChapterDomain>,progress: null == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
+as List<AudioTrack>,chapters: null == chapters ? _self._chapters : chapters // ignore: cast_nullable_to_non_nullable
+as List<BookChapter>,progress: null == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
 as double,currentOffset: null == currentOffset ? _self.currentOffset : currentOffset // ignore: cast_nullable_to_non_nullable
 as Duration,isFinished: null == isFinished ? _self.isFinished : isFinished // ignore: cast_nullable_to_non_nullable
 as bool,hideFromContinueListening: null == hideFromContinueListening ? _self.hideFromContinueListening : hideFromContinueListening // ignore: cast_nullable_to_non_nullable

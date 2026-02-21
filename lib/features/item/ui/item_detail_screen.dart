@@ -6,10 +6,10 @@ import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/item.dart';
-import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/ui/cover_image.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
+import 'package:storii/features/player/logic/active_item_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
@@ -49,8 +49,6 @@ class ItemDetailScreen extends ConsumerWidget {
                       style: textTheme.titleLarge,
                       textAlign: .center,
                     ),
-                    const SizedBox(height: 4),
-                    _AuthorsSeriesChips(item),
                     if (item.progress > 0) ...[
                       const SizedBox(height: 4),
                       LinearProgressIndicator(
@@ -69,6 +67,7 @@ class ItemDetailScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 4),
                     ],
+                    _AuthorsSeriesChips(item),
                     Wrap(
                       spacing: 8,
                       alignment: .center,
@@ -92,9 +91,7 @@ class ItemDetailScreen extends ConsumerWidget {
                       width: double.infinity,
                       child: AppFilledButton(
                         onPressed: () {
-                          ref
-                              .read(userSettingsProvider.notifier)
-                              .setCurrentItemId(id);
+                          ref.read(activeItemProvider.notifier).setActive(item);
                         },
                         icon: const Icon(Icons.play_arrow_rounded),
                         text: item.progress > 0

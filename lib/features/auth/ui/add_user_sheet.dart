@@ -53,6 +53,8 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
     final l10n = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
 
+    final focusUsername = widget.username == null || widget.username!.isEmpty;
+
     return SafeArea(
       child: Padding(
         padding: MediaQuery.viewInsetsOf(context).add(const .all(24)),
@@ -73,7 +75,7 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
                 textInputAction: .next,
                 keyboardType: .name,
                 autofillHints: const [AutofillHints.username],
-                autofocus: true,
+                autofocus: focusUsername,
                 decoration: InputDecoration(
                   labelText: l10n.username,
                   labelStyle: textTheme.titleSmall,
@@ -81,6 +83,7 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
               ),
               const SizedBox(height: 16),
               TextField(
+                autofocus: !focusUsername,
                 controller: _passwordController,
                 enabled: !isLoading,
                 textInputAction: .done,

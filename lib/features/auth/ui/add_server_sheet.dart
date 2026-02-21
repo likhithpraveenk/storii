@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/models/server.dart';
 import 'package:storii/features/auth/logic/add_server_notifier.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
-Future<String?> showAddServerSheet(BuildContext context) async {
+Future<String?> showAddServerSheet(
+  BuildContext context, [
+  Server? server,
+]) async {
   return await showModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
-    builder: (context) => const AddServerSheet(),
+    builder: (context) => AddServerSheet(server: server),
   );
 }
 
 class AddServerSheet extends ConsumerStatefulWidget {
-  const AddServerSheet({super.key});
+  const AddServerSheet({super.key, this.server});
+
+  final Server? server;
 
   @override
   ConsumerState<AddServerSheet> createState() => _AddServerSheetState();
@@ -25,7 +31,9 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
   @override
   void initState() {
     super.initState();
-    _urlController = TextEditingController(text: 'https://');
+    _urlController = TextEditingController(
+      text: widget.server?.url.toString() ?? 'https://',
+    );
   }
 
   @override
@@ -35,7 +43,9 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
   }
 
   Future<void> submit() async {
-    await ref.read(addServerProvider.notifier).addServer(_urlController.text);
+    await ref
+        .read(addServerProvider.notifier)
+        .addServer(_urlController.text, widget.server);
   }
 
   @override

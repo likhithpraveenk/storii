@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
+import 'package:storii/features/auth/ui/add_server_sheet.dart';
 import 'package:storii/features/auth/ui/add_user_sheet.dart';
 import 'package:storii/features/auth/ui/delete_server_dialog.dart';
 import 'package:storii/features/auth/ui/user_tile.dart';
@@ -22,7 +24,7 @@ class ServerTile extends ConsumerStatefulWidget {
 
 class _ServerTileState extends ConsumerState<ServerTile>
     with SingleTickerProviderStateMixin {
-  bool _expanded = true;
+  bool _expanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class _ServerTileState extends ConsumerState<ServerTile>
     return Column(
       children: [
         InkWell(
+          borderRadius: kBorderRadius,
           onTap: () => setState(() => _expanded = !_expanded),
           onLongPress: () {
             Clipboard.setData(
@@ -75,24 +78,25 @@ class _ServerTileState extends ConsumerState<ServerTile>
             ),
           ),
         ),
-        AnimatedSize(
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeInOut,
-          child: _expanded
-              ? usersAsync.when(
-                  loading: () => const Center(child: RandomWaveform()),
-                  error: (error, stack) => Center(
-                    child: Padding(
-                      padding: const .all(16),
-                      child: Text('${l.errorLoadingUsers}: $error'),
-                    ),
-                  ),
-                  data: (users) => Column(
-                    children: [
-                      ...users.map(
-                        (user) => UserTile(user: user, server: widget.server),
-                      ),
-                      Padding(
+        usersAsync.when(
+          loading: () => const Center(child: RandomWaveform()),
+          error: (error, stack) => Center(
+            child: Padding(
+              padding: const .all(16),
+              child: Text('${l.errorLoadingUsers}: $error'),
+            ),
+          ),
+          data: (users) => Column(
+            children: [
+              ...users.map(
+                (user) => UserTile(user: user, server: widget.server),
+              ),
+              AnimatedSize(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut,
+                child: !_expanded
+                    ? const SizedBox.shrink()
+                    : Padding(
                         padding: const .only(left: 16, right: 16, bottom: 16),
                         child: Column(
                           children: [
@@ -116,6 +120,17 @@ class _ServerTileState extends ConsumerState<ServerTile>
                             const SizedBox(height: 8),
                             SizedBox(
                               width: double.infinity,
+                              child: AppOutlinedButton(
+                                icon: const Icon(Icons.edit),
+                                text: l.editServer,
+                                onPressed: () {
+                                  showAddServerSheet(context, widget.server);
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            SizedBox(
+                              width: double.infinity,
                               child: AppFilledButton(
                                 icon: const Icon(Icons.add),
                                 text: l.addUser,
@@ -127,10 +142,9 @@ class _ServerTileState extends ConsumerState<ServerTile>
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                )
-              : const SizedBox.shrink(),
+              ),
+            ],
+          ),
         ),
       ],
     );

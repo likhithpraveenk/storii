@@ -17,9 +17,6 @@ targets:
       storii:settings_generator:
         generate_for:
           - lib/**/settings_provider.dart
-      drift_dev:
-        generate_for:
-          - lib/storage/drift/**
       riverpod_generator:
         generate_for:
           - lib/app/providers/**

@@ -62,6 +62,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addUser => 'Add User';
 
   @override
+  String get editServer => 'Edit Server';
+
+  @override
   String get errorLoadingUsers => 'Error loading users';
 
   @override
@@ -152,9 +155,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get replay => 'Replay';
 
   @override
-  String deleteLogsQ(int count) {
-    return 'Delete $count logs?';
-  }
+  String get deleteLogsQ => 'Delete all logs?';
 
   @override
   String get audiobooks => 'Audiobooks';
@@ -478,32 +479,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String versionText(String text) {
-    return 'Version: $text';
-  }
+  String get version => 'Version';
 
   @override
   String buildNumber(String text) {
     return 'Build Number: $text';
   }
-
-  @override
-  String keepLogsFor(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count days',
-      one: '1 day',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get logHistory => 'Log History';
-
-  @override
-  String get autoDeleteNotice =>
-      'Logs older than this will be automatically deleted.';
 
   @override
   String get networkLogs => 'Network Logs';

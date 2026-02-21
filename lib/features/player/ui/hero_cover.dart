@@ -2,8 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
-import 'package:storii/features/player/logic/current_item_provider.dart';
+import 'package:storii/features/player/logic/active_item_provider.dart';
 
 class HeroCover extends ConsumerWidget {
   const HeroCover({super.key, required this.expandFactor});
@@ -12,18 +13,14 @@ class HeroCover extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final itemAsync = ref.watch(currentItemProvider);
-    final imageRadius = lerpDouble(4, 12, expandFactor)!;
-    return itemAsync.maybeWhen(
-      data: (item) => Material(
-        // elevation: lerpDouble(0, 8, expandFactor)!,
-        borderRadius: .circular(imageRadius),
-        clipBehavior: .antiAlias,
-        child: item != null
-            ? ImageWidget(id: item.id, type: .item)
-            : const SizedBox.shrink(),
-      ),
-      orElse: () => const SizedBox.shrink(),
+    final item = ref.watch(activeItemProvider);
+    if (item == null) return const SizedBox.shrink();
+
+    final imageRadius = lerpDouble(4, kRadius, expandFactor)!;
+
+    return Material(
+      borderRadius: .circular(imageRadius),
+      child: ImageWidget(id: item.id, type: .item),
     );
   }
 }

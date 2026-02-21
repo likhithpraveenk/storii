@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 import java.util.Properties
 import java.io.FileInputStream
 
@@ -9,8 +10,8 @@ plugins {
 }
 
 val keystoreProperties = Properties()
-val keystorePropertiesFile = rootProject.file("key.properties")
-if (keystorePropertiesFile.exists()) {
+val keystorePropertiesFile: File? = rootProject.file("key.properties")
+if (keystorePropertiesFile?.exists() ?: false) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
@@ -47,18 +48,19 @@ android {
 
     buildTypes {
         release {
-            if (keystorePropertiesFile.exists()) {
-                isMinifyEnabled = true
-                isShrinkResources = true
-                signingConfig = signingConfigs.getByName("release")
-                resValue("string", "app_name", "Storii")
+            isMinifyEnabled = true
+            isShrinkResources = true
+            resValue("string", "app_name", "Storii")
+            signingConfig = if (keystorePropertiesFile?.exists() ?: false) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
             }
         }
         debug {
             applicationIdSuffix = ".debug"
-            signingConfig = signingConfigs.getByName("debug")
-            isDebuggable = true
             resValue("string", "app_name", "Storii (Debug)")
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }

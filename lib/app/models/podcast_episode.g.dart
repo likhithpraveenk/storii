@@ -23,9 +23,7 @@ _PodcastEpisodeDomain _$PodcastEpisodeDomainFromJson(
   publishedAt: DateTime.parse(json['publishedAt'] as String),
   addedAt: DateTime.parse(json['addedAt'] as String),
   updatedAt: DateTime.parse(json['updatedAt'] as String),
-  audioTrack: AudioTrackDomain.fromJson(
-    json['audioTrack'] as Map<String, dynamic>,
-  ),
+  audioTrack: AudioTrack.fromJson(json['audioTrack'] as Map<String, dynamic>),
   duration: Duration(microseconds: (json['duration'] as num).toInt()),
   size: (json['size'] as num?)?.toInt(),
 );

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-final kBorderRadius = BorderRadius.circular(12);
+const kRadius = 12.0;
+final kBorderRadius = BorderRadius.circular(kRadius);
 
 const maxCardWidthInGrid = 180.0;
 const maxSeriesCardWidthInGrid = 360.0;

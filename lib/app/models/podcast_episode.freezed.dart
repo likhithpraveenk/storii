@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PodcastEpisodeDomain {
 
- String get libraryItemId; String get podcastId; String get id; int? get index; String? get season; String? get episode; String? get episodeType; String? get title; String? get subtitle; String? get description; String? get pubDate; DateTime get publishedAt; DateTime get addedAt; DateTime get updatedAt; AudioTrackDomain get audioTrack; Duration get duration; int? get size;
+ String get libraryItemId; String get podcastId; String get id; int? get index; String? get season; String? get episode; String? get episodeType; String? get title; String? get subtitle; String? get description; String? get pubDate; DateTime get publishedAt; DateTime get addedAt; DateTime get updatedAt; AudioTrack get audioTrack; Duration get duration; int? get size;
 /// Create a copy of PodcastEpisodeDomain
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,11 +48,11 @@ abstract mixin class $PodcastEpisodeDomainCopyWith<$Res>  {
   factory $PodcastEpisodeDomainCopyWith(PodcastEpisodeDomain value, $Res Function(PodcastEpisodeDomain) _then) = _$PodcastEpisodeDomainCopyWithImpl;
 @useResult
 $Res call({
- String libraryItemId, String podcastId, String id, int? index, String? season, String? episode, String? episodeType, String? title, String? subtitle, String? description, String? pubDate, DateTime publishedAt, DateTime addedAt, DateTime updatedAt, AudioTrackDomain audioTrack, Duration duration, int? size
+ String libraryItemId, String podcastId, String id, int? index, String? season, String? episode, String? episodeType, String? title, String? subtitle, String? description, String? pubDate, DateTime publishedAt, DateTime addedAt, DateTime updatedAt, AudioTrack audioTrack, Duration duration, int? size
 });
 
 
-$AudioTrackDomainCopyWith<$Res> get audioTrack;
+$AudioTrackCopyWith<$Res> get audioTrack;
 
 }
 /// @nodoc
@@ -82,7 +82,7 @@ as String?,publishedAt: null == publishedAt ? _self.publishedAt : publishedAt //
 as DateTime,addedAt: null == addedAt ? _self.addedAt : addedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,audioTrack: null == audioTrack ? _self.audioTrack : audioTrack // ignore: cast_nullable_to_non_nullable
-as AudioTrackDomain,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
+as AudioTrack,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
 as Duration,size: freezed == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
 as int?,
   ));
@@ -91,9 +91,9 @@ as int?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$AudioTrackDomainCopyWith<$Res> get audioTrack {
+$AudioTrackCopyWith<$Res> get audioTrack {
   
-  return $AudioTrackDomainCopyWith<$Res>(_self.audioTrack, (value) {
+  return $AudioTrackCopyWith<$Res>(_self.audioTrack, (value) {
     return _then(_self.copyWith(audioTrack: value));
   });
 }
@@ -175,7 +175,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  String? pubDate,  DateTime publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrackDomain audioTrack,  Duration duration,  int? size)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  String? pubDate,  DateTime publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack audioTrack,  Duration duration,  int? size)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PodcastEpisodeDomain() when $default != null:
 return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.season,_that.episode,_that.episodeType,_that.title,_that.subtitle,_that.description,_that.pubDate,_that.publishedAt,_that.addedAt,_that.updatedAt,_that.audioTrack,_that.duration,_that.size);case _:
@@ -196,7 +196,7 @@ return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  String? pubDate,  DateTime publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrackDomain audioTrack,  Duration duration,  int? size)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  String? pubDate,  DateTime publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack audioTrack,  Duration duration,  int? size)  $default,) {final _that = this;
 switch (_that) {
 case _PodcastEpisodeDomain():
 return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.season,_that.episode,_that.episodeType,_that.title,_that.subtitle,_that.description,_that.pubDate,_that.publishedAt,_that.addedAt,_that.updatedAt,_that.audioTrack,_that.duration,_that.size);}
@@ -213,7 +213,7 @@ return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  String? pubDate,  DateTime publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrackDomain audioTrack,  Duration duration,  int? size)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  String? pubDate,  DateTime publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack audioTrack,  Duration duration,  int? size)?  $default,) {final _that = this;
 switch (_that) {
 case _PodcastEpisodeDomain() when $default != null:
 return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.season,_that.episode,_that.episodeType,_that.title,_that.subtitle,_that.description,_that.pubDate,_that.publishedAt,_that.addedAt,_that.updatedAt,_that.audioTrack,_that.duration,_that.size);case _:
@@ -245,7 +245,7 @@ class _PodcastEpisodeDomain implements PodcastEpisodeDomain {
 @override final  DateTime publishedAt;
 @override final  DateTime addedAt;
 @override final  DateTime updatedAt;
-@override final  AudioTrackDomain audioTrack;
+@override final  AudioTrack audioTrack;
 @override final  Duration duration;
 @override final  int? size;
 
@@ -282,11 +282,11 @@ abstract mixin class _$PodcastEpisodeDomainCopyWith<$Res> implements $PodcastEpi
   factory _$PodcastEpisodeDomainCopyWith(_PodcastEpisodeDomain value, $Res Function(_PodcastEpisodeDomain) _then) = __$PodcastEpisodeDomainCopyWithImpl;
 @override @useResult
 $Res call({
- String libraryItemId, String podcastId, String id, int? index, String? season, String? episode, String? episodeType, String? title, String? subtitle, String? description, String? pubDate, DateTime publishedAt, DateTime addedAt, DateTime updatedAt, AudioTrackDomain audioTrack, Duration duration, int? size
+ String libraryItemId, String podcastId, String id, int? index, String? season, String? episode, String? episodeType, String? title, String? subtitle, String? description, String? pubDate, DateTime publishedAt, DateTime addedAt, DateTime updatedAt, AudioTrack audioTrack, Duration duration, int? size
 });
 
 
-@override $AudioTrackDomainCopyWith<$Res> get audioTrack;
+@override $AudioTrackCopyWith<$Res> get audioTrack;
 
 }
 /// @nodoc
@@ -316,7 +316,7 @@ as String?,publishedAt: null == publishedAt ? _self.publishedAt : publishedAt //
 as DateTime,addedAt: null == addedAt ? _self.addedAt : addedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,audioTrack: null == audioTrack ? _self.audioTrack : audioTrack // ignore: cast_nullable_to_non_nullable
-as AudioTrackDomain,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
+as AudioTrack,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
 as Duration,size: freezed == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
 as int?,
   ));
@@ -326,9 +326,9 @@ as int?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$AudioTrackDomainCopyWith<$Res> get audioTrack {
+$AudioTrackCopyWith<$Res> get audioTrack {
   
-  return $AudioTrackDomainCopyWith<$Res>(_self.audioTrack, (value) {
+  return $AudioTrackCopyWith<$Res>(_self.audioTrack, (value) {
     return _then(_self.copyWith(audioTrack: value));
   });
 }

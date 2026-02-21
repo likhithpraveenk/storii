@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/app_styles.dart';
-import 'package:storii/app/logs/log_service.dart';
-import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/player/logic/active_item_provider.dart';
+import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/ui/full_player.dart';
 import 'package:storii/features/player/ui/hero_cover.dart';
 import 'package:storii/features/player/ui/mini_player.dart';
 import 'package:storii/features/player/ui/player_builder.dart';
 
-class PlayerScreen extends ConsumerStatefulWidget {
+class PlayerScreen extends ConsumerWidget {
   const PlayerScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _PlayerScreenState();
-}
-
-class _PlayerScreenState extends ConsumerState<PlayerScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
     final screenWidth = size.width;
     final screenHeight = size.height;
@@ -33,25 +28,13 @@ class _PlayerScreenState extends ConsumerState<PlayerScreen> {
     const miniInterval = Interval(0.0, 0.3);
     const fullInterval = Interval(0.6, 1.0);
 
-    // TODO: audio
-    // ref.listen(currentItemProvider, (prev, next) {
-    //   next.whenData((item) {
-    //     if (item != null) {
-    //       LogService.log('listener: ${item.title}', source: 'PlayerScreen');
-    //       ref.read(audioPlayerProvider.notifier).play(item);
-    //     }
-    //   });
-    // });
+    ref.watch(audioOrchestratorProvider);
 
     return PlayerBuilder(
       maxHeight: screenHeight,
       onDismiss: () {
-        LogService.log(
-          'miniPlayerDismissed',
-          level: .debug,
-          source: 'PlayerScreen',
-        );
-        ref.read(userSettingsProvider.notifier).setCurrentItemId(null);
+        audioHandler.stop();
+        ref.read(activeItemProvider.notifier).setActive(null);
       },
       builder: (context, f) {
         final miniOpacity = 1 - miniInterval.transform(f);

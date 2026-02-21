@@ -20,7 +20,9 @@ class HttpLogsTile extends ConsumerWidget {
         ),
       ),
       value: enableHttpLogs,
-      onChanged: ref.read(appSettingsProvider.notifier).setEnableHttpLogs,
+      onChanged: (enable) {
+        ref.read(appSettingsProvider.notifier).setEnableHttpLogs(enable);
+      },
     );
   }
 }

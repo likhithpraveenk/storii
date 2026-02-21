@@ -1,5 +1,4 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/app/providers/settings_provider.dart';
 
 part 'player_providers.g.dart';
 
@@ -14,14 +13,6 @@ const double epsilon = 0.5;
 class PlayerController extends _$PlayerController {
   @override
   PlayerViewState build() {
-    ref.listen(currentItemIdProvider, (prev, next) {
-      if (next == null) {
-        state = .hidden;
-      } else {
-        state = .mini;
-      }
-    });
-
     return .hidden;
   }
 

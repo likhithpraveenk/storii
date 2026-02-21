@@ -9,6 +9,7 @@ import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/ui/player_screen.dart';
+import 'package:storii/globals.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 class ShellScaffold extends ConsumerWidget {

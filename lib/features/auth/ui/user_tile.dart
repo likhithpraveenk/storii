@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
@@ -27,98 +28,88 @@ class UserTile extends ConsumerWidget {
     final loginNeeded = authStatus == .loginRequired;
     final isActive = authStatus == .active;
 
-    return Row(
-      children: [
-        Expanded(
-          child: InkWell(
-            onTap: () async {
-              if (isActive) {
-                LogService.log(l.switchingToUser(user.username));
-                await ref
-                    .read(appSettingsProvider.notifier)
-                    .setCurrentUser(user);
-              } else if (loginNeeded) {
-                await showAddUserSheet(context, server.url, user.username);
-              }
-            },
-            child: Padding(
-              padding: const .only(top: 16, bottom: 16, left: 16),
-              child: Row(
-                children: [
-                  Container(width: 4, height: 24, color: color),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(
-                        text: user.username,
-                        style: textTheme.bodyLarge?.copyWith(
-                          color: scheme.onSurface,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: '  (${user.userType})',
-                            style: textTheme.labelSmall?.copyWith(
-                              color: scheme.onSurface,
-                            ),
-                          ),
-                        ],
+    return InkWell(
+      borderRadius: kBorderRadius,
+      onTap: () async {
+        if (isActive) {
+          LogService.log(l.switchingToUser(user.username));
+          await ref.read(appSettingsProvider.notifier).setCurrentUser(user);
+        } else if (loginNeeded) {
+          await showAddUserSheet(context, server.url, user.username);
+        }
+      },
+      child: Padding(
+        padding: const .all(16),
+        child: Row(
+          children: [
+            Container(width: 4, height: 24, color: color),
+            const SizedBox(width: 16),
+            Expanded(
+              child: RichText(
+                text: TextSpan(
+                  text: user.username,
+                  style: textTheme.bodyLarge?.copyWith(color: scheme.onSurface),
+                  children: [
+                    TextSpan(
+                      text: '  (${user.userType})',
+                      style: textTheme.labelSmall?.copyWith(
+                        color: scheme.onSurface,
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    loginNeeded
-                        ? l.noSession
-                        : isActive
-                        ? l.active
-                        : '${l.loading}...',
-                    style: textTheme.labelSmall?.copyWith(
-                      color: scheme.onSurface,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ),
-        InkWell(
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  actionsAlignment: .spaceBetween,
-                  actions: [
-                    AppTextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      text: l.cancel,
-                    ),
-                    AppFilledButton(
-                      text: l.delete,
-                      isDestructive: true,
-                      onPressed: () async {
-                        await ref.read(usersProvider.notifier).delete(user);
-                        if (context.mounted) {
-                          Navigator.of(context).pop();
-                        }
-                      },
-                    ),
-                  ],
-                  title: Text(
-                    l.deleteUserQ(user.username),
-                    style: textTheme.titleLarge,
-                  ),
+            const SizedBox(width: 8),
+            Text(
+              loginNeeded
+                  ? l.noSession
+                  : isActive
+                  ? l.active
+                  : '${l.loading}...',
+              style: textTheme.labelSmall?.copyWith(
+                color: scheme.onSurface,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            const SizedBox(width: 8),
+            InkWell(
+              borderRadius: BorderRadius.circular(48),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      actionsAlignment: .spaceBetween,
+                      actions: [
+                        AppTextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          text: l.cancel,
+                        ),
+                        AppFilledButton(
+                          text: l.delete,
+                          isDestructive: true,
+                          onPressed: () async {
+                            await ref.read(usersProvider.notifier).delete(user);
+                            if (context.mounted) {
+                              Navigator.of(context).pop();
+                            }
+                          },
+                        ),
+                      ],
+                      title: Text(
+                        l.deleteUserQ(user.username),
+                        style: textTheme.titleLarge,
+                      ),
+                    );
+                  },
                 );
               },
-            );
-          },
-          child: Padding(
-            padding: const .all(16),
-            child: Icon(Icons.delete_outline, color: scheme.error),
-          ),
+              child: Icon(Icons.delete_outline, color: scheme.error),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

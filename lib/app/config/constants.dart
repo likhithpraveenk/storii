@@ -1,9 +1,4 @@
-abstract class AppConstants {
-  static const appName = 'Storii';
-  static const githubLink = 'https://github.com/likhithpraveenk/storii';
-}
-
-abstract class LocalAssets {
-  static const appIcon = 'assets/icons/icon.png';
-  static const appForeground = 'assets/icons/foreground.png';
-}
+const appName = 'Storii';
+const githubLink = 'https://github.com/likhithpraveenk/storii';
+const appIcon = 'assets/icons/icon.png';
+const appForegroundIcon = 'assets/icons/foreground.png';

@@ -20,12 +20,13 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final shelvesAsync = ref.watch(shelvesProvider);
+    final theme = Theme.of(context);
     final l = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: 0,
+        backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        scrolledUnderElevation: 0,
         title: const LibrarySwitcher(),
         actions: const [FiltersButton(.library)],
       ),
@@ -65,7 +66,7 @@ class HomeScreen extends ConsumerWidget {
                             padding: const .symmetric(horizontal: 16),
                             child: Text(
                               shelf.label,
-                              style: Theme.of(context).textTheme.titleMedium,
+                              style: theme.textTheme.titleMedium,
                             ),
                           ),
                           const SizedBox(height: 8),

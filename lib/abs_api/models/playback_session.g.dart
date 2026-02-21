@@ -6,8 +6,8 @@ part of 'playback_session.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PlaybackSessionBase _$PlaybackSessionBaseFromJson(Map<String, dynamic> json) =>
-    PlaybackSessionBase(
+_PlaybackSession _$PlaybackSessionFromJson(Map<String, dynamic> json) =>
+    _PlaybackSession(
       id: json['id'] as String,
       userId: json['userId'] as String,
       libraryId: json['libraryId'] as String,
@@ -59,8 +59,8 @@ PlaybackSessionBase _$PlaybackSessionBaseFromJson(Map<String, dynamic> json) =>
           : LibraryItem.fromJson(json['libraryItem'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$PlaybackSessionBaseToJson(
-  PlaybackSessionBase instance,
+Map<String, dynamic> _$PlaybackSessionToJson(
+  _PlaybackSession instance,
 ) => <String, dynamic>{
   'id': instance.id,
   'userId': instance.userId,

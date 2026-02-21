@@ -33,7 +33,7 @@ final class UsersNotifierProvider
   UsersNotifier create() => UsersNotifier();
 }
 
-String _$usersNotifierHash() => r'dfc307c348bb94eaf8db4c0dea271e57cc66622a';
+String _$usersNotifierHash() => r'2dd91df4cb7df2549069b8dd8d48dc6fce0f5455';
 
 abstract class _$UsersNotifier extends $StreamNotifier<List<UserDomain>> {
   Stream<List<UserDomain>> build();
@@ -117,7 +117,7 @@ final class UsersOfServerProvider
   }
 }
 
-String _$usersOfServerHash() => r'10366ba3062e4d0708649fbe44779b7d9860f9c8';
+String _$usersOfServerHash() => r'49fb1c9b20eadea2ab0da5bbdd8683c317f6710c';
 
 final class UsersOfServerFamily extends $Family
     with $FunctionalFamilyOverride<AsyncValue<List<UserDomain>>, Uri> {

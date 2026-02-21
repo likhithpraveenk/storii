@@ -25,24 +25,25 @@ String mapDioToMessage(DioException e) {
     case DioExceptionType.connectionTimeout:
     case DioExceptionType.sendTimeout:
     case DioExceptionType.receiveTimeout:
-      return 'The connection timed out';
+      return 'Request timeout';
     case DioExceptionType.connectionError:
-      return 'Cannot reach the server. Please check your connection';
+      return 'Connection error';
     case DioExceptionType.badCertificate:
-      return 'Secure connection failed (SSl Certificate Error)';
+      return 'SSL certificate error';
     case DioExceptionType.badResponse:
       final code = e.response?.statusCode;
-      if (code == 401) return 'Your session has expired. Please login again';
-      if (code == 403) return 'You do not have permission to access this';
-      if (code == 404) return 'Resource not found';
+      if (code == 400) return 'HTTP 400 Bad Request';
+      if (code == 401) return 'HTTP 401 Unauthorized';
+      if (code == 403) return 'HTTP 403 Forbidden';
+      if (code == 404) return 'HTTP 404 Not Found';
       if (code != null && code >= 500) {
-        return 'Server is having trouble (Error $code).';
+        return 'HTTP $code Internal Server Error';
       }
-      return 'Request failed with status: $code';
+      return code != null ? 'HTTP $code' : 'HTTP error';
     case DioExceptionType.cancel:
-      return 'Request was cancelled';
+      return 'Request cancelled';
     case DioExceptionType.unknown:
-      if (e.error is SocketException) return 'No internet connection detected';
-      return 'An unknown network error occurred';
+      if (e.error is SocketException) return 'No internet';
+      return 'Unknown network error';
   }
 }

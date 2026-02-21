@@ -41,7 +41,7 @@ _ServerSettings _$ServerSettingsFromJson(
   chromecastEnabled: json['chromecastEnabled'] as bool?,
   dateFormat: json['dateFormat'] as String?,
   language: json['language'] as String?,
-  logLevel: $enumDecodeNullable(_$LogLevelEnumMap, json['logLevel']),
+  logLevel: $enumDecodeNullable(_$ServerLogLevelEnumMap, json['logLevel']),
   version: json['version'] as String?,
 );
 
@@ -77,7 +77,7 @@ Map<String, dynamic> _$ServerSettingsToJson(_ServerSettings instance) =>
       'chromecastEnabled': ?instance.chromecastEnabled,
       'dateFormat': ?instance.dateFormat,
       'language': ?instance.language,
-      'logLevel': ?_$LogLevelEnumMap[instance.logLevel],
+      'logLevel': ?_$ServerLogLevelEnumMap[instance.logLevel],
       'version': ?instance.version,
     };
 
@@ -86,11 +86,11 @@ Value? _$JsonConverterFromJson<Json, Value>(
   Value? Function(Json json) fromJson,
 ) => json == null ? null : fromJson(json as Json);
 
-const _$LogLevelEnumMap = {
-  LogLevel.debug: 0,
-  LogLevel.info: 1,
-  LogLevel.warning: 2,
-  LogLevel.error: 3,
+const _$ServerLogLevelEnumMap = {
+  ServerLogLevel.debug: 0,
+  ServerLogLevel.info: 1,
+  ServerLogLevel.warning: 2,
+  ServerLogLevel.error: 3,
 };
 
 Json? _$JsonConverterToJson<Json, Value>(

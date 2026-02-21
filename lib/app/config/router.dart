@@ -20,6 +20,7 @@ import 'package:storii/features/series/ui/series_list_screen.dart';
 import 'package:storii/features/settings/ui/appearance_screen.dart';
 import 'package:storii/features/settings/ui/config_nav_screen.dart';
 import 'package:storii/features/settings/ui/settings_screen.dart';
+import 'package:storii/globals.dart';
 import 'package:storii/shared/splash_screen.dart';
 import 'package:storii/shared/widgets/shell_scaffold.dart';
 
@@ -50,13 +51,11 @@ enum AppRoute {
   String withId(String id) => path.replaceFirst(':id', id);
 }
 
-final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'Root');
-final shellNavigatorKey = GlobalKey<StatefulNavigationShellState>(
-  debugLabel: 'StatefulShellRoute',
-);
-final shellScaffoldKey = GlobalKey<ScaffoldState>(debugLabel: 'ShellScaffold');
-
-final publicRoutes = [AppRoute.logs.path, AppRoute.about.path, AppRoute.login];
+final publicRoutes = [
+  AppRoute.logs.path,
+  AppRoute.about.path,
+  AppRoute.login.path,
+];
 
 final routerProvider = Provider<GoRouter>((ref) {
   final user = ref.watch(currentUserProvider);

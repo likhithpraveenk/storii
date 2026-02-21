@@ -88,6 +88,13 @@ ThemeData themeData(Ref ref, Brightness brightness) {
     buttonTheme: ButtonThemeData(
       shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
     ),
+    snackBarTheme: SnackBarThemeData(
+      behavior: .floating,
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+      backgroundColor: colorScheme.inverseSurface,
+      contentTextStyle: TextStyle(color: colorScheme.onInverseSurface),
+    ),
   );
 }
 

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ServerSettings {
 
- String? get id; bool? get scannerFindCovers; bool? get scannerParseSubtitle; bool? get scannerPreferMatchedMetadata; bool? get scannerDisableWatcher; bool? get storeCoverWithItem; bool? get storeMetadataWithItem; String? get metadataFileFormat; int? get rateLimitLoginRequests;@DurationMsConverter() Duration? get rateLimitLoginWindow; int? get backupsToKeep; int? get maxBackupSize; int? get loggerDailyLogsToKeep; int? get loggerScannerLogsToKeep;@BoolBinaryConverter() bool? get homeBookshelfView;@BoolBinaryConverter() bool? get bookshelfView; bool? get sortingIgnorePrefix; List<String>? get sortingPrefixes; bool? get chromecastEnabled; String? get dateFormat; String? get language; LogLevel? get logLevel; String? get version;
+ String? get id; bool? get scannerFindCovers; bool? get scannerParseSubtitle; bool? get scannerPreferMatchedMetadata; bool? get scannerDisableWatcher; bool? get storeCoverWithItem; bool? get storeMetadataWithItem; String? get metadataFileFormat; int? get rateLimitLoginRequests;@DurationMsConverter() Duration? get rateLimitLoginWindow; int? get backupsToKeep; int? get maxBackupSize; int? get loggerDailyLogsToKeep; int? get loggerScannerLogsToKeep;@BoolBinaryConverter() bool? get homeBookshelfView;@BoolBinaryConverter() bool? get bookshelfView; bool? get sortingIgnorePrefix; List<String>? get sortingPrefixes; bool? get chromecastEnabled; String? get dateFormat; String? get language; ServerLogLevel? get logLevel; String? get version;
 /// Create a copy of ServerSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $ServerSettingsCopyWith<$Res>  {
   factory $ServerSettingsCopyWith(ServerSettings value, $Res Function(ServerSettings) _then) = _$ServerSettingsCopyWithImpl;
 @useResult
 $Res call({
- String? id, bool? scannerFindCovers, bool? scannerParseSubtitle, bool? scannerPreferMatchedMetadata, bool? scannerDisableWatcher, bool? storeCoverWithItem, bool? storeMetadataWithItem, String? metadataFileFormat, int? rateLimitLoginRequests,@DurationMsConverter() Duration? rateLimitLoginWindow, int? backupsToKeep, int? maxBackupSize, int? loggerDailyLogsToKeep, int? loggerScannerLogsToKeep,@BoolBinaryConverter() bool? homeBookshelfView,@BoolBinaryConverter() bool? bookshelfView, bool? sortingIgnorePrefix, List<String>? sortingPrefixes, bool? chromecastEnabled, String? dateFormat, String? language, LogLevel? logLevel, String? version
+ String? id, bool? scannerFindCovers, bool? scannerParseSubtitle, bool? scannerPreferMatchedMetadata, bool? scannerDisableWatcher, bool? storeCoverWithItem, bool? storeMetadataWithItem, String? metadataFileFormat, int? rateLimitLoginRequests,@DurationMsConverter() Duration? rateLimitLoginWindow, int? backupsToKeep, int? maxBackupSize, int? loggerDailyLogsToKeep, int? loggerScannerLogsToKeep,@BoolBinaryConverter() bool? homeBookshelfView,@BoolBinaryConverter() bool? bookshelfView, bool? sortingIgnorePrefix, List<String>? sortingPrefixes, bool? chromecastEnabled, String? dateFormat, String? language, ServerLogLevel? logLevel, String? version
 });
 
 
@@ -89,7 +89,7 @@ as List<String>?,chromecastEnabled: freezed == chromecastEnabled ? _self.chromec
 as bool?,dateFormat: freezed == dateFormat ? _self.dateFormat : dateFormat // ignore: cast_nullable_to_non_nullable
 as String?,language: freezed == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
 as String?,logLevel: freezed == logLevel ? _self.logLevel : logLevel // ignore: cast_nullable_to_non_nullable
-as LogLevel?,version: freezed == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
+as ServerLogLevel?,version: freezed == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -172,7 +172,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  bool? scannerFindCovers,  bool? scannerParseSubtitle,  bool? scannerPreferMatchedMetadata,  bool? scannerDisableWatcher,  bool? storeCoverWithItem,  bool? storeMetadataWithItem,  String? metadataFileFormat,  int? rateLimitLoginRequests, @DurationMsConverter()  Duration? rateLimitLoginWindow,  int? backupsToKeep,  int? maxBackupSize,  int? loggerDailyLogsToKeep,  int? loggerScannerLogsToKeep, @BoolBinaryConverter()  bool? homeBookshelfView, @BoolBinaryConverter()  bool? bookshelfView,  bool? sortingIgnorePrefix,  List<String>? sortingPrefixes,  bool? chromecastEnabled,  String? dateFormat,  String? language,  LogLevel? logLevel,  String? version)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  bool? scannerFindCovers,  bool? scannerParseSubtitle,  bool? scannerPreferMatchedMetadata,  bool? scannerDisableWatcher,  bool? storeCoverWithItem,  bool? storeMetadataWithItem,  String? metadataFileFormat,  int? rateLimitLoginRequests, @DurationMsConverter()  Duration? rateLimitLoginWindow,  int? backupsToKeep,  int? maxBackupSize,  int? loggerDailyLogsToKeep,  int? loggerScannerLogsToKeep, @BoolBinaryConverter()  bool? homeBookshelfView, @BoolBinaryConverter()  bool? bookshelfView,  bool? sortingIgnorePrefix,  List<String>? sortingPrefixes,  bool? chromecastEnabled,  String? dateFormat,  String? language,  ServerLogLevel? logLevel,  String? version)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ServerSettings() when $default != null:
 return $default(_that.id,_that.scannerFindCovers,_that.scannerParseSubtitle,_that.scannerPreferMatchedMetadata,_that.scannerDisableWatcher,_that.storeCoverWithItem,_that.storeMetadataWithItem,_that.metadataFileFormat,_that.rateLimitLoginRequests,_that.rateLimitLoginWindow,_that.backupsToKeep,_that.maxBackupSize,_that.loggerDailyLogsToKeep,_that.loggerScannerLogsToKeep,_that.homeBookshelfView,_that.bookshelfView,_that.sortingIgnorePrefix,_that.sortingPrefixes,_that.chromecastEnabled,_that.dateFormat,_that.language,_that.logLevel,_that.version);case _:
@@ -193,7 +193,7 @@ return $default(_that.id,_that.scannerFindCovers,_that.scannerParseSubtitle,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  bool? scannerFindCovers,  bool? scannerParseSubtitle,  bool? scannerPreferMatchedMetadata,  bool? scannerDisableWatcher,  bool? storeCoverWithItem,  bool? storeMetadataWithItem,  String? metadataFileFormat,  int? rateLimitLoginRequests, @DurationMsConverter()  Duration? rateLimitLoginWindow,  int? backupsToKeep,  int? maxBackupSize,  int? loggerDailyLogsToKeep,  int? loggerScannerLogsToKeep, @BoolBinaryConverter()  bool? homeBookshelfView, @BoolBinaryConverter()  bool? bookshelfView,  bool? sortingIgnorePrefix,  List<String>? sortingPrefixes,  bool? chromecastEnabled,  String? dateFormat,  String? language,  LogLevel? logLevel,  String? version)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  bool? scannerFindCovers,  bool? scannerParseSubtitle,  bool? scannerPreferMatchedMetadata,  bool? scannerDisableWatcher,  bool? storeCoverWithItem,  bool? storeMetadataWithItem,  String? metadataFileFormat,  int? rateLimitLoginRequests, @DurationMsConverter()  Duration? rateLimitLoginWindow,  int? backupsToKeep,  int? maxBackupSize,  int? loggerDailyLogsToKeep,  int? loggerScannerLogsToKeep, @BoolBinaryConverter()  bool? homeBookshelfView, @BoolBinaryConverter()  bool? bookshelfView,  bool? sortingIgnorePrefix,  List<String>? sortingPrefixes,  bool? chromecastEnabled,  String? dateFormat,  String? language,  ServerLogLevel? logLevel,  String? version)  $default,) {final _that = this;
 switch (_that) {
 case _ServerSettings():
 return $default(_that.id,_that.scannerFindCovers,_that.scannerParseSubtitle,_that.scannerPreferMatchedMetadata,_that.scannerDisableWatcher,_that.storeCoverWithItem,_that.storeMetadataWithItem,_that.metadataFileFormat,_that.rateLimitLoginRequests,_that.rateLimitLoginWindow,_that.backupsToKeep,_that.maxBackupSize,_that.loggerDailyLogsToKeep,_that.loggerScannerLogsToKeep,_that.homeBookshelfView,_that.bookshelfView,_that.sortingIgnorePrefix,_that.sortingPrefixes,_that.chromecastEnabled,_that.dateFormat,_that.language,_that.logLevel,_that.version);}
@@ -210,7 +210,7 @@ return $default(_that.id,_that.scannerFindCovers,_that.scannerParseSubtitle,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  bool? scannerFindCovers,  bool? scannerParseSubtitle,  bool? scannerPreferMatchedMetadata,  bool? scannerDisableWatcher,  bool? storeCoverWithItem,  bool? storeMetadataWithItem,  String? metadataFileFormat,  int? rateLimitLoginRequests, @DurationMsConverter()  Duration? rateLimitLoginWindow,  int? backupsToKeep,  int? maxBackupSize,  int? loggerDailyLogsToKeep,  int? loggerScannerLogsToKeep, @BoolBinaryConverter()  bool? homeBookshelfView, @BoolBinaryConverter()  bool? bookshelfView,  bool? sortingIgnorePrefix,  List<String>? sortingPrefixes,  bool? chromecastEnabled,  String? dateFormat,  String? language,  LogLevel? logLevel,  String? version)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  bool? scannerFindCovers,  bool? scannerParseSubtitle,  bool? scannerPreferMatchedMetadata,  bool? scannerDisableWatcher,  bool? storeCoverWithItem,  bool? storeMetadataWithItem,  String? metadataFileFormat,  int? rateLimitLoginRequests, @DurationMsConverter()  Duration? rateLimitLoginWindow,  int? backupsToKeep,  int? maxBackupSize,  int? loggerDailyLogsToKeep,  int? loggerScannerLogsToKeep, @BoolBinaryConverter()  bool? homeBookshelfView, @BoolBinaryConverter()  bool? bookshelfView,  bool? sortingIgnorePrefix,  List<String>? sortingPrefixes,  bool? chromecastEnabled,  String? dateFormat,  String? language,  ServerLogLevel? logLevel,  String? version)?  $default,) {final _that = this;
 switch (_that) {
 case _ServerSettings() when $default != null:
 return $default(_that.id,_that.scannerFindCovers,_that.scannerParseSubtitle,_that.scannerPreferMatchedMetadata,_that.scannerDisableWatcher,_that.storeCoverWithItem,_that.storeMetadataWithItem,_that.metadataFileFormat,_that.rateLimitLoginRequests,_that.rateLimitLoginWindow,_that.backupsToKeep,_that.maxBackupSize,_that.loggerDailyLogsToKeep,_that.loggerScannerLogsToKeep,_that.homeBookshelfView,_that.bookshelfView,_that.sortingIgnorePrefix,_that.sortingPrefixes,_that.chromecastEnabled,_that.dateFormat,_that.language,_that.logLevel,_that.version);case _:
@@ -257,7 +257,7 @@ class _ServerSettings implements ServerSettings {
 @override final  bool? chromecastEnabled;
 @override final  String? dateFormat;
 @override final  String? language;
-@override final  LogLevel? logLevel;
+@override final  ServerLogLevel? logLevel;
 @override final  String? version;
 
 /// Create a copy of ServerSettings
@@ -293,7 +293,7 @@ abstract mixin class _$ServerSettingsCopyWith<$Res> implements $ServerSettingsCo
   factory _$ServerSettingsCopyWith(_ServerSettings value, $Res Function(_ServerSettings) _then) = __$ServerSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, bool? scannerFindCovers, bool? scannerParseSubtitle, bool? scannerPreferMatchedMetadata, bool? scannerDisableWatcher, bool? storeCoverWithItem, bool? storeMetadataWithItem, String? metadataFileFormat, int? rateLimitLoginRequests,@DurationMsConverter() Duration? rateLimitLoginWindow, int? backupsToKeep, int? maxBackupSize, int? loggerDailyLogsToKeep, int? loggerScannerLogsToKeep,@BoolBinaryConverter() bool? homeBookshelfView,@BoolBinaryConverter() bool? bookshelfView, bool? sortingIgnorePrefix, List<String>? sortingPrefixes, bool? chromecastEnabled, String? dateFormat, String? language, LogLevel? logLevel, String? version
+ String? id, bool? scannerFindCovers, bool? scannerParseSubtitle, bool? scannerPreferMatchedMetadata, bool? scannerDisableWatcher, bool? storeCoverWithItem, bool? storeMetadataWithItem, String? metadataFileFormat, int? rateLimitLoginRequests,@DurationMsConverter() Duration? rateLimitLoginWindow, int? backupsToKeep, int? maxBackupSize, int? loggerDailyLogsToKeep, int? loggerScannerLogsToKeep,@BoolBinaryConverter() bool? homeBookshelfView,@BoolBinaryConverter() bool? bookshelfView, bool? sortingIgnorePrefix, List<String>? sortingPrefixes, bool? chromecastEnabled, String? dateFormat, String? language, ServerLogLevel? logLevel, String? version
 });
 
 
@@ -334,7 +334,7 @@ as List<String>?,chromecastEnabled: freezed == chromecastEnabled ? _self.chromec
 as bool?,dateFormat: freezed == dateFormat ? _self.dateFormat : dateFormat // ignore: cast_nullable_to_non_nullable
 as String?,language: freezed == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
 as String?,logLevel: freezed == logLevel ? _self.logLevel : logLevel // ignore: cast_nullable_to_non_nullable
-as LogLevel?,version: freezed == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
+as ServerLogLevel?,version: freezed == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

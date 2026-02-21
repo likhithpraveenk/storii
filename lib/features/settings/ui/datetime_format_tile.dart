@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:storii/app/config/app_styles.dart';
-import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/globals.dart';
 import 'package:storii/l10n/l10n.dart';
 
 class DateTimeFormatTile extends ConsumerWidget {

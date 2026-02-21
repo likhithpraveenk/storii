@@ -11,16 +11,19 @@ part of 'log_entry.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
 mixin _$LogEntry {
 
- DateTime get timestamp; String get message; LogLevelDomain get level; String? get source; String? get stackTrace;
+ DateTime get timestamp; String get message; LogLevel get level; String? get source; String? get stackTrace;
 /// Create a copy of LogEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $LogEntryCopyWith<LogEntry> get copyWith => _$LogEntryCopyWithImpl<LogEntry>(this as LogEntry, _$identity);
 
+  /// Serializes this LogEntry to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -28,7 +31,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is LogEntry&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.message, message) || other.message == message)&&(identical(other.level, level) || other.level == level)&&(identical(other.source, source) || other.source == source)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,timestamp,message,level,source,stackTrace);
 
@@ -45,7 +48,7 @@ abstract mixin class $LogEntryCopyWith<$Res>  {
   factory $LogEntryCopyWith(LogEntry value, $Res Function(LogEntry) _then) = _$LogEntryCopyWithImpl;
 @useResult
 $Res call({
- DateTime timestamp, String message, LogLevelDomain level, String? source, String? stackTrace
+ DateTime timestamp, String message, LogLevel level, String? source, String? stackTrace
 });
 
 
@@ -67,7 +70,7 @@ class _$LogEntryCopyWithImpl<$Res>
 timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
 as DateTime,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,level: null == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
-as LogLevelDomain,source: freezed == source ? _self.source : source // ignore: cast_nullable_to_non_nullable
+as LogLevel,source: freezed == source ? _self.source : source // ignore: cast_nullable_to_non_nullable
 as String?,stackTrace: freezed == stackTrace ? _self.stackTrace : stackTrace // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -151,7 +154,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime timestamp,  String message,  LogLevelDomain level,  String? source,  String? stackTrace)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime timestamp,  String message,  LogLevel level,  String? source,  String? stackTrace)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LogEntry() when $default != null:
 return $default(_that.timestamp,_that.message,_that.level,_that.source,_that.stackTrace);case _:
@@ -172,7 +175,7 @@ return $default(_that.timestamp,_that.message,_that.level,_that.source,_that.sta
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime timestamp,  String message,  LogLevelDomain level,  String? source,  String? stackTrace)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime timestamp,  String message,  LogLevel level,  String? source,  String? stackTrace)  $default,) {final _that = this;
 switch (_that) {
 case _LogEntry():
 return $default(_that.timestamp,_that.message,_that.level,_that.source,_that.stackTrace);}
@@ -189,7 +192,7 @@ return $default(_that.timestamp,_that.message,_that.level,_that.source,_that.sta
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime timestamp,  String message,  LogLevelDomain level,  String? source,  String? stackTrace)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime timestamp,  String message,  LogLevel level,  String? source,  String? stackTrace)?  $default,) {final _that = this;
 switch (_that) {
 case _LogEntry() when $default != null:
 return $default(_that.timestamp,_that.message,_that.level,_that.source,_that.stackTrace);case _:
@@ -201,15 +204,15 @@ return $default(_that.timestamp,_that.message,_that.level,_that.source,_that.sta
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _LogEntry implements LogEntry {
   const _LogEntry({required this.timestamp, required this.message, required this.level, this.source, this.stackTrace});
-  
+  factory _LogEntry.fromJson(Map<String, dynamic> json) => _$LogEntryFromJson(json);
 
 @override final  DateTime timestamp;
 @override final  String message;
-@override final  LogLevelDomain level;
+@override final  LogLevel level;
 @override final  String? source;
 @override final  String? stackTrace;
 
@@ -219,14 +222,17 @@ class _LogEntry implements LogEntry {
 @pragma('vm:prefer-inline')
 _$LogEntryCopyWith<_LogEntry> get copyWith => __$LogEntryCopyWithImpl<_LogEntry>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$LogEntryToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _LogEntry&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.message, message) || other.message == message)&&(identical(other.level, level) || other.level == level)&&(identical(other.source, source) || other.source == source)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,timestamp,message,level,source,stackTrace);
 
@@ -243,7 +249,7 @@ abstract mixin class _$LogEntryCopyWith<$Res> implements $LogEntryCopyWith<$Res>
   factory _$LogEntryCopyWith(_LogEntry value, $Res Function(_LogEntry) _then) = __$LogEntryCopyWithImpl;
 @override @useResult
 $Res call({
- DateTime timestamp, String message, LogLevelDomain level, String? source, String? stackTrace
+ DateTime timestamp, String message, LogLevel level, String? source, String? stackTrace
 });
 
 
@@ -265,7 +271,7 @@ class __$LogEntryCopyWithImpl<$Res>
 timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
 as DateTime,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,level: null == level ? _self.level : level // ignore: cast_nullable_to_non_nullable
-as LogLevelDomain,source: freezed == source ? _self.source : source // ignore: cast_nullable_to_non_nullable
+as LogLevel,source: freezed == source ? _self.source : source // ignore: cast_nullable_to_non_nullable
 as String?,stackTrace: freezed == stackTrace ? _self.stackTrace : stackTrace // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

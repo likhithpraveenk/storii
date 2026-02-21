@@ -196,6 +196,12 @@ abstract class AppLocalizations {
   /// **'Add User'**
   String get addUser;
 
+  /// No description provided for @editServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Server'**
+  String get editServer;
+
   /// No description provided for @errorLoadingUsers.
   ///
   /// In en, this message translates to:
@@ -367,8 +373,8 @@ abstract class AppLocalizations {
   /// No description provided for @deleteLogsQ.
   ///
   /// In en, this message translates to:
-  /// **'Delete {count} logs?'**
-  String deleteLogsQ(int count);
+  /// **'Delete all logs?'**
+  String get deleteLogsQ;
 
   /// No description provided for @audiobooks.
   ///
@@ -1000,35 +1006,17 @@ abstract class AppLocalizations {
   /// **'Error: {text}'**
   String errorText(String text);
 
-  /// No description provided for @versionText.
+  /// No description provided for @version.
   ///
   /// In en, this message translates to:
-  /// **'Version: {text}'**
-  String versionText(String text);
+  /// **'Version'**
+  String get version;
 
   /// No description provided for @buildNumber.
   ///
   /// In en, this message translates to:
   /// **'Build Number: {text}'**
   String buildNumber(String text);
-
-  /// No description provided for @keepLogsFor.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{1 day} other{{count} days}}'**
-  String keepLogsFor(int count);
-
-  /// No description provided for @logHistory.
-  ///
-  /// In en, this message translates to:
-  /// **'Log History'**
-  String get logHistory;
-
-  /// No description provided for @autoDeleteNotice.
-  ///
-  /// In en, this message translates to:
-  /// **'Logs older than this will be automatically deleted.'**
-  String get autoDeleteNotice;
 
   /// No description provided for @networkLogs.
   ///

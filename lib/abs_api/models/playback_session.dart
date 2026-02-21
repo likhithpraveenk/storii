@@ -41,7 +41,7 @@ abstract class PlaybackSession with _$PlaybackSession {
     SessionUser? user,
     List<AudioTrack>? audioTracks,
     LibraryItem? libraryItem,
-  }) = PlaybackSessionBase;
+  }) = _PlaybackSession;
 
   factory PlaybackSession.fromJson(Map<String, dynamic> json) =>
       _$PlaybackSessionFromJson(json);

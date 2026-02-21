@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/item.dart';
 import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -62,7 +63,7 @@ extension StringExtensions on String {
   }
 }
 
-extension LogLevelX on LogLevelDomain {
+extension LogLevelX on LogLevel {
   Color color(ColorScheme scheme) {
     return switch (this) {
       .debug => Colors.grey,
@@ -193,5 +194,17 @@ extension AudiobookX on Audiobook {
       accumulated += trackLen;
     }
     return (0, Duration.zero);
+  }
+}
+
+extension SnackBarShorthand on ScaffoldMessengerState {
+  void showAppSnackBar(String message, {bool isError = false}) {
+    showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+        backgroundColor: isError ? appRedColor : null,
+      ),
+    );
   }
 }

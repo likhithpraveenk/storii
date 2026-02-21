@@ -3,96 +3,6 @@
 part of 'settings_provider.dart';
 
 // **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-_AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
-  themeMode:
-      $enumDecodeNullable(_$ThemeModeEnumMap, json['themeMode']) ??
-      ThemeMode.dark,
-  useDynamicColor: json['useDynamicColor'] as bool? ?? false,
-  usePureBlack: json['usePureBlack'] as bool? ?? false,
-  localeCode: json['localeCode'] as String? ?? 'en',
-  currentUser: json['currentUser'] == null
-      ? null
-      : UserDomain.fromJson(json['currentUser'] as Map<String, dynamic>),
-  logRetention: json['logRetention'] == null
-      ? const Duration(days: 2)
-      : Duration(microseconds: (json['logRetention'] as num).toInt()),
-  dateTimeFormat: json['dateTimeFormat'] as String? ?? 'dd MMM y',
-  navTargets:
-      (json['navTargets'] as List<dynamic>?)
-          ?.map((e) => $enumDecode(_$NavTargetEnumMap, e))
-          .toList() ??
-      defaultNavTargets,
-  fontFamily: json['fontFamily'] as String? ?? 'AtkinsonHyperlegibleNext',
-  fontScale: (json['fontScale'] as num?)?.toDouble() ?? 1,
-  defaultItemsLimit: (json['defaultItemsLimit'] as num?)?.toInt() ?? 50,
-  defaultSeriesLimit: (json['defaultSeriesLimit'] as num?)?.toInt() ?? 20,
-  showTitleForItem: json['showTitleForItem'] as bool? ?? true,
-  stackTitleOnImage: json['stackTitleOnImage'] as bool? ?? false,
-  enableHttpLogs: json['enableHttpLogs'] as bool? ?? false,
-);
-
-Map<String, dynamic> _$AppSettingsToJson(
-  _AppSettings instance,
-) => <String, dynamic>{
-  'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,
-  'useDynamicColor': instance.useDynamicColor,
-  'usePureBlack': instance.usePureBlack,
-  'localeCode': instance.localeCode,
-  'currentUser': ?instance.currentUser?.toJson(),
-  'logRetention': instance.logRetention.inMicroseconds,
-  'dateTimeFormat': instance.dateTimeFormat,
-  'navTargets': instance.navTargets.map((e) => _$NavTargetEnumMap[e]!).toList(),
-  'fontFamily': ?instance.fontFamily,
-  'fontScale': instance.fontScale,
-  'defaultItemsLimit': instance.defaultItemsLimit,
-  'defaultSeriesLimit': instance.defaultSeriesLimit,
-  'showTitleForItem': instance.showTitleForItem,
-  'stackTitleOnImage': instance.stackTitleOnImage,
-  'enableHttpLogs': instance.enableHttpLogs,
-};
-
-const _$ThemeModeEnumMap = {
-  ThemeMode.system: 'system',
-  ThemeMode.light: 'light',
-  ThemeMode.dark: 'dark',
-};
-
-const _$NavTargetEnumMap = {
-  NavTarget.home: 'home',
-  NavTarget.library: 'library',
-  NavTarget.series: 'series',
-  NavTarget.downloads: 'downloads',
-  NavTarget.collections: 'collections',
-  NavTarget.authors: 'authors',
-  NavTarget.more: 'more',
-};
-
-_UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>
-    _UserSettings(
-      userId: json['userId'] as String,
-      currentLibraryId: json['currentLibraryId'] as String?,
-      currentItemId: json['currentItemId'] as String?,
-      isFullySynced: json['isFullySynced'] as bool? ?? false,
-      isItemsGridView: json['isItemsGridView'] as bool? ?? true,
-      isSeriesGridView: json['isSeriesGridView'] as bool? ?? true,
-      isAuthorsGridView: json['isAuthorsGridView'] as bool? ?? true,
-    );
-
-Map<String, dynamic> _$UserSettingsToJson(_UserSettings instance) =>
-    <String, dynamic>{
-      'userId': instance.userId,
-      'currentLibraryId': ?instance.currentLibraryId,
-      'currentItemId': ?instance.currentItemId,
-      'isFullySynced': instance.isFullySynced,
-      'isItemsGridView': instance.isItemsGridView,
-      'isSeriesGridView': instance.isSeriesGridView,
-      'isAuthorsGridView': instance.isAuthorsGridView,
-    };
-
-// **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
@@ -132,7 +42,7 @@ final class AppSettingsNotifierProvider
 }
 
 String _$appSettingsNotifierHash() =>
-    r'7e5a7e2bd26fa4c4ba1365cf7762e570d518b1dd';
+    r'f21dd1366ec87231b95f64e9f643ea4152cb5bcc';
 
 abstract class _$AppSettingsNotifier extends $Notifier<AppSettings> {
   AppSettings build();
@@ -185,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'0147fa00f2181d26a85a29998221babdcf3a58c6';
+    r'a03799819f091522de796136f76d429a4e2fff30';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings> {
   UserSettings build();
@@ -225,11 +135,10 @@ extension AppSettingsSetters on AppSettingsNotifier {
   Future<void> setCurrentUser(UserDomain? value) =>
       _save(state.copyWith(currentUser: value));
 
-  Future<void> setLogRetention(Duration value) =>
-      _save(state.copyWith(logRetention: value));
-
   Future<void> setDateTimeFormat(String value) =>
       _save(state.copyWith(dateTimeFormat: value));
+
+  Future<void> setMaxLogs(int value) => _save(state.copyWith(maxLogs: value));
 
   Future<void> setNavTargets(List<NavTarget> value) =>
       _save(state.copyWith(navTargets: value));
@@ -240,12 +149,6 @@ extension AppSettingsSetters on AppSettingsNotifier {
   Future<void> setFontScale(double value) =>
       _save(state.copyWith(fontScale: value));
 
-  Future<void> setDefaultItemsLimit(int value) =>
-      _save(state.copyWith(defaultItemsLimit: value));
-
-  Future<void> setDefaultSeriesLimit(int value) =>
-      _save(state.copyWith(defaultSeriesLimit: value));
-
   Future<void> setShowTitleForItem(bool value) =>
       _save(state.copyWith(showTitleForItem: value));
 
@@ -254,6 +157,14 @@ extension AppSettingsSetters on AppSettingsNotifier {
 
   Future<void> setEnableHttpLogs(bool value) =>
       _save(state.copyWith(enableHttpLogs: value));
+
+  Future<void> setFastForward(Duration value) =>
+      _save(state.copyWith(fastForward: value));
+
+  Future<void> setRewind(Duration value) =>
+      _save(state.copyWith(rewind: value));
+
+  Future<void> setSpeed(double value) => _save(state.copyWith(speed: value));
 }
 
 final themeModeProvider = Provider<ThemeMode>(
@@ -276,12 +187,12 @@ final currentUserProvider = Provider<UserDomain?>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.currentUser)),
 );
 
-final logRetentionProvider = Provider<Duration>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.logRetention)),
-);
-
 final dateTimeFormatProvider = Provider<String>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.dateTimeFormat)),
+);
+
+final maxLogsProvider = Provider<int>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.maxLogs)),
 );
 
 final navTargetsProvider = Provider<List<NavTarget>>(
@@ -296,14 +207,6 @@ final fontScaleProvider = Provider<double>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.fontScale)),
 );
 
-final defaultItemsLimitProvider = Provider<int>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.defaultItemsLimit)),
-);
-
-final defaultSeriesLimitProvider = Provider<int>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.defaultSeriesLimit)),
-);
-
 final showTitleForItemProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.showTitleForItem)),
 );
@@ -316,6 +219,18 @@ final enableHttpLogsProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.enableHttpLogs)),
 );
 
+final fastForwardProvider = Provider<Duration>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.fastForward)),
+);
+
+final rewindProvider = Provider<Duration>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.rewind)),
+);
+
+final speedProvider = Provider<double>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.speed)),
+);
+
 // **************************************************************************
 // _UserSettingsGenerator
 // **************************************************************************
@@ -323,9 +238,6 @@ final enableHttpLogsProvider = Provider<bool>(
 extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setCurrentLibraryId(String? value) =>
       _save(state.copyWith(currentLibraryId: value));
-
-  Future<void> setCurrentItemId(String? value) =>
-      _save(state.copyWith(currentItemId: value));
 
   Future<void> setIsFullySynced(bool value) =>
       _save(state.copyWith(isFullySynced: value));
@@ -342,10 +254,6 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
 final currentLibraryIdProvider = Provider<String?>(
   (ref) => ref.watch(userSettingsProvider.select((s) => s.currentLibraryId)),
-);
-
-final currentItemIdProvider = Provider<String?>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.currentItemId)),
 );
 
 final isFullySyncedProvider = Provider<bool>(

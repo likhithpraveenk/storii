@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:storii/app/models/log_entry.dart';
+import 'package:storii/globals.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 void showLogEntrySheet(BuildContext context, LogEntry entry) {
@@ -7,30 +9,75 @@ void showLogEntrySheet(BuildContext context, LogEntry entry) {
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    showDragHandle: true,
     builder: (context) => DraggableScrollableSheet(
-      initialChildSize: 0.5,
-      minChildSize: 0.5,
-      maxChildSize: 0.95,
       expand: false,
       builder: (context, scrollController) {
-        return SizedBox(
-          width: double.infinity,
-          child: SingleChildScrollView(
-            controller: scrollController,
-            padding: const .fromLTRB(20, 0, 20, 20),
-            child: Column(
-              crossAxisAlignment: .start,
-              children: [
-                _LogRow('Timestamp', entry.timestamp.fString(forLogs: true)),
-                _LogRow('Level', entry.level.name.toUpperCase()),
-                _LogRow('Message', entry.message),
-                if (entry.source != null) _LogRow('Source', entry.source!),
-                if (entry.stackTrace != null)
-                  _LogRow('StackTrace', entry.stackTrace!),
-              ],
+        return Column(
+          children: [
+            Padding(
+              padding: const .symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Stack(
+                alignment: .center,
+                children: [
+                  Container(
+                    width: 32,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                  Align(
+                    alignment: .centerRight,
+                    child: IconButton(
+                      icon: const Icon(Icons.copy_rounded),
+                      onPressed: () async {
+                        final fullLog =
+                            '''
+Timestamp: ${entry.timestamp.fString(forLogs: true)}
+Level: ${entry.level.name.toUpperCase()}
+Source: ${entry.source ?? 'N/A'}
+Message: ${entry.message}
+${entry.stackTrace != null ? '\nStackTrace:\n${entry.stackTrace}' : ''}
+''';
+                        await Clipboard.setData(ClipboardData(text: fullLog));
+
+                        if (context.mounted) {
+                          globalMessengerKey.currentState?.showAppSnackBar(
+                            'Log copied to clipboard',
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+            Expanded(
+              child: SingleChildScrollView(
+                controller: scrollController,
+                padding: const .fromLTRB(20, 0, 20, 20),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: .start,
+                    children: [
+                      _LogRow(
+                        'Timestamp',
+                        entry.timestamp.fString(forLogs: true),
+                      ),
+                      _LogRow('Level', entry.level.name.toUpperCase()),
+                      _LogRow('Message', entry.message),
+                      if (entry.source != null)
+                        _LogRow('Source', entry.source!),
+                      if (entry.stackTrace != null)
+                        _LogRow('StackTrace', entry.stackTrace!),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         );
       },
     ),

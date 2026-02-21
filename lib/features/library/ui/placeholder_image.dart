@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:storii/app/config/constants.dart';
 
 class PlaceholderImage extends StatelessWidget {
   final String? label;
@@ -10,16 +11,17 @@ class PlaceholderImage extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return Container(
-      color: scheme.onPrimary,
+      color: scheme.surface,
       child: Stack(
         alignment: .center,
         children: [
           Opacity(
             opacity: label != null ? 0.05 : 0.2,
             child: Image.asset(
-              'assets/icons/foreground.png',
+              appForegroundIcon,
               width: 120,
               height: 120,
+              color: scheme.onSurfaceVariant,
             ),
           ),
           if (label != null)

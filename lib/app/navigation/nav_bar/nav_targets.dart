@@ -78,3 +78,5 @@ const defaultNavTargets = <NavTarget>[
   .authors,
   .more,
 ];
+
+const podcastNavTargets = <NavTarget>[.home, .library, .more];

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 
 typedef PlayerWidgetBuilder =
@@ -44,10 +43,6 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
       ref
           .read(playerBoundsProvider.notifier)
           .update(widget.minHeight, widget.maxHeight);
-      final id = ref.read(currentItemIdProvider);
-      if (id != null) {
-        _snapTo(.mini);
-      }
     });
   }
 

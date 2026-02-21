@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/abs_api/models/enums.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/theme_provider.dart';

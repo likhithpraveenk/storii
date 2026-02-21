@@ -16,6 +16,8 @@ enum MediaContent {
   }
 }
 
+enum PlayableType { audiobook, podcastEpisode }
+
 enum Languages {
   en('English');
 

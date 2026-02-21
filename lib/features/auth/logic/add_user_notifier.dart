@@ -4,7 +4,6 @@ import 'package:storii/app/models/to_domain.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
-import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
@@ -43,8 +42,7 @@ class AddUserNotifier extends _$AddUserNotifier {
 
       final storeUser = response.user.toDomain(url);
 
-      await ref.read(serversProvider.notifier).add(url);
-      await ref.read(usersProvider.notifier).upsert(storeUser);
+      await ref.read(usersProvider.notifier).add(storeUser);
       await ref
           .read(tokenProvider)
           .saveTokens(

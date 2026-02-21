@@ -29,7 +29,7 @@ sealed class ServerSettings with _$ServerSettings {
     bool? chromecastEnabled,
     String? dateFormat,
     String? language,
-    LogLevel? logLevel,
+    ServerLogLevel? logLevel,
     String? version,
   }) = _ServerSettings;
 

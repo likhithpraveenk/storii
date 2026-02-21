@@ -24,6 +24,7 @@
   "followingUsers": "You are about to delete the following users",
   "urlCopied": "URL Copied",
   "addUser": "Add User",
+  "editServer": "Edit Server",
   "errorLoadingUsers": "Error loading users",
   "welcome": "Welcome {username}",
   "@welcome": {
@@ -73,14 +74,7 @@
   "resume": "Resume",
   "play": "Play",
   "replay": "Replay",
-  "deleteLogsQ": "Delete {count} logs?",
-  "@deleteLogsQ": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
+  "deleteLogsQ": "Delete all logs?",
   "audiobooks": "Audiobooks",
   "podcasts": "Podcasts",
   "search": "Search",
@@ -200,14 +194,7 @@
       }
     }
   },
-  "versionText": "Version: {text}",
-  "@versionText": {
-    "placeholders": {
-      "text": {
-        "type": "String"
-      }
-    }
-  },
+  "version": "Version",
   "buildNumber": "Build Number: {text}",
   "@buildNumber": {
     "placeholders": {
@@ -216,16 +203,6 @@
       }
     }
   },
-  "keepLogsFor": "{count, plural, =1{1 day} other{{count} days}}",
-  "@keepLogsFor": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "logHistory": "Log History",
-  "autoDeleteNotice": "Logs older than this will be automatically deleted.",
   "networkLogs": "Network Logs",
   "networkLogsDescription": "Log HTTP requests and responses",
   "networkLogsWarning": "Logging active. This may increase storage usage"

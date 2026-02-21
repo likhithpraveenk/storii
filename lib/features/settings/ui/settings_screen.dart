@@ -5,7 +5,6 @@ import 'package:storii/features/settings/ui/config_nav_screen.dart';
 import 'package:storii/features/settings/ui/datetime_format_tile.dart';
 import 'package:storii/features/settings/ui/http_logs.dart';
 import 'package:storii/features/settings/ui/language_selector.dart';
-import 'package:storii/features/settings/ui/log_retention.dart';
 import 'package:storii/features/settings/ui/reset_settings_action.dart';
 import 'package:storii/l10n/l10n.dart';
 
@@ -32,9 +31,10 @@ class SettingsScreen extends StatelessWidget {
         children: const [
           AppearanceTile(),
           LanguageSelectorTile(),
-          LogRetentionTile(),
           DateTimeFormatTile(),
           ConfigNavTile(),
+          // TODO: logs maximum sheet
+          // TODO: player settings - forward, rewind and speed
           HttpLogsTile(),
         ],
       ),

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:storii/app/models/audio_track.dart';
+import 'package:storii/abs_api/models/audio_track.dart';
 
 part 'podcast_episode.freezed.dart';
 part 'podcast_episode.g.dart';
@@ -21,7 +21,7 @@ sealed class PodcastEpisodeDomain with _$PodcastEpisodeDomain {
     required DateTime publishedAt,
     required DateTime addedAt,
     required DateTime updatedAt,
-    required AudioTrackDomain audioTrack,
+    required AudioTrack audioTrack,
     required Duration duration,
     int? size,
   }) = _PodcastEpisodeDomain;

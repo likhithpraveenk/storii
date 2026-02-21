@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/router.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/globals.dart';
 import 'package:storii/l10n/l10n.dart';
 
 class LanguageSelectorTile extends ConsumerWidget {

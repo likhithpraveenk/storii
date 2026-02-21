@@ -1,6 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/models/server.dart';
 import 'package:storii/app/providers/api_providers.dart';
+import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
@@ -19,7 +21,7 @@ class AddServerNotifier extends _$AddServerNotifier {
   @override
   ServerState build() => const ServerState();
 
-  Future<void> addServer(String url) async {
+  Future<void> addServer(String url, [Server? server]) async {
     state = const ServerState(status: .checking);
 
     try {
@@ -29,6 +31,13 @@ class AddServerNotifier extends _$AddServerNotifier {
         'Server validated: ${url.normalizedUri}',
         source: 'AddServerNotifier',
       );
+      if (server != null) {
+        await ref
+            .read(serversProvider.notifier)
+            .edit(server.url, server.copyWith(url: url.normalizedUri));
+      } else {
+        await ref.read(serversProvider.notifier).add(url.normalizedUri);
+      }
       state = const ServerState(status: .available);
     } catch (e, st) {
       final error = AppError.resolve(e);

@@ -11,13 +11,6 @@ part of 'playback_session.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-PlaybackSession _$PlaybackSessionFromJson(
-  Map<String, dynamic> json
-) {
-    return PlaybackSessionBase.fromJson(
-      json
-    );
-}
 
 /// @nodoc
 mixin _$PlaybackSession {
@@ -165,10 +158,10 @@ extension PlaybackSessionPatterns on PlaybackSession {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( PlaybackSessionBase value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _PlaybackSession value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case PlaybackSessionBase() when $default != null:
+case _PlaybackSession() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -187,10 +180,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( PlaybackSessionBase value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _PlaybackSession value)  $default,){
 final _that = this;
 switch (_that) {
-case PlaybackSessionBase():
+case _PlaybackSession():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -208,10 +201,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( PlaybackSessionBase value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _PlaybackSession value)?  $default,){
 final _that = this;
 switch (_that) {
-case PlaybackSessionBase() when $default != null:
+case _PlaybackSession() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -231,7 +224,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String libraryId,  String libraryItemId,  String? episodeId,  MediaType mediaType,  MediaMetadata mediaMetadata,  List<BookChapter> chapters,  String displayTitle,  String displayAuthor,  String? coverPath,  Duration duration,  PlayMethod playMethod,  String mediaPlayer,  DeviceInfo? deviceInfo,  String date,  String dayOfWeek,  Duration timeListening,  Duration startTime,  Duration currentTime,  DateTime startedAt,  DateTime updatedAt,  SessionUser? user,  List<AudioTrack>? audioTracks,  LibraryItem? libraryItem)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case PlaybackSessionBase() when $default != null:
+case _PlaybackSession() when $default != null:
 return $default(_that.id,_that.userId,_that.libraryId,_that.libraryItemId,_that.episodeId,_that.mediaType,_that.mediaMetadata,_that.chapters,_that.displayTitle,_that.displayAuthor,_that.coverPath,_that.duration,_that.playMethod,_that.mediaPlayer,_that.deviceInfo,_that.date,_that.dayOfWeek,_that.timeListening,_that.startTime,_that.currentTime,_that.startedAt,_that.updatedAt,_that.user,_that.audioTracks,_that.libraryItem);case _:
   return orElse();
 
@@ -252,7 +245,7 @@ return $default(_that.id,_that.userId,_that.libraryId,_that.libraryItemId,_that.
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String libraryId,  String libraryItemId,  String? episodeId,  MediaType mediaType,  MediaMetadata mediaMetadata,  List<BookChapter> chapters,  String displayTitle,  String displayAuthor,  String? coverPath,  Duration duration,  PlayMethod playMethod,  String mediaPlayer,  DeviceInfo? deviceInfo,  String date,  String dayOfWeek,  Duration timeListening,  Duration startTime,  Duration currentTime,  DateTime startedAt,  DateTime updatedAt,  SessionUser? user,  List<AudioTrack>? audioTracks,  LibraryItem? libraryItem)  $default,) {final _that = this;
 switch (_that) {
-case PlaybackSessionBase():
+case _PlaybackSession():
 return $default(_that.id,_that.userId,_that.libraryId,_that.libraryItemId,_that.episodeId,_that.mediaType,_that.mediaMetadata,_that.chapters,_that.displayTitle,_that.displayAuthor,_that.coverPath,_that.duration,_that.playMethod,_that.mediaPlayer,_that.deviceInfo,_that.date,_that.dayOfWeek,_that.timeListening,_that.startTime,_that.currentTime,_that.startedAt,_that.updatedAt,_that.user,_that.audioTracks,_that.libraryItem);case _:
   throw StateError('Unexpected subclass');
 
@@ -272,7 +265,7 @@ return $default(_that.id,_that.userId,_that.libraryId,_that.libraryItemId,_that.
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String libraryId,  String libraryItemId,  String? episodeId,  MediaType mediaType,  MediaMetadata mediaMetadata,  List<BookChapter> chapters,  String displayTitle,  String displayAuthor,  String? coverPath,  Duration duration,  PlayMethod playMethod,  String mediaPlayer,  DeviceInfo? deviceInfo,  String date,  String dayOfWeek,  Duration timeListening,  Duration startTime,  Duration currentTime,  DateTime startedAt,  DateTime updatedAt,  SessionUser? user,  List<AudioTrack>? audioTracks,  LibraryItem? libraryItem)?  $default,) {final _that = this;
 switch (_that) {
-case PlaybackSessionBase() when $default != null:
+case _PlaybackSession() when $default != null:
 return $default(_that.id,_that.userId,_that.libraryId,_that.libraryItemId,_that.episodeId,_that.mediaType,_that.mediaMetadata,_that.chapters,_that.displayTitle,_that.displayAuthor,_that.coverPath,_that.duration,_that.playMethod,_that.mediaPlayer,_that.deviceInfo,_that.date,_that.dayOfWeek,_that.timeListening,_that.startTime,_that.currentTime,_that.startedAt,_that.updatedAt,_that.user,_that.audioTracks,_that.libraryItem);case _:
   return null;
 
@@ -285,9 +278,9 @@ return $default(_that.id,_that.userId,_that.libraryId,_that.libraryItemId,_that.
 @JsonSerializable()
 @DateTimeEpochConverter()
 @DurationPreciseSecondsConverter()
-class PlaybackSessionBase implements PlaybackSession {
-  const PlaybackSessionBase({required this.id, required this.userId, required this.libraryId, required this.libraryItemId, this.episodeId, required this.mediaType, required this.mediaMetadata, required final  List<BookChapter> chapters, required this.displayTitle, required this.displayAuthor, this.coverPath, required this.duration, required this.playMethod, required this.mediaPlayer, this.deviceInfo, required this.date, required this.dayOfWeek, required this.timeListening, required this.startTime, required this.currentTime, required this.startedAt, required this.updatedAt, this.user, final  List<AudioTrack>? audioTracks, this.libraryItem}): _chapters = chapters,_audioTracks = audioTracks;
-  factory PlaybackSessionBase.fromJson(Map<String, dynamic> json) => _$PlaybackSessionBaseFromJson(json);
+class _PlaybackSession implements PlaybackSession {
+  const _PlaybackSession({required this.id, required this.userId, required this.libraryId, required this.libraryItemId, this.episodeId, required this.mediaType, required this.mediaMetadata, required final  List<BookChapter> chapters, required this.displayTitle, required this.displayAuthor, this.coverPath, required this.duration, required this.playMethod, required this.mediaPlayer, this.deviceInfo, required this.date, required this.dayOfWeek, required this.timeListening, required this.startTime, required this.currentTime, required this.startedAt, required this.updatedAt, this.user, final  List<AudioTrack>? audioTracks, this.libraryItem}): _chapters = chapters,_audioTracks = audioTracks;
+  factory _PlaybackSession.fromJson(Map<String, dynamic> json) => _$PlaybackSessionFromJson(json);
 
 @override final  String id;
 @override final  String userId;
@@ -333,16 +326,16 @@ class PlaybackSessionBase implements PlaybackSession {
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$PlaybackSessionBaseCopyWith<PlaybackSessionBase> get copyWith => _$PlaybackSessionBaseCopyWithImpl<PlaybackSessionBase>(this, _$identity);
+_$PlaybackSessionCopyWith<_PlaybackSession> get copyWith => __$PlaybackSessionCopyWithImpl<_PlaybackSession>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$PlaybackSessionBaseToJson(this, );
+  return _$PlaybackSessionToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlaybackSessionBase&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.mediaMetadata, mediaMetadata) || other.mediaMetadata == mediaMetadata)&&const DeepCollectionEquality().equals(other._chapters, _chapters)&&(identical(other.displayTitle, displayTitle) || other.displayTitle == displayTitle)&&(identical(other.displayAuthor, displayAuthor) || other.displayAuthor == displayAuthor)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.playMethod, playMethod) || other.playMethod == playMethod)&&(identical(other.mediaPlayer, mediaPlayer) || other.mediaPlayer == mediaPlayer)&&(identical(other.deviceInfo, deviceInfo) || other.deviceInfo == deviceInfo)&&(identical(other.date, date) || other.date == date)&&(identical(other.dayOfWeek, dayOfWeek) || other.dayOfWeek == dayOfWeek)&&(identical(other.timeListening, timeListening) || other.timeListening == timeListening)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.currentTime, currentTime) || other.currentTime == currentTime)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other._audioTracks, _audioTracks)&&(identical(other.libraryItem, libraryItem) || other.libraryItem == libraryItem));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlaybackSession&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.mediaMetadata, mediaMetadata) || other.mediaMetadata == mediaMetadata)&&const DeepCollectionEquality().equals(other._chapters, _chapters)&&(identical(other.displayTitle, displayTitle) || other.displayTitle == displayTitle)&&(identical(other.displayAuthor, displayAuthor) || other.displayAuthor == displayAuthor)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.playMethod, playMethod) || other.playMethod == playMethod)&&(identical(other.mediaPlayer, mediaPlayer) || other.mediaPlayer == mediaPlayer)&&(identical(other.deviceInfo, deviceInfo) || other.deviceInfo == deviceInfo)&&(identical(other.date, date) || other.date == date)&&(identical(other.dayOfWeek, dayOfWeek) || other.dayOfWeek == dayOfWeek)&&(identical(other.timeListening, timeListening) || other.timeListening == timeListening)&&(identical(other.startTime, startTime) || other.startTime == startTime)&&(identical(other.currentTime, currentTime) || other.currentTime == currentTime)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other._audioTracks, _audioTracks)&&(identical(other.libraryItem, libraryItem) || other.libraryItem == libraryItem));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -358,8 +351,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $PlaybackSessionBaseCopyWith<$Res> implements $PlaybackSessionCopyWith<$Res> {
-  factory $PlaybackSessionBaseCopyWith(PlaybackSessionBase value, $Res Function(PlaybackSessionBase) _then) = _$PlaybackSessionBaseCopyWithImpl;
+abstract mixin class _$PlaybackSessionCopyWith<$Res> implements $PlaybackSessionCopyWith<$Res> {
+  factory _$PlaybackSessionCopyWith(_PlaybackSession value, $Res Function(_PlaybackSession) _then) = __$PlaybackSessionCopyWithImpl;
 @override @useResult
 $Res call({
  String id, String userId, String libraryId, String libraryItemId, String? episodeId, MediaType mediaType, MediaMetadata mediaMetadata, List<BookChapter> chapters, String displayTitle, String displayAuthor, String? coverPath, Duration duration, PlayMethod playMethod, String mediaPlayer, DeviceInfo? deviceInfo, String date, String dayOfWeek, Duration timeListening, Duration startTime, Duration currentTime, DateTime startedAt, DateTime updatedAt, SessionUser? user, List<AudioTrack>? audioTracks, LibraryItem? libraryItem
@@ -370,17 +363,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$PlaybackSessionBaseCopyWithImpl<$Res>
-    implements $PlaybackSessionBaseCopyWith<$Res> {
-  _$PlaybackSessionBaseCopyWithImpl(this._self, this._then);
+class __$PlaybackSessionCopyWithImpl<$Res>
+    implements _$PlaybackSessionCopyWith<$Res> {
+  __$PlaybackSessionCopyWithImpl(this._self, this._then);
 
-  final PlaybackSessionBase _self;
-  final $Res Function(PlaybackSessionBase) _then;
+  final _PlaybackSession _self;
+  final $Res Function(_PlaybackSession) _then;
 
 /// Create a copy of PlaybackSession
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? libraryId = null,Object? libraryItemId = null,Object? episodeId = freezed,Object? mediaType = null,Object? mediaMetadata = null,Object? chapters = null,Object? displayTitle = null,Object? displayAuthor = null,Object? coverPath = freezed,Object? duration = null,Object? playMethod = null,Object? mediaPlayer = null,Object? deviceInfo = freezed,Object? date = null,Object? dayOfWeek = null,Object? timeListening = null,Object? startTime = null,Object? currentTime = null,Object? startedAt = null,Object? updatedAt = null,Object? user = freezed,Object? audioTracks = freezed,Object? libraryItem = freezed,}) {
-  return _then(PlaybackSessionBase(
+  return _then(_PlaybackSession(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,libraryId: null == libraryId ? _self.libraryId : libraryId // ignore: cast_nullable_to_non_nullable

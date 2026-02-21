@@ -1,7 +1,5 @@
 import 'package:storii/abs_api/abs_api.dart';
-import 'package:storii/app/models/audio_track.dart';
 import 'package:storii/app/models/author.dart';
-import 'package:storii/app/models/chapter.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/app/models/item.dart';
 import 'package:storii/app/models/library.dart';
@@ -50,7 +48,7 @@ extension LibraryItemToDomain on LibraryItem {
         chapters:
             m.chapters
                 ?.map(
-                  (c) => ChapterDomain(
+                  (c) => BookChapter(
                     id: c.id,
                     start: c.start,
                     end: c.end,
@@ -82,7 +80,7 @@ extension LibraryItemToDomain on LibraryItem {
         tracks:
             m.tracks
                 ?.map(
-                  (t) => AudioTrackDomain(
+                  (t) => AudioTrack(
                     index: t.index,
                     startOffset: t.startOffset,
                     duration: t.duration,
@@ -118,7 +116,7 @@ extension LibraryItemToDomain on LibraryItem {
                     publishedAt: e.publishedAt,
                     addedAt: e.addedAt,
                     updatedAt: e.updatedAt,
-                    audioTrack: AudioTrackDomain(
+                    audioTrack: AudioTrack(
                       index: e.audioTrack.index,
                       startOffset: e.audioTrack.startOffset,
                       duration: e.audioTrack.duration,

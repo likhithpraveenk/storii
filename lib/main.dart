@@ -4,6 +4,7 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/theme_provider.dart';
+import 'package:storii/globals.dart';
 import 'package:storii/init.dart' as init;
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/storage/local/font_service.dart';
@@ -13,6 +14,7 @@ void main() async {
   await init.setupHive();
   await init.setupLicenses();
   await FontService.loadFonts();
+  await init.setupGlobals();
 
   final container = await init.setupProviders();
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
@@ -33,17 +35,15 @@ class MyApp extends ConsumerWidget {
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      scaffoldMessengerKey: globalMessengerKey,
       themeMode: themeMode,
       theme: lightTheme,
       darkTheme: darkTheme,
       routerConfig: router,
-      title: AppConstants.appName,
+      title: appName,
       locale: Locale(localeCode),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      scrollBehavior: const MaterialScrollBehavior().copyWith(
-        dragDevices: {.mouse, .touch, .trackpad, .stylus},
-      ),
       builder: (context, child) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(textScaler: textScaler),

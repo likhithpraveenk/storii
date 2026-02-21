@@ -7,6 +7,7 @@ import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/library/ui/filters_button.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/app_scroll_thumb.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -20,32 +21,11 @@ class AuthorListScreen extends ConsumerStatefulWidget {
 
 class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
   final _scrollController = ScrollController();
-  bool _showBackToTopButton = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(() {
-      if (_scrollController.hasClients) {
-        setState(() {
-          _showBackToTopButton = _scrollController.offset >= 400;
-        });
-      }
-    });
-  }
 
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
-  }
-
-  void _scrollToTop() {
-    _scrollController.animateTo(
-      0,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-    );
   }
 
   @override
@@ -56,6 +36,8 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
         title: Text(
           AppLocalizations.of(context)!.authors,
           style: Theme.of(context).textTheme.titleLarge,
@@ -64,19 +46,40 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () => ref.read(authorsListProvider.notifier).manualSync(),
-        child: Column(
-          children: [
-            Expanded(
-              child: authorsAsync.when(
-                data: (authors) {
-                  if (authors.isEmpty) {
-                    return SliverFillRemaining(
-                      child: Center(child: Text(l.empty)),
-                    );
-                  }
+        child: authorsAsync.when(
+          data: (authors) {
+            if (authors.isEmpty) {
+              return SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  alignment: .center,
+                  child: Text(l.empty),
+                ),
+              );
+            }
+            final height = ref.watch(authorsGridHeightProvider);
 
-                  if (!filterState.isGridView) {
-                    return ListView.builder(
+            return AppScrollThumb(
+              controller: _scrollController,
+              child: filterState.isGridView
+                  ? GridView.builder(
+                      controller: _scrollController,
+                      itemCount: authors.length,
+                      padding: const .symmetric(horizontal: 16),
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: maxCardWidthInGrid,
+                        mainAxisExtent: height,
+                        crossAxisSpacing: 16,
+                      ),
+                      itemBuilder: (context, index) {
+                        return AuthorCard(
+                          key: ValueKey(authors[index].id),
+                          authors[index],
+                        );
+                      },
+                    )
+                  : ListView.builder(
                       controller: _scrollController,
                       itemCount: authors.length,
                       itemBuilder: (context, index) {
@@ -85,45 +88,14 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
                           authors[index],
                         );
                       },
-                    );
-                  }
-                  final height = ref.watch(authorsGridHeightProvider);
-
-                  return GridView.builder(
-                    controller: _scrollController,
-                    itemCount: authors.length,
-                    padding: const .symmetric(horizontal: 16),
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: maxCardWidthInGrid,
-                      mainAxisExtent: height,
-                      crossAxisSpacing: 16,
                     ),
-                    itemBuilder: (context, index) {
-                      return AuthorCard(
-                        key: ValueKey(authors[index].id),
-                        authors[index],
-                      );
-                    },
-                  );
-                },
-                loading: () => const Center(child: RandomWaveform()),
-
-                error: (error, _) => ErrorRetryWidget(
-                  '$error',
-                  onRetry: () => ref.invalidate(authorsListProvider),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: AnimatedScale(
-        scale: _showBackToTopButton ? 1.0 : 0.0,
-        duration: const Duration(milliseconds: 200),
-        child: FloatingActionButton(
-          onPressed: _scrollToTop,
-          mini: true,
-          child: const Icon(Icons.arrow_upward),
+            );
+          },
+          loading: () => const Center(child: RandomWaveform()),
+          error: (error, _) => ErrorRetryWidget(
+            '$error',
+            onRetry: () => ref.invalidate(authorsListProvider),
+          ),
         ),
       ),
     );

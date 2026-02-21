@@ -1,20 +1,23 @@
 import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
-import 'package:storii/app/background/audio_handler.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:storii/app/logs/log_service.dart';
-import 'package:storii/app/providers/database_provider.dart';
-import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
-import 'package:storii/storage/drift/database.dart';
+import 'package:storii/globals.dart';
 
 Future<void> setupHive() async {
   await Hive.initFlutter();
-  await Hive.openBox<String>(settingsBox);
+  await Hive.openBox<Map>('settings');
+  await Hive.openBox<Map>('users');
+  await Hive.openBox<Map>('servers');
+  await Hive.openBox<Map>('logs');
 }
 
 Future<void> setupLicenses() async {
@@ -30,34 +33,28 @@ Future<void> setupLicenses() async {
 }
 
 Future<ProviderContainer> setupProviders() async {
-  final db = AppDatabase();
+  final container = ProviderContainer(overrides: ([]));
 
-  final audioHandler = await setupAudioService();
-  final container = ProviderContainer(
-    overrides: ([
-      databaseProvider.overrideWithValue(db),
-      audioHandlerProvider.overrideWithValue(audioHandler),
-    ]),
-  );
-
-  final enableHttpLogs = container.read(appSettingsProvider).enableHttpLogs;
-  setupLogging(db, enableHttpLogs);
-
+  audioHandler = await setupAudioService(container);
+  LogService.init(container);
   return container;
 }
 
-void setupLogging(AppDatabase db, bool enableHttpLogs) {
-  LogService.init(db);
-  LogService.enableHttpLogs = enableHttpLogs;
-}
-
-Future<MyAudioHandler> setupAudioService() async {
+Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
   return await AudioService.init(
-    builder: MyAudioHandler.new,
+    builder: () => AppAudioHandler(container),
     config: const AudioServiceConfig(
       androidNotificationChannelId: 'com.likhithpraveenk.storii.audio',
-      androidNotificationChannelName: 'Playback',
+      androidNotificationChannelName: 'Audio Playback',
+      androidNotificationIcon: 'drawable/ic_launcher_foreground',
+      androidStopForegroundOnPause: true,
       androidNotificationOngoing: true,
     ),
   );
+}
+
+Future<void> setupGlobals() async {
+  packageInfo = await PackageInfo.fromPlatform();
+  final deviceInfoPlugin = DeviceInfoPlugin();
+  androidDeviceInfo = await deviceInfoPlugin.androidInfo;
 }

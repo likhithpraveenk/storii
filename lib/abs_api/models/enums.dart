@@ -7,14 +7,14 @@ enum UserType { root, guest, user, admin }
 enum AuthMethod { local, openid }
 
 @JsonEnum(valueField: 'value')
-enum LogLevel {
+enum ServerLogLevel {
   debug(0),
   info(1),
   warning(2),
   error(3);
 
   final int value;
-  const LogLevel(this.value);
+  const ServerLogLevel(this.value);
 }
 
 @JsonEnum(valueField: 'type')

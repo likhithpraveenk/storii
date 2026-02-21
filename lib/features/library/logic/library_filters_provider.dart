@@ -118,6 +118,7 @@ extension FilterStateToParamsX on FilterState {
 
   SeriesRequestParams toSeriesParams() {
     return SeriesRequestParams(
+      limit: 10000,
       desc: !sortAscending,
       filter: filter,
       sort: sortType.value,

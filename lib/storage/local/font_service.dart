@@ -78,25 +78,28 @@ class FontService {
   static Future<void> loadFonts() async {
     final families = await groupByFamily();
 
-    for (final entry in families.entries) {
-      try {
-        final loader = FontLoader(entry.key);
+    await Future.wait(
+      families.entries.map((entry) async {
+        try {
+          final loader = FontLoader(entry.key);
 
-        for (final file in entry.value) {
-          final bytes = await file.readAsBytes();
-          loader.addFont(Future.value(ByteData.view(bytes.buffer)));
+          for (final file in entry.value) {
+            loader.addFont(
+              file.readAsBytes().then((b) => ByteData.view(b.buffer)),
+            );
+          }
+
+          await loader.load();
+        } catch (e, st) {
+          LogService.log(
+            'Failed to load font: ${entry.key}:$e',
+            source: 'FontService',
+            level: .debug,
+            stackTrace: st,
+          );
         }
-
-        await loader.load();
-      } catch (e, st) {
-        LogService.log(
-          'Failed to load font: ${entry.key}:$e',
-          source: 'FontService',
-          level: .debug,
-          stackTrace: st,
-        );
-      }
-    }
+      }),
+    );
   }
 }
 

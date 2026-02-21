@@ -1,33 +1,46 @@
 import 'dart:async';
 
+import 'package:hive_ce/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/server.dart';
-import 'package:storii/app/providers/database_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/storage/drift/database.dart';
+import 'package:storii/features/auth/logic/users_provider.dart';
+import 'package:uuid/uuid.dart';
 
 part 'servers_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class ServersNotifier extends _$ServersNotifier {
-  AppDatabase get _db => ref.read(databaseProvider);
+  final _box = Hive.box<Map>('servers');
 
   @override
   Stream<List<Server>> build() {
-    return _db.managers.servers.watch();
+    List<Server> mapToServers() => _box.values
+        .map((s) => Server.fromJson(Map<String, dynamic>.from(s)))
+        .toList();
+    return _box.watch().map((_) => mapToServers()).startWith(mapToServers());
   }
 
   Future<void> add(Uri url) async {
-    await _db.managers.servers.create(
-      (o) => o(url: url),
-      mode: .insertOrIgnore,
-    );
+    final id = const Uuid().v4();
+    final server = Server(id: id, url: url);
+    await _box.put(id, server.toJson());
+  }
+
+  Future<void> edit(Uri oldUrl, Server server) async {
+    await _box.put(server.id, server.toJson());
+    await ref.read(usersProvider.notifier).editServerUrl(oldUrl, server.url);
   }
 
   Future<void> delete(Server server) async {
-    await _db.managers.servers.filter((f) => f.url.equals(server.url)).delete();
-    await ref.read(appSettingsProvider.notifier).deleteSettings(server.url);
+    await _box.delete(server.id);
+    final users = await ref
+        .read(usersProvider.notifier)
+        .deleteUsersByServer(server.url);
+    await ref.read(appSettingsProvider.notifier).deleteSettings(users);
+
     LogService.log('Server deleted: ${server.url}', source: 'ServersNotifier');
   }
 }

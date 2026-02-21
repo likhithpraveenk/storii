@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "Dart-Code.flutter",
-    "aaron-bond.better-comments",
     "Google.arb-editor"
   ]
 }

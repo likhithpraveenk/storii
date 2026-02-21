@@ -14,7 +14,7 @@ Thanks for your interest.
 2. **Clone the forked repository**
 
 ```bash
-git clone https://github.com/[YOUR_USERNAME]/storii.git
+git clone https://github.com/YOUR_USERNAME/storii.git
 cd storii
 flutter pub get
 ```
@@ -26,7 +26,7 @@ Code generation only runs for files in these locations:
 - **Models:** `lib/**/models/`
 - **Drift:** `lib/storage/drift/`
 - **Riverpod Providers:** `lib/app/providers/` or `lib/features/**/logic/`
-- **Settings:** update the relevant class in `settings_provider.dart`
+- **Settings:** add parameters in `app_settings.dart` or `user_settings.dart`
 
 Refer to [build.yml](build.yaml) for the exact configuration.
 

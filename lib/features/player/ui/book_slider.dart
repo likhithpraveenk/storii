@@ -2,21 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 
-class BookSlider extends ConsumerWidget {
-  const BookSlider({super.key});
+class BookSlider extends ConsumerStatefulWidget {
+  const BookSlider({super.key, required this.totalDuration});
+
+  final Duration totalDuration;
+  @override
+  ConsumerState<BookSlider> createState() => _BookSliderState();
+}
+
+class _BookSliderState extends ConsumerState<BookSlider> {
+  double? _dragValue;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final currentPos = ref.watch(globalPositionProvider).value ?? Duration.zero;
-    final totalLen = ref.watch(totalBookDurationProvider);
+  Widget build(BuildContext context) {
+    final globalPosition = ref.watch(highResPositionProvider).value;
+
+    final duration = widget.totalDuration.inMilliseconds.toDouble();
+    final position = (globalPosition?.inMilliseconds.toDouble() ?? 0.0).clamp(
+      0.0,
+      duration,
+    );
 
     return Slider(
-      value: currentPos.inMilliseconds.toDouble(),
-      max: totalLen.inMilliseconds.toDouble(),
-      onChanged: (value) {
-        ref
-            .read(audioHandlerProvider)
-            .seek(Duration(milliseconds: value.toInt()));
+      value: _dragValue ?? position,
+      max: duration,
+      onChanged: (value) => setState(() => _dragValue = value),
+      onChangeEnd: (value) async {
+        await audioHandler.seek(Duration(milliseconds: value.toInt()));
+
+        if (mounted) {
+          setState(() => _dragValue = null);
+        }
       },
     );
   }
