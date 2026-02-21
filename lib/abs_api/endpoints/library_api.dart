@@ -1,16 +1,16 @@
 import 'package:storii/abs_api/client/api_client.dart';
 import 'package:storii/abs_api/endpoints/api_routes.dart';
-import 'package:storii/abs_api/models/books/author.dart';
-import 'package:storii/abs_api/models/books/series.dart';
-import 'package:storii/abs_api/models/library/library.dart';
-import 'package:storii/abs_api/models/library/shelf.dart';
-import 'package:storii/abs_api/models/requests/authors_request_params.dart';
-import 'package:storii/abs_api/models/requests/library_items_request_params.dart';
-import 'package:storii/abs_api/models/requests/series_request_params.dart';
-import 'package:storii/abs_api/models/responses/library_items_response.dart';
-import 'package:storii/abs_api/models/responses/library_response.dart';
-import 'package:storii/abs_api/models/responses/series_response.dart';
-import 'package:storii/abs_api/models/utils/json_helpers.dart';
+import 'package:storii/abs_api/models/author.dart';
+import 'package:storii/abs_api/models/authors_request_params.dart';
+import 'package:storii/abs_api/models/json_helpers.dart';
+import 'package:storii/abs_api/models/library.dart';
+import 'package:storii/abs_api/models/library_items_request_params.dart';
+import 'package:storii/abs_api/models/library_items_response.dart';
+import 'package:storii/abs_api/models/library_response.dart';
+import 'package:storii/abs_api/models/series.dart';
+import 'package:storii/abs_api/models/series_request_params.dart';
+import 'package:storii/abs_api/models/series_response.dart';
+import 'package:storii/abs_api/models/shelf.dart';
 
 class LibraryApi {
   final ApiClient api;

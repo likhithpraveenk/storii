@@ -1,7 +1,7 @@
 import 'package:storii/abs_api/client/api_client.dart';
 import 'package:storii/abs_api/endpoints/api_routes.dart';
-import 'package:storii/abs_api/models/library/library_item.dart';
-import 'package:storii/abs_api/models/utils/json_helpers.dart';
+import 'package:storii/abs_api/models/json_helpers.dart';
+import 'package:storii/abs_api/models/library_item.dart';
 
 class ItemApi {
   final ApiClient api;

@@ -1,13 +1,13 @@
 import 'package:storii/abs_api/client/api_client.dart';
 import 'package:storii/abs_api/endpoints/api_routes.dart';
-import 'package:storii/abs_api/models/audio/audio_bookmark.dart';
-import 'package:storii/abs_api/models/library/library_item.dart';
-import 'package:storii/abs_api/models/requests/upsert_progress_request_params.dart';
-import 'package:storii/abs_api/models/responses/user_sessions_response.dart';
-import 'package:storii/abs_api/models/responses/user_stats_response.dart';
-import 'package:storii/abs_api/models/users/media_progress.dart';
-import 'package:storii/abs_api/models/users/user.dart';
-import 'package:storii/abs_api/models/utils/json_helpers.dart';
+import 'package:storii/abs_api/models/audio_bookmark.dart';
+import 'package:storii/abs_api/models/json_helpers.dart';
+import 'package:storii/abs_api/models/library_item.dart';
+import 'package:storii/abs_api/models/media_progress.dart';
+import 'package:storii/abs_api/models/upsert_progress_request_params.dart';
+import 'package:storii/abs_api/models/user.dart';
+import 'package:storii/abs_api/models/user_sessions_response.dart';
+import 'package:storii/abs_api/models/user_stats_response.dart';
 
 class MeApi {
   final ApiClient api;

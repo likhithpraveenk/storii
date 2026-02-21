@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/abs_api/models/utils/filter.dart';
+import 'package:storii/abs_api/models/filter.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';

@@ -118,7 +118,7 @@ final class SaveProgressProvider
   SaveProgress create() => SaveProgress();
 }
 
-String _$saveProgressHash() => r'adf3bbac21e008e77f559272916d90024ec09908';
+String _$saveProgressHash() => r'69c1c6da072e984326d60e0c86142b89a893e750';
 
 abstract class _$SaveProgress extends $AsyncNotifier<void> {
   FutureOr<void> build();

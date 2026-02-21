@@ -33,7 +33,7 @@ final class CacheSizeProvider
   CacheSize create() => CacheSize();
 }
 
-String _$cacheSizeHash() => r'4944e49cc276bc59e0d6e970d6a4e9350f77490f';
+String _$cacheSizeHash() => r'492b5248f16222beb14d4991480f5f880784610f';
 
 abstract class _$CacheSize extends $AsyncNotifier<String> {
   FutureOr<String> build();

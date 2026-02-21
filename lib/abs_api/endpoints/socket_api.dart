@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:socket_io_client/socket_io_client.dart';
-import 'package:storii/abs_api/models/socket_events/user_item_progress_updated_event.dart';
+import 'package:storii/abs_api/models/user_item_progress_updated_event.dart';
 
 class SocketApi {
   final Socket socket;

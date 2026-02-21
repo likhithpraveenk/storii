@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:storii/abs_api/client/interceptors.dart';
 import 'package:storii/abs_api/endpoints/api_exception.dart';
 import 'package:storii/abs_api/endpoints/api_routes.dart';
-import 'package:storii/abs_api/models/utils/enums.dart';
+import 'package:storii/abs_api/models/enums.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:synchronized/synchronized.dart';
 

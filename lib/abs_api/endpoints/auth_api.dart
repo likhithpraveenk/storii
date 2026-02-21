@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:storii/abs_api/client/base_api_client.dart';
 import 'package:storii/abs_api/endpoints/api_exception.dart';
 import 'package:storii/abs_api/endpoints/api_routes.dart';
-import 'package:storii/abs_api/models/responses/login_response.dart';
-import 'package:storii/abs_api/models/utils/json_helpers.dart';
+import 'package:storii/abs_api/models/json_helpers.dart';
+import 'package:storii/abs_api/models/login_response.dart';
 
 class AuthApi {
   final BaseApiClient api;

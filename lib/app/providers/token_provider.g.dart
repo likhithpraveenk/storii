@@ -48,4 +48,4 @@ final class TokenProvider
   }
 }
 
-String _$tokenHash() => r'8ee572220d00831bba4cafa84c0a8ffa8e2a9126';
+String _$tokenHash() => r'adb42da678150df3fa97962de48b1aabe905e0e4';

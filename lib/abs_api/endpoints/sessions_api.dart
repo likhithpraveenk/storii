@@ -1,10 +1,10 @@
 import 'package:storii/abs_api/client/api_client.dart';
 import 'package:storii/abs_api/endpoints/api_routes.dart';
-import 'package:storii/abs_api/models/books/playback_session.dart';
-import 'package:storii/abs_api/models/requests/sync_session_request_params.dart';
-import 'package:storii/abs_api/models/responses/sessions_response.dart';
-import 'package:storii/abs_api/models/responses/sync_local_session_response.dart';
-import 'package:storii/abs_api/models/utils/json_helpers.dart';
+import 'package:storii/abs_api/models/json_helpers.dart';
+import 'package:storii/abs_api/models/playback_session.dart';
+import 'package:storii/abs_api/models/sessions_response.dart';
+import 'package:storii/abs_api/models/sync_local_session_response.dart';
+import 'package:storii/abs_api/models/sync_session_request_params.dart';
 
 class SessionsApi {
   const SessionsApi(this.api);
