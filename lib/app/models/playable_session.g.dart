@@ -21,7 +21,7 @@ _PlayableSession _$PlayableSessionFromJson(Map<String, dynamic> json) =>
       chapters: (json['chapters'] as List<dynamic>)
           .map((e) => BookChapter.fromJson(e as Map<String, dynamic>))
           .toList(),
-      content: $enumDecode(_$PlayableTypeEnumMap, json['content']),
+      type: $enumDecode(_$MediaTypeEnumMap, json['type']),
       duration: Duration(microseconds: (json['duration'] as num).toInt()),
     );
 
@@ -36,11 +36,11 @@ Map<String, dynamic> _$PlayableSessionToJson(_PlayableSession instance) =>
       'authorName': instance.authorName,
       'queue': instance.queue.map((e) => e.toJson()).toList(),
       'chapters': instance.chapters.map((e) => e.toJson()).toList(),
-      'content': _$PlayableTypeEnumMap[instance.content]!,
+      'type': _$MediaTypeEnumMap[instance.type]!,
       'duration': instance.duration.inMicroseconds,
     };
 
-const _$PlayableTypeEnumMap = {
-  PlayableType.audiobook: 'audiobook',
-  PlayableType.podcastEpisode: 'podcastEpisode',
+const _$MediaTypeEnumMap = {
+  MediaType.book: 'book',
+  MediaType.podcast: 'podcast',
 };

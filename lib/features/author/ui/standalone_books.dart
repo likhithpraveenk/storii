@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/models/item.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/l10n/l10n.dart';
 
 class StandaloneBooks extends ConsumerWidget {
   const StandaloneBooks(this.books, {super.key});
 
-  final List<ItemDomain> books;
+  final List<LibraryItem> books;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

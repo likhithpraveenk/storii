@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/theme.dart';
-import 'package:storii/app/models/item.dart';
 import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/l10n/l10n.dart';
 
@@ -86,22 +85,26 @@ extension LocalFormatterX on DateTime {
   }
 }
 
-extension AudiobookSortX on Iterable<ItemDomain> {
-  List<ItemDomain> sortedBySequence() {
+extension AudiobookSortX on Iterable<LibraryItem> {
+  List<LibraryItem> sortedBySequence() {
     return toList()..sort((a, b) {
       double parseSequence(String? seq) {
         if (seq == null || seq.isEmpty) return 0.0;
-        final numericPart = seq.replaceAll(RegExp(r'[^0-9.]'), '');
+
+        final firstPart = seq.split(RegExp(r'[,\-]')).first;
+        final numericPart = firstPart.replaceAll(RegExp(r'[^0-9.]'), '');
+
         return double.tryParse(numericPart) ?? 0.0;
       }
 
-      final aVal = parseSequence(
-        a.mapOrNull(audiobook: (x) => x.seriesSequence),
-      );
-      final bVal = parseSequence(
-        b.mapOrNull(audiobook: (x) => x.seriesSequence),
-      );
+      final aVal = parseSequence(a.seriesSequence);
+      final bVal = parseSequence(b.seriesSequence);
 
+      if (aVal == bVal) {
+        return (a.seriesSequence ?? '').length.compareTo(
+          (b.seriesSequence ?? '').length,
+        );
+      }
       return aVal.compareTo(bVal);
     });
   }
@@ -183,7 +186,7 @@ extension ColorExtensions on Color {
   }
 }
 
-extension AudiobookX on Audiobook {
+extension AudiobookX on LibraryItem {
   (int, Duration) getIndexAndOffset() {
     var accumulated = Duration.zero;
     for (var i = 0; i < tracks.length; i++) {

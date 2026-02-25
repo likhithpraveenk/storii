@@ -62,7 +62,7 @@ class AuthorDetailScreen extends ConsumerWidget {
               ),
               AuthorContent(
                 authorId: author.id,
-                books: author.books ?? [],
+                books: author.libraryItems ?? [],
                 series: author.series ?? [],
               ),
             ],

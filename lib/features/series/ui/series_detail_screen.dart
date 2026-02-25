@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/models/item.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/series/logic/series_provider.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -32,7 +31,7 @@ class SeriesDetailScreen extends ConsumerWidget {
       ),
       body: seriesAsync.when(
         data: (series) {
-          final books = series.books?.cast<Audiobook>().sortedBySequence();
+          final books = series.books.sortedBySequence();
           return Column(
             children: [
               if (series.description != null)
@@ -40,7 +39,7 @@ class SeriesDetailScreen extends ConsumerWidget {
                   padding: const .all(16),
                   child: ExpandableHtml(data: series.description!),
                 ),
-              if (books != null) Expanded(child: ItemsGridView(books)),
+              Expanded(child: ItemsGridView(books)),
             ],
           );
         },

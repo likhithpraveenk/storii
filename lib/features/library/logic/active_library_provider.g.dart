@@ -13,13 +13,8 @@ part of 'active_library_provider.dart';
 final activeLibraryProvider = ActiveLibraryProvider._();
 
 final class ActiveLibraryProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<LibraryDomain>,
-          LibraryDomain,
-          FutureOr<LibraryDomain>
-        >
-    with $FutureModifier<LibraryDomain>, $FutureProvider<LibraryDomain> {
+    extends $FunctionalProvider<AsyncValue<Library>, Library, FutureOr<Library>>
+    with $FutureModifier<Library>, $FutureProvider<Library> {
   ActiveLibraryProvider._()
     : super(
         from: null,
@@ -36,14 +31,13 @@ final class ActiveLibraryProvider
 
   @$internal
   @override
-  $FutureProviderElement<LibraryDomain> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
+  $FutureProviderElement<Library> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
 
   @override
-  FutureOr<LibraryDomain> create(Ref ref) {
+  FutureOr<Library> create(Ref ref) {
     return activeLibrary(ref);
   }
 }
 
-String _$activeLibraryHash() => r'fe67c8dce493a2efc0254ab8a80a5ac89ba3cb40';
+String _$activeLibraryHash() => r'1300d0e3e134d9ce5499648d35616b8cbc4aefbc';

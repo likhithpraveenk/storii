@@ -13,7 +13,7 @@ part of 'authors_list_provider.dart';
 final authorsListProvider = AuthorsListNotifierProvider._();
 
 final class AuthorsListNotifierProvider
-    extends $StreamNotifierProvider<AuthorsListNotifier, List<AuthorDomain>> {
+    extends $StreamNotifierProvider<AuthorsListNotifier, List<Author>> {
   AuthorsListNotifierProvider._()
     : super(
         from: null,
@@ -34,21 +34,19 @@ final class AuthorsListNotifierProvider
 }
 
 String _$authorsListNotifierHash() =>
-    r'8a0ae79e7b538d5ee22f8bb732632422f958bda9';
+    r'0c7a57bde6cc5512690335e68ba09b624722340f';
 
-abstract class _$AuthorsListNotifier
-    extends $StreamNotifier<List<AuthorDomain>> {
-  Stream<List<AuthorDomain>> build();
+abstract class _$AuthorsListNotifier extends $StreamNotifier<List<Author>> {
+  Stream<List<Author>> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref =
-        this.ref as $Ref<AsyncValue<List<AuthorDomain>>, List<AuthorDomain>>;
+    final ref = this.ref as $Ref<AsyncValue<List<Author>>, List<Author>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<List<AuthorDomain>>, List<AuthorDomain>>,
-              AsyncValue<List<AuthorDomain>>,
+              AnyNotifier<AsyncValue<List<Author>>, List<Author>>,
+              AsyncValue<List<Author>>,
               Object?,
               Object?
             >;

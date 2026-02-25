@@ -10,7 +10,6 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(LogEntryAdapter());
     registerAdapter(LogLevelAdapter());
     registerAdapter(ServerAdapter());
-    registerAdapter(UriAdapter());
     registerAdapter(UserDomainAdapter());
   }
 }
@@ -20,7 +19,6 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(LogEntryAdapter());
     registerAdapter(LogLevelAdapter());
     registerAdapter(ServerAdapter());
-    registerAdapter(UriAdapter());
     registerAdapter(UserDomainAdapter());
   }
 }

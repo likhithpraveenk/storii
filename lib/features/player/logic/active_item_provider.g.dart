@@ -13,7 +13,7 @@ part of 'active_item_provider.dart';
 final activeItemProvider = ActiveItemProvider._();
 
 final class ActiveItemProvider
-    extends $NotifierProvider<ActiveItem, ItemDomain?> {
+    extends $NotifierProvider<ActiveItem, LibraryItem?> {
   ActiveItemProvider._()
     : super(
         from: null,
@@ -33,27 +33,27 @@ final class ActiveItemProvider
   ActiveItem create() => ActiveItem();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(ItemDomain? value) {
+  Override overrideWithValue(LibraryItem? value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<ItemDomain?>(value),
+      providerOverride: $SyncValueProvider<LibraryItem?>(value),
     );
   }
 }
 
-String _$activeItemHash() => r'a13ca6f541e1b1e14c8ad50da231fbe3fe81cd78';
+String _$activeItemHash() => r'b9c5ae682dd919df06cad4e54d7501dee1b01c8c';
 
-abstract class _$ActiveItem extends $Notifier<ItemDomain?> {
-  ItemDomain? build();
+abstract class _$ActiveItem extends $Notifier<LibraryItem?> {
+  LibraryItem? build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<ItemDomain?, ItemDomain?>;
+    final ref = this.ref as $Ref<LibraryItem?, LibraryItem?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<ItemDomain?, ItemDomain?>,
-              ItemDomain?,
+              AnyNotifier<LibraryItem?, LibraryItem?>,
+              LibraryItem?,
               Object?,
               Object?
             >;
@@ -100,4 +100,4 @@ final class CurrentChapterProvider
   }
 }
 
-String _$currentChapterHash() => r'41618fad4afc1f8b69675b4298985c706c33387b';
+String _$currentChapterHash() => r'b7da905d490971030376434e48e160811f34d0fc';

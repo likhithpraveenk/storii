@@ -179,7 +179,7 @@ final class AudioPlayerNotifierProvider
 }
 
 String _$audioPlayerNotifierHash() =>
-    r'e74361a2ef99aef38b1d5d106720386d12feb757';
+    r'dd79c26b74bb97b5c2cdbd3342958ea0e5a3b8fd';
 
 abstract class _$AudioPlayerNotifier extends $AsyncNotifier<void> {
   FutureOr<void> build();

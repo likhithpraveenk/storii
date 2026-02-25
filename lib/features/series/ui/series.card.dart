@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/app/models/series.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/library/ui/placeholder_image.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -10,16 +10,16 @@ import 'package:storii/shared/widgets/stack_badge.dart';
 
 class SeriesCard extends StatelessWidget {
   const SeriesCard(this.series, {super.key});
-  final SeriesDomain series;
+  final Series series;
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    final books = series.books ?? [];
-    final authorName = books.firstOrNull?.authorName;
-    final double seriesProgress = (series.books?.isEmpty ?? true)
+    final authorName = series.books.firstOrNull?.authorName;
+    final double seriesProgress = series.books.isEmpty
         ? 0
-        : (series.libraryItemIdsFinished?.length ?? 0) / series.books!.length;
+        : (series.progress?.libraryItemIdsFinished.length ?? 0) /
+              series.books.length;
 
     return InkWell(
       onTap: () => context.push(AppRoute.seriesDetail.withId(series.id)),
@@ -34,15 +34,15 @@ class SeriesCard extends StatelessWidget {
               final stackHeight = maxWidth * 0.5;
               final bookSize = stackHeight;
 
-              final visibleBooks = books.length > 6
-                  ? books.sublist(books.length - 6)
-                  : books;
+              final visibleBooks = series.books.length > 6
+                  ? series.books.sublist(series.books.length - 6)
+                  : series.books;
               final count = visibleBooks.length;
 
               return SizedBox(
                 height: stackHeight,
                 width: double.infinity,
-                child: books.isEmpty
+                child: series.books.isEmpty
                     ? ClipRRect(
                         borderRadius: kBorderRadius,
                         child: PlaceholderImage(label: l.noImage),
@@ -113,7 +113,7 @@ class SeriesCard extends StatelessWidget {
                                   context,
                                 ).colorScheme.surface.withValues(alpha: 0.2),
                                 valueColor: AlwaysStoppedAnimation<Color>(
-                                  series.isFinished
+                                  series.progress?.isFinished == true
                                       ? Theme.of(context).colorScheme.primary
                                       : Theme.of(context).colorScheme.error,
                                 ),
@@ -123,7 +123,7 @@ class SeriesCard extends StatelessWidget {
                           Positioned(
                             top: 4,
                             right: 4,
-                            child: StackBadge(books.length),
+                            child: StackBadge(series.books.length),
                           ),
                         ],
                       ),
@@ -159,23 +159,23 @@ class SeriesCard extends StatelessWidget {
 
 class SeriesCardListView extends StatelessWidget {
   const SeriesCardListView(this.series, {super.key});
-  final SeriesDomain series;
+  final Series series;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l = AppLocalizations.of(context)!;
-    final books = series.books ?? [];
-    final authorName = books.firstOrNull?.authorName;
-    final double seriesProgress = (series.books?.isEmpty ?? true)
+    final authorName = series.books.firstOrNull?.authorName;
+    final double seriesProgress = series.books.isEmpty
         ? 0
-        : (series.libraryItemIdsFinished?.length ?? 0) / series.books!.length;
+        : (series.progress?.libraryItemIdsFinished.length ?? 0) /
+              series.books.length;
     return ListTile(
       onTap: () => context.push(AppRoute.itemDetail.withId(series.id)),
       contentPadding: const .fromLTRB(16, 8, 16, 8),
       leading: AspectRatio(
         aspectRatio: 1,
-        child: books.isEmpty
+        child: series.books.isEmpty
             ? ClipRRect(
                 borderRadius: kBorderRadius,
                 child: PlaceholderImage(label: l.noImage),
@@ -183,9 +183,9 @@ class SeriesCardListView extends StatelessWidget {
             : ClipRRect(
                 borderRadius: kBorderRadius,
                 child: ImageWidget(
-                  id: books.first.id,
+                  id: series.books.first.id,
                   type: .item,
-                  updatedAt: books.first.updatedAt,
+                  updatedAt: series.books.first.updatedAt,
                 ),
               ),
       ),
@@ -218,7 +218,7 @@ class SeriesCardListView extends StatelessWidget {
         ],
       ),
       trailing: Text(
-        books.length.toString(),
+        series.books.length.toString(),
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
           fontSize: 12,
           color: theme.colorScheme.onSurfaceVariant,

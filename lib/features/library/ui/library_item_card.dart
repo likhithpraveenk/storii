@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
-import 'package:storii/app/models/item.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -12,13 +12,11 @@ import 'package:storii/shared/widgets/stack_badge.dart';
 
 class LibraryItemCard extends ConsumerWidget {
   const LibraryItemCard(this.item, {super.key});
-  final ItemDomain item;
+  final LibraryItem item;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sequence = item is Audiobook
-        ? (item as Audiobook).seriesSequence
-        : null;
+    final sequence = item.seriesSequence;
     final scheme = Theme.of(context).colorScheme;
     final stackTitle = ref.watch(stackTitleOnImageProvider);
     final showTitle = ref.watch(showTitleForItemProvider);
@@ -88,7 +86,7 @@ class LibraryItemCard extends ConsumerWidget {
 class TitleWidget extends StatelessWidget {
   const TitleWidget({super.key, required this.item, this.inStack = false});
 
-  final ItemDomain item;
+  final LibraryItem item;
   final bool inStack;
 
   @override
@@ -142,7 +140,7 @@ class TitleWidget extends StatelessWidget {
 
 class LibraryItemCardListView extends StatelessWidget {
   const LibraryItemCardListView(this.item, {super.key});
-  final ItemDomain item;
+  final LibraryItem item;
 
   @override
   Widget build(BuildContext context) {

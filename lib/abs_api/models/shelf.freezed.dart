@@ -245,8 +245,8 @@ return authors(_that.id,_that.label,_that.labelStringKey,_that.type,_that.entiti
 /// @nodoc
 @JsonSerializable()
 
-class LibraryItemsShelf implements Shelf {
-  const LibraryItemsShelf({required this.id, required this.label, required this.labelStringKey, required this.type, required final  List<LibraryItem> entities, required this.total, final  String? $type}): _entities = entities,$type = $type ?? 'libraryItems';
+class LibraryItemsShelf extends Shelf {
+  const LibraryItemsShelf({required this.id, required this.label, required this.labelStringKey, required this.type, required final  List<LibraryItem> entities, required this.total, final  String? $type}): _entities = entities,$type = $type ?? 'libraryItems',super._();
   factory LibraryItemsShelf.fromJson(Map<String, dynamic> json) => _$LibraryItemsShelfFromJson(json);
 
 @override final  String id;
@@ -334,8 +334,8 @@ as int,
 /// @nodoc
 @JsonSerializable()
 
-class SeriesShelf implements Shelf {
-  const SeriesShelf({required this.id, required this.label, required this.labelStringKey, required this.type, required final  List<Series> entities, required this.total, final  String? $type}): _entities = entities,$type = $type ?? 'series';
+class SeriesShelf extends Shelf {
+  const SeriesShelf({required this.id, required this.label, required this.labelStringKey, required this.type, required final  List<Series> entities, required this.total, final  String? $type}): _entities = entities,$type = $type ?? 'series',super._();
   factory SeriesShelf.fromJson(Map<String, dynamic> json) => _$SeriesShelfFromJson(json);
 
 @override final  String id;
@@ -423,8 +423,8 @@ as int,
 /// @nodoc
 @JsonSerializable()
 
-class AuthorShelf implements Shelf {
-  const AuthorShelf({required this.id, required this.label, required this.labelStringKey, required this.type, required final  List<Author> entities, required this.total, final  String? $type}): _entities = entities,$type = $type ?? 'authors';
+class AuthorShelf extends Shelf {
+  const AuthorShelf({required this.id, required this.label, required this.labelStringKey, required this.type, required final  List<Author> entities, required this.total, final  String? $type}): _entities = entities,$type = $type ?? 'authors',super._();
   factory AuthorShelf.fromJson(Map<String, dynamic> json) => _$AuthorShelfFromJson(json);
 
 @override final  String id;

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/app/models/item.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/player/logic/active_item_provider.dart';
@@ -41,16 +41,15 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
   @override
   FutureOr<void> build() => null;
 
-  Future<void> play(ItemDomain item) async {
+  Future<void> play(LibraryItem item) async {
     state = const AsyncLoading();
 
     state = await AsyncValue.guard(() async {
       final user = await ref.read(authenticatedUserProvider.future);
       final token = await ref.read(tokenProvider).getAccessToken(user.id);
 
-      final audiobook = item as Audiobook;
-      final (index, offset) = audiobook.getIndexAndOffset();
-      final mediaItems = audiobook.toMediaItems(user.serverUrl);
+      final (index, offset) = item.getIndexAndOffset();
+      final mediaItems = item.toMediaItems(user.serverUrl);
 
       final sources = mediaItems.map((mediaItem) {
         return AudioSource.uri(

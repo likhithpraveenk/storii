@@ -234,8 +234,8 @@ return $default(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isM
 /// @nodoc
 @JsonSerializable()
 @DateTimeEpochConverter()
-class _LibraryItem implements LibraryItem {
-  const _LibraryItem({required this.id, required this.libraryId, required this.addedAt, required this.updatedAt, required this.isMissing, required this.mediaType, required this.media, required this.size, this.sequence, this.seriesSequence, this.userMediaProgress, final  List<PodcastEpisodeDownload>? episodesDownloading}): _episodesDownloading = episodesDownloading;
+class _LibraryItem extends LibraryItem {
+  const _LibraryItem({required this.id, required this.libraryId, required this.addedAt, required this.updatedAt, required this.isMissing, required this.mediaType, required this.media, required this.size, this.sequence, this.seriesSequence, this.userMediaProgress, final  List<PodcastEpisodeDownload>? episodesDownloading}): _episodesDownloading = episodesDownloading,super._();
   factory _LibraryItem.fromJson(Map<String, dynamic> json) => _$LibraryItemFromJson(json);
 
 @override final  String id;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/models/to_domain.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/user_libraries_provider.dart';
@@ -65,7 +66,7 @@ class LibrarySwitcher extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            ' (${lib.mediaContent.getDisplayString(context)})',
+                            ' (${lib.mediaType.getDisplayString(context)})',
                             style: Theme.of(context).textTheme.bodySmall,
                             maxLines: 1,
                             overflow: .ellipsis,
@@ -80,7 +81,9 @@ class LibrarySwitcher extends ConsumerWidget {
                         ref
                             .read(userSettingsProvider.notifier)
                             .setCurrentLibraryId(lib.id);
-                        Navigator.pop(context);
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                        }
                       },
                     ),
                   )

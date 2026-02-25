@@ -2,14 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
-import 'package:storii/app/models/item.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
 
 class CoverImage extends StatelessWidget {
   const CoverImage(this.item, {super.key});
-  final ItemDomain item;
+  final LibraryItem item;
 
   @override
   Widget build(BuildContext context) {

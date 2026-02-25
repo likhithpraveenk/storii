@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/app/models/item.dart';
 import 'package:storii/features/player/logic/active_item_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
@@ -39,26 +38,14 @@ class FullPlayer extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleSmall,
             textAlign: .center,
           ),
-          BookSlider(
-            totalDuration: item.map(
-              audiobook: (a) => a.duration,
-              podcast: (_) => Duration.zero,
-            ),
-          ),
+          BookSlider(totalDuration: item.duration),
           Padding(
             padding: const .symmetric(horizontal: 24),
             child: Row(
               mainAxisAlignment: .spaceBetween,
               children: [
                 const CurrentTimeText(),
-                Text(
-                  _formatDuration(
-                    item.map(
-                      audiobook: (a) => a.duration,
-                      podcast: (_) => Duration.zero,
-                    ),
-                  ),
-                ),
+                Text(_formatDuration(item.duration)),
               ],
             ),
           ),

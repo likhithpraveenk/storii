@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
-import 'package:storii/app/models/item.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 
 class ItemsGridView extends ConsumerWidget {
   const ItemsGridView(this.items, {super.key, this.scrollController});
 
-  final List<ItemDomain> items;
+  final List<LibraryItem> items;
   final ScrollController? scrollController;
 
   @override

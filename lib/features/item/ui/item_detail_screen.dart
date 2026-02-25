@@ -5,7 +5,6 @@ import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
-import 'package:storii/app/models/item.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/ui/cover_image.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
@@ -120,7 +119,7 @@ class ItemDetailScreen extends ConsumerWidget {
 class _AuthorsSeriesChips extends StatelessWidget {
   const _AuthorsSeriesChips(this.item);
 
-  final ItemDomain item;
+  final LibraryItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -128,10 +127,10 @@ class _AuthorsSeriesChips extends StatelessWidget {
     final textStyle = Theme.of(context).textTheme.labelLarge;
     final children = <Widget>[];
 
-    switch (item) {
-      case final Audiobook a:
+    switch (item.mediaType) {
+      case .book:
         children.addAll(
-          a.authors.map(
+          item.authors.map(
             (author) => ActionChip(
               avatar: const Icon(Icons.person_2_outlined),
               label: Text(author.name, style: textStyle),
@@ -142,7 +141,7 @@ class _AuthorsSeriesChips extends StatelessWidget {
           ),
         );
         children.addAll(
-          a.series.map((series) {
+          item.series.map((series) {
             final seriesLabel = series.sequence != null
                 ? '${series.name} #${series.sequence}'
                 : series.name;
@@ -155,7 +154,7 @@ class _AuthorsSeriesChips extends StatelessWidget {
             );
           }),
         );
-      case Podcast _:
+      case .podcast:
         children.add(
           Chip(
             avatar: const Icon(Icons.person_2_outlined),

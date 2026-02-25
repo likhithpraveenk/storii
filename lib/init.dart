@@ -15,11 +15,13 @@ import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/globals.dart';
 import 'package:storii/storage/hive/boxes.dart';
+import 'package:storii/storage/hive/hive_adapters.dart';
 import 'package:storii/storage/hive/hive_registrar.g.dart';
 
 Future<void> setupHive() async {
   await Hive.initFlutter();
   Hive.registerAdapters();
+  Hive.registerAdapter(UriAdapter());
   await Future.wait([
     Hive.openBox<String>(appSettingsBox),
     Hive.openBox<String>(userSettingsBox),

@@ -40,9 +40,8 @@ class _FilterBottomSheet extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final filterState = ref.watch(libraryFiltersProvider(tab));
     final notifier = ref.read(libraryFiltersProvider(tab).notifier);
-    final mediaContent =
-        ref.watch(activeLibraryProvider).value?.mediaContent ??
-        MediaContent.audiobooks;
+    final mediaType =
+        ref.watch(activeLibraryProvider).value?.mediaType ?? MediaType.book;
 
     return DefaultTabController(
       length: 3,
@@ -64,13 +63,13 @@ class _FilterBottomSheet extends ConsumerWidget {
                   tab: tab,
                   state: filterState,
                   notifier: notifier,
-                  mediaContent: mediaContent,
+                  mediaContent: mediaType,
                 ),
                 _SortTab(
                   tab: tab,
                   state: filterState,
                   notifier: notifier,
-                  mediaContent: mediaContent,
+                  mediaContent: mediaType,
                 ),
                 _DisplayTab(state: filterState, notifier: notifier),
               ],
@@ -92,7 +91,7 @@ class _FilterTab extends StatelessWidget {
   final FiltersScreen tab;
   final FilterState state;
   final LibraryFiltersNotifier notifier;
-  final MediaContent mediaContent;
+  final MediaType mediaContent;
 
   @override
   Widget build(BuildContext context) {
@@ -131,14 +130,14 @@ class _SortTab extends StatelessWidget {
   final FiltersScreen tab;
   final FilterState state;
   final LibraryFiltersNotifier notifier;
-  final MediaContent mediaContent;
+  final MediaType mediaContent;
 
   @override
   Widget build(BuildContext context) {
     final List<EnumHasValue> sortValues = switch (tab) {
       .library => switch (mediaContent) {
-        .audiobooks => AudiobookSort.values,
-        .podcasts => PodcastSort.values,
+        .book => AudiobookSort.values,
+        .podcast => PodcastSort.values,
       },
       .authors => AuthorSort.values,
       .series => SeriesSort.values,

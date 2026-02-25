@@ -2,8 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
-import 'package:storii/app/models/series.dart';
-import 'package:storii/app/models/to_domain.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
@@ -15,7 +13,7 @@ part 'series_list_provider.g.dart';
 @Riverpod(keepAlive: true)
 class SeriesListNotifier extends _$SeriesListNotifier {
   @override
-  Future<List<SeriesDomain>> build() async {
+  Future<List<Series>> build() async {
     final library = await ref.watch(activeLibraryProvider.future);
     final params = ref.watch(
       libraryFiltersProvider(.series).select((s) => s.toSeriesParams()),
@@ -25,7 +23,7 @@ class SeriesListNotifier extends _$SeriesListNotifier {
     return series;
   }
 
-  Future<List<SeriesDomain>> _fetch({
+  Future<List<Series>> _fetch({
     required SeriesRequestParams params,
     required String libId,
   }) async {
@@ -34,7 +32,7 @@ class SeriesListNotifier extends _$SeriesListNotifier {
       final api = ref.read(libraryApiProvider(user));
       final response = await api.getSeries(libId, params);
 
-      return response.results.map((i) => i.toDomain(libId)).toList();
+      return response.results;
     } catch (e, st) {
       final error = AppError.resolve(e);
       LogService.log(

@@ -2,8 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
-import 'package:storii/app/models/item.dart';
-import 'package:storii/app/models/to_domain.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
@@ -15,7 +13,7 @@ part 'library_items_provider.g.dart';
 @Riverpod(keepAlive: true)
 class LibraryItemsNotifier extends _$LibraryItemsNotifier {
   @override
-  Future<List<ItemDomain>> build() async {
+  Future<List<LibraryItem>> build() async {
     final library = await ref.watch(activeLibraryProvider.future);
     final params = ref.watch(
       libraryFiltersProvider(.library).select((s) => s.toItemParams()),
@@ -30,7 +28,7 @@ class LibraryItemsNotifier extends _$LibraryItemsNotifier {
     await future;
   }
 
-  Future<List<ItemDomain>> _fetchItems({
+  Future<List<LibraryItem>> _fetchItems({
     required LibraryItemsRequestParams params,
     required String libId,
   }) async {
@@ -40,7 +38,7 @@ class LibraryItemsNotifier extends _$LibraryItemsNotifier {
 
       final response = await api.getItems(libId, params);
 
-      return response.results.map((i) => i.toDomain()).toList();
+      return response.results;
     } catch (e, st) {
       final error = AppError.resolve(e);
       LogService.log(

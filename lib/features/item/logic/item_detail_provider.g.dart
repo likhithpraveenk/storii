@@ -15,11 +15,11 @@ final itemDetailProvider = ItemDetailFamily._();
 final class ItemDetailProvider
     extends
         $FunctionalProvider<
-          AsyncValue<ItemDomain>,
-          ItemDomain,
-          FutureOr<ItemDomain>
+          AsyncValue<LibraryItem>,
+          LibraryItem,
+          FutureOr<LibraryItem>
         >
-    with $FutureModifier<ItemDomain>, $FutureProvider<ItemDomain> {
+    with $FutureModifier<LibraryItem>, $FutureProvider<LibraryItem> {
   ItemDetailProvider._({
     required ItemDetailFamily super.from,
     required String super.argument,
@@ -43,11 +43,12 @@ final class ItemDetailProvider
 
   @$internal
   @override
-  $FutureProviderElement<ItemDomain> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
+  $FutureProviderElement<LibraryItem> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<ItemDomain> create(Ref ref) {
+  FutureOr<LibraryItem> create(Ref ref) {
     final argument = this.argument as String;
     return itemDetail(ref, argument);
   }
@@ -63,10 +64,10 @@ final class ItemDetailProvider
   }
 }
 
-String _$itemDetailHash() => r'b44280b2cedcfc6574e3927e345407b788b593de';
+String _$itemDetailHash() => r'475ba93a0568ab1e754fe52fa18b1ff858a915bc';
 
 final class ItemDetailFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<ItemDomain>, String> {
+    with $FunctionalFamilyOverride<FutureOr<LibraryItem>, String> {
   ItemDetailFamily._()
     : super(
         retry: null,
@@ -81,77 +82,4 @@ final class ItemDetailFamily extends $Family
 
   @override
   String toString() => r'itemDetailProvider';
-}
-
-@ProviderFor(item)
-final itemProvider = ItemFamily._();
-
-final class ItemProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<ItemDomain>,
-          ItemDomain,
-          FutureOr<ItemDomain>
-        >
-    with $FutureModifier<ItemDomain>, $FutureProvider<ItemDomain> {
-  ItemProvider._({
-    required ItemFamily super.from,
-    required String super.argument,
-  }) : super(
-         retry: null,
-         name: r'itemProvider',
-         isAutoDispose: true,
-         dependencies: null,
-         $allTransitiveDependencies: null,
-       );
-
-  @override
-  String debugGetCreateSourceHash() => _$itemHash();
-
-  @override
-  String toString() {
-    return r'itemProvider'
-        ''
-        '($argument)';
-  }
-
-  @$internal
-  @override
-  $FutureProviderElement<ItemDomain> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<ItemDomain> create(Ref ref) {
-    final argument = this.argument as String;
-    return item(ref, argument);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is ItemProvider && other.argument == argument;
-  }
-
-  @override
-  int get hashCode {
-    return argument.hashCode;
-  }
-}
-
-String _$itemHash() => r'73c24211339e03225f5448b90be4a5ef9ec0d5fa';
-
-final class ItemFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<ItemDomain>, String> {
-  ItemFamily._()
-    : super(
-        retry: null,
-        name: r'itemProvider',
-        dependencies: null,
-        $allTransitiveDependencies: null,
-        isAutoDispose: true,
-      );
-
-  ItemProvider call(String id) => ItemProvider._(argument: id, from: this);
-
-  @override
-  String toString() => r'itemProvider';
 }

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/app/models/author.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class AuthorCard extends ConsumerWidget {
   const AuthorCard(this.author, {super.key});
-  final AuthorDomain author;
+  final Author author;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -55,7 +55,7 @@ class AuthorCard extends ConsumerWidget {
 
 class AuthorCardListView extends ConsumerWidget {
   const AuthorCardListView(this.author, {super.key});
-  final AuthorDomain author;
+  final Author author;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

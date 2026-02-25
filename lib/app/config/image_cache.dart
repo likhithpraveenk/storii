@@ -4,6 +4,6 @@ final imageCacheManager = CacheManager(
   Config(
     'libCachedImageData',
     stalePeriod: const Duration(days: 7),
-    maxNrOfCacheObjects: 500,
+    maxNrOfCacheObjects: 5000,
   ),
 );

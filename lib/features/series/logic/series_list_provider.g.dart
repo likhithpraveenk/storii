@@ -13,7 +13,7 @@ part of 'series_list_provider.dart';
 final seriesListProvider = SeriesListNotifierProvider._();
 
 final class SeriesListNotifierProvider
-    extends $AsyncNotifierProvider<SeriesListNotifier, List<SeriesDomain>> {
+    extends $AsyncNotifierProvider<SeriesListNotifier, List<Series>> {
   SeriesListNotifierProvider._()
     : super(
         from: null,
@@ -34,20 +34,19 @@ final class SeriesListNotifierProvider
 }
 
 String _$seriesListNotifierHash() =>
-    r'70fbd093222bf0009b34258804ea511444cba2cc';
+    r'fd9a71df7d82d19367a9f0862aa15f65d9acbb3a';
 
-abstract class _$SeriesListNotifier extends $AsyncNotifier<List<SeriesDomain>> {
-  FutureOr<List<SeriesDomain>> build();
+abstract class _$SeriesListNotifier extends $AsyncNotifier<List<Series>> {
+  FutureOr<List<Series>> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref =
-        this.ref as $Ref<AsyncValue<List<SeriesDomain>>, List<SeriesDomain>>;
+    final ref = this.ref as $Ref<AsyncValue<List<Series>>, List<Series>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<List<SeriesDomain>>, List<SeriesDomain>>,
-              AsyncValue<List<SeriesDomain>>,
+              AnyNotifier<AsyncValue<List<Series>>, List<Series>>,
+              AsyncValue<List<Series>>,
               Object?,
               Object?
             >;

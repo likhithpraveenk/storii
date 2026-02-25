@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/app/models/item.dart';
-import 'package:storii/app/models/series.dart';
 import 'package:storii/features/author/ui/standalone_books.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
@@ -18,8 +17,8 @@ class AuthorContent extends StatelessWidget {
     required this.series,
   });
 
-  final List<ItemDomain> books;
-  final List<SeriesDomain> series;
+  final List<LibraryItem> books;
+  final List<Series> series;
   final String authorId;
 
   @override
@@ -27,7 +26,7 @@ class AuthorContent extends StatelessWidget {
     if (books.isEmpty) return const SizedBox.shrink();
 
     final seriesBookIds = series
-        .expand((s) => s.books ?? <ItemDomain>[])
+        .expand((s) => s.books)
         .map((item) => item.id)
         .toSet();
     final standaloneBooks = books
@@ -126,13 +125,13 @@ class SectionHeader extends StatelessWidget {
 }
 
 class SeriesSection extends StatelessWidget {
-  final SeriesDomain series;
+  final Series series;
 
   const SeriesSection({super.key, required this.series});
 
   @override
   Widget build(BuildContext context) {
-    final books = series.books ?? [];
+    final books = series.books;
     if (books.isEmpty) return const SizedBox.shrink();
 
     return Column(
@@ -152,7 +151,7 @@ class SeriesSection extends StatelessWidget {
 }
 
 class HorizontalBooksCarousel extends ConsumerWidget {
-  final List<ItemDomain> books;
+  final List<LibraryItem> books;
 
   const HorizontalBooksCarousel({super.key, required this.books});
 
