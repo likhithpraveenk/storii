@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:storii/globals.dart';
 
 String getDeviceInfo() {
-  final now = DateTime.now().toIso8601String();
-
   String osDetails = '';
   String deviceDetails = '';
 
@@ -24,9 +22,7 @@ String getDeviceInfo() {
     App ID: ${packageInfo.packageName}
     App version: ${packageInfo.version} (${packageInfo.buildNumber})
     $osDetails
-    $deviceDetails
-    Current time: $now
-  '''
+    $deviceDetails'''
       .split('\n')
       .map((line) => line.trim())
       .join('\n')

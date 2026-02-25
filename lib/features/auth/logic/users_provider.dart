@@ -6,24 +6,24 @@ import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/storage/hive/boxes.dart';
 
 part 'users_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class UsersNotifier extends _$UsersNotifier {
-  final _box = Hive.box<Map>('users');
+  final _box = Hive.box<UserDomain>(usersBox);
 
   @override
   Stream<List<UserDomain>> build() {
-    List<UserDomain> mapToUsers() => _box.values
-        .map((u) => UserDomain.fromJson(Map<String, dynamic>.from(u)))
-        .toList();
-
-    return _box.watch().map((_) => mapToUsers()).startWith(mapToUsers());
+    return _box
+        .watch()
+        .map((_) => _box.values.toList())
+        .startWith(_box.values.toList());
   }
 
   Future<void> add(UserDomain user) async {
-    await _box.put(user.id, user.toJson());
+    await _box.put(user.id, user);
   }
 
   Future<void> delete(UserDomain user) async {
@@ -33,14 +33,10 @@ class UsersNotifier extends _$UsersNotifier {
   }
 
   Future<List<String>> deleteUsersByServer(Uri url) async {
-    final keysToDelete = <String>[];
-
-    for (var entry in _box.toMap().entries) {
-      final user = UserDomain.fromJson(Map<String, dynamic>.from(entry.value));
-      if (user.serverUrl == url) {
-        keysToDelete.add(entry.key as String);
-      }
-    }
+    final keysToDelete = _box.values
+        .where((u) => u.serverUrl == url)
+        .map((u) => u.id)
+        .toList();
 
     if (keysToDelete.isNotEmpty) {
       await _box.deleteAll(keysToDelete);
@@ -49,16 +45,12 @@ class UsersNotifier extends _$UsersNotifier {
   }
 
   Future<void> editServerUrl(Uri oldUrl, Uri newUrl) async {
-    final Map<dynamic, Map<dynamic, dynamic>> updates = {};
-    for (var entry in _box.toMap().entries) {
-      final user = UserDomain.fromJson(Map<String, dynamic>.from(entry.value));
+    final usersToUpdate = _box.values
+        .where((user) => user.serverUrl == oldUrl)
+        .toList();
 
-      if (user.serverUrl == oldUrl) {
-        updates[entry.key] = user.copyWith(serverUrl: newUrl).toJson();
-      }
-    }
-    if (updates.isNotEmpty) {
-      await _box.putAll(updates);
+    for (var user in usersToUpdate) {
+      await _box.put(user.id, user.copyWith(serverUrl: newUrl));
     }
   }
 }

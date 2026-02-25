@@ -14,6 +14,15 @@ targets:
           - lib/**/models/**
           - lib/features/**/logic/**
           - lib/**/settings_provider.dart
+      hive_ce_generator:hive_type_adapter_generator:
+        generate_for:
+          - lib/storage/hive/**
+      hive_ce_generator:hive_registrar_intermediate_generator:
+        generate_for:
+          - lib/storage/hive/**
+      hive_ce_generator:hive_adapters_generator:
+        generate_for:
+          - lib/storage/hive/**
       storii:settings_generator:
         generate_for:
           - lib/**/settings_provider.dart

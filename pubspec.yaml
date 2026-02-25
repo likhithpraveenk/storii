@@ -56,6 +56,7 @@ dev_dependencies:
     sdk: flutter
   freezed: ^3.2.3
   freezed_lint: ^0.0.12
+  hive_ce_generator: ^1.10.0
   json_serializable: ^6.11.2
   riverpod_generator: ^4.0.0+1
   riverpod_lint: ^3.1.0

@@ -33,7 +33,7 @@ final class LogsNotifierProvider
   LogsNotifier create() => LogsNotifier();
 }
 
-String _$logsNotifierHash() => r'65c88ccd8390cc64c1678dff74bc428459c45fdf';
+String _$logsNotifierHash() => r'99e1816df71d7fb2eecbf764cba04c4fd64832dd';
 
 abstract class _$LogsNotifier extends $StreamNotifier<List<LogEntry>> {
   Stream<List<LogEntry>> build();

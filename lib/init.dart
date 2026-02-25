@@ -8,16 +8,25 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/models/log_entry.dart';
+import 'package:storii/app/models/server.dart';
+import 'package:storii/app/models/user.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/globals.dart';
+import 'package:storii/storage/hive/boxes.dart';
+import 'package:storii/storage/hive/hive_registrar.g.dart';
 
 Future<void> setupHive() async {
   await Hive.initFlutter();
-  await Hive.openBox<Map>('settings');
-  await Hive.openBox<Map>('users');
-  await Hive.openBox<Map>('servers');
-  await Hive.openBox<Map>('logs');
+  Hive.registerAdapters();
+  await Future.wait([
+    Hive.openBox<String>(appSettingsBox),
+    Hive.openBox<String>(userSettingsBox),
+    Hive.openBox<UserDomain>(usersBox),
+    Hive.openBox<Server>(serversBox),
+    Hive.openBox<LogEntry>(logsBox),
+  ]);
 }
 
 Future<void> setupLicenses() async {

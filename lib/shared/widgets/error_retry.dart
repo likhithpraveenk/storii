@@ -15,7 +15,7 @@ class ErrorRetryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(automaticallyImplyLeading: true, titleSpacing: 0),
       body: Padding(
-        padding: const .all(24),
+        padding: const .all(16),
         child: Center(
           child: Column(
             mainAxisAlignment: .center,
@@ -27,7 +27,7 @@ class ErrorRetryScreen extends StatelessWidget {
                 ).textTheme.bodyLarge?.copyWith(color: scheme.error),
                 textAlign: .center,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 4),
               AppFilledButton(
                 text: AppLocalizations.of(context)!.retry,
                 onPressed: onRetry,
@@ -51,7 +51,7 @@ class ErrorRetryWidget extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
 
     return Padding(
-      padding: const .all(24),
+      padding: const .all(16),
       child: Center(
         child: Column(
           mainAxisAlignment: .center,
@@ -63,7 +63,7 @@ class ErrorRetryWidget extends StatelessWidget {
               ).textTheme.bodyLarge?.copyWith(color: scheme.error),
               textAlign: .center,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 4),
             AppFilledButton(
               text: AppLocalizations.of(context)!.retry,
               onPressed: onRetry,
@@ -87,7 +87,7 @@ class SliverErrorRetryWidget extends StatelessWidget {
 
     return SliverFillRemaining(
       child: Padding(
-        padding: const .all(24),
+        padding: const .all(16),
         child: Center(
           child: Column(
             mainAxisAlignment: .center,
@@ -99,7 +99,7 @@ class SliverErrorRetryWidget extends StatelessWidget {
                 ).textTheme.bodyLarge?.copyWith(color: scheme.error),
                 textAlign: .center,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 4),
               AppFilledButton(
                 text: AppLocalizations.of(context)!.retry,
                 onPressed: onRetry,

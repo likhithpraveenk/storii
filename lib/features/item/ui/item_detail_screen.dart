@@ -49,8 +49,8 @@ class ItemDetailScreen extends ConsumerWidget {
                       style: textTheme.titleLarge,
                       textAlign: .center,
                     ),
+                    const SizedBox(height: 8),
                     if (item.progress > 0) ...[
-                      const SizedBox(height: 4),
                       LinearProgressIndicator(
                         value: item.progress,
                         borderRadius: kBorderRadius,
@@ -58,16 +58,17 @@ class ItemDetailScreen extends ConsumerWidget {
                           item.isFinished ? appGreenColor : appRedColor,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 8),
                       Text(
                         l.percentCompleted(
                           (item.progress * 100).toStringAsFixed(1),
                         ),
                         style: textTheme.labelSmall,
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 8),
                     ],
                     _AuthorsSeriesChips(item),
+                    const SizedBox(height: 8),
                     Wrap(
                       spacing: 8,
                       alignment: .center,
@@ -101,7 +102,9 @@ class ItemDetailScreen extends ConsumerWidget {
                             : l.play,
                       ),
                     ),
+                    const SizedBox(height: 8),
                     ExpandableHtml(data: item.description ?? l.noDescription),
+                    // TODO: chapters and other data
                     const SizedBox(height: 200),
                   ],
                 ),

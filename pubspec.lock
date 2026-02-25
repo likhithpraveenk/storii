@@ -589,6 +589,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.4"
+  hive_ce_generator:
+    dependency: "direct dev"
+    description:
+      name: hive_ce_generator
+      sha256: b19ac263cb37529513508ba47352c41e6de72ba879952898d9c18c9c8a955921
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.10.0"
   hooks:
     dependency: transitive
     description:
@@ -1466,6 +1474,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.4"
+  yaml_writer:
+    dependency: transitive
+    description:
+      name: yaml_writer
+      sha256: "69651cd7238411179ac32079937d4aa9a2970150d6b2ae2c6fe6de09402a5dc5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
 sdks:
   dart: ">=3.11.0 <4.0.0"
   flutter: ">=3.38.4"

@@ -4,11 +4,12 @@ import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/storage/hive/boxes.dart';
 
 class LogService {
   static final _console = Logger(printer: PrettyPrinter(methodCount: 0));
   static late final ProviderContainer _container;
-  static final _box = Hive.box<Map>('logs');
+  static final _box = Hive.box<LogEntry>(logsBox);
 
   static void init(ProviderContainer container) {
     _container = container;
@@ -36,7 +37,7 @@ class LogService {
             source: source,
             level: level,
             stackTrace: stackTrace?.toString(),
-          ).toJson(),
+          ),
         )
         .catchError((e) {
           if (kDebugMode) debugPrint('Failed to save log: $e');

@@ -7,30 +7,31 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
+import 'package:storii/storage/hive/boxes.dart';
 import 'package:uuid/uuid.dart';
 
 part 'servers_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class ServersNotifier extends _$ServersNotifier {
-  final _box = Hive.box<Map>('servers');
+  final _box = Hive.box<Server>(serversBox);
 
   @override
   Stream<List<Server>> build() {
-    List<Server> mapToServers() => _box.values
-        .map((s) => Server.fromJson(Map<String, dynamic>.from(s)))
-        .toList();
-    return _box.watch().map((_) => mapToServers()).startWith(mapToServers());
+    return _box
+        .watch()
+        .map((_) => _box.values.toList())
+        .startWith(_box.values.toList());
   }
 
   Future<void> add(Uri url) async {
     final id = const Uuid().v4();
     final server = Server(id: id, url: url);
-    await _box.put(id, server.toJson());
+    await _box.put(id, server);
   }
 
   Future<void> edit(Uri oldUrl, Server server) async {
-    await _box.put(server.id, server.toJson());
+    await _box.put(server.id, server);
     await ref.read(usersProvider.notifier).editServerUrl(oldUrl, server.url);
   }
 

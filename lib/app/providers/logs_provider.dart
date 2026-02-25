@@ -7,24 +7,24 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/storage/hive/boxes.dart';
 
 part 'logs_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class LogsNotifier extends _$LogsNotifier {
-  final _box = Hive.box<Map>('logs');
+  final _box = Hive.box<LogEntry>(logsBox);
 
   @override
   Stream<List<LogEntry>> build() {
-    List<LogEntry> mapToLogs() => _box.values
-        .map((e) => LogEntry.fromJson(Map<String, dynamic>.from(e)))
-        .toList();
-
-    return _box.watch().map((_) => mapToLogs()).startWith(mapToLogs());
+    return _box
+        .watch()
+        .map((_) => _box.values.toList())
+        .startWith(_box.values.toList());
   }
 
   Future<void> add(LogEntry entry) async {
-    await _box.add(entry.toJson());
+    await _box.add(entry);
     await _pruneOldest();
   }
 
@@ -45,10 +45,11 @@ class LogsNotifier extends _$LogsNotifier {
   }
 
   Future<void> _trimToMax(int maxLogs) async {
-    if (_box.length > maxLogs) {
-      final recentLogs = _box.values.skip(_box.length - maxLogs).toList();
-      await _box.clear();
-      await _box.addAll(recentLogs);
+    final currentLength = _box.length;
+    if (currentLength > maxLogs) {
+      final deleteCount = currentLength - maxLogs;
+      final keysToDelete = _box.keys.take(deleteCount).toList();
+      await _box.deleteAll(keysToDelete);
     }
   }
 
