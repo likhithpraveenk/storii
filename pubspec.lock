@@ -361,14 +361,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  draggable_scrollbar:
-    dependency: "direct main"
-    description:
-      name: draggable_scrollbar
-      sha256: a906e27fc1ee056e2942d66989dd0cb5b70a361e7d44af566cfa1b584054eac3
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.0"
   dynamic_color:
     dependency: "direct main"
     description:
@@ -741,14 +733,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
-  logger:
-    dependency: "direct main"
-    description:
-      name: logger
-      sha256: a7967e31b703831a893bbc3c3dd11db08126fe5f369b5c648a36f821979f5be3
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.6.2"
   logging:
     dependency: transitive
     description:
@@ -1243,7 +1227,7 @@ packages:
     source: hosted
     version: "1.4.1"
   synchronized:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: synchronized
       sha256: c254ade258ec8282947a0acbbc90b9575b4f19673533ee46f2f6e9b3aeefd7c0
@@ -1363,7 +1347,7 @@ packages:
     source: hosted
     version: "3.1.5"
   uuid:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: uuid
       sha256: "1fef9e8e11e2991bb773070d4656b7bd5d850967a2456cfc83cf47925ba79489"

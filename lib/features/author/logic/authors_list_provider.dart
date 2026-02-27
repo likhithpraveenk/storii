@@ -27,8 +27,14 @@ class AuthorsListNotifier extends _$AuthorsListNotifier {
       final response = await api.getAuthors(library.id, params);
       yield response;
     } catch (e, st) {
-      _logError(e, st);
-      throw AppError.resolve(e);
+      final err = AppError.resolve(e);
+      LogService.log(
+        'error getting authors: $err',
+        level: .error,
+        source: 'AuthorsListNotifier',
+        stackTrace: st,
+      );
+      throw err;
     }
   }
 
@@ -36,14 +42,5 @@ class AuthorsListNotifier extends _$AuthorsListNotifier {
     ref.invalidate(libraryFiltersProvider(.authors));
     ref.invalidateSelf();
     await future;
-  }
-
-  void _logError(Object e, StackTrace st) {
-    LogService.log(
-      'error getting authors: ${AppError.resolve(e)}',
-      level: .error,
-      source: 'AuthorsListNotifier',
-      stackTrace: st,
-    );
   }
 }

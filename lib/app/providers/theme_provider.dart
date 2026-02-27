@@ -95,6 +95,15 @@ ThemeData themeData(Ref ref, Brightness brightness) {
       backgroundColor: colorScheme.inverseSurface,
       contentTextStyle: TextStyle(color: colorScheme.onInverseSurface),
     ),
+    scrollbarTheme: ScrollbarThemeData(
+      thickness: WidgetStateProperty.all(12),
+      thumbColor: WidgetStateProperty.all(colorScheme.primaryContainer),
+      radius: const .circular(16),
+      interactive: true,
+      mainAxisMargin: 4.0,
+      crossAxisMargin: 2.0,
+      thumbVisibility: WidgetStateProperty.all(true),
+    ),
   );
 }
 

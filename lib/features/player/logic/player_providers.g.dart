@@ -9,28 +9,28 @@ part of 'player_providers.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(PlayerController)
-final playerControllerProvider = PlayerControllerProvider._();
+@ProviderFor(PlayerMode)
+final playerModeProvider = PlayerModeProvider._();
 
-final class PlayerControllerProvider
-    extends $NotifierProvider<PlayerController, PlayerViewState> {
-  PlayerControllerProvider._()
+final class PlayerModeProvider
+    extends $NotifierProvider<PlayerMode, PlayerViewState> {
+  PlayerModeProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'playerControllerProvider',
+        name: r'playerModeProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$playerControllerHash();
+  String debugGetCreateSourceHash() => _$playerModeHash();
 
   @$internal
   @override
-  PlayerController create() => PlayerController();
+  PlayerMode create() => PlayerMode();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(PlayerViewState value) {
@@ -41,9 +41,9 @@ final class PlayerControllerProvider
   }
 }
 
-String _$playerControllerHash() => r'57094db7d11858d4b9655e37e3942c2ec776b92d';
+String _$playerModeHash() => r'85973874bd45cc1a5e4b6976b14b89bc142a5186';
 
-abstract class _$PlayerController extends $Notifier<PlayerViewState> {
+abstract class _$PlayerMode extends $Notifier<PlayerViewState> {
   PlayerViewState build();
   @$mustCallSuper
   @override
@@ -252,4 +252,4 @@ final class PlayerViewStateProvider
   }
 }
 
-String _$playerViewStateHash() => r'a2466d5fb7b389b5bc4de519563fa5c99f5054b8';
+String _$playerViewStateHash() => r'1cee937014a975aa297a4e9a80689a5b43a289f5';

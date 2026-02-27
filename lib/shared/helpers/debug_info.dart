@@ -7,14 +7,16 @@ String getDeviceInfo() {
   String deviceDetails = '';
 
   if (Platform.isAndroid) {
+    final info = androidDeviceInfo;
     osDetails =
-        'Android version: ${androidDeviceInfo.version.release} (SDK ${androidDeviceInfo.version.sdkInt}; build ${androidDeviceInfo.display})';
+        'Android version: ${info.version.release}'
+        ' (SDK ${info.version.sdkInt}; build ${info.display})';
     deviceDetails =
         '''
-      Device brand: ${androidDeviceInfo.brand}
-      Device manufacturer: ${androidDeviceInfo.manufacturer}
-      Device name: ${androidDeviceInfo.device} (${androidDeviceInfo.product})
-      Device model: ${androidDeviceInfo.model}
+      Device brand: ${info.brand}
+      Device manufacturer: ${info.manufacturer}
+      Device name: ${info.device} (${info.product})
+      Device model: ${info.model}
     ''';
   }
 

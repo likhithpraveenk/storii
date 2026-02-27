@@ -14,19 +14,14 @@ Future<ColorScheme?> dynamicColors(Ref ref, Brightness brightness) async {
     final primary = corePalette?.toColorScheme(brightness: brightness).primary;
     if (primary != null) {
       final harmonizedPrimary = primary.harmonizeWith(appPrimaryColor);
-      // LogService.log(
-      //   'found color ${harmonizedPrimary.toHex()} for $brightness',
-      //   source: 'dynamicColors',
-      //   level: .debug,
-      // );
       colorScheme = ColorScheme.fromSeed(
         seedColor: harmonizedPrimary,
         brightness: brightness,
       );
     }
-  } catch (_) {
+  } catch (e) {
     LogService.log(
-      'getting OS\'s colors failed',
+      'getting OS colors failed: $e',
       source: 'dynamicColors',
       level: .error,
     );
@@ -36,19 +31,14 @@ Future<ColorScheme?> dynamicColors(Ref ref, Brightness brightness) async {
       final primary = await DynamicColorPlugin.getAccentColor();
       if (primary != null) {
         final harmonizedPrimary = primary.harmonizeWith(appPrimaryColor);
-        // LogService.log(
-        //   'found color ${harmonizedPrimary.toHex()} for $brightness',
-        //   source: 'dynamicColors',
-        //   level: .debug,
-        // );
         colorScheme = ColorScheme.fromSeed(
           seedColor: harmonizedPrimary,
           brightness: brightness,
         );
       }
-    } catch (_) {
+    } catch (e) {
       LogService.log(
-        'getting OS\'s accent color failed',
+        'getting OS accent color failed: $e',
         source: 'dynamicColors',
         level: .error,
       );

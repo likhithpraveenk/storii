@@ -6,7 +6,6 @@ import 'package:storii/abs_api/endpoints/api_exception.dart';
 import 'package:storii/abs_api/endpoints/api_routes.dart';
 import 'package:storii/abs_api/models/enums.dart';
 import 'package:storii/app/logs/log_service.dart';
-import 'package:synchronized/synchronized.dart';
 
 class ApiClient {
   final Dio _dio;
@@ -18,7 +17,7 @@ class ApiClient {
   final CancelToken? cancelToken;
   final List<Interceptor>? interceptors;
 
-  final Lock _refreshLock = Lock();
+  Future<bool>? _refreshFuture;
 
   ApiClient({
     required this.baseUrl,
@@ -45,24 +44,22 @@ class ApiClient {
         ?.toString()
         .replaceFirst('Bearer ', '');
 
-    return _refreshLock.synchronized(() async {
-      final currentToken = await getAccessToken?.call();
-      if (currentToken != null && currentToken != failedToken) {
-        LogService.log(
-          'Token was refreshed by another request, retrying with new token',
-          source: 'handleUnauthorized',
-          level: .debug,
-        );
-        return _retryRequest(failedRequest, currentToken);
-      }
+    final currentToken = await getAccessToken?.call();
+    if (currentToken != null && currentToken != failedToken) {
+      LogService.log(
+        'Token was refreshed by another request, retrying with new token',
+        source: 'handleUnauthorized',
+        level: .debug,
+      );
+      return _retryRequest(failedRequest, currentToken);
+    }
 
-      if (failedRequest.extra['__retried'] == true) {
-        throw const ApiException('Session expired', statusCode: 401);
-      }
-      failedRequest.extra['__retried'] = true;
+    _refreshFuture ??= refreshAccessToken();
 
-      final success = await refreshAccessToken();
-      if (!success) {
+    try {
+      final success = await _refreshFuture;
+
+      if (success == false || success == null) {
         await onTokensFailure?.call();
         throw const ApiException(
           'Your session has expired. Please login again.',
@@ -72,7 +69,9 @@ class ApiClient {
 
       final newToken = await getAccessToken?.call();
       return _retryRequest(failedRequest, newToken!);
-    });
+    } finally {
+      _refreshFuture = null;
+    }
   }
 
   Future<Response> _retryRequest(RequestOptions options, String token) {

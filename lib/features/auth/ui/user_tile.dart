@@ -32,7 +32,7 @@ class UserTile extends ConsumerWidget {
       borderRadius: kBorderRadius,
       onTap: () async {
         if (isActive) {
-          LogService.log(l.switchingToUser(user.username));
+          LogService.log(l.switchingToUser(user.username), level: .info);
           await ref.read(appSettingsProvider.notifier).setCurrentUser(user);
         } else if (loginNeeded) {
           await showAddUserSheet(context, server.url, user.username);

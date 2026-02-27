@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/builder/annotations.dart';
 
 part 'user_settings.freezed.dart';
@@ -11,6 +12,10 @@ sealed class UserSettings with _$UserSettings {
 
     String? currentLibraryId,
 
+    String? activeItemId,
+
+    @Default(defaultNavTargets) List<NavTarget> navTargets,
+
     @Default(false) bool isFullySynced,
 
     @Default(true) bool isItemsGridView,
@@ -18,6 +23,16 @@ sealed class UserSettings with _$UserSettings {
     @Default(true) bool isSeriesGridView,
 
     @Default(true) bool isAuthorsGridView,
+
+    @Default(true) bool showTitleForItem,
+
+    @Default(false) bool stackTitleOnImage,
+
+    @Default(Duration(seconds: 10)) Duration fastForward,
+
+    @Default(Duration(seconds: 10)) Duration rewind,
+
+    @Default(1.0) double speed,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

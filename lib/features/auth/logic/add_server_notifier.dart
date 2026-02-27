@@ -27,10 +27,7 @@ class AddServerNotifier extends _$AddServerNotifier {
     try {
       final authApi = ref.read(authApiProvider(url.normalizedUri));
       await authApi.healthCheck();
-      LogService.log(
-        'Server validated: ${url.normalizedUri}',
-        source: 'AddServerNotifier',
-      );
+      LogService.log('Server is healthy ${url.normalizedUri}', level: .info);
       if (server != null) {
         await ref
             .read(serversProvider.notifier)
@@ -42,7 +39,7 @@ class AddServerNotifier extends _$AddServerNotifier {
     } catch (e, st) {
       final error = AppError.resolve(e);
       LogService.log(
-        'Server validated failed: ${url.normalizedUri}',
+        'Server validation failed: ${url.normalizedUri}',
         source: 'AddServerNotifier',
         level: .error,
         stackTrace: st,

@@ -12,12 +12,12 @@
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
+        android:appCategory="audio"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name="com.ryanheise.audioservice.AudioServiceActivity"
             android:exported="true"
-            android:launchMode="singleTop"
-            android:taskAffinity=""
+            android:launchMode="singleInstance"
             android:enableOnBackInvokedCallback="false"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

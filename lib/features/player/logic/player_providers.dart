@@ -6,26 +6,42 @@ enum PlayerSwipeDirection { left, right }
 
 enum PlayerViewState { hidden, mini, full }
 
-const double velocityThreshold = 100;
-const double epsilon = 0.5;
+const velocityThreshold = 100.0;
+const kEpsilon = 0.5;
 
 @riverpod
-class PlayerController extends _$PlayerController {
+class PlayerMode extends _$PlayerMode {
   @override
-  PlayerViewState build() {
-    return .hidden;
-  }
+  PlayerViewState build() => .hidden;
 
-  void toFull() {
-    state = .full;
-  }
+  void toFull() => state = .full;
+  void toMini() => state = .mini;
+  void toHidden() => state = .hidden;
 
-  void toMini() {
-    state = .mini;
-  }
+  PlayerViewState resolveAfterDrag(double velocityY) {
+    final height = ref.read(playerHeightProvider);
+    final bounds = ref.read(playerBoundsProvider);
 
-  void toHidden() {
-    state = .hidden;
+    const closeThresholdFactor = 0.6;
+    final closeThreshold = bounds.min * closeThresholdFactor;
+
+    PlayerViewState target;
+
+    if (velocityY.abs() > velocityThreshold) {
+      if (velocityY < 0) {
+        target = .full;
+      } else {
+        target = height < closeThreshold ? .hidden : .mini;
+      }
+    } else {
+      final mid = (bounds.min + bounds.max) / 2;
+      target = height > mid ? .full : .mini;
+      if (height < closeThreshold) {
+        target = .hidden;
+      }
+    }
+    state = target;
+    return target;
   }
 }
 
@@ -68,7 +84,7 @@ PlayerViewState playerViewState(Ref ref) {
   final height = ref.watch(playerHeightProvider);
   final bounds = ref.watch(playerBoundsProvider);
 
-  if (height <= epsilon) return .hidden;
-  if ((height - bounds.max).abs() < epsilon) return .full;
+  if (height <= kEpsilon) return .hidden;
+  if ((height - bounds.max).abs() < kEpsilon) return .full;
   return .mini;
 }

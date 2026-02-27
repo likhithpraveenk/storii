@@ -1,26 +1,27 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 
 extension ItemDomainToMediaItem on LibraryItem {
   List<MediaItem> toMediaItems(Uri serverUrl) {
     return switch (mediaType) {
       .book => () {
-        var accumulated = Duration.zero;
+        double accumulated = 0.0;
         return tracks.map((track) {
           final item = MediaItem(
             id: track.contentUrl,
             title: title ?? '',
             artist: authorName,
-            duration: duration,
+            duration: track.duration,
             artUri: serverUrl.resolve(ApiRoutes.itemCover(id)),
             extras: {
-              'bookId': id,
+              'itemId': id,
               'trackIndex': tracks.indexOf(track),
-              'startOffset': accumulated.inMilliseconds,
-              'trackDuration': track.duration.inMilliseconds,
+              'startOffset': accumulated,
+              'totalDuration': duration.inSecondsPrecise,
             },
           );
-          accumulated += track.duration;
+          accumulated += track.duration.inSecondsPrecise;
           return item;
         }).toList();
       }(),

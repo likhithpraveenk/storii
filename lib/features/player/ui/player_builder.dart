@@ -19,7 +19,7 @@ class PlayerBuilder extends ConsumerStatefulWidget {
   final double minHeight;
   final double maxHeight;
   final PlayerWidgetBuilder builder;
-  final VoidCallback onDismiss;
+  final Future<void> Function() onDismiss;
 
   @override
   ConsumerState<PlayerBuilder> createState() => _PlayerBuilderState();
@@ -53,80 +53,84 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
     super.dispose();
   }
 
+  @override
+  void didUpdateWidget(covariant PlayerBuilder oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.maxHeight != widget.maxHeight ||
+        oldWidget.minHeight != widget.minHeight) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          ref
+              .read(playerBoundsProvider.notifier)
+              .update(widget.minHeight, widget.maxHeight);
+        }
+      });
+    }
+  }
+
   void _animationListener() {
-    if (!mounted) return;
     final curvedValue = Curves.easeOutCubic.transform(_controller.value);
     final newValue = _heightTween.transform(curvedValue);
     ref.read(playerHeightProvider.notifier).set(newValue);
   }
 
-  void _snapTo(PlayerViewState newState) {
+  void _animateTo(PlayerViewState newState) {
     final targetHeight = switch (newState) {
       .full => widget.maxHeight,
       .mini => widget.minHeight,
       .hidden => 0.0,
     };
+
     final currentHeight = ref.read(playerHeightProvider);
-    if ((currentHeight - targetHeight).abs() < epsilon) return;
 
     _controller.stop();
     _heightTween = Tween(begin: currentHeight, end: targetHeight);
     _controller.reset();
-    _controller.forward().whenComplete(() {
-      if (targetHeight == 0.0) {
-        widget.onDismiss();
-      }
-    });
+    _controller.forward();
   }
 
   void _onVerticalDragUpdate(DragUpdateDetails details) {
     _controller.stop();
 
     final currentHeight = ref.read(playerHeightProvider);
-    final newHeight = (currentHeight - details.delta.dy).clamp(
-      0.0,
-      widget.maxHeight,
-    );
+    final bounds = ref.read(playerBoundsProvider);
+
+    final newHeight = (currentHeight - details.delta.dy).clamp(0.0, bounds.max);
+
     ref.read(playerHeightProvider.notifier).set(newHeight);
   }
 
   void _onVerticalDragEnd(DragEndDetails details) {
     final velocityY = details.velocity.pixelsPerSecond.dy;
-    final height = ref.read(playerHeightProvider);
 
-    PlayerViewState target;
-
-    if (velocityY.abs() > velocityThreshold) {
-      if (velocityY < 0) {
-        target = .full;
-      } else {
-        target = height < widget.minHeight * 0.8 ? .hidden : .mini;
-      }
-    } else {
-      final mid = (widget.minHeight + widget.maxHeight) / 2;
-      target = height > mid ? .full : .mini;
-      if (height < widget.minHeight * 0.8) {
-        target = .hidden;
-      }
-    }
-    _snapTo(target);
+    final state = ref
+        .read(playerModeProvider.notifier)
+        .resolveAfterDrag(velocityY);
+    _animateTo(state);
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(playerControllerProvider, (_, next) {
-      _snapTo(next);
+    ref.listen(playerModeProvider, (prev, next) {
+      if (prev != next) {
+        _animateTo(next);
+      }
+
+      if (next == .hidden && prev != .hidden) {
+        Future.microtask(widget.onDismiss);
+      }
     });
 
     final height = ref.watch(playerHeightProvider);
-    if (height == 0) return const SizedBox.shrink();
+    if (height <= kEpsilon) return const SizedBox.shrink();
 
     final expandFactor = ref.watch(playerExpandFactorProvider);
 
     return BackButtonListener(
       onBackButtonPressed: () async {
         if (height > widget.minHeight) {
-          _snapTo(.mini);
+          ref.read(playerModeProvider.notifier).toMini();
           return true;
         }
         return false;
@@ -135,7 +139,9 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
         alignment: .bottomCenter,
         child: GestureDetector(
           behavior: .translucent,
-          onTap: () => _snapTo(.full),
+          onTap: () {
+            ref.read(playerModeProvider.notifier).toFull();
+          },
           onVerticalDragUpdate: _onVerticalDragUpdate,
           onVerticalDragEnd: _onVerticalDragEnd,
           child: SizedBox(

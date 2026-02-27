@@ -8,4 +8,4 @@ const maxSeriesCardWidthInGrid = 360.0;
 
 const imgSizeInMiniPlayer = 64.0;
 const imgLeftPaddingInMiniPlayer = 8.0;
-const maxImgSizeInFullPlayer = 320.0;
+const maxImgSizeInFullPlayer = 360.0;

@@ -42,7 +42,7 @@ class LibraryItemsNotifier extends _$LibraryItemsNotifier {
     } catch (e, st) {
       final error = AppError.resolve(e);
       LogService.log(
-        'Error during fetching items: $error}',
+        'Error fetching items: $error',
         level: .error,
         source: 'LibraryItemsNotifier',
         stackTrace: st,

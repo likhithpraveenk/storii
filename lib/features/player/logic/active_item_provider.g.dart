@@ -9,11 +9,17 @@ part of 'active_item_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(ActiveItem)
+@ProviderFor(activeItem)
 final activeItemProvider = ActiveItemProvider._();
 
 final class ActiveItemProvider
-    extends $NotifierProvider<ActiveItem, LibraryItem?> {
+    extends
+        $FunctionalProvider<
+          AsyncValue<LibraryItem?>,
+          LibraryItem?,
+          FutureOr<LibraryItem?>
+        >
+    with $FutureModifier<LibraryItem?>, $FutureProvider<LibraryItem?> {
   ActiveItemProvider._()
     : super(
         from: null,
@@ -30,36 +36,17 @@ final class ActiveItemProvider
 
   @$internal
   @override
-  ActiveItem create() => ActiveItem();
+  $FutureProviderElement<LibraryItem?> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
 
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(LibraryItem? value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<LibraryItem?>(value),
-    );
-  }
-}
-
-String _$activeItemHash() => r'b9c5ae682dd919df06cad4e54d7501dee1b01c8c';
-
-abstract class _$ActiveItem extends $Notifier<LibraryItem?> {
-  LibraryItem? build();
-  @$mustCallSuper
   @override
-  void runBuild() {
-    final ref = this.ref as $Ref<LibraryItem?, LibraryItem?>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<LibraryItem?, LibraryItem?>,
-              LibraryItem?,
-              Object?,
-              Object?
-            >;
-    element.handleCreate(ref, build);
+  FutureOr<LibraryItem?> create(Ref ref) {
+    return activeItem(ref);
   }
 }
+
+String _$activeItemHash() => r'523bb70e53c88ee69bccd6b6a57e63c89052430d';
 
 @ProviderFor(currentChapter)
 final currentChapterProvider = CurrentChapterProvider._();
@@ -100,4 +87,4 @@ final class CurrentChapterProvider
   }
 }
 
-String _$currentChapterHash() => r'b7da905d490971030376434e48e160811f34d0fc';
+String _$currentChapterHash() => r'b606ddf0f70afa3c955c9d202e67d845564168f0';

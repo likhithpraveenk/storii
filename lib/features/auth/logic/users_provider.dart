@@ -29,7 +29,7 @@ class UsersNotifier extends _$UsersNotifier {
   Future<void> delete(UserDomain user) async {
     await _box.delete(user.id);
     await ref.read(appSettingsProvider.notifier).deleteUserSettings(user.id);
-    LogService.log('User deleted: ${user.username}', source: 'UsersNotifier');
+    LogService.log('User deleted: ${user.username}', level: .info);
   }
 
   Future<List<String>> deleteUsersByServer(Uri url) async {

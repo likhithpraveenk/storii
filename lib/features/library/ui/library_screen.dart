@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
-import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/library/logic/library_items_provider.dart';
 import 'package:storii/features/library/ui/filters_button.dart';
+import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/widgets/app_scroll_thumb.dart';
+import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/library_switcher.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -54,30 +53,11 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                 ),
               );
             }
-            final height = ref.watch(gridHeightProvider);
-            final isSquare = height == maxCardWidthInGrid;
 
-            return AppScrollThumb(
+            return AppScrollbar(
               controller: _scrollController,
               child: filterState.isGridView
-                  ? GridView.builder(
-                      controller: _scrollController,
-                      padding: const .symmetric(horizontal: 16),
-                      itemCount: items.length,
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: maxCardWidthInGrid,
-                        mainAxisExtent: isSquare ? null : height,
-                        mainAxisSpacing: isSquare ? 16 : 4,
-                        crossAxisSpacing: 16,
-                        childAspectRatio: 1,
-                      ),
-                      itemBuilder: (context, index) {
-                        return LibraryItemCard(
-                          key: ValueKey(items[index].id),
-                          items[index],
-                        );
-                      },
-                    )
+                  ? ItemsGridView(items, scrollController: _scrollController)
                   : ListView.builder(
                       controller: _scrollController,
                       itemCount: items.length,

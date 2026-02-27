@@ -8,7 +8,6 @@ import 'package:storii/app/models/server.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
 import 'package:storii/storage/hive/boxes.dart';
-import 'package:uuid/uuid.dart';
 
 part 'servers_provider.g.dart';
 
@@ -25,7 +24,7 @@ class ServersNotifier extends _$ServersNotifier {
   }
 
   Future<void> add(Uri url) async {
-    final id = const Uuid().v4();
+    final id = DateTime.now().microsecondsSinceEpoch.toString();
     final server = Server(id: id, url: url);
     await _box.put(id, server);
   }
@@ -42,6 +41,6 @@ class ServersNotifier extends _$ServersNotifier {
         .deleteUsersByServer(server.url);
     await ref.read(appSettingsProvider.notifier).deleteSettings(users);
 
-    LogService.log('Server deleted: ${server.url}', source: 'ServersNotifier');
+    LogService.log('Server deleted: ${server.url}', level: .info);
   }
 }

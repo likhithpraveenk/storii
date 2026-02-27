@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/globals.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/widgets/app_scrollbar.dart';
 
 void showLogEntrySheet(BuildContext context, LogEntry entry) {
   showModalBottomSheet(
@@ -54,25 +55,28 @@ ${entry.stackTrace != null ? '\nStackTrace:\n${entry.stackTrace}' : ''}
               ),
             ),
             Expanded(
-              child: SingleChildScrollView(
+              child: AppScrollbar(
                 controller: scrollController,
-                padding: const .fromLTRB(20, 0, 20, 20),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: .start,
-                    children: [
-                      _LogRow(
-                        'Timestamp',
-                        entry.timestamp.fString(forLogs: true),
-                      ),
-                      _LogRow('Level', entry.level.name.toUpperCase()),
-                      _LogRow('Message', entry.message),
-                      if (entry.source != null)
-                        _LogRow('Source', entry.source!),
-                      if (entry.stackTrace != null)
-                        _LogRow('StackTrace', entry.stackTrace!),
-                    ],
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  padding: const .fromLTRB(20, 0, 20, 20),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: .start,
+                      children: [
+                        _LogRow(
+                          'Timestamp',
+                          entry.timestamp.fString(forLogs: true),
+                        ),
+                        _LogRow('Level', entry.level.name.toUpperCase()),
+                        _LogRow('Message', entry.message),
+                        if (entry.source != null)
+                          _LogRow('Source', entry.source!),
+                        if (entry.stackTrace != null)
+                          _LogRow('StackTrace', entry.stackTrace!),
+                      ],
+                    ),
                   ),
                 ),
               ),

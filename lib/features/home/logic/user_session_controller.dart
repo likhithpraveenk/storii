@@ -20,14 +20,11 @@ class UserSessionController extends _$UserSessionController {
     state = .loading;
     try {
       await ref.read(serverApiProvider(user)).logout();
-      LogService.log(
-        'User "${user.username}" logged out',
-        source: 'UserSessionController',
-      );
+      LogService.log('"${user.username}" logged out', level: .info);
       await _clearLocalSession(user.id);
     } catch (e, st) {
       LogService.log(
-        'Unexpected error during logout for user ${user.username}:$e',
+        'Unexpected error during logout for ${user.username}: $e',
         source: 'UserSessionController',
         level: .error,
         stackTrace: st,
@@ -42,13 +39,14 @@ class UserSessionController extends _$UserSessionController {
     try {
       LogService.log(
         'Forcing logout for user "${user.username}" - $reason',
-        source: 'UserSessionController',
+        level: .info,
       );
       await _clearLocalSession(user.id);
     } catch (e, st) {
       LogService.log(
-        'Unexpected error during force logout for user ${user.username}: $e',
+        'Unexpected error during force logout for ${user.username}: $e',
         source: 'UserSessionController',
+        level: .error,
         stackTrace: st,
       );
       await _clearLocalSession(user.id);

@@ -140,31 +140,14 @@ extension AppSettingsSetters on AppSettingsNotifier {
 
   Future<void> setMaxLogs(int value) => _save(state.copyWith(maxLogs: value));
 
-  Future<void> setNavTargets(List<NavTarget> value) =>
-      _save(state.copyWith(navTargets: value));
-
   Future<void> setFontFamily(String? value) =>
       _save(state.copyWith(fontFamily: value));
 
   Future<void> setFontScale(double value) =>
       _save(state.copyWith(fontScale: value));
 
-  Future<void> setShowTitleForItem(bool value) =>
-      _save(state.copyWith(showTitleForItem: value));
-
-  Future<void> setStackTitleOnImage(bool value) =>
-      _save(state.copyWith(stackTitleOnImage: value));
-
   Future<void> setEnableHttpLogs(bool value) =>
       _save(state.copyWith(enableHttpLogs: value));
-
-  Future<void> setFastForward(Duration value) =>
-      _save(state.copyWith(fastForward: value));
-
-  Future<void> setRewind(Duration value) =>
-      _save(state.copyWith(rewind: value));
-
-  Future<void> setSpeed(double value) => _save(state.copyWith(speed: value));
 }
 
 final themeModeProvider = Provider<ThemeMode>(
@@ -195,10 +178,6 @@ final maxLogsProvider = Provider<int>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.maxLogs)),
 );
 
-final navTargetsProvider = Provider<List<NavTarget>>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.navTargets)),
-);
-
 final fontFamilyProvider = Provider<String?>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.fontFamily)),
 );
@@ -207,28 +186,8 @@ final fontScaleProvider = Provider<double>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.fontScale)),
 );
 
-final showTitleForItemProvider = Provider<bool>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.showTitleForItem)),
-);
-
-final stackTitleOnImageProvider = Provider<bool>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.stackTitleOnImage)),
-);
-
 final enableHttpLogsProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.enableHttpLogs)),
-);
-
-final fastForwardProvider = Provider<Duration>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.fastForward)),
-);
-
-final rewindProvider = Provider<Duration>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.rewind)),
-);
-
-final speedProvider = Provider<double>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.speed)),
 );
 
 // **************************************************************************
@@ -238,6 +197,12 @@ final speedProvider = Provider<double>(
 extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setCurrentLibraryId(String? value) =>
       _save(state.copyWith(currentLibraryId: value));
+
+  Future<void> setActiveItemId(String? value) =>
+      _save(state.copyWith(activeItemId: value));
+
+  Future<void> setNavTargets(List<NavTarget> value) =>
+      _save(state.copyWith(navTargets: value));
 
   Future<void> setIsFullySynced(bool value) =>
       _save(state.copyWith(isFullySynced: value));
@@ -250,10 +215,32 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setIsAuthorsGridView(bool value) =>
       _save(state.copyWith(isAuthorsGridView: value));
+
+  Future<void> setShowTitleForItem(bool value) =>
+      _save(state.copyWith(showTitleForItem: value));
+
+  Future<void> setStackTitleOnImage(bool value) =>
+      _save(state.copyWith(stackTitleOnImage: value));
+
+  Future<void> setFastForward(Duration value) =>
+      _save(state.copyWith(fastForward: value));
+
+  Future<void> setRewind(Duration value) =>
+      _save(state.copyWith(rewind: value));
+
+  Future<void> setSpeed(double value) => _save(state.copyWith(speed: value));
 }
 
 final currentLibraryIdProvider = Provider<String?>(
   (ref) => ref.watch(userSettingsProvider.select((s) => s.currentLibraryId)),
+);
+
+final activeItemIdProvider = Provider<String?>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.activeItemId)),
+);
+
+final navTargetsProvider = Provider<List<NavTarget>>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.navTargets)),
 );
 
 final isFullySyncedProvider = Provider<bool>(
@@ -270,4 +257,24 @@ final isSeriesGridViewProvider = Provider<bool>(
 
 final isAuthorsGridViewProvider = Provider<bool>(
   (ref) => ref.watch(userSettingsProvider.select((s) => s.isAuthorsGridView)),
+);
+
+final showTitleForItemProvider = Provider<bool>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.showTitleForItem)),
+);
+
+final stackTitleOnImageProvider = Provider<bool>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.stackTitleOnImage)),
+);
+
+final fastForwardProvider = Provider<Duration>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.fastForward)),
+);
+
+final rewindProvider = Provider<Duration>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.rewind)),
+);
+
+final speedProvider = Provider<double>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.speed)),
 );

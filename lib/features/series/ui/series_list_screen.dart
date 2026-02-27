@@ -7,7 +7,7 @@ import 'package:storii/features/library/ui/filters_button.dart';
 import 'package:storii/features/series/logic/series_list_provider.dart';
 import 'package:storii/features/series/ui/series.card.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/widgets/app_scroll_thumb.dart';
+import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -57,7 +57,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
             }
             final height = ref.watch(seriesGridHeightProvider);
 
-            return AppScrollThumb(
+            return AppScrollbar(
               controller: _scrollController,
               child: filterState.isGridView
                   ? GridView.builder(

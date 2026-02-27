@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:storii/app/logs/log_service.dart';
-import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
@@ -27,7 +26,6 @@ Future<void> setupHive() async {
     Hive.openBox<String>(userSettingsBox),
     Hive.openBox<UserDomain>(usersBox),
     Hive.openBox<Server>(serversBox),
-    Hive.openBox<LogEntry>(logsBox),
   ]);
 }
 

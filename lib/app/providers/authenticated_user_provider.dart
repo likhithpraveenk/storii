@@ -13,12 +13,17 @@ Future<UserDomain> authenticatedUser(Ref ref) async {
   if (user == null) throw StateError('No current user');
   try {
     await ref.read(serverApiProvider(user)).authorize();
+    LogService.log(
+      'User Session validated',
+      source: 'authenticatedUser',
+      level: .info,
+    );
     return user;
   } catch (e) {
     final error = AppError.resolve(e);
     LogService.log(
       'Error validating user session: $error',
-      source: 'AuthenticatedUserProvider',
+      source: 'authenticatedUser',
       level: .error,
     );
     throw error;

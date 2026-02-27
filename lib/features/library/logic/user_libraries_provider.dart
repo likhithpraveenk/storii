@@ -19,7 +19,7 @@ Future<List<Library>> userLibraries(Ref ref) async {
     final error = AppError.resolve(e);
     LogService.log(
       'Error fetching user libraries: ${error.message}',
-      source: 'UserLibrariesProvider',
+      source: 'userLibraries',
       level: .error,
       stackTrace: st,
     );

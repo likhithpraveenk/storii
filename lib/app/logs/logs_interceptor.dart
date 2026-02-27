@@ -5,11 +5,9 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 class LogsInterceptor extends Interceptor {
-  final _stopwatch = Stopwatch();
-
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    _stopwatch.start();
+    options.extra['startTime'] = DateTime.now().millisecondsSinceEpoch;
     final path = options.uri.path;
     final query = options.queryParameters.isNotEmpty
         ? '\nqueryParameters: ${options.queryParameters}'
@@ -24,8 +22,7 @@ class LogsInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    _stopwatch.stop();
-    final duration = _stopwatch.elapsedMilliseconds;
+    final duration = _getDuration(response.requestOptions);
     final path = response.requestOptions.uri.path;
     final prettyBody = response.data != null
         ? '\n${jsonEncode(response.data).toPrettyJson()}'
@@ -40,15 +37,21 @@ class LogsInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    _stopwatch.stop();
+    final duration = _getDuration(err.requestOptions);
     final path = err.requestOptions.uri.path;
     LogService.log(
-      'ERROR: [${err.response?.statusCode ?? "No Status"}] $path\n'
+      'ERROR: [${err.response?.statusCode ?? "No Status"}] (${duration}ms) $path\n'
       'Message: ${err.message}',
       source: 'ApiClient',
       level: .http,
       stackTrace: err.stackTrace,
     );
     super.onError(err, handler);
+  }
+
+  int _getDuration(RequestOptions options) {
+    final startTime = options.extra['startTime'] as int?;
+    if (startTime == null) return 0;
+    return DateTime.now().millisecondsSinceEpoch - startTime;
   }
 }

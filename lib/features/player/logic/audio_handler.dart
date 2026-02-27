@@ -2,9 +2,11 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 
-class AppAudioHandler extends BaseAudioHandler with SeekHandler {
+class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final _player = AudioPlayer();
   late final ProviderContainer _container;
 
@@ -12,12 +14,13 @@ class AppAudioHandler extends BaseAudioHandler with SeekHandler {
     _container = container;
     _player.playbackEventStream.listen(_broadcastState);
 
-    _player.sequenceStateStream.listen((sequenceState) {
-      final currentItem = sequenceState.currentSource?.tag as MediaItem?;
-      if (currentItem != null) {
-        mediaItem.add(currentItem);
-      }
-    });
+    // // updating mediaItem from sequence
+    // _player.sequenceStateStream.listen((sequenceState) {
+    //   final currentItem = sequenceState.currentSource?.tag as MediaItem?;
+    //   if (currentItem != null) {
+    //     mediaItem.add(currentItem);
+    //   }
+    // });
 
     _initAudioSession();
   }
@@ -29,21 +32,26 @@ class AppAudioHandler extends BaseAudioHandler with SeekHandler {
 
   void _broadcastState(PlaybackEvent event) {
     final playing = _player.playing;
-    final queueIndex = _player.currentIndex ?? 0;
-    final items = queue.value;
-    if (items.isEmpty || queueIndex >= items.length) return;
+    final queueIndex = event.currentIndex ?? 0;
+    if (queue.value.isEmpty || queueIndex >= queue.value.length) return;
 
-    final currentTrackItem = items[queueIndex];
-    final startOffset = Duration(
-      milliseconds: currentTrackItem.extras?['startOffset'] ?? 0,
-    );
+    final currentTrackItem = queue.value[queueIndex];
+    final startOffset =
+        (currentTrackItem.extras?['startOffset'] as double? ?? 0.0).toDuration;
 
     playbackState.add(
       playbackState.value.copyWith(
-        controls: [.rewind, playing ? .pause : .play, .fastForward],
-        systemActions: const {.seek, .seekForward, .seekBackward},
+        controls: [.rewind, playing ? .pause : .play, .fastForward, .stop],
+        systemActions: const {
+          .seek,
+          .seekForward,
+          .seekBackward,
+          .playPause,
+          .rewind,
+          .fastForward,
+        },
         androidCompactActionIndices: const [0, 1, 2],
-        processingState: switch (_player.processingState) {
+        processingState: switch (event.processingState) {
           .idle => .idle,
           .loading => .loading,
           .buffering => .buffering,
@@ -51,16 +59,12 @@ class AppAudioHandler extends BaseAudioHandler with SeekHandler {
           .completed => .completed,
         },
         playing: playing,
-        updatePosition: _player.position + startOffset,
-        bufferedPosition: _player.bufferedPosition + startOffset,
+        updatePosition: event.updatePosition + startOffset,
+        bufferedPosition: event.bufferedPosition + startOffset,
         speed: _container.read(speedProvider),
         queueIndex: queueIndex,
       ),
     );
-
-    if (mediaItem.value != currentTrackItem) {
-      mediaItem.add(currentTrackItem);
-    }
   }
 
   Future<void> _initAudioSession() async {
@@ -78,11 +82,49 @@ class AppAudioHandler extends BaseAudioHandler with SeekHandler {
         .map((source) => source.tag as MediaItem)
         .toList();
     queue.add(mediaItems);
+
+    // setting single media item with global values
+    final firstMediaItem = mediaItems.first;
+    final totalDuration =
+        (firstMediaItem.extras?['totalDuration'] as double? ?? 0.0).toDuration;
+    final globalMediaItem = firstMediaItem.copyWith(
+      id: 'global_${firstMediaItem.extras?['itemId']}',
+      duration: totalDuration,
+    );
+    mediaItem.add(globalMediaItem);
+    // setting single media item with global values
+
     await _player.setAudioSources(
       sources,
       initialIndex: initialIndex,
       initialPosition: initialPosition,
     );
+  }
+
+  Stream<Duration> get positionStream {
+    return Rx.combineLatest3<int?, Duration, PlaybackState, Duration>(
+      _player.currentIndexStream,
+      _player.positionStream,
+      playbackState,
+      (index, localPosition, state) {
+        if (state.processingState == .loading ||
+            state.processingState == .idle) {
+          return Duration.zero;
+        }
+
+        return _currentGlobalPosition(index, localPosition);
+      },
+    ).distinct();
+  }
+
+  Duration _currentGlobalPosition(int? index, Duration position) {
+    if (index == null || queue.value.isEmpty || index >= queue.value.length) {
+      return Duration.zero;
+    }
+
+    final startOffset =
+        queue.value[index].extras?['startOffset'] as double? ?? 0.0;
+    return startOffset.toDuration + position;
   }
 
   Future<void> togglePlay() async {
@@ -102,85 +144,56 @@ class AppAudioHandler extends BaseAudioHandler with SeekHandler {
   @override
   Future<void> fastForward() async {
     final jump = _container.read(fastForwardProvider);
-    final newPosition = _player.position + jump;
-    await seek(newPosition);
-    // final currentPos = _player.position;
-    // final trackDuration = _player.duration ?? Duration.zero;
-
-    // if (currentPos + jump <= trackDuration) {
-    //   return _player.seek(currentPos + jump);
-    // } else {
-    //   final index = _player.currentIndex;
-    //   final items = queue.value;
-
-    //   if (index != null && index < items.length - 1) {
-    //     final overflow = jump - (trackDuration - currentPos);
-    //     return _player.seek(overflow, index: index + 1);
-    //   } else {
-    //     return _player.seek(trackDuration);
-    //   }
-    // }
+    await seek(
+      _currentGlobalPosition(_player.currentIndex, _player.position) + jump,
+    );
   }
 
   @override
   Future<void> rewind() async {
     final jump = _container.read(rewindProvider);
-    final newPosition = _player.position - jump;
-    await seek(newPosition);
-    // final currentPos = _player.position;
-
-    // if (currentPos >= jump) {
-    //   return _player.seek(currentPos - jump);
-    // } else {
-    //   final index = _player.currentIndex;
-    //   if (index != null && index > 0) {
-    //     final previousTrackDuration =
-    //         queue.value[index - 1].duration ?? Duration.zero;
-    //     final remainingJump = jump - currentPos;
-
-    //     return _player.seek(
-    //       previousTrackDuration - remainingJump,
-    //       index: index - 1,
-    //     );
-    //   } else {
-    //     return _player.seek(Duration.zero);
-    //   }
-    // }
+    await seek(
+      _currentGlobalPosition(_player.currentIndex, _player.position) - jump,
+    );
   }
 
   @override
   Future<void> seek(Duration position) async {
     final items = queue.value;
-    var accumulated = Duration.zero;
+    final targetSeconds = position.inSecondsPrecise;
 
-    for (var i = 0; i < items.length; i++) {
-      final trackDuration = Duration(
-        milliseconds: items[i].extras?['trackDuration'] ?? 0,
-      );
-      if (position < accumulated + trackDuration) {
-        final localOffset = position - accumulated;
-        return _player.seek(localOffset, index: i);
-      }
-      accumulated += trackDuration;
+    final trackIndex = items.lastIndexWhere((item) {
+      final offset = item.extras?['startOffset'] as double? ?? 0.0;
+      return targetSeconds >= offset;
+    });
+
+    if (trackIndex != -1) {
+      final startOffset =
+          items[trackIndex].extras?['startOffset'] as double? ?? 0.0;
+      final localSeconds = targetSeconds - startOffset;
+
+      await _player.seek(localSeconds.toDuration, index: trackIndex);
     }
   }
 
   @override
   Future<void> stop() async {
-    mediaItem.add(null);
-    playbackState.add(
-      playbackState.value.copyWith(
-        playing: false,
-        processingState: .idle,
-        controls: [],
-      ),
-    );
     await _player.stop();
+    queue.add([]);
+
+    playbackState.add(
+      playbackState.value.copyWith(playing: false, processingState: .idle),
+    );
     await super.stop();
   }
 
   @override
   Future<void> onNotificationDeleted() async {
+    await stop();
+  }
+
+  @override
+  Future<void> onTaskRemoved() async {
     await stop();
   }
 }

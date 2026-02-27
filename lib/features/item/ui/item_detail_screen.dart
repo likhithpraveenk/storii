@@ -5,10 +5,10 @@ import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/ui/cover_image.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
-import 'package:storii/features/player/logic/active_item_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
@@ -67,31 +67,38 @@ class ItemDetailScreen extends ConsumerWidget {
                       const SizedBox(height: 8),
                     ],
                     _AuthorsSeriesChips(item),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      alignment: .center,
-                      children: item.genres.map((g) {
-                        return ActionChip(
-                          label: Text(g, style: textTheme.labelSmall),
-                          onPressed: () {
-                            ref
-                                .read(libraryFiltersProvider(.library).notifier)
-                                .setFilter(GenreFilter(g));
-                            context.go(AppRoute.library.path);
-                          },
-                          visualDensity: .compact,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: kBorderRadius,
-                          ),
-                        );
-                      }).toList(),
-                    ),
+                    const SizedBox(height: 4),
+                    if (item.genres.isNotEmpty) ...[
+                      Wrap(
+                        spacing: 8,
+                        alignment: .center,
+                        children: item.genres.map((g) {
+                          return ActionChip(
+                            label: Text(g, style: textTheme.labelSmall),
+                            onPressed: () {
+                              ref
+                                  .read(
+                                    libraryFiltersProvider(.library).notifier,
+                                  )
+                                  .setFilter(GenreFilter(g));
+                              context.go(AppRoute.library.path);
+                            },
+                            visualDensity: .compact,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: kBorderRadius,
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 4),
+                    ],
                     SizedBox(
                       width: double.infinity,
                       child: AppFilledButton(
-                        onPressed: () {
-                          ref.read(activeItemProvider.notifier).setActive(item);
+                        onPressed: () async {
+                          await ref
+                              .read(userSettingsProvider.notifier)
+                              .setActiveItemId(item.id);
                         },
                         icon: const Icon(Icons.play_arrow_rounded),
                         text: item.progress > 0
@@ -146,7 +153,7 @@ class _AuthorsSeriesChips extends StatelessWidget {
                 ? '${series.name} #${series.sequence}'
                 : series.name;
             return ActionChip(
-              avatar: const Icon(Icons.stacked_bar_chart_outlined),
+              avatar: const Icon(Icons.layers_outlined),
               label: Text(seriesLabel, style: textStyle),
               onPressed: () =>
                   context.push(AppRoute.seriesDetail.withId(series.id)),

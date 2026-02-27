@@ -101,7 +101,7 @@ class _ConfigNavScreenState extends ConsumerState<ConfigNavScreen> {
                   .where((t) => _activeDraft.contains(t))
                   .toList();
               await ref
-                  .read(appSettingsProvider.notifier)
+                  .read(userSettingsProvider.notifier)
                   .setNavTargets(finalOrder);
               if (context.mounted) {
                 context.pop();

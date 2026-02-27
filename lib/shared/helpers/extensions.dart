@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/log_entry.dart';
+import 'package:storii/app/models/playable_item.dart';
 import 'package:storii/l10n/l10n.dart';
 
 extension IterableExtensions<T> on Iterable<T> {
@@ -65,11 +67,11 @@ extension StringExtensions on String {
 extension LogLevelX on LogLevel {
   Color color(ColorScheme scheme) {
     return switch (this) {
-      .debug => Colors.grey,
+      .debug => appWhiteColor,
       .info => scheme.primary,
-      .warning => Colors.yellow,
-      .error => Colors.red,
-      .http => Colors.green,
+      .warning => appYellowColor,
+      .error => appRedColor,
+      .http => appGreenColor,
     };
   }
 }
@@ -77,8 +79,8 @@ extension LogLevelX on LogLevel {
 extension LocalFormatterX on DateTime {
   static final Map<String, DateFormat> _cache = {};
 
-  String fString({String format = 'dd MMM yyyy', bool forLogs = false}) {
-    final pattern = forLogs ? 'dd MMM, HH:mm:ss.SSS' : format;
+  String fString({String format = 'dd MMM y', bool forLogs = false}) {
+    final pattern = forLogs ? '$format, HH:mm:ss.SSS' : format;
 
     final formatter = _cache.putIfAbsent(pattern, () => DateFormat(pattern));
     return formatter.format(toLocal());
@@ -208,6 +210,53 @@ extension SnackBarShorthand on ScaffoldMessengerState {
         duration: const Duration(seconds: 2),
         backgroundColor: isError ? appRedColor : null,
       ),
+    );
+  }
+}
+
+extension DurationPreciseX on Duration {
+  double get inSecondsPrecise => inMicroseconds / 1e6;
+
+  String toTimestamp() {
+    final hours = inHours;
+    final minutes = inMinutes.remainder(60);
+    final seconds = inSeconds.remainder(60);
+
+    final hoursString = hours > 0 ? '${hours.toString().padLeft(2, '0')}:' : '';
+    final minutesString = minutes.toString().padLeft(2, '0');
+    final secondsString = seconds.toString().padLeft(2, '0');
+    return '$hoursString$minutesString:$secondsString';
+  }
+}
+
+extension DoubleToDurationX on double {
+  Duration get toDuration => Duration(microseconds: (this * 1e6).round());
+}
+
+extension PlayableItemX on PlayableItem {
+  // BookChapter? findChapter(Duration position) {
+  //   return map(
+  //     audiobook: (b) {
+  //       final sec = position.inSecondsPrecise;
+  //       return b.chapters.firstWhereOrNull(
+  //         (c) => sec >= c.start && sec < c.end,
+  //       );
+  //     },
+  //     podcast: (_) => null,
+  //   );
+  // }
+
+  MediaItem toMediaItem() {
+    return MediaItem(
+      id: id,
+      title: title ?? '',
+      artist: map(
+        audiobook: (b) => b.authorName,
+        podcast: (p) => p.podcastTitle,
+      ),
+      duration: duration,
+      artUri: cover,
+      extras: {'sessionId': sessionId},
     );
   }
 }

@@ -7,7 +7,7 @@ import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/library/ui/filters_button.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/widgets/app_scroll_thumb.dart';
+import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -60,7 +60,7 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
             }
             final height = ref.watch(authorsGridHeightProvider);
 
-            return AppScrollThumb(
+            return AppScrollbar(
               controller: _scrollController,
               child: filterState.isGridView
                   ? GridView.builder(

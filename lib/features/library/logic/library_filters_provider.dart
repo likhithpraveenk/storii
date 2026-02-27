@@ -88,7 +88,7 @@ class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
     bool isGridView = true,
   }) {
     setGridView(isGridView);
-    final settings = ref.read(appSettingsProvider.notifier);
+    final settings = ref.read(userSettingsProvider.notifier);
     settings.setStackTitleOnImage(stack);
     settings.setShowTitleForItem(title);
   }

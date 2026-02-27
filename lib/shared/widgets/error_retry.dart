@@ -63,11 +63,13 @@ class ErrorRetryWidget extends StatelessWidget {
               ).textTheme.bodyLarge?.copyWith(color: scheme.error),
               textAlign: .center,
             ),
-            const SizedBox(height: 4),
-            AppFilledButton(
-              text: AppLocalizations.of(context)!.retry,
-              onPressed: onRetry,
-            ),
+            if (onRetry != null) ...[
+              const SizedBox(height: 4),
+              AppFilledButton(
+                text: AppLocalizations.of(context)!.retry,
+                onPressed: onRetry,
+              ),
+            ],
           ],
         ),
       ),

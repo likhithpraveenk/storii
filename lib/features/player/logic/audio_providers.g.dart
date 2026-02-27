@@ -26,7 +26,7 @@ final class PlaybackStateProvider
         argument: null,
         retry: null,
         name: r'playbackStateProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -46,7 +46,94 @@ final class PlaybackStateProvider
   }
 }
 
-String _$playbackStateHash() => r'1f044d8e7684db097cc1994538c3a464e556edc8';
+String _$playbackStateHash() => r'bd2f07e833076e09c869c569319f35513f62dadc';
+
+@ProviderFor(processingState)
+final processingStateProvider = ProcessingStateProvider._();
+
+final class ProcessingStateProvider
+    extends
+        $FunctionalProvider<
+          AudioProcessingState,
+          AudioProcessingState,
+          AudioProcessingState
+        >
+    with $Provider<AudioProcessingState> {
+  ProcessingStateProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'processingStateProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$processingStateHash();
+
+  @$internal
+  @override
+  $ProviderElement<AudioProcessingState> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  AudioProcessingState create(Ref ref) {
+    return processingState(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AudioProcessingState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AudioProcessingState>(value),
+    );
+  }
+}
+
+String _$processingStateHash() => r'72b01f00eed52313b16eac9088e53a4c03eb18ee';
+
+@ProviderFor(isPlaying)
+final isPlayingProvider = IsPlayingProvider._();
+
+final class IsPlayingProvider extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  IsPlayingProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'isPlayingProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$isPlayingHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    return isPlaying(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$isPlayingHash() => r'c827c1eb13aab3d28de851e7c36678d0704ffed0';
 
 @ProviderFor(currentMediaItem)
 final currentMediaItemProvider = CurrentMediaItemProvider._();
@@ -65,7 +152,7 @@ final class CurrentMediaItemProvider
         argument: null,
         retry: null,
         name: r'currentMediaItemProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -84,28 +171,28 @@ final class CurrentMediaItemProvider
   }
 }
 
-String _$currentMediaItemHash() => r'a1fbb316887cf68d8f0bfb6aa8286e657de50023';
+String _$currentMediaItemHash() => r'9724a20312faffba7e4c45611e8cd58eac9c3eac';
 
-@ProviderFor(highResPosition)
-final highResPositionProvider = HighResPositionProvider._();
+@ProviderFor(globalPosition)
+final globalPositionProvider = GlobalPositionProvider._();
 
-final class HighResPositionProvider
+final class GlobalPositionProvider
     extends
         $FunctionalProvider<AsyncValue<Duration>, Duration, Stream<Duration>>
     with $FutureModifier<Duration>, $StreamProvider<Duration> {
-  HighResPositionProvider._()
+  GlobalPositionProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'highResPositionProvider',
+        name: r'globalPositionProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$highResPositionHash();
+  String debugGetCreateSourceHash() => _$globalPositionHash();
 
   @$internal
   @override
@@ -114,45 +201,52 @@ final class HighResPositionProvider
 
   @override
   Stream<Duration> create(Ref ref) {
-    return highResPosition(ref);
+    return globalPosition(ref);
   }
 }
 
-String _$highResPositionHash() => r'a19516894b148c90f4f878eefc3bfcc769bcd82c';
+String _$globalPositionHash() => r'd6f6086196f78b66be0d2c4dc0b105b7e2cb29f1';
 
-@ProviderFor(lowResPosition)
-final lowResPositionProvider = LowResPositionProvider._();
+@ProviderFor(totalDuration)
+final totalDurationProvider = TotalDurationProvider._();
 
-final class LowResPositionProvider
-    extends
-        $FunctionalProvider<AsyncValue<Duration>, Duration, Stream<Duration>>
-    with $FutureModifier<Duration>, $StreamProvider<Duration> {
-  LowResPositionProvider._()
+final class TotalDurationProvider
+    extends $FunctionalProvider<Duration, Duration, Duration>
+    with $Provider<Duration> {
+  TotalDurationProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'lowResPositionProvider',
+        name: r'totalDurationProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$lowResPositionHash();
+  String debugGetCreateSourceHash() => _$totalDurationHash();
 
   @$internal
   @override
-  $StreamProviderElement<Duration> $createElement($ProviderPointer pointer) =>
-      $StreamProviderElement(pointer);
+  $ProviderElement<Duration> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
 
   @override
-  Stream<Duration> create(Ref ref) {
-    return lowResPosition(ref);
+  Duration create(Ref ref) {
+    return totalDuration(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Duration value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Duration>(value),
+    );
   }
 }
 
-String _$lowResPositionHash() => r'e0b1fce3f2966f010d8af34fc7025d4ed44bf1f5';
+String _$totalDurationHash() => r'25b4ae5b2682440d831eaa56e7db72db2dfdb1b8';
 
 @ProviderFor(AudioPlayerNotifier)
 final audioPlayerProvider = AudioPlayerNotifierProvider._();
@@ -179,7 +273,7 @@ final class AudioPlayerNotifierProvider
 }
 
 String _$audioPlayerNotifierHash() =>
-    r'dd79c26b74bb97b5c2cdbd3342958ea0e5a3b8fd';
+    r'af7a9a8d1e40a9395f5bc3995bfb53eebc0ffa81';
 
 abstract class _$AudioPlayerNotifier extends $AsyncNotifier<void> {
   FutureOr<void> build();
@@ -231,7 +325,7 @@ final class AudioOrchestratorProvider
   }
 }
 
-String _$audioOrchestratorHash() => r'25bbc34c67ddf41baaf4c27a2152294e87eba677';
+String _$audioOrchestratorHash() => r'4b24215ac325cc748dd3c1d326fadc9464adfe8e';
 
 abstract class _$AudioOrchestrator extends $Notifier<void> {
   void build();

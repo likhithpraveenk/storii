@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:storii/abs_api/models/json_converters.dart';
 import 'package:storii/abs_api/models/library_item.dart';
-import 'package:storii/abs_api/models/rss_feed.dart';
 import 'package:storii/abs_api/models/series_progress.dart';
 
 part 'series.freezed.dart';
@@ -39,7 +38,7 @@ sealed class Series with _$Series {
     LibraryItem? firstBookUnread,
 
     // External
-    RssFeed? rssFeed,
+    // RssFeed? rssFeed,
   }) = _Series;
 
   factory Series.fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);

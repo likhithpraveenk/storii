@@ -18,7 +18,7 @@ Future<LibraryItem> itemDetail(Ref ref, String id) async {
     final error = AppError.resolve(e);
     LogService.log(
       'Error fetching library item details: $error',
-      source: 'itemDetailProvider',
+      source: 'itemDetail',
       level: .error,
       stackTrace: s,
     );

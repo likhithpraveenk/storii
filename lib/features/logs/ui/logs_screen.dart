@@ -7,7 +7,7 @@ import 'package:storii/features/logs/ui/log_entry_sheet.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
-import 'package:storii/shared/widgets/app_scroll_thumb.dart';
+import 'package:storii/shared/widgets/app_scrollbar.dart';
 
 class LogsScreen extends ConsumerStatefulWidget {
   const LogsScreen({super.key});
@@ -55,16 +55,13 @@ class _LogsScreenState extends ConsumerState<LogsScreen> {
       ),
       body: logs.isEmpty
           ? Center(child: Text(l.empty, style: textTheme.bodyLarge))
-          : AppScrollThumb(
+          : AppScrollbar(
               controller: _scrollController,
-              child: ListView.separated(
+              child: ListView.builder(
                 controller: _scrollController,
                 itemCount: logs.length,
-                cacheExtent: 500,
-                separatorBuilder: (_, _) =>
-                    const Divider(height: 1, indent: 16),
                 itemBuilder: (context, index) {
-                  final entry = logs[logs.length - 1 - index];
+                  final entry = logs[index];
                   final color = entry.level.color(scheme);
                   final displayMessage = entry.message.length > 36
                       ? '${entry.message.substring(0, 36)}...'
@@ -154,7 +151,7 @@ class _DeleteLogsButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context)!;
-    final logs = ref.watch(logsProvider).value ?? [];
+    final logs = ref.watch(logsProvider);
     if (logs.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -172,11 +169,9 @@ class _DeleteLogsButton extends ConsumerWidget {
               AppFilledButton(
                 text: l.delete,
                 isDestructive: true,
-                onPressed: () async {
-                  await ref.read(logsProvider.notifier).deleteAll();
-                  if (context.mounted) {
-                    Navigator.of(context).pop();
-                  }
+                onPressed: () {
+                  ref.read(logsProvider.notifier).clear();
+                  Navigator.of(context).pop();
                 },
               ),
             ],

@@ -41,9 +41,6 @@ _Series _$SeriesFromJson(Map<String, dynamic> json) => _Series(
   firstBookUnread: json['firstBookUnread'] == null
       ? null
       : LibraryItem.fromJson(json['firstBookUnread'] as Map<String, dynamic>),
-  rssFeed: json['rssFeed'] == null
-      ? null
-      : RssFeed.fromJson(json['rssFeed'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$SeriesToJson(_Series instance) => <String, dynamic>{
@@ -73,7 +70,6 @@ Map<String, dynamic> _$SeriesToJson(_Series instance) => <String, dynamic>{
     const DateTimeEpochConverter().toJson,
   ),
   'firstBookUnread': ?instance.firstBookUnread?.toJson(),
-  'rssFeed': ?instance.rssFeed?.toJson(),
 };
 
 Value? _$JsonConverterFromJson<Json, Value>(

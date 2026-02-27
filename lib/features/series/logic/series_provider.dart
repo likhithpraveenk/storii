@@ -49,13 +49,13 @@ Future<Series> series(Ref ref, String seriesId) async {
         );
       }).toList(),
     );
-  } catch (e, s) {
+  } catch (e, st) {
     final error = AppError.resolve(e);
     LogService.log(
       'Error fetching series: $error',
-      source: 'seriesProvider',
+      source: 'series',
       level: .error,
-      stackTrace: s,
+      stackTrace: st,
     );
     throw error;
   }

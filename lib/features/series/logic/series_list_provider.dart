@@ -36,7 +36,7 @@ class SeriesListNotifier extends _$SeriesListNotifier {
     } catch (e, st) {
       final error = AppError.resolve(e);
       LogService.log(
-        'Error during fetching series: $error}',
+        'Error fetching series list: $error',
         level: .error,
         source: 'SeriesListNotifier',
         stackTrace: st,
