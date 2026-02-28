@@ -27,8 +27,8 @@ sealed class User with _$User {
     required List<String> librariesAccessible,
     required List<String> itemTagsSelected,
     required bool hasOpenIDLink,
-    required String accessToken,
-    required String? refreshToken,
+    String? accessToken,
+    String? refreshToken,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

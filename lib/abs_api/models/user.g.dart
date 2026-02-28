@@ -40,7 +40,7 @@ _User _$UserFromJson(Map<String, dynamic> json) => _User(
       .map((e) => e as String)
       .toList(),
   hasOpenIDLink: json['hasOpenIDLink'] as bool,
-  accessToken: json['accessToken'] as String,
+  accessToken: json['accessToken'] as String?,
   refreshToken: json['refreshToken'] as String?,
 );
 
@@ -63,7 +63,7 @@ Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
   'librariesAccessible': instance.librariesAccessible,
   'itemTagsSelected': instance.itemTagsSelected,
   'hasOpenIDLink': instance.hasOpenIDLink,
-  'accessToken': instance.accessToken,
+  'accessToken': ?instance.accessToken,
   'refreshToken': ?instance.refreshToken,
 };
 

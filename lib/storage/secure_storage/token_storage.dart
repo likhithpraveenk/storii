@@ -8,7 +8,11 @@ class TokenStorage {
   String _access(String userId) => '$userId:access';
   String _refresh(String userId) => '$userId:refresh';
 
-  Future<void> saveTokens(String userId, String access, String? refresh) async {
+  Future<void> saveTokens(
+    String userId,
+    String? access,
+    String? refresh,
+  ) async {
     await _storage.write(key: _access(userId), value: access);
     await _storage.write(key: _refresh(userId), value: refresh);
   }

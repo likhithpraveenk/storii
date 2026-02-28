@@ -10,6 +10,7 @@ import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/ui/cover_image.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/expandable_text.dart';
@@ -64,6 +65,10 @@ class ItemDetailScreen extends ConsumerWidget {
                         ),
                         style: textTheme.labelSmall,
                       ),
+                      Text(
+                        '${(item.duration - item.currentOffset).toTimestamp()} remaining',
+                        style: textTheme.labelSmall,
+                      ),
                       const SizedBox(height: 8),
                     ],
                     _AuthorsSeriesChips(item),
@@ -110,6 +115,7 @@ class ItemDetailScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: 8),
                     ExpandableHtml(data: item.description ?? l.noDescription),
+                    const SizedBox(height: 8),
                     // TODO: chapters and other data
                     const SizedBox(height: 200),
                   ],

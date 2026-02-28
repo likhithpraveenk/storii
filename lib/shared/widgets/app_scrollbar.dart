@@ -32,7 +32,8 @@ class _AppScrollbarState extends State<AppScrollbar>
     super.initState();
     widget.controller.addListener(_handleScroll);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.controller.hasClients) {
+      if (widget.controller.hasClients &&
+          widget.controller.position.hasContentDimensions) {
         _handleScroll();
       }
     });
@@ -55,7 +56,10 @@ class _AppScrollbarState extends State<AppScrollbar>
   }
 
   void _handleDrag(DragUpdateDetails details, double availableHeight) {
-    if (!widget.controller.hasClients) return;
+    if (!widget.controller.hasClients ||
+        !widget.controller.position.hasContentDimensions) {
+      return;
+    }
 
     final delta = details.primaryDelta! / availableHeight;
     final newOffset =
@@ -81,7 +85,9 @@ class _AppScrollbarState extends State<AppScrollbar>
             AnimatedBuilder(
               animation: Listenable.merge([_anim, widget.controller]),
               builder: (context, _) {
-                final isReady = widget.controller.hasClients;
+                final isReady =
+                    widget.controller.hasClients &&
+                    widget.controller.position.hasContentDimensions;
 
                 if (!isReady) return const SizedBox.shrink();
 

@@ -33,7 +33,7 @@ final class ShelvesNotifierProvider
   ShelvesNotifier create() => ShelvesNotifier();
 }
 
-String _$shelvesNotifierHash() => r'4cb589324ff56000e556fc9f236e78f9626b43d1';
+String _$shelvesNotifierHash() => r'8e808f29c0e5a1e11cf6297664ecaa253a8e2713';
 
 abstract class _$ShelvesNotifier extends $AsyncNotifier<List<Shelf>> {
   FutureOr<List<Shelf>> build();
