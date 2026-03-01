@@ -23,33 +23,23 @@ class AuthorContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (books.isEmpty) return const SizedBox.shrink();
-
-    final seriesBookIds = series
-        .expand((s) => s.books)
-        .map((item) => item.id)
-        .toSet();
-    final standaloneBooks = books
-        .where((book) => !seriesBookIds.contains(book.id))
-        .toList();
+    if (books.isEmpty && series.isEmpty) return const SizedBox.shrink();
 
     return Column(
       children: [
-        ...series.map((s) => SeriesSection(series: s)),
-        if (standaloneBooks.isNotEmpty) ...[
+        if (books.isNotEmpty) ...[
           SectionHeader(
-            title: AppLocalizations.of(context)!.standaloneBooks,
-            count: standaloneBooks.length,
+            title: AppLocalizations.of(context)!.books,
+            count: books.length,
             onViewAll: () {
               Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => StandaloneBooks(standaloneBooks),
-                ),
+                MaterialPageRoute(builder: (context) => StandaloneBooks(books)),
               );
             },
           ),
-          HorizontalBooksCarousel(books: standaloneBooks),
+          HorizontalBooksCarousel(books: books),
         ],
+        ...series.map((s) => SeriesSection(series: s)),
         const SizedBox(height: 32),
       ],
     );

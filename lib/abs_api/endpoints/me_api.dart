@@ -53,9 +53,10 @@ class MeApi {
     required String libraryItemId,
     String? episodeId,
   }) async {
-    var path = ApiRoutes.meProgressById(libraryItemId);
-    if (episodeId != null) path += '/$episodeId';
-    final response = await api.request(path, method: .get);
+    final response = await api.request(
+      ApiRoutes.meProgressById(libraryItemId, episodeId),
+      method: .get,
+    );
     return fromJson(response.data, MediaProgress.fromJson);
   }
 

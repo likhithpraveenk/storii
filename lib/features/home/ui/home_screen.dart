@@ -28,7 +28,7 @@ class HomeScreen extends ConsumerWidget {
         title: const LibrarySwitcher(),
       ),
       body: RefreshIndicator(
-        onRefresh: () => ref.read(shelvesProvider.notifier).manualSync(),
+        onRefresh: () => ref.refresh(shelvesProvider.future),
         child: shelvesAsync.when(
           data: (shelves) {
             if (shelves.isEmpty) {

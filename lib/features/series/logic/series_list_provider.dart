@@ -11,42 +11,25 @@ import 'package:storii/shared/helpers/app_error.dart';
 part 'series_list_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-class SeriesListNotifier extends _$SeriesListNotifier {
-  @override
-  Future<List<Series>> build() async {
-    final library = await ref.watch(activeLibraryProvider.future);
-    final params = ref.watch(
-      libraryFiltersProvider(.series).select((s) => s.toSeriesParams()),
+Future<List<Series>> seriesList(Ref ref) async {
+  final library = await ref.watch(activeLibraryProvider.future);
+  final params = ref.watch(
+    libraryFiltersProvider(.series).select((s) => s.toSeriesParams()),
+  );
+  try {
+    final user = await ref.read(authenticatedUserProvider.future);
+    final api = ref.read(libraryApiProvider(user));
+    final response = await api.getSeries(library.id, params);
+
+    return response.results;
+  } catch (e, st) {
+    final error = AppError.resolve(e);
+    LogService.log(
+      'Error fetching series list: $error',
+      level: .error,
+      source: 'seriesList',
+      stackTrace: st,
     );
-
-    final series = await _fetch(params: params, libId: library.id);
-    return series;
-  }
-
-  Future<List<Series>> _fetch({
-    required SeriesRequestParams params,
-    required String libId,
-  }) async {
-    try {
-      final user = await ref.read(authenticatedUserProvider.future);
-      final api = ref.read(libraryApiProvider(user));
-      final response = await api.getSeries(libId, params);
-
-      return response.results;
-    } catch (e, st) {
-      final error = AppError.resolve(e);
-      LogService.log(
-        'Error fetching series list: $error',
-        level: .error,
-        source: 'SeriesListNotifier',
-        stackTrace: st,
-      );
-      throw error;
-    }
-  }
-
-  Future<void> manualSync() async {
-    ref.invalidateSelf();
-    await future;
+    throw error;
   }
 }

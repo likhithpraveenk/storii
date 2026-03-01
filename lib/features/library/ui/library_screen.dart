@@ -41,7 +41,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
         actions: const [FiltersButton(.library)],
       ),
       body: RefreshIndicator(
-        onRefresh: () => ref.read(libraryItemsProvider.notifier).manualSync(),
+        onRefresh: () => ref.refresh(libraryItemsProvider.future),
         child: itemsAsync.when(
           data: (items) {
             if (items.isEmpty) {

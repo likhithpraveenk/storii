@@ -19,6 +19,7 @@ class PlayButton extends ConsumerWidget {
 
     return InkWell(
       splashFactory: NoSplash.splashFactory,
+      highlightColor: Colors.transparent,
       onTap: isLoading ? null : audioHandler.togglePlay,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),

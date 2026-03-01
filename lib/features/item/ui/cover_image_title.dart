@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/router.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -78,17 +80,23 @@ class CoverImageTitle extends StatelessWidget {
                     spacing: 16,
                     runSpacing: 8,
                     children: item.authors.map((author) {
-                      return CustomPaint(
-                        painter: DashedUnderlinePainter(
-                          color: theme.colorScheme.onSurfaceVariant.withValues(
-                            alpha: 0.7,
+                      return InkWell(
+                        splashFactory: NoSplash.splashFactory,
+                        highlightColor: Colors.transparent,
+                        onTap: () {
+                          context.push(AppRoute.authorDetail.withId(author.id));
+                        },
+                        child: CustomPaint(
+                          painter: DashedUnderlinePainter(
+                            color: theme.colorScheme.onSurfaceVariant
+                                .withValues(alpha: 0.7),
                           ),
-                        ),
-                        child: Text(
-                          author.name,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: .w600,
-                            color: theme.colorScheme.onSurfaceVariant,
+                          child: Text(
+                            author.name,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: .w600,
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
                           ),
                         ),
                       );

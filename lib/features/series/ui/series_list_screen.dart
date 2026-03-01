@@ -42,7 +42,9 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
         actions: const [FiltersButton(.series)],
       ),
       body: RefreshIndicator(
-        onRefresh: () => ref.read(seriesListProvider.notifier).manualSync(),
+        onRefresh: () {
+          return ref.refresh(seriesListProvider.future);
+        },
         child: seriesAsync.when(
           data: (series) {
             if (series.isEmpty) {

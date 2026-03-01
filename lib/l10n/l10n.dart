@@ -586,12 +586,6 @@ abstract class AppLocalizations {
   /// **'View All'**
   String get viewAll;
 
-  /// No description provided for @standaloneBooks.
-  ///
-  /// In en, this message translates to:
-  /// **'Standalone Books'**
-  String get standaloneBooks;
-
   /// No description provided for @sortTitle.
   ///
   /// In en, this message translates to:

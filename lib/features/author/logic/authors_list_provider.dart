@@ -10,37 +10,28 @@ import 'package:storii/shared/helpers/app_error.dart';
 
 part 'authors_list_provider.g.dart';
 
-@Riverpod(keepAlive: true)
-class AuthorsListNotifier extends _$AuthorsListNotifier {
-  @override
-  Stream<List<Author>> build() async* {
-    final library = await ref.watch(activeLibraryProvider.future);
+@riverpod
+Stream<List<Author>> authorsList(Ref ref) async* {
+  final library = await ref.watch(activeLibraryProvider.future);
 
-    final params = ref.watch(
-      libraryFiltersProvider(.authors).select((s) => s.toAuthorParams()),
+  final params = ref.watch(
+    libraryFiltersProvider(.authors).select((s) => s.toAuthorParams()),
+  );
+
+  final user = await ref.read(authenticatedUserProvider.future);
+  final api = ref.read(libraryApiProvider(user));
+
+  try {
+    final response = await api.getAuthors(library.id, params);
+    yield response;
+  } catch (e, st) {
+    final err = AppError.resolve(e);
+    LogService.log(
+      'error getting authors: $err',
+      level: .error,
+      source: 'authorsList',
+      stackTrace: st,
     );
-
-    final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(libraryApiProvider(user));
-
-    try {
-      final response = await api.getAuthors(library.id, params);
-      yield response;
-    } catch (e, st) {
-      final err = AppError.resolve(e);
-      LogService.log(
-        'error getting authors: $err',
-        level: .error,
-        source: 'AuthorsListNotifier',
-        stackTrace: st,
-      );
-      throw err;
-    }
-  }
-
-  Future<void> manualSync() async {
-    ref.invalidate(libraryFiltersProvider(.authors));
-    ref.invalidateSelf();
-    await future;
+    throw err;
   }
 }

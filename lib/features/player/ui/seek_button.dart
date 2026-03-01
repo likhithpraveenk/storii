@@ -19,6 +19,7 @@ class AppSeekButton extends ConsumerWidget {
 
     return InkWell(
       splashFactory: NoSplash.splashFactory,
+      highlightColor: Colors.transparent,
       onTap: () {
         if (isForward) {
           audioHandler.fastForward();

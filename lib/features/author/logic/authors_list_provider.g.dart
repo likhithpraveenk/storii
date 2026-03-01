@@ -9,47 +9,41 @@ part of 'authors_list_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(AuthorsListNotifier)
-final authorsListProvider = AuthorsListNotifierProvider._();
+@ProviderFor(authorsList)
+final authorsListProvider = AuthorsListProvider._();
 
-final class AuthorsListNotifierProvider
-    extends $StreamNotifierProvider<AuthorsListNotifier, List<Author>> {
-  AuthorsListNotifierProvider._()
+final class AuthorsListProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Author>>,
+          List<Author>,
+          Stream<List<Author>>
+        >
+    with $FutureModifier<List<Author>>, $StreamProvider<List<Author>> {
+  AuthorsListProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'authorsListProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$authorsListNotifierHash();
+  String debugGetCreateSourceHash() => _$authorsListHash();
 
   @$internal
   @override
-  AuthorsListNotifier create() => AuthorsListNotifier();
-}
+  $StreamProviderElement<List<Author>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
 
-String _$authorsListNotifierHash() =>
-    r'bd6fe3334a6248277ac31660d3b8a80cd0b87569';
-
-abstract class _$AuthorsListNotifier extends $StreamNotifier<List<Author>> {
-  Stream<List<Author>> build();
-  @$mustCallSuper
   @override
-  void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<List<Author>>, List<Author>>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<AsyncValue<List<Author>>, List<Author>>,
-              AsyncValue<List<Author>>,
-              Object?,
-              Object?
-            >;
-    element.handleCreate(ref, build);
+  Stream<List<Author>> create(Ref ref) {
+    return authorsList(ref);
   }
 }
+
+String _$authorsListHash() => r'e75ba5e9a27b5f3c68cfe2102b4724498e622e16';

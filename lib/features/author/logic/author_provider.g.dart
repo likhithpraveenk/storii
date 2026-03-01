@@ -58,7 +58,7 @@ final class AuthorProvider
   }
 }
 
-String _$authorHash() => r'b16759e9f4955369eed541d53c84525637bc6ae9';
+String _$authorHash() => r'aac8378ae517b8aaa8d94561c3aeff23c349743f';
 
 final class AuthorFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<Author>, String> {

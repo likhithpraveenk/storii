@@ -262,9 +262,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get viewAll => 'View All';
 
   @override
-  String get standaloneBooks => 'Standalone Books';
-
-  @override
   String get sortTitle => 'Title';
 
   @override

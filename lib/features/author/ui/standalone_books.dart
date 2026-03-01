@@ -18,7 +18,7 @@ class StandaloneBooks extends ConsumerWidget {
           icon: const Icon(Icons.arrow_back),
         ),
         title: Text(
-          AppLocalizations.of(context)!.standaloneBooks,
+          AppLocalizations.of(context)!.books,
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
