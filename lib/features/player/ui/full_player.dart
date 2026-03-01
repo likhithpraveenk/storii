@@ -8,6 +8,7 @@ import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/features/player/ui/play_button.dart';
 import 'package:storii/features/player/ui/seek_button.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 

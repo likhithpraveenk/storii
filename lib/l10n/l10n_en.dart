@@ -135,11 +135,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gridCount => 'Grid Count';
 
   @override
-  String percentCompleted(String percent) {
-    return '$percent% completed';
-  }
-
-  @override
   String get description => 'Description';
 
   @override
@@ -495,4 +490,37 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get networkLogsWarning =>
       'Logging active. This may increase storage usage';
+
+  @override
+  String readableDuration(int hours, int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '${hours}hr ',
+      zero: '',
+    );
+    return '$_temp0${minutes}min';
+  }
+
+  @override
+  String durationRemaining(int hours, int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '${hours}hr ',
+      zero: '',
+    );
+    return '$_temp0${minutes}min remaining';
+  }
+
+  @override
+  String chapterCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Chapters',
+      one: '1 Chapter',
+    );
+    return '$_temp0';
+  }
 }

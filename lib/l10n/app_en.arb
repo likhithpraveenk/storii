@@ -61,14 +61,6 @@
   "retry": "Retry",
   "ascDesc": "Tap again for ascending/descending",
   "gridCount": "Grid Count",
-  "percentCompleted": "{percent}% completed",
-  "@percentCompleted": {
-    "placeholders": {
-      "percent": {
-        "type": "String"
-      }
-    }
-  },
   "description": "Description",
   "noDescription": "No description available",
   "resume": "Resume",
@@ -205,5 +197,35 @@
   },
   "networkLogs": "Network Logs",
   "networkLogsDescription": "Log HTTP requests and responses",
-  "networkLogsWarning": "Logging active. This may increase storage usage"
+  "networkLogsWarning": "Logging active. This may increase storage usage",
+  "readableDuration": "{hours, plural, =0{} other{{hours}hr }}{minutes}min",
+  "@readableDuration": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "durationRemaining": "{hours, plural, =0{} other{{hours}hr }}{minutes}min remaining",
+  "@durationRemaining": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "chapterCount": "{count, plural, =1{1 Chapter} other{{count} Chapters}}",
+  "@chapterCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

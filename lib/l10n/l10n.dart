@@ -334,12 +334,6 @@ abstract class AppLocalizations {
   /// **'Grid Count'**
   String get gridCount;
 
-  /// No description provided for @percentCompleted.
-  ///
-  /// In en, this message translates to:
-  /// **'{percent}% completed'**
-  String percentCompleted(String percent);
-
   /// No description provided for @description.
   ///
   /// In en, this message translates to:
@@ -1035,6 +1029,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Logging active. This may increase storage usage'**
   String get networkLogsWarning;
+
+  /// No description provided for @readableDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours, plural, =0{} other{{hours}hr }}{minutes}min'**
+  String readableDuration(int hours, int minutes);
+
+  /// No description provided for @durationRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours, plural, =0{} other{{hours}hr }}{minutes}min remaining'**
+  String durationRemaining(int hours, int minutes);
+
+  /// No description provided for @chapterCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 Chapter} other{{count} Chapters}}'**
+  String chapterCount(int count);
 }
 
 class _AppLocalizationsDelegate

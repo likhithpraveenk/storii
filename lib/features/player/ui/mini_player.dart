@@ -4,6 +4,7 @@ import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/player/logic/active_item_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
 import 'package:storii/shared/widgets/waveform.dart';

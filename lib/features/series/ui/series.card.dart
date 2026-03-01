@@ -6,6 +6,7 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/library/ui/placeholder_image.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class SeriesCard extends StatelessWidget {
@@ -16,8 +17,8 @@ class SeriesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
     final authorName = series.books.firstOrNull?.authorName;
-    final double seriesProgress = series.books.isEmpty
-        ? 0
+    final seriesProgress = series.books.isEmpty
+        ? 0.0
         : (series.progress?.libraryItemIdsFinished.length ?? 0) /
               series.books.length;
 
@@ -166,8 +167,8 @@ class SeriesCardListView extends StatelessWidget {
     final theme = Theme.of(context);
     final l = AppLocalizations.of(context)!;
     final authorName = series.books.firstOrNull?.authorName;
-    final double seriesProgress = series.books.isEmpty
-        ? 0
+    final seriesProgress = series.books.isEmpty
+        ? 0.0
         : (series.progress?.libraryItemIdsFinished.length ?? 0) /
               series.books.length;
     return ListTile(
@@ -212,7 +213,7 @@ class SeriesCardListView extends StatelessWidget {
           const SizedBox(height: 2),
           if (seriesProgress > 0)
             Text(
-              l.percentCompleted((seriesProgress * 100).toStringAsFixed(1)),
+              '${(seriesProgress * 100).toStringAsFixed(1)}%',
               style: theme.textTheme.labelSmall,
             ),
         ],

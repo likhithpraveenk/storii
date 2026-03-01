@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class MarqueeText extends StatefulWidget {
   final String text;
   final TextStyle? style;
+  final TextAlign? textAlign;
 
-  const MarqueeText(this.text, {super.key, this.style});
+  const MarqueeText(this.text, {super.key, this.style, this.textAlign});
 
   @override
   State<MarqueeText> createState() => _MarqueeTextState();
@@ -23,20 +24,20 @@ class _MarqueeTextState extends State<MarqueeText> {
   void _scroll() async {
     while (_scrollController.hasClients) {
       await Future.delayed(const Duration(seconds: 2));
+      final maxExtent = _scrollController.position.maxScrollExtent;
+
+      const speed = 40.0; // pixels per second
+      final durationInSeconds = (maxExtent / speed).round();
       if (_scrollController.hasClients) {
         await _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: const Duration(seconds: 5),
+          maxExtent,
+          duration: Duration(seconds: durationInSeconds.clamp(1, 10)),
           curve: Curves.linear,
         );
       }
       await Future.delayed(const Duration(seconds: 2));
       if (_scrollController.hasClients) {
-        await _scrollController.animateTo(
-          0.0,
-          duration: const Duration(seconds: 1),
-          curve: Curves.easeOut,
-        );
+        _scrollController.jumpTo(0.0);
       }
     }
   }
@@ -52,7 +53,12 @@ class _MarqueeTextState extends State<MarqueeText> {
     return SingleChildScrollView(
       controller: _scrollController,
       scrollDirection: .horizontal,
-      child: Text(widget.text, style: widget.style, maxLines: 1),
+      child: Text(
+        widget.text,
+        style: widget.style,
+        maxLines: 1,
+        textAlign: widget.textAlign,
+      ),
     );
   }
 }

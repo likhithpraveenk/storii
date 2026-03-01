@@ -8,6 +8,7 @@ import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class LibraryItemCard extends ConsumerWidget {
@@ -184,7 +185,7 @@ class LibraryItemCardListView extends StatelessWidget {
           const SizedBox(height: 2),
           if (item.progress > 0)
             Text(
-              l.percentCompleted((item.progress * 100).toStringAsFixed(1)),
+              '${(item.progress * 100).toStringAsFixed(1)}%',
               style: theme.textTheme.labelSmall,
             ),
         ],

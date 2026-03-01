@@ -53,7 +53,9 @@ class HomeScreen extends ConsumerWidget {
                       padding: const .symmetric(horizontal: 16),
                       child: Text(
                         shelf.label,
-                        style: theme.textTheme.titleMedium,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8),

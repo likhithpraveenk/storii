@@ -200,6 +200,50 @@ extension AudiobookX on LibraryItem {
     }
     return (0, Duration.zero);
   }
+
+  String? get title => media.metadata.title;
+  String? get subtitle =>
+      media.metadata.map(book: (m) => m.subtitle, podcast: (m) => null);
+  String? get description => media.metadata.description;
+  String? get authorName => media.metadata.map(
+    book: (m) => m.authorName ?? m.authors?.firstOrNull?.name,
+    podcast: (m) => m.author,
+  );
+  List<Author> get authors =>
+      media.metadata.map(book: (m) => m.authors ?? [], podcast: (m) => []);
+  List<Series> get series =>
+      media.metadata.map(book: (m) => m.series ?? [], podcast: (m) => []);
+
+  List<String> get genres => media.metadata.genres;
+  bool get explicit => media.metadata.explicit;
+  String? get language => media.metadata.language;
+  List<String> get tags => media.tags;
+
+  Duration get duration => media.map(
+    book: (m) => m.duration,
+    podcast: (m) => throw UnsupportedError('Podcast duration unsupported'),
+  );
+  List<BookChapter> get chapters =>
+      media.map(book: (m) => m.chapters ?? [], podcast: (m) => []);
+  List<AudioTrack> get tracks => media.map(
+    book: (m) => m.tracks ?? [],
+    podcast: (m) => throw UnsupportedError('Podcast tracks unsupported'),
+  );
+  List<PodcastEpisode> get episodes => media.map(
+    book: (m) => throw UnsupportedError('Audiobook episodes unsupported'),
+    podcast: (m) => m.episodes ?? [],
+  );
+  DateTime? get lastEpisodeCheck => media.map(
+    book: (m) => throw UnsupportedError('Audiobook episode unsupported'),
+    podcast: (m) => m.lastEpisodeCheck,
+  );
+
+  double get progress => userMediaProgress?.progress ?? 0.0;
+  bool get isFinished => userMediaProgress?.isFinished ?? false;
+  Duration get currentOffset => userMediaProgress?.currentTime ?? Duration.zero;
+  bool get hideFromContinue =>
+      userMediaProgress?.hideFromContinueListening ?? false;
+  String? get episodeId => userMediaProgress?.episodeId;
 }
 
 extension SnackBarShorthand on ScaffoldMessengerState {
@@ -226,6 +270,12 @@ extension DurationPreciseX on Duration {
     final minutesString = minutes.toString().padLeft(2, '0');
     final secondsString = seconds.toString().padLeft(2, '0');
     return '$hoursString$minutesString:$secondsString';
+  }
+
+  (int hours, int minutes) toReadableDuration() {
+    final hours = inHours;
+    final minutes = inMinutes.remainder(60);
+    return (hours, minutes);
   }
 }
 

@@ -22,8 +22,7 @@ class ServerTile extends ConsumerStatefulWidget {
   ConsumerState<ServerTile> createState() => _ServerTileState();
 }
 
-class _ServerTileState extends ConsumerState<ServerTile>
-    with SingleTickerProviderStateMixin {
+class _ServerTileState extends ConsumerState<ServerTile> {
   bool _expanded = false;
 
   @override
