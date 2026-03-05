@@ -9,6 +9,87 @@ part of 'audio_providers.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
+@ProviderFor(queue)
+final queueProvider = QueueProvider._();
+
+final class QueueProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<MediaItem>>,
+          List<MediaItem>,
+          Stream<List<MediaItem>>
+        >
+    with $FutureModifier<List<MediaItem>>, $StreamProvider<List<MediaItem>> {
+  QueueProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'queueProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$queueHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<MediaItem>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<MediaItem>> create(Ref ref) {
+    return queue(ref);
+  }
+}
+
+String _$queueHash() => r'e3257730a5d646c55c66051e4cc3b942cd5c09e6';
+
+@ProviderFor(audioHandlerEvents)
+final audioHandlerEventsProvider = AudioHandlerEventsProvider._();
+
+final class AudioHandlerEventsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<AudioHandlerEvent>,
+          AudioHandlerEvent,
+          Stream<AudioHandlerEvent>
+        >
+    with
+        $FutureModifier<AudioHandlerEvent>,
+        $StreamProvider<AudioHandlerEvent> {
+  AudioHandlerEventsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'audioHandlerEventsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$audioHandlerEventsHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<AudioHandlerEvent> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<AudioHandlerEvent> create(Ref ref) {
+    return audioHandlerEvents(ref);
+  }
+}
+
+String _$audioHandlerEventsHash() =>
+    r'9f1d9d8a0e644a276b50c846466bc05b8c338429';
+
 @ProviderFor(playbackState)
 final playbackStateProvider = PlaybackStateProvider._();
 
@@ -46,7 +127,7 @@ final class PlaybackStateProvider
   }
 }
 
-String _$playbackStateHash() => r'bd2f07e833076e09c869c569319f35513f62dadc';
+String _$playbackStateHash() => r'fb2b353a97b19a31b8060f60f312aab13ab0cbdd';
 
 @ProviderFor(processingState)
 final processingStateProvider = ProcessingStateProvider._();
@@ -93,7 +174,7 @@ final class ProcessingStateProvider
   }
 }
 
-String _$processingStateHash() => r'72b01f00eed52313b16eac9088e53a4c03eb18ee';
+String _$processingStateHash() => r'0f04b82bad3d9956ff74fb511e221553c8a75b80';
 
 @ProviderFor(isPlaying)
 final isPlayingProvider = IsPlayingProvider._();
@@ -133,7 +214,7 @@ final class IsPlayingProvider extends $FunctionalProvider<bool, bool, bool>
   }
 }
 
-String _$isPlayingHash() => r'c827c1eb13aab3d28de851e7c36678d0704ffed0';
+String _$isPlayingHash() => r'27909a8b37b348f87c3b6eed7f9aa66454c6fb36';
 
 @ProviderFor(currentMediaItem)
 final currentMediaItemProvider = CurrentMediaItemProvider._();
@@ -246,7 +327,7 @@ final class TotalDurationProvider
   }
 }
 
-String _$totalDurationHash() => r'25b4ae5b2682440d831eaa56e7db72db2dfdb1b8';
+String _$totalDurationHash() => r'ad8cd7bf01c938b51409190aa66f0fc5f1f9b9f4';
 
 @ProviderFor(AudioPlayerNotifier)
 final audioPlayerProvider = AudioPlayerNotifierProvider._();
@@ -273,7 +354,7 @@ final class AudioPlayerNotifierProvider
 }
 
 String _$audioPlayerNotifierHash() =>
-    r'af7a9a8d1e40a9395f5bc3995bfb53eebc0ffa81';
+    r'6d5034383f938cbf7db5e92a346ab3d4b85229a6';
 
 abstract class _$AudioPlayerNotifier extends $AsyncNotifier<void> {
   FutureOr<void> build();
@@ -293,28 +374,35 @@ abstract class _$AudioPlayerNotifier extends $AsyncNotifier<void> {
   }
 }
 
-@ProviderFor(AudioOrchestrator)
-final audioOrchestratorProvider = AudioOrchestratorProvider._();
+@ProviderFor(playerStateWatcher)
+final playerStateWatcherProvider = PlayerStateWatcherProvider._();
 
-final class AudioOrchestratorProvider
-    extends $NotifierProvider<AudioOrchestrator, void> {
-  AudioOrchestratorProvider._()
+final class PlayerStateWatcherProvider
+    extends $FunctionalProvider<void, void, void>
+    with $Provider<void> {
+  PlayerStateWatcherProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'audioOrchestratorProvider',
-        isAutoDispose: true,
+        name: r'playerStateWatcherProvider',
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$audioOrchestratorHash();
+  String debugGetCreateSourceHash() => _$playerStateWatcherHash();
 
   @$internal
   @override
-  AudioOrchestrator create() => AudioOrchestrator();
+  $ProviderElement<void> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  void create(Ref ref) {
+    return playerStateWatcher(ref);
+  }
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(void value) {
@@ -325,22 +413,47 @@ final class AudioOrchestratorProvider
   }
 }
 
-String _$audioOrchestratorHash() => r'4b24215ac325cc748dd3c1d326fadc9464adfe8e';
+String _$playerStateWatcherHash() =>
+    r'2b502b1e29ef70583405270e2542c019f67f8acf';
 
-abstract class _$AudioOrchestrator extends $Notifier<void> {
-  void build();
-  @$mustCallSuper
+@ProviderFor(audioSettingsWatcher)
+final audioSettingsWatcherProvider = AudioSettingsWatcherProvider._();
+
+final class AudioSettingsWatcherProvider
+    extends $FunctionalProvider<void, void, void>
+    with $Provider<void> {
+  AudioSettingsWatcherProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'audioSettingsWatcherProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
   @override
-  void runBuild() {
-    final ref = this.ref as $Ref<void, void>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<void, void>,
-              void,
-              Object?,
-              Object?
-            >;
-    element.handleCreate(ref, build);
+  String debugGetCreateSourceHash() => _$audioSettingsWatcherHash();
+
+  @$internal
+  @override
+  $ProviderElement<void> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  void create(Ref ref) {
+    return audioSettingsWatcher(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(void value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<void>(value),
+    );
   }
 }
+
+String _$audioSettingsWatcherHash() =>
+    r'c81d3d9bc2f48999677efda9e590480056ebc142';

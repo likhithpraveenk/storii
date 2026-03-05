@@ -12,7 +12,9 @@ sealed class MediaProgress with _$MediaProgress {
     String? episodeId,
     @DurationPreciseSecondsConverter() required Duration duration,
     double? progress,
-    @DurationPreciseSecondsConverter() required Duration currentTime,
+    @DurationPreciseSecondsConverter()
+    @JsonKey(readValue: readDuration)
+    required Duration currentTime,
     required bool isFinished,
     required bool hideFromContinueListening,
     @DateTimeEpochConverter() required DateTime lastUpdate,

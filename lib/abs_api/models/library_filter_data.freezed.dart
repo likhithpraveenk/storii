@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LibraryFilterData {
 
- List<Author> get authors; List<String> get genres; List<String> get tags; List<Series> get series; List<String> get narrators; List<String> get languages;
+ List<Author> get authors; List<String> get genres; List<String> get tags; List<Series> get series; List<String> get narrators; List<String> get languages; List<String> get publishers; List<String> get publishedDecades;
 /// Create a copy of LibraryFilterData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $LibraryFilterDataCopyWith<LibraryFilterData> get copyWith => _$LibraryFilterDat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryFilterData&&const DeepCollectionEquality().equals(other.authors, authors)&&const DeepCollectionEquality().equals(other.genres, genres)&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.series, series)&&const DeepCollectionEquality().equals(other.narrators, narrators)&&const DeepCollectionEquality().equals(other.languages, languages));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryFilterData&&const DeepCollectionEquality().equals(other.authors, authors)&&const DeepCollectionEquality().equals(other.genres, genres)&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.series, series)&&const DeepCollectionEquality().equals(other.narrators, narrators)&&const DeepCollectionEquality().equals(other.languages, languages)&&const DeepCollectionEquality().equals(other.publishers, publishers)&&const DeepCollectionEquality().equals(other.publishedDecades, publishedDecades));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(authors),const DeepCollectionEquality().hash(genres),const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(series),const DeepCollectionEquality().hash(narrators),const DeepCollectionEquality().hash(languages));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(authors),const DeepCollectionEquality().hash(genres),const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(series),const DeepCollectionEquality().hash(narrators),const DeepCollectionEquality().hash(languages),const DeepCollectionEquality().hash(publishers),const DeepCollectionEquality().hash(publishedDecades));
 
 @override
 String toString() {
-  return 'LibraryFilterData(authors: $authors, genres: $genres, tags: $tags, series: $series, narrators: $narrators, languages: $languages)';
+  return 'LibraryFilterData(authors: $authors, genres: $genres, tags: $tags, series: $series, narrators: $narrators, languages: $languages, publishers: $publishers, publishedDecades: $publishedDecades)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $LibraryFilterDataCopyWith<$Res>  {
   factory $LibraryFilterDataCopyWith(LibraryFilterData value, $Res Function(LibraryFilterData) _then) = _$LibraryFilterDataCopyWithImpl;
 @useResult
 $Res call({
- List<Author> authors, List<String> genres, List<String> tags, List<Series> series, List<String> narrators, List<String> languages
+ List<Author> authors, List<String> genres, List<String> tags, List<Series> series, List<String> narrators, List<String> languages, List<String> publishers, List<String> publishedDecades
 });
 
 
@@ -65,7 +65,7 @@ class _$LibraryFilterDataCopyWithImpl<$Res>
 
 /// Create a copy of LibraryFilterData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? authors = null,Object? genres = null,Object? tags = null,Object? series = null,Object? narrators = null,Object? languages = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? authors = null,Object? genres = null,Object? tags = null,Object? series = null,Object? narrators = null,Object? languages = null,Object? publishers = null,Object? publishedDecades = null,}) {
   return _then(_self.copyWith(
 authors: null == authors ? _self.authors : authors // ignore: cast_nullable_to_non_nullable
 as List<Author>,genres: null == genres ? _self.genres : genres // ignore: cast_nullable_to_non_nullable
@@ -73,6 +73,8 @@ as List<String>,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_
 as List<String>,series: null == series ? _self.series : series // ignore: cast_nullable_to_non_nullable
 as List<Series>,narrators: null == narrators ? _self.narrators : narrators // ignore: cast_nullable_to_non_nullable
 as List<String>,languages: null == languages ? _self.languages : languages // ignore: cast_nullable_to_non_nullable
+as List<String>,publishers: null == publishers ? _self.publishers : publishers // ignore: cast_nullable_to_non_nullable
+as List<String>,publishedDecades: null == publishedDecades ? _self.publishedDecades : publishedDecades // ignore: cast_nullable_to_non_nullable
 as List<String>,
   ));
 }
@@ -158,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Author> authors,  List<String> genres,  List<String> tags,  List<Series> series,  List<String> narrators,  List<String> languages)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Author> authors,  List<String> genres,  List<String> tags,  List<Series> series,  List<String> narrators,  List<String> languages,  List<String> publishers,  List<String> publishedDecades)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LibraryFilterData() when $default != null:
-return $default(_that.authors,_that.genres,_that.tags,_that.series,_that.narrators,_that.languages);case _:
+return $default(_that.authors,_that.genres,_that.tags,_that.series,_that.narrators,_that.languages,_that.publishers,_that.publishedDecades);case _:
   return orElse();
 
 }
@@ -179,10 +181,10 @@ return $default(_that.authors,_that.genres,_that.tags,_that.series,_that.narrato
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Author> authors,  List<String> genres,  List<String> tags,  List<Series> series,  List<String> narrators,  List<String> languages)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Author> authors,  List<String> genres,  List<String> tags,  List<Series> series,  List<String> narrators,  List<String> languages,  List<String> publishers,  List<String> publishedDecades)  $default,) {final _that = this;
 switch (_that) {
 case _LibraryFilterData():
-return $default(_that.authors,_that.genres,_that.tags,_that.series,_that.narrators,_that.languages);case _:
+return $default(_that.authors,_that.genres,_that.tags,_that.series,_that.narrators,_that.languages,_that.publishers,_that.publishedDecades);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +201,10 @@ return $default(_that.authors,_that.genres,_that.tags,_that.series,_that.narrato
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Author> authors,  List<String> genres,  List<String> tags,  List<Series> series,  List<String> narrators,  List<String> languages)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Author> authors,  List<String> genres,  List<String> tags,  List<Series> series,  List<String> narrators,  List<String> languages,  List<String> publishers,  List<String> publishedDecades)?  $default,) {final _that = this;
 switch (_that) {
 case _LibraryFilterData() when $default != null:
-return $default(_that.authors,_that.genres,_that.tags,_that.series,_that.narrators,_that.languages);case _:
+return $default(_that.authors,_that.genres,_that.tags,_that.series,_that.narrators,_that.languages,_that.publishers,_that.publishedDecades);case _:
   return null;
 
 }
@@ -214,7 +216,7 @@ return $default(_that.authors,_that.genres,_that.tags,_that.series,_that.narrato
 @JsonSerializable()
 
 class _LibraryFilterData implements LibraryFilterData {
-  const _LibraryFilterData({required final  List<Author> authors, required final  List<String> genres, required final  List<String> tags, required final  List<Series> series, required final  List<String> narrators, required final  List<String> languages}): _authors = authors,_genres = genres,_tags = tags,_series = series,_narrators = narrators,_languages = languages;
+  const _LibraryFilterData({required final  List<Author> authors, required final  List<String> genres, required final  List<String> tags, required final  List<Series> series, required final  List<String> narrators, required final  List<String> languages, required final  List<String> publishers, required final  List<String> publishedDecades}): _authors = authors,_genres = genres,_tags = tags,_series = series,_narrators = narrators,_languages = languages,_publishers = publishers,_publishedDecades = publishedDecades;
   factory _LibraryFilterData.fromJson(Map<String, dynamic> json) => _$LibraryFilterDataFromJson(json);
 
  final  List<Author> _authors;
@@ -259,6 +261,20 @@ class _LibraryFilterData implements LibraryFilterData {
   return EqualUnmodifiableListView(_languages);
 }
 
+ final  List<String> _publishers;
+@override List<String> get publishers {
+  if (_publishers is EqualUnmodifiableListView) return _publishers;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_publishers);
+}
+
+ final  List<String> _publishedDecades;
+@override List<String> get publishedDecades {
+  if (_publishedDecades is EqualUnmodifiableListView) return _publishedDecades;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_publishedDecades);
+}
+
 
 /// Create a copy of LibraryFilterData
 /// with the given fields replaced by the non-null parameter values.
@@ -273,16 +289,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryFilterData&&const DeepCollectionEquality().equals(other._authors, _authors)&&const DeepCollectionEquality().equals(other._genres, _genres)&&const DeepCollectionEquality().equals(other._tags, _tags)&&const DeepCollectionEquality().equals(other._series, _series)&&const DeepCollectionEquality().equals(other._narrators, _narrators)&&const DeepCollectionEquality().equals(other._languages, _languages));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryFilterData&&const DeepCollectionEquality().equals(other._authors, _authors)&&const DeepCollectionEquality().equals(other._genres, _genres)&&const DeepCollectionEquality().equals(other._tags, _tags)&&const DeepCollectionEquality().equals(other._series, _series)&&const DeepCollectionEquality().equals(other._narrators, _narrators)&&const DeepCollectionEquality().equals(other._languages, _languages)&&const DeepCollectionEquality().equals(other._publishers, _publishers)&&const DeepCollectionEquality().equals(other._publishedDecades, _publishedDecades));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_authors),const DeepCollectionEquality().hash(_genres),const DeepCollectionEquality().hash(_tags),const DeepCollectionEquality().hash(_series),const DeepCollectionEquality().hash(_narrators),const DeepCollectionEquality().hash(_languages));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_authors),const DeepCollectionEquality().hash(_genres),const DeepCollectionEquality().hash(_tags),const DeepCollectionEquality().hash(_series),const DeepCollectionEquality().hash(_narrators),const DeepCollectionEquality().hash(_languages),const DeepCollectionEquality().hash(_publishers),const DeepCollectionEquality().hash(_publishedDecades));
 
 @override
 String toString() {
-  return 'LibraryFilterData(authors: $authors, genres: $genres, tags: $tags, series: $series, narrators: $narrators, languages: $languages)';
+  return 'LibraryFilterData(authors: $authors, genres: $genres, tags: $tags, series: $series, narrators: $narrators, languages: $languages, publishers: $publishers, publishedDecades: $publishedDecades)';
 }
 
 
@@ -293,7 +309,7 @@ abstract mixin class _$LibraryFilterDataCopyWith<$Res> implements $LibraryFilter
   factory _$LibraryFilterDataCopyWith(_LibraryFilterData value, $Res Function(_LibraryFilterData) _then) = __$LibraryFilterDataCopyWithImpl;
 @override @useResult
 $Res call({
- List<Author> authors, List<String> genres, List<String> tags, List<Series> series, List<String> narrators, List<String> languages
+ List<Author> authors, List<String> genres, List<String> tags, List<Series> series, List<String> narrators, List<String> languages, List<String> publishers, List<String> publishedDecades
 });
 
 
@@ -310,7 +326,7 @@ class __$LibraryFilterDataCopyWithImpl<$Res>
 
 /// Create a copy of LibraryFilterData
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? authors = null,Object? genres = null,Object? tags = null,Object? series = null,Object? narrators = null,Object? languages = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? authors = null,Object? genres = null,Object? tags = null,Object? series = null,Object? narrators = null,Object? languages = null,Object? publishers = null,Object? publishedDecades = null,}) {
   return _then(_LibraryFilterData(
 authors: null == authors ? _self._authors : authors // ignore: cast_nullable_to_non_nullable
 as List<Author>,genres: null == genres ? _self._genres : genres // ignore: cast_nullable_to_non_nullable
@@ -318,6 +334,8 @@ as List<String>,tags: null == tags ? _self._tags : tags // ignore: cast_nullable
 as List<String>,series: null == series ? _self._series : series // ignore: cast_nullable_to_non_nullable
 as List<Series>,narrators: null == narrators ? _self._narrators : narrators // ignore: cast_nullable_to_non_nullable
 as List<String>,languages: null == languages ? _self._languages : languages // ignore: cast_nullable_to_non_nullable
+as List<String>,publishers: null == publishers ? _self._publishers : publishers // ignore: cast_nullable_to_non_nullable
+as List<String>,publishedDecades: null == publishedDecades ? _self._publishedDecades : publishedDecades // ignore: cast_nullable_to_non_nullable
 as List<String>,
   ));
 }

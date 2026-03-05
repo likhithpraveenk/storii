@@ -16,7 +16,7 @@ _MediaProgress _$MediaProgressFromJson(Map<String, dynamic> json) =>
       ),
       progress: (json['progress'] as num?)?.toDouble(),
       currentTime: const DurationPreciseSecondsConverter().fromJson(
-        json['currentTime'] as num,
+        readDuration(json, 'currentTime') as num,
       ),
       isFinished: json['isFinished'] as bool,
       hideFromContinueListening: json['hideFromContinueListening'] as bool,

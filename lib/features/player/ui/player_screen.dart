@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/app_styles.dart';
-import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
-import 'package:storii/features/player/logic/player_providers.dart';
+import 'package:storii/features/player/logic/session_sync_watcher.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/features/player/ui/full_player.dart';
 import 'package:storii/features/player/ui/hero_cover.dart';
@@ -28,7 +27,7 @@ class PlayerScreen extends ConsumerWidget {
         : (screenWidth - maxImgSize) / 2;
     final targetImgTop = isLandscape
         ? (screenHeight - maxImgSize) / 2
-        : screenHeight * 0.1;
+        : screenHeight * 0.08;
 
     final imgSizeDelta = maxImgSize - imgSizeInMiniPlayer;
     final imgLeftDelta = targetImgLeft - imgLeftPaddingInMiniPlayer;
@@ -37,14 +36,12 @@ class PlayerScreen extends ConsumerWidget {
     const miniInterval = Interval(0.0, 0.3);
     const fullInterval = Interval(0.6, 1.0);
 
-    ref.watch(audioOrchestratorProvider);
+    ref.watch(playerStateWatcherProvider);
+    ref.watch(sessionSyncWatcherProvider);
 
     return PlayerBuilder(
       maxHeight: screenHeight,
-      onDismiss: () async {
-        await audioHandler.stop();
-        await ref.read(userSettingsProvider.notifier).setActiveItemId(null);
-      },
+      onDismiss: () => audioHandler.stop(),
       builder: (context, f) {
         final miniOpacity = 1 - miniInterval.transform(f);
         final fullOpacity = fullInterval.transform(f);
@@ -93,37 +90,6 @@ class PlayerScreen extends ConsumerWidget {
               height: imgSize,
               child: HeroCover(expandFactor: f),
             ),
-            if (f > 0.7)
-              Positioned(
-                top: imgTop - 48,
-                left: 0,
-                right: 0,
-                child: SafeArea(
-                  child: Opacity(
-                    opacity: fullOpacity,
-                    child: Row(
-                      mainAxisAlignment: .spaceBetween,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          onPressed: () {
-                            ref.read(playerModeProvider.notifier).toMini();
-                          },
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.close),
-                          onPressed: () async {
-                            await audioHandler.stop();
-                            await ref
-                                .read(userSettingsProvider.notifier)
-                                .setActiveItemId(null);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
             if (f < 0.2)
               Positioned(
                 bottom: 0,

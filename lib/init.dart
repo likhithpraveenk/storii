@@ -10,8 +10,10 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/sessions_cleanup.dart';
 import 'package:storii/globals.dart';
 import 'package:storii/storage/hive/boxes.dart';
 import 'package:storii/storage/hive/hive_adapters.dart';
@@ -26,6 +28,7 @@ Future<void> setupHive() async {
     Hive.openBox<String>(userSettingsBox),
     Hive.openBox<UserDomain>(usersBox),
     Hive.openBox<Server>(serversBox),
+    Hive.openBox<String>(sessionIdBox),
   ]);
 }
 
@@ -44,14 +47,25 @@ Future<void> setupLicenses() async {
 Future<ProviderContainer> setupProviders() async {
   final container = ProviderContainer(overrides: ([]));
 
-  audioHandler = await setupAudioService(container);
   LogService.init(container);
+  audioHandler = await setupAudioService(container);
+
+  //! session cleanup
+  final settings = container.read(appSettingsProvider);
+  if (settings.currentUser != null) {
+    container.read(sessionsCleanupProvider.notifier).cleanup();
+  }
+
   return container;
 }
 
 Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
   return await AudioService.init(
-    builder: () => AppAudioHandler(container),
+    builder: () => AppAudioHandler(
+      speed: container.read(speedProvider),
+      getFastForward: () => container.read(fastForwardProvider),
+      getRewind: () => container.read(rewindProvider),
+    ),
     config: const AudioServiceConfig(
       androidNotificationChannelId: 'com.likhithpraveenk.storii.audio',
       androidNotificationChannelName: 'Audio Playback',

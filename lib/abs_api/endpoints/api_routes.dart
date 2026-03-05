@@ -43,11 +43,16 @@ class ApiRoutes {
   static const _itemDownload = '/api/items/:id/download';
   static const _itemMedia = '/api/items/:id/media';
   static const _itemCover = '/api/items/:id/cover';
+  static const _itemPlay = '/api/items/:id/play';
+  static const _itemPlayEpisode = '/api/items/:id/play/:episodeId';
 
   static String itemById(String id) => _build(_itemById, {'id': id});
   static String itemDownload(String id) => _build(_itemDownload, {'id': id});
   static String itemMedia(String id) => _build(_itemMedia, {'id': id});
   static String itemCover(String id) => _build(_itemCover, {'id': id});
+  static String itemPlay(String id) => _build(_itemPlay, {'id': id});
+  static String itemPlayEpisode(String id, String episodeId) =>
+      _build(_itemPlayEpisode, {'id': id, 'episodeId': episodeId});
 
   // Author
   static const _authorById = '/api/authors/:id';
@@ -90,14 +95,16 @@ class ApiRoutes {
   //
   static const sessions = '/api/sessions';
   static const sessionOpen = '/api/sessions/open';
-  static const sessionBatchDelete = '/api/sessions/batch/delete';
   static const sessionLocal = '/api/session/local';
   static const sessionLocalAll = '/api/session/local-all';
-  static const _sessionById = '/api/sessions/:id';
+  static const _sessionById = '/api/session/:id';
   static const _sessionSync = '/api/session/:id/sync';
   static const _sessionClose = '/api/session/:id/close';
+  static const _sessionOpenTrack = '/public/session/:id/track/:index';
 
   static String sessionById(String id) => _build(_sessionById, {'id': id});
   static String sessionSync(String id) => _build(_sessionSync, {'id': id});
   static String sessionClose(String id) => _build(_sessionClose, {'id': id});
+  static String sessionOpenTrack(String id, String index) =>
+      _build(_sessionOpenTrack, {'id': id, 'index': index});
 }

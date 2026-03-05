@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MediaProgress {
 
- String get id; String get libraryItemId; String? get episodeId;@DurationPreciseSecondsConverter() Duration get duration; double? get progress;@DurationPreciseSecondsConverter() Duration get currentTime; bool get isFinished; bool get hideFromContinueListening;@DateTimeEpochConverter() DateTime get lastUpdate;@DateTimeEpochConverter() DateTime get startedAt;@DateTimeEpochConverter() DateTime? get finishedAt;
+ String get id; String get libraryItemId; String? get episodeId;@DurationPreciseSecondsConverter() Duration get duration; double? get progress;@DurationPreciseSecondsConverter()@JsonKey(readValue: readDuration) Duration get currentTime; bool get isFinished; bool get hideFromContinueListening;@DateTimeEpochConverter() DateTime get lastUpdate;@DateTimeEpochConverter() DateTime get startedAt;@DateTimeEpochConverter() DateTime? get finishedAt;
 /// Create a copy of MediaProgress
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $MediaProgressCopyWith<$Res>  {
   factory $MediaProgressCopyWith(MediaProgress value, $Res Function(MediaProgress) _then) = _$MediaProgressCopyWithImpl;
 @useResult
 $Res call({
- String id, String libraryItemId, String? episodeId,@DurationPreciseSecondsConverter() Duration duration, double? progress,@DurationPreciseSecondsConverter() Duration currentTime, bool isFinished, bool hideFromContinueListening,@DateTimeEpochConverter() DateTime lastUpdate,@DateTimeEpochConverter() DateTime startedAt,@DateTimeEpochConverter() DateTime? finishedAt
+ String id, String libraryItemId, String? episodeId,@DurationPreciseSecondsConverter() Duration duration, double? progress,@DurationPreciseSecondsConverter()@JsonKey(readValue: readDuration) Duration currentTime, bool isFinished, bool hideFromContinueListening,@DateTimeEpochConverter() DateTime lastUpdate,@DateTimeEpochConverter() DateTime startedAt,@DateTimeEpochConverter() DateTime? finishedAt
 });
 
 
@@ -160,7 +160,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String libraryItemId,  String? episodeId, @DurationPreciseSecondsConverter()  Duration duration,  double? progress, @DurationPreciseSecondsConverter()  Duration currentTime,  bool isFinished,  bool hideFromContinueListening, @DateTimeEpochConverter()  DateTime lastUpdate, @DateTimeEpochConverter()  DateTime startedAt, @DateTimeEpochConverter()  DateTime? finishedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String libraryItemId,  String? episodeId, @DurationPreciseSecondsConverter()  Duration duration,  double? progress, @DurationPreciseSecondsConverter()@JsonKey(readValue: readDuration)  Duration currentTime,  bool isFinished,  bool hideFromContinueListening, @DateTimeEpochConverter()  DateTime lastUpdate, @DateTimeEpochConverter()  DateTime startedAt, @DateTimeEpochConverter()  DateTime? finishedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MediaProgress() when $default != null:
 return $default(_that.id,_that.libraryItemId,_that.episodeId,_that.duration,_that.progress,_that.currentTime,_that.isFinished,_that.hideFromContinueListening,_that.lastUpdate,_that.startedAt,_that.finishedAt);case _:
@@ -181,7 +181,7 @@ return $default(_that.id,_that.libraryItemId,_that.episodeId,_that.duration,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String libraryItemId,  String? episodeId, @DurationPreciseSecondsConverter()  Duration duration,  double? progress, @DurationPreciseSecondsConverter()  Duration currentTime,  bool isFinished,  bool hideFromContinueListening, @DateTimeEpochConverter()  DateTime lastUpdate, @DateTimeEpochConverter()  DateTime startedAt, @DateTimeEpochConverter()  DateTime? finishedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String libraryItemId,  String? episodeId, @DurationPreciseSecondsConverter()  Duration duration,  double? progress, @DurationPreciseSecondsConverter()@JsonKey(readValue: readDuration)  Duration currentTime,  bool isFinished,  bool hideFromContinueListening, @DateTimeEpochConverter()  DateTime lastUpdate, @DateTimeEpochConverter()  DateTime startedAt, @DateTimeEpochConverter()  DateTime? finishedAt)  $default,) {final _that = this;
 switch (_that) {
 case _MediaProgress():
 return $default(_that.id,_that.libraryItemId,_that.episodeId,_that.duration,_that.progress,_that.currentTime,_that.isFinished,_that.hideFromContinueListening,_that.lastUpdate,_that.startedAt,_that.finishedAt);}
@@ -198,7 +198,7 @@ return $default(_that.id,_that.libraryItemId,_that.episodeId,_that.duration,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String libraryItemId,  String? episodeId, @DurationPreciseSecondsConverter()  Duration duration,  double? progress, @DurationPreciseSecondsConverter()  Duration currentTime,  bool isFinished,  bool hideFromContinueListening, @DateTimeEpochConverter()  DateTime lastUpdate, @DateTimeEpochConverter()  DateTime startedAt, @DateTimeEpochConverter()  DateTime? finishedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String libraryItemId,  String? episodeId, @DurationPreciseSecondsConverter()  Duration duration,  double? progress, @DurationPreciseSecondsConverter()@JsonKey(readValue: readDuration)  Duration currentTime,  bool isFinished,  bool hideFromContinueListening, @DateTimeEpochConverter()  DateTime lastUpdate, @DateTimeEpochConverter()  DateTime startedAt, @DateTimeEpochConverter()  DateTime? finishedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _MediaProgress() when $default != null:
 return $default(_that.id,_that.libraryItemId,_that.episodeId,_that.duration,_that.progress,_that.currentTime,_that.isFinished,_that.hideFromContinueListening,_that.lastUpdate,_that.startedAt,_that.finishedAt);case _:
@@ -213,7 +213,7 @@ return $default(_that.id,_that.libraryItemId,_that.episodeId,_that.duration,_tha
 @JsonSerializable()
 
 class _MediaProgress implements MediaProgress {
-  const _MediaProgress({required this.id, required this.libraryItemId, this.episodeId, @DurationPreciseSecondsConverter() required this.duration, this.progress, @DurationPreciseSecondsConverter() required this.currentTime, required this.isFinished, required this.hideFromContinueListening, @DateTimeEpochConverter() required this.lastUpdate, @DateTimeEpochConverter() required this.startedAt, @DateTimeEpochConverter() this.finishedAt});
+  const _MediaProgress({required this.id, required this.libraryItemId, this.episodeId, @DurationPreciseSecondsConverter() required this.duration, this.progress, @DurationPreciseSecondsConverter()@JsonKey(readValue: readDuration) required this.currentTime, required this.isFinished, required this.hideFromContinueListening, @DateTimeEpochConverter() required this.lastUpdate, @DateTimeEpochConverter() required this.startedAt, @DateTimeEpochConverter() this.finishedAt});
   factory _MediaProgress.fromJson(Map<String, dynamic> json) => _$MediaProgressFromJson(json);
 
 @override final  String id;
@@ -221,7 +221,7 @@ class _MediaProgress implements MediaProgress {
 @override final  String? episodeId;
 @override@DurationPreciseSecondsConverter() final  Duration duration;
 @override final  double? progress;
-@override@DurationPreciseSecondsConverter() final  Duration currentTime;
+@override@DurationPreciseSecondsConverter()@JsonKey(readValue: readDuration) final  Duration currentTime;
 @override final  bool isFinished;
 @override final  bool hideFromContinueListening;
 @override@DateTimeEpochConverter() final  DateTime lastUpdate;
@@ -261,7 +261,7 @@ abstract mixin class _$MediaProgressCopyWith<$Res> implements $MediaProgressCopy
   factory _$MediaProgressCopyWith(_MediaProgress value, $Res Function(_MediaProgress) _then) = __$MediaProgressCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String libraryItemId, String? episodeId,@DurationPreciseSecondsConverter() Duration duration, double? progress,@DurationPreciseSecondsConverter() Duration currentTime, bool isFinished, bool hideFromContinueListening,@DateTimeEpochConverter() DateTime lastUpdate,@DateTimeEpochConverter() DateTime startedAt,@DateTimeEpochConverter() DateTime? finishedAt
+ String id, String libraryItemId, String? episodeId,@DurationPreciseSecondsConverter() Duration duration, double? progress,@DurationPreciseSecondsConverter()@JsonKey(readValue: readDuration) Duration currentTime, bool isFinished, bool hideFromContinueListening,@DateTimeEpochConverter() DateTime lastUpdate,@DateTimeEpochConverter() DateTime startedAt,@DateTimeEpochConverter() DateTime? finishedAt
 });
 
 

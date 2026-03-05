@@ -34,6 +34,9 @@ sealed class Filter {
       .feedOpen => const FeedOpenFilter(),
       .explicit => const ExplicitFilter(),
       .abridged => const AbridgedFilter(),
+      .publishers => PublishersFilter(value),
+      .publishedDecade => PublishedDecadeFilter(value),
+      .ebooks => EbooksFilter(EbooksFilterValue.byName[value]!),
     };
   }
 
@@ -58,11 +61,14 @@ enum FilterGroup {
   tags('tags'),
   series('series'),
   authors('authors'),
+  publishers('publishers'),
+  publishedDecade('publishedDecades'),
   progress('progress'),
   narrators('narrators'),
   missing('missing'),
   languages('languages'),
   tracks('tracks'),
+  ebooks('ebooks'),
   issues('issues'),
   feedOpen('feed-open'),
   abridged('abridged'),
@@ -147,10 +153,37 @@ class TracksFilter extends Filter {
   TracksFilter(TracksFilterValue value) : super(.tracks, value.name);
 }
 
-enum TracksFilterValue { single, multi }
+enum TracksFilterValue { none, single, multi }
 
 class IssuesFilter extends Filter {
   const IssuesFilter() : super(.issues);
+}
+
+enum EbooksFilterValue {
+  ebook('ebook'),
+  noEbook('no-ebook'),
+  supplementary('supplementary'),
+  noSupplementary('no-supplementary');
+
+  static final byName = {
+    for (final value in EbooksFilterValue.values) value.name: value,
+  };
+
+  final String name;
+
+  const EbooksFilterValue(this.name);
+}
+
+class EbooksFilter extends Filter {
+  EbooksFilter(EbooksFilterValue value) : super(.ebooks, value.name);
+}
+
+class PublishersFilter extends Filter {
+  const PublishersFilter(String publisher) : super(.publishers, publisher);
+}
+
+class PublishedDecadeFilter extends Filter {
+  const PublishedDecadeFilter(String decade) : super(.publishedDecade, decade);
 }
 
 class FeedOpenFilter extends Filter {

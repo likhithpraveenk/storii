@@ -11,7 +11,7 @@ class SessionsApi {
 
   final ApiClient api;
 
-  Future<SessionsResponse?> getAll({
+  Future<SessionsResponse?> getAllSessions({
     String? userId,
     int itemsPerPage = 10,
     int page = 10,
@@ -24,7 +24,7 @@ class SessionsApi {
     return fromJson(response.data, SessionsResponse.fromJson);
   }
 
-  Future<void> delete({required String sessionId}) async {
+  Future<void> deleteSession({required String sessionId}) async {
     await api.request(ApiRoutes.sessionById(sessionId), method: .delete);
   }
 
@@ -32,7 +32,7 @@ class SessionsApi {
     await api.request(
       ApiRoutes.sessionLocal,
       method: .post,
-      body: localSession,
+      body: localSession.toJson(),
     );
   }
 
@@ -51,7 +51,7 @@ class SessionsApi {
     );
   }
 
-  Future<PlaybackSession> getOpen({required String sessionId}) async {
+  Future<PlaybackSession> getSession({required String sessionId}) async {
     final response = await api.request(
       ApiRoutes.sessionById(sessionId),
       method: .get,
@@ -59,25 +59,25 @@ class SessionsApi {
     return fromJson(response.data, PlaybackSession.fromJson);
   }
 
-  Future<void> syncOpen({
+  Future<void> syncSession({
     required String sessionId,
-    required SyncSessionRequestParams parameters,
+    required SyncSessionRequestParams params,
   }) async {
     await api.request(
       ApiRoutes.sessionSync(sessionId),
       method: .post,
-      body: parameters.toJson(),
+      body: params.toJson(),
     );
   }
 
-  Future<void> closeOpen({
+  Future<void> closeSession({
     required String sessionId,
-    SyncSessionRequestParams? parameters,
+    SyncSessionRequestParams? params,
   }) async {
     await api.request(
       ApiRoutes.sessionClose(sessionId),
       method: .post,
-      body: parameters?.toJson(),
+      body: params?.toJson(),
     );
   }
 }

@@ -27,6 +27,7 @@ export 'login_response.dart';
 export 'media.dart';
 export 'media_metadata.dart';
 export 'media_progress.dart';
+export 'play_item_request_params.dart';
 export 'playback_session.dart';
 export 'podcast_episode.dart';
 export 'podcast_episode_download.dart';

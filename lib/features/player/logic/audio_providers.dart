@@ -1,41 +1,55 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
-import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
-import 'package:storii/features/player/logic/to_media_items.dart';
-import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/features/player/logic/session_extensions.dart';
+import 'package:storii/features/player/logic/session_notifier.dart';
+import 'package:storii/shared/helpers/app_error.dart';
 
 part 'audio_providers.g.dart';
 
 late final AppAudioHandler audioHandler;
 
 @riverpod
+Stream<List<MediaItem>> queue(Ref ref) {
+  return audioHandler.queue;
+}
+
+@riverpod
+Stream<AudioHandlerEvent> audioHandlerEvents(Ref ref) {
+  return audioHandler.events.map((event) {
+    log('Handler: $event');
+    return event;
+  });
+}
+
+@riverpod
 Stream<PlaybackState> playbackState(Ref ref) {
-  return audioHandler.playbackState;
+  return audioHandler.playbackState.map((state) {
+    // log('playbackState: $state');
+    return state;
+  });
 }
 
 @riverpod
 AudioProcessingState processingState(Ref ref) {
   return ref.watch(
-    playbackStateProvider.select(
-      (state) => state.value?.processingState ?? AudioProcessingState.idle,
-    ),
+    playbackStateProvider.select((s) => s.value?.processingState ?? .idle),
   );
 }
 
 @riverpod
 bool isPlaying(Ref ref) {
   return ref.watch(
-    playbackStateProvider.select((state) => state.value?.playing == true),
+    playbackStateProvider.select((s) => s.value?.playing == true),
   );
 }
 
@@ -51,10 +65,10 @@ Stream<Duration> globalPosition(Ref ref) {
 
 @riverpod
 Duration totalDuration(Ref ref) {
-  final items = audioHandler.queue.value;
+  final items = ref.watch(queueProvider).value ?? const <MediaItem>[];
   if (items.isEmpty) return Duration.zero;
-  final durationInSec = items.first.extras?['totalDuration'] as double? ?? 0.0;
-  return durationInSec.toDuration;
+  final totalDuration = items.first.extras!['totalDuration'] as Duration;
+  return totalDuration;
 }
 
 @Riverpod(keepAlive: true)
@@ -62,109 +76,54 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
   @override
   FutureOr<void> build() => null;
 
-  Future<void> play(String id) async {
+  Future<void> play(String itemId, [String? episodeId]) async {
     state = const AsyncLoading();
+    try {
+      final user = await ref.read(authenticatedUserProvider.future);
+      final token = await ref.read(tokenProvider).getAccessToken(user.id);
 
-    state =
-        await AsyncValue.guard(() async {
-          final user = await ref.read(authenticatedUserProvider.future);
-          final token = await ref.read(tokenProvider).getAccessToken(user.id);
-          final item = await ref.read(itemDetailProvider(id).future);
+      final session = await ref
+          .read(sessionProvider.notifier)
+          .open(itemId: itemId, episodeId: episodeId);
 
-          final (index, offset) = item.getIndexAndOffset();
-          final mediaItems = item.toMediaItems(user.serverUrl);
+      final (int index, Duration position) = session.getIndexAndOffset();
+      final sources = session.toAudioSources(user.serverUrl, token);
 
-          final sources = mediaItems.map((mediaItem) {
-            return AudioSource.uri(
-              user.serverUrl.resolve(mediaItem.id),
-              headers: {'Authorization': 'Bearer $token'},
-              tag: mediaItem,
-            );
-          }).toList();
-          await audioHandler.setSources(
-            sources,
-            initialIndex: index,
-            initialPosition: offset,
-          );
+      await audioHandler.setSources(
+        sources,
+        initialIndex: index,
+        initialPosition: position,
+      );
+      await audioHandler.play();
 
-          await audioHandler.play();
-        }).onError((e, st) {
-          LogService.log(
-            'error playing item: $e',
-            level: .error,
-            source: 'AudioPlayerNotifier',
-          );
-          return AsyncValue.error('$e', st);
-        });
+      state = const AsyncData(null);
+    } catch (e, st) {
+      final error = AppError.resolve(e);
+      LogService.log(
+        'playing failed: $error',
+        source: 'AudioPlayerNotifier',
+        stackTrace: st,
+      );
+      state = AsyncError(error, st);
+      throw error;
+    }
   }
 }
 
-// @riverpod
-// class SaveProgress extends _$SaveProgress {
-//   int _lastSavedSecond = -1;
-//   String? _lastTrackId;
+@Riverpod(keepAlive: true)
+void playerStateWatcher(Ref ref) {
+  ref.listen(processingStateProvider, (_, next) {
+    if (next == .loading) {
+      ref.read(playerModeProvider.notifier).toMini();
+    } else if (next == .idle) {
+      ref.read(playerHeightProvider.notifier).snapTo(.hidden);
+    }
+  });
+}
 
-//   @override
-//   FutureOr<void> build() async {
-//     final handler = ref.watch(audioHandlerProvider);
-//     final globalPos =
-//         ref.watch(lowResPositionProvider).value ?? Duration.zero;
-//     final currentItem = handler.mediaItem.value;
-//     final isPlaying = handler.playbackState.value.playing;
-//     final processingState = handler.playbackState.value.processingState;
-
-//     final currentSecond = globalPos.inSeconds;
-//     final bookId = currentItem?.extras?['itemId'];
-//     final trackId = currentItem?.id;
-
-//     if (bookId == null) return;
-
-//     final isHeartbeat =
-//         currentSecond % 5 == 0 && currentSecond != _lastSavedSecond;
-//     final isTrackChanged = _lastTrackId != null && _lastTrackId != trackId;
-//     final isFinished = processingState == .completed;
-
-//     if (isPlaying && (isHeartbeat || isTrackChanged || isFinished)) {
-//       _lastSavedSecond = currentSecond;
-//       _lastTrackId = trackId;
-//       unawaited(_saveProgress(bookId, globalPos));
-//     }
-//   }
-
-//   Future<void> _saveProgress(String id, Duration pos) async {
-//     // final db =
-//     ref.read(databaseProvider);
-//     // await db.updateProgress(currentBookId, pos);
-//     LogService.log(
-//       'Saving progress for $id at ${pos.inSeconds}s',
-//       source: 'SaveProgress',
-//       level: .debug,
-//     );
-//   }
-// }
-
-@riverpod
-class AudioOrchestrator extends _$AudioOrchestrator {
-  @override
-  void build() {
-    ref.listen(activeItemIdProvider, (prev, next) {
-      if (next != null) {
-        ref.read(audioPlayerProvider.notifier).play(next);
-      }
-    });
-
-    ref.listen(processingStateProvider, (prev, next) async {
-      if (next == .loading) {
-        ref.read(playerModeProvider.notifier).toMini();
-        final activeItemId = ref.read(activeItemIdProvider);
-        if (activeItemId == null) {
-          final mediaItem = ref.read(currentMediaItemProvider).value;
-          final id = mediaItem?.extras?['itemId'] as String?;
-          await ref.read(userSettingsProvider.notifier).setActiveItemId(id);
-        }
-      } else if (next == .idle) {
-        ref.read(playerHeightProvider.notifier).snapTo(.hidden);
-      }
-    });
-  }
+@Riverpod(keepAlive: true)
+void audioSettingsWatcher(Ref ref) {
+  ref.listen(speedProvider, (_, next) {
+    audioHandler.setSpeed(next);
+  });
 }

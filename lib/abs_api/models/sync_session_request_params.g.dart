@@ -15,5 +15,4 @@ Map<String, dynamic> _$SyncSessionRequestParamsToJson(
   'timeListened': const DurationPreciseSecondsConverter().toJson(
     instance.timeListened,
   ),
-  'duration': const DurationPreciseSecondsConverter().toJson(instance.duration),
 };

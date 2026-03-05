@@ -37,30 +37,30 @@ enum AudiobookSort implements EnumHasValue {
   String getDisplayString(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return switch (this) {
-      title => l10n.sortTitle,
-      authorName => l10n.sortAuthor,
-      authorNameLF => l10n.sortAuthorLastFirst,
-      addedAt => l10n.sortAddedAt,
-      publishedYear => l10n.sortPublishedYear,
-      size => l10n.sortSize,
-      duration => l10n.sortDuration,
-      fileBirthtime => l10n.sortFileBirthtime,
-      fileModified => l10n.sortFileModified,
-      progressLastUpdated => l10n.sortProgressUpdated,
-      progressStartedAt => l10n.sortProgressStarted,
-      progressFinishedAt => l10n.sortProgressFinished,
-      random => l10n.sortRandom,
+      title => l10n.title,
+      authorName => l10n.author,
+      authorNameLF => l10n.authorLastFirst,
+      addedAt => l10n.dateAdded,
+      publishedYear => l10n.publishedYear,
+      size => l10n.size,
+      duration => l10n.duration,
+      fileBirthtime => l10n.fileCreatedDate,
+      fileModified => l10n.fileModifiedDate,
+      progressLastUpdated => l10n.lastPlayed,
+      progressStartedAt => l10n.dateStarted,
+      progressFinishedAt => l10n.dateFinished,
+      random => l10n.random,
     };
   }
 }
 
 enum SeriesSort implements EnumHasValue {
-  numBooks('numBooks'),
-  addedAt('addedAt'),
   name('name'),
-  totalDuration('totalDuration'),
+  addedAt('addedAt'),
   lastBookAdded('lastBookAdded'),
   lastBookUpdated('lastBookUpdated'),
+  totalDuration('totalDuration'),
+  numBooks('numBooks'),
   random('random');
 
   @override
@@ -71,13 +71,13 @@ enum SeriesSort implements EnumHasValue {
   String getDisplayString(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return switch (this) {
-      numBooks => l10n.sortNumBooks,
-      addedAt => l10n.sortAddedAt,
-      name => l10n.sortName,
-      totalDuration => l10n.sortDuration,
-      lastBookAdded => l10n.sortLastBookAdded,
-      lastBookUpdated => l10n.sortLastBookUpdated,
-      random => l10n.sortRandom,
+      numBooks => l10n.numOfBooks,
+      addedAt => l10n.dateAdded,
+      name => l10n.name,
+      totalDuration => l10n.duration,
+      lastBookAdded => l10n.lastBookAdded,
+      lastBookUpdated => l10n.lastBookUpdated,
+      random => l10n.random,
     };
   }
 }
@@ -97,11 +97,11 @@ enum AuthorSort implements EnumHasValue {
   String getDisplayString(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return switch (this) {
-      name => l10n.sortName,
-      lastFirst => l10n.sortLastFirst,
-      addedAt => l10n.sortAddedAt,
-      updatedAt => l10n.sortUpdatedAt,
-      numBooks => l10n.sortNumBooks,
+      name => l10n.name,
+      lastFirst => l10n.lastFirst,
+      addedAt => l10n.dateAdded,
+      updatedAt => l10n.lastUpdated,
+      numBooks => l10n.numOfBooks,
     };
   }
 }
@@ -124,14 +124,14 @@ enum PodcastSort implements EnumHasValue {
   String getDisplayString(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return switch (this) {
-      addedAt => l10n.sortAddedAt,
-      size => l10n.sortSize,
-      birthtime => l10n.sortFileBirthtime,
-      mtime => l10n.sortFileModified,
-      author => l10n.sortAuthor,
-      title => l10n.sortTitle,
-      numEpisodes => l10n.sortNumEpisodes,
-      random => l10n.sortRandom,
+      addedAt => l10n.dateAdded,
+      size => l10n.size,
+      birthtime => l10n.fileCreatedDate,
+      mtime => l10n.fileModifiedDate,
+      author => l10n.author,
+      title => l10n.title,
+      numEpisodes => l10n.numOfEpisodes,
+      random => l10n.random,
     };
   }
 }
@@ -141,66 +141,73 @@ enum FilterAudiobooks {
   tag,
   author,
   series,
-  status;
-
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-    return switch (this) {
-      genre => l.filterGenre,
-      tag => l.filterTag,
-      author => l.filterAuthor,
-      series => l.filterSeries,
-      status => l.filterStatus,
-    };
-  }
+  narrator,
+  publishers,
+  publishedDecade,
+  language,
+  progress,
+  missing,
+  tracks,
+  abridged,
+  explicit,
+  ebooks,
+  issues,
+  feedOpen;
 
   FilterGroup get group => switch (this) {
     genre => .genres,
     tag => .tags,
     author => .authors,
     series => .series,
-    status => .progress,
+    progress => .progress,
+    narrator => .narrators,
+    publishers => .publishers,
+    publishedDecade => .publishedDecade,
+    language => .languages,
+    missing => .missing,
+    tracks => .tracks,
+    abridged => .abridged,
+    explicit => .explicit,
+    ebooks => .ebooks,
+    issues => .issues,
+    feedOpen => .feedOpen,
   };
 }
 
 enum FilterPodcasts {
   genre,
   tag,
-  language;
-
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-    return switch (this) {
-      genre => l.filterGenre,
-      tag => l.filterTag,
-      language => l.filterLanguage,
-    };
-  }
+  language,
+  issues,
+  explicit,
+  feedOpen;
 
   FilterGroup get group => switch (this) {
     genre => .genres,
     tag => .tags,
     language => .languages,
+    issues => .issues,
+    feedOpen => .feedOpen,
+    explicit => .explicit,
   };
 }
 
 enum FilterSeries {
   genre,
   tag,
-  status;
-
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-    return switch (this) {
-      genre => l.filterGenre,
-      tag => l.filterTag,
-      status => l.filterStatus,
-    };
-  }
+  progress,
+  author,
+  narrator,
+  publishers,
+  language;
 
   FilterGroup get group => switch (this) {
     genre => .genres,
     tag => .tags,
-    status => .progress,
+    progress => .progress,
+    author => .authors,
+    narrator => .narrators,
+    publishers => .publishers,
+    language => .languages,
   };
 }

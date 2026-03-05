@@ -24,6 +24,12 @@ _LibraryFilterData _$LibraryFilterDataFromJson(Map<String, dynamic> json) =>
       languages: (json['languages'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      publishers: (json['publishers'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      publishedDecades: (json['publishedDecades'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$LibraryFilterDataToJson(_LibraryFilterData instance) =>
@@ -34,4 +40,6 @@ Map<String, dynamic> _$LibraryFilterDataToJson(_LibraryFilterData instance) =>
       'series': instance.series.map((e) => e.toJson()).toList(),
       'narrators': instance.narrators,
       'languages': instance.languages,
+      'publishers': instance.publishers,
+      'publishedDecades': instance.publishedDecades,
     };

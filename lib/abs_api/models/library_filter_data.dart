@@ -14,6 +14,8 @@ abstract class LibraryFilterData with _$LibraryFilterData {
     required List<Series> series,
     required List<String> narrators,
     required List<String> languages,
+    required List<String> publishers,
+    required List<String> publishedDecades,
   }) = _LibraryFilterData;
 
   factory LibraryFilterData.fromJson(Map<String, dynamic> json) =>
