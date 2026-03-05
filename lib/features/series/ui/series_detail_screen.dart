@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/series/logic/series_provider.dart';
-import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/helpers/model_extensions.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/expandable_text.dart';
 import 'package:storii/shared/widgets/waveform.dart';

@@ -13,7 +13,7 @@ class AuthorCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
-      onTap: () => context.push(AppRoute.authorDetail.withId(author.id)),
+      onTap: () => context.push(AppRoute.authorDetail.path, extra: author.id),
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       child: Column(
@@ -63,7 +63,7 @@ class AuthorCardListView extends ConsumerWidget {
 
     return ListTile(
       contentPadding: const .fromLTRB(16, 8, 16, 8),
-      onTap: () => context.push(AppRoute.authors.withId(author.id)),
+      onTap: () => context.push(AppRoute.authorDetail.path, extra: author.id),
       leading: AspectRatio(
         aspectRatio: 1,
         child: ClipRRect(

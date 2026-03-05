@@ -131,7 +131,7 @@ class SeriesSection extends StatelessWidget {
           title: series.name,
           count: books.length,
           onViewAll: () =>
-              context.push(AppRoute.seriesDetail.withId(series.id)),
+              context.push(AppRoute.seriesDetail.path, extra: series.id),
         ),
         HorizontalBooksCarousel(books: books),
         const SizedBox(height: 16),

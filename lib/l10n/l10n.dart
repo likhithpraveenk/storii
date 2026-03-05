@@ -358,6 +358,12 @@ abstract class AppLocalizations {
   /// **'Play'**
   String get play;
 
+  /// No description provided for @pause.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get pause;
+
   /// No description provided for @replay.
   ///
   /// In en, this message translates to:
@@ -586,125 +592,149 @@ abstract class AppLocalizations {
   /// **'View All'**
   String get viewAll;
 
-  /// No description provided for @sortTitle.
+  /// No description provided for @title.
   ///
   /// In en, this message translates to:
   /// **'Title'**
-  String get sortTitle;
+  String get title;
 
-  /// No description provided for @sortAuthor.
+  /// No description provided for @author.
   ///
   /// In en, this message translates to:
   /// **'Author'**
-  String get sortAuthor;
+  String get author;
 
-  /// No description provided for @sortAuthorLastFirst.
+  /// No description provided for @authorLastFirst.
   ///
   /// In en, this message translates to:
   /// **'Author (Last, First)'**
-  String get sortAuthorLastFirst;
+  String get authorLastFirst;
 
-  /// No description provided for @sortAddedAt.
+  /// No description provided for @dateAdded.
   ///
   /// In en, this message translates to:
   /// **'Date Added'**
-  String get sortAddedAt;
+  String get dateAdded;
 
-  /// No description provided for @sortPublishedYear.
+  /// No description provided for @publishedYear.
   ///
   /// In en, this message translates to:
   /// **'Published Year'**
-  String get sortPublishedYear;
+  String get publishedYear;
 
-  /// No description provided for @sortSize.
+  /// No description provided for @size.
   ///
   /// In en, this message translates to:
   /// **'Size'**
-  String get sortSize;
+  String get size;
 
-  /// No description provided for @sortDuration.
+  /// No description provided for @duration.
   ///
   /// In en, this message translates to:
   /// **'Duration'**
-  String get sortDuration;
+  String get duration;
 
-  /// No description provided for @sortFileBirthtime.
+  /// No description provided for @fileCreatedDate.
   ///
   /// In en, this message translates to:
   /// **'File Created Date'**
-  String get sortFileBirthtime;
+  String get fileCreatedDate;
 
-  /// No description provided for @sortFileModified.
+  /// No description provided for @fileModifiedDate.
   ///
   /// In en, this message translates to:
   /// **'File Modified Date'**
-  String get sortFileModified;
+  String get fileModifiedDate;
 
-  /// No description provided for @sortProgressUpdated.
+  /// No description provided for @lastPlayed.
   ///
   /// In en, this message translates to:
   /// **'Last Played'**
-  String get sortProgressUpdated;
+  String get lastPlayed;
 
-  /// No description provided for @sortProgressStarted.
+  /// No description provided for @dateStarted.
   ///
   /// In en, this message translates to:
   /// **'Date Started'**
-  String get sortProgressStarted;
+  String get dateStarted;
 
-  /// No description provided for @sortProgressFinished.
+  /// No description provided for @dateFinished.
   ///
   /// In en, this message translates to:
   /// **'Date Finished'**
-  String get sortProgressFinished;
+  String get dateFinished;
 
-  /// No description provided for @sortRandom.
+  /// No description provided for @random.
   ///
   /// In en, this message translates to:
   /// **'Random'**
-  String get sortRandom;
+  String get random;
 
-  /// No description provided for @sortNumBooks.
+  /// No description provided for @numOfBooks.
   ///
   /// In en, this message translates to:
   /// **'Number of Books'**
-  String get sortNumBooks;
+  String get numOfBooks;
 
-  /// No description provided for @sortName.
+  /// No description provided for @name.
   ///
   /// In en, this message translates to:
   /// **'Name'**
-  String get sortName;
+  String get name;
 
-  /// No description provided for @sortLastBookAdded.
+  /// No description provided for @lastBookAdded.
   ///
   /// In en, this message translates to:
   /// **'Last Book Added'**
-  String get sortLastBookAdded;
+  String get lastBookAdded;
 
-  /// No description provided for @sortLastBookUpdated.
+  /// No description provided for @lastBookUpdated.
   ///
   /// In en, this message translates to:
   /// **'Last Book Updated'**
-  String get sortLastBookUpdated;
+  String get lastBookUpdated;
 
-  /// No description provided for @sortLastFirst.
+  /// No description provided for @lastFirst.
   ///
   /// In en, this message translates to:
   /// **'Last Name, First Name'**
-  String get sortLastFirst;
+  String get lastFirst;
 
-  /// No description provided for @sortUpdatedAt.
+  /// No description provided for @lastUpdated.
   ///
   /// In en, this message translates to:
   /// **'Last Updated'**
-  String get sortUpdatedAt;
+  String get lastUpdated;
 
-  /// No description provided for @sortNumEpisodes.
+  /// No description provided for @numOfEpisodes.
   ///
   /// In en, this message translates to:
   /// **'Number of Episodes'**
-  String get sortNumEpisodes;
+  String get numOfEpisodes;
+
+  /// No description provided for @hasEbook.
+  ///
+  /// In en, this message translates to:
+  /// **'Has ebook'**
+  String get hasEbook;
+
+  /// No description provided for @hasNoEbook.
+  ///
+  /// In en, this message translates to:
+  /// **'Has no ebook'**
+  String get hasNoEbook;
+
+  /// No description provided for @hasSupplementary.
+  ///
+  /// In en, this message translates to:
+  /// **'Has supplementary ebook'**
+  String get hasSupplementary;
+
+  /// No description provided for @hasNoSupplementary.
+  ///
+  /// In en, this message translates to:
+  /// **'Has no supplementary ebook'**
+  String get hasNoSupplementary;
 
   /// No description provided for @filter.
   ///
@@ -730,59 +760,59 @@ abstract class AppLocalizations {
   /// **'Grid View'**
   String get gridView;
 
-  /// No description provided for @filterGenre.
+  /// No description provided for @genre.
   ///
   /// In en, this message translates to:
   /// **'Genre'**
-  String get filterGenre;
+  String get genre;
 
-  /// No description provided for @filterTag.
+  /// No description provided for @tag.
   ///
   /// In en, this message translates to:
   /// **'Tag'**
-  String get filterTag;
+  String get tag;
 
-  /// No description provided for @filterAuthor.
+  /// No description provided for @publisher.
   ///
   /// In en, this message translates to:
-  /// **'Author'**
-  String get filterAuthor;
+  /// **'Publisher'**
+  String get publisher;
 
-  /// No description provided for @filterSeries.
+  /// No description provided for @publishedDecade.
   ///
   /// In en, this message translates to:
-  /// **'Series'**
-  String get filterSeries;
+  /// **'Published Decade'**
+  String get publishedDecade;
 
-  /// No description provided for @filterStatus.
+  /// No description provided for @progress.
   ///
   /// In en, this message translates to:
-  /// **'Status'**
-  String get filterStatus;
+  /// **'Progress'**
+  String get progress;
 
-  /// No description provided for @filterNarrator.
+  /// No description provided for @narrator.
   ///
   /// In en, this message translates to:
   /// **'Narrator'**
-  String get filterNarrator;
+  String get narrator;
 
-  /// No description provided for @filterLanguage.
-  ///
-  /// In en, this message translates to:
-  /// **'Language'**
-  String get filterLanguage;
-
-  /// No description provided for @filterTracks.
+  /// No description provided for @tracks.
   ///
   /// In en, this message translates to:
   /// **'Tracks'**
-  String get filterTracks;
+  String get tracks;
 
-  /// No description provided for @filterMissing.
+  /// No description provided for @missingMetadata.
   ///
   /// In en, this message translates to:
   /// **'Missing Metadata'**
-  String get filterMissing;
+  String get missingMetadata;
+
+  /// No description provided for @ebooks.
+  ///
+  /// In en, this message translates to:
+  /// **'Ebooks'**
+  String get ebooks;
 
   /// No description provided for @clearFilter.
   ///
@@ -790,101 +820,53 @@ abstract class AppLocalizations {
   /// **'Clear Filter'**
   String get clearFilter;
 
-  /// No description provided for @statusFinished.
+  /// No description provided for @finished.
   ///
   /// In en, this message translates to:
   /// **'Finished'**
-  String get statusFinished;
+  String get finished;
 
-  /// No description provided for @statusNotStarted.
+  /// No description provided for @notStarted.
   ///
   /// In en, this message translates to:
   /// **'Not Started'**
-  String get statusNotStarted;
+  String get notStarted;
 
-  /// No description provided for @statusInProgress.
+  /// No description provided for @inProgress.
   ///
   /// In en, this message translates to:
   /// **'In Progress'**
-  String get statusInProgress;
+  String get inProgress;
 
-  /// No description provided for @statusNotFinished.
+  /// No description provided for @notFinished.
   ///
   /// In en, this message translates to:
   /// **'Not Finished'**
-  String get statusNotFinished;
+  String get notFinished;
 
-  /// No description provided for @missingAsin.
+  /// No description provided for @asin.
   ///
   /// In en, this message translates to:
-  /// **'Missing ASIN'**
-  String get missingAsin;
+  /// **'ASIN'**
+  String get asin;
 
-  /// No description provided for @missingIsbn.
+  /// No description provided for @isbn.
   ///
   /// In en, this message translates to:
-  /// **'Missing ISBN'**
-  String get missingIsbn;
+  /// **'ISBN'**
+  String get isbn;
 
-  /// No description provided for @missingSubtitle.
+  /// No description provided for @subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Missing Subtitle'**
-  String get missingSubtitle;
+  /// **'Subtitle'**
+  String get subtitle;
 
-  /// No description provided for @missingAuthors.
+  /// No description provided for @year.
   ///
   /// In en, this message translates to:
-  /// **'Missing Authors'**
-  String get missingAuthors;
-
-  /// No description provided for @missingPublishedYear.
-  ///
-  /// In en, this message translates to:
-  /// **'Missing Year'**
-  String get missingPublishedYear;
-
-  /// No description provided for @missingSeries.
-  ///
-  /// In en, this message translates to:
-  /// **'Missing Series'**
-  String get missingSeries;
-
-  /// No description provided for @missingDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Missing Description'**
-  String get missingDescription;
-
-  /// No description provided for @missingGenres.
-  ///
-  /// In en, this message translates to:
-  /// **'Missing Genres'**
-  String get missingGenres;
-
-  /// No description provided for @missingTags.
-  ///
-  /// In en, this message translates to:
-  /// **'Missing Tags'**
-  String get missingTags;
-
-  /// No description provided for @missingNarrators.
-  ///
-  /// In en, this message translates to:
-  /// **'Missing Narrators'**
-  String get missingNarrators;
-
-  /// No description provided for @missingPublisher.
-  ///
-  /// In en, this message translates to:
-  /// **'Missing Publisher'**
-  String get missingPublisher;
-
-  /// No description provided for @missingLanguage.
-  ///
-  /// In en, this message translates to:
-  /// **'Missing Language'**
-  String get missingLanguage;
+  /// **'Year'**
+  String get year;
 
   /// No description provided for @singleTrack.
   ///
@@ -898,17 +880,23 @@ abstract class AppLocalizations {
   /// **'Multiple Tracks'**
   String get multipleTracks;
 
-  /// No description provided for @issuesFound.
+  /// No description provided for @noTracks.
+  ///
+  /// In en, this message translates to:
+  /// **'No Tracks'**
+  String get noTracks;
+
+  /// No description provided for @itemsWithIssues.
   ///
   /// In en, this message translates to:
   /// **'Items with Issues'**
-  String get issuesFound;
+  String get itemsWithIssues;
 
-  /// No description provided for @feedOpen.
+  /// No description provided for @rssFeedOpen.
   ///
   /// In en, this message translates to:
-  /// **'Open Podcast Feed'**
-  String get feedOpen;
+  /// **'RSS Feed Open'**
+  String get rssFeedOpen;
 
   /// No description provided for @explicit.
   ///

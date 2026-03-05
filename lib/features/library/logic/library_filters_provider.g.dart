@@ -16,7 +16,7 @@ final class LibraryFiltersNotifierProvider
     extends $NotifierProvider<LibraryFiltersNotifier, FilterState> {
   LibraryFiltersNotifierProvider._({
     required LibraryFiltersNotifierFamily super.from,
-    required FiltersScreen super.argument,
+    required CurrentScreen super.argument,
   }) : super(
          retry: null,
          name: r'libraryFiltersProvider',
@@ -60,7 +60,7 @@ final class LibraryFiltersNotifierProvider
 }
 
 String _$libraryFiltersNotifierHash() =>
-    r'cd626eca9ff2ec327a27030a91fe672c929fe13e';
+    r'1918bc8ac369f59d3b2664a141c301dc391bca0b';
 
 final class LibraryFiltersNotifierFamily extends $Family
     with
@@ -69,7 +69,7 @@ final class LibraryFiltersNotifierFamily extends $Family
           FilterState,
           FilterState,
           FilterState,
-          FiltersScreen
+          CurrentScreen
         > {
   LibraryFiltersNotifierFamily._()
     : super(
@@ -80,7 +80,7 @@ final class LibraryFiltersNotifierFamily extends $Family
         isAutoDispose: true,
       );
 
-  LibraryFiltersNotifierProvider call(FiltersScreen screen) =>
+  LibraryFiltersNotifierProvider call(CurrentScreen screen) =>
       LibraryFiltersNotifierProvider._(argument: screen, from: this);
 
   @override
@@ -88,10 +88,10 @@ final class LibraryFiltersNotifierFamily extends $Family
 }
 
 abstract class _$LibraryFiltersNotifier extends $Notifier<FilterState> {
-  late final _$args = ref.$arg as FiltersScreen;
-  FiltersScreen get screen => _$args;
+  late final _$args = ref.$arg as CurrentScreen;
+  CurrentScreen get screen => _$args;
 
-  FilterState build(FiltersScreen screen);
+  FilterState build(CurrentScreen screen);
   @$mustCallSuper
   @override
   void runBuild() {

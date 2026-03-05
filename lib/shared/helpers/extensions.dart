@@ -1,13 +1,9 @@
 import 'dart:convert';
 
-import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/log_entry.dart';
-import 'package:storii/app/models/playable_item.dart';
-import 'package:storii/l10n/l10n.dart';
 
 extension IterableExtensions<T> on Iterable<T> {
   T? firstWhereOrNull(bool Function(T element) test) {
@@ -87,95 +83,6 @@ extension LocalFormatterX on DateTime {
   }
 }
 
-extension AudiobookSortX on Iterable<LibraryItem> {
-  List<LibraryItem> sortedBySequence() {
-    return toList()..sort((a, b) {
-      double parseSequence(String? seq) {
-        if (seq == null || seq.isEmpty) return 0.0;
-
-        final firstPart = seq.split(RegExp(r'[,\-]')).first;
-        final numericPart = firstPart.replaceAll(RegExp(r'[^0-9.]'), '');
-
-        return double.tryParse(numericPart) ?? 0.0;
-      }
-
-      final aVal = parseSequence(a.seriesSequence);
-      final bVal = parseSequence(b.seriesSequence);
-
-      if (aVal == bVal) {
-        return (a.seriesSequence ?? '').length.compareTo(
-          (b.seriesSequence ?? '').length,
-        );
-      }
-      return aVal.compareTo(bVal);
-    });
-  }
-}
-
-extension MissingFilterValueX on MissingFilterValue {
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-    return switch (this) {
-      .asin => l.missingAsin,
-      .isbn => l.missingIsbn,
-      .subtitle => l.missingSubtitle,
-      .authors => l.missingAuthors,
-      .publishedYear => l.missingPublishedYear,
-      .series => l.missingSeries,
-      .description => l.missingDescription,
-      .genres => l.missingGenres,
-      .tags => l.missingTags,
-      .narrators => l.missingNarrators,
-      .publisher => l.missingPublisher,
-      .language => l.missingLanguage,
-    };
-  }
-}
-
-extension ProgressFilterValueX on ProgressFilterValue {
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-    return switch (this) {
-      .finished => l.statusFinished,
-      .notStarted => l.statusNotStarted,
-      .inProgress => l.statusInProgress,
-      .notFinished => l.statusNotFinished,
-    };
-  }
-}
-
-extension TracksFilterValueX on TracksFilterValue {
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-    return switch (this) {
-      .single => l.singleTrack,
-      .multi => l.multipleTracks,
-    };
-  }
-}
-
-extension FilterGroupX on FilterGroup {
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-    return switch (this) {
-      .all => l.all,
-      .genres => l.filterGenre,
-      .tags => l.filterTag,
-      .series => l.filterSeries,
-      .authors => l.filterAuthor,
-      .progress => l.filterStatus,
-      .narrators => l.filterNarrator,
-      .languages => l.filterLanguage,
-      .tracks => l.filterTracks,
-      .missing => l.filterMissing,
-      .issues => l.issuesFound,
-      .feedOpen => l.feedOpen,
-      .abridged => l.abridged,
-      .explicit => l.explicit,
-    };
-  }
-}
-
 extension ColorExtensions on Color {
   String toHex() {
     final argb = toARGB32();
@@ -186,64 +93,6 @@ extension ColorExtensions on Color {
     final argb = toARGB32();
     return '#${(argb & 0xFFFFFF).toRadixString(16).padLeft(6, '0')}';
   }
-}
-
-extension AudiobookX on LibraryItem {
-  (int, Duration) getIndexAndOffset() {
-    var accumulated = Duration.zero;
-    for (var i = 0; i < tracks.length; i++) {
-      final trackLen = tracks[i].duration;
-      if (currentOffset < accumulated + trackLen) {
-        return (i, currentOffset - accumulated);
-      }
-      accumulated += trackLen;
-    }
-    return (0, Duration.zero);
-  }
-
-  String? get title => media.metadata.title;
-  String? get subtitle =>
-      media.metadata.map(book: (m) => m.subtitle, podcast: (m) => null);
-  String? get description => media.metadata.description;
-  String? get authorName => media.metadata.map(
-    book: (m) => m.authorName ?? m.authors?.firstOrNull?.name,
-    podcast: (m) => m.author,
-  );
-  List<Author> get authors =>
-      media.metadata.map(book: (m) => m.authors ?? [], podcast: (m) => []);
-  List<Series> get series =>
-      media.metadata.map(book: (m) => m.series ?? [], podcast: (m) => []);
-
-  List<String> get genres => media.metadata.genres;
-  bool get explicit => media.metadata.explicit;
-  String? get language => media.metadata.language;
-  List<String> get tags => media.tags;
-
-  Duration get duration => media.map(
-    book: (m) => m.duration,
-    podcast: (m) => throw UnsupportedError('Podcast duration unsupported'),
-  );
-  List<BookChapter> get chapters =>
-      media.map(book: (m) => m.chapters ?? [], podcast: (m) => []);
-  List<AudioTrack> get tracks => media.map(
-    book: (m) => m.tracks ?? [],
-    podcast: (m) => throw UnsupportedError('Podcast tracks unsupported'),
-  );
-  List<PodcastEpisode> get episodes => media.map(
-    book: (m) => throw UnsupportedError('Audiobook episodes unsupported'),
-    podcast: (m) => m.episodes ?? [],
-  );
-  DateTime? get lastEpisodeCheck => media.map(
-    book: (m) => throw UnsupportedError('Audiobook episode unsupported'),
-    podcast: (m) => m.lastEpisodeCheck,
-  );
-
-  double get progress => userMediaProgress?.progress ?? 0.0;
-  bool get isFinished => userMediaProgress?.isFinished ?? false;
-  Duration get currentOffset => userMediaProgress?.currentTime ?? Duration.zero;
-  bool get hideFromContinue =>
-      userMediaProgress?.hideFromContinueListening ?? false;
-  String? get episodeId => userMediaProgress?.episodeId;
 }
 
 extension SnackBarShorthand on ScaffoldMessengerState {
@@ -259,7 +108,8 @@ extension SnackBarShorthand on ScaffoldMessengerState {
 }
 
 extension DurationPreciseX on Duration {
-  double get inSecondsPrecise => inMicroseconds / 1e6;
+  double get inSecondsPrecise =>
+      inMicroseconds / Duration.microsecondsPerSecond;
 
   String toTimestamp() {
     final hours = inHours;
@@ -280,33 +130,6 @@ extension DurationPreciseX on Duration {
 }
 
 extension DoubleToDurationX on double {
-  Duration get toDuration => Duration(microseconds: (this * 1e6).round());
-}
-
-extension PlayableItemX on PlayableItem {
-  // BookChapter? findChapter(Duration position) {
-  //   return map(
-  //     audiobook: (b) {
-  //       final sec = position.inSecondsPrecise;
-  //       return b.chapters.firstWhereOrNull(
-  //         (c) => sec >= c.start && sec < c.end,
-  //       );
-  //     },
-  //     podcast: (_) => null,
-  //   );
-  // }
-
-  MediaItem toMediaItem() {
-    return MediaItem(
-      id: id,
-      title: title ?? '',
-      artist: map(
-        audiobook: (b) => b.authorName,
-        podcast: (p) => p.podcastTitle,
-      ),
-      duration: duration,
-      artUri: cover,
-      extras: {'sessionId': sessionId},
-    );
-  }
+  Duration get toDuration =>
+      Duration(microseconds: (this * Duration.microsecondsPerSecond).round());
 }

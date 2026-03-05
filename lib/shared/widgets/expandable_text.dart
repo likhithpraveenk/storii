@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:simple_html_css/simple_html_css.dart';
 
 class ExpandableHtml extends StatefulWidget {
   final String data;
@@ -8,7 +7,7 @@ class ExpandableHtml extends StatefulWidget {
   const ExpandableHtml({
     super.key,
     required this.data,
-    this.collapsedHeight = 120,
+    this.collapsedHeight = 80,
   });
 
   @override
@@ -47,13 +46,11 @@ class _ExpandableHtmlState extends State<ExpandableHtml> {
                   ],
                   stops: const [0.8, 1.0],
                 ).createShader(bounds),
-                child: HTML.toRichText(
-                  context,
-                  widget.data,
-                  defaultTextStyle: Theme.of(context).textTheme.bodyMedium
-                      ?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
+                child: Text(
+                  _cleanHtml(widget.data),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
               ),
             ),
@@ -65,4 +62,12 @@ class _ExpandableHtmlState extends State<ExpandableHtml> {
       ),
     );
   }
+}
+
+String _cleanHtml(String data) {
+  return data
+      .replaceAll(RegExp(r'<\/?(p|div|br\s?\/?)>'), '\n')
+      .replaceAll(RegExp(r'<\/?(b|i|strong|em|span|u|a)[^>]*>'), '')
+      .replaceAll(RegExp(r'\n{3,}'), '\n\n')
+      .trim();
 }

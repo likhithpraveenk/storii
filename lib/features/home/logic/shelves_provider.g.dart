@@ -26,7 +26,7 @@ final class ShelvesProvider
         argument: null,
         retry: null,
         name: r'shelvesProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -46,4 +46,43 @@ final class ShelvesProvider
   }
 }
 
-String _$shelvesHash() => r'ca45abb0eb2c2e63ee11fa37a9210d1070f1aa97';
+String _$shelvesHash() => r'ba43fdac53faa72b7c75707048edc5a0c6fb3ff5';
+
+@ProviderFor(rawShelves)
+final rawShelvesProvider = RawShelvesProvider._();
+
+final class RawShelvesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Shelf>>,
+          List<Shelf>,
+          FutureOr<List<Shelf>>
+        >
+    with $FutureModifier<List<Shelf>>, $FutureProvider<List<Shelf>> {
+  RawShelvesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'rawShelvesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$rawShelvesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Shelf>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Shelf>> create(Ref ref) {
+    return rawShelves(ref);
+  }
+}
+
+String _$rawShelvesHash() => r'4535b37f2586ddafa71974c98af28ef32269c345';

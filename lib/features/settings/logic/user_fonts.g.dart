@@ -26,7 +26,7 @@ final class UserFontsProvider
         argument: null,
         retry: null,
         name: r'userFontsProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -46,4 +46,4 @@ final class UserFontsProvider
   }
 }
 
-String _$userFontsHash() => r'76d5c9d208da83357039a17b77a5feffa9534c22';
+String _$userFontsHash() => r'cbba96740ed0c6448cf61187f43f0ce0a6c527a0';

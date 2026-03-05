@@ -20,7 +20,7 @@ final class FilterDataProvider
         argument: null,
         retry: null,
         name: r'filterDataProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -41,7 +41,7 @@ final class FilterDataProvider
   }
 }
 
-String _$filterDataHash() => r'def38e0387893efc3778d83af1b91648a65a8495';
+String _$filterDataHash() => r'59abdcc6265b10ff842561d7b6d75790d3643097';
 
 abstract class _$FilterData extends $Notifier<LibraryFilterData> {
   LibraryFilterData build();

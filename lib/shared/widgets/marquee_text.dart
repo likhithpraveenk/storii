@@ -22,21 +22,26 @@ class _MarqueeTextState extends State<MarqueeText> {
   }
 
   void _scroll() async {
-    while (_scrollController.hasClients) {
+    while (mounted &&
+        _scrollController.hasClients &&
+        _scrollController.position.hasContentDimensions) {
       await Future.delayed(const Duration(seconds: 2));
-      final maxExtent = _scrollController.position.maxScrollExtent;
 
+      if (!mounted || !_scrollController.hasClients) return;
+
+      final maxExtent = _scrollController.position.maxScrollExtent;
       const speed = 40.0; // pixels per second
       final durationInSeconds = (maxExtent / speed).round();
-      if (_scrollController.hasClients) {
-        await _scrollController.animateTo(
-          maxExtent,
-          duration: Duration(seconds: durationInSeconds.clamp(1, 10)),
-          curve: Curves.linear,
-        );
-      }
+
+      await _scrollController.animateTo(
+        maxExtent,
+        duration: Duration(seconds: durationInSeconds.clamp(1, 10)),
+        curve: Curves.linear,
+      );
+
       await Future.delayed(const Duration(seconds: 2));
-      if (_scrollController.hasClients) {
+
+      if (mounted && _scrollController.hasClients) {
         _scrollController.jumpTo(0.0);
       }
     }

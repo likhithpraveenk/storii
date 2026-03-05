@@ -51,9 +51,6 @@ class AddUserNotifier extends _$AddUserNotifier {
             response.user.refreshToken,
           );
       await ref.read(appSettingsProvider.notifier).setCurrentUser(storeUser);
-      await ref
-          .read(userSettingsProvider.notifier)
-          .setCurrentLibraryId(response.userDefaultLibraryId);
       LogService.log('${storeUser.username} logged in', level: .info);
       state = state.copyWith(status: .success);
     } catch (e, st) {

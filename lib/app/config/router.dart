@@ -31,12 +31,12 @@ enum AppRoute {
   logs('/logs'),
   home('/'),
   library('/library'),
-  itemDetail('/item/:id'),
+  itemDetail('/itemDetail'),
   search('/search'),
   series('/series'),
-  seriesDetail('/series/:id'),
+  seriesDetail('/series/detail'),
   authors('/authors'),
-  authorDetail('/authors/:id'),
+  authorDetail('/authors/detail'),
   collections('/collections'),
   downloads('/downloads'),
   more('/more'),
@@ -47,8 +47,6 @@ enum AppRoute {
 
   final String path;
   const AppRoute(this.path);
-
-  String withId(String id) => path.replaceFirst(':id', id);
 }
 
 final publicRoutes = [
@@ -94,7 +92,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         },
         branches: [
           StatefulShellBranch(
-            initialLocation: AppRoute.home.path,
             routes: [
               GoRoute(
                 path: AppRoute.home.path,
@@ -105,7 +102,6 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
           StatefulShellBranch(
-            initialLocation: AppRoute.library.path,
             routes: [
               GoRoute(
                 path: AppRoute.library.path,
@@ -116,7 +112,6 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
           StatefulShellBranch(
-            initialLocation: AppRoute.series.path,
             routes: [
               GoRoute(
                 path: AppRoute.series.path,
@@ -125,9 +120,9 @@ final routerProvider = Provider<GoRouter>((ref) {
                 },
                 routes: [
                   GoRoute(
-                    path: ':id',
+                    path: 'detail',
                     builder: (context, state) {
-                      final id = state.pathParameters['id']!;
+                      final id = state.extra as String;
                       return SeriesDetailScreen(key: ValueKey(id), id: id);
                     },
                   ),
@@ -136,7 +131,6 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
           StatefulShellBranch(
-            initialLocation: AppRoute.downloads.path,
             routes: [
               GoRoute(
                 path: AppRoute.downloads.path,
@@ -147,7 +141,6 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
           StatefulShellBranch(
-            initialLocation: AppRoute.authors.path,
             routes: [
               GoRoute(
                 path: AppRoute.authors.path,
@@ -156,9 +149,9 @@ final routerProvider = Provider<GoRouter>((ref) {
                 },
                 routes: [
                   GoRoute(
-                    path: ':id',
+                    path: 'detail',
                     builder: (context, state) {
-                      final id = state.pathParameters['id']!;
+                      final id = state.extra as String;
                       return AuthorDetailScreen(key: ValueKey(id), id: id);
                     },
                   ),
@@ -167,7 +160,6 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
           StatefulShellBranch(
-            initialLocation: AppRoute.collections.path,
             routes: [
               GoRoute(
                 path: AppRoute.collections.path,
@@ -178,7 +170,6 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
           StatefulShellBranch(
-            initialLocation: AppRoute.more.path,
             routes: [
               GoRoute(
                 path: AppRoute.more.path,
@@ -209,7 +200,6 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
           StatefulShellBranch(
-            initialLocation: AppRoute.search.path,
             routes: [
               GoRoute(
                 path: AppRoute.search.path,
@@ -218,12 +208,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
           StatefulShellBranch(
-            initialLocation: AppRoute.itemDetail.path,
             routes: [
               GoRoute(
                 path: AppRoute.itemDetail.path,
                 builder: (context, state) {
-                  final id = state.pathParameters['id']!;
+                  final id = state.extra as String;
                   return ItemDetailScreen(key: ValueKey(id), id: id);
                 },
               ),

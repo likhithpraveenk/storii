@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'623029f73f24103f8a82f8f7fe2e68dfebecd5e9';
+    r'a7f2a3ae93e2dad4b31278fb2b798475693c0408';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings> {
   UserSettings build();
@@ -195,11 +195,8 @@ final enableHttpLogsProvider = Provider<bool>(
 // **************************************************************************
 
 extension UserSettingsSetters on UserSettingsNotifier {
-  Future<void> setCurrentLibraryId(String? value) =>
-      _save(state.copyWith(currentLibraryId: value));
-
-  Future<void> setActiveItemId(String? value) =>
-      _save(state.copyWith(activeItemId: value));
+  Future<void> setCurrentLibrary(Library? value) =>
+      _save(state.copyWith(currentLibrary: value));
 
   Future<void> setNavTargets(List<NavTarget> value) =>
       _save(state.copyWith(navTargets: value));
@@ -231,12 +228,8 @@ extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setSpeed(double value) => _save(state.copyWith(speed: value));
 }
 
-final currentLibraryIdProvider = Provider<String?>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.currentLibraryId)),
-);
-
-final activeItemIdProvider = Provider<String?>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.activeItemId)),
+final currentLibraryProvider = Provider<Library?>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.currentLibrary)),
 );
 
 final navTargetsProvider = Provider<List<NavTarget>>(

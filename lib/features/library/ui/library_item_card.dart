@@ -8,7 +8,7 @@ import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/helpers/model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class LibraryItemCard extends ConsumerWidget {
@@ -23,7 +23,7 @@ class LibraryItemCard extends ConsumerWidget {
     final showTitle = ref.watch(showTitleForItemProvider);
 
     return InkWell(
-      onTap: () => context.push(AppRoute.itemDetail.withId(item.id)),
+      onTap: () => context.push(AppRoute.itemDetail.path, extra: item.id),
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       child: Column(
@@ -149,7 +149,7 @@ class LibraryItemCardListView extends StatelessWidget {
     final theme = Theme.of(context);
 
     return ListTile(
-      onTap: () => context.push(AppRoute.itemDetail.withId(item.id)),
+      onTap: () => context.push(AppRoute.itemDetail.path, extra: item.id),
       contentPadding: const .fromLTRB(16, 8, 16, 8),
       leading: AspectRatio(
         aspectRatio: 1,

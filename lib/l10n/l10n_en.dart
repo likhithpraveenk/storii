@@ -147,6 +147,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get play => 'Play';
 
   @override
+  String get pause => 'Pause';
+
+  @override
   String get replay => 'Replay';
 
   @override
@@ -262,64 +265,76 @@ class AppLocalizationsEn extends AppLocalizations {
   String get viewAll => 'View All';
 
   @override
-  String get sortTitle => 'Title';
+  String get title => 'Title';
 
   @override
-  String get sortAuthor => 'Author';
+  String get author => 'Author';
 
   @override
-  String get sortAuthorLastFirst => 'Author (Last, First)';
+  String get authorLastFirst => 'Author (Last, First)';
 
   @override
-  String get sortAddedAt => 'Date Added';
+  String get dateAdded => 'Date Added';
 
   @override
-  String get sortPublishedYear => 'Published Year';
+  String get publishedYear => 'Published Year';
 
   @override
-  String get sortSize => 'Size';
+  String get size => 'Size';
 
   @override
-  String get sortDuration => 'Duration';
+  String get duration => 'Duration';
 
   @override
-  String get sortFileBirthtime => 'File Created Date';
+  String get fileCreatedDate => 'File Created Date';
 
   @override
-  String get sortFileModified => 'File Modified Date';
+  String get fileModifiedDate => 'File Modified Date';
 
   @override
-  String get sortProgressUpdated => 'Last Played';
+  String get lastPlayed => 'Last Played';
 
   @override
-  String get sortProgressStarted => 'Date Started';
+  String get dateStarted => 'Date Started';
 
   @override
-  String get sortProgressFinished => 'Date Finished';
+  String get dateFinished => 'Date Finished';
 
   @override
-  String get sortRandom => 'Random';
+  String get random => 'Random';
 
   @override
-  String get sortNumBooks => 'Number of Books';
+  String get numOfBooks => 'Number of Books';
 
   @override
-  String get sortName => 'Name';
+  String get name => 'Name';
 
   @override
-  String get sortLastBookAdded => 'Last Book Added';
+  String get lastBookAdded => 'Last Book Added';
 
   @override
-  String get sortLastBookUpdated => 'Last Book Updated';
+  String get lastBookUpdated => 'Last Book Updated';
 
   @override
-  String get sortLastFirst => 'Last Name, First Name';
+  String get lastFirst => 'Last Name, First Name';
 
   @override
-  String get sortUpdatedAt => 'Last Updated';
+  String get lastUpdated => 'Last Updated';
 
   @override
-  String get sortNumEpisodes => 'Number of Episodes';
+  String get numOfEpisodes => 'Number of Episodes';
+
+  @override
+  String get hasEbook => 'Has ebook';
+
+  @override
+  String get hasNoEbook => 'Has no ebook';
+
+  @override
+  String get hasSupplementary => 'Has supplementary ebook';
+
+  @override
+  String get hasNoSupplementary => 'Has no supplementary ebook';
 
   @override
   String get filter => 'Filter';
@@ -334,82 +349,58 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gridView => 'Grid View';
 
   @override
-  String get filterGenre => 'Genre';
+  String get genre => 'Genre';
 
   @override
-  String get filterTag => 'Tag';
+  String get tag => 'Tag';
 
   @override
-  String get filterAuthor => 'Author';
+  String get publisher => 'Publisher';
 
   @override
-  String get filterSeries => 'Series';
+  String get publishedDecade => 'Published Decade';
 
   @override
-  String get filterStatus => 'Status';
+  String get progress => 'Progress';
 
   @override
-  String get filterNarrator => 'Narrator';
+  String get narrator => 'Narrator';
 
   @override
-  String get filterLanguage => 'Language';
+  String get tracks => 'Tracks';
 
   @override
-  String get filterTracks => 'Tracks';
+  String get missingMetadata => 'Missing Metadata';
 
   @override
-  String get filterMissing => 'Missing Metadata';
+  String get ebooks => 'Ebooks';
 
   @override
   String get clearFilter => 'Clear Filter';
 
   @override
-  String get statusFinished => 'Finished';
+  String get finished => 'Finished';
 
   @override
-  String get statusNotStarted => 'Not Started';
+  String get notStarted => 'Not Started';
 
   @override
-  String get statusInProgress => 'In Progress';
+  String get inProgress => 'In Progress';
 
   @override
-  String get statusNotFinished => 'Not Finished';
+  String get notFinished => 'Not Finished';
 
   @override
-  String get missingAsin => 'Missing ASIN';
+  String get asin => 'ASIN';
 
   @override
-  String get missingIsbn => 'Missing ISBN';
+  String get isbn => 'ISBN';
 
   @override
-  String get missingSubtitle => 'Missing Subtitle';
+  String get subtitle => 'Subtitle';
 
   @override
-  String get missingAuthors => 'Missing Authors';
-
-  @override
-  String get missingPublishedYear => 'Missing Year';
-
-  @override
-  String get missingSeries => 'Missing Series';
-
-  @override
-  String get missingDescription => 'Missing Description';
-
-  @override
-  String get missingGenres => 'Missing Genres';
-
-  @override
-  String get missingTags => 'Missing Tags';
-
-  @override
-  String get missingNarrators => 'Missing Narrators';
-
-  @override
-  String get missingPublisher => 'Missing Publisher';
-
-  @override
-  String get missingLanguage => 'Missing Language';
+  String get year => 'Year';
 
   @override
   String get singleTrack => 'Single Track';
@@ -418,10 +409,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get multipleTracks => 'Multiple Tracks';
 
   @override
-  String get issuesFound => 'Items with Issues';
+  String get noTracks => 'No Tracks';
 
   @override
-  String get feedOpen => 'Open Podcast Feed';
+  String get itemsWithIssues => 'Items with Issues';
+
+  @override
+  String get rssFeedOpen => 'RSS Feed Open';
 
   @override
   String get explicit => 'Explicit';

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/builder/annotations.dart';
 
@@ -10,9 +11,7 @@ sealed class UserSettings with _$UserSettings {
   const factory UserSettings({
     @noCodeGen required String userId,
 
-    String? currentLibraryId,
-
-    String? activeItemId,
+    Library? currentLibrary,
 
     @Default(defaultNavTargets) List<NavTarget> navTargets,
 

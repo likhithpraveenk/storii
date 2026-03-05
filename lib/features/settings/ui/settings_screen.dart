@@ -33,7 +33,6 @@ class SettingsScreen extends StatelessWidget {
           LanguageSelectorTile(),
           DateTimeFormatTile(),
           ConfigNavTile(),
-          // TODO: logs maximum sheet
           // TODO: player settings - forward, rewind and speed
           HttpLogsTile(),
         ],

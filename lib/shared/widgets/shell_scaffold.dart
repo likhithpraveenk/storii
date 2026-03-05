@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
@@ -28,7 +27,7 @@ class ShellScaffold extends ConsumerWidget {
     );
 
     return PopScope(
-      canPop: false,
+      canPop: path == AppRoute.home.path,
       onPopInvokedWithResult: (didPop, _) async {
         if (didPop) return;
 
@@ -37,11 +36,7 @@ class ShellScaffold extends ConsumerWidget {
           return;
         }
 
-        if (path == AppRoute.home.path) {
-          await SystemNavigator.pop();
-        } else {
-          context.go(AppRoute.home.path);
-        }
+        context.go(AppRoute.home.path);
       },
       child: Scaffold(
         key: shellScaffoldKey,

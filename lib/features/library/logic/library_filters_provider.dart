@@ -8,7 +8,7 @@ import 'package:storii/features/library/logic/grid_height_provider.dart';
 part 'library_filters_provider.freezed.dart';
 part 'library_filters_provider.g.dart';
 
-enum FiltersScreen { authors, library, series }
+enum CurrentScreen { authors, library, series }
 
 @freezed
 sealed class FilterState with _$FilterState {
@@ -26,7 +26,7 @@ sealed class FilterState with _$FilterState {
 @riverpod
 class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
   @override
-  FilterState build(FiltersScreen screen) {
+  FilterState build(CurrentScreen screen) {
     final isGridView = switch (screen) {
       .library => ref.watch(isItemsGridViewProvider),
       .authors => ref.watch(isAuthorsGridViewProvider),

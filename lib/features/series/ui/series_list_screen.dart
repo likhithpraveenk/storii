@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
-import 'package:storii/features/library/ui/filters_button.dart';
 import 'package:storii/features/series/logic/series_list_provider.dart';
 import 'package:storii/features/series/ui/series.card.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
+import 'package:storii/shared/widgets/display_button.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
+import 'package:storii/shared/widgets/filters_button.dart';
+import 'package:storii/shared/widgets/sort_button.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class SeriesListScreen extends ConsumerStatefulWidget {
@@ -31,7 +33,6 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
   @override
   Widget build(BuildContext context) {
     final seriesAsync = ref.watch(seriesListProvider);
-    final filterState = ref.watch(libraryFiltersProvider(.series));
     final l = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -39,7 +40,11 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: Text(l.series, style: Theme.of(context).textTheme.titleLarge),
-        actions: const [FiltersButton(.series)],
+        actions: const [
+          FiltersButton(.series),
+          SortButton(.series),
+          DisplayButton(.series),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () {
@@ -59,10 +64,13 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
             }
             final height = ref.watch(seriesGridHeightProvider);
 
+            final filterState = ref.watch(libraryFiltersProvider(.series));
+
             return AppScrollbar(
               controller: _scrollController,
               child: filterState.isGridView
                   ? GridView.builder(
+                      key: const ValueKey('series_grid_view'),
                       controller: _scrollController,
                       padding: const .symmetric(horizontal: 16),
                       itemCount: series.length,
@@ -80,6 +88,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
                       },
                     )
                   : ListView.builder(
+                      key: const ValueKey('series_list_view'),
                       controller: _scrollController,
                       itemCount: series.length,
                       itemBuilder: (context, index) {

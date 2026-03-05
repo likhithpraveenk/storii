@@ -9,8 +9,9 @@ part of 'user_settings.dart';
 _UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>
     _UserSettings(
       userId: json['userId'] as String,
-      currentLibraryId: json['currentLibraryId'] as String?,
-      activeItemId: json['activeItemId'] as String?,
+      currentLibrary: json['currentLibrary'] == null
+          ? null
+          : Library.fromJson(json['currentLibrary'] as Map<String, dynamic>),
       navTargets:
           (json['navTargets'] as List<dynamic>?)
               ?.map((e) => $enumDecode(_$NavTargetEnumMap, e))
@@ -35,8 +36,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   _UserSettings instance,
 ) => <String, dynamic>{
   'userId': instance.userId,
-  'currentLibraryId': ?instance.currentLibraryId,
-  'activeItemId': ?instance.activeItemId,
+  'currentLibrary': ?instance.currentLibrary?.toJson(),
   'navTargets': instance.navTargets.map((e) => _$NavTargetEnumMap[e]!).toList(),
   'isFullySynced': instance.isFullySynced,
   'isItemsGridView': instance.isItemsGridView,

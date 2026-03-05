@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/library/logic/library_items_provider.dart';
-import 'package:storii/features/library/ui/filters_button.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
+import 'package:storii/shared/widgets/display_button.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
+import 'package:storii/shared/widgets/filters_button.dart';
 import 'package:storii/shared/widgets/library_switcher.dart';
+import 'package:storii/shared/widgets/sort_button.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class LibraryScreen extends ConsumerStatefulWidget {
@@ -30,7 +32,6 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     final itemsAsync = ref.watch(libraryItemsProvider);
-    final filterState = ref.watch(libraryFiltersProvider(.library));
     final l = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -38,7 +39,11 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: const LibrarySwitcher(),
-        actions: const [FiltersButton(.library)],
+        actions: const [
+          FiltersButton(.library),
+          SortButton(.library),
+          DisplayButton(.library),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () => ref.refresh(libraryItemsProvider.future),
@@ -54,11 +59,18 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
               );
             }
 
+            final filterState = ref.watch(libraryFiltersProvider(.library));
+
             return AppScrollbar(
               controller: _scrollController,
               child: filterState.isGridView
-                  ? ItemsGridView(items, scrollController: _scrollController)
+                  ? ItemsGridView(
+                      items,
+                      scrollController: _scrollController,
+                      key: const ValueKey('items_grid_view'),
+                    )
                   : ListView.builder(
+                      key: const ValueKey('items_list_view'),
                       controller: _scrollController,
                       itemCount: items.length,
                       itemBuilder: (context, index) {

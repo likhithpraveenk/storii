@@ -10,16 +10,19 @@ import 'package:storii/shared/helpers/app_error.dart';
 
 part 'series_list_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<List<Series>> seriesList(Ref ref) async {
-  final library = await ref.watch(activeLibraryProvider.future);
+  final libraryId = (await ref.watch(
+    activeLibraryDetailsProvider.future,
+  )).library.id;
+
   final params = ref.watch(
     libraryFiltersProvider(.series).select((s) => s.toSeriesParams()),
   );
   try {
     final user = await ref.read(authenticatedUserProvider.future);
     final api = ref.read(libraryApiProvider(user));
-    final response = await api.getSeries(library.id, params);
+    final response = await api.getSeries(libraryId, params);
 
     return response.results;
   } catch (e, st) {

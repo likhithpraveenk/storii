@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/image_cache.dart';
 import 'package:storii/features/library/logic/cover_url_provider.dart';
-import 'package:storii/features/library/ui/placeholder_image.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/placeholder_image.dart';
 
 class ImageWidget extends ConsumerWidget {
   const ImageWidget({

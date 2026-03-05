@@ -11,23 +11,30 @@ import 'package:storii/shared/helpers/app_error.dart';
 
 part 'library_items_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<List<LibraryItem>> libraryItems(Ref ref) async {
-  final library = await ref.watch(activeLibraryProvider.future);
+  final items = await ref.watch(rawLibraryItemsProvider.future);
+  final progressMap = await ref.watch(mediaProgressProvider.future);
+
+  return items
+      .map((item) => item.copyWith(userMediaProgress: progressMap[item.id]))
+      .toList();
+}
+
+@riverpod
+Future<List<LibraryItem>> rawLibraryItems(Ref ref) async {
+  final libraryId = (await ref.watch(
+    activeLibraryDetailsProvider.future,
+  )).library.id;
   final params = ref.watch(
     libraryFiltersProvider(.library).select((s) => s.toItemParams()),
   );
-  final progressMap = await ref.watch(mediaProgressProvider.future);
+  final user = await ref.read(authenticatedUserProvider.future);
+  final api = ref.read(libraryApiProvider(user));
 
   try {
-    final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(libraryApiProvider(user));
-
-    final response = await api.getItems(library.id, params);
-
-    return response.results
-        .map((item) => item.copyWith(userMediaProgress: progressMap[item.id]))
-        .toList();
+    final response = await api.getItems(libraryId, params);
+    return response.results;
   } catch (e, st) {
     final error = AppError.resolve(e);
     LogService.log(

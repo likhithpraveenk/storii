@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserSettings {
 
-@noCodeGen String get userId; String? get currentLibraryId; String? get activeItemId; List<NavTarget> get navTargets; bool get isFullySynced; bool get isItemsGridView; bool get isSeriesGridView; bool get isAuthorsGridView; bool get showTitleForItem; bool get stackTitleOnImage; Duration get fastForward; Duration get rewind; double get speed;
+@noCodeGen String get userId; Library? get currentLibrary; List<NavTarget> get navTargets; bool get isFullySynced; bool get isItemsGridView; bool get isSeriesGridView; bool get isAuthorsGridView; bool get showTitleForItem; bool get stackTitleOnImage; Duration get fastForward; Duration get rewind; double get speed;
 /// Create a copy of UserSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserSettingsCopyWith<UserSettings> get copyWith => _$UserSettingsCopyWithImpl<U
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserSettings&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.currentLibraryId, currentLibraryId) || other.currentLibraryId == currentLibraryId)&&(identical(other.activeItemId, activeItemId) || other.activeItemId == activeItemId)&&const DeepCollectionEquality().equals(other.navTargets, navTargets)&&(identical(other.isFullySynced, isFullySynced) || other.isFullySynced == isFullySynced)&&(identical(other.isItemsGridView, isItemsGridView) || other.isItemsGridView == isItemsGridView)&&(identical(other.isSeriesGridView, isSeriesGridView) || other.isSeriesGridView == isSeriesGridView)&&(identical(other.isAuthorsGridView, isAuthorsGridView) || other.isAuthorsGridView == isAuthorsGridView)&&(identical(other.showTitleForItem, showTitleForItem) || other.showTitleForItem == showTitleForItem)&&(identical(other.stackTitleOnImage, stackTitleOnImage) || other.stackTitleOnImage == stackTitleOnImage)&&(identical(other.fastForward, fastForward) || other.fastForward == fastForward)&&(identical(other.rewind, rewind) || other.rewind == rewind)&&(identical(other.speed, speed) || other.speed == speed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserSettings&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.currentLibrary, currentLibrary) || other.currentLibrary == currentLibrary)&&const DeepCollectionEquality().equals(other.navTargets, navTargets)&&(identical(other.isFullySynced, isFullySynced) || other.isFullySynced == isFullySynced)&&(identical(other.isItemsGridView, isItemsGridView) || other.isItemsGridView == isItemsGridView)&&(identical(other.isSeriesGridView, isSeriesGridView) || other.isSeriesGridView == isSeriesGridView)&&(identical(other.isAuthorsGridView, isAuthorsGridView) || other.isAuthorsGridView == isAuthorsGridView)&&(identical(other.showTitleForItem, showTitleForItem) || other.showTitleForItem == showTitleForItem)&&(identical(other.stackTitleOnImage, stackTitleOnImage) || other.stackTitleOnImage == stackTitleOnImage)&&(identical(other.fastForward, fastForward) || other.fastForward == fastForward)&&(identical(other.rewind, rewind) || other.rewind == rewind)&&(identical(other.speed, speed) || other.speed == speed));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,currentLibraryId,activeItemId,const DeepCollectionEquality().hash(navTargets),isFullySynced,isItemsGridView,isSeriesGridView,isAuthorsGridView,showTitleForItem,stackTitleOnImage,fastForward,rewind,speed);
+int get hashCode => Object.hash(runtimeType,userId,currentLibrary,const DeepCollectionEquality().hash(navTargets),isFullySynced,isItemsGridView,isSeriesGridView,isAuthorsGridView,showTitleForItem,stackTitleOnImage,fastForward,rewind,speed);
 
 @override
 String toString() {
-  return 'UserSettings(userId: $userId, currentLibraryId: $currentLibraryId, activeItemId: $activeItemId, navTargets: $navTargets, isFullySynced: $isFullySynced, isItemsGridView: $isItemsGridView, isSeriesGridView: $isSeriesGridView, isAuthorsGridView: $isAuthorsGridView, showTitleForItem: $showTitleForItem, stackTitleOnImage: $stackTitleOnImage, fastForward: $fastForward, rewind: $rewind, speed: $speed)';
+  return 'UserSettings(userId: $userId, currentLibrary: $currentLibrary, navTargets: $navTargets, isFullySynced: $isFullySynced, isItemsGridView: $isItemsGridView, isSeriesGridView: $isSeriesGridView, isAuthorsGridView: $isAuthorsGridView, showTitleForItem: $showTitleForItem, stackTitleOnImage: $stackTitleOnImage, fastForward: $fastForward, rewind: $rewind, speed: $speed)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $UserSettingsCopyWith<$Res>  {
   factory $UserSettingsCopyWith(UserSettings value, $Res Function(UserSettings) _then) = _$UserSettingsCopyWithImpl;
 @useResult
 $Res call({
-@noCodeGen String userId, String? currentLibraryId, String? activeItemId, List<NavTarget> navTargets, bool isFullySynced, bool isItemsGridView, bool isSeriesGridView, bool isAuthorsGridView, bool showTitleForItem, bool stackTitleOnImage, Duration fastForward, Duration rewind, double speed
+@noCodeGen String userId, Library? currentLibrary, List<NavTarget> navTargets, bool isFullySynced, bool isItemsGridView, bool isSeriesGridView, bool isAuthorsGridView, bool showTitleForItem, bool stackTitleOnImage, Duration fastForward, Duration rewind, double speed
 });
 
 
-
+$LibraryCopyWith<$Res>? get currentLibrary;
 
 }
 /// @nodoc
@@ -65,12 +65,11 @@ class _$UserSettingsCopyWithImpl<$Res>
 
 /// Create a copy of UserSettings
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? currentLibraryId = freezed,Object? activeItemId = freezed,Object? navTargets = null,Object? isFullySynced = null,Object? isItemsGridView = null,Object? isSeriesGridView = null,Object? isAuthorsGridView = null,Object? showTitleForItem = null,Object? stackTitleOnImage = null,Object? fastForward = null,Object? rewind = null,Object? speed = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? currentLibrary = freezed,Object? navTargets = null,Object? isFullySynced = null,Object? isItemsGridView = null,Object? isSeriesGridView = null,Object? isAuthorsGridView = null,Object? showTitleForItem = null,Object? stackTitleOnImage = null,Object? fastForward = null,Object? rewind = null,Object? speed = null,}) {
   return _then(_self.copyWith(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as String,currentLibraryId: freezed == currentLibraryId ? _self.currentLibraryId : currentLibraryId // ignore: cast_nullable_to_non_nullable
-as String?,activeItemId: freezed == activeItemId ? _self.activeItemId : activeItemId // ignore: cast_nullable_to_non_nullable
-as String?,navTargets: null == navTargets ? _self.navTargets : navTargets // ignore: cast_nullable_to_non_nullable
+as String,currentLibrary: freezed == currentLibrary ? _self.currentLibrary : currentLibrary // ignore: cast_nullable_to_non_nullable
+as Library?,navTargets: null == navTargets ? _self.navTargets : navTargets // ignore: cast_nullable_to_non_nullable
 as List<NavTarget>,isFullySynced: null == isFullySynced ? _self.isFullySynced : isFullySynced // ignore: cast_nullable_to_non_nullable
 as bool,isItemsGridView: null == isItemsGridView ? _self.isItemsGridView : isItemsGridView // ignore: cast_nullable_to_non_nullable
 as bool,isSeriesGridView: null == isSeriesGridView ? _self.isSeriesGridView : isSeriesGridView // ignore: cast_nullable_to_non_nullable
@@ -83,7 +82,19 @@ as Duration,speed: null == speed ? _self.speed : speed // ignore: cast_nullable_
 as double,
   ));
 }
+/// Create a copy of UserSettings
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LibraryCopyWith<$Res>? get currentLibrary {
+    if (_self.currentLibrary == null) {
+    return null;
+  }
 
+  return $LibraryCopyWith<$Res>(_self.currentLibrary!, (value) {
+    return _then(_self.copyWith(currentLibrary: value));
+  });
+}
 }
 
 
@@ -162,10 +173,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@noCodeGen  String userId,  String? currentLibraryId,  String? activeItemId,  List<NavTarget> navTargets,  bool isFullySynced,  bool isItemsGridView,  bool isSeriesGridView,  bool isAuthorsGridView,  bool showTitleForItem,  bool stackTitleOnImage,  Duration fastForward,  Duration rewind,  double speed)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@noCodeGen  String userId,  Library? currentLibrary,  List<NavTarget> navTargets,  bool isFullySynced,  bool isItemsGridView,  bool isSeriesGridView,  bool isAuthorsGridView,  bool showTitleForItem,  bool stackTitleOnImage,  Duration fastForward,  Duration rewind,  double speed)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserSettings() when $default != null:
-return $default(_that.userId,_that.currentLibraryId,_that.activeItemId,_that.navTargets,_that.isFullySynced,_that.isItemsGridView,_that.isSeriesGridView,_that.isAuthorsGridView,_that.showTitleForItem,_that.stackTitleOnImage,_that.fastForward,_that.rewind,_that.speed);case _:
+return $default(_that.userId,_that.currentLibrary,_that.navTargets,_that.isFullySynced,_that.isItemsGridView,_that.isSeriesGridView,_that.isAuthorsGridView,_that.showTitleForItem,_that.stackTitleOnImage,_that.fastForward,_that.rewind,_that.speed);case _:
   return orElse();
 
 }
@@ -183,10 +194,10 @@ return $default(_that.userId,_that.currentLibraryId,_that.activeItemId,_that.nav
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@noCodeGen  String userId,  String? currentLibraryId,  String? activeItemId,  List<NavTarget> navTargets,  bool isFullySynced,  bool isItemsGridView,  bool isSeriesGridView,  bool isAuthorsGridView,  bool showTitleForItem,  bool stackTitleOnImage,  Duration fastForward,  Duration rewind,  double speed)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@noCodeGen  String userId,  Library? currentLibrary,  List<NavTarget> navTargets,  bool isFullySynced,  bool isItemsGridView,  bool isSeriesGridView,  bool isAuthorsGridView,  bool showTitleForItem,  bool stackTitleOnImage,  Duration fastForward,  Duration rewind,  double speed)  $default,) {final _that = this;
 switch (_that) {
 case _UserSettings():
-return $default(_that.userId,_that.currentLibraryId,_that.activeItemId,_that.navTargets,_that.isFullySynced,_that.isItemsGridView,_that.isSeriesGridView,_that.isAuthorsGridView,_that.showTitleForItem,_that.stackTitleOnImage,_that.fastForward,_that.rewind,_that.speed);}
+return $default(_that.userId,_that.currentLibrary,_that.navTargets,_that.isFullySynced,_that.isItemsGridView,_that.isSeriesGridView,_that.isAuthorsGridView,_that.showTitleForItem,_that.stackTitleOnImage,_that.fastForward,_that.rewind,_that.speed);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -200,10 +211,10 @@ return $default(_that.userId,_that.currentLibraryId,_that.activeItemId,_that.nav
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@noCodeGen  String userId,  String? currentLibraryId,  String? activeItemId,  List<NavTarget> navTargets,  bool isFullySynced,  bool isItemsGridView,  bool isSeriesGridView,  bool isAuthorsGridView,  bool showTitleForItem,  bool stackTitleOnImage,  Duration fastForward,  Duration rewind,  double speed)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@noCodeGen  String userId,  Library? currentLibrary,  List<NavTarget> navTargets,  bool isFullySynced,  bool isItemsGridView,  bool isSeriesGridView,  bool isAuthorsGridView,  bool showTitleForItem,  bool stackTitleOnImage,  Duration fastForward,  Duration rewind,  double speed)?  $default,) {final _that = this;
 switch (_that) {
 case _UserSettings() when $default != null:
-return $default(_that.userId,_that.currentLibraryId,_that.activeItemId,_that.navTargets,_that.isFullySynced,_that.isItemsGridView,_that.isSeriesGridView,_that.isAuthorsGridView,_that.showTitleForItem,_that.stackTitleOnImage,_that.fastForward,_that.rewind,_that.speed);case _:
+return $default(_that.userId,_that.currentLibrary,_that.navTargets,_that.isFullySynced,_that.isItemsGridView,_that.isSeriesGridView,_that.isAuthorsGridView,_that.showTitleForItem,_that.stackTitleOnImage,_that.fastForward,_that.rewind,_that.speed);case _:
   return null;
 
 }
@@ -215,12 +226,11 @@ return $default(_that.userId,_that.currentLibraryId,_that.activeItemId,_that.nav
 @JsonSerializable()
 
 class _UserSettings implements UserSettings {
-  const _UserSettings({@noCodeGen required this.userId, this.currentLibraryId, this.activeItemId, final  List<NavTarget> navTargets = defaultNavTargets, this.isFullySynced = false, this.isItemsGridView = true, this.isSeriesGridView = true, this.isAuthorsGridView = true, this.showTitleForItem = true, this.stackTitleOnImage = false, this.fastForward = const Duration(seconds: 10), this.rewind = const Duration(seconds: 10), this.speed = 1.0}): _navTargets = navTargets;
+  const _UserSettings({@noCodeGen required this.userId, this.currentLibrary, final  List<NavTarget> navTargets = defaultNavTargets, this.isFullySynced = false, this.isItemsGridView = true, this.isSeriesGridView = true, this.isAuthorsGridView = true, this.showTitleForItem = true, this.stackTitleOnImage = false, this.fastForward = const Duration(seconds: 10), this.rewind = const Duration(seconds: 10), this.speed = 1.0}): _navTargets = navTargets;
   factory _UserSettings.fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);
 
 @override@noCodeGen final  String userId;
-@override final  String? currentLibraryId;
-@override final  String? activeItemId;
+@override final  Library? currentLibrary;
  final  List<NavTarget> _navTargets;
 @override@JsonKey() List<NavTarget> get navTargets {
   if (_navTargets is EqualUnmodifiableListView) return _navTargets;
@@ -251,16 +261,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserSettings&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.currentLibraryId, currentLibraryId) || other.currentLibraryId == currentLibraryId)&&(identical(other.activeItemId, activeItemId) || other.activeItemId == activeItemId)&&const DeepCollectionEquality().equals(other._navTargets, _navTargets)&&(identical(other.isFullySynced, isFullySynced) || other.isFullySynced == isFullySynced)&&(identical(other.isItemsGridView, isItemsGridView) || other.isItemsGridView == isItemsGridView)&&(identical(other.isSeriesGridView, isSeriesGridView) || other.isSeriesGridView == isSeriesGridView)&&(identical(other.isAuthorsGridView, isAuthorsGridView) || other.isAuthorsGridView == isAuthorsGridView)&&(identical(other.showTitleForItem, showTitleForItem) || other.showTitleForItem == showTitleForItem)&&(identical(other.stackTitleOnImage, stackTitleOnImage) || other.stackTitleOnImage == stackTitleOnImage)&&(identical(other.fastForward, fastForward) || other.fastForward == fastForward)&&(identical(other.rewind, rewind) || other.rewind == rewind)&&(identical(other.speed, speed) || other.speed == speed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserSettings&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.currentLibrary, currentLibrary) || other.currentLibrary == currentLibrary)&&const DeepCollectionEquality().equals(other._navTargets, _navTargets)&&(identical(other.isFullySynced, isFullySynced) || other.isFullySynced == isFullySynced)&&(identical(other.isItemsGridView, isItemsGridView) || other.isItemsGridView == isItemsGridView)&&(identical(other.isSeriesGridView, isSeriesGridView) || other.isSeriesGridView == isSeriesGridView)&&(identical(other.isAuthorsGridView, isAuthorsGridView) || other.isAuthorsGridView == isAuthorsGridView)&&(identical(other.showTitleForItem, showTitleForItem) || other.showTitleForItem == showTitleForItem)&&(identical(other.stackTitleOnImage, stackTitleOnImage) || other.stackTitleOnImage == stackTitleOnImage)&&(identical(other.fastForward, fastForward) || other.fastForward == fastForward)&&(identical(other.rewind, rewind) || other.rewind == rewind)&&(identical(other.speed, speed) || other.speed == speed));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,currentLibraryId,activeItemId,const DeepCollectionEquality().hash(_navTargets),isFullySynced,isItemsGridView,isSeriesGridView,isAuthorsGridView,showTitleForItem,stackTitleOnImage,fastForward,rewind,speed);
+int get hashCode => Object.hash(runtimeType,userId,currentLibrary,const DeepCollectionEquality().hash(_navTargets),isFullySynced,isItemsGridView,isSeriesGridView,isAuthorsGridView,showTitleForItem,stackTitleOnImage,fastForward,rewind,speed);
 
 @override
 String toString() {
-  return 'UserSettings(userId: $userId, currentLibraryId: $currentLibraryId, activeItemId: $activeItemId, navTargets: $navTargets, isFullySynced: $isFullySynced, isItemsGridView: $isItemsGridView, isSeriesGridView: $isSeriesGridView, isAuthorsGridView: $isAuthorsGridView, showTitleForItem: $showTitleForItem, stackTitleOnImage: $stackTitleOnImage, fastForward: $fastForward, rewind: $rewind, speed: $speed)';
+  return 'UserSettings(userId: $userId, currentLibrary: $currentLibrary, navTargets: $navTargets, isFullySynced: $isFullySynced, isItemsGridView: $isItemsGridView, isSeriesGridView: $isSeriesGridView, isAuthorsGridView: $isAuthorsGridView, showTitleForItem: $showTitleForItem, stackTitleOnImage: $stackTitleOnImage, fastForward: $fastForward, rewind: $rewind, speed: $speed)';
 }
 
 
@@ -271,11 +281,11 @@ abstract mixin class _$UserSettingsCopyWith<$Res> implements $UserSettingsCopyWi
   factory _$UserSettingsCopyWith(_UserSettings value, $Res Function(_UserSettings) _then) = __$UserSettingsCopyWithImpl;
 @override @useResult
 $Res call({
-@noCodeGen String userId, String? currentLibraryId, String? activeItemId, List<NavTarget> navTargets, bool isFullySynced, bool isItemsGridView, bool isSeriesGridView, bool isAuthorsGridView, bool showTitleForItem, bool stackTitleOnImage, Duration fastForward, Duration rewind, double speed
+@noCodeGen String userId, Library? currentLibrary, List<NavTarget> navTargets, bool isFullySynced, bool isItemsGridView, bool isSeriesGridView, bool isAuthorsGridView, bool showTitleForItem, bool stackTitleOnImage, Duration fastForward, Duration rewind, double speed
 });
 
 
-
+@override $LibraryCopyWith<$Res>? get currentLibrary;
 
 }
 /// @nodoc
@@ -288,12 +298,11 @@ class __$UserSettingsCopyWithImpl<$Res>
 
 /// Create a copy of UserSettings
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? currentLibraryId = freezed,Object? activeItemId = freezed,Object? navTargets = null,Object? isFullySynced = null,Object? isItemsGridView = null,Object? isSeriesGridView = null,Object? isAuthorsGridView = null,Object? showTitleForItem = null,Object? stackTitleOnImage = null,Object? fastForward = null,Object? rewind = null,Object? speed = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? currentLibrary = freezed,Object? navTargets = null,Object? isFullySynced = null,Object? isItemsGridView = null,Object? isSeriesGridView = null,Object? isAuthorsGridView = null,Object? showTitleForItem = null,Object? stackTitleOnImage = null,Object? fastForward = null,Object? rewind = null,Object? speed = null,}) {
   return _then(_UserSettings(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as String,currentLibraryId: freezed == currentLibraryId ? _self.currentLibraryId : currentLibraryId // ignore: cast_nullable_to_non_nullable
-as String?,activeItemId: freezed == activeItemId ? _self.activeItemId : activeItemId // ignore: cast_nullable_to_non_nullable
-as String?,navTargets: null == navTargets ? _self._navTargets : navTargets // ignore: cast_nullable_to_non_nullable
+as String,currentLibrary: freezed == currentLibrary ? _self.currentLibrary : currentLibrary // ignore: cast_nullable_to_non_nullable
+as Library?,navTargets: null == navTargets ? _self._navTargets : navTargets // ignore: cast_nullable_to_non_nullable
 as List<NavTarget>,isFullySynced: null == isFullySynced ? _self.isFullySynced : isFullySynced // ignore: cast_nullable_to_non_nullable
 as bool,isItemsGridView: null == isItemsGridView ? _self.isItemsGridView : isItemsGridView // ignore: cast_nullable_to_non_nullable
 as bool,isSeriesGridView: null == isSeriesGridView ? _self.isSeriesGridView : isSeriesGridView // ignore: cast_nullable_to_non_nullable
@@ -307,7 +316,19 @@ as double,
   ));
 }
 
+/// Create a copy of UserSettings
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LibraryCopyWith<$Res>? get currentLibrary {
+    if (_self.currentLibrary == null) {
+    return null;
+  }
 
+  return $LibraryCopyWith<$Res>(_self.currentLibrary!, (value) {
+    return _then(_self.copyWith(currentLibrary: value));
+  });
+}
 }
 
 // dart format on

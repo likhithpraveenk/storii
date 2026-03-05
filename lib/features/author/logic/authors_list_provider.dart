@@ -11,9 +11,10 @@ import 'package:storii/shared/helpers/app_error.dart';
 part 'authors_list_provider.g.dart';
 
 @riverpod
-Stream<List<Author>> authorsList(Ref ref) async* {
-  final library = await ref.watch(activeLibraryProvider.future);
-
+Future<List<Author>> authorsList(Ref ref) async {
+  final libraryId = (await ref.watch(
+    activeLibraryDetailsProvider.future,
+  )).library.id;
   final params = ref.watch(
     libraryFiltersProvider(.authors).select((s) => s.toAuthorParams()),
   );
@@ -22,8 +23,8 @@ Stream<List<Author>> authorsList(Ref ref) async* {
   final api = ref.read(libraryApiProvider(user));
 
   try {
-    final response = await api.getAuthors(library.id, params);
-    yield response;
+    final response = await api.getAuthors(libraryId, params);
+    return response;
   } catch (e, st) {
     final err = AppError.resolve(e);
     LogService.log(

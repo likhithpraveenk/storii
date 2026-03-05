@@ -31,12 +31,6 @@ class _AppScrollbarState extends State<AppScrollbar>
   void initState() {
     super.initState();
     widget.controller.addListener(_handleScroll);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.controller.hasClients &&
-          widget.controller.position.hasContentDimensions) {
-        _handleScroll();
-      }
-    });
   }
 
   @override
@@ -52,7 +46,7 @@ class _AppScrollbarState extends State<AppScrollbar>
 
     _anim.forward();
     _hideTimer?.cancel();
-    _hideTimer = Timer(const Duration(seconds: 2), () => _anim.reverse());
+    _hideTimer = Timer(const Duration(seconds: 1), () => _anim.reverse());
   }
 
   void _handleDrag(DragUpdateDetails details, double availableHeight) {
@@ -87,6 +81,7 @@ class _AppScrollbarState extends State<AppScrollbar>
               builder: (context, _) {
                 final isReady =
                     widget.controller.hasClients &&
+                    widget.controller.positions.length == 1 &&
                     widget.controller.position.hasContentDimensions;
 
                 if (!isReady) return const SizedBox.shrink();

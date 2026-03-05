@@ -9,31 +9,39 @@ import 'package:storii/shared/helpers/app_error.dart';
 
 part 'shelves_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<List<Shelf>> shelves(Ref ref) async {
-  final library = await ref.watch(activeLibraryProvider.future);
-  final progressMap = await ref.refresh(mediaProgressProvider.future);
+  final rawShelves = await ref.watch(rawShelvesProvider.future);
+  final progressMap = await ref.watch(mediaProgressProvider.future);
 
+  return rawShelves
+      .map(
+        (s) => switch (s) {
+          LibraryItemsShelf() => s.copyWith(
+            entities: s.entities
+                .map(
+                  (item) =>
+                      item.copyWith(userMediaProgress: progressMap[item.id]),
+                )
+                .toList(),
+          ),
+          _ => s,
+        },
+      )
+      .toList();
+}
+
+@riverpod
+Future<List<Shelf>> rawShelves(Ref ref) async {
+  final libraryId = (await ref.watch(
+    activeLibraryDetailsProvider.future,
+  )).library.id;
   try {
     final user = await ref.read(authenticatedUserProvider.future);
     final rawShelves = await ref
         .read(libraryApiProvider(user))
-        .getPersonalized(library.id);
-    return rawShelves
-        .map(
-          (s) => switch (s) {
-            LibraryItemsShelf() => s.copyWith(
-              entities: s.entities
-                  .map(
-                    (item) =>
-                        item.copyWith(userMediaProgress: progressMap[item.id]),
-                  )
-                  .toList(),
-            ),
-            _ => s,
-          },
-        )
-        .toList();
+        .getPersonalized(libraryId);
+    return rawShelves;
   } catch (e, s) {
     final error = AppError.resolve(e);
     LogService.log(

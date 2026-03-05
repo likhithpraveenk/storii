@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/models/app_settings.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/models/user_settings.dart';
@@ -95,7 +96,7 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
   Future<void> reset() => _save(
     UserSettings(
       userId: state.userId,
-      currentLibraryId: state.currentLibraryId,
+      currentLibrary: state.currentLibrary,
       isFullySynced: state.isFullySynced,
     ),
   );

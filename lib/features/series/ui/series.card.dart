@@ -4,9 +4,9 @@ import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
-import 'package:storii/features/library/ui/placeholder_image.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/helpers/model_extensions.dart';
+import 'package:storii/shared/widgets/placeholder_image.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class SeriesCard extends StatelessWidget {
@@ -23,7 +23,7 @@ class SeriesCard extends StatelessWidget {
               series.books.length;
 
     return InkWell(
-      onTap: () => context.push(AppRoute.seriesDetail.withId(series.id)),
+      onTap: () => context.push(AppRoute.seriesDetail.path, extra: series.id),
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       child: Column(
@@ -172,7 +172,7 @@ class SeriesCardListView extends StatelessWidget {
         : (series.progress?.libraryItemIdsFinished.length ?? 0) /
               series.books.length;
     return ListTile(
-      onTap: () => context.push(AppRoute.itemDetail.withId(series.id)),
+      onTap: () => context.push(AppRoute.seriesDetail.path, extra: series.id),
       contentPadding: const .fromLTRB(16, 8, 16, 8),
       leading: AspectRatio(
         aspectRatio: 1,

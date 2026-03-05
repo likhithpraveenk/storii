@@ -17,9 +17,9 @@ final class AuthorsListProvider
         $FunctionalProvider<
           AsyncValue<List<Author>>,
           List<Author>,
-          Stream<List<Author>>
+          FutureOr<List<Author>>
         >
-    with $FutureModifier<List<Author>>, $StreamProvider<List<Author>> {
+    with $FutureModifier<List<Author>>, $FutureProvider<List<Author>> {
   AuthorsListProvider._()
     : super(
         from: null,
@@ -36,14 +36,14 @@ final class AuthorsListProvider
 
   @$internal
   @override
-  $StreamProviderElement<List<Author>> $createElement(
+  $FutureProviderElement<List<Author>> $createElement(
     $ProviderPointer pointer,
-  ) => $StreamProviderElement(pointer);
+  ) => $FutureProviderElement(pointer);
 
   @override
-  Stream<List<Author>> create(Ref ref) {
+  FutureOr<List<Author>> create(Ref ref) {
     return authorsList(ref);
   }
 }
 
-String _$authorsListHash() => r'e75ba5e9a27b5f3c68cfe2102b4724498e622e16';
+String _$authorsListHash() => r'5ee2d2faaf93470d3a20ad9299ecbed831fabcaf';

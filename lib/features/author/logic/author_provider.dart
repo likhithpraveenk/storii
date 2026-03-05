@@ -12,7 +12,10 @@ part 'author_provider.g.dart';
 @riverpod
 Future<Author> author(Ref ref, String authorId) async {
   final user = await ref.watch(authenticatedUserProvider.future);
-  final libraryId = (await ref.watch(activeLibraryProvider.future)).id;
+  final libraryId = (await ref.watch(
+    activeLibraryDetailsProvider.future,
+  )).library.id;
+
   final api = ref.read(authorApiProvider(user));
   final progressMap = await ref.watch(mediaProgressProvider.future);
   try {

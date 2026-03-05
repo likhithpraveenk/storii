@@ -5,30 +5,43 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/filter_data_provider.dart';
 import 'package:storii/features/library/logic/user_libraries_provider.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 
 part 'active_library_provider.g.dart';
 
-@Riverpod(keepAlive: true)
-Future<Library> activeLibrary(Ref ref) async {
-  final user = await ref.watch(authenticatedUserProvider.future);
+@riverpod
+Future<LibraryResponse> activeLibraryDetails(Ref ref) async {
+  final currentLibrary = ref.watch(currentLibraryProvider);
 
-  final libraries = await ref.watch(userLibrariesProvider.future);
-  if (libraries.isEmpty) throw StateError('No libraries found');
-
-  final currentLibraryId = ref.watch(currentLibraryIdProvider);
-  final library =
-      libraries.firstWhereOrNull((l) => l.id == currentLibraryId) ??
-      libraries.first;
-  if (currentLibraryId != library.id) {
-    await ref
-        .read(userSettingsProvider.notifier)
-        .setCurrentLibraryId(library.id);
+  Future<LibraryResponse> fetchFullLibrary(Library lib) async {
+    final user = await ref.read(authenticatedUserProvider.future);
+    final api = ref.read(libraryApiProvider(user));
+    try {
+      return await api.get(lib.id);
+    } catch (e) {
+      rethrow;
+    }
   }
-  final api = ref.read(libraryApiProvider(user));
-  final response = await api.get(library.id);
 
-  ref.read(filterDataProvider.notifier).set(response.filterData);
+  if (currentLibrary == null) {
+    final libraries = await ref.watch(userLibrariesProvider.future);
+    if (libraries.isEmpty) throw StateError('No libraries found');
 
-  return response.library;
+    final sortedLibraries = libraries
+      ..sort((a, b) => a.displayOrder.compareTo(b.displayOrder));
+    return fetchFullLibrary(sortedLibraries.first);
+  }
+
+  return fetchFullLibrary(currentLibrary);
+}
+
+@riverpod
+void librarySyncController(Ref ref) {
+  ref.listen(activeLibraryDetailsProvider, (prev, next) {
+    next.whenData((response) {
+      ref.read(filterDataProvider.notifier).set(response.filterData);
+      ref
+          .read(userSettingsProvider.notifier)
+          .setCurrentLibrary(response.library);
+    });
+  });
 }
