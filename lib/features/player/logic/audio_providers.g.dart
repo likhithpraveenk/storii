@@ -9,45 +9,6 @@ part of 'audio_providers.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(queue)
-final queueProvider = QueueProvider._();
-
-final class QueueProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<MediaItem>>,
-          List<MediaItem>,
-          Stream<List<MediaItem>>
-        >
-    with $FutureModifier<List<MediaItem>>, $StreamProvider<List<MediaItem>> {
-  QueueProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'queueProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$queueHash();
-
-  @$internal
-  @override
-  $StreamProviderElement<List<MediaItem>> $createElement(
-    $ProviderPointer pointer,
-  ) => $StreamProviderElement(pointer);
-
-  @override
-  Stream<List<MediaItem>> create(Ref ref) {
-    return queue(ref);
-  }
-}
-
-String _$queueHash() => r'e3257730a5d646c55c66051e4cc3b942cd5c09e6';
-
 @ProviderFor(audioHandlerEvents)
 final audioHandlerEventsProvider = AudioHandlerEventsProvider._();
 
@@ -327,7 +288,7 @@ final class TotalDurationProvider
   }
 }
 
-String _$totalDurationHash() => r'ad8cd7bf01c938b51409190aa66f0fc5f1f9b9f4';
+String _$totalDurationHash() => r'5b8043ca284de5972183decfc40d0b6f06647bdd';
 
 @ProviderFor(AudioPlayerNotifier)
 final audioPlayerProvider = AudioPlayerNotifierProvider._();
@@ -354,7 +315,7 @@ final class AudioPlayerNotifierProvider
 }
 
 String _$audioPlayerNotifierHash() =>
-    r'6d5034383f938cbf7db5e92a346ab3d4b85229a6';
+    r'eb8f59b09ae9f063598d407081e353f2a597fa08';
 
 abstract class _$AudioPlayerNotifier extends $AsyncNotifier<void> {
   FutureOr<void> build();

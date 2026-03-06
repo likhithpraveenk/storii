@@ -24,8 +24,8 @@ extension PlaybackSessionX on PlaybackSession {
             duration: track.duration,
             artUri: coverUri,
             extras: {
-              'startOffset': startOffset,
-              'totalDuration': duration,
+              'startOffset': startOffset.inMicroseconds,
+              'totalDuration': duration.inMicroseconds,
               'itemId': libraryItemId,
               'trackIndex': '${track.index}',
               if (mediaType == .podcast) 'episodeId': episodeId,

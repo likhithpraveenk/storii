@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:hive_ce/hive_ce.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -7,6 +8,7 @@ import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/globals.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/storage/hive/boxes.dart';
 
 part 'session_notifier.g.dart';
@@ -66,6 +68,10 @@ class SessionNotifier extends _$SessionNotifier {
             timeListened: totalListened,
           ),
         );
+    log(
+      'session sync: ${position.toTimestamp()}'
+      '\nlistened for ${totalListened.inSeconds}s',
+    );
   }
 
   Future<void> close(Duration totalListened) async {
@@ -87,6 +93,7 @@ class SessionNotifier extends _$SessionNotifier {
           );
       await Hive.box<String>(sessionIdBox).delete(session.id);
     } finally {
+      log('session closed');
       state = null;
     }
   }

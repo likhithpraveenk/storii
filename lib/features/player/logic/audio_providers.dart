@@ -19,11 +19,6 @@ part 'audio_providers.g.dart';
 late final AppAudioHandler audioHandler;
 
 @riverpod
-Stream<List<MediaItem>> queue(Ref ref) {
-  return audioHandler.queue;
-}
-
-@riverpod
 Stream<AudioHandlerEvent> audioHandlerEvents(Ref ref) {
   return audioHandler.events.map((event) {
     log('Handler: $event');
@@ -65,10 +60,10 @@ Stream<Duration> globalPosition(Ref ref) {
 
 @riverpod
 Duration totalDuration(Ref ref) {
-  final items = ref.watch(queueProvider).value ?? const <MediaItem>[];
-  if (items.isEmpty) return Duration.zero;
-  final totalDuration = items.first.extras!['totalDuration'] as Duration;
-  return totalDuration;
+  final session = ref.watch(sessionProvider);
+  if (session == null) return Duration.zero;
+
+  return session.duration;
 }
 
 @Riverpod(keepAlive: true)
@@ -89,6 +84,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       final (int index, Duration position) = session.getIndexAndOffset();
       final sources = session.toAudioSources(user.serverUrl, token);
 
+      await audioHandler.stop();
       await audioHandler.setSources(
         sources,
         initialIndex: index,

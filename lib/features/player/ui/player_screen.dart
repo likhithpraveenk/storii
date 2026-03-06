@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/app_styles.dart';
@@ -41,7 +43,10 @@ class PlayerScreen extends ConsumerWidget {
 
     return PlayerBuilder(
       maxHeight: screenHeight,
-      onDismiss: () => audioHandler.stop(),
+      onDismiss: () async {
+        log('miniplayer dismissed');
+        return await audioHandler.stop();
+      },
       builder: (context, f) {
         final miniOpacity = 1 - miniInterval.transform(f);
         final fullOpacity = fullInterval.transform(f);

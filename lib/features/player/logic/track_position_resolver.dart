@@ -8,7 +8,9 @@ class TrackPositionResolver {
   static TrackPositionResolver from(List<MediaItem> items) {
     return TrackPositionResolver(
       List<Duration>.unmodifiable(
-        items.map((item) => item.extras!['startOffset'] as Duration),
+        items.map(
+          (item) => Duration(microseconds: item.extras!['startOffset'] as int),
+        ),
       ),
     );
   }

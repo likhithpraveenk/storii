@@ -144,26 +144,21 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     mediaItem.add(
       first.copyWith(
         id: first.extras!['itemId'] as String,
-        duration: first.extras!['totalDuration'] as Duration,
+        duration: Duration(microseconds: first.extras!['totalDuration'] as int),
         artUri: first.artUri,
       ),
     );
   }
 
   Stream<Duration> get positionStream {
-    return Rx.combineLatest3<int?, Duration, PlaybackState, Duration>(
+    return Rx.combineLatest2(
       _player.currentIndexStream,
       _player.positionStream,
-      playbackState,
-      (index, localPosition, state) {
-        if (state.processingState == .loading ||
-            state.processingState == .idle) {
-          return Duration.zero;
-        }
-
-        return _resolver.globalPosition(index, localPosition);
-      },
-    ).distinct();
+      (index, pos) => _resolver.globalPosition(index, pos),
+    ).where((_) {
+      final state = playbackState.value.processingState;
+      return state != .loading && state != .idle;
+    }).distinct();
   }
 
   Future<void> togglePlay() async {
@@ -188,7 +183,14 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   Future<void> fastForward() => seek(_currentPosition + getFastForward());
 
   @override
-  Future<void> rewind() => seek(_currentPosition - getRewind());
+  Future<void> rewind() => seek(
+    Duration(
+      microseconds: (_currentPosition - getRewind()).inMicroseconds.clamp(
+        0,
+        double.maxFinite.toInt(),
+      ),
+    ),
+  );
 
   @override
   Future<void> seek(Duration position) async {
