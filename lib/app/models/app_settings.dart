@@ -28,7 +28,7 @@ sealed class AppSettings with _$AppSettings {
 
     @Default(false) bool enableHttpLogs,
 
-    @Default(Duration(seconds: 10)) Duration fastForward,
+    @Default(Duration(seconds: 30)) Duration fastForward,
 
     @Default(Duration(seconds: 10)) Duration rewind,
 

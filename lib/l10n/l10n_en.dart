@@ -553,4 +553,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get progressRemoveFailed => 'Failed to remove progress';
+
+  @override
+  String get playerSettings => 'Player Settings';
+
+  @override
+  String get skipForward => 'Skip forward';
+
+  @override
+  String get skipBack => 'Skip back';
 }

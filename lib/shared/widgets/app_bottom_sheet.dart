@@ -11,6 +11,7 @@ class AppBottomSheet extends StatelessWidget {
     this.confirmIcon,
     this.isDestructive = false,
     this.onConfirm,
+    this.showActions = true,
   });
 
   final String title;
@@ -19,6 +20,7 @@ class AppBottomSheet extends StatelessWidget {
   final IconData? confirmIcon;
   final bool isDestructive;
   final VoidCallback? onConfirm;
+  final bool showActions;
 
   static Future<bool?> show(
     BuildContext context, {
@@ -28,6 +30,7 @@ class AppBottomSheet extends StatelessWidget {
     IconData? confirmIcon,
     bool isDestructive = false,
     VoidCallback? onConfirm,
+    bool showActions = true,
   }) {
     return showModalBottomSheet<bool>(
       context: context,
@@ -39,6 +42,7 @@ class AppBottomSheet extends StatelessWidget {
         confirmIcon: confirmIcon,
         isDestructive: isDestructive,
         onConfirm: onConfirm,
+        showActions: showActions,
       ),
     );
   }
@@ -48,53 +52,54 @@ class AppBottomSheet extends StatelessWidget {
     return Padding(
       padding: const .fromLTRB(24, 24, 24, 36),
       child: Column(
-        mainAxisSize: .min,
         crossAxisAlignment: .stretch,
         children: [
           Text(title, style: Theme.of(context).textTheme.titleLarge),
           const Divider(),
           if (body != null) ...[const SizedBox(height: 12), body!],
-          const SizedBox(height: 24),
-          Row(
-            children: [
-              if (isDestructive) ...[
-                Expanded(
-                  child: AppFilledButton(
-                    isDestructive: true,
-                    onPressed: () {
-                      onConfirm?.call();
-                      Navigator.of(context).pop(true);
-                    },
-                    text: confirmLabel,
+          if (showActions) ...[
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                if (isDestructive) ...[
+                  Expanded(
+                    child: AppFilledButton(
+                      isDestructive: true,
+                      onPressed: () {
+                        onConfirm?.call();
+                        Navigator.of(context).pop(true);
+                      },
+                      text: confirmLabel,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: AppOutlinedButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    text: AppLocalizations.of(context)!.cancel,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: AppOutlinedButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      text: AppLocalizations.of(context)!.cancel,
+                    ),
                   ),
-                ),
-              ] else ...[
-                Expanded(
-                  child: AppOutlinedButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    text: AppLocalizations.of(context)!.cancel,
+                ] else ...[
+                  Expanded(
+                    child: AppOutlinedButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      text: AppLocalizations.of(context)!.cancel,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: AppFilledButton(
-                    onPressed: () {
-                      onConfirm?.call();
-                      Navigator.of(context).pop(true);
-                    },
-                    text: confirmLabel,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: AppFilledButton(
+                      onPressed: () {
+                        onConfirm?.call();
+                        Navigator.of(context).pop(true);
+                      },
+                      text: confirmLabel,
+                    ),
                   ),
-                ),
+                ],
               ],
-            ],
-          ),
+            ),
+          ],
         ],
       ),
     );

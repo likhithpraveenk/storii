@@ -20,6 +20,7 @@ import 'package:storii/features/series/ui/series_detail_screen.dart';
 import 'package:storii/features/series/ui/series_list_screen.dart';
 import 'package:storii/features/settings/ui/appearance_screen.dart';
 import 'package:storii/features/settings/ui/config_nav_screen.dart';
+import 'package:storii/features/settings/ui/player_settings_screen.dart';
 import 'package:storii/features/settings/ui/settings_screen.dart';
 import 'package:storii/shared/splash_screen.dart';
 import 'package:storii/shared/widgets/shell_scaffold.dart';
@@ -42,6 +43,7 @@ enum AppRoute {
   more('/more'),
   settings('/more/settings'),
   appearanceSettings('/more/settings/appearance'),
+  playerSettings('/more/settings/player'),
   navigationSettings('/more/settings/navigation'),
   profile('/more/profile');
 
@@ -151,6 +153,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: 'appearance',
                     builder: (context, state) => const AppearanceScreen(),
+                  ),
+                  GoRoute(
+                    path: 'player',
+                    builder: (context, state) => const PlayerSettingsScreen(),
                   ),
                   GoRoute(
                     path: 'navigation',

@@ -22,7 +22,7 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
   fontScale: (json['fontScale'] as num?)?.toDouble() ?? 1,
   enableHttpLogs: json['enableHttpLogs'] as bool? ?? false,
   fastForward: json['fastForward'] == null
-      ? const Duration(seconds: 10)
+      ? const Duration(seconds: 30)
       : Duration(microseconds: (json['fastForward'] as num).toInt()),
   rewind: json['rewind'] == null
       ? const Duration(seconds: 10)

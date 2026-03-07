@@ -227,7 +227,7 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.l
 @JsonSerializable()
 
 class _AppSettings implements AppSettings {
-  const _AppSettings({this.themeMode = ThemeMode.system, this.useDynamicColor = false, this.usePureBlack = false, this.localeCode = 'en', this.currentUser, this.dateTimeFormat = 'dd MMM y', this.maxLogs = 100, this.fontFamily = 'AtkinsonHyperlegibleNext', this.fontScale = 1, this.enableHttpLogs = false, this.fastForward = const Duration(seconds: 10), this.rewind = const Duration(seconds: 10), this.speed = 1.0});
+  const _AppSettings({this.themeMode = ThemeMode.system, this.useDynamicColor = false, this.usePureBlack = false, this.localeCode = 'en', this.currentUser, this.dateTimeFormat = 'dd MMM y', this.maxLogs = 100, this.fontFamily = 'AtkinsonHyperlegibleNext', this.fontScale = 1, this.enableHttpLogs = false, this.fastForward = const Duration(seconds: 30), this.rewind = const Duration(seconds: 10), this.speed = 1.0});
   factory _AppSettings.fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);
 
 @override@JsonKey() final  ThemeMode themeMode;

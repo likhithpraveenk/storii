@@ -1095,6 +1095,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to remove progress'**
   String get progressRemoveFailed;
+
+  /// No description provided for @playerSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Player Settings'**
+  String get playerSettings;
+
+  /// No description provided for @skipForward.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip forward'**
+  String get skipForward;
+
+  /// No description provided for @skipBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip back'**
+  String get skipBack;
 }
 
 class _AppLocalizationsDelegate

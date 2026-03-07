@@ -7,7 +7,6 @@
   "validateServer": "Validate Server",
   "username": "Username",
   "password": "Password",
-  "errorUnknown": "Something went wrong",
   "delete": "Delete",
   "cancel": "Cancel",
   "deleteServer": "Delete Server",
@@ -26,14 +25,6 @@
   "addUser": "Add User",
   "editServer": "Edit Server",
   "errorLoadingUsers": "Error loading users",
-  "welcome": "Welcome {username}",
-  "@welcome": {
-    "placeholders": {
-      "username": {
-        "type": "String"
-      }
-    }
-  },
   "switchingToUser": "Switching to {user}",
   "@switchingToUser": {
     "placeholders": {
@@ -57,10 +48,7 @@
   "noLibrary": "No Library",
   "empty": "Empty",
   "collapse": "Collapse",
-  "readMore": "Read More",
   "retry": "Retry",
-  "ascDesc": "Tap again for ascending/descending",
-  "gridCount": "Grid Count",
   "description": "Description",
   "noDescription": "No description available",
   "resume": "Resume",
@@ -88,7 +76,6 @@
   "language": "Language",
   "configNav": "Configure Navigation",
   "appearance": "Appearance",
-  "mustSelect3": "You must select at least 3 items",
   "theme": "Theme",
   "reset": "Reset",
   "resetSettingsQ": "Reset Settings?",
@@ -131,7 +118,6 @@
   "filter": "Filter",
   "sort": "Sort",
   "display": "Display",
-  "gridView": "Grid View",
   "genre": "Genre",
   "tag": "Tag",
   "publisher": "Publisher",
@@ -141,7 +127,6 @@
   "tracks": "Tracks",
   "missingMetadata": "Missing Metadata",
   "ebooks": "Ebooks",
-  "clearFilter": "Clear Filter",
   "finished": "Finished",
   "notStarted": "Not Started",
   "inProgress": "In Progress",
@@ -149,7 +134,6 @@
   "asin": "ASIN",
   "isbn": "ISBN",
   "subtitle": "Subtitle",
-  "year": "Year",
   "singleTrack": "Single Track",
   "multipleTracks": "Multiple Tracks",
   "noTracks": "No Tracks",
@@ -161,8 +145,6 @@
   "comfortable": "Comfortable",
   "compact": "Compact",
   "coverOnly": "Cover Only",
-  "ascending": "Ascending",
-  "descending": "Descending",
   "listView": "List View",
   "licenses": "Licenses",
   "sourceCode": "Source Code",
@@ -175,14 +157,6 @@
     }
   },
   "licensedUnder": "Licensed under the GNU General Public License v3.0",
-  "errorText": "Error: {text}",
-  "@errorText": {
-    "placeholders": {
-      "text": {
-        "type": "String"
-      }
-    }
-  },
   "version": "Version",
   "buildNumber": "Build Number: {text}",
   "@buildNumber": {
@@ -194,7 +168,6 @@
   },
   "networkLogs": "Network Logs",
   "networkLogsDescription": "Log HTTP requests and responses",
-  "networkLogsWarning": "Logging active. This may increase storage usage",
   "readableDuration": "{hours, plural, =0{} other{{hours}hr }}{minutes}min",
   "@readableDuration": {
     "placeholders": {
@@ -229,15 +202,6 @@
       }
     }
   },
-  "lastListened": "Last listened {date}",
-  "@lastListened": {
-    "placeholders": {
-      "date": {
-        "type": "DateTime",
-        "format": "yMMMd"
-      }
-    }
-  },
   "removeProgressTitle": "Remove progress?",
   "removeProgressMessage": "This will reset your listening progress and cannot be undone.",
   "remove": "Remove",
@@ -246,5 +210,8 @@
   "progressMarkedComplete": "Marked as complete",
   "progressMarkCompleteFailed": "Failed to mark as complete",
   "progressRemoved": "Progress removed",
-  "progressRemoveFailed": "Failed to remove progress"
+  "progressRemoveFailed": "Failed to remove progress",
+  "playerSettings": "Player Settings",
+  "skipForward": "Skip forward",
+  "skipBack": "Skip back"
 }

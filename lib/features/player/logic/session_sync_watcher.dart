@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 
@@ -113,7 +114,14 @@ void sessionSyncWatcher(Ref ref) {
         notifier.syncNow(isClosing: true);
       case .complete:
         notifier.syncNow(isClosing: true);
-      // TODO: set an item complete
+        ref
+            .read(
+              mediaProgressProvider(
+                session.libraryItemId,
+                session.episodeId,
+              ).notifier,
+            )
+            .markComplete();
       default:
         break;
     }

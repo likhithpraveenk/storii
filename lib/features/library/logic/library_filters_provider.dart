@@ -62,7 +62,7 @@ class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
     state = state.copyWith(sortAscending: !state.sortAscending);
   }
 
-  void setGridView(bool isGridView) {
+  void setGridView({required bool isGridView}) {
     if (isGridView == state.isGridView) return;
     final notifier = ref.read(userSettingsProvider.notifier);
     switch (screen) {
@@ -87,7 +87,7 @@ class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
     required bool title,
     bool isGridView = true,
   }) {
-    setGridView(isGridView);
+    setGridView(isGridView: isGridView);
     final settings = ref.read(userSettingsProvider.notifier);
     settings.setStackTitleOnImage(stack);
     settings.setShowTitleForItem(title);
