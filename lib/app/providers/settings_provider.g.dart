@@ -148,6 +148,14 @@ extension AppSettingsSetters on AppSettingsNotifier {
 
   Future<void> setEnableHttpLogs(bool value) =>
       _save(state.copyWith(enableHttpLogs: value));
+
+  Future<void> setFastForward(Duration value) =>
+      _save(state.copyWith(fastForward: value));
+
+  Future<void> setRewind(Duration value) =>
+      _save(state.copyWith(rewind: value));
+
+  Future<void> setSpeed(double value) => _save(state.copyWith(speed: value));
 }
 
 final themeModeProvider = Provider<ThemeMode>(
@@ -190,6 +198,18 @@ final enableHttpLogsProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.enableHttpLogs)),
 );
 
+final fastForwardProvider = Provider<Duration>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.fastForward)),
+);
+
+final rewindProvider = Provider<Duration>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.rewind)),
+);
+
+final speedProvider = Provider<double>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.speed)),
+);
+
 // **************************************************************************
 // _UserSettingsGenerator
 // **************************************************************************
@@ -218,14 +238,6 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setStackTitleOnImage(bool value) =>
       _save(state.copyWith(stackTitleOnImage: value));
-
-  Future<void> setFastForward(Duration value) =>
-      _save(state.copyWith(fastForward: value));
-
-  Future<void> setRewind(Duration value) =>
-      _save(state.copyWith(rewind: value));
-
-  Future<void> setSpeed(double value) => _save(state.copyWith(speed: value));
 
   Future<void> setSyncInterval(Duration value) =>
       _save(state.copyWith(syncInterval: value));
@@ -261,18 +273,6 @@ final showTitleForItemProvider = Provider<bool>(
 
 final stackTitleOnImageProvider = Provider<bool>(
   (ref) => ref.watch(userSettingsProvider.select((s) => s.stackTitleOnImage)),
-);
-
-final fastForwardProvider = Provider<Duration>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.fastForward)),
-);
-
-final rewindProvider = Provider<Duration>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.rewind)),
-);
-
-final speedProvider = Provider<double>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.speed)),
 );
 
 final syncIntervalProvider = Provider<Duration>(

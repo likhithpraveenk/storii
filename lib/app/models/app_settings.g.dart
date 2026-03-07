@@ -21,6 +21,13 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
   fontFamily: json['fontFamily'] as String? ?? 'AtkinsonHyperlegibleNext',
   fontScale: (json['fontScale'] as num?)?.toDouble() ?? 1,
   enableHttpLogs: json['enableHttpLogs'] as bool? ?? false,
+  fastForward: json['fastForward'] == null
+      ? const Duration(seconds: 10)
+      : Duration(microseconds: (json['fastForward'] as num).toInt()),
+  rewind: json['rewind'] == null
+      ? const Duration(seconds: 10)
+      : Duration(microseconds: (json['rewind'] as num).toInt()),
+  speed: (json['speed'] as num?)?.toDouble() ?? 1.0,
 );
 
 Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
@@ -35,6 +42,9 @@ Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
       'fontFamily': ?instance.fontFamily,
       'fontScale': instance.fontScale,
       'enableHttpLogs': instance.enableHttpLogs,
+      'fastForward': instance.fastForward.inMicroseconds,
+      'rewind': instance.rewind.inMicroseconds,
+      'speed': instance.speed,
     };
 
 const _$ThemeModeEnumMap = {

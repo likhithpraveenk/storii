@@ -27,6 +27,12 @@ sealed class AppSettings with _$AppSettings {
     @Default(1) double fontScale,
 
     @Default(false) bool enableHttpLogs,
+
+    @Default(Duration(seconds: 10)) Duration fastForward,
+
+    @Default(Duration(seconds: 10)) Duration rewind,
+
+    @Default(1.0) double speed,
   }) = _AppSettings;
 
   factory AppSettings.fromJson(Map<String, dynamic> json) =>

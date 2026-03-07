@@ -23,13 +23,6 @@ _UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>
       isAuthorsGridView: json['isAuthorsGridView'] as bool? ?? true,
       showTitleForItem: json['showTitleForItem'] as bool? ?? true,
       stackTitleOnImage: json['stackTitleOnImage'] as bool? ?? false,
-      fastForward: json['fastForward'] == null
-          ? const Duration(seconds: 10)
-          : Duration(microseconds: (json['fastForward'] as num).toInt()),
-      rewind: json['rewind'] == null
-          ? const Duration(seconds: 10)
-          : Duration(microseconds: (json['rewind'] as num).toInt()),
-      speed: (json['speed'] as num?)?.toDouble() ?? 1.0,
       syncInterval: json['syncInterval'] == null
           ? const Duration(seconds: 30)
           : Duration(microseconds: (json['syncInterval'] as num).toInt()),
@@ -47,9 +40,6 @@ Map<String, dynamic> _$UserSettingsToJson(
   'isAuthorsGridView': instance.isAuthorsGridView,
   'showTitleForItem': instance.showTitleForItem,
   'stackTitleOnImage': instance.stackTitleOnImage,
-  'fastForward': instance.fastForward.inMicroseconds,
-  'rewind': instance.rewind.inMicroseconds,
-  'speed': instance.speed,
   'syncInterval': instance.syncInterval.inMicroseconds,
 };
 
