@@ -5,7 +5,7 @@ import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
-import 'package:storii/app/providers/media_progress_provider.dart';
+import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
@@ -15,7 +15,7 @@ part 'library_items_provider.g.dart';
 @Riverpod(keepAlive: true)
 Future<List<LibraryItem>> libraryItems(Ref ref) async {
   final items = await ref.watch(rawLibraryItemsProvider.future);
-  final progressMap = await ref.watch(mediaProgressProvider.future);
+  final progressMap = await ref.watch(mediaProgressMapProvider.future);
 
   return items
       .map((item) => item.copyWith(userMediaProgress: progressMap[item.id]))

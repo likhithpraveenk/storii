@@ -43,7 +43,6 @@ class FiltersButton extends ConsumerWidget {
 
               return DraggableScrollableSheet(
                 minChildSize: 0.1,
-                maxChildSize: 0.9,
                 expand: false,
                 builder: (context, scrollController) {
                   return _FilterBottomSheet(
@@ -119,7 +118,7 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
       controller: widget.controller,
       children: [
         Padding(
-          padding: const .fromLTRB(16, 12, 16, 8),
+          padding: const .fromLTRB(24, 24, 24, 12),
           child: Text(
             AppLocalizations.of(context)!.filter,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -133,6 +132,7 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
         ...groups.map((group) {
           if (group.isImmediate) {
             return ListTile(
+              contentPadding: const .only(left: 24, right: 24),
               title: Text(group.getDisplayString(context)),
               selected: widget.currentFilter.group == group,
               onTap: () => widget.notifier.setFilter(group.toImmediateFilter()),
@@ -142,6 +142,7 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
             key: ValueKey('filter_${group.name}_${_expandedGroup == group}'),
             title: Text(group.getDisplayString(context)),
             initiallyExpanded: _expandedGroup == group,
+            tilePadding: const .only(left: 24, right: 12),
             onExpansionChanged: (isExpanded) {
               setState(() {
                 _expandedGroup = isExpanded ? group : null;
@@ -157,6 +158,7 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
             ],
           );
         }),
+        const SizedBox(height: 48),
       ],
     );
   }
@@ -185,7 +187,7 @@ class FilterSubOptionsList extends StatelessWidget {
         final (label, filter) = item;
         final isSelected = currentFilter == filter;
         return ListTile(
-          contentPadding: const .only(left: 32, right: 16),
+          contentPadding: const .only(left: 32, right: 24),
           title: Text(
             label,
             style: TextStyle(

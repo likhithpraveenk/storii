@@ -62,18 +62,8 @@ class _ConfigNavScreenState extends ConsumerState<ConfigNavScreen> {
     setState(() {
       if (isEnabled) {
         _activeDraft.add(target);
-      } else {
-        if (_activeDraft.length > 3) {
-          _activeDraft.remove(target);
-        } else {
-          // never runs
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(AppLocalizations.of(context)!.mustSelect3),
-              duration: const Duration(seconds: 1),
-            ),
-          );
-        }
+      } else if (_activeDraft.length > 3) {
+        _activeDraft.remove(target);
       }
     });
   }

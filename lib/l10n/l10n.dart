@@ -1024,11 +1024,11 @@ abstract class AppLocalizations {
   /// **'{hours, plural, =0{} other{{hours}hr }}{minutes}min remaining'**
   String durationRemaining(int hours, int minutes);
 
-  /// No description provided for @chapterCount.
+  /// No description provided for @chapters.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 Chapter} other{{count} Chapters}}'**
-  String chapterCount(int count);
+  /// **'Chapters'**
+  String get chapters;
 
   /// No description provided for @currentTime.
   ///
@@ -1059,6 +1059,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove'**
   String get remove;
+
+  /// No description provided for @markAsComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as complete?'**
+  String get markAsComplete;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @progressMarkedComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Marked as complete'**
+  String get progressMarkedComplete;
+
+  /// No description provided for @progressMarkCompleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to mark as complete'**
+  String get progressMarkCompleteFailed;
+
+  /// No description provided for @progressRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress removed'**
+  String get progressRemoved;
+
+  /// No description provided for @progressRemoveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to remove progress'**
+  String get progressRemoveFailed;
 }
 
 class _AppLocalizationsDelegate

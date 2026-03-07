@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:storii/shared/helpers/helpers.dart';
 
 class ExpandableHtml extends StatefulWidget {
   final String data;
@@ -47,7 +48,7 @@ class _ExpandableHtmlState extends State<ExpandableHtml> {
                   stops: const [0.8, 1.0],
                 ).createShader(bounds),
                 child: Text(
-                  _cleanHtml(widget.data),
+                  cleanHtml(widget.data),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurface,
                   ),
@@ -62,12 +63,4 @@ class _ExpandableHtmlState extends State<ExpandableHtml> {
       ),
     );
   }
-}
-
-String _cleanHtml(String data) {
-  return data
-      .replaceAll(RegExp(r'<\/?(p|div|br\s?\/?)>'), '\n')
-      .replaceAll(RegExp(r'<\/?(b|i|strong|em|span|u|a)[^>]*>'), '')
-      .replaceAll(RegExp(r'\n{3,}'), '\n\n')
-      .trim();
 }

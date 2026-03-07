@@ -46,7 +46,7 @@ final class ShelvesProvider
   }
 }
 
-String _$shelvesHash() => r'b99afc1fa8c5c5479fb221225c7c12452da62a16';
+String _$shelvesHash() => r'66b7fcf219e86408fb5ad4d59eb3c21a25134afc';
 
 @ProviderFor(rawShelves)
 final rawShelvesProvider = RawShelvesProvider._();

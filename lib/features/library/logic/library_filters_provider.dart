@@ -23,7 +23,7 @@ sealed class FilterState with _$FilterState {
   }) = _FilterState;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
   @override
   FilterState build(CurrentScreen screen) {

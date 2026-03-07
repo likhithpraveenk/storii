@@ -73,6 +73,16 @@ class LibrarySwitcher extends ConsumerWidget {
                         ? const Icon(Icons.check)
                         : null,
                     onTap: () {
+                      if (lib.mediaType == .podcast) {
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(scaffoldContext).showSnackBar(
+                          const SnackBar(
+                            content: Text('Podcast support coming soon'),
+                            duration: Duration(seconds: 4),
+                          ),
+                        );
+                        return;
+                      }
                       ref
                           .read(userSettingsProvider.notifier)
                           .setCurrentLibrary(lib);

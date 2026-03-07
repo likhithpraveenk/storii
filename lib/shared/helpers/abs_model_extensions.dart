@@ -216,11 +216,18 @@ extension AudiobookX on LibraryItem {
       media.metadata.map(book: (m) => m.authors ?? [], podcast: (m) => []);
   List<Series> get series =>
       media.metadata.map(book: (m) => m.series ?? [], podcast: (m) => []);
+  List<String> get narrators =>
+      media.metadata.map(book: (m) => m.narrators ?? [], podcast: (m) => []);
 
   List<String> get genres => media.metadata.genres;
   bool get explicit => media.metadata.explicit;
   String? get language => media.metadata.language;
   List<String> get tags => media.tags;
+  String? get publisher => media.metadata.mapOrNull(book: (m) => m.publisher);
+  String? get publishedDate =>
+      media.metadata.mapOrNull(book: (m) => m.publishedDate);
+  String? get publishedYear =>
+      media.metadata.mapOrNull(book: (m) => m.publishedYear);
 
   Duration get duration => media.map(
     book: (m) => m.duration,

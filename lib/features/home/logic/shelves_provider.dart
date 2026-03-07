@@ -3,7 +3,7 @@ import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
-import 'package:storii/app/providers/media_progress_provider.dart';
+import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
@@ -12,10 +12,10 @@ part 'shelves_provider.g.dart';
 @riverpod
 Future<List<Shelf>> shelves(Ref ref) async {
   //! TODO: only invalidate on socket event
-  ref.invalidate(mediaProgressProvider);
+  ref.invalidate(mediaProgressMapProvider);
 
   final rawShelves = await ref.watch(rawShelvesProvider.future);
-  final progressMap = await ref.watch(mediaProgressProvider.future);
+  final progressMap = await ref.watch(mediaProgressMapProvider.future);
 
   return rawShelves
       .map(

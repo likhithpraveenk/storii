@@ -53,14 +53,13 @@ class _SortBottomSheet extends ConsumerWidget {
 
     return DraggableScrollableSheet(
       minChildSize: 0.1,
-      maxChildSize: 0.9,
       expand: false,
       builder: (context, scrollController) {
         return ListView(
           controller: scrollController,
           children: [
             Padding(
-              padding: const .fromLTRB(16, 12, 16, 8),
+              padding: const .fromLTRB(24, 24, 24, 12),
               child: Text(
                 AppLocalizations.of(context)!.sort,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -85,8 +84,10 @@ class _SortBottomSheet extends ConsumerWidget {
                 onTap: () => isSelected
                     ? notifier.toggleSortOrder()
                     : notifier.setSortType(type),
+                contentPadding: const .symmetric(horizontal: 24, vertical: 0),
               );
             }),
+            const SizedBox(height: 48),
           ],
         );
       },

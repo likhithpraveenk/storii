@@ -20,7 +20,7 @@ final class LibraryFiltersNotifierProvider
   }) : super(
          retry: null,
          name: r'libraryFiltersProvider',
-         isAutoDispose: true,
+         isAutoDispose: false,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -60,7 +60,7 @@ final class LibraryFiltersNotifierProvider
 }
 
 String _$libraryFiltersNotifierHash() =>
-    r'1918bc8ac369f59d3b2664a141c301dc391bca0b';
+    r'b079d4251d68e8afce19f75c858e0265f053c5ff';
 
 final class LibraryFiltersNotifierFamily extends $Family
     with
@@ -77,7 +77,7 @@ final class LibraryFiltersNotifierFamily extends $Family
         name: r'libraryFiltersProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: true,
+        isAutoDispose: false,
       );
 
   LibraryFiltersNotifierProvider call(CurrentScreen screen) =>

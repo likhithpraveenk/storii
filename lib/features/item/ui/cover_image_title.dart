@@ -8,7 +8,6 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/dashed_underline.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
 
@@ -21,16 +20,10 @@ class CoverImageTitle extends StatelessWidget {
     final l = AppLocalizations.of(context)!;
     final size = MediaQuery.sizeOf(context);
     final theme = Theme.of(context);
-    // final backgroundColor = Theme.brightnessOf(context) == .light
-    //     ? scheme.inverseSurface
-    //     : scheme.surface;
-
-    final (hours, minutes) = item.duration.toReadableDuration();
 
     return Stack(
       children: [
         Material(
-          // color: backgroundColor,
           child: ImageFiltered(
             imageFilter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
             child: ImageWidget(
@@ -107,13 +100,6 @@ class CoverImageTitle extends StatelessWidget {
                     }).toList(),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    l.readableDuration(hours, minutes),
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: .w600,
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
                 ],
                 if (item.mediaType == .podcast && item.authorName != null)
                   MarqueeText(

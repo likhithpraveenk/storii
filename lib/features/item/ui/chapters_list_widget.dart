@@ -34,9 +34,14 @@ class _ChaptersListWidgetState extends ConsumerState<ChaptersListWidget> {
             child: Row(
               mainAxisAlignment: .spaceBetween,
               children: [
+                Expanded(
+                  child: Text(l.chapters, style: theme.textTheme.titleLarge),
+                ),
                 Text(
-                  l.chapterCount(widget.chapters.length),
-                  style: Theme.of(context).textTheme.titleMedium,
+                  '${widget.chapters.length}',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontStyle: .italic,
+                  ),
                 ),
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
@@ -75,7 +80,7 @@ class _ChaptersListWidgetState extends ConsumerState<ChaptersListWidget> {
                         chapter.title,
                         maxLines: 1,
                         overflow: .ellipsis,
-                        style: theme.textTheme.titleMedium,
+                        style: theme.textTheme.titleSmall,
                       ),
                       trailing: Text(
                         chapter.start.toTimestamp(),

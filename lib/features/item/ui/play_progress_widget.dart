@@ -1,0 +1,223 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/features/item/logic/progress_notifier.dart';
+import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/session_notifier.dart';
+import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
+import 'package:storii/shared/widgets/app_buttons.dart';
+
+class PlayProgressWidget extends ConsumerWidget {
+  const PlayProgressWidget(this.item, {super.key});
+
+  final LibraryItem item;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+
+    final isLoading = ref.watch(
+      audioPlayerProvider.select((s) => s.loadingItemId == item.id),
+    );
+
+    final session = ref.watch(sessionProvider);
+    final isCurrentItem = session?.libraryItemId == item.id;
+    final isPlaying = isCurrentItem && ref.watch(isPlayingProvider);
+
+    // TODO: invalidate when socket event 'user_updated'
+    final mediaProgress = ref.watch(mediaProgressProvider(item.id)).value;
+    final progress = mediaProgress?.progress ?? 0.0;
+
+    return Column(
+      crossAxisAlignment: .stretch,
+      children: [
+        AppFilledButton(
+          loading: isLoading,
+          onPressed: () async {
+            if (isCurrentItem) {
+              isPlaying
+                  ? await audioHandler.pause()
+                  : await audioHandler.play();
+            } else {
+              await ref.read(audioPlayerProvider.notifier).play(item.id);
+            }
+          },
+          icon: Icon(
+            isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+          ),
+          text: isPlaying
+              ? l.pause
+              : progress == 1.0
+              ? l.replay
+              : progress > 0
+              ? '${l.resume} · ${_formatRemaining(context, mediaProgress!)}'
+              : l.play,
+        ),
+        if (progress > 0) ...[
+          const SizedBox(height: 10),
+          _ProgressBar(progress: progress),
+          const SizedBox(height: 4),
+        ],
+        Row(
+          mainAxisAlignment: .spaceEvenly,
+          children: [
+            IconButton(
+              onPressed: () => AppBottomSheet.show(
+                context,
+                title: 'Download Item?',
+                confirmLabel: l.confirm,
+                confirmIcon: Icons.download,
+                body: const Text('coming soon'),
+                onConfirm: () {},
+              ),
+              icon: const Icon(Icons.download_outlined),
+            ),
+            if (progress != 1.0)
+              IconButton(
+                onPressed: () => AppBottomSheet.show(
+                  context,
+                  title: l.markAsComplete,
+                  confirmLabel: l.confirm,
+                  confirmIcon: Icons.check,
+                  onConfirm: () async {
+                    final success = await ref
+                        .read(mediaProgressProvider(item.id).notifier)
+                        .markComplete();
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            success
+                                ? l.progressMarkedComplete
+                                : l.progressMarkCompleteFailed,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                ),
+                icon: const Icon(Icons.check_rounded),
+              ),
+            if (mediaProgress != null)
+              IconButton(
+                onPressed: () => AppBottomSheet.show(
+                  context,
+                  title: l.removeProgressTitle,
+                  body: Text(
+                    l.removeProgressMessage,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  confirmLabel: l.remove,
+                  confirmIcon: Icons.delete_outline,
+                  isDestructive: true,
+                  onConfirm: () async {
+                    final success = await ref
+                        .read(
+                          mediaProgressProvider(
+                            mediaProgress.libraryItemId,
+                          ).notifier,
+                        )
+                        .remove(mediaProgress.id);
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            success
+                                ? l.progressRemoved
+                                : l.progressRemoveFailed,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                ),
+                icon: const Icon(Icons.delete_outline),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+String _formatRemaining(BuildContext context, MediaProgress mediaProgress) {
+  final l = AppLocalizations.of(context)!;
+  final remaining = mediaProgress.duration - mediaProgress.currentTime;
+  return l.durationRemaining(
+    remaining.inHours,
+    remaining.inMinutes.remainder(60),
+  );
+}
+
+class _ProgressBar extends StatelessWidget {
+  const _ProgressBar({required this.progress});
+  final double progress;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final totalWidth = constraints.maxWidth;
+
+        return TweenAnimationBuilder<double>(
+          tween: Tween(begin: 0, end: progress),
+          duration: const Duration(milliseconds: 800),
+          curve: Curves.easeOutCubic,
+          builder: (context, value, _) {
+            final barWidth = (totalWidth * value).clamp(0.0, totalWidth);
+            final animatedPercent = (value * 100).toStringAsFixed(1);
+            final clampedLeft = (barWidth + 6).clamp(0.0, totalWidth - 48);
+            final isInsideBar = clampedLeft < barWidth;
+
+            return Stack(
+              alignment: .centerLeft,
+              children: [
+                Container(
+                  height: 20,
+                  width: barWidth,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        theme.colorScheme.onPrimary,
+                        theme.colorScheme.primary,
+                      ],
+                    ),
+                    borderRadius: .circular(kRadius),
+                    boxShadow: [
+                      BoxShadow(
+                        color: theme.colorScheme.outline.withValues(
+                          alpha: 0.35,
+                        ),
+                        blurRadius: 6,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                ),
+                if (barWidth > 0)
+                  Positioned(
+                    left: clampedLeft,
+                    child: Text(
+                      '$animatedPercent%',
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: isInsideBar
+                            ? theme.colorScheme.onPrimary
+                            : theme.colorScheme.onSurface,
+                        fontWeight: .bold,
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+}

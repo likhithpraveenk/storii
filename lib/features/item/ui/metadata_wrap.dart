@@ -1,0 +1,67 @@
+import 'package:flutter/material.dart';
+import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/shared/helpers/extensions.dart';
+
+class MetadataWrap extends StatelessWidget {
+  const MetadataWrap(this.item, {super.key});
+
+  final LibraryItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    final (hr, min) = item.duration.toReadableDuration();
+    final duration = l.readableDuration(hr, min);
+    return Padding(
+      padding: const .symmetric(horizontal: 16),
+      child: Wrap(
+        alignment: .spaceBetween,
+        spacing: 16,
+        runSpacing: 8,
+        children: [
+          _MetaItem(icon: Icons.schedule, label: duration),
+          _MetaItem(icon: Icons.business, label: item.publisher),
+          _MetaItem(icon: Icons.calendar_today, label: item.publishedYear),
+          _MetaItem(icon: Icons.language, label: item.language),
+          if (item.narrators.isNotEmpty)
+            _MetaItem(
+              icon: Icons.mic,
+              label:
+                  item.narrators.take(3).join(', ') +
+                  (item.narrators.length > 3
+                      ? ' +${item.narrators.length - 3}'
+                      : ''),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MetaItem extends StatelessWidget {
+  final IconData icon;
+  final String? label;
+
+  const _MetaItem({required this.icon, this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    if (label == null) {
+      return const SizedBox.shrink();
+    }
+    final muted = Theme.of(context).colorScheme.onSurfaceVariant;
+    return Row(
+      mainAxisSize: .min,
+      spacing: 4,
+      children: [
+        Icon(icon, size: 14, color: muted),
+        Text(
+          label!,
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: muted),
+        ),
+      ],
+    );
+  }
+}

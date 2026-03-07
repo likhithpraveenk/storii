@@ -13,7 +13,7 @@ Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
   final device = await ref.watch(deviceInfoProvider.future);
 
   final (
-    osDetails,
+    mediaPlayer,
     deviceId,
     deviceName,
     manufacturer,
@@ -21,17 +21,21 @@ Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
     sdkVersion,
   ) = switch (device) {
     AndroidDeviceInfo d => (
-      'Android ${d.version.release} (SDK ${d.version.sdkInt})',
+      'ExoPlayer',
       d.id,
       '${d.brand} ${d.name}',
       d.manufacturer,
       d.model,
       d.version.sdkInt.toString(),
     ),
-    _ => ('Unknown', '', '', '', '', ''),
+    _ => ('unknown', '', '', '', '', ''),
   };
 
   return PlayItemRequestParams(
+    forceDirectPlay: true,
+    forceTranscode: false,
+    mediaPlayer: mediaPlayer,
+    supportedMimeTypes: [],
     deviceInfo: ClientDeviceInfo(
       clientName: 'storii',
       clientVersion: package.version,

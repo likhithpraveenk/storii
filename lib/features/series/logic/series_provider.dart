@@ -3,7 +3,7 @@ import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
-import 'package:storii/app/providers/media_progress_provider.dart';
+import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/app_error.dart';
@@ -18,7 +18,7 @@ Future<Series> series(Ref ref, String seriesId) async {
     activeLibraryDetailsProvider.future,
   )).library.id;
   final api = ref.read(libraryApiProvider(user));
-  final progressMap = await ref.watch(mediaProgressProvider.future);
+  final progressMap = await ref.watch(mediaProgressMapProvider.future);
 
   try {
     final results = await Future.wait([

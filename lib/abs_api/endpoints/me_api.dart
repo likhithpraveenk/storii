@@ -63,12 +63,12 @@ class MeApi {
   Future<void> upsertMediaProgress({
     required String libraryItemId,
     String? episodeId,
-    UpsertProgressRequestParams? parameters,
+    UpsertProgressRequestParams? params,
   }) async {
     await api.request(
       ApiRoutes.meProgressById(libraryItemId, episodeId),
       method: .patch,
-      body: parameters?.toJson(),
+      body: params?.toJson(),
     );
   }
 

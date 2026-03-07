@@ -505,15 +505,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String chapterCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count Chapters',
-      one: '1 Chapter',
-    );
-    return '$_temp0';
-  }
+  String get chapters => 'Chapters';
 
   @override
   String currentTime(int hours, int minutes) {
@@ -543,4 +535,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get remove => 'Remove';
+
+  @override
+  String get markAsComplete => 'Mark as complete?';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get progressMarkedComplete => 'Marked as complete';
+
+  @override
+  String get progressMarkCompleteFailed => 'Failed to mark as complete';
+
+  @override
+  String get progressRemoved => 'Progress removed';
+
+  @override
+  String get progressRemoveFailed => 'Failed to remove progress';
 }

@@ -27,8 +27,8 @@ enum NavTarget {
     ),
     .series => const NavItem(
       route: AppRoute.series,
-      icon: Icons.layers_outlined,
-      selectedIcon: Icons.layers,
+      icon: Icons.stacked_bar_chart_outlined,
+      selectedIcon: Icons.stacked_bar_chart,
       indexInRouter: 2,
     ),
     .downloads => const NavItem(

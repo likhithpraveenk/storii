@@ -217,14 +217,7 @@
       }
     }
   },
-  "chapterCount": "{count, plural, =1{1 Chapter} other{{count} Chapters}}",
-  "@chapterCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
+  "chapters": "Chapters",
   "currentTime": "At {hours, plural, =0{} other{{hours}hr }}{minutes}min",
   "@currentTime": {
     "placeholders": {
@@ -247,5 +240,11 @@
   },
   "removeProgressTitle": "Remove progress?",
   "removeProgressMessage": "This will reset your listening progress and cannot be undone.",
-  "remove": "Remove"
+  "remove": "Remove",
+  "markAsComplete": "Mark as complete?",
+  "confirm": "Confirm",
+  "progressMarkedComplete": "Marked as complete",
+  "progressMarkCompleteFailed": "Failed to mark as complete",
+  "progressRemoved": "Progress removed",
+  "progressRemoveFailed": "Failed to remove progress"
 }
