@@ -14,6 +14,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   device_info_plus: ^12.3.0
   dio: ^5.9.1
+  dio_cache_interceptor: ^4.0.5
   dynamic_color: ^1.8.1
   file_picker: ^10.3.10
   flutter:
@@ -27,6 +28,7 @@ dependencies:
   go_router: ^17.1.0
   hive_ce: ^2.19.3
   hive_ce_flutter: ^2.3.4
+  http_cache_hive_store: ^5.0.2
   intl: ^0.20.2
   json_annotation: ^4.9.0
   just_audio: ^0.10.5

@@ -42,6 +42,18 @@ class LibraryApi {
     return fromJson(response.data, LibraryItemsResponse.fromJson);
   }
 
+  Future<Map<String, dynamic>> getItemsRaw(
+    String libraryId,
+    LibraryItemsRequestParams? params,
+  ) async {
+    final response = await api.request(
+      ApiRoutes.libraryItems(libraryId),
+      method: .get,
+      query: params?.toJson(),
+    );
+    return response.data;
+  }
+
   Future<List<Shelf>> getPersonalized(String libraryId) async {
     final response = await api.request(
       ApiRoutes.libraryPersonalized(libraryId),

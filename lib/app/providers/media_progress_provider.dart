@@ -7,20 +7,19 @@ import 'package:storii/shared/helpers/app_error.dart';
 
 part 'media_progress_provider.g.dart';
 
-@Riverpod(keepAlive: true)
-FutureOr<Map<String, MediaProgress>> mediaProgress(Ref ref) async {
+@riverpod
+Future<Map<String, MediaProgress>> mediaProgress(Ref ref) async {
+  final user = await ref.watch(authenticatedUserProvider.future);
   try {
-    final user = await ref.read(authenticatedUserProvider.future);
     final updatedUser = await ref.read(meApiProvider(user)).getUser();
     final map = {for (var p in updatedUser.mediaProgress) p.libraryItemId: p};
     return map;
-  } catch (e, st) {
+  } catch (e) {
     final error = AppError.resolve(e);
     LogService.log(
       'Failed to get media progress: $error',
       level: .warning,
-      source: 'MediaProgressNotifier',
-      stackTrace: st,
+      source: 'mediaProgress',
     );
     return {};
   }
@@ -32,20 +31,19 @@ Future<MediaProgress?> mediaProgressById(
   String itemId, [
   String? episodeId,
 ]) async {
+  final user = await ref.watch(authenticatedUserProvider.future);
   try {
-    final user = await ref.read(authenticatedUserProvider.future);
     final progress = await ref
         .read(meApiProvider(user))
         .getMediaProgress(libraryItemId: itemId, episodeId: episodeId);
     return progress;
-  } catch (e, st) {
+  } catch (e) {
     final error = AppError.resolve(e);
     if (error.toString().contains('404')) return null;
     LogService.log(
       'Failed to get media progress: $error',
       level: .warning,
-      source: 'MediaProgressNotifier',
-      stackTrace: st,
+      source: 'mediaProgressById',
     );
     throw error;
   }

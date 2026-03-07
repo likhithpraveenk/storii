@@ -28,7 +28,7 @@ final class MediaProgressProvider
         argument: null,
         retry: null,
         name: r'mediaProgressProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -48,7 +48,7 @@ final class MediaProgressProvider
   }
 }
 
-String _$mediaProgressHash() => r'00692d80395cfc8dedac96886ea813b7d7170e88';
+String _$mediaProgressHash() => r'51ef4d272441cdd6978613897e4b00a9566e21a9';
 
 @ProviderFor(mediaProgressById)
 final mediaProgressByIdProvider = MediaProgressByIdFamily._();
@@ -105,7 +105,7 @@ final class MediaProgressByIdProvider
   }
 }
 
-String _$mediaProgressByIdHash() => r'5c7c1f733658970f30e534ddc7847ba7e779b6a4';
+String _$mediaProgressByIdHash() => r'db499b595fbece5d9dad368f0f9049b38b0e3b9b';
 
 final class MediaProgressByIdFamily extends $Family
     with

@@ -6,7 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
+import 'package:http_cache_hive_store/http_cache_hive_store.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
@@ -80,4 +82,8 @@ Future<void> setupGlobals() async {
   packageInfo = await PackageInfo.fromPlatform();
   final deviceInfoPlugin = DeviceInfoPlugin();
   androidDeviceInfo = await deviceInfoPlugin.androidInfo;
+
+  // dio cache
+  final dir = await getApplicationDocumentsDirectory();
+  dioCacheStore = HiveCacheStore('${dir.path}/dio_cache');
 }

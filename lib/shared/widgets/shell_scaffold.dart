@@ -12,9 +12,9 @@ import 'package:storii/globals.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 class ShellScaffold extends ConsumerWidget {
-  const ShellScaffold(this.navigationShell, {super.key});
+  const ShellScaffold({required this.child, super.key});
 
-  final StatefulNavigationShell navigationShell;
+  final Widget child;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,14 +44,10 @@ class ShellScaffold extends ConsumerWidget {
           mainAxisSize: .min,
           children: [
             const PlayerScreen(),
-            _ShellBottomBar(
-              target: target,
-              navTargets: navTargets,
-              goBranch: navigationShell.goBranch,
-            ),
+            _ShellBottomBar(target: target, navTargets: navTargets),
           ],
         ),
-        body: navigationShell,
+        body: child,
       ),
     );
   }
@@ -60,15 +56,10 @@ class ShellScaffold extends ConsumerWidget {
 final lastNavIndexProvider = StateProvider<int>((ref) => 0);
 
 class _ShellBottomBar extends ConsumerWidget {
-  const _ShellBottomBar({
-    required this.target,
-    required this.navTargets,
-    required this.goBranch,
-  });
+  const _ShellBottomBar({required this.target, required this.navTargets});
 
   final NavTarget? target;
   final List<NavTarget> navTargets;
-  final void Function(int index) goBranch;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -101,7 +92,7 @@ class _ShellBottomBar extends ConsumerWidget {
         child: RepaintBoundary(
           child: NavBar(
             currentIndex: displayIndex,
-            onTap: (i) => goBranch(navTargets[i].item.indexInRouter),
+            onTap: (i) => context.go(navTargets[i].item.route.path),
           ),
         ),
       ),

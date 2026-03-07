@@ -46,4 +46,4 @@ final class SeriesListProvider
   }
 }
 
-String _$seriesListHash() => r'2b8a0c57c64abeef565956592d00268ab85a2cae';
+String _$seriesListHash() => r'1497792e026755b744fb0299dc571342ffdc92ee';

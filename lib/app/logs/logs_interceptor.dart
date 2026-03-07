@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:storii/app/logs/log_service.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 
 class LogsInterceptor extends Interceptor {
   @override
@@ -10,7 +7,7 @@ class LogsInterceptor extends Interceptor {
     options.extra['startTime'] = DateTime.now().millisecondsSinceEpoch;
     final path = options.uri.path;
     final query = options.queryParameters.isNotEmpty
-        ? '\nqueryParameters: ${options.queryParameters}'
+        ? ' query: ${options.queryParameters}'
         : '';
     LogService.log(
       'REQUEST: ${options.method} $path$query',
@@ -24,11 +21,13 @@ class LogsInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     final duration = _getDuration(response.requestOptions);
     final path = response.requestOptions.uri.path;
-    final prettyBody = response.data != null
-        ? '\n${jsonEncode(response.data).toPrettyJson()}'
-        : '';
+
+    // final prettyBody = response.data != null
+    //     ? '\n${jsonEncode(response.data).toPrettyJson()}'
+    //     : '';
+
     LogService.log(
-      'RESPONSE: [${response.statusCode}] (${duration}ms) $path$prettyBody',
+      'RESPONSE: [${response.statusCode}] (${duration}ms) $path',
       source: 'ApiClient',
       level: .http,
     );

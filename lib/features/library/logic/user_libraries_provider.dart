@@ -7,7 +7,7 @@ import 'package:storii/shared/helpers/app_error.dart';
 
 part 'user_libraries_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<List<Library>> userLibraries(Ref ref) async {
   final user = await ref.watch(authenticatedUserProvider.future);
   final api = ref.read(libraryApiProvider(user));

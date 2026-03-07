@@ -26,7 +26,7 @@ final class UserLibrariesProvider
         argument: null,
         retry: null,
         name: r'userLibrariesProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -46,4 +46,4 @@ final class UserLibrariesProvider
   }
 }
 
-String _$userLibrariesHash() => r'9f2c5f1fd914d90109d4e6be2f6d445a84370207';
+String _$userLibrariesHash() => r'1ddac2ee1508afb5ffa9df3c961130009d596e72';

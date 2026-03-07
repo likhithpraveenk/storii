@@ -13,12 +13,7 @@ class HttpLogsTile extends ConsumerWidget {
     return SwitchListTile(
       secondary: const Icon(Icons.swap_calls),
       title: Text(l.networkLogs),
-      subtitle: Text(
-        enableHttpLogs ? l.networkLogsWarning : l.networkLogsDescription,
-        style: TextStyle(
-          color: enableHttpLogs ? Theme.of(context).colorScheme.error : null,
-        ),
-      ),
+      subtitle: Text(l.networkLogsDescription),
       value: enableHttpLogs,
       onChanged: (enable) {
         ref.read(appSettingsProvider.notifier).setEnableHttpLogs(enable);

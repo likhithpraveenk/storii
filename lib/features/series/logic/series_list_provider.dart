@@ -25,13 +25,12 @@ Future<List<Series>> seriesList(Ref ref) async {
     final response = await api.getSeries(libraryId, params);
 
     return response.results;
-  } catch (e, st) {
+  } catch (e) {
     final error = AppError.resolve(e);
     LogService.log(
       'Error fetching series list: $error',
       level: .error,
       source: 'seriesList',
-      stackTrace: st,
     );
     throw error;
   }

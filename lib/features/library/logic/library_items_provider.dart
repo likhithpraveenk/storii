@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
@@ -11,7 +12,7 @@ import 'package:storii/shared/helpers/app_error.dart';
 
 part 'library_items_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<List<LibraryItem>> libraryItems(Ref ref) async {
   final items = await ref.watch(rawLibraryItemsProvider.future);
   final progressMap = await ref.watch(mediaProgressProvider.future);
@@ -21,7 +22,7 @@ Future<List<LibraryItem>> libraryItems(Ref ref) async {
       .toList();
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<List<LibraryItem>> rawLibraryItems(Ref ref) async {
   final libraryId = (await ref.watch(
     activeLibraryDetailsProvider.future,
@@ -29,19 +30,19 @@ Future<List<LibraryItem>> rawLibraryItems(Ref ref) async {
   final params = ref.watch(
     libraryFiltersProvider(.library).select((s) => s.toItemParams()),
   );
-  final user = await ref.read(authenticatedUserProvider.future);
+  final user = await ref.watch(authenticatedUserProvider.future);
   final api = ref.read(libraryApiProvider(user));
 
   try {
-    final response = await api.getItems(libraryId, params);
+    final data = await api.getItemsRaw(libraryId, params);
+    final response = await compute(LibraryItemsResponse.fromJson, data);
     return response.results;
-  } catch (e, st) {
+  } catch (e) {
     final error = AppError.resolve(e);
     LogService.log(
       'Error fetching items: $error',
       level: .error,
       source: 'libraryItems',
-      stackTrace: st,
     );
     throw error;
   }

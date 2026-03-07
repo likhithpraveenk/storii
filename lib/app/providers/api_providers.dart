@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
@@ -6,6 +7,7 @@ import 'package:storii/app/logs/logs_interceptor.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/home/logic/user_session_controller.dart';
+import 'package:storii/globals.dart';
 
 part 'api_providers.g.dart';
 
@@ -14,10 +16,20 @@ ApiClient apiClient(Ref ref, UserDomain user) {
   final tokenService = ref.watch(tokenProvider);
   final cancelToken = CancelToken();
 
+  final cacheOptions = CacheOptions(
+    store: dioCacheStore,
+    policy: CachePolicy.refreshForceCache,
+    hitCacheOnNetworkFailure: true,
+    maxStale: const Duration(days: 7),
+  );
+
   final apiClient = ApiClient(
     baseUrl: user.serverUrl,
     cancelToken: cancelToken,
-    interceptors: [LogsInterceptor()],
+    interceptors: [
+      LogsInterceptor(),
+      DioCacheInterceptor(options: cacheOptions),
+    ],
     getAccessToken: () async {
       final token = await tokenService.getAccessToken(user.id);
       if (token == null) {

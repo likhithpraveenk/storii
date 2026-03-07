@@ -85,138 +85,95 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoute.logs.path,
         builder: (context, state) => const LogsScreen(),
       ),
-      StatefulShellRoute.indexedStack(
-        key: shellNavigatorKey,
-        builder: (context, state, navigationShell) {
-          return ShellScaffold(navigationShell);
+      ShellRoute(
+        navigatorKey: shellNavigatorKey,
+        builder: (context, state, child) {
+          return ShellScaffold(child: child);
         },
-        branches: [
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: AppRoute.home.path,
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(child: HomeScreen());
-                },
-              ),
-            ],
+        routes: [
+          GoRoute(
+            path: AppRoute.home.path,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: HomeScreen()),
           ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: AppRoute.library.path,
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(child: LibraryScreen());
-                },
-              ),
-            ],
+          GoRoute(
+            path: AppRoute.library.path,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: LibraryScreen()),
           ),
-          StatefulShellBranch(
+          GoRoute(
+            path: AppRoute.series.path,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: SeriesListScreen()),
             routes: [
               GoRoute(
-                path: AppRoute.series.path,
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(child: SeriesListScreen());
-                },
-                routes: [
-                  GoRoute(
-                    path: 'detail',
-                    builder: (context, state) {
-                      final id = state.extra as String;
-                      return SeriesDetailScreen(key: ValueKey(id), id: id);
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: AppRoute.downloads.path,
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(child: DownloadsScreen());
-                },
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: AppRoute.authors.path,
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(child: AuthorListScreen());
-                },
-                routes: [
-                  GoRoute(
-                    path: 'detail',
-                    builder: (context, state) {
-                      final id = state.extra as String;
-                      return AuthorDetailScreen(key: ValueKey(id), id: id);
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: AppRoute.collections.path,
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(child: CollectionsScreen());
-                },
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: AppRoute.more.path,
-                pageBuilder: (context, state) {
-                  return const NoTransitionPage(child: MoreScreen());
-                },
-                routes: [
-                  GoRoute(
-                    path: 'settings',
-                    builder: (context, state) => const SettingsScreen(),
-                    routes: [
-                      GoRoute(
-                        path: 'appearance',
-                        builder: (context, state) => const AppearanceScreen(),
-                      ),
-                      GoRoute(
-                        path: 'navigation',
-                        builder: (context, state) => const ConfigNavScreen(),
-                      ),
-                    ],
-                  ),
-                  GoRoute(
-                    path: 'profile',
-                    builder: (context, state) => const ProfileScreen(),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: AppRoute.search.path,
-                builder: (context, state) => const SearchScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: AppRoute.itemDetail.path,
+                path: 'detail',
                 builder: (context, state) {
                   final id = state.extra as String;
-                  return ItemDetailScreen(key: ValueKey(id), id: id);
+                  return SeriesDetailScreen(key: ValueKey(id), id: id);
                 },
               ),
             ],
+          ),
+          GoRoute(
+            path: AppRoute.downloads.path,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: DownloadsScreen()),
+          ),
+          GoRoute(
+            path: AppRoute.authors.path,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: AuthorListScreen()),
+            routes: [
+              GoRoute(
+                path: 'detail',
+                builder: (context, state) {
+                  final id = state.extra as String;
+                  return AuthorDetailScreen(key: ValueKey(id), id: id);
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            path: AppRoute.collections.path,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: CollectionsScreen()),
+          ),
+          GoRoute(
+            path: AppRoute.more.path,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: MoreScreen()),
+            routes: [
+              GoRoute(
+                path: 'settings',
+                builder: (context, state) => const SettingsScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'appearance',
+                    builder: (context, state) => const AppearanceScreen(),
+                  ),
+                  GoRoute(
+                    path: 'navigation',
+                    builder: (context, state) => const ConfigNavScreen(),
+                  ),
+                ],
+              ),
+              GoRoute(
+                path: 'profile',
+                builder: (context, state) => const ProfileScreen(),
+              ),
+            ],
+          ),
+          GoRoute(
+            path: AppRoute.search.path,
+            builder: (context, state) => const SearchScreen(),
+          ),
+          GoRoute(
+            path: AppRoute.itemDetail.path,
+            builder: (context, state) {
+              final id = state.extra as String;
+              return ItemDetailScreen(key: ValueKey(id), id: id);
+            },
           ),
         ],
       ),

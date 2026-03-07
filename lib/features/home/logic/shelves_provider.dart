@@ -11,6 +11,9 @@ part 'shelves_provider.g.dart';
 
 @riverpod
 Future<List<Shelf>> shelves(Ref ref) async {
+  //! TODO: only invalidate on socket event
+  ref.invalidate(mediaProgressProvider);
+
   final rawShelves = await ref.watch(rawShelvesProvider.future);
   final progressMap = await ref.watch(mediaProgressProvider.future);
 

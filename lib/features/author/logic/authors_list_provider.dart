@@ -10,7 +10,7 @@ import 'package:storii/shared/helpers/app_error.dart';
 
 part 'authors_list_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<List<Author>> authorsList(Ref ref) async {
   final libraryId = (await ref.watch(
     activeLibraryDetailsProvider.future,
@@ -25,13 +25,12 @@ Future<List<Author>> authorsList(Ref ref) async {
   try {
     final response = await api.getAuthors(libraryId, params);
     return response;
-  } catch (e, st) {
+  } catch (e) {
     final err = AppError.resolve(e);
     LogService.log(
       'error getting authors: $err',
       level: .error,
       source: 'authorsList',
-      stackTrace: st,
     );
     throw err;
   }

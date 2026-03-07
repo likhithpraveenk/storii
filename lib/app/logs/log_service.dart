@@ -25,7 +25,7 @@ class LogService {
 
     if (kDebugMode) {
       final label = source != null
-          ? '[$source]'
+          ? '[$source] [${level.name.toUpperCase()}]'
           : '[${level.name.toUpperCase()}]';
       _outputToConsole(level, '$label $message', stackTrace);
     }
@@ -43,25 +43,14 @@ class LogService {
         );
   }
 
-  static String _limitLines(String input, {int maxLines = 2}) {
-    final lines = input.split('\n');
-    if (lines.length <= maxLines) return input;
-    return '${lines.take(maxLines).join('\n')}\n... (${lines.length - maxLines} more lines)';
-  }
-
   static void _outputToConsole(LogLevel level, String msg, StackTrace? st) {
     final int severity = switch (level) {
-      LogLevel.error => 1000,
-      LogLevel.warning => 900,
-      LogLevel.info || LogLevel.http => 800,
-      LogLevel.debug => 500,
+      .error => 1000,
+      .warning => 900,
+      .info || .http => 800,
+      .debug => 500,
     };
 
-    dev.log(
-      level == LogLevel.http ? _limitLines(msg) : msg,
-      name: level.name.toUpperCase(),
-      level: severity,
-      stackTrace: st,
-    );
+    dev.log(msg, name: 'log', level: severity, stackTrace: st);
   }
 }
