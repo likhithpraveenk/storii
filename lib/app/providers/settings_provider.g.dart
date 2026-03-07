@@ -226,6 +226,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
       _save(state.copyWith(rewind: value));
 
   Future<void> setSpeed(double value) => _save(state.copyWith(speed: value));
+
+  Future<void> setSyncInterval(Duration value) =>
+      _save(state.copyWith(syncInterval: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -270,4 +273,8 @@ final rewindProvider = Provider<Duration>(
 
 final speedProvider = Provider<double>(
   (ref) => ref.watch(userSettingsProvider.select((s) => s.speed)),
+);
+
+final syncIntervalProvider = Provider<Duration>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.syncInterval)),
 );

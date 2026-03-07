@@ -26,7 +26,7 @@ final class SeriesListProvider
         argument: null,
         retry: null,
         name: r'seriesListProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -46,4 +46,4 @@ final class SeriesListProvider
   }
 }
 
-String _$seriesListHash() => r'9640a399868b5d257f1022ba88a1e9cab554f876';
+String _$seriesListHash() => r'2b8a0c57c64abeef565956592d00268ab85a2cae';

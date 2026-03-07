@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/providers/app_controller.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/theme_provider.dart';
 import 'package:storii/globals.dart';
@@ -25,6 +26,8 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(appControllerProvider);
+
     final router = ref.watch(routerProvider);
     final themeMode = ref.watch(themeModeProvider);
     final textScaler = ref.watch(textScalerProvider);

@@ -49,7 +49,7 @@ final class AudioHandlerEventsProvider
 }
 
 String _$audioHandlerEventsHash() =>
-    r'9f1d9d8a0e644a276b50c846466bc05b8c338429';
+    r'0d6a770918df1cb44fbf87fe7d27b3a9928a08d2';
 
 @ProviderFor(playbackState)
 final playbackStateProvider = PlaybackStateProvider._();
@@ -294,7 +294,7 @@ String _$totalDurationHash() => r'5b8043ca284de5972183decfc40d0b6f06647bdd';
 final audioPlayerProvider = AudioPlayerNotifierProvider._();
 
 final class AudioPlayerNotifierProvider
-    extends $AsyncNotifierProvider<AudioPlayerNotifier, void> {
+    extends $NotifierProvider<AudioPlayerNotifier, AudioPlayerState> {
   AudioPlayerNotifierProvider._()
     : super(
         from: null,
@@ -312,22 +312,30 @@ final class AudioPlayerNotifierProvider
   @$internal
   @override
   AudioPlayerNotifier create() => AudioPlayerNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AudioPlayerState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AudioPlayerState>(value),
+    );
+  }
 }
 
 String _$audioPlayerNotifierHash() =>
-    r'eb8f59b09ae9f063598d407081e353f2a597fa08';
+    r'3db69930b86bfeecd6e17dafe6c1fcabc9323fdf';
 
-abstract class _$AudioPlayerNotifier extends $AsyncNotifier<void> {
-  FutureOr<void> build();
+abstract class _$AudioPlayerNotifier extends $Notifier<AudioPlayerState> {
+  AudioPlayerState build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final ref = this.ref as $Ref<AudioPlayerState, AudioPlayerState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<void>, void>,
-              AsyncValue<void>,
+              AnyNotifier<AudioPlayerState, AudioPlayerState>,
+              AudioPlayerState,
               Object?,
               Object?
             >;
@@ -347,7 +355,7 @@ final class PlayerStateWatcherProvider
         argument: null,
         retry: null,
         name: r'playerStateWatcherProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -375,7 +383,7 @@ final class PlayerStateWatcherProvider
 }
 
 String _$playerStateWatcherHash() =>
-    r'2b502b1e29ef70583405270e2542c019f67f8acf';
+    r'b71758c84719e4bf616828fd20e9be5429800024';
 
 @ProviderFor(audioSettingsWatcher)
 final audioSettingsWatcherProvider = AudioSettingsWatcherProvider._();
@@ -389,7 +397,7 @@ final class AudioSettingsWatcherProvider
         argument: null,
         retry: null,
         name: r'audioSettingsWatcherProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -417,4 +425,4 @@ final class AudioSettingsWatcherProvider
 }
 
 String _$audioSettingsWatcherHash() =>
-    r'c81d3d9bc2f48999677efda9e590480056ebc142';
+    r'd87615e1af0ed39a75a2d9d5831d83889ebfe539';

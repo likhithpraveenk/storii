@@ -514,4 +514,33 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String currentTime(int hours, int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '${hours}hr ',
+      zero: '',
+    );
+    return 'At $_temp0${minutes}min';
+  }
+
+  @override
+  String lastListened(DateTime date) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return 'Last listened $dateString';
+  }
+
+  @override
+  String get removeProgressTitle => 'Remove progress?';
+
+  @override
+  String get removeProgressMessage =>
+      'This will reset your listening progress and cannot be undone.';
+
+  @override
+  String get remove => 'Remove';
 }

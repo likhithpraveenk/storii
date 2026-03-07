@@ -4,7 +4,6 @@ import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
-import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/features/series/ui/series.card.dart';
@@ -18,7 +17,6 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(librarySyncControllerProvider);
     final shelvesAsync = ref.watch(shelvesProvider);
     final theme = Theme.of(context);
     final l = AppLocalizations.of(context)!;

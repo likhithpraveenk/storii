@@ -21,7 +21,7 @@ final class AuthorProvider
   }) : super(
          retry: null,
          name: r'authorProvider',
-         isAutoDispose: true,
+         isAutoDispose: false,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -58,7 +58,7 @@ final class AuthorProvider
   }
 }
 
-String _$authorHash() => r'bb3e6ef95abbafa84df613b9dc5a8e8d57596160';
+String _$authorHash() => r'8305c36878a4bf54ffa08bcad22aef3986b85a89';
 
 final class AuthorFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<Author>, String> {
@@ -68,7 +68,7 @@ final class AuthorFamily extends $Family
         name: r'authorProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: true,
+        isAutoDispose: false,
       );
 
   AuthorProvider call(String authorId) =>

@@ -123,8 +123,6 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
     });
 
     final height = ref.watch(playerHeightProvider);
-    if (height <= kEpsilon) return const SizedBox.shrink();
-
     final expandFactor = ref.watch(playerExpandFactorProvider);
 
     return BackButtonListener(

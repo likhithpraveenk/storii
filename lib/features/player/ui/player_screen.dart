@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
-import 'package:storii/features/player/logic/session_sync_watcher.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/features/player/ui/full_player.dart';
 import 'package:storii/features/player/ui/hero_cover.dart';
@@ -37,9 +36,6 @@ class PlayerScreen extends ConsumerWidget {
 
     const miniInterval = Interval(0.0, 0.3);
     const fullInterval = Interval(0.6, 1.0);
-
-    ref.watch(playerStateWatcherProvider);
-    ref.watch(sessionSyncWatcherProvider);
 
     return PlayerBuilder(
       maxHeight: screenHeight,

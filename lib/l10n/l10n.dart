@@ -1029,6 +1029,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 Chapter} other{{count} Chapters}}'**
   String chapterCount(int count);
+
+  /// No description provided for @currentTime.
+  ///
+  /// In en, this message translates to:
+  /// **'At {hours, plural, =0{} other{{hours}hr }}{minutes}min'**
+  String currentTime(int hours, int minutes);
+
+  /// No description provided for @lastListened.
+  ///
+  /// In en, this message translates to:
+  /// **'Last listened {date}'**
+  String lastListened(DateTime date);
+
+  /// No description provided for @removeProgressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove progress?'**
+  String get removeProgressTitle;
+
+  /// No description provided for @removeProgressMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This will reset your listening progress and cannot be undone.'**
+  String get removeProgressMessage;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
 }
 
 class _AppLocalizationsDelegate

@@ -30,6 +30,9 @@ _UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>
           ? const Duration(seconds: 10)
           : Duration(microseconds: (json['rewind'] as num).toInt()),
       speed: (json['speed'] as num?)?.toDouble() ?? 1.0,
+      syncInterval: json['syncInterval'] == null
+          ? const Duration(seconds: 30)
+          : Duration(microseconds: (json['syncInterval'] as num).toInt()),
     );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -47,6 +50,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'fastForward': instance.fastForward.inMicroseconds,
   'rewind': instance.rewind.inMicroseconds,
   'speed': instance.speed,
+  'syncInterval': instance.syncInterval.inMicroseconds,
 };
 
 const _$NavTargetEnumMap = {

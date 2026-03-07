@@ -9,7 +9,7 @@ import 'package:storii/shared/helpers/app_error.dart';
 
 part 'author_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<Author> author(Ref ref, String authorId) async {
   final user = await ref.watch(authenticatedUserProvider.future);
   final libraryId = (await ref.watch(

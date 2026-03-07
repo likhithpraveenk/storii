@@ -224,5 +224,28 @@
         "type": "int"
       }
     }
-  }
+  },
+  "currentTime": "At {hours, plural, =0{} other{{hours}hr }}{minutes}min",
+  "@currentTime": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "lastListened": "Last listened {date}",
+  "@lastListened": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMd"
+      }
+    }
+  },
+  "removeProgressTitle": "Remove progress?",
+  "removeProgressMessage": "This will reset your listening progress and cannot be undone.",
+  "remove": "Remove"
 }

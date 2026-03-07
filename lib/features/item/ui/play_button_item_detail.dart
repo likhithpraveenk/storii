@@ -16,13 +16,12 @@ class PlayButtonItemDetail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context)!;
 
+    final isLoading = ref.watch(
+      audioPlayerProvider.select((s) => s.loadingItemId == item.id),
+    );
+
     final session = ref.watch(sessionProvider);
     final isCurrentItem = session?.libraryItemId == item.id;
-
-    final isLoading =
-        ref.watch(audioPlayerProvider.select((s) => s.isLoading)) &&
-        isCurrentItem;
-
     final isPlaying = isCurrentItem && ref.watch(isPlayingProvider);
 
     return SizedBox(

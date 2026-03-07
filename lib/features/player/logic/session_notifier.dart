@@ -37,8 +37,6 @@ class SessionNotifier extends _$SessionNotifier {
     required String itemId,
     String? episodeId,
   }) async {
-    await _closeCurrentIfNeeded();
-
     final user = await ref.read(authenticatedUserProvider.future);
     final params = ref.read(playRequestParamsProvider);
 
@@ -69,16 +67,24 @@ class SessionNotifier extends _$SessionNotifier {
           ),
         );
     log(
-      'session sync: ${position.toTimestamp()}'
-      '\nlistened for ${totalListened.inSeconds}s',
+      'sync pos ${position.toTimestamp()}'
+      ' listened ${totalListened.inSeconds}s',
     );
   }
 
   Future<void> close(Duration totalListened) async {
     final session = state;
-    if (session == null) return;
+    if (session == null) {
+      log('no session to close');
+      return;
+    }
 
-    final position = ref.read(globalPositionProvider).value ?? Duration.zero;
+    final position = ref.read(globalPositionProvider).value;
+    if (position == null) {
+      state = null;
+      return;
+    }
+
     final user = await ref.read(authenticatedUserProvider.future);
 
     try {
@@ -96,10 +102,5 @@ class SessionNotifier extends _$SessionNotifier {
       log('session closed');
       state = null;
     }
-  }
-
-  Future<void> _closeCurrentIfNeeded() async {
-    if (state == null) return;
-    state = null;
   }
 }

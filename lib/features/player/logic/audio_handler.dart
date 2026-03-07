@@ -6,7 +6,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storii/features/player/logic/track_position_resolver.dart';
 
-enum AudioHandlerEvent { play, pause, seek, stop }
+enum AudioHandlerEvent { play, pause, seek, stop, complete, buffering }
 
 class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final _player = AudioPlayer();
@@ -96,12 +96,27 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
     final seekEvents = _player.positionDiscontinuityStream
         .where((d) => d.reason == .seek)
+        .debounceTime(const Duration(milliseconds: 200))
         .map((_) => AudioHandlerEvent.seek);
+
+    final completeEvents = playbackState
+        .map((s) => s.processingState)
+        .distinct()
+        .where((s) => s == .completed)
+        .map((_) => AudioHandlerEvent.complete);
+
+    final bufferingEvents = playbackState
+        .map((s) => s.processingState)
+        .distinct()
+        .where((s) => s == .buffering || s == .loading)
+        .map((_) => AudioHandlerEvent.buffering);
 
     return Rx.merge<AudioHandlerEvent>([
       playPauseEvents,
       stopEvents,
       seekEvents,
+      completeEvents,
+      bufferingEvents,
     ]);
   }
 
@@ -151,14 +166,15 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   Stream<Duration> get positionStream {
-    return Rx.combineLatest2(
+    return Rx.combineLatest3(
       _player.currentIndexStream,
       _player.positionStream,
-      (index, pos) => _resolver.globalPosition(index, pos),
-    ).where((_) {
-      final state = playbackState.value.processingState;
-      return state != .loading && state != .idle;
-    }).distinct();
+      playbackState,
+      (index, position, state) => switch (state.processingState) {
+        .loading || .idle => Duration.zero,
+        _ => _resolver.globalPosition(index, position),
+      },
+    ).distinct();
   }
 
   Future<void> togglePlay() async {

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/providers/media_progress_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/ui/chapters_list_widget.dart';
 import 'package:storii/features/item/ui/cover_image_title.dart';
@@ -38,7 +39,10 @@ class ItemDetailScreen extends ConsumerWidget {
           return Stack(
             children: [
               RefreshIndicator(
-                onRefresh: () => ref.refresh(itemDetailProvider(id).future),
+                onRefresh: () async {
+                  ref.invalidate(mediaProgressByIdProvider(id));
+                  return await ref.refresh(itemDetailProvider(id).future);
+                },
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
@@ -48,14 +52,11 @@ class ItemDetailScreen extends ConsumerWidget {
                         child: Column(
                           children: [
                             CoverImageTitle(item),
+                            PlayButtonItemDetail(item),
                             if (item.progress > 0 && item.progress < 1) ...[
-                              ProgressWidget(
-                                remaining: item.duration - item.currentOffset,
-                                progress: item.progress,
-                              ),
+                              ProgressWidget(itemId: id),
                               const SizedBox(height: 8),
                             ],
-                            PlayButtonItemDetail(item),
                             if (item.mediaType == .book) ...[
                               const SizedBox(height: 4),
                               Wrap(

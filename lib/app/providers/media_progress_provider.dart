@@ -27,7 +27,7 @@ FutureOr<Map<String, MediaProgress>> mediaProgress(Ref ref) async {
 }
 
 @riverpod
-Future<MediaProgress> mediaProgressById(
+Future<MediaProgress?> mediaProgressById(
   Ref ref,
   String itemId, [
   String? episodeId,
@@ -40,6 +40,7 @@ Future<MediaProgress> mediaProgressById(
     return progress;
   } catch (e, st) {
     final error = AppError.resolve(e);
+    if (error.toString().contains('404')) return null;
     LogService.log(
       'Failed to get media progress: $error',
       level: .warning,

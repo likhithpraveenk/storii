@@ -32,6 +32,8 @@ sealed class UserSettings with _$UserSettings {
     @Default(Duration(seconds: 10)) Duration rewind,
 
     @Default(1.0) double speed,
+
+    @Default(Duration(seconds: 30)) Duration syncInterval,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

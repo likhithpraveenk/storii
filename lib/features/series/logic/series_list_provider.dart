@@ -10,7 +10,7 @@ import 'package:storii/shared/helpers/app_error.dart';
 
 part 'series_list_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<List<Series>> seriesList(Ref ref) async {
   final libraryId = (await ref.watch(
     activeLibraryDetailsProvider.future,

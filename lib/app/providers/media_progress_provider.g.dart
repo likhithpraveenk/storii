@@ -56,11 +56,11 @@ final mediaProgressByIdProvider = MediaProgressByIdFamily._();
 final class MediaProgressByIdProvider
     extends
         $FunctionalProvider<
-          AsyncValue<MediaProgress>,
-          MediaProgress,
-          FutureOr<MediaProgress>
+          AsyncValue<MediaProgress?>,
+          MediaProgress?,
+          FutureOr<MediaProgress?>
         >
-    with $FutureModifier<MediaProgress>, $FutureProvider<MediaProgress> {
+    with $FutureModifier<MediaProgress?>, $FutureProvider<MediaProgress?> {
   MediaProgressByIdProvider._({
     required MediaProgressByIdFamily super.from,
     required (String, String?) super.argument,
@@ -84,12 +84,12 @@ final class MediaProgressByIdProvider
 
   @$internal
   @override
-  $FutureProviderElement<MediaProgress> $createElement(
+  $FutureProviderElement<MediaProgress?> $createElement(
     $ProviderPointer pointer,
   ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<MediaProgress> create(Ref ref) {
+  FutureOr<MediaProgress?> create(Ref ref) {
     final argument = this.argument as (String, String?);
     return mediaProgressById(ref, argument.$1, argument.$2);
   }
@@ -105,10 +105,11 @@ final class MediaProgressByIdProvider
   }
 }
 
-String _$mediaProgressByIdHash() => r'a76b7a6a40aeea20f2e236633741d10ae6f580a2';
+String _$mediaProgressByIdHash() => r'5c7c1f733658970f30e534ddc7847ba7e779b6a4';
 
 final class MediaProgressByIdFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<MediaProgress>, (String, String?)> {
+    with
+        $FunctionalFamilyOverride<FutureOr<MediaProgress?>, (String, String?)> {
   MediaProgressByIdFamily._()
     : super(
         retry: null,

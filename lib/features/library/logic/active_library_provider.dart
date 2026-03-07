@@ -8,18 +8,14 @@ import 'package:storii/features/library/logic/user_libraries_provider.dart';
 
 part 'active_library_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<LibraryResponse> activeLibraryDetails(Ref ref) async {
   final currentLibrary = ref.watch(currentLibraryProvider);
 
   Future<LibraryResponse> fetchFullLibrary(Library lib) async {
     final user = await ref.read(authenticatedUserProvider.future);
     final api = ref.read(libraryApiProvider(user));
-    try {
-      return await api.get(lib.id);
-    } catch (e) {
-      rethrow;
-    }
+    return await api.get(lib.id);
   }
 
   if (currentLibrary == null) {

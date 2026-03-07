@@ -5,6 +5,7 @@ part 'play_item_request_params.g.dart';
 
 @requestToJsonRemoveNull
 class PlayItemRequestParams {
+  // TODO: set these dynamically
   static const defaults = {
     'forceDirectPlay': false,
     'forceTranscode': false,

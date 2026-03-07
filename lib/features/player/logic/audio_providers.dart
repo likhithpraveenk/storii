@@ -12,6 +12,7 @@ import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
+import 'package:storii/features/player/logic/session_sync_watcher.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
 part 'audio_providers.g.dart';
@@ -21,7 +22,7 @@ late final AppAudioHandler audioHandler;
 @riverpod
 Stream<AudioHandlerEvent> audioHandlerEvents(Ref ref) {
   return audioHandler.events.map((event) {
-    log('Handler: $event');
+    log('caught $event event');
     return event;
   });
 }
@@ -66,16 +67,32 @@ Duration totalDuration(Ref ref) {
   return session.duration;
 }
 
+class AudioPlayerState {
+  final String? loadingItemId;
+  final String? loadingEpisodeId;
+
+  const AudioPlayerState({this.loadingItemId, this.loadingEpisodeId});
+}
+
 @Riverpod(keepAlive: true)
 class AudioPlayerNotifier extends _$AudioPlayerNotifier {
   @override
-  FutureOr<void> build() => null;
+  AudioPlayerState build() => const AudioPlayerState();
 
   Future<void> play(String itemId, [String? episodeId]) async {
-    state = const AsyncLoading();
+    state = AudioPlayerState(
+      loadingItemId: itemId,
+      loadingEpisodeId: episodeId,
+    );
     try {
       final user = await ref.read(authenticatedUserProvider.future);
       final token = await ref.read(tokenProvider).getAccessToken(user.id);
+
+      final oldSession = ref.read(sessionProvider);
+      if (oldSession != null) {
+        await ref.read(listenTimeProvider.notifier).syncNow(isClosing: true);
+        await audioHandler.stop();
+      }
 
       final session = await ref
           .read(sessionProvider.notifier)
@@ -83,41 +100,40 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
 
       final (int index, Duration position) = session.getIndexAndOffset();
       final sources = session.toAudioSources(user.serverUrl, token);
-
-      await audioHandler.stop();
       await audioHandler.setSources(
         sources,
         initialIndex: index,
         initialPosition: position,
       );
-      await audioHandler.play();
 
-      state = const AsyncData(null);
+      state = const AudioPlayerState();
+      await audioHandler.play();
     } catch (e, st) {
       final error = AppError.resolve(e);
       LogService.log(
         'playing failed: $error',
         source: 'AudioPlayerNotifier',
+        level: .error,
         stackTrace: st,
       );
-      state = AsyncError(error, st);
+      state = const AudioPlayerState();
       throw error;
     }
   }
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 void playerStateWatcher(Ref ref) {
   ref.listen(processingStateProvider, (_, next) {
     if (next == .loading) {
-      ref.read(playerModeProvider.notifier).toMini();
+      ref.read(playerModeProvider.notifier).toFull();
     } else if (next == .idle) {
       ref.read(playerHeightProvider.notifier).snapTo(.hidden);
     }
   });
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 void audioSettingsWatcher(Ref ref) {
   ref.listen(speedProvider, (_, next) {
     audioHandler.setSpeed(next);
