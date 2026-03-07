@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/app/navigation/nav_bar/nav_item.dart';
+import 'package:storii/app/models/nav_item.dart';
 import 'package:storii/l10n/l10n.dart';
 
 enum NavTarget {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/ui/server_list_screen.dart';
 import 'package:storii/features/author/ui/author_detail_screen.dart';
@@ -20,7 +21,6 @@ import 'package:storii/features/series/ui/series_list_screen.dart';
 import 'package:storii/features/settings/ui/appearance_screen.dart';
 import 'package:storii/features/settings/ui/config_nav_screen.dart';
 import 'package:storii/features/settings/ui/settings_screen.dart';
-import 'package:storii/globals.dart';
 import 'package:storii/shared/splash_screen.dart';
 import 'package:storii/shared/widgets/shell_scaffold.dart';
 

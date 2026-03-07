@@ -12,7 +12,7 @@ import 'package:storii/features/item/ui/play_button_item_detail.dart';
 import 'package:storii/features/item/ui/progress_widget.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/helpers/model_extensions.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/expandable_text.dart';
 import 'package:storii/shared/widgets/waveform.dart';

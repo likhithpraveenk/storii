@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/init.dart' as init;
 import 'package:storii/app/providers/app_controller.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/theme_provider.dart';
-import 'package:storii/globals.dart';
-import 'package:storii/init.dart' as init;
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/storage/hive/boxes.dart';
 import 'package:storii/storage/local/font_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await init.setupHive();
+  await setupHive();
   await init.setupLicenses();
   await FontService.loadFonts();
-  await init.setupGlobals();
 
   final container = await init.setupProviders();
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));

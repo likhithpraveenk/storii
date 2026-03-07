@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
-import 'package:storii/app/models/to_domain.dart';
+import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
@@ -40,7 +40,12 @@ class AddUserNotifier extends _$AddUserNotifier {
         password: password,
       );
 
-      final storeUser = response.user.toDomain(url);
+      final storeUser = UserDomain(
+        id: response.user.id,
+        username: response.user.username,
+        userType: response.user.type.name,
+        serverUrl: url,
+      );
 
       await ref.read(usersProvider.notifier).add(storeUser);
       await ref

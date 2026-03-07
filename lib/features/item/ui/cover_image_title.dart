@@ -7,8 +7,8 @@ import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
-import 'package:storii/shared/helpers/model_extensions.dart';
 import 'package:storii/shared/widgets/dashed_underline.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
 

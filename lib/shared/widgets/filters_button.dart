@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/filter_data_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
-import 'package:storii/globals.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/helpers/model_extensions.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
 
 class FiltersButton extends ConsumerWidget {
   const FiltersButton(this.screen, {super.key});

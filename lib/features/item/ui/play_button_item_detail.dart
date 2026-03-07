@@ -4,7 +4,7 @@ import 'package:storii/abs_api/models/library_item.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/helpers/model_extensions.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 class PlayButtonItemDetail extends ConsumerWidget {

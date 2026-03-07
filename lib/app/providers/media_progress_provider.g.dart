@@ -48,7 +48,7 @@ final class MediaProgressProvider
   }
 }
 
-String _$mediaProgressHash() => r'51ef4d272441cdd6978613897e4b00a9566e21a9';
+String _$mediaProgressHash() => r'5cd7d60e0f1c6e1ddd9b0797ed51edc7cbacd90a';
 
 @ProviderFor(mediaProgressById)
 final mediaProgressByIdProvider = MediaProgressByIdFamily._();
@@ -105,7 +105,7 @@ final class MediaProgressByIdProvider
   }
 }
 
-String _$mediaProgressByIdHash() => r'db499b595fbece5d9dad368f0f9049b38b0e3b9b';
+String _$mediaProgressByIdHash() => r'5c48292feb1114cb1c59688b0c63adaf943f9d97';
 
 final class MediaProgressByIdFamily extends $Family
     with

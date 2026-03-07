@@ -7,26 +7,11 @@ import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
-import 'package:storii/globals.dart';
+import 'package:storii/features/player/logic/play_request_params.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/storage/hive/boxes.dart';
 
 part 'session_notifier.g.dart';
-
-@riverpod
-PlayItemRequestParams playRequestParams(Ref ref) {
-  return PlayItemRequestParams(
-    deviceInfo: ClientDeviceInfo(
-      clientName: 'storii',
-      clientVersion: packageInfo.version,
-      deviceId: androidDeviceInfo.id,
-      deviceName: '${androidDeviceInfo.brand} ${androidDeviceInfo.name}',
-      manufacturer: androidDeviceInfo.manufacturer,
-      model: androidDeviceInfo.model,
-      sdkVersion: androidDeviceInfo.version.sdkInt.toString(),
-    ),
-  );
-}
 
 @Riverpod(keepAlive: true)
 class SessionNotifier extends _$SessionNotifier {
@@ -38,7 +23,7 @@ class SessionNotifier extends _$SessionNotifier {
     String? episodeId,
   }) async {
     final user = await ref.read(authenticatedUserProvider.future);
-    final params = ref.read(playRequestParamsProvider);
+    final params = await ref.read(playRequestParamsProvider.future);
 
     final session = await ref
         .read(itemApiProvider(user))

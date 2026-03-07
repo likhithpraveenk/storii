@@ -66,7 +66,7 @@ final class ApiClientProvider
   }
 }
 
-String _$apiClientHash() => r'3fb9dd56e466ff7466a863c8d934d45c944459f1';
+String _$apiClientHash() => r'20ddfb421f057f5ef37f578c59cee89d7932bf97';
 
 final class ApiClientFamily extends $Family
     with $FunctionalFamilyOverride<ApiClient, UserDomain> {

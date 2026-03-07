@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/app/config/keys.dart';
+import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/app/navigation/nav_bar/nav_bar.dart';
-import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/ui/player_screen.dart';
-import 'package:storii/globals.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/widgets/nav_bar.dart';
 
 class ShellScaffold extends ConsumerWidget {
   const ShellScaffold({required this.child, super.key});

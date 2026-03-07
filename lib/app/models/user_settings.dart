@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
-import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
+import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/builder/annotations.dart';
 
 part 'user_settings.freezed.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/models/log_entry.dart';
-import 'package:storii/globals.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 

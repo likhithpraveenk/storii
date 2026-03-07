@@ -6,10 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/app/models/app_settings.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/models/user_settings.dart';
-import 'package:storii/app/navigation/nav_bar/nav_targets.dart';
 import 'package:storii/storage/hive/boxes.dart';
 
 export 'package:storii/app/models/app_settings.dart';

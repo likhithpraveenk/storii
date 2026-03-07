@@ -6,8 +6,8 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/logs/logs_interceptor.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/token_provider.dart';
-import 'package:storii/features/home/logic/user_session_controller.dart';
-import 'package:storii/globals.dart';
+import 'package:storii/features/auth/logic/user_session_controller.dart';
+import 'package:storii/storage/hive/boxes.dart';
 
 part 'api_providers.g.dart';
 

@@ -5,9 +5,9 @@ import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/media_progress_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/extensions.dart';
-import 'package:storii/shared/helpers/model_extensions.dart';
 
 part 'series_provider.g.dart';
 
