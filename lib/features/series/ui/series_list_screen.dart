@@ -4,7 +4,8 @@ import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/series/logic/series_list_provider.dart';
-import 'package:storii/features/series/ui/series.card.dart';
+import 'package:storii/features/series/ui/series_card.dart';
+import 'package:storii/features/series/ui/series_list_card.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/display_button.dart';
@@ -47,10 +48,9 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () {
-          return ref.refresh(seriesListProvider.future);
-        },
+        onRefresh: () => ref.refresh(rawSeriesListProvider.future),
         child: seriesAsync.when(
+          skipLoadingOnReload: true,
           data: (series) {
             if (series.isEmpty) {
               return SingleChildScrollView(

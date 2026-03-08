@@ -254,3 +254,21 @@ extension AudiobookX on LibraryItem {
   bool get hideFromContinue =>
       userMediaProgress?.hideFromContinueListening ?? false;
 }
+
+extension SeriesX on Series {
+  double get finishRatio {
+    final int count;
+    final int finished;
+
+    if (progress != null) {
+      count = progress!.libraryItemIds.length;
+      finished = progress!.libraryItemIdsFinished.length;
+    } else {
+      count = books.length;
+      finished = books.where((b) => b.progress == 1.0).length;
+    }
+
+    if (count == 0) return 0.0;
+    return (finished / count);
+  }
+}

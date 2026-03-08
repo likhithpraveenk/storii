@@ -46,8 +46,9 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () => ref.refresh(libraryItemsProvider.future),
+        onRefresh: () => ref.refresh(rawLibraryItemsProvider.future),
         child: itemsAsync.when(
+          skipLoadingOnReload: true,
           data: (items) {
             if (items.isEmpty) {
               return SingleChildScrollView(

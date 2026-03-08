@@ -70,12 +70,6 @@ class _ChaptersListWidgetState extends ConsumerState<ChaptersListWidget> {
                     final (hours, minutes) = duration.toReadableDuration();
 
                     return ListTile(
-                      leading: Text(
-                        '#${index + 1}',
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: theme.colorScheme.secondary,
-                        ),
-                      ),
                       title: Text(
                         chapter.title,
                         maxLines: 1,

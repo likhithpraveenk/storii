@@ -136,12 +136,6 @@ abstract class AppLocalizations {
   /// **'Password'**
   String get password;
 
-  /// No description provided for @errorUnknown.
-  ///
-  /// In en, this message translates to:
-  /// **'Something went wrong'**
-  String get errorUnknown;
-
   /// No description provided for @delete.
   ///
   /// In en, this message translates to:
@@ -207,12 +201,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error loading users'**
   String get errorLoadingUsers;
-
-  /// No description provided for @welcome.
-  ///
-  /// In en, this message translates to:
-  /// **'Welcome {username}'**
-  String welcome(String username);
 
   /// No description provided for @switchingToUser.
   ///
@@ -310,29 +298,11 @@ abstract class AppLocalizations {
   /// **'Collapse'**
   String get collapse;
 
-  /// No description provided for @readMore.
-  ///
-  /// In en, this message translates to:
-  /// **'Read More'**
-  String get readMore;
-
   /// No description provided for @retry.
   ///
   /// In en, this message translates to:
   /// **'Retry'**
   String get retry;
-
-  /// No description provided for @ascDesc.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap again for ascending/descending'**
-  String get ascDesc;
-
-  /// No description provided for @gridCount.
-  ///
-  /// In en, this message translates to:
-  /// **'Grid Count'**
-  String get gridCount;
 
   /// No description provided for @description.
   ///
@@ -495,12 +465,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Appearance'**
   String get appearance;
-
-  /// No description provided for @mustSelect3.
-  ///
-  /// In en, this message translates to:
-  /// **'You must select at least 3 items'**
-  String get mustSelect3;
 
   /// No description provided for @theme.
   ///
@@ -754,12 +718,6 @@ abstract class AppLocalizations {
   /// **'Display'**
   String get display;
 
-  /// No description provided for @gridView.
-  ///
-  /// In en, this message translates to:
-  /// **'Grid View'**
-  String get gridView;
-
   /// No description provided for @genre.
   ///
   /// In en, this message translates to:
@@ -814,12 +772,6 @@ abstract class AppLocalizations {
   /// **'Ebooks'**
   String get ebooks;
 
-  /// No description provided for @clearFilter.
-  ///
-  /// In en, this message translates to:
-  /// **'Clear Filter'**
-  String get clearFilter;
-
   /// No description provided for @finished.
   ///
   /// In en, this message translates to:
@@ -861,12 +813,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Subtitle'**
   String get subtitle;
-
-  /// No description provided for @year.
-  ///
-  /// In en, this message translates to:
-  /// **'Year'**
-  String get year;
 
   /// No description provided for @singleTrack.
   ///
@@ -934,18 +880,6 @@ abstract class AppLocalizations {
   /// **'Cover Only'**
   String get coverOnly;
 
-  /// No description provided for @ascending.
-  ///
-  /// In en, this message translates to:
-  /// **'Ascending'**
-  String get ascending;
-
-  /// No description provided for @descending.
-  ///
-  /// In en, this message translates to:
-  /// **'Descending'**
-  String get descending;
-
   /// No description provided for @listView.
   ///
   /// In en, this message translates to:
@@ -976,12 +910,6 @@ abstract class AppLocalizations {
   /// **'Licensed under the GNU General Public License v3.0'**
   String get licensedUnder;
 
-  /// No description provided for @errorText.
-  ///
-  /// In en, this message translates to:
-  /// **'Error: {text}'**
-  String errorText(String text);
-
   /// No description provided for @version.
   ///
   /// In en, this message translates to:
@@ -1006,12 +934,6 @@ abstract class AppLocalizations {
   /// **'Log HTTP requests and responses'**
   String get networkLogsDescription;
 
-  /// No description provided for @networkLogsWarning.
-  ///
-  /// In en, this message translates to:
-  /// **'Logging active. This may increase storage usage'**
-  String get networkLogsWarning;
-
   /// No description provided for @readableDuration.
   ///
   /// In en, this message translates to:
@@ -1035,12 +957,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'At {hours, plural, =0{} other{{hours}hr }}{minutes}min'**
   String currentTime(int hours, int minutes);
-
-  /// No description provided for @lastListened.
-  ///
-  /// In en, this message translates to:
-  /// **'Last listened {date}'**
-  String lastListened(DateTime date);
 
   /// No description provided for @removeProgressTitle.
   ///

@@ -52,6 +52,7 @@ class AppBottomSheet extends StatelessWidget {
     return Padding(
       padding: const .fromLTRB(24, 24, 24, 36),
       child: Column(
+        mainAxisSize: .min,
         crossAxisAlignment: .stretch,
         children: [
           Text(title, style: Theme.of(context).textTheme.titleLarge),

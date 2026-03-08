@@ -12,11 +12,15 @@ class ItemApi {
   Future<LibraryItem> get(
     String libraryItemId, {
     bool isExpanded = true,
+    bool includeProgress = false,
   }) async {
     final response = await api.request(
       ApiRoutes.itemById(libraryItemId),
       method: .get,
-      query: isExpanded ? {'expanded': 1, 'include': 'progress'} : null,
+      query: {
+        if (isExpanded) 'expanded': 1,
+        if (includeProgress) 'include': 'progress',
+      },
     );
     return fromJson(response.data, LibraryItem.fromJson);
   }

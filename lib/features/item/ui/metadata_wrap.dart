@@ -17,7 +17,7 @@ class MetadataWrap extends StatelessWidget {
     return Padding(
       padding: const .symmetric(horizontal: 16),
       child: Wrap(
-        alignment: .spaceBetween,
+        alignment: .spaceEvenly,
         spacing: 16,
         runSpacing: 8,
         children: [
@@ -51,15 +51,20 @@ class _MetaItem extends StatelessWidget {
     if (label == null) {
       return const SizedBox.shrink();
     }
-    final muted = Theme.of(context).colorScheme.onSurfaceVariant;
+    final theme = Theme.of(context);
     return Row(
       mainAxisSize: .min,
       spacing: 4,
       children: [
-        Icon(icon, size: 14, color: muted),
-        Text(
-          label!,
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: muted),
+        Icon(icon, size: 14, color: theme.colorScheme.onSurfaceVariant),
+        Flexible(
+          child: Text(
+            label!,
+            style: theme.textTheme.labelLarge?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+            overflow: .ellipsis,
+          ),
         ),
       ],
     );

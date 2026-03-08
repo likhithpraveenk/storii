@@ -74,6 +74,18 @@ class LibraryApi {
     return fromJson(response.data, SeriesResponse.fromJson);
   }
 
+  Future<Map<String, dynamic>> getSeriesRaw(
+    String libraryId,
+    SeriesRequestParams? params,
+  ) async {
+    final response = await api.request(
+      ApiRoutes.series(libraryId),
+      method: .get,
+      query: params?.toJson(),
+    );
+    return response.data;
+  }
+
   Future<Series> getSeriesById(String libraryId, String seriesId) async {
     final response = await api.request(
       ApiRoutes.seriesById(libraryId, seriesId),

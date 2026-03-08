@@ -30,9 +30,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get password => 'Password';
 
   @override
-  String get errorUnknown => 'Something went wrong';
-
-  @override
   String get delete => 'Delete';
 
   @override
@@ -66,11 +63,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorLoadingUsers => 'Error loading users';
-
-  @override
-  String welcome(String username) {
-    return 'Welcome $username';
-  }
 
   @override
   String switchingToUser(String user) {
@@ -123,16 +115,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get collapse => 'Collapse';
 
   @override
-  String get readMore => 'Read More';
-
-  @override
   String get retry => 'Retry';
-
-  @override
-  String get ascDesc => 'Tap again for ascending/descending';
-
-  @override
-  String get gridCount => 'Grid Count';
 
   @override
   String get description => 'Description';
@@ -214,9 +197,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appearance => 'Appearance';
-
-  @override
-  String get mustSelect3 => 'You must select at least 3 items';
 
   @override
   String get theme => 'Theme';
@@ -346,9 +326,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get display => 'Display';
 
   @override
-  String get gridView => 'Grid View';
-
-  @override
   String get genre => 'Genre';
 
   @override
@@ -376,9 +353,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ebooks => 'Ebooks';
 
   @override
-  String get clearFilter => 'Clear Filter';
-
-  @override
   String get finished => 'Finished';
 
   @override
@@ -398,9 +372,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get subtitle => 'Subtitle';
-
-  @override
-  String get year => 'Year';
 
   @override
   String get singleTrack => 'Single Track';
@@ -436,12 +407,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get coverOnly => 'Cover Only';
 
   @override
-  String get ascending => 'Ascending';
-
-  @override
-  String get descending => 'Descending';
-
-  @override
   String get listView => 'List View';
 
   @override
@@ -460,11 +425,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Licensed under the GNU General Public License v3.0';
 
   @override
-  String errorText(String text) {
-    return 'Error: $text';
-  }
-
-  @override
   String get version => 'Version';
 
   @override
@@ -477,10 +437,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get networkLogsDescription => 'Log HTTP requests and responses';
-
-  @override
-  String get networkLogsWarning =>
-      'Logging active. This may increase storage usage';
 
   @override
   String readableDuration(int hours, int minutes) {
@@ -516,14 +472,6 @@ class AppLocalizationsEn extends AppLocalizations {
       zero: '',
     );
     return 'At $_temp0${minutes}min';
-  }
-
-  @override
-  String lastListened(DateTime date) {
-    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMd(localeName);
-    final String dateString = dateDateFormat.format(date);
-
-    return 'Last listened $dateString';
   }
 
   @override

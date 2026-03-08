@@ -6,7 +6,7 @@ import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
-import 'package:storii/features/series/ui/series.card.dart';
+import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/library_switcher.dart';
@@ -28,8 +28,9 @@ class HomeScreen extends ConsumerWidget {
         title: const LibrarySwitcher(),
       ),
       body: RefreshIndicator(
-        onRefresh: () => ref.refresh(shelvesProvider.future),
+        onRefresh: () => ref.refresh(rawShelvesProvider.future),
         child: shelvesAsync.when(
+          skipLoadingOnReload: true,
           data: (shelves) {
             if (shelves.isEmpty) {
               return Center(child: Text(l.empty));

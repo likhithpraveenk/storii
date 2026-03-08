@@ -9,7 +9,7 @@ import 'package:storii/shared/helpers/app_error.dart';
 
 part 'shelves_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<List<Shelf>> shelves(Ref ref) async {
   //! TODO: only invalidate on socket event
   ref.invalidate(mediaProgressMapProvider);
@@ -19,22 +19,36 @@ Future<List<Shelf>> shelves(Ref ref) async {
 
   return rawShelves
       .map(
-        (s) => switch (s) {
-          LibraryItemsShelf() => s.copyWith(
-            entities: s.entities
+        (shelf) => switch (shelf) {
+          LibraryItemsShelf() => shelf.copyWith(
+            entities: shelf.entities
                 .map(
                   (item) =>
                       item.copyWith(userMediaProgress: progressMap[item.id]),
                 )
                 .toList(),
           ),
-          _ => s,
+          SeriesShelf() => shelf.copyWith(
+            entities: shelf.entities
+                .map(
+                  (s) => s.copyWith(
+                    books: s.books
+                        .map(
+                          (i) =>
+                              i.copyWith(userMediaProgress: progressMap[i.id]),
+                        )
+                        .toList(),
+                  ),
+                )
+                .toList(),
+          ),
+          _ => shelf,
         },
       )
       .toList();
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<List<Shelf>> rawShelves(Ref ref) async {
   final libraryId = (await ref.watch(
     activeLibraryDetailsProvider.future,
