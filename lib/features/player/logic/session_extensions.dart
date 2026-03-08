@@ -1,6 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/models/chapter.dart';
 
 extension PlaybackSessionX on PlaybackSession {
   List<AudioSource> toAudioSources(Uri serverUrl, String? token) {
@@ -10,7 +11,7 @@ extension PlaybackSessionX on PlaybackSession {
     Duration accumulated = Duration.zero;
     final sources = <AudioSource>[];
 
-    for (final track in audioTracks ?? []) {
+    for (final track in audioTracks ?? <AudioTrack>[]) {
       final startOffset = accumulated;
       accumulated += track.duration;
       sources.add(
@@ -22,12 +23,21 @@ extension PlaybackSessionX on PlaybackSession {
             title: displayTitle,
             artist: displayAuthor,
             duration: track.duration,
+            album: mediaMetadata.mapOrNull(book: (b) => b.seriesName),
             artUri: coverUri,
             extras: {
+              if (track.index == 0)
+                'chapters': chapters
+                    .map(
+                      (c) => Chapter(
+                        start: c.start,
+                        end: c.end,
+                        title: c.title,
+                      ).toJson(),
+                    )
+                    .toList(),
               'startOffset': startOffset.inMicroseconds,
-              'totalDuration': duration.inMicroseconds,
               'itemId': libraryItemId,
-              'trackIndex': '${track.index}',
               if (mediaType == .podcast) 'episodeId': episodeId,
             },
           ),

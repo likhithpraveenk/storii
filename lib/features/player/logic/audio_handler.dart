@@ -4,13 +4,15 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:storii/features/player/logic/track_position_resolver.dart';
+import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/models/chapter.dart';
+import 'package:storii/features/player/logic/position_resolver.dart';
 
 enum AudioHandlerEvent { play, pause, seek, stop, complete, buffering }
 
 class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final _player = AudioPlayer();
-  TrackPositionResolver _resolver = TrackPositionResolver.empty;
+  PositionResolver _resolver = PositionResolver.empty;
 
   final Duration Function() getFastForward;
   final Duration Function() getRewind;
@@ -32,9 +34,19 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   void _broadcastState(PlaybackEvent event) {
     final playing = _player.playing;
-    final queueIndex = event.currentIndex ?? 0;
+    final trackIndex = event.currentIndex ?? 0;
 
-    final startOffset = _resolver.globalPosition(queueIndex, Duration.zero);
+    final resolved = _resolver.resolveChapter(trackIndex, event.updatePosition);
+    final resolvedBuffered = _resolver.resolveChapter(
+      trackIndex,
+      event.bufferedPosition,
+    );
+    final chapterIndex = resolved?.chapterIndex ?? trackIndex;
+    final chapterPosition = resolved?.chapterPosition ?? event.updatePosition;
+    final chapterBuffered =
+        resolvedBuffered?.chapterPosition ?? event.bufferedPosition;
+
+    mediaItem.add(queue.value.elementAtOrNull(chapterIndex));
 
     playbackState.add(
       playbackState.value.copyWith(
@@ -57,10 +69,10 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
           .completed => .completed,
         },
         playing: playing,
-        updatePosition: event.updatePosition + startOffset,
-        bufferedPosition: event.bufferedPosition + startOffset,
+        updatePosition: chapterPosition,
+        bufferedPosition: chapterBuffered,
         speed: _player.speed,
-        queueIndex: queueIndex,
+        queueIndex: chapterIndex,
       ),
     );
   }
@@ -120,8 +132,27 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     ]);
   }
 
-  Duration get _currentPosition =>
-      _resolver.globalPosition(_player.currentIndex, _player.position);
+  Stream<T> _trackStream<T>(
+    T idle,
+    T Function(int? index, Duration position) map,
+  ) => Rx.combineLatest3(
+    _player.currentIndexStream,
+    _player.positionStream,
+    playbackState,
+    (index, position, state) => switch (state.processingState) {
+      .loading || .idle => idle,
+      _ => map(index, position),
+    },
+  ).throttleTime(const Duration(milliseconds: 200)).distinct();
+
+  Stream<Duration> get positionStream =>
+      _trackStream(Duration.zero, _resolver.globalPositionFromTrack);
+
+  Stream<Duration> get chapterPositionStream =>
+      _trackStream(Duration.zero, _resolver.chapterPositionFromTrack);
+
+  Stream<Chapter?> get currentChapterStream =>
+      _trackStream(null, _resolver.chapterFromTrack);
 
   @override
   Future<void> setSpeed(double speed) async {
@@ -133,12 +164,18 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     required int initialIndex,
     required Duration initialPosition,
   }) async {
-    final mediaItems = sources
+    final trackItems = sources
         .whereType<UriAudioSource>()
-        .map((source) => source.tag as MediaItem)
+        .map((s) => s.tag as MediaItem)
         .toList();
-    _resolver = TrackPositionResolver.from(mediaItems);
-    queue.add(mediaItems);
+
+    _resolver = PositionResolver.from(trackItems);
+
+    final chapterItems = _resolver.chapters
+        .map((c) => c.toMediaItem(trackItems.first))
+        .toList();
+
+    queue.add(chapterItems);
 
     try {
       await _player.setAudioSources(
@@ -147,34 +184,15 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         initialPosition: initialPosition,
       );
     } on PlayerException catch (e) {
-      log('Error code: ${e.code}; message: ${e.message}');
+      LogService.log(
+        'Error code: ${e.code}; message: ${e.message}',
+        level: .error,
+      );
     } on PlayerInterruptedException catch (e) {
-      log('Connection interrupted: ${e.message}');
+      LogService.log('Connection interrupted: ${e.message}', level: .error);
     } catch (e) {
-      log('An unknown error occurred: $e');
+      LogService.log('An unknown error occurred: $e', level: .error);
     }
-
-    //! setting single media item with global values
-    final first = mediaItems.first;
-    mediaItem.add(
-      first.copyWith(
-        id: first.extras!['itemId'] as String,
-        duration: Duration(microseconds: first.extras!['totalDuration'] as int),
-        artUri: first.artUri,
-      ),
-    );
-  }
-
-  Stream<Duration> get positionStream {
-    return Rx.combineLatest3(
-      _player.currentIndexStream,
-      _player.positionStream,
-      playbackState,
-      (index, position, state) => switch (state.processingState) {
-        .loading || .idle => Duration.zero,
-        _ => _resolver.globalPosition(index, position),
-      },
-    ).distinct();
   }
 
   Future<void> togglePlay() async {
@@ -196,39 +214,35 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   @override
-  Future<void> fastForward() => seek(_currentPosition + getFastForward());
+  Future<void> fastForward() => _seekRelative(getFastForward());
 
   @override
-  Future<void> rewind() => seek(
-    Duration(
-      microseconds: (_currentPosition - getRewind()).inMicroseconds.clamp(
-        0,
-        double.maxFinite.toInt(),
-      ),
-    ),
-  );
+  Future<void> rewind() => _seekRelative(getRewind());
+
+  Future<void> _seekRelative(Duration offset) async {
+    final currentPosition = playbackState.value.position;
+    await seek(currentPosition + offset);
+  }
 
   @override
   Future<void> seek(Duration position) async {
     if (queue.value.isEmpty) return;
 
-    final trackIndex = _resolver.trackIndexFor(position);
+    final chapterIndex = playbackState.value.queueIndex ?? 0;
+    final target = _resolver.resolveSeek(chapterIndex, position);
 
-    if (trackIndex != -1) {
-      await _player.seek(
-        _resolver.localSeconds(trackIndex, position),
-        index: trackIndex,
-      );
+    if (target != null) {
+      await _player.seek(target.trackPosition, index: target.trackIndex);
     }
   }
 
   @override
   Future<void> stop() async {
     await _player.stop();
-
     queue.add([]);
-    _resolver = TrackPositionResolver.empty;
+    mediaItem.add(null);
 
+    _resolver = PositionResolver.empty;
     await super.stop();
   }
 

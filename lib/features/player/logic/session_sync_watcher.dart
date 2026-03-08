@@ -57,17 +57,11 @@ class ListenTimeAccumulator {
 @Riverpod(keepAlive: true)
 class ListenTimeNotifier extends _$ListenTimeNotifier {
   final _accumulator = ListenTimeAccumulator();
-  // guard to drop simultaneous sync requests
-  bool _syncing = false;
 
   @override
   void build() {}
 
   Future<void> syncNow({bool isClosing = false, bool isPaused = false}) async {
-    // Allow close to bypass the guard so stop is never dropped
-    if (_syncing && !isClosing) return;
-    _syncing = true;
-
     final listened = _accumulator.snapshotAndReset(
       keepRunning: !isPaused && !isClosing,
     );
@@ -80,8 +74,6 @@ class ListenTimeNotifier extends _$ListenTimeNotifier {
       }
     } catch (_) {
       _accumulator.rollback(listened);
-    } finally {
-      _syncing = false;
     }
   }
 

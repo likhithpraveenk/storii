@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/app_styles.dart';
@@ -15,6 +13,16 @@ class PlayerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(playbackStateProvider, (previous, next) {
+      final event = next.value;
+      if (event?.processingState == .error) {
+        final message = event?.errorMessage ?? 'Playback Error';
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(message)));
+      }
+    });
+
     final size = MediaQuery.sizeOf(context);
     final screenWidth = size.width;
     final screenHeight = size.height;
@@ -40,7 +48,7 @@ class PlayerScreen extends ConsumerWidget {
     return PlayerBuilder(
       maxHeight: screenHeight,
       onDismiss: () async {
-        log('miniplayer dismissed');
+        // log('miniplayer dismissed');
         return await audioHandler.stop();
       },
       builder: (context, f) {

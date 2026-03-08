@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 
-enum IconSize { small, large }
-
 class AppSeekButton extends ConsumerWidget {
   final bool isForward;
 

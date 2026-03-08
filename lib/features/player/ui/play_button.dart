@@ -13,8 +13,8 @@ class PlayButton extends ConsumerWidget {
 
     final isLoading = processingState == .loading;
     final isBuffering = processingState == .buffering;
-    final width = isPlaying ? 120.0 : 80.0;
-    final height = isPlaying ? 90.0 : 80.0;
+    final width = isPlaying ? 110.0 : 80.0;
+    const height = 80.0;
     final scheme = Theme.of(context).colorScheme;
 
     return InkWell(

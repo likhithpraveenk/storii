@@ -5,6 +5,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/models/chapter.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
@@ -50,13 +51,18 @@ bool isPlaying(Ref ref) {
 }
 
 @riverpod
-Stream<MediaItem?> currentMediaItem(Ref ref) {
-  return audioHandler.mediaItem;
+Stream<Duration> globalPosition(Ref ref) {
+  return audioHandler.positionStream;
 }
 
 @riverpod
-Stream<Duration> globalPosition(Ref ref) {
-  return audioHandler.positionStream;
+Stream<Chapter?> currentChapter(Ref ref) {
+  return audioHandler.currentChapterStream;
+}
+
+@riverpod
+Stream<Duration> chapterPosition(Ref ref) {
+  return audioHandler.chapterPositionStream;
 }
 
 @riverpod
@@ -124,11 +130,29 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
 
 @riverpod
 void playerStateWatcher(Ref ref) {
-  ref.listen(processingStateProvider, (_, next) {
-    if (next == .loading) {
+  ref.listen(playbackStateProvider, (previous, next) {
+    final prev = previous?.value;
+    final curr = next.value;
+    if (curr == null) return;
+
+    if (curr.processingState == .loading) {
       ref.read(playerModeProvider.notifier).toFull();
-    } else if (next == .idle) {
+      return;
+    }
+
+    final stopped = !curr.playing && curr.processingState == .idle;
+    final wasStopped =
+        prev == null || (!prev.playing && prev.processingState == .idle);
+
+    if (stopped && !wasStopped) {
       ref.read(playerHeightProvider.notifier).snapTo(.hidden);
+      return;
+    }
+
+    final playerVisible = ref.read(playerViewStateProvider) != .hidden;
+    if (curr.playing && !playerVisible) {
+      ref.read(playerModeProvider.notifier).toMini();
+      return;
     }
   });
 }

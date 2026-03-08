@@ -15,11 +15,10 @@ class _BookSliderState extends ConsumerState<BookSlider> {
 
   @override
   Widget build(BuildContext context) {
-    final globalPosition = ref.watch(globalPositionProvider).value;
-    final totalDuration = ref.watch(totalDurationProvider);
-    final durationMs = totalDuration.inMilliseconds.toDouble();
-
-    final position = (globalPosition?.inMilliseconds.toDouble() ?? 0.0).clamp(
+    final chapter = ref.watch(currentChapterProvider).value;
+    final position = ref.watch(chapterPositionProvider).value;
+    final durationMs = (chapter?.duration.inMilliseconds ?? 0).toDouble();
+    final positionMs = (position?.inMilliseconds.toDouble() ?? 0.0).clamp(
       0.0,
       durationMs,
     );
@@ -35,7 +34,7 @@ class _BookSliderState extends ConsumerState<BookSlider> {
             context,
           ).copyWith(thumbShape: const RoundRectSliderThumbShape()),
           child: Slider(
-            value: _dragValue ?? position,
+            value: _dragValue ?? positionMs,
             max: durationMs,
             onChanged: (value) => setState(() => _dragValue = value),
             onChangeEnd: (value) async {
@@ -52,8 +51,8 @@ class _BookSliderState extends ConsumerState<BookSlider> {
           child: Row(
             mainAxisAlignment: .spaceBetween,
             children: [
-              Text(format(_dragValue ?? position)),
-              Text(totalDuration.toTimestamp()),
+              Text(format(_dragValue ?? positionMs)),
+              Text(chapter?.duration.toTimestamp() ?? ''),
             ],
           ),
         ),
@@ -67,11 +66,11 @@ class MiniProgressIndicator extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final position = ref.watch(globalPositionProvider).value ?? Duration.zero;
-    final total = ref.watch(totalDurationProvider);
-
-    final progress = total.inSeconds > 0
-        ? (position.inSeconds / total.inSeconds).clamp(0.0, 1.0)
+    final chapter = ref.watch(currentChapterProvider).value;
+    final position = ref.watch(chapterPositionProvider).value ?? Duration.zero;
+    final duration = chapter?.duration.inSeconds ?? 0;
+    final progress = duration > 0
+        ? (position.inSeconds / duration).clamp(0.0, 1.0)
         : 0.0;
 
     return LinearProgressIndicator(

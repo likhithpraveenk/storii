@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:storii/app/config/router.dart';
-import 'package:storii/features/player/logic/player_providers.dart';
+import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/features/player/ui/play_button.dart';
 import 'package:storii/features/player/ui/seek_button.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 
 class FullPlayer extends ConsumerWidget {
   const FullPlayer({super.key});
@@ -19,6 +18,10 @@ class FullPlayer extends ConsumerWidget {
       return const SizedBox.shrink();
     }
 
+    final currentChapter = ref.watch(currentChapterProvider).value;
+    final globalPosition =
+        ref.watch(globalPositionProvider).value ?? Duration.zero;
+
     return Padding(
       padding: const .all(16),
       child: SingleChildScrollView(
@@ -26,27 +29,25 @@ class FullPlayer extends ConsumerWidget {
           mainAxisAlignment: .center,
           mainAxisSize: .min,
           children: [
-            GestureDetector(
-              child: Text(
-                session.displayTitle,
-                style: Theme.of(context).textTheme.titleLarge,
-                textAlign: .center,
-              ),
-              onTap: () {
-                ref.read(playerModeProvider.notifier).toMini();
-                context.go(
-                  AppRoute.itemDetail.path,
-                  extra: session.libraryItemId,
-                );
-              },
-            ),
-            const SizedBox(height: 8),
             Text(
-              session.displayAuthor,
-              style: Theme.of(context).textTheme.titleSmall,
+              currentChapter?.title ?? session.displayTitle,
+              style: Theme.of(context).textTheme.titleLarge,
               textAlign: .center,
             ),
             const SizedBox(height: 8),
+            Text(
+              currentChapter != null
+                  ? session.displayTitle
+                  : session.displayAuthor,
+              style: Theme.of(context).textTheme.titleSmall,
+              textAlign: .center,
+            ),
+            // TODO: move to top of hero cover in player screen
+            Text(
+              globalPosition.toTimestamp(),
+              style: Theme.of(context).textTheme.labelSmall,
+              textAlign: .center,
+            ),
             const BookSlider(),
             const Row(
               mainAxisAlignment: .spaceEvenly,

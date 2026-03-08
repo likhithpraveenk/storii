@@ -19,6 +19,7 @@ Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
     manufacturer,
     model,
     sdkVersion,
+    mimeTypes,
   ) = switch (device) {
     AndroidDeviceInfo d => (
       'ExoPlayer',
@@ -27,15 +28,14 @@ Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
       d.manufacturer,
       d.model,
       d.version.sdkInt.toString(),
+      _androidSupportedMimeTypes,
     ),
-    _ => ('unknown', '', '', '', '', ''),
+    _ => ('unknown', '', '', '', '', '', <String>[]),
   };
 
   return PlayItemRequestParams(
-    forceDirectPlay: true,
-    forceTranscode: false,
     mediaPlayer: mediaPlayer,
-    supportedMimeTypes: [],
+    supportedMimeTypes: mimeTypes,
     deviceInfo: ClientDeviceInfo(
       clientName: 'storii',
       clientVersion: package.version,
@@ -47,3 +47,17 @@ Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
     ),
   );
 }
+
+const _androidSupportedMimeTypes = [
+  'audio/mpeg',
+  'audio/aac',
+  'audio/mp4',
+  'audio/flac',
+  'audio/x-flac',
+  'audio/ogg',
+  'audio/opus',
+  'audio/wav',
+  'audio/x-wav',
+  'application/x-mpegURL',
+  'application/dash+xml',
+];
