@@ -50,7 +50,14 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
     playbackState.add(
       playbackState.value.copyWith(
-        controls: [.rewind, playing ? .pause : .play, .fastForward, .stop],
+        controls: [
+          .rewind,
+          playing ? .pause : .play,
+          .fastForward,
+          .stop,
+          .skipToNext,
+          .skipToPrevious,
+        ],
         systemActions: const {
           .seek,
           .seekForward,
@@ -231,6 +238,31 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     final chapterIndex = playbackState.value.queueIndex ?? 0;
     final target = _resolver.resolveSeek(chapterIndex, position);
 
+    if (target != null) {
+      await _player.seek(target.trackPosition, index: target.trackIndex);
+    }
+  }
+
+  @override
+  Future<void> skipToNext() async {
+    final next = (playbackState.value.queueIndex ?? 0) + 1;
+    if (next < queue.value.length) await skipToQueueItem(next);
+  }
+
+  @override
+  Future<void> skipToPrevious() async {
+    final chapterIndex = playbackState.value.queueIndex ?? 0;
+    final position = playbackState.value.position;
+    if (position.inSeconds > 5 || chapterIndex == 0) {
+      await seek(Duration.zero);
+    } else {
+      await skipToQueueItem(chapterIndex - 1);
+    }
+  }
+
+  @override
+  Future<void> skipToQueueItem(int index) async {
+    final target = _resolver.resolveSeek(index, Duration.zero);
     if (target != null) {
       await _player.seek(target.trackPosition, index: target.trackIndex);
     }

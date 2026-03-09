@@ -11,7 +11,7 @@ extension PlaybackSessionX on PlaybackSession {
     Duration accumulated = Duration.zero;
     final sources = <AudioSource>[];
 
-    for (final track in audioTracks ?? <AudioTrack>[]) {
+    for (final (index, track) in (audioTracks ?? <AudioTrack>[]).indexed) {
       final startOffset = accumulated;
       accumulated += track.duration;
       sources.add(
@@ -26,7 +26,7 @@ extension PlaybackSessionX on PlaybackSession {
             album: mediaMetadata.mapOrNull(book: (b) => b.seriesName),
             artUri: coverUri,
             extras: {
-              if (track.index == 0)
+              if (index == 0)
                 'chapters': chapters
                     .map(
                       (c) => Chapter(

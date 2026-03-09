@@ -52,17 +52,26 @@ bool isPlaying(Ref ref) {
 
 @riverpod
 Stream<Duration> globalPosition(Ref ref) {
-  return audioHandler.positionStream;
+  return audioHandler.positionStream.map((pos) {
+    // log('global position: $pos');
+    return pos;
+  });
 }
 
 @riverpod
 Stream<Chapter?> currentChapter(Ref ref) {
-  return audioHandler.currentChapterStream;
+  return audioHandler.currentChapterStream.map((chapter) {
+    // log('currentChapter: $chapter');
+    return chapter;
+  });
 }
 
 @riverpod
 Stream<Duration> chapterPosition(Ref ref) {
-  return audioHandler.chapterPositionStream;
+  return audioHandler.chapterPositionStream.map((pos) {
+    // log('chapterPosition: $pos');
+    return pos;
+  });
 }
 
 @riverpod
