@@ -18,7 +18,7 @@ class SessionNotifier extends _$SessionNotifier {
   @override
   PlaybackSession? build() => null;
 
-  Future<PlaybackSession> open({
+  Future<PlaybackSession> create({
     required String itemId,
     String? episodeId,
   }) async {
@@ -27,7 +27,11 @@ class SessionNotifier extends _$SessionNotifier {
 
     final session = await ref
         .read(itemApiProvider(user))
-        .play(libraryItemId: itemId, params: params, episodeId: episodeId);
+        .createSession(
+          libraryItemId: itemId,
+          params: params,
+          episodeId: episodeId,
+        );
 
     await Hive.box<String>(sessionIdBox).put(session.id, session.id);
     state = session;
@@ -57,16 +61,10 @@ class SessionNotifier extends _$SessionNotifier {
     );
   }
 
-  Future<void> close(Duration totalListened) async {
+  Future<void> close() async {
     final session = state;
     if (session == null) {
       log('no session to close');
-      return;
-    }
-
-    final position = ref.read(globalPositionProvider).value;
-    if (position == null) {
-      state = null;
       return;
     }
 
@@ -75,13 +73,7 @@ class SessionNotifier extends _$SessionNotifier {
     try {
       await ref
           .read(sessionsApiProvider(user))
-          .closeSession(
-            sessionId: session.id,
-            params: SyncSessionRequestParams(
-              currentTime: position,
-              timeListened: totalListened,
-            ),
-          );
+          .closeSession(sessionId: session.id);
       await Hive.box<String>(sessionIdBox).delete(session.id);
     } finally {
       log('session closed');

@@ -66,7 +66,7 @@ class ItemDetailScreen extends ConsumerWidget {
                       MetadataWrap(item),
                       const SizedBox(height: 16),
                       const Divider(height: 0),
-                      ChaptersListWidget(item.chapters),
+                      ChaptersListWidget(item),
                       const SizedBox(height: 200),
                     ],
                   ),

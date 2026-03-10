@@ -25,7 +25,7 @@ class ItemApi {
     return fromJson(response.data, LibraryItem.fromJson);
   }
 
-  Future<PlaybackSession> play({
+  Future<PlaybackSession> createSession({
     required String libraryItemId,
     required PlayItemRequestParams params,
     String? episodeId,

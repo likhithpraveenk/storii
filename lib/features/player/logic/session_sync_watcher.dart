@@ -8,9 +8,6 @@ import 'package:storii/features/player/logic/session_notifier.dart';
 
 part 'session_sync_watcher.g.dart';
 
-/// Tracks listened time using a simple clock model
-/// [_unsynced] holds time from previous failed syncs
-/// [_playStartedAt] is set when playback starts and null when paused/stopped
 class ListenTimeAccumulator {
   DateTime? _playStartedAt;
   Duration _unsynced = Duration.zero;
@@ -25,13 +22,6 @@ class ListenTimeAccumulator {
     _playStartedAt = null;
   }
 
-  /// Returns total listened time since the last successful sync
-  ///
-  /// [_unsynced] (previous failed) + live delta (current session)
-  ///
-  /// If [keepRunning] is true (mid-session sync), the clock is immediately
-  /// restarted so we don't miss time during the sync call.
-  /// If false (pause/stop/seek-while-paused), the clock stays stopped
   Duration snapshotAndReset({required bool keepRunning}) {
     final now = DateTime.now();
     final live = _playStartedAt != null
@@ -44,13 +34,11 @@ class ListenTimeAccumulator {
     return total;
   }
 
-  /// Full reset after a session closes
   void resetClock() {
     _playStartedAt = null;
     _unsynced = Duration.zero;
   }
 
-  /// Called when a sync fails
   void rollback(Duration unsynced) => _unsynced = unsynced;
 }
 
@@ -67,7 +55,7 @@ class ListenTimeNotifier extends _$ListenTimeNotifier {
     );
     try {
       if (isClosing) {
-        await ref.read(sessionProvider.notifier).close(listened);
+        await ref.read(sessionProvider.notifier).close();
         _accumulator.resetClock();
       } else {
         await ref.read(sessionProvider.notifier).sync(listened);
@@ -94,13 +82,10 @@ void sessionSyncWatcher(Ref ref) {
       case .play:
         notifier.startClock();
       case .pause:
-        // Sync and stop the clock. keepRunning will be false
         notifier.syncNow(isPaused: true);
       case .buffering:
         notifier.pauseClock();
       case .seek:
-        // Sync pre-seek time. If still playing, keepRunning restarts
-        // the clock internally
         notifier.syncNow(isPaused: !ref.read(isPlayingProvider));
       case .stop:
         notifier.syncNow(isClosing: true);

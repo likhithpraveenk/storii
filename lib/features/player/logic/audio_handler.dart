@@ -66,6 +66,8 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
           .rewind,
           .fastForward,
           .stop,
+          .skipToNext,
+          .skipToPrevious,
         },
         androidCompactActionIndices: const [0, 1, 2],
         processingState: switch (event.processingState) {
@@ -97,69 +99,51 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   Stream<AudioHandlerEvent> get events {
-    final playPauseEvents = playbackState
-        .map((s) => s.playing)
-        .distinct()
-        .pairwise()
-        .map(
-          (pair) =>
-              pair.last ? AudioHandlerEvent.play : AudioHandlerEvent.pause,
-        );
-
-    final stopEvents = playbackState
-        .map((s) => s.processingState)
-        .distinct()
-        .skip(1)
-        .where((state) => state == .idle)
-        .map((_) => AudioHandlerEvent.stop);
+    final stateEvents =
+        Rx.combineLatest2(
+              playbackState.map((s) => s.playing).distinct(),
+              playbackState.map((s) => s.processingState).distinct(),
+              (playing, state) => (playing, state),
+            )
+            .skipWhile((t) => t.$1 == false) // skipping until play
+            .map(
+              (t) => switch (t) {
+                (_, .idle) => AudioHandlerEvent.stop,
+                (_, .completed) => AudioHandlerEvent.complete,
+                (_, .buffering) => AudioHandlerEvent.buffering,
+                (_, .loading) => AudioHandlerEvent.buffering,
+                (true, _) => AudioHandlerEvent.play,
+                (false, _) => AudioHandlerEvent.pause,
+              },
+            )
+            .distinct();
 
     final seekEvents = _player.positionDiscontinuityStream
         .where((d) => d.reason == .seek)
         .debounceTime(const Duration(milliseconds: 200))
         .map((_) => AudioHandlerEvent.seek);
 
-    final completeEvents = playbackState
-        .map((s) => s.processingState)
-        .distinct()
-        .where((s) => s == .completed)
-        .map((_) => AudioHandlerEvent.complete);
-
-    final bufferingEvents = playbackState
-        .map((s) => s.processingState)
-        .distinct()
-        .where((s) => s == .buffering || s == .loading)
-        .map((_) => AudioHandlerEvent.buffering);
-
-    return Rx.merge<AudioHandlerEvent>([
-      playPauseEvents,
-      stopEvents,
-      seekEvents,
-      completeEvents,
-      bufferingEvents,
-    ]);
+    return Rx.merge([stateEvents, seekEvents]);
   }
 
-  Stream<T> _trackStream<T>(
-    T idle,
-    T Function(int? index, Duration position) map,
-  ) => Rx.combineLatest3(
+  Stream<Duration> get positionStream => Rx.combineLatest3(
     _player.currentIndexStream,
     _player.positionStream,
     playbackState,
     (index, position, state) => switch (state.processingState) {
-      .loading || .idle => idle,
-      _ => map(index, position),
+      .loading || .idle => Duration.zero,
+      _ => _resolver.globalPositionFromTrack(index, position),
     },
   ).throttleTime(const Duration(milliseconds: 200)).distinct();
 
-  Stream<Duration> get positionStream =>
-      _trackStream(Duration.zero, _resolver.globalPositionFromTrack);
-
   Stream<Duration> get chapterPositionStream =>
-      _trackStream(Duration.zero, _resolver.chapterPositionFromTrack);
+      positionStream.map(_resolver.chapterPositionFromGlobal);
 
-  Stream<Chapter?> get currentChapterStream =>
-      _trackStream(null, _resolver.chapterFromTrack);
+  Stream<Chapter?> get currentChapterStream => playbackState.map(
+    (state) => state.queueIndex == null
+        ? null
+        : _resolver.chapterAt(state.queueIndex!),
+  );
 
   @override
   Future<void> setSpeed(double speed) async {

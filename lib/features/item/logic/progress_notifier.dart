@@ -13,9 +13,10 @@ class MediaProgressNotifier extends _$MediaProgressNotifier {
   Future<MediaProgress?> build(String itemId, [String? episodeId]) async {
     final user = await ref.watch(authenticatedUserProvider.future);
     try {
-      return await ref
+      final progress = await ref
           .read(meApiProvider(user))
           .getMediaProgress(libraryItemId: itemId, episodeId: episodeId);
+      return progress;
     } catch (e) {
       final error = AppError.resolve(e);
       if (error.toString().contains('404')) return null;

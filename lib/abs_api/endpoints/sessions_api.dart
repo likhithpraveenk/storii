@@ -70,14 +70,7 @@ class SessionsApi {
     );
   }
 
-  Future<void> closeSession({
-    required String sessionId,
-    SyncSessionRequestParams? params,
-  }) async {
-    await api.request(
-      ApiRoutes.sessionClose(sessionId),
-      method: .post,
-      body: params?.toJson(),
-    );
+  Future<void> closeSession({required String sessionId}) async {
+    await api.request(ApiRoutes.sessionClose(sessionId), method: .post);
   }
 }

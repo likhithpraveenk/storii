@@ -111,7 +111,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
 
       final session = await ref
           .read(sessionProvider.notifier)
-          .open(itemId: itemId, episodeId: episodeId);
+          .create(itemId: itemId, episodeId: episodeId);
 
       final (int index, Duration position) = session.getIndexAndOffset();
       final sources = session.toAudioSources(user.serverUrl, token);

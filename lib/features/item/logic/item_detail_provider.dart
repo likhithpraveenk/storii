@@ -14,13 +14,12 @@ Future<LibraryItem> itemDetail(Ref ref, String id) async {
   try {
     final item = await api.get(id);
     return item;
-  } catch (e, s) {
+  } catch (e) {
     final error = AppError.resolve(e);
     LogService.log(
       'Error fetching library item details: $error',
       source: 'itemDetail',
       level: .error,
-      stackTrace: s,
     );
     throw error;
   }
