@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:storii/abs_api/abs_api.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
@@ -11,9 +10,7 @@ class MetadataWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-    final (hr, min) = item.duration.toReadableDuration();
-    final duration = l.readableDuration(hr, min);
+    final duration = item.duration.toReadableDuration(context);
     return Padding(
       padding: const .symmetric(horizontal: 16),
       child: Wrap(

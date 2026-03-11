@@ -51,7 +51,7 @@ final class MediaProgressNotifierProvider
 }
 
 String _$mediaProgressNotifierHash() =>
-    r'715980f5817e468ba73f7103aefcee9bbd44bd37';
+    r'c77e26927645f66194e89715b8df4572ba458a74';
 
 final class MediaProgressNotifierFamily extends $Family
     with

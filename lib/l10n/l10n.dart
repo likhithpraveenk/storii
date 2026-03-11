@@ -952,12 +952,6 @@ abstract class AppLocalizations {
   /// **'Chapters'**
   String get chapters;
 
-  /// No description provided for @currentTime.
-  ///
-  /// In en, this message translates to:
-  /// **'At {hours, plural, =0{} other{{hours}hr }}{minutes}min'**
-  String currentTime(int hours, int minutes);
-
   /// No description provided for @removeProgressTitle.
   ///
   /// In en, this message translates to:
@@ -1029,6 +1023,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Skip back'**
   String get skipBack;
+
+  /// No description provided for @startPlayback.
+  ///
+  /// In en, this message translates to:
+  /// **'Start playback'**
+  String get startPlayback;
 }
 
 class _AppLocalizationsDelegate

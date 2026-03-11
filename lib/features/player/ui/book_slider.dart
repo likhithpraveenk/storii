@@ -23,8 +23,7 @@ class _BookSliderState extends ConsumerState<BookSlider> {
       durationMs,
     );
 
-    String format(double ms) =>
-        Duration(milliseconds: ms.toInt()).toTimestamp();
+    String format(double ms) => Duration(milliseconds: ms.toInt()).toTime();
 
     return Column(
       mainAxisSize: .min,
@@ -52,7 +51,7 @@ class _BookSliderState extends ConsumerState<BookSlider> {
             mainAxisAlignment: .spaceBetween,
             children: [
               Text(format(_dragValue ?? positionMs)),
-              Text(chapter?.duration.toTimestamp() ?? ''),
+              Text(chapter?.duration.toTime() ?? ''),
             ],
           ),
         ),

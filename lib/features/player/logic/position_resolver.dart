@@ -25,53 +25,25 @@ class PositionResolver {
     );
 
     final raw = items.firstOrNull?.extras?['chapters'] as List<dynamic>? ?? [];
-    final chapters = raw.isNotEmpty
-        ? List<Chapter>.unmodifiable(
-            raw.map((c) => Chapter.fromJson(c as Map<String, dynamic>)),
-          )
-        : List<Chapter>.unmodifiable(
-            items.map((item) {
-              final start = Duration(
-                microseconds: item.extras!['startOffset'] as int,
-              );
-              return Chapter(
-                start: start,
-                end: start + item.duration!,
-                title: item.title,
-                fromTracks: true,
-              );
-            }),
-          );
+    final chapters = List<Chapter>.unmodifiable(
+      raw.map((c) => Chapter.fromJson(c as Map<String, dynamic>)),
+    );
 
     return PositionResolver(trackOffsets: offsets, chapters: chapters);
   }
 
   int _trackIndexFor(Duration globalPosition) {
-    var low = 0;
-    var high = _trackOffsets.length - 1;
-    while (low <= high) {
-      final mid = (low + high) ~/ 2;
-      if (_trackOffsets[mid] <= globalPosition) {
-        low = mid + 1;
-      } else {
-        high = mid - 1;
-      }
+    for (var i = _trackOffsets.length - 1; i >= 0; i--) {
+      if (_trackOffsets[i] <= globalPosition) return i;
     }
-    return high;
+    return 0;
   }
 
   int _chapterIndexFor(Duration globalPosition) {
-    var low = 0;
-    var high = _chapters.length - 1;
-    while (low <= high) {
-      final mid = (low + high) ~/ 2;
-      if (_chapters[mid].start <= globalPosition) {
-        low = mid + 1;
-      } else {
-        high = mid - 1;
-      }
+    for (var i = _chapters.length - 1; i >= 0; i--) {
+      if (_chapters[i].start <= globalPosition) return i;
     }
-    return high;
+    return 0;
   }
 
   Duration globalPositionFromTrack(int? index, Duration position) {
@@ -85,13 +57,11 @@ class PositionResolver {
     }
     final global = globalPositionFromTrack(index, position);
     final chapterIndex = _chapterIndexFor(global);
-    if (chapterIndex < 0) return position;
     return global - _chapters[chapterIndex].start;
   }
 
-   Duration chapterPositionFromGlobal(Duration globalPosition) {
+  Duration chapterPositionFromGlobal(Duration globalPosition) {
     final chapterIndex = _chapterIndexFor(globalPosition);
-    if (chapterIndex < 0) return Duration.zero;
     return globalPosition - _chapters[chapterIndex].start;
   }
 
@@ -102,8 +72,6 @@ class PositionResolver {
     final chapterIndex = _chapterIndexFor(
       globalPositionFromTrack(index, position),
     );
-    if (chapterIndex < 0) return null;
-
     return _chapters[chapterIndex];
   }
 
@@ -122,7 +90,6 @@ class PositionResolver {
 
     final global = globalPositionFromTrack(trackIndex, trackPosition);
     final chapterIndex = _chapterIndexFor(global);
-    if (chapterIndex < 0) return null;
 
     return (
       chapterIndex: chapterIndex,
@@ -138,7 +105,6 @@ class PositionResolver {
 
     final global = _chapters[chapterIndex].start + chapterPosition;
     final trackIndex = _trackIndexFor(global);
-    if (trackIndex < 0) return null;
 
     return (
       trackIndex: trackIndex,

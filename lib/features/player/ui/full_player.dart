@@ -5,7 +5,6 @@ import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/features/player/ui/play_button.dart';
 import 'package:storii/features/player/ui/seek_button.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 class FullPlayer extends ConsumerWidget {
@@ -13,7 +12,6 @@ class FullPlayer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final session = ref.watch(sessionProvider);
 
@@ -25,10 +23,12 @@ class FullPlayer extends ConsumerWidget {
     final globalPosition =
         ref.watch(globalPositionProvider).value ?? Duration.zero;
 
+    final currentPosition = globalPosition.toReadableDuration(context);
     final totalDuration = session.duration;
-    final (hr, min) = (totalDuration - globalPosition).toReadableDuration();
+    final remainingDuration = (totalDuration - globalPosition)
+        .toReadableDuration(context);
     final progressValue =
-        (globalPosition.inMicroseconds / totalDuration.inMicroseconds).clamp(
+        (globalPosition.inMilliseconds / totalDuration.inMilliseconds).clamp(
           0.0,
           1.0,
         );
@@ -62,7 +62,7 @@ class FullPlayer extends ConsumerWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '$progress • ${l.durationRemaining(hr, min)}',
+              '$currentPosition • $progress • $remainingDuration',
               style: theme.textTheme.labelSmall?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
                 fontWeight: .w600,

@@ -31,7 +31,6 @@ class MyApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     final themeMode = ref.watch(themeModeProvider);
     final textScaler = ref.watch(textScalerProvider);
-    final localeCode = ref.watch(localeCodeProvider);
 
     final lightTheme = ref.watch(themeDataProvider(.light));
     final darkTheme = ref.watch(themeDataProvider(.dark));
@@ -44,7 +43,6 @@ class MyApp extends ConsumerWidget {
       darkTheme: darkTheme,
       routerConfig: router,
       title: appName,
-      locale: Locale(localeCode),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       builder: (context, child) {

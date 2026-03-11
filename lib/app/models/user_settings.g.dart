@@ -23,9 +23,6 @@ _UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>
       isAuthorsGridView: json['isAuthorsGridView'] as bool? ?? true,
       showTitleForItem: json['showTitleForItem'] as bool? ?? true,
       stackTitleOnImage: json['stackTitleOnImage'] as bool? ?? false,
-      syncInterval: json['syncInterval'] == null
-          ? const Duration(seconds: 30)
-          : Duration(microseconds: (json['syncInterval'] as num).toInt()),
     );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -40,7 +37,6 @@ Map<String, dynamic> _$UserSettingsToJson(
   'isAuthorsGridView': instance.isAuthorsGridView,
   'showTitleForItem': instance.showTitleForItem,
   'stackTitleOnImage': instance.stackTitleOnImage,
-  'syncInterval': instance.syncInterval.inMicroseconds,
 };
 
 const _$NavTargetEnumMap = {

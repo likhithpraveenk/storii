@@ -26,8 +26,6 @@ sealed class UserSettings with _$UserSettings {
     @Default(true) bool showTitleForItem,
 
     @Default(false) bool stackTitleOnImage,
-
-    @Default(Duration(seconds: 30)) Duration syncInterval,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

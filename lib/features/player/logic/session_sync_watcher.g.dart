@@ -42,7 +42,7 @@ final class ListenTimeNotifierProvider
 }
 
 String _$listenTimeNotifierHash() =>
-    r'7e2d5f298441536419b25119fadc70b6de6e32fe';
+    r'78d63f7861e236559d5d1d5547ad5c157e1fe6f5';
 
 abstract class _$ListenTimeNotifier extends $Notifier<void> {
   void build();
@@ -102,4 +102,4 @@ final class SessionSyncWatcherProvider
 }
 
 String _$sessionSyncWatcherHash() =>
-    r'8680d87898ef7b3638fa36524abb13f75c684fe4';
+    r'e3568675d889d45f58f696869363c217cdb2a7f6';

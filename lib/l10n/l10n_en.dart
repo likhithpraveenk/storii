@@ -464,17 +464,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chapters => 'Chapters';
 
   @override
-  String currentTime(int hours, int minutes) {
-    String _temp0 = intl.Intl.pluralLogic(
-      hours,
-      locale: localeName,
-      other: '${hours}hr ',
-      zero: '',
-    );
-    return 'At $_temp0${minutes}min';
-  }
-
-  @override
   String get removeProgressTitle => 'Remove progress?';
 
   @override
@@ -510,4 +499,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get skipBack => 'Skip back';
+
+  @override
+  String get startPlayback => 'Start playback';
 }

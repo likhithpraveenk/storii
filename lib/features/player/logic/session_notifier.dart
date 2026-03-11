@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/play_request_params.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -40,7 +41,10 @@ class SessionNotifier extends _$SessionNotifier {
 
   Future<void> sync(Duration totalListened) async {
     final session = state;
-    if (session == null) return;
+    if (session == null) {
+      // log('no session to sync');
+      return;
+    }
 
     final position = ref.read(globalPositionProvider).value;
     if (position == null) return;
@@ -55,28 +59,35 @@ class SessionNotifier extends _$SessionNotifier {
             timeListened: totalListened,
           ),
         );
-    log(
-      'sync pos ${position.toTimestamp()}'
-      ' listened ${totalListened.inSeconds}s',
-    );
+    log('sync at ${position.toTime()} listen ${totalListened.inSeconds}s');
   }
 
-  Future<void> close() async {
+  Future<void> close({bool didComplete = false}) async {
     final session = state;
     if (session == null) {
-      log('no session to close');
+      // log('no session to close');
       return;
     }
 
     final user = await ref.read(authenticatedUserProvider.future);
-
     try {
       await ref
           .read(sessionsApiProvider(user))
           .closeSession(sessionId: session.id);
       await Hive.box<String>(sessionIdBox).delete(session.id);
+
+      if (didComplete) {
+        await ref
+            .read(
+              mediaProgressProvider(
+                session.libraryItemId,
+                session.episodeId,
+              ).notifier,
+            )
+            .markComplete();
+      }
     } finally {
-      log('session closed');
+      log('session closed${didComplete ? ' (completed)' : ''}');
       state = null;
     }
   }

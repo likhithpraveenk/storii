@@ -11,6 +11,7 @@ sealed class Chapter with _$Chapter {
     required Duration start,
     required Duration end,
     required String title,
+    required String subtitle,
     @Default(false) bool fromTracks,
   }) = _Chapter;
 

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,7 +12,6 @@ import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
-import 'package:storii/features/player/logic/session_sync_watcher.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
 part 'audio_providers.g.dart';
@@ -23,7 +21,7 @@ late final AppAudioHandler audioHandler;
 @riverpod
 Stream<AudioHandlerEvent> audioHandlerEvents(Ref ref) {
   return audioHandler.events.map((event) {
-    log('caught $event event');
+    // log('caught $event event');
     return event;
   });
 }
@@ -59,18 +57,18 @@ Stream<Duration> globalPosition(Ref ref) {
 }
 
 @riverpod
-Stream<Chapter?> currentChapter(Ref ref) {
-  return audioHandler.currentChapterStream.map((chapter) {
-    // log('currentChapter: $chapter');
-    return chapter;
-  });
-}
-
-@riverpod
 Stream<Duration> chapterPosition(Ref ref) {
   return audioHandler.chapterPositionStream.map((pos) {
     // log('chapterPosition: $pos');
     return pos;
+  });
+}
+
+@riverpod
+Stream<Chapter?> currentChapter(Ref ref) {
+  return audioHandler.currentChapterStream.map((chapter) {
+    // log('currentChapter: $chapter');
+    return chapter;
   });
 }
 
@@ -105,7 +103,6 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
 
       final oldSession = ref.read(sessionProvider);
       if (oldSession != null) {
-        await ref.read(listenTimeProvider.notifier).syncNow(isClosing: true);
         await audioHandler.stop();
       }
 

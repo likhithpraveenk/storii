@@ -129,9 +129,6 @@ extension AppSettingsSetters on AppSettingsNotifier {
   Future<void> setUsePureBlack(bool value) =>
       _save(state.copyWith(usePureBlack: value));
 
-  Future<void> setLocaleCode(String value) =>
-      _save(state.copyWith(localeCode: value));
-
   Future<void> setCurrentUser(UserDomain? value) =>
       _save(state.copyWith(currentUser: value));
 
@@ -156,6 +153,9 @@ extension AppSettingsSetters on AppSettingsNotifier {
       _save(state.copyWith(rewind: value));
 
   Future<void> setSpeed(double value) => _save(state.copyWith(speed: value));
+
+  Future<void> setSyncInterval(Duration value) =>
+      _save(state.copyWith(syncInterval: value));
 }
 
 final themeModeProvider = Provider<ThemeMode>(
@@ -168,10 +168,6 @@ final useDynamicColorProvider = Provider<bool>(
 
 final usePureBlackProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.usePureBlack)),
-);
-
-final localeCodeProvider = Provider<String>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.localeCode)),
 );
 
 final currentUserProvider = Provider<UserDomain?>(
@@ -210,6 +206,10 @@ final speedProvider = Provider<double>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.speed)),
 );
 
+final syncIntervalProvider = Provider<Duration>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.syncInterval)),
+);
+
 // **************************************************************************
 // _UserSettingsGenerator
 // **************************************************************************
@@ -238,9 +238,6 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setStackTitleOnImage(bool value) =>
       _save(state.copyWith(stackTitleOnImage: value));
-
-  Future<void> setSyncInterval(Duration value) =>
-      _save(state.copyWith(syncInterval: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -273,8 +270,4 @@ final showTitleForItemProvider = Provider<bool>(
 
 final stackTitleOnImageProvider = Provider<bool>(
   (ref) => ref.watch(userSettingsProvider.select((s) => s.stackTitleOnImage)),
-);
-
-final syncIntervalProvider = Provider<Duration>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.syncInterval)),
 );

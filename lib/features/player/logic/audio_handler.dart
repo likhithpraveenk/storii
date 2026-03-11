@@ -126,18 +126,17 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     return Rx.merge([stateEvents, seekEvents]);
   }
 
-  Stream<Duration> get positionStream => Rx.combineLatest3(
-    _player.currentIndexStream,
+  Stream<Duration> get positionStream => Rx.combineLatest2(
+    _player.currentIndexStream.startWith(_player.currentIndex ?? 0),
     _player.positionStream,
-    playbackState,
-    (index, position, state) => switch (state.processingState) {
-      .loading || .idle => Duration.zero,
-      _ => _resolver.globalPositionFromTrack(index, position),
-    },
-  ).throttleTime(const Duration(milliseconds: 200)).distinct();
+    (index, position) => _resolver.globalPositionFromTrack(index, position),
+  );
 
-  Stream<Duration> get chapterPositionStream =>
-      positionStream.map(_resolver.chapterPositionFromGlobal);
+  Stream<Duration> get chapterPositionStream => Rx.combineLatest2(
+    _player.currentIndexStream.startWith(_player.currentIndex ?? 0),
+    _player.positionStream,
+    (index, position) => _resolver.chapterPositionFromTrack(index, position),
+  ).throttleTime(const Duration(milliseconds: 200));
 
   Stream<Chapter?> get currentChapterStream => playbackState.map(
     (state) => state.queueIndex == null

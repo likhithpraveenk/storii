@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/app_styles.dart';
-import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -11,16 +10,16 @@ import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/pulsing_dot.dart';
 
-class ChaptersListWidget extends ConsumerStatefulWidget {
+class ChaptersListWidget extends StatefulWidget {
   final LibraryItem item;
 
   const ChaptersListWidget(this.item, {super.key});
 
   @override
-  ConsumerState<ChaptersListWidget> createState() => _ChaptersListWidgetState();
+  State<ChaptersListWidget> createState() => _ChaptersListWidgetState();
 }
 
-class _ChaptersListWidgetState extends ConsumerState<ChaptersListWidget> {
+class _ChaptersListWidgetState extends State<ChaptersListWidget> {
   bool _expanded = true;
 
   @override
@@ -31,14 +30,6 @@ class _ChaptersListWidgetState extends ConsumerState<ChaptersListWidget> {
 
     final theme = Theme.of(context);
     final l = AppLocalizations.of(context)!;
-
-    final currentChapter = ref.watch(currentChapterProvider).value;
-    final progress = ref.watch(mediaProgressProvider(widget.item.id)).value;
-
-    final startChapterIndex = _chapterIndexFor(
-      progress?.currentTime,
-      widget.item.chapters,
-    );
 
     return Column(
       children: [
@@ -81,52 +72,10 @@ class _ChaptersListWidgetState extends ConsumerState<ChaptersListWidget> {
                   itemCount: widget.item.chapters.length,
                   itemBuilder: (context, index) {
                     final chapter = widget.item.chapters[index];
-
-                    final isCurrentChapterPlaying =
-                        currentChapter?.start == chapter.start;
-
-                    final duration = chapter.end - chapter.start;
-                    final (hours, minutes) = duration.toReadableDuration();
-
-                    return ListTile(
-                      leading: isCurrentChapterPlaying
-                          ? const PulsingDot()
-                          : index == startChapterIndex && currentChapter == null
-                          ? PulsingDot(color: theme.colorScheme.tertiary)
-                          : null,
-                      title: Text(
-                        chapter.title,
-                        maxLines: 1,
-                        overflow: .ellipsis,
-                        style: theme.textTheme.titleSmall,
-                      ),
-                      trailing: Text(
-                        chapter.start.toTimestamp(),
-                        style: theme.textTheme.labelMedium,
-                      ),
-                      subtitle: Text(
-                        l.readableDuration(hours, minutes),
-                        style: theme.textTheme.bodySmall,
-                      ),
-                      onTap: () async {
-                        final session = ref.read(sessionProvider);
-                        if (session != null &&
-                            session.libraryItemId == widget.item.id) {
-                          await audioHandler.skipToQueueItem(index);
-                        } else {
-                          final startSession = await AppBottomSheet.show(
-                            context,
-                            title: 'Start ${widget.item}',
-                            confirmLabel: l.confirm,
-                          );
-                          if (startSession == true) {
-                            await ref
-                                .read(audioPlayerProvider.notifier)
-                                .play(widget.item.id);
-                            await audioHandler.skipToQueueItem(index);
-                          }
-                        }
-                      },
+                    return _ChapterTile(
+                      index: index,
+                      item: widget.item,
+                      chapter: chapter,
                     );
                   },
                 ),
@@ -136,19 +85,72 @@ class _ChaptersListWidgetState extends ConsumerState<ChaptersListWidget> {
   }
 }
 
-int _chapterIndexFor(Duration? position, List<BookChapter> chapters) {
-  if (position == null) {
-    return -1;
+class _ChapterTile extends ConsumerWidget {
+  const _ChapterTile({
+    required this.index,
+    required this.item,
+    required this.chapter,
+  });
+
+  final int index;
+  final LibraryItem item;
+  final BookChapter chapter;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+
+    final session = ref.watch(sessionProvider);
+    final currentChapter = ref.watch(currentChapterProvider).value;
+
+    final isCurrentItemPlaying =
+        session != null && session.libraryItemId == item.id;
+
+    final isCurrentChapterPlaying =
+        isCurrentItemPlaying && currentChapter?.start == chapter.start;
+
+    final chapterDuration = chapter.end - chapter.start;
+
+    return ListTile(
+      leading: isCurrentChapterPlaying ? const PulsingDot() : null,
+      title: Text(
+        chapter.title,
+        maxLines: 1,
+        overflow: .ellipsis,
+        style: theme.textTheme.titleSmall,
+      ),
+      trailing: Text(
+        chapter.start.toTime(),
+        style: theme.textTheme.labelMedium,
+      ),
+      subtitle: Text(
+        chapterDuration.toReadableDuration(context),
+        style: theme.textTheme.bodySmall,
+      ),
+      onTap: () async {
+        if (isCurrentItemPlaying) {
+          await audioHandler.skipToQueueItem(index);
+        } else {
+          final startSession = await AppBottomSheet.show(
+            context,
+            title: l.startPlayback,
+            body: Row(
+              children: [
+                Expanded(child: Text(item.title ?? l.noTitle)),
+                const Icon(Icons.arrow_forward, size: 12),
+                const SizedBox(width: 8),
+                Text(chapter.start.toTime()),
+              ],
+            ),
+            confirmLabel: l.confirm,
+          );
+          if (startSession == true) {
+            await ref.read(audioPlayerProvider.notifier).play(item.id);
+            await audioHandler.skipToQueueItem(index);
+          }
+        }
+      },
+    );
   }
-  var low = 0;
-  var high = chapters.length - 1;
-  while (low <= high) {
-    final mid = (low + high) ~/ 2;
-    if (chapters[mid].start <= position) {
-      low = mid + 1;
-    } else {
-      high = mid - 1;
-    }
-  }
-  return high;
 }

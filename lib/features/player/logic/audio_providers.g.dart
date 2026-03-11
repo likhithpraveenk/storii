@@ -49,7 +49,7 @@ final class AudioHandlerEventsProvider
 }
 
 String _$audioHandlerEventsHash() =>
-    r'0d6a770918df1cb44fbf87fe7d27b3a9928a08d2';
+    r'646b8e9b1e7aef9d0f6d35489ecc81c6399d2b38';
 
 @ProviderFor(playbackState)
 final playbackStateProvider = PlaybackStateProvider._();
@@ -211,40 +211,6 @@ final class GlobalPositionProvider
 
 String _$globalPositionHash() => r'598efdb37e8712be502e5f96020740f767133aa1';
 
-@ProviderFor(currentChapter)
-final currentChapterProvider = CurrentChapterProvider._();
-
-final class CurrentChapterProvider
-    extends
-        $FunctionalProvider<AsyncValue<Chapter?>, Chapter?, Stream<Chapter?>>
-    with $FutureModifier<Chapter?>, $StreamProvider<Chapter?> {
-  CurrentChapterProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'currentChapterProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$currentChapterHash();
-
-  @$internal
-  @override
-  $StreamProviderElement<Chapter?> $createElement($ProviderPointer pointer) =>
-      $StreamProviderElement(pointer);
-
-  @override
-  Stream<Chapter?> create(Ref ref) {
-    return currentChapter(ref);
-  }
-}
-
-String _$currentChapterHash() => r'b6ccd21565873a361a9816058feb105e329bb8fb';
-
 @ProviderFor(chapterPosition)
 final chapterPositionProvider = ChapterPositionProvider._();
 
@@ -278,6 +244,40 @@ final class ChapterPositionProvider
 }
 
 String _$chapterPositionHash() => r'da8cbb84d7a28f04dffebbed818d5bdd83a9c4e0';
+
+@ProviderFor(currentChapter)
+final currentChapterProvider = CurrentChapterProvider._();
+
+final class CurrentChapterProvider
+    extends
+        $FunctionalProvider<AsyncValue<Chapter?>, Chapter?, Stream<Chapter?>>
+    with $FutureModifier<Chapter?>, $StreamProvider<Chapter?> {
+  CurrentChapterProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'currentChapterProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$currentChapterHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<Chapter?> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<Chapter?> create(Ref ref) {
+    return currentChapter(ref);
+  }
+}
+
+String _$currentChapterHash() => r'b6ccd21565873a361a9816058feb105e329bb8fb';
 
 @ProviderFor(totalDuration)
 final totalDurationProvider = TotalDurationProvider._();
@@ -353,7 +353,7 @@ final class AudioPlayerNotifierProvider
 }
 
 String _$audioPlayerNotifierHash() =>
-    r'27e1ca291dc5a69248dc078e4ff07219fa4cf41b';
+    r'61eda995a5be852d3a2b3d82e6f2c9186120f684';
 
 abstract class _$AudioPlayerNotifier extends $Notifier<AudioPlayerState> {
   AudioPlayerState build();

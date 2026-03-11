@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppSettings {
 
- ThemeMode get themeMode; bool get useDynamicColor; bool get usePureBlack; String get localeCode; UserDomain? get currentUser; String get dateTimeFormat; int get maxLogs; String? get fontFamily; double get fontScale; bool get enableHttpLogs; Duration get fastForward; Duration get rewind; double get speed;
+ ThemeMode get themeMode; bool get useDynamicColor; bool get usePureBlack; UserDomain? get currentUser; String get dateTimeFormat; int get maxLogs; String? get fontFamily; double get fontScale; bool get enableHttpLogs; Duration get fastForward; Duration get rewind; double get speed; Duration get syncInterval;
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AppSettingsCopyWith<AppSettings> get copyWith => _$AppSettingsCopyWithImpl<AppS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.localeCode, localeCode) || other.localeCode == localeCode)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.fastForward, fastForward) || other.fastForward == fastForward)&&(identical(other.rewind, rewind) || other.rewind == rewind)&&(identical(other.speed, speed) || other.speed == speed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.fastForward, fastForward) || other.fastForward == fastForward)&&(identical(other.rewind, rewind) || other.rewind == rewind)&&(identical(other.speed, speed) || other.speed == speed)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,usePureBlack,localeCode,currentUser,dateTimeFormat,maxLogs,fontFamily,fontScale,enableHttpLogs,fastForward,rewind,speed);
+int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,usePureBlack,currentUser,dateTimeFormat,maxLogs,fontFamily,fontScale,enableHttpLogs,fastForward,rewind,speed,syncInterval);
 
 @override
 String toString() {
-  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, usePureBlack: $usePureBlack, localeCode: $localeCode, currentUser: $currentUser, dateTimeFormat: $dateTimeFormat, maxLogs: $maxLogs, fontFamily: $fontFamily, fontScale: $fontScale, enableHttpLogs: $enableHttpLogs, fastForward: $fastForward, rewind: $rewind, speed: $speed)';
+  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, usePureBlack: $usePureBlack, currentUser: $currentUser, dateTimeFormat: $dateTimeFormat, maxLogs: $maxLogs, fontFamily: $fontFamily, fontScale: $fontScale, enableHttpLogs: $enableHttpLogs, fastForward: $fastForward, rewind: $rewind, speed: $speed, syncInterval: $syncInterval)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AppSettingsCopyWith<$Res>  {
   factory $AppSettingsCopyWith(AppSettings value, $Res Function(AppSettings) _then) = _$AppSettingsCopyWithImpl;
 @useResult
 $Res call({
- ThemeMode themeMode, bool useDynamicColor, bool usePureBlack, String localeCode, UserDomain? currentUser, String dateTimeFormat, int maxLogs, String? fontFamily, double fontScale, bool enableHttpLogs, Duration fastForward, Duration rewind, double speed
+ ThemeMode themeMode, bool useDynamicColor, bool usePureBlack, UserDomain? currentUser, String dateTimeFormat, int maxLogs, String? fontFamily, double fontScale, bool enableHttpLogs, Duration fastForward, Duration rewind, double speed, Duration syncInterval
 });
 
 
@@ -65,13 +65,12 @@ class _$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? usePureBlack = null,Object? localeCode = null,Object? currentUser = freezed,Object? dateTimeFormat = null,Object? maxLogs = null,Object? fontFamily = freezed,Object? fontScale = null,Object? enableHttpLogs = null,Object? fastForward = null,Object? rewind = null,Object? speed = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? dateTimeFormat = null,Object? maxLogs = null,Object? fontFamily = freezed,Object? fontScale = null,Object? enableHttpLogs = null,Object? fastForward = null,Object? rewind = null,Object? speed = null,Object? syncInterval = null,}) {
   return _then(_self.copyWith(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,useDynamicColor: null == useDynamicColor ? _self.useDynamicColor : useDynamicColor // ignore: cast_nullable_to_non_nullable
 as bool,usePureBlack: null == usePureBlack ? _self.usePureBlack : usePureBlack // ignore: cast_nullable_to_non_nullable
-as bool,localeCode: null == localeCode ? _self.localeCode : localeCode // ignore: cast_nullable_to_non_nullable
-as String,currentUser: freezed == currentUser ? _self.currentUser : currentUser // ignore: cast_nullable_to_non_nullable
+as bool,currentUser: freezed == currentUser ? _self.currentUser : currentUser // ignore: cast_nullable_to_non_nullable
 as UserDomain?,dateTimeFormat: null == dateTimeFormat ? _self.dateTimeFormat : dateTimeFormat // ignore: cast_nullable_to_non_nullable
 as String,maxLogs: null == maxLogs ? _self.maxLogs : maxLogs // ignore: cast_nullable_to_non_nullable
 as int,fontFamily: freezed == fontFamily ? _self.fontFamily : fontFamily // ignore: cast_nullable_to_non_nullable
@@ -80,7 +79,8 @@ as double,enableHttpLogs: null == enableHttpLogs ? _self.enableHttpLogs : enable
 as bool,fastForward: null == fastForward ? _self.fastForward : fastForward // ignore: cast_nullable_to_non_nullable
 as Duration,rewind: null == rewind ? _self.rewind : rewind // ignore: cast_nullable_to_non_nullable
 as Duration,speed: null == speed ? _self.speed : speed // ignore: cast_nullable_to_non_nullable
-as double,
+as double,syncInterval: null == syncInterval ? _self.syncInterval : syncInterval // ignore: cast_nullable_to_non_nullable
+as Duration,
   ));
 }
 /// Create a copy of AppSettings
@@ -174,10 +174,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor,  bool usePureBlack,  String localeCode,  UserDomain? currentUser,  String dateTimeFormat,  int maxLogs,  String? fontFamily,  double fontScale,  bool enableHttpLogs,  Duration fastForward,  Duration rewind,  double speed)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor,  bool usePureBlack,  UserDomain? currentUser,  String dateTimeFormat,  int maxLogs,  String? fontFamily,  double fontScale,  bool enableHttpLogs,  Duration fastForward,  Duration rewind,  double speed,  Duration syncInterval)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.localeCode,_that.currentUser,_that.dateTimeFormat,_that.maxLogs,_that.fontFamily,_that.fontScale,_that.enableHttpLogs,_that.fastForward,_that.rewind,_that.speed);case _:
+return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.currentUser,_that.dateTimeFormat,_that.maxLogs,_that.fontFamily,_that.fontScale,_that.enableHttpLogs,_that.fastForward,_that.rewind,_that.speed,_that.syncInterval);case _:
   return orElse();
 
 }
@@ -195,10 +195,10 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.l
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor,  bool usePureBlack,  String localeCode,  UserDomain? currentUser,  String dateTimeFormat,  int maxLogs,  String? fontFamily,  double fontScale,  bool enableHttpLogs,  Duration fastForward,  Duration rewind,  double speed)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor,  bool usePureBlack,  UserDomain? currentUser,  String dateTimeFormat,  int maxLogs,  String? fontFamily,  double fontScale,  bool enableHttpLogs,  Duration fastForward,  Duration rewind,  double speed,  Duration syncInterval)  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings():
-return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.localeCode,_that.currentUser,_that.dateTimeFormat,_that.maxLogs,_that.fontFamily,_that.fontScale,_that.enableHttpLogs,_that.fastForward,_that.rewind,_that.speed);}
+return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.currentUser,_that.dateTimeFormat,_that.maxLogs,_that.fontFamily,_that.fontScale,_that.enableHttpLogs,_that.fastForward,_that.rewind,_that.speed,_that.syncInterval);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -212,10 +212,10 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.l
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode,  bool useDynamicColor,  bool usePureBlack,  String localeCode,  UserDomain? currentUser,  String dateTimeFormat,  int maxLogs,  String? fontFamily,  double fontScale,  bool enableHttpLogs,  Duration fastForward,  Duration rewind,  double speed)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode,  bool useDynamicColor,  bool usePureBlack,  UserDomain? currentUser,  String dateTimeFormat,  int maxLogs,  String? fontFamily,  double fontScale,  bool enableHttpLogs,  Duration fastForward,  Duration rewind,  double speed,  Duration syncInterval)?  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.localeCode,_that.currentUser,_that.dateTimeFormat,_that.maxLogs,_that.fontFamily,_that.fontScale,_that.enableHttpLogs,_that.fastForward,_that.rewind,_that.speed);case _:
+return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.currentUser,_that.dateTimeFormat,_that.maxLogs,_that.fontFamily,_that.fontScale,_that.enableHttpLogs,_that.fastForward,_that.rewind,_that.speed,_that.syncInterval);case _:
   return null;
 
 }
@@ -227,13 +227,12 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.l
 @JsonSerializable()
 
 class _AppSettings implements AppSettings {
-  const _AppSettings({this.themeMode = ThemeMode.system, this.useDynamicColor = false, this.usePureBlack = false, this.localeCode = 'en', this.currentUser, this.dateTimeFormat = 'dd MMM y', this.maxLogs = 100, this.fontFamily = 'AtkinsonHyperlegibleNext', this.fontScale = 1, this.enableHttpLogs = false, this.fastForward = const Duration(seconds: 30), this.rewind = const Duration(seconds: 10), this.speed = 1.0});
+  const _AppSettings({this.themeMode = ThemeMode.system, this.useDynamicColor = false, this.usePureBlack = false, this.currentUser, this.dateTimeFormat = 'dd MMM y', this.maxLogs = 100, this.fontFamily = 'AtkinsonHyperlegibleNext', this.fontScale = 1, this.enableHttpLogs = false, this.fastForward = const Duration(seconds: 30), this.rewind = const Duration(seconds: 10), this.speed = 1.0, this.syncInterval = const Duration(seconds: 20)});
   factory _AppSettings.fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);
 
 @override@JsonKey() final  ThemeMode themeMode;
 @override@JsonKey() final  bool useDynamicColor;
 @override@JsonKey() final  bool usePureBlack;
-@override@JsonKey() final  String localeCode;
 @override final  UserDomain? currentUser;
 @override@JsonKey() final  String dateTimeFormat;
 @override@JsonKey() final  int maxLogs;
@@ -243,6 +242,7 @@ class _AppSettings implements AppSettings {
 @override@JsonKey() final  Duration fastForward;
 @override@JsonKey() final  Duration rewind;
 @override@JsonKey() final  double speed;
+@override@JsonKey() final  Duration syncInterval;
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
@@ -257,16 +257,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.localeCode, localeCode) || other.localeCode == localeCode)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.fastForward, fastForward) || other.fastForward == fastForward)&&(identical(other.rewind, rewind) || other.rewind == rewind)&&(identical(other.speed, speed) || other.speed == speed));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.fastForward, fastForward) || other.fastForward == fastForward)&&(identical(other.rewind, rewind) || other.rewind == rewind)&&(identical(other.speed, speed) || other.speed == speed)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,usePureBlack,localeCode,currentUser,dateTimeFormat,maxLogs,fontFamily,fontScale,enableHttpLogs,fastForward,rewind,speed);
+int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,usePureBlack,currentUser,dateTimeFormat,maxLogs,fontFamily,fontScale,enableHttpLogs,fastForward,rewind,speed,syncInterval);
 
 @override
 String toString() {
-  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, usePureBlack: $usePureBlack, localeCode: $localeCode, currentUser: $currentUser, dateTimeFormat: $dateTimeFormat, maxLogs: $maxLogs, fontFamily: $fontFamily, fontScale: $fontScale, enableHttpLogs: $enableHttpLogs, fastForward: $fastForward, rewind: $rewind, speed: $speed)';
+  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, usePureBlack: $usePureBlack, currentUser: $currentUser, dateTimeFormat: $dateTimeFormat, maxLogs: $maxLogs, fontFamily: $fontFamily, fontScale: $fontScale, enableHttpLogs: $enableHttpLogs, fastForward: $fastForward, rewind: $rewind, speed: $speed, syncInterval: $syncInterval)';
 }
 
 
@@ -277,7 +277,7 @@ abstract mixin class _$AppSettingsCopyWith<$Res> implements $AppSettingsCopyWith
   factory _$AppSettingsCopyWith(_AppSettings value, $Res Function(_AppSettings) _then) = __$AppSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- ThemeMode themeMode, bool useDynamicColor, bool usePureBlack, String localeCode, UserDomain? currentUser, String dateTimeFormat, int maxLogs, String? fontFamily, double fontScale, bool enableHttpLogs, Duration fastForward, Duration rewind, double speed
+ ThemeMode themeMode, bool useDynamicColor, bool usePureBlack, UserDomain? currentUser, String dateTimeFormat, int maxLogs, String? fontFamily, double fontScale, bool enableHttpLogs, Duration fastForward, Duration rewind, double speed, Duration syncInterval
 });
 
 
@@ -294,13 +294,12 @@ class __$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? usePureBlack = null,Object? localeCode = null,Object? currentUser = freezed,Object? dateTimeFormat = null,Object? maxLogs = null,Object? fontFamily = freezed,Object? fontScale = null,Object? enableHttpLogs = null,Object? fastForward = null,Object? rewind = null,Object? speed = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? dateTimeFormat = null,Object? maxLogs = null,Object? fontFamily = freezed,Object? fontScale = null,Object? enableHttpLogs = null,Object? fastForward = null,Object? rewind = null,Object? speed = null,Object? syncInterval = null,}) {
   return _then(_AppSettings(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,useDynamicColor: null == useDynamicColor ? _self.useDynamicColor : useDynamicColor // ignore: cast_nullable_to_non_nullable
 as bool,usePureBlack: null == usePureBlack ? _self.usePureBlack : usePureBlack // ignore: cast_nullable_to_non_nullable
-as bool,localeCode: null == localeCode ? _self.localeCode : localeCode // ignore: cast_nullable_to_non_nullable
-as String,currentUser: freezed == currentUser ? _self.currentUser : currentUser // ignore: cast_nullable_to_non_nullable
+as bool,currentUser: freezed == currentUser ? _self.currentUser : currentUser // ignore: cast_nullable_to_non_nullable
 as UserDomain?,dateTimeFormat: null == dateTimeFormat ? _self.dateTimeFormat : dateTimeFormat // ignore: cast_nullable_to_non_nullable
 as String,maxLogs: null == maxLogs ? _self.maxLogs : maxLogs // ignore: cast_nullable_to_non_nullable
 as int,fontFamily: freezed == fontFamily ? _self.fontFamily : fontFamily // ignore: cast_nullable_to_non_nullable
@@ -309,7 +308,8 @@ as double,enableHttpLogs: null == enableHttpLogs ? _self.enableHttpLogs : enable
 as bool,fastForward: null == fastForward ? _self.fastForward : fastForward // ignore: cast_nullable_to_non_nullable
 as Duration,rewind: null == rewind ? _self.rewind : rewind // ignore: cast_nullable_to_non_nullable
 as Duration,speed: null == speed ? _self.speed : speed // ignore: cast_nullable_to_non_nullable
-as double,
+as double,syncInterval: null == syncInterval ? _self.syncInterval : syncInterval // ignore: cast_nullable_to_non_nullable
+as Duration,
   ));
 }
 

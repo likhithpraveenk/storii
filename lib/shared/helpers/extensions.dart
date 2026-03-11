@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/log_entry.dart';
+import 'package:storii/l10n/l10n.dart';
 
 extension IterableExtensions<T> on Iterable<T> {
   T? firstWhereOrNull(bool Function(T element) test) {
@@ -111,7 +112,7 @@ extension DurationPreciseX on Duration {
   double get inSecondsPrecise =>
       inMicroseconds / Duration.microsecondsPerSecond;
 
-  String toTimestamp() {
+  String toTime() {
     final hours = inHours;
     final minutes = inMinutes.remainder(60);
     final seconds = inSeconds.remainder(60);
@@ -122,10 +123,11 @@ extension DurationPreciseX on Duration {
     return '$hoursString$minutesString:$secondsString';
   }
 
-  (int hours, int minutes) toReadableDuration() {
+  String toReadableDuration(BuildContext context) {
     final hours = inHours;
     final minutes = inMinutes.remainder(60);
-    return (hours, minutes);
+
+    return AppLocalizations.of(context)!.readableDuration(hours, minutes);
   }
 }
 

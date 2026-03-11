@@ -14,8 +14,6 @@ sealed class AppSettings with _$AppSettings {
 
     @Default(false) bool usePureBlack,
 
-    @Default('en') String localeCode,
-
     UserDomain? currentUser,
 
     @Default('dd MMM y') String dateTimeFormat,
@@ -33,6 +31,8 @@ sealed class AppSettings with _$AppSettings {
     @Default(Duration(seconds: 10)) Duration rewind,
 
     @Default(1.0) double speed,
+
+    @Default(Duration(seconds: 20)) Duration syncInterval,
   }) = _AppSettings;
 
   factory AppSettings.fromJson(Map<String, dynamic> json) =>

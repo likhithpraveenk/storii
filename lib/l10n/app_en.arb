@@ -191,17 +191,6 @@
     }
   },
   "chapters": "Chapters",
-  "currentTime": "At {hours, plural, =0{} other{{hours}hr }}{minutes}min",
-  "@currentTime": {
-    "placeholders": {
-      "hours": {
-        "type": "int"
-      },
-      "minutes": {
-        "type": "int"
-      }
-    }
-  },
   "removeProgressTitle": "Remove progress?",
   "removeProgressMessage": "This will reset your listening progress and cannot be undone.",
   "remove": "Remove",
@@ -213,5 +202,6 @@
   "progressRemoveFailed": "Failed to remove progress",
   "playerSettings": "Player Settings",
   "skipForward": "Skip forward",
-  "skipBack": "Skip back"
+  "skipBack": "Skip back",
+  "startPlayback": "Start playback"
 }

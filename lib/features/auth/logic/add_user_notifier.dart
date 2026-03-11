@@ -36,7 +36,7 @@ class AddUserNotifier extends _$AddUserNotifier {
     try {
       final authApi = ref.read(authApiProvider(url));
       final response = await authApi.login(
-        username: username,
+        username: username.trim(),
         password: password,
       );
 
@@ -58,13 +58,12 @@ class AddUserNotifier extends _$AddUserNotifier {
       await ref.read(appSettingsProvider.notifier).setCurrentUser(storeUser);
       LogService.log('${storeUser.username} logged in', level: .info);
       state = state.copyWith(status: .success);
-    } catch (e, st) {
+    } catch (e) {
       final error = AppError.resolve(e);
       LogService.log(
         'Error while adding $username',
         source: 'AddUserNotifier',
         level: .error,
-        stackTrace: st,
       );
       state = state.copyWith(status: .error, message: error.message);
     }

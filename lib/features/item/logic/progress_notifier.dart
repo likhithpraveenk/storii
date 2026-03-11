@@ -17,15 +17,16 @@ class MediaProgressNotifier extends _$MediaProgressNotifier {
           .read(meApiProvider(user))
           .getMediaProgress(libraryItemId: itemId, episodeId: episodeId);
       return progress;
-    } catch (e) {
-      final error = AppError.resolve(e);
-      if (error.toString().contains('404')) return null;
+    } on ApiException catch (e) {
+      if (e.statusCode == 404) {
+        return null;
+      }
       LogService.log(
-        'Failed to get media progress: $error',
+        'Failed to get media progress: $e',
         level: .warning,
         source: 'MediaProgressNotifier',
       );
-      throw error;
+      rethrow;
     }
   }
 

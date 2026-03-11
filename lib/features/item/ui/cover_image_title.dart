@@ -24,12 +24,15 @@ class CoverImageTitle extends StatelessWidget {
     return Stack(
       children: [
         Material(
-          child: ImageFiltered(
-            imageFilter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-            child: ImageWidget(
-              id: item.id,
-              type: .item,
-              updatedAt: item.updatedAt,
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: ImageFiltered(
+              imageFilter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+              child: ImageWidget(
+                id: item.id,
+                type: .item,
+                updatedAt: item.updatedAt,
+              ),
             ),
           ),
         ),

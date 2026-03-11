@@ -11,6 +11,33 @@ extension PlaybackSessionX on PlaybackSession {
     Duration accumulated = Duration.zero;
     final sources = <AudioSource>[];
 
+    List<Map<String, dynamic>> jsonChapters;
+    if (chapters.isNotEmpty) {
+      jsonChapters = chapters
+          .map(
+            (c) => Chapter(
+              start: c.start,
+              end: c.end,
+              title: c.title,
+              subtitle: displayTitle,
+            ).toJson(),
+          )
+          .toList();
+    } else {
+      jsonChapters =
+          audioTracks
+              ?.map(
+                (t) => Chapter(
+                  start: t.startOffset,
+                  end: t.startOffset + t.duration,
+                  title: displayTitle,
+                  subtitle: displayAuthor,
+                ).toJson(),
+              )
+              .toList() ??
+          [];
+    }
+
     for (final (index, track) in (audioTracks ?? <AudioTrack>[]).indexed) {
       final startOffset = accumulated;
       accumulated += track.duration;
@@ -26,16 +53,7 @@ extension PlaybackSessionX on PlaybackSession {
             album: mediaMetadata.mapOrNull(book: (b) => b.seriesName),
             artUri: coverUri,
             extras: {
-              if (index == 0)
-                'chapters': chapters
-                    .map(
-                      (c) => Chapter(
-                        start: c.start,
-                        end: c.end,
-                        title: c.title,
-                      ).toJson(),
-                    )
-                    .toList(),
+              if (index == 0) 'chapters': jsonChapters,
               'startOffset': startOffset.inMicroseconds,
               'itemId': libraryItemId,
               if (mediaType == .podcast) 'episodeId': episodeId,

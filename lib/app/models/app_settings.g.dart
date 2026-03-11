@@ -12,7 +12,6 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
       ThemeMode.system,
   useDynamicColor: json['useDynamicColor'] as bool? ?? false,
   usePureBlack: json['usePureBlack'] as bool? ?? false,
-  localeCode: json['localeCode'] as String? ?? 'en',
   currentUser: json['currentUser'] == null
       ? null
       : UserDomain.fromJson(json['currentUser'] as Map<String, dynamic>),
@@ -28,6 +27,9 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
       ? const Duration(seconds: 10)
       : Duration(microseconds: (json['rewind'] as num).toInt()),
   speed: (json['speed'] as num?)?.toDouble() ?? 1.0,
+  syncInterval: json['syncInterval'] == null
+      ? const Duration(seconds: 20)
+      : Duration(microseconds: (json['syncInterval'] as num).toInt()),
 );
 
 Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
@@ -35,7 +37,6 @@ Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
       'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,
       'useDynamicColor': instance.useDynamicColor,
       'usePureBlack': instance.usePureBlack,
-      'localeCode': instance.localeCode,
       'currentUser': ?instance.currentUser?.toJson(),
       'dateTimeFormat': instance.dateTimeFormat,
       'maxLogs': instance.maxLogs,
@@ -45,6 +46,7 @@ Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
       'fastForward': instance.fastForward.inMicroseconds,
       'rewind': instance.rewind.inMicroseconds,
       'speed': instance.speed,
+      'syncInterval': instance.syncInterval.inMicroseconds,
     };
 
 const _$ThemeModeEnumMap = {
