@@ -11,9 +11,9 @@ class AppSeekButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
-    final fastForward = ref.watch(fastForwardProvider);
-    final rewind = ref.watch(rewindProvider);
-    final skipDuration = isForward ? fastForward : rewind;
+    final skipForward = ref.watch(skipForwardProvider);
+    final skipBackward = ref.watch(skipBackwardProvider);
+    final skipDuration = isForward ? skipForward : skipBackward;
 
     return InkWell(
       splashFactory: NoSplash.splashFactory,
@@ -44,8 +44,7 @@ class AppSeekButton extends ConsumerWidget {
     );
   }
 
-  String _getDurationLabel(Duration? duration) {
-    if (duration == null) return '';
+  String _getDurationLabel(Duration duration) {
     final seconds = duration.inSeconds;
     if (seconds >= 60 && seconds % 60 == 0) {
       return '${duration.inMinutes}m';

@@ -937,14 +937,14 @@ abstract class AppLocalizations {
   /// No description provided for @readableDuration.
   ///
   /// In en, this message translates to:
-  /// **'{hours, plural, =0{} other{{hours}hr }}{minutes}min'**
+  /// **'{hours, plural, =0{} other{{hours}h }}{minutes}m'**
   String readableDuration(int hours, int minutes);
 
-  /// No description provided for @durationRemaining.
+  /// No description provided for @durationLeft.
   ///
   /// In en, this message translates to:
-  /// **'{hours, plural, =0{} other{{hours}hr }}{minutes}min remaining'**
-  String durationRemaining(int hours, int minutes);
+  /// **'{hours, plural, =0{} other{{hours}h }}{minutes}m left'**
+  String durationLeft(int hours, int minutes);
 
   /// No description provided for @chapters.
   ///

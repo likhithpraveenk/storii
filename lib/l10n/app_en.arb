@@ -168,7 +168,7 @@
   },
   "networkLogs": "Network Logs",
   "networkLogsDescription": "Log HTTP requests and responses",
-  "readableDuration": "{hours, plural, =0{} other{{hours}hr }}{minutes}min",
+  "readableDuration": "{hours, plural, =0{} other{{hours}h }}{minutes}m",
   "@readableDuration": {
     "placeholders": {
       "hours": {
@@ -179,8 +179,8 @@
       }
     }
   },
-  "durationRemaining": "{hours, plural, =0{} other{{hours}hr }}{minutes}min remaining",
-  "@durationRemaining": {
+  "durationLeft": "{hours, plural, =0{} other{{hours}h }}{minutes}m left",
+  "@durationLeft": {
     "placeholders": {
       "hours": {
         "type": "int"

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Chapter {
 
- Duration get start; Duration get end; String get title; String get subtitle; bool get fromTracks;
+ int get displayIndex; Duration get start; Duration get end; String get title; String get subtitle; bool get fromTracks;
 /// Create a copy of Chapter
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ChapterCopyWith<Chapter> get copyWith => _$ChapterCopyWithImpl<Chapter>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Chapter&&(identical(other.start, start) || other.start == start)&&(identical(other.end, end) || other.end == end)&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.fromTracks, fromTracks) || other.fromTracks == fromTracks));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Chapter&&(identical(other.displayIndex, displayIndex) || other.displayIndex == displayIndex)&&(identical(other.start, start) || other.start == start)&&(identical(other.end, end) || other.end == end)&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.fromTracks, fromTracks) || other.fromTracks == fromTracks));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,start,end,title,subtitle,fromTracks);
+int get hashCode => Object.hash(runtimeType,displayIndex,start,end,title,subtitle,fromTracks);
 
 @override
 String toString() {
-  return 'Chapter(start: $start, end: $end, title: $title, subtitle: $subtitle, fromTracks: $fromTracks)';
+  return 'Chapter(displayIndex: $displayIndex, start: $start, end: $end, title: $title, subtitle: $subtitle, fromTracks: $fromTracks)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ChapterCopyWith<$Res>  {
   factory $ChapterCopyWith(Chapter value, $Res Function(Chapter) _then) = _$ChapterCopyWithImpl;
 @useResult
 $Res call({
- Duration start, Duration end, String title, String subtitle, bool fromTracks
+ int displayIndex, Duration start, Duration end, String title, String subtitle, bool fromTracks
 });
 
 
@@ -65,9 +65,10 @@ class _$ChapterCopyWithImpl<$Res>
 
 /// Create a copy of Chapter
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? start = null,Object? end = null,Object? title = null,Object? subtitle = null,Object? fromTracks = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? displayIndex = null,Object? start = null,Object? end = null,Object? title = null,Object? subtitle = null,Object? fromTracks = null,}) {
   return _then(_self.copyWith(
-start: null == start ? _self.start : start // ignore: cast_nullable_to_non_nullable
+displayIndex: null == displayIndex ? _self.displayIndex : displayIndex // ignore: cast_nullable_to_non_nullable
+as int,start: null == start ? _self.start : start // ignore: cast_nullable_to_non_nullable
 as Duration,end: null == end ? _self.end : end // ignore: cast_nullable_to_non_nullable
 as Duration,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,subtitle: null == subtitle ? _self.subtitle : subtitle // ignore: cast_nullable_to_non_nullable
@@ -154,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Duration start,  Duration end,  String title,  String subtitle,  bool fromTracks)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int displayIndex,  Duration start,  Duration end,  String title,  String subtitle,  bool fromTracks)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Chapter() when $default != null:
-return $default(_that.start,_that.end,_that.title,_that.subtitle,_that.fromTracks);case _:
+return $default(_that.displayIndex,_that.start,_that.end,_that.title,_that.subtitle,_that.fromTracks);case _:
   return orElse();
 
 }
@@ -175,10 +176,10 @@ return $default(_that.start,_that.end,_that.title,_that.subtitle,_that.fromTrack
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Duration start,  Duration end,  String title,  String subtitle,  bool fromTracks)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int displayIndex,  Duration start,  Duration end,  String title,  String subtitle,  bool fromTracks)  $default,) {final _that = this;
 switch (_that) {
 case _Chapter():
-return $default(_that.start,_that.end,_that.title,_that.subtitle,_that.fromTracks);}
+return $default(_that.displayIndex,_that.start,_that.end,_that.title,_that.subtitle,_that.fromTracks);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -192,10 +193,10 @@ return $default(_that.start,_that.end,_that.title,_that.subtitle,_that.fromTrack
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Duration start,  Duration end,  String title,  String subtitle,  bool fromTracks)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int displayIndex,  Duration start,  Duration end,  String title,  String subtitle,  bool fromTracks)?  $default,) {final _that = this;
 switch (_that) {
 case _Chapter() when $default != null:
-return $default(_that.start,_that.end,_that.title,_that.subtitle,_that.fromTracks);case _:
+return $default(_that.displayIndex,_that.start,_that.end,_that.title,_that.subtitle,_that.fromTracks);case _:
   return null;
 
 }
@@ -207,9 +208,10 @@ return $default(_that.start,_that.end,_that.title,_that.subtitle,_that.fromTrack
 @JsonSerializable()
 
 class _Chapter extends Chapter {
-  const _Chapter({required this.start, required this.end, required this.title, required this.subtitle, this.fromTracks = false}): super._();
+  const _Chapter({required this.displayIndex, required this.start, required this.end, required this.title, required this.subtitle, this.fromTracks = false}): super._();
   factory _Chapter.fromJson(Map<String, dynamic> json) => _$ChapterFromJson(json);
 
+@override final  int displayIndex;
 @override final  Duration start;
 @override final  Duration end;
 @override final  String title;
@@ -229,16 +231,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Chapter&&(identical(other.start, start) || other.start == start)&&(identical(other.end, end) || other.end == end)&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.fromTracks, fromTracks) || other.fromTracks == fromTracks));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Chapter&&(identical(other.displayIndex, displayIndex) || other.displayIndex == displayIndex)&&(identical(other.start, start) || other.start == start)&&(identical(other.end, end) || other.end == end)&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.fromTracks, fromTracks) || other.fromTracks == fromTracks));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,start,end,title,subtitle,fromTracks);
+int get hashCode => Object.hash(runtimeType,displayIndex,start,end,title,subtitle,fromTracks);
 
 @override
 String toString() {
-  return 'Chapter(start: $start, end: $end, title: $title, subtitle: $subtitle, fromTracks: $fromTracks)';
+  return 'Chapter(displayIndex: $displayIndex, start: $start, end: $end, title: $title, subtitle: $subtitle, fromTracks: $fromTracks)';
 }
 
 
@@ -249,7 +251,7 @@ abstract mixin class _$ChapterCopyWith<$Res> implements $ChapterCopyWith<$Res> {
   factory _$ChapterCopyWith(_Chapter value, $Res Function(_Chapter) _then) = __$ChapterCopyWithImpl;
 @override @useResult
 $Res call({
- Duration start, Duration end, String title, String subtitle, bool fromTracks
+ int displayIndex, Duration start, Duration end, String title, String subtitle, bool fromTracks
 });
 
 
@@ -266,9 +268,10 @@ class __$ChapterCopyWithImpl<$Res>
 
 /// Create a copy of Chapter
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? start = null,Object? end = null,Object? title = null,Object? subtitle = null,Object? fromTracks = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? displayIndex = null,Object? start = null,Object? end = null,Object? title = null,Object? subtitle = null,Object? fromTracks = null,}) {
   return _then(_Chapter(
-start: null == start ? _self.start : start // ignore: cast_nullable_to_non_nullable
+displayIndex: null == displayIndex ? _self.displayIndex : displayIndex // ignore: cast_nullable_to_non_nullable
+as int,start: null == start ? _self.start : start // ignore: cast_nullable_to_non_nullable
 as Duration,end: null == end ? _self.end : end // ignore: cast_nullable_to_non_nullable
 as Duration,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,subtitle: null == subtitle ? _self.subtitle : subtitle // ignore: cast_nullable_to_non_nullable

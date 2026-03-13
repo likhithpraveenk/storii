@@ -49,7 +49,7 @@ final class AudioHandlerEventsProvider
 }
 
 String _$audioHandlerEventsHash() =>
-    r'646b8e9b1e7aef9d0f6d35489ecc81c6399d2b38';
+    r'89300f8f2050779248cfb6b4760491979895517a';
 
 @ProviderFor(playbackState)
 final playbackStateProvider = PlaybackStateProvider._();
@@ -88,7 +88,7 @@ final class PlaybackStateProvider
   }
 }
 
-String _$playbackStateHash() => r'fb2b353a97b19a31b8060f60f312aab13ab0cbdd';
+String _$playbackStateHash() => r'bd2f07e833076e09c869c569319f35513f62dadc';
 
 @ProviderFor(processingState)
 final processingStateProvider = ProcessingStateProvider._();
@@ -209,7 +209,7 @@ final class GlobalPositionProvider
   }
 }
 
-String _$globalPositionHash() => r'598efdb37e8712be502e5f96020740f767133aa1';
+String _$globalPositionHash() => r'd6f6086196f78b66be0d2c4dc0b105b7e2cb29f1';
 
 @ProviderFor(chapterPosition)
 final chapterPositionProvider = ChapterPositionProvider._();
@@ -243,7 +243,7 @@ final class ChapterPositionProvider
   }
 }
 
-String _$chapterPositionHash() => r'da8cbb84d7a28f04dffebbed818d5bdd83a9c4e0';
+String _$chapterPositionHash() => r'572c2bf41d91cc4a77c773755ffde9f1e2d4aded';
 
 @ProviderFor(currentChapter)
 final currentChapterProvider = CurrentChapterProvider._();
@@ -277,7 +277,7 @@ final class CurrentChapterProvider
   }
 }
 
-String _$currentChapterHash() => r'b6ccd21565873a361a9816058feb105e329bb8fb';
+String _$currentChapterHash() => r'5f29b93de6cf1b2cda03d22d79909fc58a910d43';
 
 @ProviderFor(totalDuration)
 final totalDurationProvider = TotalDurationProvider._();
@@ -353,7 +353,7 @@ final class AudioPlayerNotifierProvider
 }
 
 String _$audioPlayerNotifierHash() =>
-    r'61eda995a5be852d3a2b3d82e6f2c9186120f684';
+    r'68bafbe772bbca0622590003042eca2a4c00478d';
 
 abstract class _$AudioPlayerNotifier extends $Notifier<AudioPlayerState> {
   AudioPlayerState build();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/theme.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
@@ -76,6 +77,7 @@ class MiniProgressIndicator extends ConsumerWidget {
       value: progress,
       minHeight: 2,
       backgroundColor: Colors.transparent,
+      color: appRedColor,
     );
   }
 }

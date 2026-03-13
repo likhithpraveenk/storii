@@ -20,12 +20,12 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
   fontFamily: json['fontFamily'] as String? ?? 'AtkinsonHyperlegibleNext',
   fontScale: (json['fontScale'] as num?)?.toDouble() ?? 1,
   enableHttpLogs: json['enableHttpLogs'] as bool? ?? false,
-  fastForward: json['fastForward'] == null
+  skipForward: json['skipForward'] == null
       ? const Duration(seconds: 30)
-      : Duration(microseconds: (json['fastForward'] as num).toInt()),
-  rewind: json['rewind'] == null
+      : Duration(microseconds: (json['skipForward'] as num).toInt()),
+  skipBackward: json['skipBackward'] == null
       ? const Duration(seconds: 10)
-      : Duration(microseconds: (json['rewind'] as num).toInt()),
+      : Duration(microseconds: (json['skipBackward'] as num).toInt()),
   speed: (json['speed'] as num?)?.toDouble() ?? 1.0,
   syncInterval: json['syncInterval'] == null
       ? const Duration(seconds: 20)
@@ -43,8 +43,8 @@ Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
       'fontFamily': ?instance.fontFamily,
       'fontScale': instance.fontScale,
       'enableHttpLogs': instance.enableHttpLogs,
-      'fastForward': instance.fastForward.inMicroseconds,
-      'rewind': instance.rewind.inMicroseconds,
+      'skipForward': instance.skipForward.inMicroseconds,
+      'skipBackward': instance.skipBackward.inMicroseconds,
       'speed': instance.speed,
       'syncInterval': instance.syncInterval.inMicroseconds,
     };

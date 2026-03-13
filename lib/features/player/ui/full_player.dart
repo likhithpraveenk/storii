@@ -23,23 +23,13 @@ class FullPlayer extends ConsumerWidget {
     final globalPosition =
         ref.watch(globalPositionProvider).value ?? Duration.zero;
 
-    final currentPosition = globalPosition.toReadableDuration(context);
-    final totalDuration = session.duration;
-    final remainingDuration = (totalDuration - globalPosition)
-        .toReadableDuration(context);
-    final progressValue =
-        (globalPosition.inMilliseconds / totalDuration.inMilliseconds).clamp(
-          0.0,
-          1.0,
-        );
-    final progress = '${(progressValue * 100).toStringAsFixed(1)}%';
+    final currentPosition = globalPosition.toTime();
+    final totalDuration = session.duration.toTime();
 
     return Padding(
-      padding: const .all(16),
+      padding: const .symmetric(horizontal: 16),
       child: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: .center,
-          mainAxisSize: .min,
           children: [
             Text(
               currentChapter?.title ?? session.displayTitle,
@@ -48,13 +38,12 @@ class FullPlayer extends ConsumerWidget {
               maxLines: 1,
               overflow: .ellipsis,
             ),
-            const SizedBox(height: 2),
             Text(
               currentChapter != null
                   ? session.displayTitle
                   : session.displayAuthor,
               style: theme.textTheme.titleSmall?.copyWith(
-                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                color: theme.colorScheme.onSurfaceVariant,
               ),
               textAlign: .center,
               maxLines: 1,
@@ -62,31 +51,40 @@ class FullPlayer extends ConsumerWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '$currentPosition • $progress • $remainingDuration',
+              '$currentPosition / $totalDuration',
               style: theme.textTheme.labelSmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-                fontWeight: .w600,
-                letterSpacing: 0.5,
+                color: theme.colorScheme.onSurfaceVariant.withValues(
+                  alpha: 0.7,
+                ),
+                fontWeight: .bold,
+                letterSpacing: 0.8,
               ),
               textAlign: .center,
             ),
             const BookSlider(),
+            const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: .spaceEvenly,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 IconButton(
                   icon: const Icon(Icons.skip_previous, size: 36),
-                  onPressed: audioHandler.skipToPrevious,
+                  onPressed: currentChapter?.displayIndex == 1
+                      ? null
+                      : audioHandler.skipToPrevious,
                 ),
                 const AppSeekButton(isForward: false),
                 const PlayButton(),
                 const AppSeekButton(isForward: true),
                 IconButton(
                   icon: const Icon(Icons.skip_next, size: 36),
-                  onPressed: audioHandler.skipToNext,
+                  onPressed:
+                      currentChapter?.displayIndex == session.chapters.length
+                      ? null
+                      : audioHandler.skipToNext,
                 ),
               ],
             ),
+            const SizedBox(height: 16),
           ],
         ),
       ),

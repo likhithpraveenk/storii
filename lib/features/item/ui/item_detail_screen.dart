@@ -49,7 +49,7 @@ class ItemDetailScreen extends ConsumerWidget {
                         child: Column(
                           children: [
                             CoverImageTitle(item),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 8),
                             PlayProgressWidget(item),
                           ],
                         ),

@@ -117,17 +117,20 @@ extension DurationPreciseX on Duration {
     final minutes = inMinutes.remainder(60);
     final seconds = inSeconds.remainder(60);
 
-    final hoursString = hours > 0 ? '${hours.toString().padLeft(2, '0')}:' : '';
+    final hoursString = hours > 0 ? '${hours.toString().padLeft(1, '0')}:' : '';
     final minutesString = minutes.toString().padLeft(2, '0');
     final secondsString = seconds.toString().padLeft(2, '0');
     return '$hoursString$minutesString:$secondsString';
   }
 
-  String toReadableDuration(BuildContext context) {
+  String toReadableDuration(BuildContext context, {bool isLeft = false}) {
+    final l = AppLocalizations.of(context)!;
     final hours = inHours;
     final minutes = inMinutes.remainder(60);
 
-    return AppLocalizations.of(context)!.readableDuration(hours, minutes);
+    return isLeft
+        ? l.durationLeft(hours, minutes)
+        : l.readableDuration(hours, minutes);
   }
 }
 

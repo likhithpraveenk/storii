@@ -17,7 +17,7 @@ class NavBar extends ConsumerWidget {
       selectedIndex: currentIndex,
       backgroundColor: scheme.surfaceContainer,
       elevation: 2,
-      labelBehavior: .onlyShowSelected,
+      labelBehavior: .alwaysShow, // TODO: setting
       onDestinationSelected: (index) {
         if (index == currentIndex) return;
         onTap(index);

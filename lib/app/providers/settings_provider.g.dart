@@ -146,11 +146,11 @@ extension AppSettingsSetters on AppSettingsNotifier {
   Future<void> setEnableHttpLogs(bool value) =>
       _save(state.copyWith(enableHttpLogs: value));
 
-  Future<void> setFastForward(Duration value) =>
-      _save(state.copyWith(fastForward: value));
+  Future<void> setSkipForward(Duration value) =>
+      _save(state.copyWith(skipForward: value));
 
-  Future<void> setRewind(Duration value) =>
-      _save(state.copyWith(rewind: value));
+  Future<void> setSkipBackward(Duration value) =>
+      _save(state.copyWith(skipBackward: value));
 
   Future<void> setSpeed(double value) => _save(state.copyWith(speed: value));
 
@@ -194,12 +194,12 @@ final enableHttpLogsProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.enableHttpLogs)),
 );
 
-final fastForwardProvider = Provider<Duration>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.fastForward)),
+final skipForwardProvider = Provider<Duration>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.skipForward)),
 );
 
-final rewindProvider = Provider<Duration>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.rewind)),
+final skipBackwardProvider = Provider<Duration>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.skipBackward)),
 );
 
 final speedProvider = Provider<double>(

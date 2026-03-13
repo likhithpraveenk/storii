@@ -29,8 +29,8 @@ class PlayerSettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
     final l = AppLocalizations.of(context)!;
-    final skipForward = ref.watch(fastForwardProvider);
-    final skipBack = ref.watch(rewindProvider);
+    final skipForward = ref.watch(skipForwardProvider);
+    final skipBackward = ref.watch(skipBackwardProvider);
     final notifier = ref.read(appSettingsProvider.notifier);
 
     const durations = [
@@ -75,7 +75,7 @@ class PlayerSettingsScreen extends ConsumerWidget {
                       groupValue: skipForward,
                       onChanged: (value) {
                         if (value != null) {
-                          notifier.setFastForward(value);
+                          notifier.setSkipForward(value);
                           Navigator.pop(context);
                         }
                       },
@@ -100,7 +100,7 @@ class PlayerSettingsScreen extends ConsumerWidget {
           ListTile(
             leading: const Icon(Icons.fast_rewind),
             title: Text(l.skipBack),
-            subtitle: Text('${skipBack.inSeconds}s'),
+            subtitle: Text('${skipBackward.inSeconds}s'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
               final scaffoldContext = shellScaffoldKey.currentContext;
@@ -117,10 +117,10 @@ class PlayerSettingsScreen extends ConsumerWidget {
                     ),
                     const Divider(height: 0),
                     RadioGroup<Duration>(
-                      groupValue: skipBack,
+                      groupValue: skipBackward,
                       onChanged: (value) {
                         if (value != null) {
-                          notifier.setRewind(value);
+                          notifier.setSkipBackward(value);
                           Navigator.pop(context);
                         }
                       },

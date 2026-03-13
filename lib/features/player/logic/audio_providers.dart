@@ -20,18 +20,12 @@ late final AppAudioHandler audioHandler;
 
 @riverpod
 Stream<AudioHandlerEvent> audioHandlerEvents(Ref ref) {
-  return audioHandler.events.map((event) {
-    // log('caught $event event');
-    return event;
-  });
+  return audioHandler.events;
 }
 
 @riverpod
 Stream<PlaybackState> playbackState(Ref ref) {
-  return audioHandler.playbackState.map((state) {
-    // log('playbackState: $state');
-    return state;
-  });
+  return audioHandler.playbackState;
 }
 
 @riverpod
@@ -50,26 +44,17 @@ bool isPlaying(Ref ref) {
 
 @riverpod
 Stream<Duration> globalPosition(Ref ref) {
-  return audioHandler.positionStream.map((pos) {
-    // log('global position: $pos');
-    return pos;
-  });
+  return audioHandler.positionStream;
 }
 
 @riverpod
 Stream<Duration> chapterPosition(Ref ref) {
-  return audioHandler.chapterPositionStream.map((pos) {
-    // log('chapterPosition: $pos');
-    return pos;
-  });
+  return audioHandler.chapterPositionStream;
 }
 
 @riverpod
 Stream<Chapter?> currentChapter(Ref ref) {
-  return audioHandler.currentChapterStream.map((chapter) {
-    // log('currentChapter: $chapter');
-    return chapter;
-  });
+  return audioHandler.currentChapterStream;
 }
 
 @riverpod
@@ -92,7 +77,12 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
   @override
   AudioPlayerState build() => const AudioPlayerState();
 
-  Future<void> play(String itemId, [String? episodeId]) async {
+  Future<void> play({
+    required String itemId,
+    String? episodeId,
+    int? initialIndex,
+    Duration? initialPosition,
+  }) async {
     state = AudioPlayerState(
       loadingItemId: itemId,
       loadingEpisodeId: episodeId,
@@ -110,7 +100,16 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
           .read(sessionProvider.notifier)
           .create(itemId: itemId, episodeId: episodeId);
 
-      final (int index, Duration position) = session.getIndexAndOffset();
+      final int index;
+      final Duration position;
+
+      if (initialIndex != null && initialPosition != null) {
+        index = initialIndex;
+        position = initialPosition;
+      } else {
+        (index, position) = session.getIndexAndOffset();
+      }
+
       final sources = session.toAudioSources(user.serverUrl, token);
       await audioHandler.setSources(
         sources,
@@ -120,13 +119,12 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
 
       state = const AudioPlayerState();
       await audioHandler.play();
-    } catch (e, st) {
+    } catch (e) {
       final error = AppError.resolve(e);
       LogService.log(
         'playing failed: $error',
         source: 'AudioPlayerNotifier',
         level: .error,
-        stackTrace: st,
       );
       state = const AudioPlayerState();
       throw error;

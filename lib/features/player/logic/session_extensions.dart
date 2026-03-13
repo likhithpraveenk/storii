@@ -16,6 +16,7 @@ extension PlaybackSessionX on PlaybackSession {
       jsonChapters = chapters
           .map(
             (c) => Chapter(
+              displayIndex: c.id + 1,
               start: c.start,
               end: c.end,
               title: c.title,
@@ -28,6 +29,7 @@ extension PlaybackSessionX on PlaybackSession {
           audioTracks
               ?.map(
                 (t) => Chapter(
+                  displayIndex: t.index + 1,
                   start: t.startOffset,
                   end: t.startOffset + t.duration,
                   title: displayTitle,

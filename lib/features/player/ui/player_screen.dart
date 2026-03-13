@@ -39,8 +39,6 @@ class PlayerScreen extends ConsumerWidget {
         : screenHeight * 0.08;
 
     final imgSizeDelta = maxImgSize - imgSizeInMiniPlayer;
-    final imgLeftDelta = targetImgLeft - imgLeftPaddingInMiniPlayer;
-    final imgTopDelta = targetImgTop - imgLeftPaddingInMiniPlayer;
 
     const miniInterval = Interval(0.0, 0.3);
     const fullInterval = Interval(0.6, 1.0);
@@ -56,8 +54,8 @@ class PlayerScreen extends ConsumerWidget {
         final fullOpacity = fullInterval.transform(f);
 
         final imgSize = imgSizeInMiniPlayer + (imgSizeDelta * f);
-        final imgLeft = imgLeftPaddingInMiniPlayer + (imgLeftDelta * f);
-        final imgTop = imgLeftPaddingInMiniPlayer + (imgTopDelta * f);
+        final imgLeft = targetImgLeft * f;
+        final imgTop = targetImgTop * f;
 
         return Stack(
           children: [

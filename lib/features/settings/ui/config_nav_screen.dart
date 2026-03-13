@@ -79,7 +79,6 @@ class _ConfigNavScreenState extends ConsumerState<ConfigNavScreen> {
           },
           icon: const Icon(Icons.arrow_back),
         ),
-
         title: Text(
           AppLocalizations.of(context)!.configNav,
           style: Theme.of(context).textTheme.titleLarge,

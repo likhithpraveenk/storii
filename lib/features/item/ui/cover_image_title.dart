@@ -8,6 +8,7 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/dashed_underline.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
 
@@ -63,13 +64,15 @@ class CoverImageTitle extends StatelessWidget {
                         id: item.id,
                         type: .item,
                         updatedAt: item.updatedAt,
+                        isRaw: true,
                       ),
                     ),
                   ),
                 ),
-                MarqueeText(
+                Text(
                   item.title ?? l.noTitle,
                   style: theme.textTheme.headlineMedium,
+                  textAlign: .center,
                 ),
                 if (item.mediaType == .book) ...[
                   Wrap(
@@ -103,6 +106,20 @@ class CoverImageTitle extends StatelessWidget {
                     }).toList(),
                   ),
                   const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: .center,
+                    spacing: 6,
+                    children: [
+                      const Icon(Icons.schedule, size: 16),
+                      Text(
+                        item.duration.toReadableDuration(context),
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: .w600,
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
                 if (item.mediaType == .podcast && item.authorName != null)
                   MarqueeText(

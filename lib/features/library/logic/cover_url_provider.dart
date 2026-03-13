@@ -27,7 +27,7 @@ String? coverUrl(
           if (updatedAt != null)
             'ts': updatedAt.millisecondsSinceEpoch.toString(),
           if (raw) 'raw': '1',
-          if (width != null) 'width': '$width',
+          if (!raw && width != null) 'width': '$width',
         },
       )
       .toString();

@@ -443,21 +443,21 @@ class AppLocalizationsEn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       hours,
       locale: localeName,
-      other: '${hours}hr ',
+      other: '${hours}h ',
       zero: '',
     );
-    return '$_temp0${minutes}min';
+    return '$_temp0${minutes}m';
   }
 
   @override
-  String durationRemaining(int hours, int minutes) {
+  String durationLeft(int hours, int minutes) {
     String _temp0 = intl.Intl.pluralLogic(
       hours,
       locale: localeName,
-      other: '${hours}hr ',
+      other: '${hours}h ',
       zero: '',
     );
-    return '$_temp0${minutes}min remaining';
+    return '$_temp0${minutes}m left';
   }
 
   @override

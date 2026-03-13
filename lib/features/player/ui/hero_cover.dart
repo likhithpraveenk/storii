@@ -21,7 +21,7 @@ class HeroCover extends ConsumerWidget {
       borderRadius: .circular(imageRadius),
       clipBehavior: .hardEdge,
       child: session != null
-          ? ImageWidget(id: session.libraryItemId, type: .item)
+          ? ImageWidget(id: session.libraryItemId, type: .item, isRaw: true)
           : const PlaceholderImage(),
     );
   }

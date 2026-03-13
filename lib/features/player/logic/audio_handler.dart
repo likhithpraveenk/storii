@@ -14,13 +14,13 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final _player = AudioPlayer();
   PositionResolver _resolver = PositionResolver.empty;
 
-  final Duration Function() getFastForward;
-  final Duration Function() getRewind;
+  final Duration Function() getSkipForward;
+  final Duration Function() getSkipBackward;
 
   AppAudioHandler({
     required double speed,
-    required this.getFastForward,
-    required this.getRewind,
+    required this.getSkipForward,
+    required this.getSkipBackward,
   }) {
     _player.playbackEventStream.listen(_broadcastState, onError: logError);
     setSpeed(speed);
@@ -136,7 +136,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     _player.currentIndexStream.startWith(_player.currentIndex ?? 0),
     _player.positionStream,
     (index, position) => _resolver.chapterPositionFromTrack(index, position),
-  ).throttleTime(const Duration(milliseconds: 200));
+  );
 
   Stream<Chapter?> get currentChapterStream => playbackState.map(
     (state) => state.queueIndex == null
@@ -204,10 +204,10 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   @override
-  Future<void> fastForward() => _seekRelative(getFastForward());
+  Future<void> fastForward() => _seekRelative(getSkipForward());
 
   @override
-  Future<void> rewind() => _seekRelative(getRewind());
+  Future<void> rewind() => _seekRelative(getSkipBackward());
 
   Future<void> _seekRelative(Duration offset) async {
     final currentPosition = playbackState.value.position;

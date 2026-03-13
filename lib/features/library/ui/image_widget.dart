@@ -13,17 +13,25 @@ class ImageWidget extends ConsumerWidget {
     required this.id,
     required this.type,
     this.updatedAt,
+    this.isRaw = false,
   });
 
   final String id;
   final CoverType type;
   final DateTime? updatedAt;
+  final bool isRaw;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context)!;
     final coverUrl = ref.watch(
-      coverUrlProvider(id, type: type, updatedAt: updatedAt, width: 600),
+      coverUrlProvider(
+        id,
+        type: type,
+        updatedAt: updatedAt,
+        width: 400,
+        raw: isRaw,
+      ),
     );
     if (coverUrl == null) {
       return PlaceholderImage(label: l.noImage);

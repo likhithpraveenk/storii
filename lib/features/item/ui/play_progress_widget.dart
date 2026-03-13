@@ -6,6 +6,8 @@ import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
@@ -30,6 +32,12 @@ class PlayProgressWidget extends ConsumerWidget {
     // TODO: invalidate when socket event 'user_updated'
     final mediaProgress = ref.watch(mediaProgressProvider(item.id)).value;
     final progress = mediaProgress?.progress ?? 0.0;
+    final remaining =
+        (item.duration -
+                (mediaProgress?.currentTime ??
+                    session?.currentTime ??
+                    Duration.zero))
+            .toReadableDuration(context, isLeft: true);
 
     return Column(
       crossAxisAlignment: .stretch,
@@ -42,7 +50,9 @@ class PlayProgressWidget extends ConsumerWidget {
                   ? await audioHandler.pause()
                   : await audioHandler.play();
             } else {
-              await ref.read(audioPlayerProvider.notifier).play(item.id);
+              await ref
+                  .read(audioPlayerProvider.notifier)
+                  .play(itemId: item.id);
             }
           },
           icon: Icon(
@@ -53,7 +63,7 @@ class PlayProgressWidget extends ConsumerWidget {
               : progress == 1.0
               ? l.replay
               : progress > 0
-              ? '${l.resume} · ${_formatRemaining(context, mediaProgress!)}'
+              ? '${l.resume} • $remaining'
               : l.play,
         ),
         if (progress > 0) ...[
@@ -145,15 +155,6 @@ class PlayProgressWidget extends ConsumerWidget {
   }
 }
 
-String _formatRemaining(BuildContext context, MediaProgress mediaProgress) {
-  final l = AppLocalizations.of(context)!;
-  final remaining = mediaProgress.duration - mediaProgress.currentTime;
-  return l.durationRemaining(
-    remaining.inHours,
-    remaining.inMinutes.remainder(60),
-  );
-}
-
 class _ProgressBar extends StatelessWidget {
   const _ProgressBar({required this.progress});
   final double progress;
@@ -172,8 +173,16 @@ class _ProgressBar extends StatelessWidget {
           builder: (context, value, _) {
             final barWidth = (totalWidth * value).clamp(0.0, totalWidth);
             final animatedPercent = (value * 100).toStringAsFixed(1);
-            final clampedLeft = (barWidth + 6).clamp(0.0, totalWidth - 48);
-            final isInsideBar = clampedLeft < barWidth;
+
+            const textWidth = 48.0;
+            const padding = 8.0;
+            final isInsideBar = value > 0.7;
+            final clampedLeft = isInsideBar
+                ? (barWidth - textWidth - padding).clamp(padding, totalWidth)
+                : (barWidth + padding).clamp(
+                    0.0,
+                    totalWidth - textWidth - padding,
+                  );
 
             return Stack(
               alignment: .centerLeft,
@@ -184,8 +193,8 @@ class _ProgressBar extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        theme.colorScheme.onPrimary,
-                        theme.colorScheme.primary,
+                        theme.colorScheme.inverseSurface,
+                        theme.colorScheme.primaryFixed,
                       ],
                     ),
                     borderRadius: .circular(kRadius),
@@ -207,7 +216,7 @@ class _ProgressBar extends StatelessWidget {
                       '$animatedPercent%',
                       style: theme.textTheme.labelMedium?.copyWith(
                         color: isInsideBar
-                            ? theme.colorScheme.onPrimary
+                            ? theme.colorScheme.onPrimaryFixed
                             : theme.colorScheme.onSurface,
                         fontWeight: .bold,
                       ),

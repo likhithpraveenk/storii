@@ -146,8 +146,13 @@ class _ChapterTile extends ConsumerWidget {
             confirmLabel: l.confirm,
           );
           if (startSession == true) {
-            await ref.read(audioPlayerProvider.notifier).play(item.id);
-            await audioHandler.skipToQueueItem(index);
+            await ref
+                .read(audioPlayerProvider.notifier)
+                .play(
+                  itemId: item.id,
+                  initialIndex: index,
+                  initialPosition: chapter.start,
+                );
           }
         }
       },
