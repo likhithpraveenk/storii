@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/config/constants.dart';
 
 part 'player_providers.g.dart';
 
@@ -7,7 +8,6 @@ enum PlayerSwipeDirection { left, right }
 enum PlayerViewState { hidden, mini, full }
 
 const velocityThreshold = 100.0;
-const kEpsilon = 0.5;
 
 @riverpod
 class PlayerMode extends _$PlayerMode {

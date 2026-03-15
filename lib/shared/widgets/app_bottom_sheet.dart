@@ -7,7 +7,7 @@ class AppBottomSheet extends StatelessWidget {
     super.key,
     required this.title,
     this.body,
-    required this.confirmLabel,
+    this.confirmLabel = 'Confirm',
     this.confirmIcon,
     this.isDestructive = false,
     this.onConfirm,
@@ -26,7 +26,7 @@ class AppBottomSheet extends StatelessWidget {
     BuildContext context, {
     required String title,
     Widget? body,
-    required String confirmLabel,
+    String? confirmLabel,
     IconData? confirmIcon,
     bool isDestructive = false,
     VoidCallback? onConfirm,
@@ -38,7 +38,7 @@ class AppBottomSheet extends StatelessWidget {
       builder: (_) => AppBottomSheet(
         title: title,
         body: body,
-        confirmLabel: confirmLabel,
+        confirmLabel: confirmLabel ?? 'Confirm',
         confirmIcon: confirmIcon,
         isDestructive: isDestructive,
         onConfirm: onConfirm,

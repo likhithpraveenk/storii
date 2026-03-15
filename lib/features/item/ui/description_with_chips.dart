@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/abs_api/models/filter.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/shared/helpers/helpers.dart';
@@ -48,7 +48,7 @@ class _ExpandableDescriptionWithChipsState
             context.go(AppRoute.library.path);
           },
           visualDensity: .compact,
-          shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+          shape: RoundedRectangleBorder(borderRadius: .circular(kRadius)),
         ),
       ),
       ...widget.tags.map(
@@ -62,7 +62,7 @@ class _ExpandableDescriptionWithChipsState
             context.go(AppRoute.library.path);
           },
           visualDensity: .compact,
-          shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+          shape: RoundedRectangleBorder(borderRadius: .circular(kRadius)),
         ),
       ),
     ];

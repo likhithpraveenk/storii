@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/abs_api/abs_api.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 
 class SeriesChipsList extends ConsumerWidget {
@@ -29,7 +29,7 @@ class SeriesChipsList extends ConsumerWidget {
               label: Text(sLabel, style: textTheme.labelLarge),
               onPressed: () =>
                   context.push(AppRoute.seriesDetail.path, extra: s.id),
-              shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
+              shape: RoundedRectangleBorder(borderRadius: .circular(kRadius)),
             );
           }),
         ],

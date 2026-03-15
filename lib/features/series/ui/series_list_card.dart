@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/abs_api/abs_api.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -28,11 +28,11 @@ class SeriesCardListView extends StatelessWidget {
         aspectRatio: 1,
         child: series.books.isEmpty
             ? ClipRRect(
-                borderRadius: kBorderRadius,
+                borderRadius: .circular(kRadius),
                 child: PlaceholderImage(label: l.noImage),
               )
             : ClipRRect(
-                borderRadius: kBorderRadius,
+                borderRadius: .circular(kRadius),
                 child: ImageWidget(
                   id: series.books.first.id,
                   type: .item,

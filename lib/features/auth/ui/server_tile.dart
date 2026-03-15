@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
 import 'package:storii/features/auth/ui/add_server_sheet.dart';
@@ -34,7 +34,7 @@ class _ServerTileState extends ConsumerState<ServerTile> {
     return Column(
       children: [
         InkWell(
-          borderRadius: kBorderRadius,
+          borderRadius: .circular(kRadius),
           onTap: () => setState(() => _expanded = !_expanded),
           onLongPress: () {
             Clipboard.setData(

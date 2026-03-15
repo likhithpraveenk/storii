@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/abs_api/abs_api.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -47,7 +47,7 @@ class CoverImageTitle extends StatelessWidget {
                   margin: const .only(bottom: 16, top: kToolbarHeight + 16),
                   width: (size.width * 0.6).clamp(240, 360),
                   decoration: BoxDecoration(
-                    borderRadius: kBorderRadius,
+                    borderRadius: .circular(kRadius),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withValues(alpha: 0.25),
@@ -59,7 +59,7 @@ class CoverImageTitle extends StatelessWidget {
                   child: AspectRatio(
                     aspectRatio: 1,
                     child: ClipRRect(
-                      borderRadius: kBorderRadius,
+                      borderRadius: .circular(kRadius),
                       child: ImageWidget(
                         id: item.id,
                         type: .item,

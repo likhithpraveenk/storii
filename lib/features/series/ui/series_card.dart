@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/abs_api/abs_api.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
@@ -71,7 +71,7 @@ class _SeriesBookStack extends StatelessWidget {
       builder: (context, constraints) {
         if (series.books.isEmpty) {
           return ClipRRect(
-            borderRadius: kBorderRadius,
+            borderRadius: .circular(kRadius),
             child: PlaceholderImage(label: l.noImage),
           );
         }
@@ -113,7 +113,7 @@ class _SeriesBookStack extends StatelessWidget {
                         width: bookSize,
                         height: bookSize,
                         decoration: BoxDecoration(
-                          borderRadius: kBorderRadius,
+                          borderRadius: .circular(kRadius),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withValues(
@@ -125,7 +125,7 @@ class _SeriesBookStack extends StatelessWidget {
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius: kBorderRadius,
+                          borderRadius: .circular(kRadius),
                           child: ImageWidget(id: book.id, type: .item),
                         ),
                       ),
@@ -139,7 +139,7 @@ class _SeriesBookStack extends StatelessWidget {
                   height: 3,
                   child: LinearProgressIndicator(
                     value: progress,
-                    borderRadius: kBorderRadius,
+                    borderRadius: .circular(kRadius),
                     backgroundColor: Theme.of(
                       context,
                     ).colorScheme.surface.withValues(alpha: 0.2),

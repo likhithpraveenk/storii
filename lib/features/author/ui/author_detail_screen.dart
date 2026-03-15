@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/features/author/logic/author_provider.dart';
 import 'package:storii/features/author/ui/author_content.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
@@ -44,7 +44,7 @@ class AuthorDetailScreen extends ConsumerWidget {
                   child: AspectRatio(
                     aspectRatio: 4 / 5,
                     child: ClipRRect(
-                      borderRadius: kBorderRadius,
+                      borderRadius: .circular(kRadius),
                       child: ImageWidget(
                         id: author.id,
                         type: .author,

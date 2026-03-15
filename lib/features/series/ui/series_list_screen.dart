@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/series/logic/series_list_provider.dart';
@@ -50,7 +50,6 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
       body: RefreshIndicator(
         onRefresh: () => ref.refresh(rawSeriesListProvider.future),
         child: seriesAsync.when(
-          skipLoadingOnReload: true,
           data: (series) {
             if (series.isEmpty) {
               return SingleChildScrollView(

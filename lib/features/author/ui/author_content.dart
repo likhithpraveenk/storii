@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/abs_api/abs_api.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/features/author/ui/standalone_books.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
@@ -83,7 +83,7 @@ class SectionHeader extends StatelessWidget {
                 padding: const .symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  borderRadius: kBorderRadius,
+                  borderRadius: .circular(kRadius),
                 ),
                 child: Text(
                   count.toString(),

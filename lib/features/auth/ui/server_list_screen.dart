@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/config/app_styles.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
@@ -51,7 +50,7 @@ class ServerListScreen extends ConsumerWidget {
                 child: Material(
                   elevation: 6,
                   color: scheme.secondaryContainer,
-                  borderRadius: kBorderRadius,
+                  borderRadius: .circular(kRadius),
                   child: SizedBox(
                     width: double.infinity,
                     child: serversAsync.when(

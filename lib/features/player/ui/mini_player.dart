@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -26,7 +26,7 @@ class MiniPlayer extends ConsumerWidget {
     final chapterPosition =
         ref.watch(chapterPositionProvider).value ?? Duration.zero;
     final remaining =
-        currentChapter?.duration ?? Duration.zero - chapterPosition;
+        (currentChapter?.duration ?? Duration.zero) - chapterPosition;
     final remainingStr = remaining.toReadableDuration(context, isLeft: true);
 
     return Container(
@@ -41,7 +41,7 @@ class MiniPlayer extends ConsumerWidget {
       child: Row(
         children: [
           const SizedBox(width: imgSizeInMiniPlayer),
-          const SizedBox(width: 4),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
               mainAxisAlignment: .center,

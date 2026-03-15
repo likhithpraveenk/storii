@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
@@ -29,7 +29,7 @@ class UserTile extends ConsumerWidget {
     final isActive = authStatus == .active;
 
     return InkWell(
-      borderRadius: kBorderRadius,
+      borderRadius: .circular(kRadius),
       onTap: () async {
         if (isActive) {
           LogService.log(l.switchingToUser(user.username), level: .info);

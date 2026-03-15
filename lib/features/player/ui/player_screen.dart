@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/features/player/ui/full_player.dart';
@@ -39,6 +39,8 @@ class PlayerScreen extends ConsumerWidget {
         : screenHeight * 0.08;
 
     final imgSizeDelta = maxImgSize - imgSizeInMiniPlayer;
+    final imgLeftDelta = targetImgLeft - imgLeftPaddingInMiniPlayer;
+    final imgTopDelta = targetImgTop - imgLeftPaddingInMiniPlayer;
 
     const miniInterval = Interval(0.0, 0.3);
     const fullInterval = Interval(0.6, 1.0);
@@ -54,8 +56,8 @@ class PlayerScreen extends ConsumerWidget {
         final fullOpacity = fullInterval.transform(f);
 
         final imgSize = imgSizeInMiniPlayer + (imgSizeDelta * f);
-        final imgLeft = targetImgLeft * f;
-        final imgTop = targetImgTop * f;
+        final imgLeft = imgLeftPaddingInMiniPlayer + (imgLeftDelta * f);
+        final imgTop = imgLeftPaddingInMiniPlayer + (imgTopDelta * f);
 
         return Stack(
           children: [

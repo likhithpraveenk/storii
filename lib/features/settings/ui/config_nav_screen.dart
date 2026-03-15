@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
+import 'package:storii/shared/widgets/marquee_text.dart';
 
 class ConfigNavTile extends StatelessWidget {
   const ConfigNavTile({super.key});
@@ -79,7 +80,7 @@ class _ConfigNavScreenState extends ConsumerState<ConfigNavScreen> {
           },
           icon: const Icon(Icons.arrow_back),
         ),
-        title: Text(
+        title: MarqueeText(
           AppLocalizations.of(context)!.configNav,
           style: Theme.of(context).textTheme.titleLarge,
         ),
@@ -119,7 +120,7 @@ class _ConfigNavScreenState extends ConsumerState<ConfigNavScreen> {
               color: isEnabled
                   ? scheme.surfaceContainerHighest.withValues(alpha: 0.5)
                   : scheme.surface.withValues(alpha: 0.3),
-              borderRadius: kBorderRadius,
+              borderRadius: .circular(kRadius),
               border: Border.all(
                 color: isEnabled
                     ? scheme.outlineVariant.withValues(alpha: 0.5)

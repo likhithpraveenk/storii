@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/abs_api/abs_api.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -33,7 +33,7 @@ class LibraryItemCard extends ConsumerWidget {
           AspectRatio(
             aspectRatio: 1,
             child: ClipRRect(
-              borderRadius: kBorderRadius,
+              borderRadius: .circular(kRadius),
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -57,7 +57,7 @@ class LibraryItemCard extends ConsumerWidget {
                         height: 3,
                         child: LinearProgressIndicator(
                           value: item.progress,
-                          borderRadius: kBorderRadius,
+                          borderRadius: .circular(kRadius),
                           backgroundColor: scheme.surface.withValues(
                             alpha: 0.2,
                           ),

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/app_styles.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/widgets/placeholder_image.dart';
