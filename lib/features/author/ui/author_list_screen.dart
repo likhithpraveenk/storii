@@ -45,9 +45,9 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
         actions: const [SortButton(.authors), DisplayButton(.authors)],
       ),
       body: RefreshIndicator(
-        onRefresh: () {
+        onRefresh: () async {
           ref.invalidate(libraryFiltersProvider(.authors));
-          return ref.refresh(authorsListProvider.future);
+          ref.invalidate(authorsListProvider);
         },
         child: authorsAsync.when(
           data: (authors) {

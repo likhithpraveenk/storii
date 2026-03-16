@@ -46,7 +46,9 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () => ref.refresh(rawLibraryItemsProvider.future),
+        onRefresh: () async {
+          ref.invalidate(rawLibraryItemsProvider);
+        },
         child: itemsAsync.when(
           data: (items) {
             if (items.isEmpty) {

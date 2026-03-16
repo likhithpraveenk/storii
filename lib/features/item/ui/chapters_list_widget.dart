@@ -42,7 +42,10 @@ class _ChaptersListWidgetState extends State<ChaptersListWidget> {
               mainAxisAlignment: .spaceBetween,
               children: [
                 Expanded(
-                  child: Text(l.chapters, style: theme.textTheme.titleLarge),
+                  child: Text(
+                    l.chapters,
+                    style: theme.textTheme.labelLarge?.copyWith(fontSize: 20),
+                  ),
                 ),
                 Text(
                   '${widget.item.chapters.length}',
@@ -72,10 +75,11 @@ class _ChaptersListWidgetState extends State<ChaptersListWidget> {
                   itemCount: widget.item.chapters.length,
                   itemBuilder: (context, index) {
                     final chapter = widget.item.chapters[index];
-                    return _ChapterTile(
+                    return ChapterTile(
                       index: index,
-                      item: widget.item,
+                      itemId: widget.item.id,
                       chapter: chapter,
+                      bookTitle: widget.item.title,
                     );
                   },
                 ),
@@ -85,15 +89,18 @@ class _ChaptersListWidgetState extends State<ChaptersListWidget> {
   }
 }
 
-class _ChapterTile extends ConsumerWidget {
-  const _ChapterTile({
+class ChapterTile extends ConsumerWidget {
+  const ChapterTile({
+    super.key,
     required this.index,
-    required this.item,
+    required this.itemId,
     required this.chapter,
+    this.bookTitle,
   });
 
   final int index;
-  final LibraryItem item;
+  final String itemId;
+  final String? bookTitle;
   final BookChapter chapter;
 
   @override
@@ -105,57 +112,98 @@ class _ChapterTile extends ConsumerWidget {
     final currentChapter = ref.watch(currentChapterProvider).value;
 
     final isCurrentItemPlaying =
-        session != null && session.libraryItemId == item.id;
+        session != null && session.libraryItemId == itemId;
 
     final isCurrentChapterPlaying =
         isCurrentItemPlaying && currentChapter?.start == chapter.start;
 
     final chapterDuration = chapter.end - chapter.start;
 
-    return ListTile(
-      leading: isCurrentChapterPlaying ? const PulsingDot() : null,
-      title: Text(
-        chapter.title,
-        maxLines: 1,
-        overflow: .ellipsis,
-        style: theme.textTheme.titleSmall,
-      ),
-      trailing: Text(
-        chapter.start.toTime(),
-        style: theme.textTheme.labelMedium,
-      ),
-      subtitle: Text(
-        chapterDuration.toReadableDuration(context),
-        style: theme.textTheme.bodySmall,
-      ),
+    return InkWell(
+      borderRadius: .circular(kRadius),
       onTap: () async {
         if (isCurrentItemPlaying) {
           await audioHandler.skipToQueueItem(index);
+          //! TODO: fix precision for chapter duration
         } else {
           final startSession = await AppBottomSheet.show(
             context,
             title: l.startPlayback,
             body: Row(
               children: [
-                Expanded(child: Text(item.title ?? l.noTitle)),
+                Expanded(child: Text(bookTitle ?? l.noTitle)),
                 const Icon(Icons.arrow_forward, size: 12),
                 const SizedBox(width: 8),
                 Text(chapter.start.toTime()),
               ],
             ),
-            confirmLabel: l.confirm,
+            primaryActionLabel: l.confirm,
           );
           if (startSession == true) {
             await ref
                 .read(audioPlayerProvider.notifier)
                 .play(
-                  itemId: item.id,
+                  itemId: itemId,
                   initialIndex: index,
                   initialPosition: chapter.start,
                 );
           }
         }
       },
+      child: Container(
+        padding: const .symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          color: isCurrentChapterPlaying
+              ? theme.colorScheme.primaryContainer.withValues(alpha: 0.08)
+              : null,
+          borderRadius: .circular(kRadius),
+        ),
+        child: Row(
+          crossAxisAlignment: .start,
+          children: [
+            Container(
+              alignment: .center,
+              width: 40,
+              child: isCurrentChapterPlaying
+                  ? const PulsingDot()
+                  : Text(
+                      (index + 1).toString().padLeft(2, '0'),
+                      style: theme.textTheme.labelSmall,
+                    ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: .start,
+                mainAxisSize: .min,
+                children: [
+                  Text(
+                    chapter.title,
+                    maxLines: 2,
+                    overflow: .ellipsis,
+                    style: theme.textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    chapterDuration.toReadableDuration(context),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const .symmetric(horizontal: 12),
+              child: Text(
+                chapter.start.toTime(),
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

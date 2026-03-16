@@ -60,24 +60,17 @@ class AboutScreen extends ConsumerWidget {
                 ListTile(
                   title: Text(l.licenses),
                   leading: const Icon(Icons.gavel_outlined),
-                  onTap: () => showLicensePage(context: context),
+                  onTap: () => showLicensePage(
+                    context: context,
+                    applicationName: appName,
+                    applicationLegalese: l.licensedUnder,
+                    applicationVersion: '${packageInfo?.version}',
+                  ),
                 ),
                 ListTile(
                   title: Text(l.sourceCode),
                   leading: const Icon(Icons.open_in_new),
                   onTap: () => _launchUrl(context),
-                ),
-                const SizedBox(height: 8),
-                Padding(
-                  padding: const .symmetric(horizontal: 16),
-                  child: Text(
-                    l.licensedUnder,
-                    style: textTheme.titleSmall?.copyWith(
-                      color: scheme.onSurfaceVariant,
-                      fontWeight: .w500,
-                    ),
-                    textAlign: .center,
-                  ),
                 ),
               ],
             ),

@@ -1,6 +1,12 @@
 # Storii
 
-A flutter client for audiobookshelf
+A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf) focused on simple UX, and maintainable architecture.
+
+## Features
+
+- Audiobook playback and sync with server
+- browse library, series and authors with sort & filters
+- multi-user and multi-server support
 
 ## Contributing
 

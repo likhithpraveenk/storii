@@ -48,7 +48,9 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () => ref.refresh(rawSeriesListProvider.future),
+        onRefresh: () async {
+          ref.invalidate(rawSeriesListProvider);
+        },
         child: seriesAsync.when(
           data: (series) {
             if (series.isEmpty) {

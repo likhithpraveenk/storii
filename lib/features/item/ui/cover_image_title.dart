@@ -21,12 +21,13 @@ class CoverImageTitle extends StatelessWidget {
     final l = AppLocalizations.of(context)!;
     final size = MediaQuery.sizeOf(context);
     final theme = Theme.of(context);
+    final orientation = MediaQuery.orientationOf(context);
 
     return Stack(
       children: [
         Material(
           child: AspectRatio(
-            aspectRatio: 1,
+            aspectRatio: orientation == .landscape ? 1.6 : 1,
             child: ImageFiltered(
               imageFilter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
               child: ImageWidget(

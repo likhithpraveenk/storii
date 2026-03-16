@@ -104,6 +104,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       final Duration position;
 
       if (initialIndex != null && initialPosition != null) {
+        //! TODO: not respecting initial positions
         index = initialIndex;
         position = initialPosition;
       } else {
