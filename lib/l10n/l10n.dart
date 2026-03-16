@@ -940,6 +940,12 @@ abstract class AppLocalizations {
   /// **'{hours, plural, =0{} other{{hours}h }}{minutes}m'**
   String readableDuration(int hours, int minutes);
 
+  /// No description provided for @readableDurationFull.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours, plural, =0{} other{{hours}h }}{minutes}m {seconds}s'**
+  String readableDurationFull(int hours, int minutes, int seconds);
+
   /// No description provided for @durationLeft.
   ///
   /// In en, this message translates to:
@@ -1029,6 +1035,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Start playback'**
   String get startPlayback;
+
+  /// No description provided for @playbackSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Playback speed'**
+  String get playbackSpeed;
+
+  /// No description provided for @sleepTimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep timer'**
+  String get sleepTimer;
+
+  /// No description provided for @cancelTimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel timer'**
+  String get cancelTimer;
+
+  /// No description provided for @timeMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} min'**
+  String timeMinutes(int time);
 }
 
 class _AppLocalizationsDelegate

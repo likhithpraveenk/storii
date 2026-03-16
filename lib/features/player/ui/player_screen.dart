@@ -66,7 +66,7 @@ class PlayerScreen extends ConsumerWidget {
             ),
             if (f > 0.5)
               Positioned(
-                top: isLandscape ? 16 : targetImgTop + maxImgSize + 16,
+                top: isLandscape ? 48 : targetImgTop + maxImgSize + 16,
                 left: isLandscape ? screenWidth * 0.5 : 0,
                 bottom: 0,
                 right: 0,

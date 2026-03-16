@@ -450,6 +450,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String readableDurationFull(int hours, int minutes, int seconds) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '${hours}h ',
+      zero: '',
+    );
+    return '$_temp0${minutes}m ${seconds}s';
+  }
+
+  @override
   String durationLeft(int hours, int minutes) {
     String _temp0 = intl.Intl.pluralLogic(
       hours,
@@ -502,4 +513,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get startPlayback => 'Start playback';
+
+  @override
+  String get playbackSpeed => 'Playback speed';
+
+  @override
+  String get sleepTimer => 'Sleep timer';
+
+  @override
+  String get cancelTimer => 'Cancel timer';
+
+  @override
+  String timeMinutes(int time) {
+    return '$time min';
+  }
 }

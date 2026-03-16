@@ -127,6 +127,10 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
 
     return BackButtonListener(
       onBackButtonPressed: () async {
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+          return true;
+        }
         if (height > widget.minHeight) {
           ref.read(playerModeProvider.notifier).toMini();
           return true;

@@ -3,8 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
+import 'package:storii/features/player/ui/chapter_button.dart';
 import 'package:storii/features/player/ui/play_button.dart';
 import 'package:storii/features/player/ui/seek_button.dart';
+import 'package:storii/features/player/ui/sleep_button.dart';
+import 'package:storii/features/player/ui/speed_button.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 class FullPlayer extends ConsumerWidget {
@@ -33,7 +36,7 @@ class FullPlayer extends ConsumerWidget {
           children: [
             Text(
               currentChapter?.title ?? session.displayTitle,
-              style: theme.textTheme.titleLarge,
+              style: theme.textTheme.titleLarge?.copyWith(fontSize: 22),
               textAlign: .center,
               maxLines: 1,
               overflow: .ellipsis,
@@ -82,6 +85,18 @@ class FullPlayer extends ConsumerWidget {
                       ? null
                       : audioHandler.skipToNext,
                 ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: .center,
+              crossAxisAlignment: .start,
+              children: [
+                ChapterButton(session.chapters),
+                const SizedBox(width: 16),
+                const SleepButton(),
+                const SizedBox(width: 16),
+                const SpeedButton(),
               ],
             ),
             const SizedBox(height: 16),

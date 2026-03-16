@@ -7,42 +7,45 @@ class AppBottomSheet extends StatelessWidget {
     super.key,
     required this.title,
     this.body,
-    this.confirmLabel = 'Confirm',
-    this.confirmIcon,
+    this.primaryActionLabel = 'Confirm',
+    this.primaryActionIcon,
     this.isDestructive = false,
-    this.onConfirm,
-    this.showActions = true,
+    this.onPrimaryAction,
+    this.showButtons = true,
   });
 
   final String title;
   final Widget? body;
-  final String confirmLabel;
-  final IconData? confirmIcon;
+  final String primaryActionLabel;
+  final IconData? primaryActionIcon;
   final bool isDestructive;
-  final VoidCallback? onConfirm;
-  final bool showActions;
+  final VoidCallback? onPrimaryAction;
+  final bool showButtons;
 
   static Future<bool?> show(
     BuildContext context, {
     required String title,
     Widget? body,
-    String? confirmLabel,
-    IconData? confirmIcon,
+    String? primaryActionLabel,
+    IconData? primaryActionIcon,
     bool isDestructive = false,
-    VoidCallback? onConfirm,
-    bool showActions = true,
+    VoidCallback? onPrimaryAction,
+    bool showButtons = true,
+    bool isDismissible = true,
   }) {
     return showModalBottomSheet<bool>(
       context: context,
       useSafeArea: true,
+      isScrollControlled: true,
+      isDismissible: isDismissible,
       builder: (_) => AppBottomSheet(
         title: title,
         body: body,
-        confirmLabel: confirmLabel ?? 'Confirm',
-        confirmIcon: confirmIcon,
+        primaryActionLabel: primaryActionLabel ?? 'Confirm',
+        primaryActionIcon: primaryActionIcon,
         isDestructive: isDestructive,
-        onConfirm: onConfirm,
-        showActions: showActions,
+        onPrimaryAction: onPrimaryAction,
+        showButtons: showButtons,
       ),
     );
   }
@@ -50,15 +53,19 @@ class AppBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const .fromLTRB(24, 24, 24, 36),
+      padding: const .all(24),
       child: Column(
         mainAxisSize: .min,
         crossAxisAlignment: .stretch,
         children: [
-          Text(title, style: Theme.of(context).textTheme.titleLarge),
-          const Divider(),
-          if (body != null) ...[const SizedBox(height: 12), body!],
-          if (showActions) ...[
+          Text(
+            title,
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: .w500),
+          ),
+          if (body != null) ...[const SizedBox(height: 16), body!],
+          if (showButtons) ...[
             const SizedBox(height: 24),
             Row(
               children: [
@@ -67,10 +74,10 @@ class AppBottomSheet extends StatelessWidget {
                     child: AppFilledButton(
                       isDestructive: true,
                       onPressed: () {
-                        onConfirm?.call();
+                        onPrimaryAction?.call();
                         Navigator.of(context).pop(true);
                       },
-                      text: confirmLabel,
+                      text: primaryActionLabel,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -91,10 +98,10 @@ class AppBottomSheet extends StatelessWidget {
                   Expanded(
                     child: AppFilledButton(
                       onPressed: () {
-                        onConfirm?.call();
+                        onPrimaryAction?.call();
                         Navigator.of(context).pop(true);
                       },
-                      text: confirmLabel,
+                      text: primaryActionLabel,
                     ),
                   ),
                 ],

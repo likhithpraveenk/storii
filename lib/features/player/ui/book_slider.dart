@@ -46,7 +46,7 @@ class _BookSliderState extends ConsumerState<BookSlider> {
           ),
         ),
         Padding(
-          padding: const .symmetric(horizontal: 24),
+          padding: const .symmetric(horizontal: 12),
           child: Row(
             mainAxisAlignment: .spaceBetween,
             children: [

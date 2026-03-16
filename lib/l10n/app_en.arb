@@ -179,6 +179,20 @@
       }
     }
   },
+  "readableDurationFull": "{hours, plural, =0{} other{{hours}h }}{minutes}m {seconds}s",
+  "@readableDurationFull": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
   "durationLeft": "{hours, plural, =0{} other{{hours}h }}{minutes}m left",
   "@durationLeft": {
     "placeholders": {
@@ -203,5 +217,16 @@
   "playerSettings": "Player Settings",
   "skipForward": "Skip forward",
   "skipBack": "Skip back",
-  "startPlayback": "Start playback"
+  "startPlayback": "Start playback",
+  "playbackSpeed": "Playback speed",
+  "sleepTimer": "Sleep timer",
+  "cancelTimer": "Cancel timer",
+  "timeMinutes": "{time} min",
+  "@timeMinutes": {
+    "placeholders": {
+      "time": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -123,13 +123,20 @@ extension DurationPreciseX on Duration {
     return '$hoursString$minutesString:$secondsString';
   }
 
-  String toReadableDuration(BuildContext context, {bool isLeft = false}) {
+  String toReadableDuration(
+    BuildContext context, {
+    bool isLeft = false,
+    bool showSeconds = false,
+  }) {
     final l = AppLocalizations.of(context)!;
     final hours = inHours;
     final minutes = inMinutes.remainder(60);
+    final seconds = inSeconds.remainder(60);
 
     return isLeft
         ? l.durationLeft(hours, minutes)
+        : showSeconds
+        ? l.readableDurationFull(hours, minutes, seconds)
         : l.readableDuration(hours, minutes);
   }
 }

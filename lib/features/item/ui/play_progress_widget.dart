@@ -78,10 +78,10 @@ class PlayProgressWidget extends ConsumerWidget {
               onPressed: () => AppBottomSheet.show(
                 context,
                 title: 'Download Item?',
-                confirmLabel: l.confirm,
-                confirmIcon: Icons.download,
+                primaryActionLabel: l.confirm,
+                primaryActionIcon: Icons.download,
                 body: const Text('coming soon'),
-                onConfirm: () {},
+                onPrimaryAction: () {},
               ),
               icon: const Icon(Icons.download_outlined),
             ),
@@ -90,9 +90,9 @@ class PlayProgressWidget extends ConsumerWidget {
                 onPressed: () => AppBottomSheet.show(
                   context,
                   title: l.markAsComplete,
-                  confirmLabel: l.confirm,
-                  confirmIcon: Icons.check,
-                  onConfirm: () async {
+                  primaryActionLabel: l.confirm,
+                  primaryActionIcon: Icons.check,
+                  onPrimaryAction: () async {
                     final success = await ref
                         .read(mediaProgressProvider(item.id).notifier)
                         .markComplete();
@@ -122,10 +122,10 @@ class PlayProgressWidget extends ConsumerWidget {
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
-                  confirmLabel: l.remove,
-                  confirmIcon: Icons.delete_outline,
+                  primaryActionLabel: l.remove,
+                  primaryActionIcon: Icons.delete_outline,
                   isDestructive: true,
-                  onConfirm: () async {
+                  onPrimaryAction: () async {
                     final success = await ref
                         .read(
                           mediaProgressProvider(
@@ -194,7 +194,7 @@ class _ProgressBar extends StatelessWidget {
                     gradient: LinearGradient(
                       colors: [
                         theme.colorScheme.inverseSurface,
-                        theme.colorScheme.primaryFixed,
+                        theme.colorScheme.primary,
                       ],
                     ),
                     borderRadius: .circular(kRadius),
@@ -216,7 +216,7 @@ class _ProgressBar extends StatelessWidget {
                       '$animatedPercent%',
                       style: theme.textTheme.labelMedium?.copyWith(
                         color: isInsideBar
-                            ? theme.colorScheme.onPrimaryFixed
+                            ? theme.colorScheme.onPrimary
                             : theme.colorScheme.onSurface,
                         fontWeight: .bold,
                       ),
