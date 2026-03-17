@@ -2,6 +2,17 @@
 
 A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf) focused on simple UX, and maintainable architecture.
 
+## Features
+
+- Audiobook streaming with background playback and progress sync  
+- Multi-user, multi-server support with persistent sessions  
+- Advanced library browsing with filters, sorting, and series grouping  
+- Responsive UI with reusable components across feature modules  
+
+## Demo
+
+[Watch demo](https://youtube.com/shorts/ngYgcCmK-cE)
+
 ## Screenshots
 
 | Library | Server |
@@ -20,15 +31,32 @@ A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf)
 |:---------|:-----------|
 | <img src="assets/screenshots/settings.jpg" width="300" alt="Storii application settings screen"> | <img src="assets/screenshots/appearance.jpg" width="300" alt="Storii appearance and theme settings"> |
 
-## Features
+## Roadmap
 
-- Audiobook playback and sync with server
-- browse library, series and authors with sort & filters
-- multi-user and multi-server support
+- Offline downloads for audiobooks  
+- Podcast support  
+
+## Tech Stack & Architecture
+
+- Flutter (Dart) with feature-based modular architecture
+
+- Riverpod for scalable state management
+
+- Dio-based API layer with interceptors and endpoint abstraction
+
+- Background audio handling with persistent playback state
+
+- Local storage using Hive and secure storage for authentication
 
 ## Contributing
 
 Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a PR.
+
+## Acknowledgements
+
+Adapted and extended from the original [audiobookshelf_api](https://github.com/audiobookshelf-flutter/audiobookshelf_api), which provided the initial API structure.
+Extended by migrating from http to Dio, adding interceptors and improved error handling.
+Full credit to the original contributors for the foundation.
 
 ## License
 
