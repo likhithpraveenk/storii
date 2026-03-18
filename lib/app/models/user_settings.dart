@@ -26,6 +26,8 @@ sealed class UserSettings with _$UserSettings {
     @Default(true) bool showTitleForItem,
 
     @Default(false) bool stackTitleOnImage,
+
+    @Default(NavTarget.home) NavTarget startupNav,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

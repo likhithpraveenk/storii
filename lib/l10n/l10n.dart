@@ -1059,6 +1059,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{time} min'**
   String timeMinutes(int time);
+
+  /// No description provided for @settingsStartupRouteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Start on app open'**
+  String get settingsStartupRouteTitle;
+
+  /// No description provided for @settingsReorderNavTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation tabs'**
+  String get settingsReorderNavTitle;
+
+  /// No description provided for @settingsReorderNavSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder and enable or disable tabs'**
+  String get settingsReorderNavSubtitle;
 }
 
 class _AppLocalizationsDelegate

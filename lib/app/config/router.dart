@@ -59,9 +59,13 @@ final publicRoutes = [
 
 final routerProvider = Provider<GoRouter>((ref) {
   final user = ref.watch(currentUserProvider);
+  String initialRoute = AppRoute.home.path;
+  if (user != null) {
+    initialRoute = ref.read(startupNavProvider).item.route.path;
+  }
 
   return GoRouter(
-    initialLocation: AppRoute.home.path,
+    initialLocation: initialRoute,
     navigatorKey: rootNavigatorKey,
     redirect: (context, state) {
       final isPublic = publicRoutes.contains(state.matchedLocation);

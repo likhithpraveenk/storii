@@ -238,6 +238,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setStackTitleOnImage(bool value) =>
       _save(state.copyWith(stackTitleOnImage: value));
+
+  Future<void> setStartupNav(NavTarget value) =>
+      _save(state.copyWith(startupNav: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -270,4 +273,8 @@ final showTitleForItemProvider = Provider<bool>(
 
 final stackTitleOnImageProvider = Provider<bool>(
   (ref) => ref.watch(userSettingsProvider.select((s) => s.stackTitleOnImage)),
+);
+
+final startupNavProvider = Provider<NavTarget>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.startupNav)),
 );

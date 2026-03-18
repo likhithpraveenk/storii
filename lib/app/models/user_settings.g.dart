@@ -23,6 +23,9 @@ _UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>
       isAuthorsGridView: json['isAuthorsGridView'] as bool? ?? true,
       showTitleForItem: json['showTitleForItem'] as bool? ?? true,
       stackTitleOnImage: json['stackTitleOnImage'] as bool? ?? false,
+      startupNav:
+          $enumDecodeNullable(_$NavTargetEnumMap, json['startupNav']) ??
+          NavTarget.home,
     );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -37,6 +40,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'isAuthorsGridView': instance.isAuthorsGridView,
   'showTitleForItem': instance.showTitleForItem,
   'stackTitleOnImage': instance.stackTitleOnImage,
+  'startupNav': _$NavTargetEnumMap[instance.startupNav]!,
 };
 
 const _$NavTargetEnumMap = {

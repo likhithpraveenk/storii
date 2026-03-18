@@ -527,4 +527,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String timeMinutes(int time) {
     return '$time min';
   }
+
+  @override
+  String get settingsStartupRouteTitle => 'Start on app open';
+
+  @override
+  String get settingsReorderNavTitle => 'Navigation tabs';
+
+  @override
+  String get settingsReorderNavSubtitle => 'Reorder and enable or disable tabs';
 }

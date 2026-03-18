@@ -228,5 +228,8 @@
         "type": "int"
       }
     }
-  }
+  },
+  "settingsStartupRouteTitle": "Start on app open",
+  "settingsReorderNavTitle": "Navigation tabs",
+  "settingsReorderNavSubtitle": "Reorder and enable or disable tabs"
 }
