@@ -16,6 +16,16 @@ class MediaProgressNotifier extends _$MediaProgressNotifier {
       final progress = await ref
           .read(meApiProvider(user))
           .getMediaProgress(libraryItemId: itemId, episodeId: episodeId);
+
+      final socket = await ref.watch(socketApiProvider(user).future);
+      socket.user.onProgressUpdate.listen((event) {
+        if (ref.mounted &&
+            event.data.libraryItemId == itemId &&
+            event.data.episodeId == episodeId) {
+          state = AsyncData(event.data);
+        }
+      });
+
       return progress;
     } on ApiException catch (e) {
       if (e.statusCode == 404) {

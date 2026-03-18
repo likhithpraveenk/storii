@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/auth/logic/user_session_controller.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
 import 'package:storii/features/more/ui/logout_tile.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -59,7 +60,7 @@ class MoreScreen extends ConsumerWidget {
               leading: const Icon(Icons.switch_account),
               title: Text(AppLocalizations.of(context)!.switchAccount),
               onTap: () {
-                ref.read(appSettingsProvider.notifier).setCurrentUser(null);
+                ref.read(userSessionControllerProvider.notifier).switchUser();
               },
             ),
             const AboutTile(),

@@ -36,6 +36,7 @@ class SessionNotifier extends _$SessionNotifier {
 
     await Hive.box<String>(sessionIdBox).put(session.id, session.id);
     state = session;
+    log('session created for ${session.displayTitle}');
     return session;
   }
 

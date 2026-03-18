@@ -21,7 +21,7 @@ class UserSessionController extends _$UserSessionController {
     try {
       await ref.read(serverApiProvider(user)).logout();
       LogService.log('"${user.username}" logged out', level: .info);
-      await _clearLocalSession(user.id);
+      await _clearLocalSession(user);
     } catch (e, st) {
       LogService.log(
         'Unexpected error during logout for ${user.username}: $e',
@@ -29,7 +29,7 @@ class UserSessionController extends _$UserSessionController {
         level: .error,
         stackTrace: st,
       );
-      await _clearLocalSession(user.id);
+      await _clearLocalSession(user);
     }
     state = .success;
   }
@@ -41,7 +41,7 @@ class UserSessionController extends _$UserSessionController {
         'Forcing logout for user "${user.username}" - $reason',
         level: .info,
       );
-      await _clearLocalSession(user.id);
+      await _clearLocalSession(user);
     } catch (e, st) {
       LogService.log(
         'Unexpected error during force logout for ${user.username}: $e',
@@ -49,13 +49,22 @@ class UserSessionController extends _$UserSessionController {
         level: .error,
         stackTrace: st,
       );
-      await _clearLocalSession(user.id);
+      await _clearLocalSession(user);
     }
     state = .success;
   }
 
-  Future<void> _clearLocalSession(String userId) async {
-    await ref.read(tokenProvider).clearTokens(userId);
+  Future<void> switchUser() async {
+    final user = ref.read(currentUserProvider);
+    if (user != null) {
+      ref.invalidate(apiClientProvider(user));
+    }
     await ref.read(appSettingsProvider.notifier).setCurrentUser(null);
+  }
+
+  Future<void> _clearLocalSession(UserDomain user) async {
+    await ref.read(tokenProvider).clearTokens(user.id);
+    await ref.read(appSettingsProvider.notifier).setCurrentUser(null);
+    ref.invalidate(apiClientProvider(user));
   }
 }

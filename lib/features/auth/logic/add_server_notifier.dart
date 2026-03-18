@@ -39,7 +39,7 @@ class AddServerNotifier extends _$AddServerNotifier {
     } catch (e, st) {
       final error = AppError.resolve(e);
       LogService.log(
-        'Server validation failed: ${url.normalizedUri}',
+        'Server validation failed: ${url.normalizedUri}: $error',
         source: 'AddServerNotifier',
         level: .error,
         stackTrace: st,

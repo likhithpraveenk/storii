@@ -29,7 +29,6 @@ class PlayProgressWidget extends ConsumerWidget {
     final isCurrentItem = session?.libraryItemId == item.id;
     final isPlaying = isCurrentItem && ref.watch(isPlayingProvider);
 
-    // TODO: invalidate when socket event 'user_updated'
     final mediaProgress = ref.watch(mediaProgressProvider(item.id)).value;
     final progress = mediaProgress?.progress ?? 0.0;
     final remaining =

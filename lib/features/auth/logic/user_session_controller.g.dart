@@ -42,7 +42,7 @@ final class UserSessionControllerProvider
 }
 
 String _$userSessionControllerHash() =>
-    r'2473733940c76674f30194c858c773ee41b1aecc';
+    r'5c361ab0cdcdb026b2d9fb88ebf4306da18f131e';
 
 abstract class _$UserSessionController extends $Notifier<UsesSessionState> {
   UsesSessionState build();

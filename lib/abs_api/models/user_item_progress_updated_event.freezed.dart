@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserItemProgressUpdatedEvent {
 
- String get id; MediaProgress get data;
+ String get id; String get sessionId; String get deviceDescription; MediaProgress get data;
 /// Create a copy of UserItemProgressUpdatedEvent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserItemProgressUpdatedEventCopyWith<UserItemProgressUpdatedEvent> get copyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserItemProgressUpdatedEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.data, data) || other.data == data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserItemProgressUpdatedEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.deviceDescription, deviceDescription) || other.deviceDescription == deviceDescription)&&(identical(other.data, data) || other.data == data));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,data);
+int get hashCode => Object.hash(runtimeType,id,sessionId,deviceDescription,data);
 
 @override
 String toString() {
-  return 'UserItemProgressUpdatedEvent(id: $id, data: $data)';
+  return 'UserItemProgressUpdatedEvent(id: $id, sessionId: $sessionId, deviceDescription: $deviceDescription, data: $data)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserItemProgressUpdatedEventCopyWith<$Res>  {
   factory $UserItemProgressUpdatedEventCopyWith(UserItemProgressUpdatedEvent value, $Res Function(UserItemProgressUpdatedEvent) _then) = _$UserItemProgressUpdatedEventCopyWithImpl;
 @useResult
 $Res call({
- String id, MediaProgress data
+ String id, String sessionId, String deviceDescription, MediaProgress data
 });
 
 
@@ -65,9 +65,11 @@ class _$UserItemProgressUpdatedEventCopyWithImpl<$Res>
 
 /// Create a copy of UserItemProgressUpdatedEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? data = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? sessionId = null,Object? deviceDescription = null,Object? data = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,sessionId: null == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
+as String,deviceDescription: null == deviceDescription ? _self.deviceDescription : deviceDescription // ignore: cast_nullable_to_non_nullable
 as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as MediaProgress,
   ));
@@ -163,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  MediaProgress data)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String sessionId,  String deviceDescription,  MediaProgress data)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserItemProgressUpdatedEvent() when $default != null:
-return $default(_that.id,_that.data);case _:
+return $default(_that.id,_that.sessionId,_that.deviceDescription,_that.data);case _:
   return orElse();
 
 }
@@ -184,10 +186,10 @@ return $default(_that.id,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  MediaProgress data)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String sessionId,  String deviceDescription,  MediaProgress data)  $default,) {final _that = this;
 switch (_that) {
 case _UserItemProgressUpdatedEvent():
-return $default(_that.id,_that.data);case _:
+return $default(_that.id,_that.sessionId,_that.deviceDescription,_that.data);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +206,10 @@ return $default(_that.id,_that.data);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  MediaProgress data)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String sessionId,  String deviceDescription,  MediaProgress data)?  $default,) {final _that = this;
 switch (_that) {
 case _UserItemProgressUpdatedEvent() when $default != null:
-return $default(_that.id,_that.data);case _:
+return $default(_that.id,_that.sessionId,_that.deviceDescription,_that.data);case _:
   return null;
 
 }
@@ -219,10 +221,12 @@ return $default(_that.id,_that.data);case _:
 @JsonSerializable()
 
 class _UserItemProgressUpdatedEvent implements UserItemProgressUpdatedEvent {
-  const _UserItemProgressUpdatedEvent({required this.id, required this.data});
+  const _UserItemProgressUpdatedEvent({required this.id, required this.sessionId, required this.deviceDescription, required this.data});
   factory _UserItemProgressUpdatedEvent.fromJson(Map<String, dynamic> json) => _$UserItemProgressUpdatedEventFromJson(json);
 
 @override final  String id;
+@override final  String sessionId;
+@override final  String deviceDescription;
 @override final  MediaProgress data;
 
 /// Create a copy of UserItemProgressUpdatedEvent
@@ -238,16 +242,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserItemProgressUpdatedEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.data, data) || other.data == data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserItemProgressUpdatedEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.deviceDescription, deviceDescription) || other.deviceDescription == deviceDescription)&&(identical(other.data, data) || other.data == data));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,data);
+int get hashCode => Object.hash(runtimeType,id,sessionId,deviceDescription,data);
 
 @override
 String toString() {
-  return 'UserItemProgressUpdatedEvent(id: $id, data: $data)';
+  return 'UserItemProgressUpdatedEvent(id: $id, sessionId: $sessionId, deviceDescription: $deviceDescription, data: $data)';
 }
 
 
@@ -258,7 +262,7 @@ abstract mixin class _$UserItemProgressUpdatedEventCopyWith<$Res> implements $Us
   factory _$UserItemProgressUpdatedEventCopyWith(_UserItemProgressUpdatedEvent value, $Res Function(_UserItemProgressUpdatedEvent) _then) = __$UserItemProgressUpdatedEventCopyWithImpl;
 @override @useResult
 $Res call({
- String id, MediaProgress data
+ String id, String sessionId, String deviceDescription, MediaProgress data
 });
 
 
@@ -275,9 +279,11 @@ class __$UserItemProgressUpdatedEventCopyWithImpl<$Res>
 
 /// Create a copy of UserItemProgressUpdatedEvent
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? data = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? sessionId = null,Object? deviceDescription = null,Object? data = null,}) {
   return _then(_UserItemProgressUpdatedEvent(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,sessionId: null == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
+as String,deviceDescription: null == deviceDescription ? _self.deviceDescription : deviceDescription // ignore: cast_nullable_to_non_nullable
 as String,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as MediaProgress,
   ));

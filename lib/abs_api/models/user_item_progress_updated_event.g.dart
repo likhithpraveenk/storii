@@ -10,9 +10,16 @@ _UserItemProgressUpdatedEvent _$UserItemProgressUpdatedEventFromJson(
   Map<String, dynamic> json,
 ) => _UserItemProgressUpdatedEvent(
   id: json['id'] as String,
+  sessionId: json['sessionId'] as String,
+  deviceDescription: json['deviceDescription'] as String,
   data: MediaProgress.fromJson(json['data'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$UserItemProgressUpdatedEventToJson(
   _UserItemProgressUpdatedEvent instance,
-) => <String, dynamic>{'id': instance.id, 'data': instance.data.toJson()};
+) => <String, dynamic>{
+  'id': instance.id,
+  'sessionId': instance.sessionId,
+  'deviceDescription': instance.deviceDescription,
+  'data': instance.data.toJson(),
+};

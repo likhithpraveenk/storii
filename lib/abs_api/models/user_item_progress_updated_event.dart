@@ -9,6 +9,8 @@ abstract class UserItemProgressUpdatedEvent
     with _$UserItemProgressUpdatedEvent {
   const factory UserItemProgressUpdatedEvent({
     required String id,
+    required String sessionId,
+    required String deviceDescription,
     required MediaProgress data,
   }) = _UserItemProgressUpdatedEvent;
 
