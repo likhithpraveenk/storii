@@ -109,6 +109,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noLibrary => 'No Library';
 
   @override
+  String get libraries => 'Libraries';
+
+  @override
   String get empty => 'Empty';
 
   @override
@@ -536,4 +539,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsReorderNavSubtitle => 'Reorder and enable or disable tabs';
+
+  @override
+  String get sampleText => 'Sphinx of black quartz, judge my vow - 0123456789';
+
+  @override
+  String get addFonts => 'Add fonts';
 }

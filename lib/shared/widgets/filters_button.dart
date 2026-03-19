@@ -8,6 +8,7 @@ import 'package:storii/features/library/logic/filter_data_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class FiltersButton extends ConsumerWidget {
   const FiltersButton(this.screen, {super.key});
@@ -22,11 +23,10 @@ class FiltersButton extends ConsumerWidget {
         final scaffoldContext = shellScaffoldKey.currentContext;
         if (scaffoldContext == null) return;
 
-        showModalBottomSheet(
-          context: scaffoldContext,
-          isScrollControlled: true,
-          useSafeArea: true,
-          builder: (context) => Consumer(
+        AppBottomSheet.show(
+          scaffoldContext,
+          title: AppLocalizations.of(context)!.filter,
+          body: Consumer(
             builder: (context, ref, _) {
               final filterState = ref.watch(libraryFiltersProvider(screen));
               final filterData = ref.watch(filterDataProvider);
@@ -41,19 +41,12 @@ class FiltersButton extends ConsumerWidget {
                       .mediaType ??
                   MediaType.book;
 
-              return DraggableScrollableSheet(
-                minChildSize: 0.1,
-                expand: false,
-                builder: (context, scrollController) {
-                  return _FilterBottomSheet(
-                    screen: screen,
-                    currentFilter: filterState.filter,
-                    notifier: notifier,
-                    mediaContent: mediaType,
-                    filterData: filterData,
-                    controller: scrollController,
-                  );
-                },
+              return _FilterBottomSheet(
+                screen: screen,
+                currentFilter: filterState.filter,
+                notifier: notifier,
+                mediaContent: mediaType,
+                filterData: filterData,
               );
             },
           ),
@@ -70,14 +63,12 @@ class _FilterBottomSheet extends StatefulWidget {
     required this.notifier,
     required this.mediaContent,
     required this.filterData,
-    required this.controller,
   });
   final CurrentScreen screen;
   final Filter currentFilter;
   final LibraryFiltersNotifier notifier;
   final MediaType mediaContent;
   final LibraryFilterData filterData;
-  final ScrollController controller;
 
   @override
   State<_FilterBottomSheet> createState() => _FilterBottomSheetState();
@@ -114,20 +105,8 @@ class _FilterBottomSheetState extends State<_FilterBottomSheet> {
         .where(widget.filterData.hasValuesForGroup)
         .toList();
 
-    return ListView(
-      controller: widget.controller,
+    return Column(
       children: [
-        Padding(
-          padding: const .fromLTRB(24, 24, 24, 12),
-          child: Text(
-            AppLocalizations.of(context)!.filter,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ),
-        const Divider(height: 1),
         ActiveFiltersChips(widget.screen),
         ...groups.map((group) {
           if (group.isImmediate) {

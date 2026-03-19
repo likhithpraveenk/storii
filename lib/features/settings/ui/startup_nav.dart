@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class StartupNavTile extends ConsumerWidget {
   const StartupNavTile({super.key});
@@ -18,51 +19,36 @@ class StartupNavTile extends ConsumerWidget {
       title: Text(l.settingsStartupRouteTitle),
       subtitle: Text(startupNav),
       onTap: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (_) {
-            return Consumer(
-              builder: (context, ref, _) {
-                final navTargets = ref.read(navTargetsProvider);
-                final startup = ref.watch(startupNavProvider);
+        AppBottomSheet.show(
+          context,
+          title: l.settingsStartupRouteTitle,
+          body: Consumer(
+            builder: (context, ref, _) {
+              final navTargets = ref.read(navTargetsProvider);
+              final startup = ref.watch(startupNavProvider);
 
-                return Column(
+              return RadioGroup<NavTarget>(
+                groupValue: startup,
+                onChanged: (target) {
+                  if (target != null) {
+                    ref
+                        .read(userSettingsProvider.notifier)
+                        .setStartupNav(target);
+                  }
+                },
+                child: Column(
                   children: [
-                    Padding(
-                      padding: const .fromLTRB(24, 16, 24, 16),
-                      child: Text(
-                        l.settingsStartupRouteTitle,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.labelLarge?.copyWith(fontSize: 20),
+                    ...navTargets.map(
+                      (nav) => RadioListTile(
+                        value: nav,
+                        title: Text(nav.label(context)),
                       ),
                     ),
-                    RadioGroup<NavTarget>(
-                      groupValue: startup,
-                      onChanged: (target) {
-                        if (target != null) {
-                          ref
-                              .read(userSettingsProvider.notifier)
-                              .setStartupNav(target);
-                        }
-                      },
-                      child: Column(
-                        children: [
-                          ...navTargets.map(
-                            (nav) => RadioListTile(
-                              value: nav,
-                              title: Text(nav.label(context)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 36),
                   ],
-                );
-              },
-            );
-          },
+                ),
+              );
+            },
+          ),
         );
       },
     );

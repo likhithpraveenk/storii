@@ -31,15 +31,22 @@ class FontService {
     if (result == null || result.files.isEmpty) return;
 
     final fontsDir = await _getFontsDirectory();
+    final existing = await _listFontFiles();
+    final existingNames = existing.map((f) => _fontFamily(f.path)).toSet();
+    existingNames.add('AtkinsonHyperlegibleNext');
 
     for (final picked in result.files) {
       if (picked.path == null) continue;
 
       final source = File(picked.path!);
-      final fileName = p.basename(source.path);
-      final target = File(p.join(fontsDir.path, fileName));
+      final fontName = _fontFamily(source.path);
 
+      if (existingNames.contains(fontName)) continue;
+
+      final ext = p.extension(source.path);
+      final target = File(p.join(fontsDir.path, '$fontName$ext'));
       await source.copy(target.path);
+      existingNames.add(fontName);
     }
 
     await loadFonts();
@@ -67,8 +74,7 @@ class FontService {
     final families = <String, List<File>>{};
 
     for (final file in fontFiles) {
-      final fontName = _readFontName(file.path);
-      final familyName = fontName.split('-').first;
+      final familyName = _fontFamily(file.path);
 
       families.putIfAbsent(familyName, () => []).add(file);
     }
@@ -101,9 +107,16 @@ class FontService {
       }),
     );
   }
+
+  static Future<void> clearFonts() async {
+    final fontsDir = await _getFontsDirectory();
+    await fontsDir.delete(recursive: true);
+    await fontsDir.create();
+  }
 }
 
-String _readFontName(String path) {
+String _fontFamily(String path) {
+  String fontName;
   try {
     final font = TtfMetadata(TtfFileSource(path: path));
     final name = font.fontName;
@@ -112,8 +125,9 @@ String _readFontName(String path) {
       throw Exception('Empty font name');
     }
 
-    return name;
+    fontName = name;
   } catch (_) {
-    return p.basenameWithoutExtension(path);
+    fontName = p.basenameWithoutExtension(path);
   }
+  return fontName.split('-').first;
 }

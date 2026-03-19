@@ -5,6 +5,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/user_libraries_provider.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class LibrarySwitcher extends ConsumerWidget {
@@ -45,16 +46,14 @@ class LibrarySwitcher extends ConsumerWidget {
   void _showPicker(String libraryId) {
     final scaffoldContext = shellScaffoldKey.currentContext;
     if (scaffoldContext == null) return;
-    showModalBottomSheet(
-      context: scaffoldContext,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (_) => Consumer(
+    AppBottomSheet.show(
+      scaffoldContext,
+      title: AppLocalizations.of(scaffoldContext)!.libraries,
+      body: Consumer(
         builder: (context, ref, _) {
           final librariesAsync = ref.watch(userLibrariesProvider);
           return librariesAsync.when(
             data: (libs) => Column(
-              mainAxisSize: .min,
               children: [
                 ...libs.map(
                   (lib) => ListTile(

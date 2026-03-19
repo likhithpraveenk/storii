@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/auth/logic/add_user_notifier.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 Future<void> showAddUserSheet(
@@ -10,11 +11,12 @@ Future<void> showAddUserSheet(
   Uri serverUrl, [
   String? username,
 ]) async {
-  await showModalBottomSheet(
-    context: context,
-    useSafeArea: true,
-    isScrollControlled: true,
-    builder: (_) => AddUserSheet(serverUrl, username: username),
+  await AppBottomSheet.show(
+    context,
+    title: AppLocalizations.of(context)!.addUser,
+    subtitle: serverUrl.cleanString,
+    isDismissible: false,
+    body: AddUserSheet(serverUrl, username: username),
   );
 }
 
@@ -55,78 +57,80 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
 
     final focusUsername = widget.username == null || widget.username!.isEmpty;
 
-    return SafeArea(
-      child: Padding(
-        padding: MediaQuery.viewInsetsOf(context).add(const .all(24)),
-        child: AutofillGroup(
-          child: Column(
-            mainAxisSize: .min,
-            children: [
-              Text(
-                '${l10n.serverUrl}: ${widget.serverUrl.cleanString}',
-                style: textTheme.bodyLarge?.copyWith(
-                  color: scheme.onSurface.withValues(alpha: 0.7),
-                ),
+    return Padding(
+      padding: MediaQuery.viewInsetsOf(
+        context,
+      ).add(const .fromLTRB(24, 0, 24, 24)),
+      child: AutofillGroup(
+        child: Column(
+          children: [
+            TextField(
+              controller: _usernameController,
+              enabled: !isLoading,
+              textInputAction: .next,
+              keyboardType: .name,
+              autofillHints: const [AutofillHints.username],
+              autofocus: focusUsername,
+              decoration: InputDecoration(
+                labelText: l10n.username,
+                labelStyle: textTheme.titleSmall,
               ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _usernameController,
-                enabled: !isLoading,
-                textInputAction: .next,
-                keyboardType: .name,
-                autofillHints: const [AutofillHints.username],
-                autofocus: focusUsername,
-                decoration: InputDecoration(
-                  labelText: l10n.username,
-                  labelStyle: textTheme.titleSmall,
-                ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              autofocus: !focusUsername,
+              controller: _passwordController,
+              enabled: !isLoading,
+              textInputAction: .done,
+              autofillHints: const [AutofillHints.password],
+              onSubmitted: (_) => ref
+                  .read(addUserProvider.notifier)
+                  .login(
+                    widget.serverUrl,
+                    _usernameController.text,
+                    _passwordController.text,
+                  ),
+              keyboardType: .visiblePassword,
+              decoration: InputDecoration(
+                labelText: l10n.password,
+                labelStyle: textTheme.titleSmall,
               ),
-              const SizedBox(height: 16),
-              TextField(
-                autofocus: !focusUsername,
-                controller: _passwordController,
-                enabled: !isLoading,
-                textInputAction: .done,
-                autofillHints: const [AutofillHints.password],
-                onSubmitted: (_) => ref
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: AppFilledButton(
+                icon: const Icon(Icons.login),
+                text: l10n.login,
+                loading: isLoading,
+                onPressed: () => ref
                     .read(addUserProvider.notifier)
                     .login(
                       widget.serverUrl,
                       _usernameController.text,
                       _passwordController.text,
                     ),
-                keyboardType: .visiblePassword,
-                decoration: InputDecoration(
-                  labelText: l10n.password,
-                  labelStyle: textTheme.titleSmall,
-                ),
               ),
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: AppTextButton(
+                text: l10n.cancel,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+            if (state.message != null) ...[
               const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: AppFilledButton(
-                  icon: const Icon(Icons.login),
-                  text: l10n.login,
-                  loading: isLoading,
-                  onPressed: () => ref
-                      .read(addUserProvider.notifier)
-                      .login(
-                        widget.serverUrl,
-                        _usernameController.text,
-                        _passwordController.text,
-                      ),
-                ),
+              Text(
+                state.message!,
+                style: textTheme.labelSmall?.copyWith(color: scheme.error),
+                textAlign: .center,
               ),
-              if (state.message != null) ...[
-                const SizedBox(height: 16),
-                Text(
-                  state.message!,
-                  style: textTheme.labelSmall?.copyWith(color: scheme.error),
-                  textAlign: .center,
-                ),
-              ],
             ],
-          ),
+          ],
         ),
       ),
     );

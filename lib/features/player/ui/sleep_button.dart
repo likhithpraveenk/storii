@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/player/logic/sleep_timer_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
 
@@ -12,9 +13,15 @@ class SleepButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sleep = ref.watch(sleepTimerProvider);
+    final l = AppLocalizations.of(context)!;
+
     return IconButton(
       onPressed: () {
-        _showSleepSheet(context);
+        AppBottomSheet.show(
+          context,
+          title: l.sleepTimer,
+          body: const SleepTimerSheet(),
+        );
       },
       icon: sleep == null
           ? const Icon(Icons.bedtime_outlined)
@@ -24,15 +31,6 @@ class SleepButton extends ConsumerWidget {
             ),
     );
   }
-}
-
-void _showSleepSheet(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    useSafeArea: true,
-    isScrollControlled: true,
-    builder: (_) => const SleepTimerSheet(),
-  );
 }
 
 class SleepTimerSheet extends ConsumerStatefulWidget {
@@ -52,16 +50,11 @@ class _SleepTimerSheetState extends ConsumerState<SleepTimerSheet> {
     final l = AppLocalizations.of(context)!;
 
     return Padding(
-      padding: const .all(24),
+      padding: const .symmetric(horizontal: 24),
       child: Column(
         mainAxisSize: .min,
         crossAxisAlignment: .stretch,
         children: [
-          Text(
-            l.sleepTimer,
-            style: textTheme.titleLarge?.copyWith(fontWeight: .w500),
-          ),
-          const SizedBox(height: 24),
           if (sleep != null) ...[
             Center(
               child: Text(

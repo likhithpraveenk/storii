@@ -5,6 +5,8 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
+import 'package:storii/shared/widgets/app_buttons.dart';
 
 class DateTimeFormatTile extends ConsumerWidget {
   const DateTimeFormatTile({super.key});
@@ -21,11 +23,10 @@ class DateTimeFormatTile extends ConsumerWidget {
       onTap: () {
         final scaffoldContext = shellScaffoldKey.currentContext;
         if (scaffoldContext == null) return;
-        showModalBottomSheet(
-          context: scaffoldContext,
-          showDragHandle: true,
-          isScrollControlled: true,
-          builder: (context) => const DateTimeFormatSheet(),
+        AppBottomSheet.show(
+          scaffoldContext,
+          title: AppLocalizations.of(context)!.dateFormat,
+          body: const DateTimeFormatSheet(),
         );
       },
     );
@@ -46,7 +47,6 @@ class _DateTimeFormatSheetState extends ConsumerState<DateTimeFormatSheet> {
 
   final List<String> _presets = const [
     'dd MMM y',
-    'EEEE dd MMM',
     'MM/dd/y',
     'y-MM-dd',
     'dd/MM/yy',
@@ -75,81 +75,93 @@ class _DateTimeFormatSheetState extends ConsumerState<DateTimeFormatSheet> {
     }
   }
 
-  void _saveAndClose(String pattern) {
-    if (_isValid(pattern)) {
-      ref.read(appSettingsProvider.notifier).setDateTimeFormat(pattern);
-      Navigator.pop(context);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    final scheme = Theme.of(context).colorScheme;
     final isValid = _isValid(_previewPattern);
 
-    return SingleChildScrollView(
+    return Padding(
       padding: .only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: RadioGroup(
-        groupValue: _previewPattern,
-        onChanged: (val) => val != null ? _saveAndClose(val) : null,
-        child: Column(
-          mainAxisSize: .min,
-          children: [
-            ..._presets.map(
-              (fmt) => RadioListTile<String>(
-                title: Text(fmt),
-                subtitle: Text(DateFormat(fmt).format(DateTime.now())),
-                value: fmt,
+      child: Column(
+        children: [
+          ..._presets.map(
+            (fmt) => ListTile(
+              title: Text(fmt),
+              trailing: fmt == _previewPattern ? const Icon(Icons.check) : null,
+              onTap: () {
+                setState(() => _previewPattern = fmt);
+              },
+              contentPadding: const .symmetric(horizontal: 24),
+            ),
+          ),
+          const Divider(indent: 24, endIndent: 24),
+          _PreviewBox(isValid: isValid, previewPattern: _previewPattern),
+          Padding(
+            padding: const .all(24),
+            child: TextField(
+              controller: _controller,
+              decoration: InputDecoration(labelText: l.customPattern),
+              onChanged: (val) => setState(() => _previewPattern = val),
+              textInputAction: .done,
+              onSubmitted: (_) {
+                FocusScope.of(context).unfocus();
+              },
+            ),
+          ),
+          // TODO: launch url for learn more
+          // https://api.flutter.dev/flutter/package-intl_intl/DateFormat-class.html
+          Padding(
+            padding: const .fromLTRB(24, 8, 24, 36),
+            child: SizedBox(
+              width: double.infinity,
+              child: AppFilledButton(
+                text: l.save,
+                onPressed: () async {
+                  if (_isValid(_previewPattern)) {
+                    await ref
+                        .read(appSettingsProvider.notifier)
+                        .setDateTimeFormat(_previewPattern);
+                    if (context.mounted) Navigator.pop(context);
+                  }
+                },
               ),
             ),
-            const Divider(indent: 16, endIndent: 16),
-            Padding(
-              padding: const .fromLTRB(16, 8, 16, 32),
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    padding: const .all(16),
-                    decoration: BoxDecoration(
-                      color: isValid
-                          ? scheme.primaryContainer
-                          : scheme.errorContainer,
-                      borderRadius: .circular(kRadius),
-                    ),
-                    child: Text(
-                      isValid
-                          ? DateFormat(_previewPattern).format(DateTime.now())
-                          : l.invalidFormat,
-                      style: TextStyle(
-                        color: isValid
-                            ? scheme.onPrimaryContainer
-                            : scheme.onErrorContainer,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'monospace',
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      labelText: l.customPattern,
-                      hintText: 'e.g. HH:mm:ss',
-                      suffixIcon: isValid
-                          ? IconButton(
-                              icon: const Icon(Icons.save),
-                              onPressed: () => _saveAndClose(_previewPattern),
-                            )
-                          : Icon(Icons.error, color: scheme.error),
-                    ),
-                    onChanged: (val) => setState(() => _previewPattern = val),
-                    onSubmitted: _saveAndClose,
-                  ),
-                ],
-              ),
-            ),
-          ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PreviewBox extends StatelessWidget {
+  const _PreviewBox({required this.isValid, required this.previewPattern});
+
+  final bool isValid;
+  final String previewPattern;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Container(
+      width: double.infinity,
+      padding: const .all(16),
+      margin: const .symmetric(horizontal: 24),
+      decoration: BoxDecoration(
+        color: isValid
+            ? colorScheme.primaryContainer
+            : colorScheme.errorContainer,
+        borderRadius: .circular(kRadius),
+      ),
+      child: Text(
+        isValid
+            ? DateFormat(previewPattern).format(DateTime.now())
+            : AppLocalizations.of(context)!.invalidFormat,
+        style: TextStyle(
+          color: isValid
+              ? colorScheme.onPrimaryContainer
+              : colorScheme.onErrorContainer,
+          fontWeight: .bold,
+          fontFamily: 'monospace',
         ),
       ),
     );

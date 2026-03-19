@@ -46,6 +46,7 @@
   "about": "About",
   "switchAccount": "Switch Account",
   "noLibrary": "No Library",
+  "libraries": "Libraries",
   "empty": "Empty",
   "collapse": "Collapse",
   "retry": "Retry",
@@ -231,5 +232,7 @@
   },
   "settingsStartupRouteTitle": "Start on app open",
   "settingsReorderNavTitle": "Navigation tabs",
-  "settingsReorderNavSubtitle": "Reorder and enable or disable tabs"
+  "settingsReorderNavSubtitle": "Reorder and enable or disable tabs",
+  "sampleText": "Sphinx of black quartz, judge my vow - 0123456789",
+  "addFonts": "Add fonts"
 }

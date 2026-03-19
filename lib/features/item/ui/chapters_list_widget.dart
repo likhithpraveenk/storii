@@ -126,7 +126,7 @@ class ChapterTile extends ConsumerWidget {
           await audioHandler.skipToQueueItem(index);
           //! TODO: fix precision for chapter duration
         } else {
-          final startSession = await AppBottomSheet.show(
+          await AppBottomSheet.show(
             context,
             title: l.startPlayback,
             body: Row(
@@ -137,17 +137,17 @@ class ChapterTile extends ConsumerWidget {
                 Text(chapter.start.toTime()),
               ],
             ),
-            primaryActionLabel: l.confirm,
+            actionLabel: l.confirm,
+            onTap: () async {
+              await ref
+                  .read(audioPlayerProvider.notifier)
+                  .play(
+                    itemId: itemId,
+                    initialIndex: index,
+                    initialPosition: chapter.start,
+                  );
+            },
           );
-          if (startSession == true) {
-            await ref
-                .read(audioPlayerProvider.notifier)
-                .play(
-                  itemId: itemId,
-                  initialIndex: index,
-                  initialPosition: chapter.start,
-                );
-          }
         }
       },
       child: Container(

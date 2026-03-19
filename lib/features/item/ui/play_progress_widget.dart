@@ -73,25 +73,22 @@ class PlayProgressWidget extends ConsumerWidget {
         Row(
           mainAxisAlignment: .spaceEvenly,
           children: [
-            IconButton(
-              onPressed: () => AppBottomSheet.show(
-                context,
-                title: 'Download Item?',
-                primaryActionLabel: l.confirm,
-                primaryActionIcon: Icons.download,
-                body: const Text('coming soon'),
-                onPrimaryAction: () {},
-              ),
-              icon: const Icon(Icons.download_outlined),
-            ),
+            // IconButton(
+            //   onPressed: () => AppBottomSheet.show(
+            //     context,
+            //     title: 'Download Item?',
+            //     body: const Text('coming soon'),
+            //   ),
+            //   icon: const Icon(Icons.download_outlined),
+            // ),
             if (progress != 1.0)
               IconButton(
                 onPressed: () => AppBottomSheet.show(
                   context,
                   title: l.markAsComplete,
-                  primaryActionLabel: l.confirm,
-                  primaryActionIcon: Icons.check,
-                  onPrimaryAction: () async {
+                  actionLabel: l.confirm,
+                  actionIcon: Icons.check,
+                  onTap: () async {
                     final success = await ref
                         .read(mediaProgressProvider(item.id).notifier)
                         .markComplete();
@@ -121,10 +118,10 @@ class PlayProgressWidget extends ConsumerWidget {
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
-                  primaryActionLabel: l.remove,
-                  primaryActionIcon: Icons.delete_outline,
+                  actionLabel: l.remove,
+                  actionIcon: Icons.delete_outline,
                   isDestructive: true,
-                  onPrimaryAction: () async {
+                  onTap: () async {
                     final success = await ref
                         .read(
                           mediaProgressProvider(

@@ -7,6 +7,8 @@ import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/settings/logic/user_fonts.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
+import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 import 'package:storii/storage/local/font_service.dart';
 
@@ -16,103 +18,147 @@ class FontFamilyTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fontFamily = ref.watch(fontFamilyProvider);
+    final l = AppLocalizations.of(context)!;
 
     return ListTile(
-      title: Text(AppLocalizations.of(context)!.fontFamily),
-      subtitle: Text(fontFamily ?? AppLocalizations.of(context)!.system),
+      title: Text(l.fontFamily),
+      subtitle: Text(fontFamily ?? l.system),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
         final scaffoldContext = shellScaffoldKey.currentContext;
         if (scaffoldContext == null) return;
-        showModalBottomSheet(
-          context: scaffoldContext,
-          isScrollControlled: true,
-          showDragHandle: true,
-          builder: (context) => const FontFamilySheet(),
+        AppBottomSheet.show(
+          scaffoldContext,
+          title: l.fontFamily,
+          body: const FontFamilySheet(),
         );
       },
     );
   }
 }
 
-class FontFamilySheet extends ConsumerWidget {
+class FontFamilySheet extends ConsumerStatefulWidget {
   const FontFamilySheet({super.key});
+  @override
+  ConsumerState<FontFamilySheet> createState() => _FontFamilySheetState();
+}
+
+class _FontFamilySheetState extends ConsumerState<FontFamilySheet> {
+  String? _selected;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final currentFont = ref.watch(fontFamilyProvider);
     final userFontsAsync = ref.watch(userFontsProvider);
+    _selected ??= currentFont ?? 'system';
+    final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
 
-    return SingleChildScrollView(
-      child: RadioGroup(
-        groupValue: currentFont ?? 'system',
-        onChanged: (val) {
-          if (val == 'system') {
-            ref.read(appSettingsProvider.notifier).setFontFamily(null);
-          } else {
-            ref.read(appSettingsProvider.notifier).setFontFamily(val);
-          }
-          Navigator.pop(context);
-        },
-        child: Column(
-          children: [
-            ListTile(
-              leading: const Icon(Icons.folder_open),
-              title: const Text('Add Fonts'),
-              contentPadding: const .symmetric(horizontal: 24),
-              horizontalTitleGap: 24,
-              onTap: () async {
+    return Column(
+      children: [
+        Padding(
+          padding: const .fromLTRB(24, 0, 24, 24),
+          child: Text(
+            l.sampleText,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontFamily: _selected,
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+            textAlign: .center,
+          ),
+        ),
+        _FontTile(
+          label: l.system,
+          value: 'system',
+          selected: _selected,
+          onTap: (v) => setState(() => _selected = v),
+        ),
+        _FontTile(
+          label: 'AtkinsonHyperlegibleNext',
+          value: 'AtkinsonHyperlegibleNext',
+          selected: _selected,
+          onTap: (v) => setState(() => _selected = v),
+        ),
+        userFontsAsync.when(
+          data: (fonts) => Column(
+            children: fonts
+                .map(
+                  (font) => _FontTile(
+                    label: font,
+                    value: font,
+                    selected: _selected,
+                    onTap: (v) => setState(() => _selected = v),
+                  ),
+                )
+                .toList(),
+          ),
+          loading: () => const Center(child: RandomWaveform()),
+          error: (_, _) => const SizedBox.shrink(),
+        ),
+        Padding(
+          padding: const .fromLTRB(24, 16, 24, 0),
+          child: SizedBox(
+            width: double.infinity,
+            child: AppFilledButton(
+              text: l.save,
+              onPressed: () async {
+                final val = _selected;
+                await ref
+                    .read(appSettingsProvider.notifier)
+                    .setFontFamily(val == 'system' ? null : val);
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
+              },
+            ),
+          ),
+        ),
+        Padding(
+          padding: const .fromLTRB(24, 8, 24, 24),
+          child: SizedBox(
+            width: double.infinity,
+            child: AppTextButton(
+              text: l.addFonts,
+              icon: const Icon(Icons.folder_open),
+              onPressed: () async {
                 if (Platform.isAndroid) {
                   await Permission.storage.request();
                 }
-
                 await FontService.importFonts();
                 ref.invalidate(userFontsProvider);
               },
             ),
-            const Divider(),
-            RadioListTile<String>(
-              title: Text(
-                AppLocalizations.of(context)!.system,
-                style: const TextStyle(fontSize: 18),
-              ),
-              value: 'system',
-            ),
-            const RadioListTile<String>(
-              title: Text(
-                'AtkinsonHyperlegibleNext',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'AtkinsonHyperlegibleNext',
-                ),
-              ),
-              value: 'AtkinsonHyperlegibleNext',
-            ),
-            userFontsAsync.when(
-              data: (fonts) {
-                if (fonts.isEmpty) {
-                  return const SizedBox.shrink();
-                }
-                return Column(
-                  mainAxisSize: .min,
-                  children: fonts.map((font) {
-                    return RadioListTile<String>(
-                      title: Text(
-                        font,
-                        style: TextStyle(fontSize: 18, fontFamily: font),
-                      ),
-                      value: font,
-                    );
-                  }).toList(),
-                );
-              },
-              loading: () => const Center(child: RandomWaveform()),
-              error: (_, _) => const SizedBox.shrink(),
-            ),
-            const SizedBox(height: 32),
-          ],
+          ),
         ),
+      ],
+    );
+  }
+}
+
+class _FontTile extends StatelessWidget {
+  const _FontTile({
+    required this.label,
+    required this.value,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final String value;
+  final String? selected;
+  final ValueChanged<String> onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return ListTile(
+      title: Text(
+        label,
+        style: theme.textTheme.bodyLarge?.copyWith(fontFamily: value),
       ),
+      trailing: selected == value ? const Icon(Icons.check) : null,
+      contentPadding: const .symmetric(horizontal: 24),
+      onTap: () => onTap(value),
     );
   }
 }

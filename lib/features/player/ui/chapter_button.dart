@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/pulsing_dot.dart';
 
 class ChapterButton extends StatelessWidget {
@@ -15,34 +17,15 @@ class ChapterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.list),
-      onPressed: () => showModalBottomSheet(
-        context: context,
-        useSafeArea: true,
-        isScrollControlled: true,
-        showDragHandle: true,
-        builder: (_) => _ChapterSheet(chapters),
-      ),
-    );
-  }
-}
-
-class _ChapterSheet extends ConsumerWidget {
-  const _ChapterSheet(this.chapters);
-
-  final List<BookChapter> chapters;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.5,
-      minChildSize: 0.3,
-      maxChildSize: 0.9,
-      expand: false,
-      builder: (_, controller) => ListView.builder(
-        padding: const .fromLTRB(4, 0, 4, 36),
-        controller: controller,
-        itemCount: chapters.length,
-        itemBuilder: (_, i) => _ChapterTile(i, chapter: chapters[i]),
+      onPressed: () => AppBottomSheet.show(
+        context,
+        title: AppLocalizations.of(context)!.chapters,
+        body: Column(
+          children: [
+            ...chapters.indexed.map((e) => _ChapterTile(e.$1, chapter: e.$2)),
+            const SizedBox(height: 36),
+          ],
+        ),
       ),
     );
   }

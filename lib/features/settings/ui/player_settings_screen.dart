@@ -5,6 +5,7 @@ import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class PlayerSettingsTile extends ConsumerWidget {
   const PlayerSettingsTile({super.key});
@@ -33,14 +34,7 @@ class PlayerSettingsScreen extends ConsumerWidget {
     final skipBackward = ref.watch(skipBackwardProvider);
     final notifier = ref.read(appSettingsProvider.notifier);
 
-    const durations = [
-      Duration(seconds: 5),
-      Duration(seconds: 10),
-      Duration(seconds: 15),
-      Duration(seconds: 30),
-      Duration(seconds: 45),
-      Duration(seconds: 60),
-    ];
+    const durations = [5, 10, 15, 30, 45, 60];
 
     return Scaffold(
       appBar: AppBar(
@@ -60,39 +54,31 @@ class PlayerSettingsScreen extends ConsumerWidget {
             onTap: () {
               final scaffoldContext = shellScaffoldKey.currentContext;
               if (scaffoldContext == null) return;
-              showModalBottomSheet(
-                context: scaffoldContext,
-                isScrollControlled: true,
-                builder: (context) => Column(
-                  mainAxisSize: .min,
-                  children: [
-                    Padding(
-                      padding: const .fromLTRB(24, 24, 24, 16),
-                      child: Text(l.skipForward, style: textTheme.titleLarge),
-                    ),
-                    const Divider(height: 0),
-                    RadioGroup<Duration>(
-                      groupValue: skipForward,
+              AppBottomSheet.show(
+                scaffoldContext,
+                title: l.skipForward,
+                body: Builder(
+                  builder: (context) {
+                    return RadioGroup<int>(
+                      groupValue: skipForward.inSeconds,
                       onChanged: (value) {
                         if (value != null) {
-                          notifier.setSkipForward(value);
+                          notifier.setSkipForward(Duration(seconds: value));
                           Navigator.pop(context);
                         }
                       },
                       child: Column(
-                        mainAxisSize: .min,
                         children: [
                           ...durations.map((val) {
-                            return RadioListTile<Duration>(
-                              title: Text('${val.inSeconds}s'),
+                            return RadioListTile<int>(
+                              title: Text('${val}s'),
                               value: val,
                             );
                           }),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: 48),
-                  ],
+                    );
+                  },
                 ),
               );
             },
@@ -105,39 +91,31 @@ class PlayerSettingsScreen extends ConsumerWidget {
             onTap: () {
               final scaffoldContext = shellScaffoldKey.currentContext;
               if (scaffoldContext == null) return;
-              showModalBottomSheet(
-                context: scaffoldContext,
-                isScrollControlled: true,
-                builder: (context) => Column(
-                  mainAxisSize: .min,
-                  children: [
-                    Padding(
-                      padding: const .fromLTRB(24, 24, 24, 16),
-                      child: Text(l.skipBack, style: textTheme.titleLarge),
-                    ),
-                    const Divider(height: 0),
-                    RadioGroup<Duration>(
-                      groupValue: skipBackward,
+              AppBottomSheet.show(
+                scaffoldContext,
+                title: l.skipBack,
+                body: Builder(
+                  builder: (context) {
+                    return RadioGroup<int>(
+                      groupValue: skipBackward.inSeconds,
                       onChanged: (value) {
                         if (value != null) {
-                          notifier.setSkipBackward(value);
+                          notifier.setSkipBackward(Duration(seconds: value));
                           Navigator.pop(context);
                         }
                       },
                       child: Column(
-                        mainAxisSize: .min,
                         children: [
                           ...durations.map((val) {
-                            return RadioListTile<Duration>(
-                              title: Text('${val.inSeconds}s'),
+                            return RadioListTile<int>(
+                              title: Text('${val}s'),
                               value: val,
                             );
                           }),
                         ],
                       ),
-                    ),
-                    const SizedBox(height: 48),
-                  ],
+                    );
+                  },
                 ),
               );
             },

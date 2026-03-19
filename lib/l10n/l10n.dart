@@ -286,6 +286,12 @@ abstract class AppLocalizations {
   /// **'No Library'**
   String get noLibrary;
 
+  /// No description provided for @libraries.
+  ///
+  /// In en, this message translates to:
+  /// **'Libraries'**
+  String get libraries;
+
   /// No description provided for @empty.
   ///
   /// In en, this message translates to:
@@ -1077,6 +1083,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reorder and enable or disable tabs'**
   String get settingsReorderNavSubtitle;
+
+  /// No description provided for @sampleText.
+  ///
+  /// In en, this message translates to:
+  /// **'Sphinx of black quartz, judge my vow - 0123456789'**
+  String get sampleText;
+
+  /// No description provided for @addFonts.
+  ///
+  /// In en, this message translates to:
+  /// **'Add fonts'**
+  String get addFonts;
 }
 
 class _AppLocalizationsDelegate

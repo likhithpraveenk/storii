@@ -16,7 +16,6 @@ class SpeedButton extends ConsumerWidget {
         AppBottomSheet.show(
           context,
           title: AppLocalizations.of(context)!.playbackSpeed,
-          showButtons: false,
           body: WheelPicker.fromDoubleRange(
             initialValue: speed,
             min: 0.5,

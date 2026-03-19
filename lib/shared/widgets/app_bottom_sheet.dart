@@ -1,112 +1,120 @@
 import 'package:flutter/material.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 class AppBottomSheet extends StatelessWidget {
   const AppBottomSheet({
     super.key,
     required this.title,
+    this.subtitle,
     this.body,
-    this.primaryActionLabel = 'Confirm',
-    this.primaryActionIcon,
+    this.actionLabel,
+    this.actionIcon,
     this.isDestructive = false,
-    this.onPrimaryAction,
-    this.showButtons = true,
-  });
+    this.onTap,
+  }) : assert((actionLabel == null) == (onTap == null));
 
   final String title;
+  final String? subtitle;
   final Widget? body;
-  final String primaryActionLabel;
-  final IconData? primaryActionIcon;
+  final String? actionLabel;
+  final IconData? actionIcon;
   final bool isDestructive;
-  final VoidCallback? onPrimaryAction;
-  final bool showButtons;
+  final Future<void> Function()? onTap;
 
-  static Future<bool?> show(
+  static Future<void> show(
     BuildContext context, {
     required String title,
+    String? subtitle,
     Widget? body,
-    String? primaryActionLabel,
-    IconData? primaryActionIcon,
+    String? actionLabel,
+    IconData? actionIcon,
     bool isDestructive = false,
-    VoidCallback? onPrimaryAction,
-    bool showButtons = true,
+    Future<void> Function()? onTap,
     bool isDismissible = true,
   }) {
-    return showModalBottomSheet<bool>(
+    return showModalBottomSheet(
       context: context,
       useSafeArea: true,
       isScrollControlled: true,
       isDismissible: isDismissible,
+      shape: const RoundedRectangleBorder(
+        borderRadius: .vertical(top: .circular(24)),
+      ),
       builder: (_) => AppBottomSheet(
         title: title,
+        subtitle: subtitle,
         body: body,
-        primaryActionLabel: primaryActionLabel ?? 'Confirm',
-        primaryActionIcon: primaryActionIcon,
+        actionLabel: actionLabel,
+        actionIcon: actionIcon,
         isDestructive: isDestructive,
-        onPrimaryAction: onPrimaryAction,
-        showButtons: showButtons,
+        onTap: onTap,
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const .all(24),
+    final hasButton = onTap != null;
+    final theme = Theme.of(context);
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: const .vertical(top: .circular(24)),
+        border: Border(
+          top: BorderSide(
+            width: 0.5,
+            strokeAlign: BorderSide.strokeAlignInside,
+            color: theme.colorScheme.primary,
+          ),
+        ),
+      ),
       child: Column(
         mainAxisSize: .min,
         crossAxisAlignment: .stretch,
         children: [
-          Text(
-            title,
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(fontWeight: .w500),
-          ),
-          if (body != null) ...[const SizedBox(height: 16), body!],
-          if (showButtons) ...[
-            const SizedBox(height: 24),
-            Row(
+          Padding(
+            padding: const .fromLTRB(24, 24, 24, 16),
+            child: Column(
               children: [
-                if (isDestructive) ...[
-                  Expanded(
-                    child: AppFilledButton(
-                      isDestructive: true,
-                      onPressed: () {
-                        onPrimaryAction?.call();
-                        Navigator.of(context).pop(true);
-                      },
-                      text: primaryActionLabel,
-                    ),
+                Text(
+                  title,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontSize: 20,
+                    fontWeight: .w600,
+                    letterSpacing: -0.3,
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: AppOutlinedButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      text: AppLocalizations.of(context)!.cancel,
-                    ),
-                  ),
-                ] else ...[
-                  Expanded(
-                    child: AppOutlinedButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      text: AppLocalizations.of(context)!.cancel,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: AppFilledButton(
-                      onPressed: () {
-                        onPrimaryAction?.call();
-                        Navigator.of(context).pop(true);
-                      },
-                      text: primaryActionLabel,
+                  textAlign: .center,
+                ),
+                if (subtitle != null) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    subtitle!,
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant.withValues(
+                        alpha: 0.8,
+                      ),
                     ),
                   ),
                 ],
               ],
             ),
+          ),
+          if (body != null) Flexible(child: SingleChildScrollView(child: body)),
+          const SizedBox(height: 16),
+          if (hasButton) ...[
+            Container(
+              padding: const .symmetric(horizontal: 24),
+              width: double.infinity,
+              child: AppFilledButton(
+                isDestructive: isDestructive,
+                onPressed: () async {
+                  await onTap?.call();
+                  if (context.mounted) Navigator.of(context).pop();
+                },
+                text: actionLabel!,
+              ),
+            ),
+            const SizedBox(height: 24),
           ],
         ],
       ),

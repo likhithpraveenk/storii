@@ -12,6 +12,7 @@ Future<String?> showAddServerSheet(
   return await showModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
+    isDismissible: false,
     builder: (context) => AddServerSheet(server: server),
   );
 }
@@ -52,7 +53,7 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
   Widget build(BuildContext context) {
     final state = ref.watch(addServerProvider);
     final isLoading = state.status == .checking;
-    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
     final l = AppLocalizations.of(context)!;
 
     ref.listen<ServerState>(addServerProvider, (p, n) {
@@ -61,46 +62,75 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
       }
     });
 
-    return SafeArea(
-      child: Padding(
-        padding: MediaQuery.viewInsetsOf(context).add(const .all(24)),
-        child: Column(
-          mainAxisSize: .min,
-          children: [
-            TextField(
-              controller: _urlController,
-              keyboardType: .url,
-              enabled: !isLoading,
-              textInputAction: .done,
-              onSubmitted: (_) => submit(),
-              decoration: InputDecoration(
-                labelText: l.serverUrl,
-                labelStyle: Theme.of(context).textTheme.titleSmall,
-                hintText: 'https://abs.example.com',
-              ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: AppFilledButton(
-                icon: const Icon(Icons.monitor_heart_outlined),
-                text: l.validateServer,
-                loading: isLoading,
-                onPressed: submit,
-              ),
-            ),
-            if (state.message != null) ...[
-              const SizedBox(height: 16),
-              Text(
-                state.message!,
-                style: Theme.of(
-                  context,
-                ).textTheme.labelSmall?.copyWith(color: scheme.error),
-                textAlign: .center,
-              ),
-            ],
-          ],
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const .vertical(top: .circular(24)),
+        border: Border(
+          top: BorderSide(
+            width: 0.5,
+            strokeAlign: BorderSide.strokeAlignInside,
+            color: theme.colorScheme.primary,
+          ),
         ),
+      ),
+      padding: MediaQuery.viewInsetsOf(context).add(const .all(24)),
+      child: Column(
+        mainAxisSize: .min,
+        children: [
+          Text(
+            l.addServer,
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontSize: 20,
+              fontWeight: .w600,
+              letterSpacing: -0.3,
+            ),
+            textAlign: .center,
+          ),
+          const SizedBox(height: 24),
+          TextField(
+            controller: _urlController,
+            keyboardType: .url,
+            enabled: !isLoading,
+            textInputAction: .done,
+            autofocus: true,
+            onSubmitted: (_) => submit(),
+            decoration: InputDecoration(
+              labelText: l.serverUrl,
+              labelStyle: theme.textTheme.titleSmall,
+              hintText: 'https://abs.example.com',
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: AppFilledButton(
+              icon: const Icon(Icons.monitor_heart_outlined),
+              text: l.validateServer,
+              loading: isLoading,
+              onPressed: submit,
+            ),
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            width: double.infinity,
+            child: AppTextButton(
+              text: l.cancel,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+          if (state.message != null) ...[
+            const SizedBox(height: 16),
+            Text(
+              state.message!,
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: theme.colorScheme.error,
+              ),
+              textAlign: .center,
+            ),
+          ],
+        ],
       ),
     );
   }
