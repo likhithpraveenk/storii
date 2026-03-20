@@ -190,7 +190,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pureBlackSubtitle => 'High contrast theme';
 
   @override
-  String get fontScale => 'Font Size';
+  String get fontScale => 'Font Scale';
 
   @override
   String get language => 'Language';

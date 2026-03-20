@@ -115,19 +115,34 @@ class _FontFamilySheetState extends ConsumerState<FontFamilySheet> {
         ),
         Padding(
           padding: const .fromLTRB(24, 8, 24, 24),
-          child: SizedBox(
-            width: double.infinity,
-            child: AppTextButton(
-              text: l.addFonts,
-              icon: const Icon(Icons.folder_open),
-              onPressed: () async {
-                if (Platform.isAndroid) {
-                  await Permission.storage.request();
-                }
-                await FontService.importFonts();
-                ref.invalidate(userFontsProvider);
-              },
-            ),
+          child: Row(
+            children: [
+              Expanded(
+                child: AppOutlinedButton(
+                  text: l.remove,
+                  isDestructive: true,
+                  icon: Icon(Icons.delete, color: theme.colorScheme.error),
+                  onPressed: () async {
+                    await FontService.clearFonts();
+                    ref.invalidate(userFontsProvider);
+                  },
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: AppOutlinedButton(
+                  text: l.addFonts,
+                  icon: const Icon(Icons.folder_open),
+                  onPressed: () async {
+                    if (Platform.isAndroid) {
+                      await Permission.storage.request();
+                    }
+                    await FontService.importFonts();
+                    ref.invalidate(userFontsProvider);
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ],

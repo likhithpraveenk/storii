@@ -69,8 +69,8 @@ class _FontScaleSheetState extends ConsumerState<_FontScaleSheet> {
         Slider(
           value: _scale,
           min: 16,
-          max: 30,
-          divisions: 14,
+          max: 40,
+          divisions: 12,
           label: _display(_scale),
           onChanged: (value) {
             setState(() => _scale = value);

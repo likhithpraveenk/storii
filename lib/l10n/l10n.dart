@@ -451,7 +451,7 @@ abstract class AppLocalizations {
   /// No description provided for @fontScale.
   ///
   /// In en, this message translates to:
-  /// **'Font Size'**
+  /// **'Font Scale'**
   String get fontScale;
 
   /// No description provided for @language.
