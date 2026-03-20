@@ -6,7 +6,7 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart' as init;
 import 'package:storii/app/providers/app_controller.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/app/providers/theme_provider.dart';
+import 'package:storii/features/settings/logic/theme_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/storage/hive/boxes.dart';
 import 'package:storii/storage/local/font_service.dart';

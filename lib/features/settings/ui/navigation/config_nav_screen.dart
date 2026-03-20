@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/features/settings/ui/reorder_nav_tabs.dart';
-import 'package:storii/features/settings/ui/startup_nav.dart';
+import 'package:storii/features/settings/ui/navigation/reorder_nav_tabs.dart';
+import 'package:storii/features/settings/ui/navigation/startup_nav.dart';
 import 'package:storii/l10n/l10n.dart';
 
 class ConfigNavTile extends StatelessWidget {

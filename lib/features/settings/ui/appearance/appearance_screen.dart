@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/settings/ui/font_family.dart';
-import 'package:storii/features/settings/ui/font_scale.dart';
+import 'package:storii/features/settings/ui/appearance/font_family.dart';
+import 'package:storii/features/settings/ui/appearance/font_scale.dart';
 import 'package:storii/l10n/l10n.dart';
 
 class AppearanceTile extends ConsumerWidget {
