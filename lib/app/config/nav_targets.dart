@@ -17,43 +17,36 @@ enum NavTarget {
       route: AppRoute.home,
       icon: Icons.home_outlined,
       selectedIcon: Icons.home,
-      indexInRouter: 0,
     ),
     .library => const NavItem(
       route: AppRoute.library,
       icon: Icons.library_books_outlined,
       selectedIcon: Icons.library_books,
-      indexInRouter: 1,
     ),
     .series => const NavItem(
       route: AppRoute.series,
       icon: Icons.stacked_bar_chart_outlined,
       selectedIcon: Icons.stacked_bar_chart,
-      indexInRouter: 2,
     ),
     .downloads => const NavItem(
       route: AppRoute.downloads,
       icon: Icons.download_outlined,
       selectedIcon: Icons.download,
-      indexInRouter: 3,
     ),
     .authors => const NavItem(
       route: AppRoute.authors,
       icon: Icons.person_outline,
       selectedIcon: Icons.person,
-      indexInRouter: 4,
     ),
     .collections => const NavItem(
       route: AppRoute.collections,
       icon: Icons.collections_bookmark_outlined,
       selectedIcon: Icons.collections_bookmark,
-      indexInRouter: 5,
     ),
     .more => const NavItem(
       route: AppRoute.more,
       icon: Icons.more_horiz_outlined,
       selectedIcon: Icons.more_horiz,
-      indexInRouter: 6,
     ),
   };
 

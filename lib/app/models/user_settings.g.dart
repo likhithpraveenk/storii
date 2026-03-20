@@ -26,6 +26,12 @@ _UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>
       startupNav:
           $enumDecodeNullable(_$NavTargetEnumMap, json['startupNav']) ??
           NavTarget.home,
+      navLabelBehavior:
+          $enumDecodeNullable(
+            _$NavigationDestinationLabelBehaviorEnumMap,
+            json['navLabelBehavior'],
+          ) ??
+          NavigationDestinationLabelBehavior.alwaysShow,
     );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -41,6 +47,8 @@ Map<String, dynamic> _$UserSettingsToJson(
   'showTitleForItem': instance.showTitleForItem,
   'stackTitleOnImage': instance.stackTitleOnImage,
   'startupNav': _$NavTargetEnumMap[instance.startupNav]!,
+  'navLabelBehavior':
+      _$NavigationDestinationLabelBehaviorEnumMap[instance.navLabelBehavior]!,
 };
 
 const _$NavTargetEnumMap = {
@@ -51,4 +59,10 @@ const _$NavTargetEnumMap = {
   NavTarget.collections: 'collections',
   NavTarget.authors: 'authors',
   NavTarget.more: 'more',
+};
+
+const _$NavigationDestinationLabelBehaviorEnumMap = {
+  NavigationDestinationLabelBehavior.alwaysShow: 'alwaysShow',
+  NavigationDestinationLabelBehavior.alwaysHide: 'alwaysHide',
+  NavigationDestinationLabelBehavior.onlyShowSelected: 'onlyShowSelected',
 };

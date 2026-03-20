@@ -241,6 +241,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setStartupNav(NavTarget value) =>
       _save(state.copyWith(startupNav: value));
+
+  Future<void> setNavLabelBehavior(NavigationDestinationLabelBehavior value) =>
+      _save(state.copyWith(navLabelBehavior: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -277,4 +280,8 @@ final stackTitleOnImageProvider = Provider<bool>(
 
 final startupNavProvider = Provider<NavTarget>(
   (ref) => ref.watch(userSettingsProvider.select((s) => s.startupNav)),
+);
+
+final navLabelBehaviorProvider = Provider<NavigationDestinationLabelBehavior>(
+  (ref) => ref.watch(userSettingsProvider.select((s) => s.navLabelBehavior)),
 );

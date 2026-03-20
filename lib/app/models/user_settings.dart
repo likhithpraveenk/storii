@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/nav_targets.dart';
@@ -28,6 +29,9 @@ sealed class UserSettings with _$UserSettings {
     @Default(false) bool stackTitleOnImage,
 
     @Default(NavTarget.home) NavTarget startupNav,
+
+    @Default(NavigationDestinationLabelBehavior.alwaysShow)
+    NavigationDestinationLabelBehavior navLabelBehavior,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

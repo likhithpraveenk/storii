@@ -548,4 +548,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appCache => 'App Cache';
+
+  @override
+  String get settingsNavLabelBehavior => 'Navigation label';
+
+  @override
+  String get alwaysShow => 'Always show';
+
+  @override
+  String get onlyShowSelected => 'Only show when selected';
+
+  @override
+  String get alwaysHide => 'Always hide';
 }

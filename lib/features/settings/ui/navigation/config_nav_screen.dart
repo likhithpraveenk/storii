@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/features/settings/ui/navigation/nav_label_tile.dart';
 import 'package:storii/features/settings/ui/navigation/reorder_nav_tabs.dart';
 import 'package:storii/features/settings/ui/navigation/startup_nav.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -38,7 +39,11 @@ class ConfigNavScreen extends StatelessWidget {
         ),
         title: Text(l.configNav, style: Theme.of(context).textTheme.titleLarge),
       ),
-      body: ListView(children: const [StartupNavTile(), ReorderNavTabsTile()]),
+      body: const SingleChildScrollView(
+        child: Column(
+          children: [StartupNavTile(), ReorderNavTabsTile(), NavLabelTile()],
+        ),
+      ),
     );
   }
 }

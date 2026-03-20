@@ -92,7 +92,11 @@ class _ShellBottomBar extends ConsumerWidget {
         child: RepaintBoundary(
           child: NavBar(
             currentIndex: displayIndex,
-            onTap: (i) => context.go(navTargets[i].item.route.path),
+            onTap: (i) {
+              final index = i < navTargets.length ? i : 0;
+              final path = navTargets[index].item.route.path;
+              context.go(path);
+            },
           ),
         ),
       ),

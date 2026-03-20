@@ -1101,6 +1101,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'App Cache'**
   String get appCache;
+
+  /// No description provided for @settingsNavLabelBehavior.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation label'**
+  String get settingsNavLabelBehavior;
+
+  /// No description provided for @alwaysShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Always show'**
+  String get alwaysShow;
+
+  /// No description provided for @onlyShowSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Only show when selected'**
+  String get onlyShowSelected;
+
+  /// No description provided for @alwaysHide.
+  ///
+  /// In en, this message translates to:
+  /// **'Always hide'**
+  String get alwaysHide;
 }
 
 class _AppLocalizationsDelegate
