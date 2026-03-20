@@ -12,8 +12,7 @@ part of 'cache_notifier.dart';
 @ProviderFor(CacheSize)
 final cacheSizeProvider = CacheSizeProvider._();
 
-final class CacheSizeProvider
-    extends $AsyncNotifierProvider<CacheSize, String> {
+final class CacheSizeProvider extends $AsyncNotifierProvider<CacheSize, int> {
   CacheSizeProvider._()
     : super(
         from: null,
@@ -33,19 +32,19 @@ final class CacheSizeProvider
   CacheSize create() => CacheSize();
 }
 
-String _$cacheSizeHash() => r'492b5248f16222beb14d4991480f5f880784610f';
+String _$cacheSizeHash() => r'2a7c0a339a8fc8737b4511e72216b0917499b21e';
 
-abstract class _$CacheSize extends $AsyncNotifier<String> {
-  FutureOr<String> build();
+abstract class _$CacheSize extends $AsyncNotifier<int> {
+  FutureOr<int> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<String>, String>;
+    final ref = this.ref as $Ref<AsyncValue<int>, int>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<String>, String>,
-              AsyncValue<String>,
+              AnyNotifier<AsyncValue<int>, int>,
+              AsyncValue<int>,
               Object?,
               Object?
             >;

@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/image_cache.dart';
 import 'package:storii/features/library/logic/cover_url_provider.dart';
+import 'package:storii/features/settings/logic/app_cache.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/placeholder_image.dart';
 
@@ -37,7 +37,7 @@ class ImageWidget extends ConsumerWidget {
       return PlaceholderImage(label: l.noImage);
     }
     return CachedNetworkImage(
-      cacheManager: imageCacheManager,
+      cacheManager: AppImageCacheManager.instance,
       imageUrl: coverUrl,
       fit: .cover,
       placeholder: (_, _) => const PlaceholderImage(),

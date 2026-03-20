@@ -17,7 +17,7 @@ ApiClient apiClient(Ref ref, UserDomain user) {
   final cancelToken = CancelToken();
 
   final cacheOptions = CacheOptions(
-    store: dioCacheStore,
+    store: networkCacheStore,
     policy: CachePolicy.refreshForceCache,
     hitCacheOnNetworkFailure: true,
     maxStale: const Duration(days: 7),

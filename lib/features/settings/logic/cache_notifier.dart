@@ -1,50 +1,37 @@
-import 'dart:io';
-
-import 'package:flutter/painting.dart';
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/app/config/image_cache.dart';
+import 'package:storii/features/settings/logic/app_cache.dart';
 
 part 'cache_notifier.g.dart';
 
 @riverpod
 class CacheSize extends _$CacheSize {
-  static const _cacheKey = 'libCachedImageData';
-
   @override
-  Future<String> build() async {
-    return _calculateSize();
+  Future<int> build() async {
+    final results = await Future.wait([
+      AppImageCacheManager.instance.sizeInBytes(),
+      NetworkCache.instance.sizeInBytes(),
+    ]);
+    return results[0] + results[1];
   }
 
-  Future<String> _calculateSize() async {
-    double totalSize = 0;
-    try {
-      final tempDir = await getTemporaryDirectory();
-      final cachePath = p.join(tempDir.path, _cacheKey);
-      final cacheDir = Directory(cachePath);
+  // Future<void> debugAllCacheDirs() async {
+  //   final temp = await getTemporaryDirectory();
+  //   final docs = await getApplicationDocumentsDirectory();
 
-      if (await cacheDir.exists()) {
-        final files = cacheDir.listSync(recursive: true);
-        for (final file in files) {
-          if (file is File) {
-            totalSize += file.lengthSync();
-          }
-        }
-      }
-    } catch (e) {
-      return '0.00 MB';
-    }
-    return '${(totalSize / (1024 * 1024)).toStringAsFixed(2)} MB';
-  }
+  //   for (final base in [temp, docs]) {
+  //     final dir = Directory(base.path);
+  //     await for (final f in dir.list(recursive: true)) {
+  //       if (f is File) {q
+  //         final size = await (f).length();
+  //         log('${f.path} — ${formatBytes(size)}');
+  //       }
+  //     }
+  //   }
+  // }
 
   Future<void> clearCache() async {
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(() async {
-      await imageCacheManager.emptyCache();
-      PaintingBinding.instance.imageCache.clear();
-      PaintingBinding.instance.imageCache.clearLiveImages();
-      return _calculateSize();
-    });
+    await AppImageCacheManager.instance.clear();
+    await NetworkCache.instance.clear();
+    ref.invalidateSelf();
   }
 }

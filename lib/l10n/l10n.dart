@@ -1095,6 +1095,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add fonts'**
   String get addFonts;
+
+  /// No description provided for @appCache.
+  ///
+  /// In en, this message translates to:
+  /// **'App Cache'**
+  String get appCache;
 }
 
 class _AppLocalizationsDelegate

@@ -234,5 +234,6 @@
   "settingsReorderNavTitle": "Navigation tabs",
   "settingsReorderNavSubtitle": "Reorder and enable or disable tabs",
   "sampleText": "Sphinx of black quartz, judge my vow - 0123456789",
-  "addFonts": "Add fonts"
+  "addFonts": "Add fonts",
+  "appCache": "App Cache"
 }

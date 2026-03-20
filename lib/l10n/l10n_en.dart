@@ -545,4 +545,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addFonts => 'Add fonts';
+
+  @override
+  String get appCache => 'App Cache';
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:http_cache_hive_store/http_cache_hive_store.dart';
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
@@ -15,7 +16,8 @@ const serversBox = 'servers_box';
 // const itemsBox = 'items_box';
 const sessionIdBox = 'session_id_box';
 
-late final HiveCacheStore dioCacheStore;
+const networkCacheDir = 'dio_cache';
+late final HiveCacheStore networkCacheStore;
 
 Future<void> setupHive() async {
   await Hive.initFlutter();
@@ -31,5 +33,5 @@ Future<void> setupHive() async {
 
   // dio cache
   final dir = await getApplicationDocumentsDirectory();
-  dioCacheStore = HiveCacheStore('${dir.path}/dio_cache');
+  networkCacheStore = HiveCacheStore(p.join(dir.path, networkCacheDir));
 }
