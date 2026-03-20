@@ -7,7 +7,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:ttf_metadata/ttf_metadata.dart';
 
-// TODO: add a setting tile for fonts folder 1. show size 2. clear
 class FontService {
   static const _folderName = 'fonts';
 

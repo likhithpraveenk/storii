@@ -112,10 +112,13 @@ class PlayProgressWidget extends ConsumerWidget {
                 onPressed: () => AppBottomSheet.show(
                   context,
                   title: l.removeProgressTitle,
-                  body: Text(
-                    l.removeProgressMessage,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
+                  body: Padding(
+                    padding: const .symmetric(horizontal: 24),
+                    child: Text(
+                      l.removeProgressMessage,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   ),
                   actionLabel: l.remove,

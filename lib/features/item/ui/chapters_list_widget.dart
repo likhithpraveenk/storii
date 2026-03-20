@@ -129,13 +129,17 @@ class ChapterTile extends ConsumerWidget {
           await AppBottomSheet.show(
             context,
             title: l.startPlayback,
-            body: Row(
-              children: [
-                Expanded(child: Text(bookTitle ?? l.noTitle)),
-                const Icon(Icons.arrow_forward, size: 12),
-                const SizedBox(width: 8),
-                Text(chapter.start.toTime()),
-              ],
+            body: Padding(
+              padding: const .symmetric(horizontal: 24),
+              child: Row(
+                children: [
+                  Flexible(child: Text(bookTitle ?? l.noTitle)),
+                  const SizedBox(width: 8),
+                  const Icon(Icons.arrow_forward, size: 12),
+                  const SizedBox(width: 8),
+                  Text(chapter.start.toTime()),
+                ],
+              ),
             ),
             actionLabel: l.confirm,
             onTap: () async {
