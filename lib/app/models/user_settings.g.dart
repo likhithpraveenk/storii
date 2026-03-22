@@ -17,7 +17,6 @@ _UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>
               ?.map((e) => $enumDecode(_$NavTargetEnumMap, e))
               .toList() ??
           defaultNavTargets,
-      isFullySynced: json['isFullySynced'] as bool? ?? false,
       isItemsGridView: json['isItemsGridView'] as bool? ?? true,
       isSeriesGridView: json['isSeriesGridView'] as bool? ?? true,
       isAuthorsGridView: json['isAuthorsGridView'] as bool? ?? true,
@@ -32,6 +31,16 @@ _UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) =>
             json['navLabelBehavior'],
           ) ??
           NavigationDestinationLabelBehavior.alwaysShow,
+      dateTimeFormat: json['dateTimeFormat'] as String? ?? 'dd MMM y',
+      fontFamily: json['fontFamily'] as String? ?? 'AtkinsonHyperlegibleNext',
+      fontScale: (json['fontScale'] as num?)?.toDouble() ?? 1,
+      skipForward: json['skipForward'] == null
+          ? const Duration(seconds: 30)
+          : Duration(microseconds: (json['skipForward'] as num).toInt()),
+      skipBackward: json['skipBackward'] == null
+          ? const Duration(seconds: 10)
+          : Duration(microseconds: (json['skipBackward'] as num).toInt()),
+      speed: (json['speed'] as num?)?.toDouble() ?? 1.0,
     );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -40,7 +49,6 @@ Map<String, dynamic> _$UserSettingsToJson(
   'userId': instance.userId,
   'currentLibrary': ?instance.currentLibrary?.toJson(),
   'navTargets': instance.navTargets.map((e) => _$NavTargetEnumMap[e]!).toList(),
-  'isFullySynced': instance.isFullySynced,
   'isItemsGridView': instance.isItemsGridView,
   'isSeriesGridView': instance.isSeriesGridView,
   'isAuthorsGridView': instance.isAuthorsGridView,
@@ -49,6 +57,12 @@ Map<String, dynamic> _$UserSettingsToJson(
   'startupNav': _$NavTargetEnumMap[instance.startupNav]!,
   'navLabelBehavior':
       _$NavigationDestinationLabelBehaviorEnumMap[instance.navLabelBehavior]!,
+  'dateTimeFormat': instance.dateTimeFormat,
+  'fontFamily': ?instance.fontFamily,
+  'fontScale': instance.fontScale,
+  'skipForward': instance.skipForward.inMicroseconds,
+  'skipBackward': instance.skipBackward.inMicroseconds,
+  'speed': instance.speed,
 };
 
 const _$NavTargetEnumMap = {

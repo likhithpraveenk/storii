@@ -76,7 +76,7 @@ class _FontScaleSheetState extends ConsumerState<_FontScaleSheet> {
             setState(() => _scale = value);
           },
           onChangeEnd: (value) {
-            ref.read(appSettingsProvider.notifier).setFontScale(value / 20);
+            ref.read(userSettingsProvider.notifier).setFontScale(value / 20);
           },
         ),
         const SizedBox(height: 16),

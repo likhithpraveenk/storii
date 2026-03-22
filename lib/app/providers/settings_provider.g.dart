@@ -66,7 +66,7 @@ abstract class _$AppSettingsNotifier extends $Notifier<AppSettings> {
 final userSettingsProvider = UserSettingsNotifierProvider._();
 
 final class UserSettingsNotifierProvider
-    extends $NotifierProvider<UserSettingsNotifier, UserSettings> {
+    extends $NotifierProvider<UserSettingsNotifier, UserSettings?> {
   UserSettingsNotifierProvider._()
     : super(
         from: null,
@@ -86,28 +86,28 @@ final class UserSettingsNotifierProvider
   UserSettingsNotifier create() => UserSettingsNotifier();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(UserSettings value) {
+  Override overrideWithValue(UserSettings? value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<UserSettings>(value),
+      providerOverride: $SyncValueProvider<UserSettings?>(value),
     );
   }
 }
 
 String _$userSettingsNotifierHash() =>
-    r'a7f2a3ae93e2dad4b31278fb2b798475693c0408';
+    r'5a7fc61c585daea12f5fe3b1ee4d2b60f930eca1';
 
-abstract class _$UserSettingsNotifier extends $Notifier<UserSettings> {
-  UserSettings build();
+abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
+  UserSettings? build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<UserSettings, UserSettings>;
+    final ref = this.ref as $Ref<UserSettings?, UserSettings?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<UserSettings, UserSettings>,
-              UserSettings,
+              AnyNotifier<UserSettings?, UserSettings?>,
+              UserSettings?,
               Object?,
               Object?
             >;
@@ -132,27 +132,10 @@ extension AppSettingsSetters on AppSettingsNotifier {
   Future<void> setCurrentUser(UserDomain? value) =>
       _save(state.copyWith(currentUser: value));
 
-  Future<void> setDateTimeFormat(String value) =>
-      _save(state.copyWith(dateTimeFormat: value));
-
   Future<void> setMaxLogs(int value) => _save(state.copyWith(maxLogs: value));
-
-  Future<void> setFontFamily(String? value) =>
-      _save(state.copyWith(fontFamily: value));
-
-  Future<void> setFontScale(double value) =>
-      _save(state.copyWith(fontScale: value));
 
   Future<void> setEnableHttpLogs(bool value) =>
       _save(state.copyWith(enableHttpLogs: value));
-
-  Future<void> setSkipForward(Duration value) =>
-      _save(state.copyWith(skipForward: value));
-
-  Future<void> setSkipBackward(Duration value) =>
-      _save(state.copyWith(skipBackward: value));
-
-  Future<void> setSpeed(double value) => _save(state.copyWith(speed: value));
 
   Future<void> setSyncInterval(Duration value) =>
       _save(state.copyWith(syncInterval: value));
@@ -174,36 +157,12 @@ final currentUserProvider = Provider<UserDomain?>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.currentUser)),
 );
 
-final dateTimeFormatProvider = Provider<String>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.dateTimeFormat)),
-);
-
 final maxLogsProvider = Provider<int>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.maxLogs)),
 );
 
-final fontFamilyProvider = Provider<String?>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.fontFamily)),
-);
-
-final fontScaleProvider = Provider<double>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.fontScale)),
-);
-
 final enableHttpLogsProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.enableHttpLogs)),
-);
-
-final skipForwardProvider = Provider<Duration>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.skipForward)),
-);
-
-final skipBackwardProvider = Provider<Duration>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.skipBackward)),
-);
-
-final speedProvider = Provider<double>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.speed)),
 );
 
 final syncIntervalProvider = Provider<Duration>(
@@ -216,72 +175,164 @@ final syncIntervalProvider = Provider<Duration>(
 
 extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setCurrentLibrary(Library? value) =>
-      _save(state.copyWith(currentLibrary: value));
+      _save(state?.copyWith(currentLibrary: value));
 
   Future<void> setNavTargets(List<NavTarget> value) =>
-      _save(state.copyWith(navTargets: value));
-
-  Future<void> setIsFullySynced(bool value) =>
-      _save(state.copyWith(isFullySynced: value));
+      _save(state?.copyWith(navTargets: value));
 
   Future<void> setIsItemsGridView(bool value) =>
-      _save(state.copyWith(isItemsGridView: value));
+      _save(state?.copyWith(isItemsGridView: value));
 
   Future<void> setIsSeriesGridView(bool value) =>
-      _save(state.copyWith(isSeriesGridView: value));
+      _save(state?.copyWith(isSeriesGridView: value));
 
   Future<void> setIsAuthorsGridView(bool value) =>
-      _save(state.copyWith(isAuthorsGridView: value));
+      _save(state?.copyWith(isAuthorsGridView: value));
 
   Future<void> setShowTitleForItem(bool value) =>
-      _save(state.copyWith(showTitleForItem: value));
+      _save(state?.copyWith(showTitleForItem: value));
 
   Future<void> setStackTitleOnImage(bool value) =>
-      _save(state.copyWith(stackTitleOnImage: value));
+      _save(state?.copyWith(stackTitleOnImage: value));
 
   Future<void> setStartupNav(NavTarget value) =>
-      _save(state.copyWith(startupNav: value));
+      _save(state?.copyWith(startupNav: value));
 
   Future<void> setNavLabelBehavior(NavigationDestinationLabelBehavior value) =>
-      _save(state.copyWith(navLabelBehavior: value));
+      _save(state?.copyWith(navLabelBehavior: value));
+
+  Future<void> setDateTimeFormat(String value) =>
+      _save(state?.copyWith(dateTimeFormat: value));
+
+  Future<void> setFontFamily(String? value) =>
+      _save(state?.copyWith(fontFamily: value));
+
+  Future<void> setFontScale(double value) =>
+      _save(state?.copyWith(fontScale: value));
+
+  Future<void> setSkipForward(Duration value) =>
+      _save(state?.copyWith(skipForward: value));
+
+  Future<void> setSkipBackward(Duration value) =>
+      _save(state?.copyWith(skipBackward: value));
+
+  Future<void> setSpeed(double value) => _save(state?.copyWith(speed: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.currentLibrary)),
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.currentLibrary ?? DefaultUserSettings.currentLibrary,
+    ),
+  ),
 );
 
 final navTargetsProvider = Provider<List<NavTarget>>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.navTargets)),
-);
-
-final isFullySyncedProvider = Provider<bool>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.isFullySynced)),
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.navTargets ?? DefaultUserSettings.navTargets,
+    ),
+  ),
 );
 
 final isItemsGridViewProvider = Provider<bool>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.isItemsGridView)),
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.isItemsGridView ?? DefaultUserSettings.isItemsGridView,
+    ),
+  ),
 );
 
 final isSeriesGridViewProvider = Provider<bool>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.isSeriesGridView)),
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.isSeriesGridView ?? DefaultUserSettings.isSeriesGridView,
+    ),
+  ),
 );
 
 final isAuthorsGridViewProvider = Provider<bool>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.isAuthorsGridView)),
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.isAuthorsGridView ?? DefaultUserSettings.isAuthorsGridView,
+    ),
+  ),
 );
 
 final showTitleForItemProvider = Provider<bool>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.showTitleForItem)),
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.showTitleForItem ?? DefaultUserSettings.showTitleForItem,
+    ),
+  ),
 );
 
 final stackTitleOnImageProvider = Provider<bool>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.stackTitleOnImage)),
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.stackTitleOnImage ?? DefaultUserSettings.stackTitleOnImage,
+    ),
+  ),
 );
 
 final startupNavProvider = Provider<NavTarget>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.startupNav)),
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.startupNav ?? DefaultUserSettings.startupNav,
+    ),
+  ),
 );
 
 final navLabelBehaviorProvider = Provider<NavigationDestinationLabelBehavior>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.navLabelBehavior)),
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.navLabelBehavior ?? DefaultUserSettings.navLabelBehavior,
+    ),
+  ),
+);
+
+final dateTimeFormatProvider = Provider<String>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.dateTimeFormat ?? DefaultUserSettings.dateTimeFormat,
+    ),
+  ),
+);
+
+final fontFamilyProvider = Provider<String?>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.fontFamily ?? DefaultUserSettings.fontFamily,
+    ),
+  ),
+);
+
+final fontScaleProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.fontScale ?? DefaultUserSettings.fontScale,
+    ),
+  ),
+);
+
+final skipForwardProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.skipForward ?? DefaultUserSettings.skipForward,
+    ),
+  ),
+);
+
+final skipBackwardProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.skipBackward ?? DefaultUserSettings.skipBackward,
+    ),
+  ),
+);
+
+final speedProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select((s) => s?.speed ?? DefaultUserSettings.speed),
+  ),
 );

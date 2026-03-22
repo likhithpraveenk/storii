@@ -32,7 +32,7 @@ class PlayerSettingsScreen extends ConsumerWidget {
     final l = AppLocalizations.of(context)!;
     final skipForward = ref.watch(skipForwardProvider);
     final skipBackward = ref.watch(skipBackwardProvider);
-    final notifier = ref.read(appSettingsProvider.notifier);
+    final notifier = ref.read(userSettingsProvider.notifier);
 
     const durations = [5, 10, 15, 30, 45, 60];
 

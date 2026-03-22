@@ -64,16 +64,11 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
   final _box = Hive.box<String>(userSettingsBox);
 
   @override
-  UserSettings build() {
+  UserSettings? build() {
     final user = ref.watch(currentUserProvider);
-    if (user == null) {
-      throw StateError(
-        'UserSettingsNotifier accessed while currentUser is null',
-      );
-    }
+    if (user == null) return null;
 
     final settingsJson = _box.get(user.id);
-
     if (settingsJson != null) {
       try {
         return UserSettings.fromJson(jsonDecode(settingsJson));
@@ -87,17 +82,22 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
     return UserSettings(userId: user.id);
   }
 
-  Future<void> _save(UserSettings s) async {
+  Future<void> _save(UserSettings? s) async {
     if (s == state) return;
     state = s;
-    await _box.put(s.userId, jsonEncode(s));
+    if (s != null) {
+      await _box.put(s.userId, jsonEncode(s));
+    }
   }
 
-  Future<void> reset() => _save(
-    UserSettings(
-      userId: state.userId,
-      currentLibrary: state.currentLibrary,
-      isFullySynced: state.isFullySynced,
-    ),
-  );
+  Future<void> reset() async {
+    final settings = state;
+    if (settings == null) return;
+    return _save(
+      UserSettings(
+        userId: settings.userId,
+        currentLibrary: settings.currentLibrary,
+      ),
+    );
+  }
 }

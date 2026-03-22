@@ -119,7 +119,7 @@ class _DateTimeFormatSheetState extends ConsumerState<DateTimeFormatSheet> {
                 onPressed: () async {
                   if (_isValid(_previewPattern)) {
                     await ref
-                        .read(appSettingsProvider.notifier)
+                        .read(userSettingsProvider.notifier)
                         .setDateTimeFormat(_previewPattern);
                     if (context.mounted) Navigator.pop(context);
                   }

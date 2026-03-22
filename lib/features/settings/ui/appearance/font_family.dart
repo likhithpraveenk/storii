@@ -104,7 +104,7 @@ class _FontFamilySheetState extends ConsumerState<FontFamilySheet> {
               onPressed: () async {
                 final val = _selected;
                 await ref
-                    .read(appSettingsProvider.notifier)
+                    .read(userSettingsProvider.notifier)
                     .setFontFamily(val == 'system' ? null : val);
                 if (context.mounted) {
                   Navigator.pop(context);

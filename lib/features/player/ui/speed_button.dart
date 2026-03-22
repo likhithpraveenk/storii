@@ -23,7 +23,7 @@ class SpeedButton extends ConsumerWidget {
             step: 0.1,
             labelBuilder: (v) => '${v}x',
             onChangedEnd: (v) {
-              ref.read(appSettingsProvider.notifier).setSpeed(v);
+              ref.read(userSettingsProvider.notifier).setSpeed(v);
             },
             // TODO: speed presets setting
             presets: [0.8, 1.0, 1.5, 2.0],

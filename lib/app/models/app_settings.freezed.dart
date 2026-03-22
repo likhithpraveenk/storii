@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppSettings {
 
- ThemeMode get themeMode; bool get useDynamicColor; bool get usePureBlack; UserDomain? get currentUser; String get dateTimeFormat; int get maxLogs; String? get fontFamily; double get fontScale; bool get enableHttpLogs; Duration get skipForward; Duration get skipBackward; double get speed; Duration get syncInterval;
+ ThemeMode get themeMode; bool get useDynamicColor; bool get usePureBlack; UserDomain? get currentUser; int get maxLogs; bool get enableHttpLogs; Duration get syncInterval;
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AppSettingsCopyWith<AppSettings> get copyWith => _$AppSettingsCopyWithImpl<AppS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.skipForward, skipForward) || other.skipForward == skipForward)&&(identical(other.skipBackward, skipBackward) || other.skipBackward == skipBackward)&&(identical(other.speed, speed) || other.speed == speed)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,usePureBlack,currentUser,dateTimeFormat,maxLogs,fontFamily,fontScale,enableHttpLogs,skipForward,skipBackward,speed,syncInterval);
+int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,usePureBlack,currentUser,maxLogs,enableHttpLogs,syncInterval);
 
 @override
 String toString() {
-  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, usePureBlack: $usePureBlack, currentUser: $currentUser, dateTimeFormat: $dateTimeFormat, maxLogs: $maxLogs, fontFamily: $fontFamily, fontScale: $fontScale, enableHttpLogs: $enableHttpLogs, skipForward: $skipForward, skipBackward: $skipBackward, speed: $speed, syncInterval: $syncInterval)';
+  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, usePureBlack: $usePureBlack, currentUser: $currentUser, maxLogs: $maxLogs, enableHttpLogs: $enableHttpLogs, syncInterval: $syncInterval)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AppSettingsCopyWith<$Res>  {
   factory $AppSettingsCopyWith(AppSettings value, $Res Function(AppSettings) _then) = _$AppSettingsCopyWithImpl;
 @useResult
 $Res call({
- ThemeMode themeMode, bool useDynamicColor, bool usePureBlack, UserDomain? currentUser, String dateTimeFormat, int maxLogs, String? fontFamily, double fontScale, bool enableHttpLogs, Duration skipForward, Duration skipBackward, double speed, Duration syncInterval
+ ThemeMode themeMode, bool useDynamicColor, bool usePureBlack, UserDomain? currentUser, int maxLogs, bool enableHttpLogs, Duration syncInterval
 });
 
 
@@ -65,21 +65,15 @@ class _$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? dateTimeFormat = null,Object? maxLogs = null,Object? fontFamily = freezed,Object? fontScale = null,Object? enableHttpLogs = null,Object? skipForward = null,Object? skipBackward = null,Object? speed = null,Object? syncInterval = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? maxLogs = null,Object? enableHttpLogs = null,Object? syncInterval = null,}) {
   return _then(_self.copyWith(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,useDynamicColor: null == useDynamicColor ? _self.useDynamicColor : useDynamicColor // ignore: cast_nullable_to_non_nullable
 as bool,usePureBlack: null == usePureBlack ? _self.usePureBlack : usePureBlack // ignore: cast_nullable_to_non_nullable
 as bool,currentUser: freezed == currentUser ? _self.currentUser : currentUser // ignore: cast_nullable_to_non_nullable
-as UserDomain?,dateTimeFormat: null == dateTimeFormat ? _self.dateTimeFormat : dateTimeFormat // ignore: cast_nullable_to_non_nullable
-as String,maxLogs: null == maxLogs ? _self.maxLogs : maxLogs // ignore: cast_nullable_to_non_nullable
-as int,fontFamily: freezed == fontFamily ? _self.fontFamily : fontFamily // ignore: cast_nullable_to_non_nullable
-as String?,fontScale: null == fontScale ? _self.fontScale : fontScale // ignore: cast_nullable_to_non_nullable
-as double,enableHttpLogs: null == enableHttpLogs ? _self.enableHttpLogs : enableHttpLogs // ignore: cast_nullable_to_non_nullable
-as bool,skipForward: null == skipForward ? _self.skipForward : skipForward // ignore: cast_nullable_to_non_nullable
-as Duration,skipBackward: null == skipBackward ? _self.skipBackward : skipBackward // ignore: cast_nullable_to_non_nullable
-as Duration,speed: null == speed ? _self.speed : speed // ignore: cast_nullable_to_non_nullable
-as double,syncInterval: null == syncInterval ? _self.syncInterval : syncInterval // ignore: cast_nullable_to_non_nullable
+as UserDomain?,maxLogs: null == maxLogs ? _self.maxLogs : maxLogs // ignore: cast_nullable_to_non_nullable
+as int,enableHttpLogs: null == enableHttpLogs ? _self.enableHttpLogs : enableHttpLogs // ignore: cast_nullable_to_non_nullable
+as bool,syncInterval: null == syncInterval ? _self.syncInterval : syncInterval // ignore: cast_nullable_to_non_nullable
 as Duration,
   ));
 }
@@ -174,10 +168,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor,  bool usePureBlack,  UserDomain? currentUser,  String dateTimeFormat,  int maxLogs,  String? fontFamily,  double fontScale,  bool enableHttpLogs,  Duration skipForward,  Duration skipBackward,  double speed,  Duration syncInterval)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor,  bool usePureBlack,  UserDomain? currentUser,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.currentUser,_that.dateTimeFormat,_that.maxLogs,_that.fontFamily,_that.fontScale,_that.enableHttpLogs,_that.skipForward,_that.skipBackward,_that.speed,_that.syncInterval);case _:
+return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.currentUser,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval);case _:
   return orElse();
 
 }
@@ -195,10 +189,10 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.c
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor,  bool usePureBlack,  UserDomain? currentUser,  String dateTimeFormat,  int maxLogs,  String? fontFamily,  double fontScale,  bool enableHttpLogs,  Duration skipForward,  Duration skipBackward,  double speed,  Duration syncInterval)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor,  bool usePureBlack,  UserDomain? currentUser,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval)  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings():
-return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.currentUser,_that.dateTimeFormat,_that.maxLogs,_that.fontFamily,_that.fontScale,_that.enableHttpLogs,_that.skipForward,_that.skipBackward,_that.speed,_that.syncInterval);}
+return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.currentUser,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -212,10 +206,10 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.c
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode,  bool useDynamicColor,  bool usePureBlack,  UserDomain? currentUser,  String dateTimeFormat,  int maxLogs,  String? fontFamily,  double fontScale,  bool enableHttpLogs,  Duration skipForward,  Duration skipBackward,  double speed,  Duration syncInterval)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode,  bool useDynamicColor,  bool usePureBlack,  UserDomain? currentUser,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval)?  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.currentUser,_that.dateTimeFormat,_that.maxLogs,_that.fontFamily,_that.fontScale,_that.enableHttpLogs,_that.skipForward,_that.skipBackward,_that.speed,_that.syncInterval);case _:
+return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.currentUser,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval);case _:
   return null;
 
 }
@@ -227,21 +221,15 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.usePureBlack,_that.c
 @JsonSerializable()
 
 class _AppSettings implements AppSettings {
-  const _AppSettings({this.themeMode = ThemeMode.system, this.useDynamicColor = false, this.usePureBlack = false, this.currentUser, this.dateTimeFormat = 'dd MMM y', this.maxLogs = 100, this.fontFamily = 'AtkinsonHyperlegibleNext', this.fontScale = 1, this.enableHttpLogs = false, this.skipForward = const Duration(seconds: 30), this.skipBackward = const Duration(seconds: 10), this.speed = 1.0, this.syncInterval = const Duration(seconds: 20)});
+  const _AppSettings({this.themeMode = ThemeMode.system, this.useDynamicColor = false, this.usePureBlack = false, this.currentUser, this.maxLogs = 100, this.enableHttpLogs = false, this.syncInterval = const Duration(seconds: 20)});
   factory _AppSettings.fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);
 
 @override@JsonKey() final  ThemeMode themeMode;
 @override@JsonKey() final  bool useDynamicColor;
 @override@JsonKey() final  bool usePureBlack;
 @override final  UserDomain? currentUser;
-@override@JsonKey() final  String dateTimeFormat;
 @override@JsonKey() final  int maxLogs;
-@override@JsonKey() final  String? fontFamily;
-@override@JsonKey() final  double fontScale;
 @override@JsonKey() final  bool enableHttpLogs;
-@override@JsonKey() final  Duration skipForward;
-@override@JsonKey() final  Duration skipBackward;
-@override@JsonKey() final  double speed;
 @override@JsonKey() final  Duration syncInterval;
 
 /// Create a copy of AppSettings
@@ -257,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.skipForward, skipForward) || other.skipForward == skipForward)&&(identical(other.skipBackward, skipBackward) || other.skipBackward == skipBackward)&&(identical(other.speed, speed) || other.speed == speed)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,usePureBlack,currentUser,dateTimeFormat,maxLogs,fontFamily,fontScale,enableHttpLogs,skipForward,skipBackward,speed,syncInterval);
+int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,usePureBlack,currentUser,maxLogs,enableHttpLogs,syncInterval);
 
 @override
 String toString() {
-  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, usePureBlack: $usePureBlack, currentUser: $currentUser, dateTimeFormat: $dateTimeFormat, maxLogs: $maxLogs, fontFamily: $fontFamily, fontScale: $fontScale, enableHttpLogs: $enableHttpLogs, skipForward: $skipForward, skipBackward: $skipBackward, speed: $speed, syncInterval: $syncInterval)';
+  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, usePureBlack: $usePureBlack, currentUser: $currentUser, maxLogs: $maxLogs, enableHttpLogs: $enableHttpLogs, syncInterval: $syncInterval)';
 }
 
 
@@ -277,7 +265,7 @@ abstract mixin class _$AppSettingsCopyWith<$Res> implements $AppSettingsCopyWith
   factory _$AppSettingsCopyWith(_AppSettings value, $Res Function(_AppSettings) _then) = __$AppSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- ThemeMode themeMode, bool useDynamicColor, bool usePureBlack, UserDomain? currentUser, String dateTimeFormat, int maxLogs, String? fontFamily, double fontScale, bool enableHttpLogs, Duration skipForward, Duration skipBackward, double speed, Duration syncInterval
+ ThemeMode themeMode, bool useDynamicColor, bool usePureBlack, UserDomain? currentUser, int maxLogs, bool enableHttpLogs, Duration syncInterval
 });
 
 
@@ -294,21 +282,15 @@ class __$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? dateTimeFormat = null,Object? maxLogs = null,Object? fontFamily = freezed,Object? fontScale = null,Object? enableHttpLogs = null,Object? skipForward = null,Object? skipBackward = null,Object? speed = null,Object? syncInterval = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? maxLogs = null,Object? enableHttpLogs = null,Object? syncInterval = null,}) {
   return _then(_AppSettings(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,useDynamicColor: null == useDynamicColor ? _self.useDynamicColor : useDynamicColor // ignore: cast_nullable_to_non_nullable
 as bool,usePureBlack: null == usePureBlack ? _self.usePureBlack : usePureBlack // ignore: cast_nullable_to_non_nullable
 as bool,currentUser: freezed == currentUser ? _self.currentUser : currentUser // ignore: cast_nullable_to_non_nullable
-as UserDomain?,dateTimeFormat: null == dateTimeFormat ? _self.dateTimeFormat : dateTimeFormat // ignore: cast_nullable_to_non_nullable
-as String,maxLogs: null == maxLogs ? _self.maxLogs : maxLogs // ignore: cast_nullable_to_non_nullable
-as int,fontFamily: freezed == fontFamily ? _self.fontFamily : fontFamily // ignore: cast_nullable_to_non_nullable
-as String?,fontScale: null == fontScale ? _self.fontScale : fontScale // ignore: cast_nullable_to_non_nullable
-as double,enableHttpLogs: null == enableHttpLogs ? _self.enableHttpLogs : enableHttpLogs // ignore: cast_nullable_to_non_nullable
-as bool,skipForward: null == skipForward ? _self.skipForward : skipForward // ignore: cast_nullable_to_non_nullable
-as Duration,skipBackward: null == skipBackward ? _self.skipBackward : skipBackward // ignore: cast_nullable_to_non_nullable
-as Duration,speed: null == speed ? _self.speed : speed // ignore: cast_nullable_to_non_nullable
-as double,syncInterval: null == syncInterval ? _self.syncInterval : syncInterval // ignore: cast_nullable_to_non_nullable
+as UserDomain?,maxLogs: null == maxLogs ? _self.maxLogs : maxLogs // ignore: cast_nullable_to_non_nullable
+as int,enableHttpLogs: null == enableHttpLogs ? _self.enableHttpLogs : enableHttpLogs // ignore: cast_nullable_to_non_nullable
+as bool,syncInterval: null == syncInterval ? _self.syncInterval : syncInterval // ignore: cast_nullable_to_non_nullable
 as Duration,
   ));
 }

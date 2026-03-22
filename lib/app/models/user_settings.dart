@@ -7,6 +7,25 @@ import 'package:storii/builder/annotations.dart';
 part 'user_settings.freezed.dart';
 part 'user_settings.g.dart';
 
+class DefaultUserSettings {
+  static const Library? currentLibrary = null;
+  static const navTargets = defaultNavTargets;
+  static const isItemsGridView = true;
+  static const isSeriesGridView = true;
+  static const isAuthorsGridView = true;
+  static const showTitleForItem = true;
+  static const stackTitleOnImage = false;
+  static const startupNav = NavTarget.home;
+  static const NavigationDestinationLabelBehavior navLabelBehavior =
+      .alwaysShow;
+  static const dateTimeFormat = 'dd MMM y';
+  static const String? fontFamily = null;
+  static const fontScale = 1.0;
+  static const skipForward = Duration(seconds: 30);
+  static const skipBackward = Duration(seconds: 10);
+  static const speed = 1.0;
+}
+
 @freezed
 sealed class UserSettings with _$UserSettings {
   const factory UserSettings({
@@ -15,8 +34,6 @@ sealed class UserSettings with _$UserSettings {
     Library? currentLibrary,
 
     @Default(defaultNavTargets) List<NavTarget> navTargets,
-
-    @Default(false) bool isFullySynced,
 
     @Default(true) bool isItemsGridView,
 
@@ -32,6 +49,18 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(NavigationDestinationLabelBehavior.alwaysShow)
     NavigationDestinationLabelBehavior navLabelBehavior,
+
+    @Default('dd MMM y') String dateTimeFormat,
+
+    @Default('AtkinsonHyperlegibleNext') String? fontFamily,
+
+    @Default(1) double fontScale,
+
+    @Default(Duration(seconds: 30)) Duration skipForward,
+
+    @Default(Duration(seconds: 10)) Duration skipBackward,
+
+    @Default(1.0) double speed,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

@@ -76,11 +76,15 @@ class _UserSettingsGenerator extends Generator {
       final providerName = '${name}Provider';
 
       setters.writeln('''
-  Future<void> $methodName($type value) => _save(state.copyWith($name: value));
+  Future<void> $methodName($type value) => _save(state?.copyWith($name: value));
 ''');
       providers.writeln('''
 final $providerName = Provider<$type>(
-  (ref) => ref.watch(userSettingsProvider.select((s) => s.$name)),
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.$name ?? DefaultUserSettings.$name,
+    ),
+  ),
 );
 ''');
     }

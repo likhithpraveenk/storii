@@ -16,21 +16,9 @@ sealed class AppSettings with _$AppSettings {
 
     UserDomain? currentUser,
 
-    @Default('dd MMM y') String dateTimeFormat,
-
     @Default(100) int maxLogs,
 
-    @Default('AtkinsonHyperlegibleNext') String? fontFamily,
-
-    @Default(1) double fontScale,
-
     @Default(false) bool enableHttpLogs,
-
-    @Default(Duration(seconds: 30)) Duration skipForward,
-
-    @Default(Duration(seconds: 10)) Duration skipBackward,
-
-    @Default(1.0) double speed,
 
     @Default(Duration(seconds: 20)) Duration syncInterval,
   }) = _AppSettings;
