@@ -50,6 +50,7 @@ class ListenTimeNotifier extends _$ListenTimeNotifier {
 
   Future<void> sync({required bool keepRunning}) async {
     final listened = _accumulator.snapshotAndReset(keepRunning: keepRunning);
+    if (listened.inMilliseconds < 999) return;
     try {
       await ref.read(sessionProvider.notifier).sync(listened);
     } catch (_) {
@@ -59,6 +60,7 @@ class ListenTimeNotifier extends _$ListenTimeNotifier {
 
   Future<void> stop({bool didComplete = false}) async {
     try {
+      await sync(keepRunning: false);
       await ref.read(sessionProvider.notifier).close(didComplete: didComplete);
     } catch (_) {
     } finally {

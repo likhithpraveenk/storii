@@ -42,7 +42,7 @@ final class ListenTimeNotifierProvider
 }
 
 String _$listenTimeNotifierHash() =>
-    r'78d63f7861e236559d5d1d5547ad5c157e1fe6f5';
+    r'8d08ddeba9ab0004381f40b8e1a79aa4869c3f90';
 
 abstract class _$ListenTimeNotifier extends $Notifier<void> {
   void build();

@@ -41,7 +41,7 @@ final class PlayerModeProvider
   }
 }
 
-String _$playerModeHash() => r'85973874bd45cc1a5e4b6976b14b89bc142a5186';
+String _$playerModeHash() => r'38731e9bea2adc27a31cf19f540d7405c9d0ab25';
 
 abstract class _$PlayerMode extends $Notifier<PlayerViewState> {
   PlayerViewState build();

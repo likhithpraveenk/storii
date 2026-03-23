@@ -79,4 +79,17 @@ extension PlaybackSessionX on PlaybackSession {
     }
     return (0, Duration.zero);
   }
+
+  (int, Duration) chapterToTrackOffset(BookChapter chapter) {
+    var accumulated = Duration.zero;
+    final tracks = audioTracks ?? [];
+    for (var i = 0; i < tracks.length; i++) {
+      final trackLen = tracks[i].duration;
+      if (chapter.start < accumulated + trackLen) {
+        return (i, chapter.start - accumulated);
+      }
+      accumulated += trackLen;
+    }
+    return (0, Duration.zero);
+  }
 }

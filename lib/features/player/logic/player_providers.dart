@@ -22,7 +22,7 @@ class PlayerMode extends _$PlayerMode {
     final height = ref.read(playerHeightProvider);
     final bounds = ref.read(playerBoundsProvider);
 
-    const closeThresholdFactor = 0.6;
+    const closeThresholdFactor = 0.8;
     final closeThreshold = bounds.min * closeThresholdFactor;
 
     PlayerViewState target;

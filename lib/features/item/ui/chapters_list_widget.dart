@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/abs_api/abs_api.dart';
@@ -143,13 +145,11 @@ class ChapterTile extends ConsumerWidget {
             ),
             actionLabel: l.confirm,
             onTap: () async {
-              await ref
-                  .read(audioPlayerProvider.notifier)
-                  .play(
-                    itemId: itemId,
-                    initialIndex: index,
-                    initialPosition: chapter.start,
-                  );
+              unawaited(
+                ref
+                    .read(audioPlayerProvider.notifier)
+                    .play(itemId: itemId, chapter: chapter),
+              );
             },
           );
         }

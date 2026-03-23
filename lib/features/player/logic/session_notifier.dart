@@ -17,7 +17,23 @@ part 'session_notifier.g.dart';
 @Riverpod(keepAlive: true)
 class SessionNotifier extends _$SessionNotifier {
   @override
-  PlaybackSession? build() => null;
+  PlaybackSession? build() {
+    ref.listen(globalPositionProvider, (_, next) {
+      final position = next.value;
+      final session = state;
+      if (position == null || session == null) return;
+      _saveLocalPosition(session.id, position);
+    });
+    return null;
+  }
+
+  void _saveLocalPosition(String sessionId, Duration position) {
+    Hive.box<Duration>(localPositionBox).put(sessionId, position);
+  }
+
+  Duration? _getLocalPosition(String sessionId) {
+    return Hive.box<Duration>(localPositionBox).get(sessionId);
+  }
 
   Future<PlaybackSession> create({
     required String itemId,
@@ -46,8 +62,7 @@ class SessionNotifier extends _$SessionNotifier {
       // log('no session to sync');
       return;
     }
-
-    final position = ref.read(globalPositionProvider).value;
+    final position = _getLocalPosition(session.id);
     if (position == null) return;
 
     final user = await ref.read(authenticatedUserProvider.future);
@@ -76,6 +91,7 @@ class SessionNotifier extends _$SessionNotifier {
           .read(sessionsApiProvider(user))
           .closeSession(sessionId: session.id);
       await Hive.box<String>(sessionIdBox).delete(session.id);
+      await Hive.box<Duration>(localPositionBox).delete(session.id);
 
       if (didComplete) {
         await ref

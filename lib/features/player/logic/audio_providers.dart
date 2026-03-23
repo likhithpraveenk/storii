@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/chapter.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
@@ -80,8 +81,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
   Future<void> play({
     required String itemId,
     String? episodeId,
-    int? initialIndex,
-    Duration? initialPosition,
+    BookChapter? chapter,
   }) async {
     state = AudioPlayerState(
       loadingItemId: itemId,
@@ -103,10 +103,8 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       final int index;
       final Duration position;
 
-      if (initialIndex != null && initialPosition != null) {
-        //! TODO: not respecting initial positions
-        index = initialIndex;
-        position = initialPosition;
+      if (chapter != null) {
+        (index, position) = session.chapterToTrackOffset(chapter);
       } else {
         (index, position) = session.getIndexAndOffset();
       }
@@ -140,6 +138,7 @@ void playerStateWatcher(Ref ref) {
     final curr = next.value;
     if (curr == null) return;
 
+    // if initial loading then expand
     if (curr.processingState == .loading) {
       ref.read(playerModeProvider.notifier).toFull();
       return;
@@ -149,14 +148,26 @@ void playerStateWatcher(Ref ref) {
     final wasStopped =
         prev == null || (!prev.playing && prev.processingState == .idle);
 
+    // if just stopped then hide
     if (stopped && !wasStopped) {
       ref.read(playerHeightProvider.notifier).snapTo(.hidden);
       return;
     }
 
     final playerVisible = ref.read(playerViewStateProvider) != .hidden;
+    // if play started off-screen then mini
     if (curr.playing && !playerVisible) {
       ref.read(playerModeProvider.notifier).toMini();
+      return;
+    }
+  });
+
+  ref.listen(sessionProvider, (_, next) {
+    final playerVisible = ref.read(playerViewStateProvider) != .hidden;
+
+    // if session ended then hide
+    if (next == null && playerVisible) {
+      ref.read(playerModeProvider.notifier).toHidden();
       return;
     }
   });
