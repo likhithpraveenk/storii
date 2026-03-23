@@ -65,12 +65,9 @@ class MiniProgressIndicator extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final chapter = ref.watch(currentChapterProvider).value;
-    final position = ref.watch(chapterPositionProvider).value ?? Duration.zero;
-    final duration = chapter?.duration.inSeconds ?? 0;
-    final progress = duration > 0
-        ? (position.inSeconds / duration).clamp(0.0, 1.0)
-        : 0.0;
+    final position = ref.watch(globalPositionProvider).value ?? Duration.zero;
+    final duration = ref.watch(totalDurationProvider).inSeconds;
+    final progress = (position.inSeconds / duration).clamp(0.0, 1.0);
 
     return LinearProgressIndicator(
       value: progress,

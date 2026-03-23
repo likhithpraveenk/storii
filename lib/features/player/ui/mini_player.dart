@@ -22,11 +22,11 @@ class MiniPlayer extends ConsumerWidget {
     final processingState = ref.watch(processingStateProvider);
     final isLoading =
         processingState == .loading || processingState == .buffering;
-    final currentChapter = ref.watch(currentChapterProvider).value;
-    final chapterPosition =
-        ref.watch(chapterPositionProvider).value ?? Duration.zero;
-    final remaining =
-        (currentChapter?.duration ?? Duration.zero) - chapterPosition;
+
+    final totalDuration = ref.watch(totalDurationProvider);
+    final globalPosition =
+        ref.watch(globalPositionProvider).value ?? Duration.zero;
+    final remaining = totalDuration - globalPosition;
     final remainingStr = remaining.toReadableDuration(context, isLeft: true);
 
     return Container(
@@ -47,30 +47,17 @@ class MiniPlayer extends ConsumerWidget {
               mainAxisAlignment: .center,
               crossAxisAlignment: .start,
               children: [
-                if (currentChapter != null)
-                  Text(
-                    session.displayTitle,
-                    style: textTheme.labelSmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant.withValues(
-                        alpha: 0.8,
-                      ),
-                      fontWeight: .w600,
-                    ),
-                    maxLines: 1,
-                    overflow: .ellipsis,
-                  ),
                 MarqueeText(
-                  currentChapter?.title ?? session.displayTitle,
+                  session.displayTitle,
                   style: textTheme.labelLarge?.copyWith(fontWeight: .bold),
                 ),
-                if (currentChapter != null)
-                  Text(
-                    remainingStr,
-                    style: textTheme.labelSmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                      fontWeight: .bold,
-                    ),
+                Text(
+                  remainingStr,
+                  style: textTheme.labelSmall?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                    fontWeight: .bold,
                   ),
+                ),
               ],
             ),
           ),

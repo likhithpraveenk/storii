@@ -11,6 +11,7 @@ class SpeedButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final speed = ref.watch(speedProvider);
+    const speedPresets = [0.8, 1.0, 1.5, 2.0];
     return IconButton(
       onPressed: () {
         AppBottomSheet.show(
@@ -25,8 +26,7 @@ class SpeedButton extends ConsumerWidget {
             onChangedEnd: (v) {
               ref.read(userSettingsProvider.notifier).setSpeed(v);
             },
-            // TODO: speed presets setting
-            presets: [0.8, 1.0, 1.5, 2.0],
+            presets: speedPresets,
           ),
         );
       },
