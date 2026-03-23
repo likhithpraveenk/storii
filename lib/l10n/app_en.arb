@@ -239,5 +239,6 @@
   "settingsNavLabelBehavior": "Navigation label",
   "alwaysShow": "Always show",
   "onlyShowSelected": "Only show when selected",
-  "alwaysHide": "Always hide"
+  "alwaysHide": "Always hide",
+  "syncInterval": "Sync Interval"
 }

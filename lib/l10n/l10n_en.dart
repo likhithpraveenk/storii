@@ -560,4 +560,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get alwaysHide => 'Always hide';
+
+  @override
+  String get syncInterval => 'Sync Interval';
 }

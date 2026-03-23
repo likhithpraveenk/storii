@@ -1125,6 +1125,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Always hide'**
   String get alwaysHide;
+
+  /// No description provided for @syncInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Interval'**
+  String get syncInterval;
 }
 
 class _AppLocalizationsDelegate
