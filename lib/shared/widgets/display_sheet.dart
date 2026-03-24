@@ -1,36 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/keys.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/l10n/l10n.dart';
-import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
-class DisplayButton extends ConsumerWidget {
-  const DisplayButton(this.screen, {super.key});
-
+class DisplayBottomSheet extends ConsumerWidget {
+  const DisplayBottomSheet(this.screen, this.controller, {super.key});
   final CurrentScreen screen;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return IconButton(
-      icon: const Icon(Icons.grid_view),
-      onPressed: () {
-        final scaffoldContext = shellScaffoldKey.currentContext;
-        if (scaffoldContext == null) return;
-        AppBottomSheet.show(
-          scaffoldContext,
-          title: AppLocalizations.of(context)!.display,
-          body: _DisplayBottomSheet(screen),
-        );
-      },
-    );
-  }
-}
-
-class _DisplayBottomSheet extends ConsumerWidget {
-  const _DisplayBottomSheet(this.screen);
-  final CurrentScreen screen;
+  final ScrollController controller;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -51,10 +28,11 @@ class _DisplayBottomSheet extends ConsumerWidget {
         ? .compact
         : .comfortable;
 
-    return Padding(
-      padding: const .symmetric(horizontal: 24),
+    return SingleChildScrollView(
+      padding: const .fromLTRB(24, 24, 24, 0),
+      controller: controller,
       child: Column(
-        crossAxisAlignment: .start,
+        crossAxisAlignment: .stretch,
         children: [
           Text(l10n.displayMode, style: Theme.of(context).textTheme.labelLarge),
           const SizedBox(height: 12),

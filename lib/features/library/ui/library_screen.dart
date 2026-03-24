@@ -6,11 +6,9 @@ import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
-import 'package:storii/shared/widgets/display_button.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
-import 'package:storii/shared/widgets/filters_button.dart';
 import 'package:storii/shared/widgets/library_switcher.dart';
-import 'package:storii/shared/widgets/sort_button.dart';
+import 'package:storii/shared/widgets/screen_options.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class LibraryScreen extends ConsumerStatefulWidget {
@@ -39,11 +37,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: const LibrarySwitcher(),
-        actions: const [
-          FiltersButton(.library),
-          SortButton(.library),
-          DisplayButton(.library),
-        ],
+        actions: const [ScreenOptionsButton(.library)],
       ),
       body: RefreshIndicator(
         onRefresh: () async {

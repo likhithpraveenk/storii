@@ -8,10 +8,8 @@ import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/features/series/ui/series_list_card.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
-import 'package:storii/shared/widgets/display_button.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
-import 'package:storii/shared/widgets/filters_button.dart';
-import 'package:storii/shared/widgets/sort_button.dart';
+import 'package:storii/shared/widgets/screen_options.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class SeriesListScreen extends ConsumerStatefulWidget {
@@ -41,11 +39,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: Text(l.series, style: Theme.of(context).textTheme.titleLarge),
-        actions: const [
-          FiltersButton(.series),
-          SortButton(.series),
-          DisplayButton(.series),
-        ],
+        actions: const [ScreenOptionsButton(.series)],
       ),
       body: RefreshIndicator(
         onRefresh: () async {

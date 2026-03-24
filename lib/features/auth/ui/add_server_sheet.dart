@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/features/auth/logic/add_server_notifier.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 Future<String?> showAddServerSheet(
@@ -13,6 +14,9 @@ Future<String?> showAddServerSheet(
     context: context,
     isScrollControlled: true,
     isDismissible: false,
+    shape: const RoundedRectangleBorder(
+      borderRadius: .vertical(top: .circular(24)),
+    ),
     builder: (context) => AddServerSheet(server: server),
   );
 }
@@ -63,16 +67,7 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
     });
 
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: const .vertical(top: .circular(24)),
-        border: Border(
-          top: BorderSide(
-            width: 0.5,
-            strokeAlign: BorderSide.strokeAlignInside,
-            color: theme.colorScheme.primary,
-          ),
-        ),
-      ),
+      decoration: bottomSheetDecoration(context),
       padding: MediaQuery.viewInsetsOf(context).add(const .all(24)),
       child: Column(
         mainAxisSize: .min,

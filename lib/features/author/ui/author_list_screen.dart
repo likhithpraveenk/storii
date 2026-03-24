@@ -7,9 +7,8 @@ import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
-import 'package:storii/shared/widgets/display_button.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
-import 'package:storii/shared/widgets/sort_button.dart';
+import 'package:storii/shared/widgets/screen_options.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class AuthorListScreen extends ConsumerStatefulWidget {
@@ -42,7 +41,7 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
           AppLocalizations.of(context)!.authors,
           style: Theme.of(context).textTheme.titleLarge,
         ),
-        actions: const [SortButton(.authors), DisplayButton(.authors)],
+        actions: const [ScreenOptionsButton(.authors)],
       ),
       body: RefreshIndicator(
         onRefresh: () async {
