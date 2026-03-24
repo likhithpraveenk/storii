@@ -211,3 +211,5 @@ enum FilterSeries {
     language => .languages,
   };
 }
+
+enum DisplayMode { listView, compact, comfortable, coverOnly }

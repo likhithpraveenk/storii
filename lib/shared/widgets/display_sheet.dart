@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/features/library/logic/grid_height_provider.dart';
+import 'package:storii/app/models/enums.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 
@@ -11,22 +12,15 @@ class DisplayBottomSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final filterState = ref.watch(libraryFiltersProvider(screen));
-    final notifier = ref.read(libraryFiltersProvider(screen).notifier);
+    final currentMode = ref.watch(screenDisplayModeProvider(screen));
+    final notifier = ref.read(userSettingsProvider.notifier);
 
     final List<DisplayMode> displayModes = switch (screen) {
       .library => [.comfortable, .compact, .coverOnly, .listView],
       _ => [.comfortable, .listView],
     };
 
-    final l10n = AppLocalizations.of(context)!;
-    final DisplayMode currentMode = !filterState.isGridView
-        ? .listView
-        : !filterState.showTitle
-        ? .coverOnly
-        : filterState.stackTitle
-        ? .compact
-        : .comfortable;
+    final l = AppLocalizations.of(context)!;
 
     return SingleChildScrollView(
       padding: const .fromLTRB(24, 24, 24, 0),
@@ -34,21 +28,30 @@ class DisplayBottomSheet extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: .stretch,
         children: [
-          Text(l10n.displayMode, style: Theme.of(context).textTheme.labelLarge),
+          Text(l.displayMode, style: Theme.of(context).textTheme.labelLarge),
           const SizedBox(height: 12),
           Wrap(
             spacing: 8,
             children: displayModes.map((mode) {
               return ChoiceChip(
                 label: Text(switch (mode) {
-                  .coverOnly => l10n.coverOnly,
-                  .compact => l10n.compact,
-                  .comfortable => l10n.comfortable,
-                  .listView => l10n.listView,
+                  .coverOnly => l.coverOnly,
+                  .compact => l.compact,
+                  .comfortable => l.comfortable,
+                  .listView => l.listView,
                 }),
                 selected: currentMode == mode,
                 onSelected: (selected) {
-                  if (selected) notifier.setDisplayMode(mode);
+                  if (selected) {
+                    switch (screen) {
+                      case .library:
+                        notifier.setLibraryDisplayMode(mode);
+                      case .series:
+                        notifier.setSeriesDisplayMode(mode);
+                      case .authors:
+                        notifier.setAuthorDisplayMode(mode);
+                    }
+                  }
                 },
               );
             }).toList(),

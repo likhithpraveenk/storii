@@ -180,20 +180,14 @@ extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setNavTargets(List<NavTarget> value) =>
       _save(state?.copyWith(navTargets: value));
 
-  Future<void> setIsItemsGridView(bool value) =>
-      _save(state?.copyWith(isItemsGridView: value));
+  Future<void> setLibraryDisplayMode(DisplayMode value) =>
+      _save(state?.copyWith(libraryDisplayMode: value));
 
-  Future<void> setIsSeriesGridView(bool value) =>
-      _save(state?.copyWith(isSeriesGridView: value));
+  Future<void> setSeriesDisplayMode(DisplayMode value) =>
+      _save(state?.copyWith(seriesDisplayMode: value));
 
-  Future<void> setIsAuthorsGridView(bool value) =>
-      _save(state?.copyWith(isAuthorsGridView: value));
-
-  Future<void> setShowTitleForItem(bool value) =>
-      _save(state?.copyWith(showTitleForItem: value));
-
-  Future<void> setStackTitleOnImage(bool value) =>
-      _save(state?.copyWith(stackTitleOnImage: value));
+  Future<void> setAuthorDisplayMode(DisplayMode value) =>
+      _save(state?.copyWith(authorDisplayMode: value));
 
   Future<void> setStartupNav(NavTarget value) =>
       _save(state?.copyWith(startupNav: value));
@@ -235,42 +229,26 @@ final navTargetsProvider = Provider<List<NavTarget>>(
   ),
 );
 
-final isItemsGridViewProvider = Provider<bool>(
+final libraryDisplayModeProvider = Provider<DisplayMode>(
   (ref) => ref.watch(
     userSettingsProvider.select(
-      (s) => s?.isItemsGridView ?? DefaultUserSettings.isItemsGridView,
+      (s) => s?.libraryDisplayMode ?? DefaultUserSettings.libraryDisplayMode,
     ),
   ),
 );
 
-final isSeriesGridViewProvider = Provider<bool>(
+final seriesDisplayModeProvider = Provider<DisplayMode>(
   (ref) => ref.watch(
     userSettingsProvider.select(
-      (s) => s?.isSeriesGridView ?? DefaultUserSettings.isSeriesGridView,
+      (s) => s?.seriesDisplayMode ?? DefaultUserSettings.seriesDisplayMode,
     ),
   ),
 );
 
-final isAuthorsGridViewProvider = Provider<bool>(
+final authorDisplayModeProvider = Provider<DisplayMode>(
   (ref) => ref.watch(
     userSettingsProvider.select(
-      (s) => s?.isAuthorsGridView ?? DefaultUserSettings.isAuthorsGridView,
-    ),
-  ),
-);
-
-final showTitleForItemProvider = Provider<bool>(
-  (ref) => ref.watch(
-    userSettingsProvider.select(
-      (s) => s?.showTitleForItem ?? DefaultUserSettings.showTitleForItem,
-    ),
-  ),
-);
-
-final stackTitleOnImageProvider = Provider<bool>(
-  (ref) => ref.watch(
-    userSettingsProvider.select(
-      (s) => s?.stackTitleOnImage ?? DefaultUserSettings.stackTitleOnImage,
+      (s) => s?.authorDisplayMode ?? DefaultUserSettings.authorDisplayMode,
     ),
   ),
 );

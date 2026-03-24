@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/features/library/logic/library_filters_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/library_items_provider.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
@@ -55,11 +55,12 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
               );
             }
 
-            final filterState = ref.watch(libraryFiltersProvider(.library));
+            final displayMode = ref.watch(libraryDisplayModeProvider);
+            final isListView = displayMode == .listView;
 
             return AppScrollbar(
               controller: _scrollController,
-              child: filterState.isGridView
+              child: !isListView
                   ? ItemsGridView(
                       items,
                       scrollController: _scrollController,

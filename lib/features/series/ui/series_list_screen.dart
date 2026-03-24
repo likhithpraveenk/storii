@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
-import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/series/logic/series_list_provider.dart';
 import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/features/series/ui/series_list_card.dart';
@@ -59,11 +59,12 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
             }
             final height = ref.watch(seriesGridHeightProvider);
 
-            final filterState = ref.watch(libraryFiltersProvider(.series));
+            final displayMode = ref.watch(seriesDisplayModeProvider);
+            final isListView = displayMode == .listView;
 
             return AppScrollbar(
               controller: _scrollController,
-              child: filterState.isGridView
+              child: !isListView
                   ? GridView.builder(
                       key: const ValueKey('series_grid_view'),
                       controller: _scrollController,

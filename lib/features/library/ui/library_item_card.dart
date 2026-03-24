@@ -19,8 +19,9 @@ class LibraryItemCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sequence = item.seriesSequence;
     final scheme = Theme.of(context).colorScheme;
-    final stackTitle = ref.watch(stackTitleOnImageProvider);
-    final showTitle = ref.watch(showTitleForItemProvider);
+    final displayMode = ref.watch(libraryDisplayModeProvider);
+    final stackTitle = displayMode == .compact;
+    final showTitle = displayMode != .coverOnly;
 
     return InkWell(
       onTap: () => context.push(AppRoute.itemDetail.path, extra: item.id),

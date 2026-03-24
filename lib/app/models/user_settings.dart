@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/nav_targets.dart';
+import 'package:storii/app/models/enums.dart';
 import 'package:storii/builder/annotations.dart';
 
 part 'user_settings.freezed.dart';
@@ -10,11 +11,9 @@ part 'user_settings.g.dart';
 class DefaultUserSettings {
   static const Library? currentLibrary = null;
   static const navTargets = defaultNavTargets;
-  static const isItemsGridView = true;
-  static const isSeriesGridView = true;
-  static const isAuthorsGridView = true;
-  static const showTitleForItem = true;
-  static const stackTitleOnImage = false;
+  static const DisplayMode libraryDisplayMode = .comfortable;
+  static const DisplayMode seriesDisplayMode = .comfortable;
+  static const DisplayMode authorDisplayMode = .comfortable;
   static const startupNav = NavTarget.home;
   static const NavigationDestinationLabelBehavior navLabelBehavior =
       .alwaysShow;
@@ -35,15 +34,11 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(defaultNavTargets) List<NavTarget> navTargets,
 
-    @Default(true) bool isItemsGridView,
+    @Default(DisplayMode.comfortable) DisplayMode libraryDisplayMode,
 
-    @Default(true) bool isSeriesGridView,
+    @Default(DisplayMode.comfortable) DisplayMode seriesDisplayMode,
 
-    @Default(true) bool isAuthorsGridView,
-
-    @Default(true) bool showTitleForItem,
-
-    @Default(false) bool stackTitleOnImage,
+    @Default(DisplayMode.comfortable) DisplayMode authorDisplayMode,
 
     @Default(NavTarget.home) NavTarget startupNav,
 

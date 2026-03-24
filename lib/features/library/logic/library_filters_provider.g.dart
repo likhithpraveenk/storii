@@ -60,7 +60,7 @@ final class LibraryFiltersNotifierProvider
 }
 
 String _$libraryFiltersNotifierHash() =>
-    r'26222f4f6b4778ae4bee1ab70c213d70380ff1f4';
+    r'cb32bff9471784f3375423bbc53ed0351ac5c0f0';
 
 final class LibraryFiltersNotifierFamily extends $Family
     with
@@ -106,4 +106,81 @@ abstract class _$LibraryFiltersNotifier extends $Notifier<FilterState> {
             >;
     element.handleCreate(ref, () => build(_$args));
   }
+}
+
+@ProviderFor(screenDisplayMode)
+final screenDisplayModeProvider = ScreenDisplayModeFamily._();
+
+final class ScreenDisplayModeProvider
+    extends $FunctionalProvider<DisplayMode, DisplayMode, DisplayMode>
+    with $Provider<DisplayMode> {
+  ScreenDisplayModeProvider._({
+    required ScreenDisplayModeFamily super.from,
+    required CurrentScreen super.argument,
+  }) : super(
+         retry: null,
+         name: r'screenDisplayModeProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$screenDisplayModeHash();
+
+  @override
+  String toString() {
+    return r'screenDisplayModeProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $ProviderElement<DisplayMode> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  DisplayMode create(Ref ref) {
+    final argument = this.argument as CurrentScreen;
+    return screenDisplayMode(ref, argument);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DisplayMode value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DisplayMode>(value),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ScreenDisplayModeProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$screenDisplayModeHash() => r'2ee093ec79ec2446c9a8f6114c960f3f913f19d5';
+
+final class ScreenDisplayModeFamily extends $Family
+    with $FunctionalFamilyOverride<DisplayMode, CurrentScreen> {
+  ScreenDisplayModeFamily._()
+    : super(
+        retry: null,
+        name: r'screenDisplayModeProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  ScreenDisplayModeProvider call(CurrentScreen screen) =>
+      ScreenDisplayModeProvider._(argument: screen, from: this);
+
+  @override
+  String toString() => r'screenDisplayModeProvider';
 }

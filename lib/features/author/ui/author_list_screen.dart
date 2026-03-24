@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/logic/authors_list_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
@@ -62,11 +63,12 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
             }
             final height = ref.watch(authorsGridHeightProvider);
 
-            final filterState = ref.watch(libraryFiltersProvider(.authors));
+            final displayMode = ref.watch(authorDisplayModeProvider);
+            final isListView = displayMode == .listView;
 
             return AppScrollbar(
               controller: _scrollController,
-              child: filterState.isGridView
+              child: !isListView
                   ? GridView.builder(
                       key: const ValueKey('author_grid_view'),
                       controller: _scrollController,

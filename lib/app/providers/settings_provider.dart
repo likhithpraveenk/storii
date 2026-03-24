@@ -8,6 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/app/models/app_settings.dart';
+import 'package:storii/app/models/enums.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/models/user_settings.dart';
 import 'package:storii/storage/hive/boxes.dart';

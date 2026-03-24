@@ -6,28 +6,9 @@ import 'package:storii/features/settings/logic/theme_provider.dart';
 
 part 'grid_height_provider.g.dart';
 
-enum DisplayMode {
-  listView,
-  compact,
-  comfortable,
-  coverOnly;
-
-  static DisplayMode fromSettings({
-    required bool showTitle,
-    required bool stackTitle,
-  }) {
-    if (!showTitle) return .coverOnly;
-    if (stackTitle) return .compact;
-    return .comfortable;
-  }
-}
-
 @riverpod
 double gridHeight(Ref ref) {
-  final mode = DisplayMode.fromSettings(
-    showTitle: ref.watch(showTitleForItemProvider),
-    stackTitle: ref.watch(stackTitleOnImageProvider),
-  );
+  final mode = ref.watch(libraryDisplayModeProvider);
 
   return switch (mode) {
     .comfortable => () {
@@ -42,7 +23,7 @@ double gridHeight(Ref ref) {
 
     .compact || .coverOnly => maxCardWidthInGrid,
 
-    .listView => throw StateError('Do not use grid for listview'),
+    .listView => throw StateError('Do not use grid for list view'),
   };
 }
 
@@ -68,10 +49,7 @@ double seriesGridHeight(Ref ref) {
 
 @riverpod
 double shelfHeight(Ref ref, ShelfType type) {
-  final mode = DisplayMode.fromSettings(
-    showTitle: ref.watch(showTitleForItemProvider),
-    stackTitle: ref.watch(stackTitleOnImageProvider),
-  );
+  final mode = ref.watch(libraryDisplayModeProvider);
 
   final cardWidth = switch (type) {
     .series => maxSeriesCardWidthInGrid,

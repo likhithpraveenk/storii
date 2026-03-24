@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$FilterState {
 
- EnumHasValue get sortType; Filter get filter; bool get sortAscending; bool get isGridView; bool get collapseSeries; bool get stackTitle; bool get showTitle;
+ EnumHasValue get sortType; Filter get filter; bool get sortAscending; bool get collapseSeries;
 /// Create a copy of FilterState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $FilterStateCopyWith<FilterState> get copyWith => _$FilterStateCopyWithImpl<Filt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FilterState&&(identical(other.sortType, sortType) || other.sortType == sortType)&&(identical(other.filter, filter) || other.filter == filter)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending)&&(identical(other.isGridView, isGridView) || other.isGridView == isGridView)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries)&&(identical(other.stackTitle, stackTitle) || other.stackTitle == stackTitle)&&(identical(other.showTitle, showTitle) || other.showTitle == showTitle));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FilterState&&(identical(other.sortType, sortType) || other.sortType == sortType)&&(identical(other.filter, filter) || other.filter == filter)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sortType,filter,sortAscending,isGridView,collapseSeries,stackTitle,showTitle);
+int get hashCode => Object.hash(runtimeType,sortType,filter,sortAscending,collapseSeries);
 
 @override
 String toString() {
-  return 'FilterState(sortType: $sortType, filter: $filter, sortAscending: $sortAscending, isGridView: $isGridView, collapseSeries: $collapseSeries, stackTitle: $stackTitle, showTitle: $showTitle)';
+  return 'FilterState(sortType: $sortType, filter: $filter, sortAscending: $sortAscending, collapseSeries: $collapseSeries)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $FilterStateCopyWith<$Res>  {
   factory $FilterStateCopyWith(FilterState value, $Res Function(FilterState) _then) = _$FilterStateCopyWithImpl;
 @useResult
 $Res call({
- EnumHasValue sortType, Filter filter, bool sortAscending, bool isGridView, bool collapseSeries, bool stackTitle, bool showTitle
+ EnumHasValue sortType, Filter filter, bool sortAscending, bool collapseSeries
 });
 
 
@@ -62,15 +62,12 @@ class _$FilterStateCopyWithImpl<$Res>
 
 /// Create a copy of FilterState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? sortType = null,Object? filter = null,Object? sortAscending = null,Object? isGridView = null,Object? collapseSeries = null,Object? stackTitle = null,Object? showTitle = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? sortType = null,Object? filter = null,Object? sortAscending = null,Object? collapseSeries = null,}) {
   return _then(_self.copyWith(
 sortType: null == sortType ? _self.sortType : sortType // ignore: cast_nullable_to_non_nullable
 as EnumHasValue,filter: null == filter ? _self.filter : filter // ignore: cast_nullable_to_non_nullable
 as Filter,sortAscending: null == sortAscending ? _self.sortAscending : sortAscending // ignore: cast_nullable_to_non_nullable
-as bool,isGridView: null == isGridView ? _self.isGridView : isGridView // ignore: cast_nullable_to_non_nullable
 as bool,collapseSeries: null == collapseSeries ? _self.collapseSeries : collapseSeries // ignore: cast_nullable_to_non_nullable
-as bool,stackTitle: null == stackTitle ? _self.stackTitle : stackTitle // ignore: cast_nullable_to_non_nullable
-as bool,showTitle: null == showTitle ? _self.showTitle : showTitle // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -153,10 +150,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( EnumHasValue sortType,  Filter filter,  bool sortAscending,  bool isGridView,  bool collapseSeries,  bool stackTitle,  bool showTitle)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( EnumHasValue sortType,  Filter filter,  bool sortAscending,  bool collapseSeries)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _FilterState() when $default != null:
-return $default(_that.sortType,_that.filter,_that.sortAscending,_that.isGridView,_that.collapseSeries,_that.stackTitle,_that.showTitle);case _:
+return $default(_that.sortType,_that.filter,_that.sortAscending,_that.collapseSeries);case _:
   return orElse();
 
 }
@@ -174,10 +171,10 @@ return $default(_that.sortType,_that.filter,_that.sortAscending,_that.isGridView
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( EnumHasValue sortType,  Filter filter,  bool sortAscending,  bool isGridView,  bool collapseSeries,  bool stackTitle,  bool showTitle)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( EnumHasValue sortType,  Filter filter,  bool sortAscending,  bool collapseSeries)  $default,) {final _that = this;
 switch (_that) {
 case _FilterState():
-return $default(_that.sortType,_that.filter,_that.sortAscending,_that.isGridView,_that.collapseSeries,_that.stackTitle,_that.showTitle);}
+return $default(_that.sortType,_that.filter,_that.sortAscending,_that.collapseSeries);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -191,10 +188,10 @@ return $default(_that.sortType,_that.filter,_that.sortAscending,_that.isGridView
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( EnumHasValue sortType,  Filter filter,  bool sortAscending,  bool isGridView,  bool collapseSeries,  bool stackTitle,  bool showTitle)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( EnumHasValue sortType,  Filter filter,  bool sortAscending,  bool collapseSeries)?  $default,) {final _that = this;
 switch (_that) {
 case _FilterState() when $default != null:
-return $default(_that.sortType,_that.filter,_that.sortAscending,_that.isGridView,_that.collapseSeries,_that.stackTitle,_that.showTitle);case _:
+return $default(_that.sortType,_that.filter,_that.sortAscending,_that.collapseSeries);case _:
   return null;
 
 }
@@ -206,16 +203,13 @@ return $default(_that.sortType,_that.filter,_that.sortAscending,_that.isGridView
 
 
 class _FilterState implements FilterState {
-  const _FilterState({required this.sortType, this.filter = const NoFilter(), this.sortAscending = true, this.isGridView = true, this.collapseSeries = false, this.stackTitle = false, this.showTitle = true});
+  const _FilterState({required this.sortType, this.filter = const NoFilter(), this.sortAscending = true, this.collapseSeries = false});
   
 
 @override final  EnumHasValue sortType;
 @override@JsonKey() final  Filter filter;
 @override@JsonKey() final  bool sortAscending;
-@override@JsonKey() final  bool isGridView;
 @override@JsonKey() final  bool collapseSeries;
-@override@JsonKey() final  bool stackTitle;
-@override@JsonKey() final  bool showTitle;
 
 /// Create a copy of FilterState
 /// with the given fields replaced by the non-null parameter values.
@@ -227,16 +221,16 @@ _$FilterStateCopyWith<_FilterState> get copyWith => __$FilterStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FilterState&&(identical(other.sortType, sortType) || other.sortType == sortType)&&(identical(other.filter, filter) || other.filter == filter)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending)&&(identical(other.isGridView, isGridView) || other.isGridView == isGridView)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries)&&(identical(other.stackTitle, stackTitle) || other.stackTitle == stackTitle)&&(identical(other.showTitle, showTitle) || other.showTitle == showTitle));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FilterState&&(identical(other.sortType, sortType) || other.sortType == sortType)&&(identical(other.filter, filter) || other.filter == filter)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sortType,filter,sortAscending,isGridView,collapseSeries,stackTitle,showTitle);
+int get hashCode => Object.hash(runtimeType,sortType,filter,sortAscending,collapseSeries);
 
 @override
 String toString() {
-  return 'FilterState(sortType: $sortType, filter: $filter, sortAscending: $sortAscending, isGridView: $isGridView, collapseSeries: $collapseSeries, stackTitle: $stackTitle, showTitle: $showTitle)';
+  return 'FilterState(sortType: $sortType, filter: $filter, sortAscending: $sortAscending, collapseSeries: $collapseSeries)';
 }
 
 
@@ -247,7 +241,7 @@ abstract mixin class _$FilterStateCopyWith<$Res> implements $FilterStateCopyWith
   factory _$FilterStateCopyWith(_FilterState value, $Res Function(_FilterState) _then) = __$FilterStateCopyWithImpl;
 @override @useResult
 $Res call({
- EnumHasValue sortType, Filter filter, bool sortAscending, bool isGridView, bool collapseSeries, bool stackTitle, bool showTitle
+ EnumHasValue sortType, Filter filter, bool sortAscending, bool collapseSeries
 });
 
 
@@ -264,15 +258,12 @@ class __$FilterStateCopyWithImpl<$Res>
 
 /// Create a copy of FilterState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? sortType = null,Object? filter = null,Object? sortAscending = null,Object? isGridView = null,Object? collapseSeries = null,Object? stackTitle = null,Object? showTitle = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? sortType = null,Object? filter = null,Object? sortAscending = null,Object? collapseSeries = null,}) {
   return _then(_FilterState(
 sortType: null == sortType ? _self.sortType : sortType // ignore: cast_nullable_to_non_nullable
 as EnumHasValue,filter: null == filter ? _self.filter : filter // ignore: cast_nullable_to_non_nullable
 as Filter,sortAscending: null == sortAscending ? _self.sortAscending : sortAscending // ignore: cast_nullable_to_non_nullable
-as bool,isGridView: null == isGridView ? _self.isGridView : isGridView // ignore: cast_nullable_to_non_nullable
 as bool,collapseSeries: null == collapseSeries ? _self.collapseSeries : collapseSeries // ignore: cast_nullable_to_non_nullable
-as bool,stackTitle: null == stackTitle ? _self.stackTitle : stackTitle // ignore: cast_nullable_to_non_nullable
-as bool,showTitle: null == showTitle ? _self.showTitle : showTitle // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
