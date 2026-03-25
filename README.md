@@ -17,19 +17,19 @@ A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf)
 
 | Library | Server |
 |:--------|:-------|
-| <img src="assets/screenshots/library.jpg" width="300" alt="Storii library view showing audiobooks"> | <img src="assets/screenshots/server.jpg" width="300" alt="Storii server connection screen"> |
+| <img src="metadata/android/en-US/images/phoneScreenshots/1.jpg" width="300" alt="Storii library view showing audiobooks"> | <img src="metadata/android/en-US/images/phoneScreenshots/2.jpg" width="300" alt="Storii server connection screen"> |
 
 | Home with Player | Now Playing |
 |:-----------------|:------------|
-| <img src="assets/screenshots/home_with_player.jpg" width="300" alt="Storii home screen with mini player"> | <img src="assets/screenshots/now_playing.jpg" width="300" alt="Storii now playing screen with playback controls"> |
+| <img src="metadata/android/en-US/images/phoneScreenshots/3.jpg" width="300" alt="Storii home screen with mini player"> | <img src="metadata/android/en-US/images/phoneScreenshots/4.jpg" width="300" alt="Storii now playing screen with playback controls"> |
 
 | Book Details | Series |
 |:-------------|:-------|
-| <img src="assets/screenshots/detail.jpg" width="300" alt="Storii audiobook detail screen with chapters"> | <img src="assets/screenshots/series.jpg" width="300" alt="Storii series view listing related books"> |
+| <img src="metadata/android/en-US/images/phoneScreenshots/5.jpg" width="300" alt="Storii audiobook detail screen with chapters"> | <img src="metadata/android/en-US/images/phoneScreenshots/6.jpg" width="300" alt="Storii series view listing related books"> |
 
 | Settings | Appearance |
 |:---------|:-----------|
-| <img src="assets/screenshots/settings.jpg" width="300" alt="Storii application settings screen"> | <img src="assets/screenshots/appearance.jpg" width="300" alt="Storii appearance and theme settings"> |
+| <img src="metadata/android/en-US/images/phoneScreenshots/7.jpg" width="300" alt="Storii application settings screen"> | <img src="metadata/android/en-US/images/phoneScreenshots/8.jpg" width="300" alt="Storii appearance and theme settings"> |
 
 ## Roadmap
 
