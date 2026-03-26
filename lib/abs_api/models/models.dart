@@ -39,6 +39,7 @@ export 'rss_feed.dart';
 export 'rss_feed_episode.dart';
 export 'rss_feed_episode_enclosure.dart';
 export 'rss_feed_metadata.dart';
+export 'search_response.dart';
 export 'series.dart';
 export 'series_progress.dart';
 export 'series_request_params.dart';

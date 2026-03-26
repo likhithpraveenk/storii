@@ -106,3 +106,19 @@ Object? readSeries(Map json, String key) {
 Object? readBooksOrItems(Map json, String key) {
   return json['books'] ?? json['items'];
 }
+
+Object? readLibraryItemList(Map json, String key) {
+  final list = json[key] as List<dynamic>?;
+  return list?.map((e) => e['libraryItem']).toList();
+}
+
+Object? readSeriesWithBooks(Map json, String key) {
+  final list = json[key] as List<dynamic>?;
+  if (list == null) return null;
+
+  return list.map((item) {
+    final seriesMap = item['series'] as Map<String, dynamic>;
+    final booksList = item['books'] as List<dynamic>?;
+    return {...seriesMap, 'books': booksList};
+  }).toList();
+}
