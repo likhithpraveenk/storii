@@ -13,7 +13,7 @@ sealed class MediaProgress with _$MediaProgress {
     @DurationPreciseSecondsConverter() required Duration duration,
     double? progress,
     @DurationPreciseSecondsConverter()
-    @JsonKey(readValue: readDuration)
+    @JsonKey(readValue: _readDuration)
     required Duration currentTime,
     required bool isFinished,
     required bool hideFromContinueListening,
@@ -24,4 +24,10 @@ sealed class MediaProgress with _$MediaProgress {
 
   factory MediaProgress.fromJson(Map<String, dynamic> json) =>
       _$MediaProgressFromJson(json);
+}
+
+Object? _readDuration(Map json, String key) {
+  final value = json[key];
+  if (value is num) return value;
+  return num.tryParse(value);
 }

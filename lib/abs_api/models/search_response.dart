@@ -5,35 +5,21 @@ part 'search_response.freezed.dart';
 part 'search_response.g.dart';
 
 @freezed
-sealed class SearchResponse with _$SearchResponse {
-  const factory SearchResponse.book({
-    @JsonKey(readValue: readLibraryItemList)
-    @Default([])
-    List<LibraryItem> book,
-
+abstract class SearchResponse with _$SearchResponse {
+  const factory SearchResponse({
     @Default([]) List<SearchResultItem> narrators,
     @Default([]) List<Author> authors,
     @Default([]) List<SearchResultItem> tags,
     @Default([]) List<SearchResultItem> genres,
 
-    @JsonKey(readValue: readSeriesWithBooks) @Default([]) List<Series> series,
-  }) = BookSearchResponse;
-
-  const factory SearchResponse.podcast({
-    @JsonKey(readValue: readLibraryItemList)
-    @Default([])
-    List<LibraryItem> podcast,
-
-    @JsonKey(readValue: readLibraryItemList)
-    @Default([])
-    List<LibraryItem> episodes,
-
-    @Default([]) List<SearchResultItem> tags,
-    @Default([]) List<SearchResultItem> genres,
-  }) = PodcastSearchResponse;
+    @JsonKey(readValue: _itemList) @Default([]) List<LibraryItem> book,
+    @JsonKey(readValue: _itemList) @Default([]) List<LibraryItem> podcast,
+    @JsonKey(readValue: _itemList) @Default([]) List<LibraryItem> episodes,
+    @JsonKey(readValue: _seriesCombined) @Default([]) List<Series> series,
+  }) = _SearchResponse;
 
   factory SearchResponse.fromJson(Map<String, dynamic> json) =>
-      const SearchResponseConverter().fromJson(json);
+      _$SearchResponseFromJson(json);
 }
 
 @freezed
@@ -47,22 +33,18 @@ sealed class SearchResultItem with _$SearchResultItem {
       _$SearchResultItemFromJson(json);
 }
 
-class SearchResponseConverter
-    implements JsonConverter<SearchResponse, Map<String, dynamic>> {
-  const SearchResponseConverter();
+Object? _itemList(Map json, String key) {
+  final list = json[key] as List<dynamic>?;
+  return list?.map((e) => e['libraryItem']).toList();
+}
 
-  @override
-  SearchResponse fromJson(Map<String, dynamic> json) {
-    if (json.containsKey('runtimeType')) return _$SearchResponseFromJson(json);
+Object? _seriesCombined(Map json, String key) {
+  final list = json[key] as List<dynamic>?;
+  if (list == null) return null;
 
-    final MediaType mediaType = json.containsKey('book') ? .book : .podcast;
-
-    return switch (mediaType) {
-      .book => BookSearchResponse.fromJson(json),
-      .podcast => PodcastSearchResponse.fromJson(json),
-    };
-  }
-
-  @override
-  Map<String, dynamic> toJson(SearchResponse response) => response.toJson();
+  return list.map((item) {
+    final seriesMap = item['series'] as Map<String, dynamic>;
+    final booksList = item['books'] as List<dynamic>?;
+    return {...seriesMap, 'books': booksList};
+  }).toList();
 }

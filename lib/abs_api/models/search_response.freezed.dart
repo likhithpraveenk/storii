@@ -11,34 +11,11 @@ part of 'search_response.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-SearchResponse _$SearchResponseFromJson(
-  Map<String, dynamic> json
-) {
-        switch (json['runtimeType']) {
-                  case 'book':
-          return BookSearchResponse.fromJson(
-            json
-          );
-                case 'podcast':
-          return PodcastSearchResponse.fromJson(
-            json
-          );
-        
-          default:
-            throw CheckedFromJsonException(
-  json,
-  'runtimeType',
-  'SearchResponse',
-  'Invalid union type "${json['runtimeType']}"!'
-);
-        }
-      
-}
 
 /// @nodoc
 mixin _$SearchResponse {
 
- List<SearchResultItem> get tags; List<SearchResultItem> get genres;
+ List<SearchResultItem> get narrators; List<Author> get authors; List<SearchResultItem> get tags; List<SearchResultItem> get genres;@JsonKey(readValue: _itemList) List<LibraryItem> get book;@JsonKey(readValue: _itemList) List<LibraryItem> get podcast;@JsonKey(readValue: _itemList) List<LibraryItem> get episodes;@JsonKey(readValue: _seriesCombined) List<Series> get series;
 /// Create a copy of SearchResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -51,16 +28,16 @@ $SearchResponseCopyWith<SearchResponse> get copyWith => _$SearchResponseCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SearchResponse&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.genres, genres));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SearchResponse&&const DeepCollectionEquality().equals(other.narrators, narrators)&&const DeepCollectionEquality().equals(other.authors, authors)&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.genres, genres)&&const DeepCollectionEquality().equals(other.book, book)&&const DeepCollectionEquality().equals(other.podcast, podcast)&&const DeepCollectionEquality().equals(other.episodes, episodes)&&const DeepCollectionEquality().equals(other.series, series));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(genres));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(narrators),const DeepCollectionEquality().hash(authors),const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(genres),const DeepCollectionEquality().hash(book),const DeepCollectionEquality().hash(podcast),const DeepCollectionEquality().hash(episodes),const DeepCollectionEquality().hash(series));
 
 @override
 String toString() {
-  return 'SearchResponse(tags: $tags, genres: $genres)';
+  return 'SearchResponse(narrators: $narrators, authors: $authors, tags: $tags, genres: $genres, book: $book, podcast: $podcast, episodes: $episodes, series: $series)';
 }
 
 
@@ -71,7 +48,7 @@ abstract mixin class $SearchResponseCopyWith<$Res>  {
   factory $SearchResponseCopyWith(SearchResponse value, $Res Function(SearchResponse) _then) = _$SearchResponseCopyWithImpl;
 @useResult
 $Res call({
- List<SearchResultItem> tags, List<SearchResultItem> genres
+ List<SearchResultItem> narrators, List<Author> authors, List<SearchResultItem> tags, List<SearchResultItem> genres,@JsonKey(readValue: _itemList) List<LibraryItem> book,@JsonKey(readValue: _itemList) List<LibraryItem> podcast,@JsonKey(readValue: _itemList) List<LibraryItem> episodes,@JsonKey(readValue: _seriesCombined) List<Series> series
 });
 
 
@@ -88,11 +65,17 @@ class _$SearchResponseCopyWithImpl<$Res>
 
 /// Create a copy of SearchResponse
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? tags = null,Object? genres = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? narrators = null,Object? authors = null,Object? tags = null,Object? genres = null,Object? book = null,Object? podcast = null,Object? episodes = null,Object? series = null,}) {
   return _then(_self.copyWith(
-tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
+narrators: null == narrators ? _self.narrators : narrators // ignore: cast_nullable_to_non_nullable
+as List<SearchResultItem>,authors: null == authors ? _self.authors : authors // ignore: cast_nullable_to_non_nullable
+as List<Author>,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<SearchResultItem>,genres: null == genres ? _self.genres : genres // ignore: cast_nullable_to_non_nullable
-as List<SearchResultItem>,
+as List<SearchResultItem>,book: null == book ? _self.book : book // ignore: cast_nullable_to_non_nullable
+as List<LibraryItem>,podcast: null == podcast ? _self.podcast : podcast // ignore: cast_nullable_to_non_nullable
+as List<LibraryItem>,episodes: null == episodes ? _self.episodes : episodes // ignore: cast_nullable_to_non_nullable
+as List<LibraryItem>,series: null == series ? _self.series : series // ignore: cast_nullable_to_non_nullable
+as List<Series>,
   ));
 }
 
@@ -113,12 +96,11 @@ extension SearchResponsePatterns on SearchResponse {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( BookSearchResponse value)?  book,TResult Function( PodcastSearchResponse value)?  podcast,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SearchResponse value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case BookSearchResponse() when book != null:
-return book(_that);case PodcastSearchResponse() when podcast != null:
-return podcast(_that);case _:
+case _SearchResponse() when $default != null:
+return $default(_that);case _:
   return orElse();
 
 }
@@ -136,12 +118,14 @@ return podcast(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( BookSearchResponse value)  book,required TResult Function( PodcastSearchResponse value)  podcast,}){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SearchResponse value)  $default,){
 final _that = this;
 switch (_that) {
-case BookSearchResponse():
-return book(_that);case PodcastSearchResponse():
-return podcast(_that);}
+case _SearchResponse():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -155,12 +139,11 @@ return podcast(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( BookSearchResponse value)?  book,TResult? Function( PodcastSearchResponse value)?  podcast,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SearchResponse value)?  $default,){
 final _that = this;
 switch (_that) {
-case BookSearchResponse() when book != null:
-return book(_that);case PodcastSearchResponse() when podcast != null:
-return podcast(_that);case _:
+case _SearchResponse() when $default != null:
+return $default(_that);case _:
   return null;
 
 }
@@ -177,11 +160,10 @@ return podcast(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function(@JsonKey(readValue: readLibraryItemList)  List<LibraryItem> book,  List<SearchResultItem> narrators,  List<Author> authors,  List<SearchResultItem> tags,  List<SearchResultItem> genres, @JsonKey(readValue: readSeriesWithBooks)  List<Series> series)?  book,TResult Function(@JsonKey(readValue: readLibraryItemList)  List<LibraryItem> podcast, @JsonKey(readValue: readLibraryItemList)  List<LibraryItem> episodes,  List<SearchResultItem> tags,  List<SearchResultItem> genres)?  podcast,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<SearchResultItem> narrators,  List<Author> authors,  List<SearchResultItem> tags,  List<SearchResultItem> genres, @JsonKey(readValue: _itemList)  List<LibraryItem> book, @JsonKey(readValue: _itemList)  List<LibraryItem> podcast, @JsonKey(readValue: _itemList)  List<LibraryItem> episodes, @JsonKey(readValue: _seriesCombined)  List<Series> series)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case BookSearchResponse() when book != null:
-return book(_that.book,_that.narrators,_that.authors,_that.tags,_that.genres,_that.series);case PodcastSearchResponse() when podcast != null:
-return podcast(_that.podcast,_that.episodes,_that.tags,_that.genres);case _:
+case _SearchResponse() when $default != null:
+return $default(_that.narrators,_that.authors,_that.tags,_that.genres,_that.book,_that.podcast,_that.episodes,_that.series);case _:
   return orElse();
 
 }
@@ -199,11 +181,13 @@ return podcast(_that.podcast,_that.episodes,_that.tags,_that.genres);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function(@JsonKey(readValue: readLibraryItemList)  List<LibraryItem> book,  List<SearchResultItem> narrators,  List<Author> authors,  List<SearchResultItem> tags,  List<SearchResultItem> genres, @JsonKey(readValue: readSeriesWithBooks)  List<Series> series)  book,required TResult Function(@JsonKey(readValue: readLibraryItemList)  List<LibraryItem> podcast, @JsonKey(readValue: readLibraryItemList)  List<LibraryItem> episodes,  List<SearchResultItem> tags,  List<SearchResultItem> genres)  podcast,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<SearchResultItem> narrators,  List<Author> authors,  List<SearchResultItem> tags,  List<SearchResultItem> genres, @JsonKey(readValue: _itemList)  List<LibraryItem> book, @JsonKey(readValue: _itemList)  List<LibraryItem> podcast, @JsonKey(readValue: _itemList)  List<LibraryItem> episodes, @JsonKey(readValue: _seriesCombined)  List<Series> series)  $default,) {final _that = this;
 switch (_that) {
-case BookSearchResponse():
-return book(_that.book,_that.narrators,_that.authors,_that.tags,_that.genres,_that.series);case PodcastSearchResponse():
-return podcast(_that.podcast,_that.episodes,_that.tags,_that.genres);}
+case _SearchResponse():
+return $default(_that.narrators,_that.authors,_that.tags,_that.genres,_that.book,_that.podcast,_that.episodes,_that.series);case _:
+  throw StateError('Unexpected subclass');
+
+}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -217,11 +201,10 @@ return podcast(_that.podcast,_that.episodes,_that.tags,_that.genres);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function(@JsonKey(readValue: readLibraryItemList)  List<LibraryItem> book,  List<SearchResultItem> narrators,  List<Author> authors,  List<SearchResultItem> tags,  List<SearchResultItem> genres, @JsonKey(readValue: readSeriesWithBooks)  List<Series> series)?  book,TResult? Function(@JsonKey(readValue: readLibraryItemList)  List<LibraryItem> podcast, @JsonKey(readValue: readLibraryItemList)  List<LibraryItem> episodes,  List<SearchResultItem> tags,  List<SearchResultItem> genres)?  podcast,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<SearchResultItem> narrators,  List<Author> authors,  List<SearchResultItem> tags,  List<SearchResultItem> genres, @JsonKey(readValue: _itemList)  List<LibraryItem> book, @JsonKey(readValue: _itemList)  List<LibraryItem> podcast, @JsonKey(readValue: _itemList)  List<LibraryItem> episodes, @JsonKey(readValue: _seriesCombined)  List<Series> series)?  $default,) {final _that = this;
 switch (_that) {
-case BookSearchResponse() when book != null:
-return book(_that.book,_that.narrators,_that.authors,_that.tags,_that.genres,_that.series);case PodcastSearchResponse() when podcast != null:
-return podcast(_that.podcast,_that.episodes,_that.tags,_that.genres);case _:
+case _SearchResponse() when $default != null:
+return $default(_that.narrators,_that.authors,_that.tags,_that.genres,_that.book,_that.podcast,_that.episodes,_that.series);case _:
   return null;
 
 }
@@ -232,26 +215,19 @@ return podcast(_that.podcast,_that.episodes,_that.tags,_that.genres);case _:
 /// @nodoc
 @JsonSerializable()
 
-class BookSearchResponse implements SearchResponse {
-  const BookSearchResponse({@JsonKey(readValue: readLibraryItemList) final  List<LibraryItem> book = const [], final  List<SearchResultItem> narrators = const [], final  List<Author> authors = const [], final  List<SearchResultItem> tags = const [], final  List<SearchResultItem> genres = const [], @JsonKey(readValue: readSeriesWithBooks) final  List<Series> series = const [], final  String? $type}): _book = book,_narrators = narrators,_authors = authors,_tags = tags,_genres = genres,_series = series,$type = $type ?? 'book';
-  factory BookSearchResponse.fromJson(Map<String, dynamic> json) => _$BookSearchResponseFromJson(json);
-
- final  List<LibraryItem> _book;
-@JsonKey(readValue: readLibraryItemList) List<LibraryItem> get book {
-  if (_book is EqualUnmodifiableListView) return _book;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_book);
-}
+class _SearchResponse implements SearchResponse {
+  const _SearchResponse({final  List<SearchResultItem> narrators = const [], final  List<Author> authors = const [], final  List<SearchResultItem> tags = const [], final  List<SearchResultItem> genres = const [], @JsonKey(readValue: _itemList) final  List<LibraryItem> book = const [], @JsonKey(readValue: _itemList) final  List<LibraryItem> podcast = const [], @JsonKey(readValue: _itemList) final  List<LibraryItem> episodes = const [], @JsonKey(readValue: _seriesCombined) final  List<Series> series = const []}): _narrators = narrators,_authors = authors,_tags = tags,_genres = genres,_book = book,_podcast = podcast,_episodes = episodes,_series = series;
+  factory _SearchResponse.fromJson(Map<String, dynamic> json) => _$SearchResponseFromJson(json);
 
  final  List<SearchResultItem> _narrators;
-@JsonKey() List<SearchResultItem> get narrators {
+@override@JsonKey() List<SearchResultItem> get narrators {
   if (_narrators is EqualUnmodifiableListView) return _narrators;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_narrators);
 }
 
  final  List<Author> _authors;
-@JsonKey() List<Author> get authors {
+@override@JsonKey() List<Author> get authors {
   if (_authors is EqualUnmodifiableListView) return _authors;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_authors);
@@ -271,157 +247,69 @@ class BookSearchResponse implements SearchResponse {
   return EqualUnmodifiableListView(_genres);
 }
 
- final  List<Series> _series;
-@JsonKey(readValue: readSeriesWithBooks) List<Series> get series {
-  if (_series is EqualUnmodifiableListView) return _series;
+ final  List<LibraryItem> _book;
+@override@JsonKey(readValue: _itemList) List<LibraryItem> get book {
+  if (_book is EqualUnmodifiableListView) return _book;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_series);
+  return EqualUnmodifiableListView(_book);
 }
-
-
-@JsonKey(name: 'runtimeType')
-final String $type;
-
-
-/// Create a copy of SearchResponse
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$BookSearchResponseCopyWith<BookSearchResponse> get copyWith => _$BookSearchResponseCopyWithImpl<BookSearchResponse>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$BookSearchResponseToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookSearchResponse&&const DeepCollectionEquality().equals(other._book, _book)&&const DeepCollectionEquality().equals(other._narrators, _narrators)&&const DeepCollectionEquality().equals(other._authors, _authors)&&const DeepCollectionEquality().equals(other._tags, _tags)&&const DeepCollectionEquality().equals(other._genres, _genres)&&const DeepCollectionEquality().equals(other._series, _series));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_book),const DeepCollectionEquality().hash(_narrators),const DeepCollectionEquality().hash(_authors),const DeepCollectionEquality().hash(_tags),const DeepCollectionEquality().hash(_genres),const DeepCollectionEquality().hash(_series));
-
-@override
-String toString() {
-  return 'SearchResponse.book(book: $book, narrators: $narrators, authors: $authors, tags: $tags, genres: $genres, series: $series)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $BookSearchResponseCopyWith<$Res> implements $SearchResponseCopyWith<$Res> {
-  factory $BookSearchResponseCopyWith(BookSearchResponse value, $Res Function(BookSearchResponse) _then) = _$BookSearchResponseCopyWithImpl;
-@override @useResult
-$Res call({
-@JsonKey(readValue: readLibraryItemList) List<LibraryItem> book, List<SearchResultItem> narrators, List<Author> authors, List<SearchResultItem> tags, List<SearchResultItem> genres,@JsonKey(readValue: readSeriesWithBooks) List<Series> series
-});
-
-
-
-
-}
-/// @nodoc
-class _$BookSearchResponseCopyWithImpl<$Res>
-    implements $BookSearchResponseCopyWith<$Res> {
-  _$BookSearchResponseCopyWithImpl(this._self, this._then);
-
-  final BookSearchResponse _self;
-  final $Res Function(BookSearchResponse) _then;
-
-/// Create a copy of SearchResponse
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? book = null,Object? narrators = null,Object? authors = null,Object? tags = null,Object? genres = null,Object? series = null,}) {
-  return _then(BookSearchResponse(
-book: null == book ? _self._book : book // ignore: cast_nullable_to_non_nullable
-as List<LibraryItem>,narrators: null == narrators ? _self._narrators : narrators // ignore: cast_nullable_to_non_nullable
-as List<SearchResultItem>,authors: null == authors ? _self._authors : authors // ignore: cast_nullable_to_non_nullable
-as List<Author>,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
-as List<SearchResultItem>,genres: null == genres ? _self._genres : genres // ignore: cast_nullable_to_non_nullable
-as List<SearchResultItem>,series: null == series ? _self._series : series // ignore: cast_nullable_to_non_nullable
-as List<Series>,
-  ));
-}
-
-
-}
-
-/// @nodoc
-@JsonSerializable()
-
-class PodcastSearchResponse implements SearchResponse {
-  const PodcastSearchResponse({@JsonKey(readValue: readLibraryItemList) final  List<LibraryItem> podcast = const [], @JsonKey(readValue: readLibraryItemList) final  List<LibraryItem> episodes = const [], final  List<SearchResultItem> tags = const [], final  List<SearchResultItem> genres = const [], final  String? $type}): _podcast = podcast,_episodes = episodes,_tags = tags,_genres = genres,$type = $type ?? 'podcast';
-  factory PodcastSearchResponse.fromJson(Map<String, dynamic> json) => _$PodcastSearchResponseFromJson(json);
 
  final  List<LibraryItem> _podcast;
-@JsonKey(readValue: readLibraryItemList) List<LibraryItem> get podcast {
+@override@JsonKey(readValue: _itemList) List<LibraryItem> get podcast {
   if (_podcast is EqualUnmodifiableListView) return _podcast;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_podcast);
 }
 
  final  List<LibraryItem> _episodes;
-@JsonKey(readValue: readLibraryItemList) List<LibraryItem> get episodes {
+@override@JsonKey(readValue: _itemList) List<LibraryItem> get episodes {
   if (_episodes is EqualUnmodifiableListView) return _episodes;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_episodes);
 }
 
- final  List<SearchResultItem> _tags;
-@override@JsonKey() List<SearchResultItem> get tags {
-  if (_tags is EqualUnmodifiableListView) return _tags;
+ final  List<Series> _series;
+@override@JsonKey(readValue: _seriesCombined) List<Series> get series {
+  if (_series is EqualUnmodifiableListView) return _series;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_tags);
+  return EqualUnmodifiableListView(_series);
 }
-
- final  List<SearchResultItem> _genres;
-@override@JsonKey() List<SearchResultItem> get genres {
-  if (_genres is EqualUnmodifiableListView) return _genres;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_genres);
-}
-
-
-@JsonKey(name: 'runtimeType')
-final String $type;
 
 
 /// Create a copy of SearchResponse
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$PodcastSearchResponseCopyWith<PodcastSearchResponse> get copyWith => _$PodcastSearchResponseCopyWithImpl<PodcastSearchResponse>(this, _$identity);
+_$SearchResponseCopyWith<_SearchResponse> get copyWith => __$SearchResponseCopyWithImpl<_SearchResponse>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$PodcastSearchResponseToJson(this, );
+  return _$SearchResponseToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastSearchResponse&&const DeepCollectionEquality().equals(other._podcast, _podcast)&&const DeepCollectionEquality().equals(other._episodes, _episodes)&&const DeepCollectionEquality().equals(other._tags, _tags)&&const DeepCollectionEquality().equals(other._genres, _genres));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SearchResponse&&const DeepCollectionEquality().equals(other._narrators, _narrators)&&const DeepCollectionEquality().equals(other._authors, _authors)&&const DeepCollectionEquality().equals(other._tags, _tags)&&const DeepCollectionEquality().equals(other._genres, _genres)&&const DeepCollectionEquality().equals(other._book, _book)&&const DeepCollectionEquality().equals(other._podcast, _podcast)&&const DeepCollectionEquality().equals(other._episodes, _episodes)&&const DeepCollectionEquality().equals(other._series, _series));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_podcast),const DeepCollectionEquality().hash(_episodes),const DeepCollectionEquality().hash(_tags),const DeepCollectionEquality().hash(_genres));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_narrators),const DeepCollectionEquality().hash(_authors),const DeepCollectionEquality().hash(_tags),const DeepCollectionEquality().hash(_genres),const DeepCollectionEquality().hash(_book),const DeepCollectionEquality().hash(_podcast),const DeepCollectionEquality().hash(_episodes),const DeepCollectionEquality().hash(_series));
 
 @override
 String toString() {
-  return 'SearchResponse.podcast(podcast: $podcast, episodes: $episodes, tags: $tags, genres: $genres)';
+  return 'SearchResponse(narrators: $narrators, authors: $authors, tags: $tags, genres: $genres, book: $book, podcast: $podcast, episodes: $episodes, series: $series)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $PodcastSearchResponseCopyWith<$Res> implements $SearchResponseCopyWith<$Res> {
-  factory $PodcastSearchResponseCopyWith(PodcastSearchResponse value, $Res Function(PodcastSearchResponse) _then) = _$PodcastSearchResponseCopyWithImpl;
+abstract mixin class _$SearchResponseCopyWith<$Res> implements $SearchResponseCopyWith<$Res> {
+  factory _$SearchResponseCopyWith(_SearchResponse value, $Res Function(_SearchResponse) _then) = __$SearchResponseCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(readValue: readLibraryItemList) List<LibraryItem> podcast,@JsonKey(readValue: readLibraryItemList) List<LibraryItem> episodes, List<SearchResultItem> tags, List<SearchResultItem> genres
+ List<SearchResultItem> narrators, List<Author> authors, List<SearchResultItem> tags, List<SearchResultItem> genres,@JsonKey(readValue: _itemList) List<LibraryItem> book,@JsonKey(readValue: _itemList) List<LibraryItem> podcast,@JsonKey(readValue: _itemList) List<LibraryItem> episodes,@JsonKey(readValue: _seriesCombined) List<Series> series
 });
 
 
@@ -429,22 +317,26 @@ $Res call({
 
 }
 /// @nodoc
-class _$PodcastSearchResponseCopyWithImpl<$Res>
-    implements $PodcastSearchResponseCopyWith<$Res> {
-  _$PodcastSearchResponseCopyWithImpl(this._self, this._then);
+class __$SearchResponseCopyWithImpl<$Res>
+    implements _$SearchResponseCopyWith<$Res> {
+  __$SearchResponseCopyWithImpl(this._self, this._then);
 
-  final PodcastSearchResponse _self;
-  final $Res Function(PodcastSearchResponse) _then;
+  final _SearchResponse _self;
+  final $Res Function(_SearchResponse) _then;
 
 /// Create a copy of SearchResponse
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? podcast = null,Object? episodes = null,Object? tags = null,Object? genres = null,}) {
-  return _then(PodcastSearchResponse(
-podcast: null == podcast ? _self._podcast : podcast // ignore: cast_nullable_to_non_nullable
-as List<LibraryItem>,episodes: null == episodes ? _self._episodes : episodes // ignore: cast_nullable_to_non_nullable
-as List<LibraryItem>,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
+@override @pragma('vm:prefer-inline') $Res call({Object? narrators = null,Object? authors = null,Object? tags = null,Object? genres = null,Object? book = null,Object? podcast = null,Object? episodes = null,Object? series = null,}) {
+  return _then(_SearchResponse(
+narrators: null == narrators ? _self._narrators : narrators // ignore: cast_nullable_to_non_nullable
+as List<SearchResultItem>,authors: null == authors ? _self._authors : authors // ignore: cast_nullable_to_non_nullable
+as List<Author>,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
 as List<SearchResultItem>,genres: null == genres ? _self._genres : genres // ignore: cast_nullable_to_non_nullable
-as List<SearchResultItem>,
+as List<SearchResultItem>,book: null == book ? _self._book : book // ignore: cast_nullable_to_non_nullable
+as List<LibraryItem>,podcast: null == podcast ? _self._podcast : podcast // ignore: cast_nullable_to_non_nullable
+as List<LibraryItem>,episodes: null == episodes ? _self._episodes : episodes // ignore: cast_nullable_to_non_nullable
+as List<LibraryItem>,series: null == series ? _self._series : series // ignore: cast_nullable_to_non_nullable
+as List<Series>,
   ));
 }
 

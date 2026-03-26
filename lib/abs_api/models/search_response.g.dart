@@ -6,13 +6,8 @@ part of 'search_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BookSearchResponse _$BookSearchResponseFromJson(Map<String, dynamic> json) =>
-    BookSearchResponse(
-      book:
-          (readLibraryItemList(json, 'book') as List<dynamic>?)
-              ?.map((e) => LibraryItem.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
+_SearchResponse _$SearchResponseFromJson(Map<String, dynamic> json) =>
+    _SearchResponse(
       narrators:
           (json['narrators'] as List<dynamic>?)
               ?.map((e) => SearchResultItem.fromJson(e as Map<String, dynamic>))
@@ -33,60 +28,39 @@ BookSearchResponse _$BookSearchResponseFromJson(Map<String, dynamic> json) =>
               ?.map((e) => SearchResultItem.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      book:
+          (_itemList(json, 'book') as List<dynamic>?)
+              ?.map((e) => LibraryItem.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      podcast:
+          (_itemList(json, 'podcast') as List<dynamic>?)
+              ?.map((e) => LibraryItem.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      episodes:
+          (_itemList(json, 'episodes') as List<dynamic>?)
+              ?.map((e) => LibraryItem.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       series:
-          (readSeriesWithBooks(json, 'series') as List<dynamic>?)
+          (_seriesCombined(json, 'series') as List<dynamic>?)
               ?.map((e) => Series.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$BookSearchResponseToJson(BookSearchResponse instance) =>
+Map<String, dynamic> _$SearchResponseToJson(_SearchResponse instance) =>
     <String, dynamic>{
-      'book': instance.book.map((e) => e.toJson()).toList(),
       'narrators': instance.narrators.map((e) => e.toJson()).toList(),
       'authors': instance.authors.map((e) => e.toJson()).toList(),
       'tags': instance.tags.map((e) => e.toJson()).toList(),
       'genres': instance.genres.map((e) => e.toJson()).toList(),
+      'book': instance.book.map((e) => e.toJson()).toList(),
+      'podcast': instance.podcast.map((e) => e.toJson()).toList(),
+      'episodes': instance.episodes.map((e) => e.toJson()).toList(),
       'series': instance.series.map((e) => e.toJson()).toList(),
-      'runtimeType': instance.$type,
     };
-
-PodcastSearchResponse _$PodcastSearchResponseFromJson(
-  Map<String, dynamic> json,
-) => PodcastSearchResponse(
-  podcast:
-      (readLibraryItemList(json, 'podcast') as List<dynamic>?)
-          ?.map((e) => LibraryItem.fromJson(e as Map<String, dynamic>))
-          .toList() ??
-      const [],
-  episodes:
-      (readLibraryItemList(json, 'episodes') as List<dynamic>?)
-          ?.map((e) => LibraryItem.fromJson(e as Map<String, dynamic>))
-          .toList() ??
-      const [],
-  tags:
-      (json['tags'] as List<dynamic>?)
-          ?.map((e) => SearchResultItem.fromJson(e as Map<String, dynamic>))
-          .toList() ??
-      const [],
-  genres:
-      (json['genres'] as List<dynamic>?)
-          ?.map((e) => SearchResultItem.fromJson(e as Map<String, dynamic>))
-          .toList() ??
-      const [],
-  $type: json['runtimeType'] as String?,
-);
-
-Map<String, dynamic> _$PodcastSearchResponseToJson(
-  PodcastSearchResponse instance,
-) => <String, dynamic>{
-  'podcast': instance.podcast.map((e) => e.toJson()).toList(),
-  'episodes': instance.episodes.map((e) => e.toJson()).toList(),
-  'tags': instance.tags.map((e) => e.toJson()).toList(),
-  'genres': instance.genres.map((e) => e.toJson()).toList(),
-  'runtimeType': instance.$type,
-};
 
 _SearchResultItem _$SearchResultItemFromJson(Map<String, dynamic> json) =>
     _SearchResultItem(

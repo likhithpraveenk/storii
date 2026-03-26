@@ -17,7 +17,7 @@ mixin _$Series {
 
  String get id; String get name; String? get libraryId; String? get nameIgnorePrefix;// Common Metadata
  String? get description; DateTime? get addedAt; DateTime? get updatedAt;// Content / Collections
-@JsonKey(readValue: readBooksOrItems) List<LibraryItem> get books; int? get numBooks;// Sequence & Sorting
+@JsonKey(readValue: _booksOrItems) List<LibraryItem> get books; int? get numBooks;// Sequence & Sorting
  String? get sequence; String? get seriesSequenceList;// Progress & States
  SeriesProgress? get progress; bool? get inProgress; bool? get hasActiveBook; bool? get hideFromContinueListening; DateTime? get bookInProgressLastUpdate; LibraryItem? get firstBookUnread;
 /// Create a copy of Series
@@ -52,7 +52,7 @@ abstract mixin class $SeriesCopyWith<$Res>  {
   factory $SeriesCopyWith(Series value, $Res Function(Series) _then) = _$SeriesCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String? libraryId, String? nameIgnorePrefix, String? description, DateTime? addedAt, DateTime? updatedAt,@JsonKey(readValue: readBooksOrItems) List<LibraryItem> books, int? numBooks, String? sequence, String? seriesSequenceList, SeriesProgress? progress, bool? inProgress, bool? hasActiveBook, bool? hideFromContinueListening, DateTime? bookInProgressLastUpdate, LibraryItem? firstBookUnread
+ String id, String name, String? libraryId, String? nameIgnorePrefix, String? description, DateTime? addedAt, DateTime? updatedAt,@JsonKey(readValue: _booksOrItems) List<LibraryItem> books, int? numBooks, String? sequence, String? seriesSequenceList, SeriesProgress? progress, bool? inProgress, bool? hasActiveBook, bool? hideFromContinueListening, DateTime? bookInProgressLastUpdate, LibraryItem? firstBookUnread
 });
 
 
@@ -194,7 +194,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? libraryId,  String? nameIgnorePrefix,  String? description,  DateTime? addedAt,  DateTime? updatedAt, @JsonKey(readValue: readBooksOrItems)  List<LibraryItem> books,  int? numBooks,  String? sequence,  String? seriesSequenceList,  SeriesProgress? progress,  bool? inProgress,  bool? hasActiveBook,  bool? hideFromContinueListening,  DateTime? bookInProgressLastUpdate,  LibraryItem? firstBookUnread)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? libraryId,  String? nameIgnorePrefix,  String? description,  DateTime? addedAt,  DateTime? updatedAt, @JsonKey(readValue: _booksOrItems)  List<LibraryItem> books,  int? numBooks,  String? sequence,  String? seriesSequenceList,  SeriesProgress? progress,  bool? inProgress,  bool? hasActiveBook,  bool? hideFromContinueListening,  DateTime? bookInProgressLastUpdate,  LibraryItem? firstBookUnread)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Series() when $default != null:
 return $default(_that.id,_that.name,_that.libraryId,_that.nameIgnorePrefix,_that.description,_that.addedAt,_that.updatedAt,_that.books,_that.numBooks,_that.sequence,_that.seriesSequenceList,_that.progress,_that.inProgress,_that.hasActiveBook,_that.hideFromContinueListening,_that.bookInProgressLastUpdate,_that.firstBookUnread);case _:
@@ -215,7 +215,7 @@ return $default(_that.id,_that.name,_that.libraryId,_that.nameIgnorePrefix,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? libraryId,  String? nameIgnorePrefix,  String? description,  DateTime? addedAt,  DateTime? updatedAt, @JsonKey(readValue: readBooksOrItems)  List<LibraryItem> books,  int? numBooks,  String? sequence,  String? seriesSequenceList,  SeriesProgress? progress,  bool? inProgress,  bool? hasActiveBook,  bool? hideFromContinueListening,  DateTime? bookInProgressLastUpdate,  LibraryItem? firstBookUnread)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? libraryId,  String? nameIgnorePrefix,  String? description,  DateTime? addedAt,  DateTime? updatedAt, @JsonKey(readValue: _booksOrItems)  List<LibraryItem> books,  int? numBooks,  String? sequence,  String? seriesSequenceList,  SeriesProgress? progress,  bool? inProgress,  bool? hasActiveBook,  bool? hideFromContinueListening,  DateTime? bookInProgressLastUpdate,  LibraryItem? firstBookUnread)  $default,) {final _that = this;
 switch (_that) {
 case _Series():
 return $default(_that.id,_that.name,_that.libraryId,_that.nameIgnorePrefix,_that.description,_that.addedAt,_that.updatedAt,_that.books,_that.numBooks,_that.sequence,_that.seriesSequenceList,_that.progress,_that.inProgress,_that.hasActiveBook,_that.hideFromContinueListening,_that.bookInProgressLastUpdate,_that.firstBookUnread);}
@@ -232,7 +232,7 @@ return $default(_that.id,_that.name,_that.libraryId,_that.nameIgnorePrefix,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? libraryId,  String? nameIgnorePrefix,  String? description,  DateTime? addedAt,  DateTime? updatedAt, @JsonKey(readValue: readBooksOrItems)  List<LibraryItem> books,  int? numBooks,  String? sequence,  String? seriesSequenceList,  SeriesProgress? progress,  bool? inProgress,  bool? hasActiveBook,  bool? hideFromContinueListening,  DateTime? bookInProgressLastUpdate,  LibraryItem? firstBookUnread)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? libraryId,  String? nameIgnorePrefix,  String? description,  DateTime? addedAt,  DateTime? updatedAt, @JsonKey(readValue: _booksOrItems)  List<LibraryItem> books,  int? numBooks,  String? sequence,  String? seriesSequenceList,  SeriesProgress? progress,  bool? inProgress,  bool? hasActiveBook,  bool? hideFromContinueListening,  DateTime? bookInProgressLastUpdate,  LibraryItem? firstBookUnread)?  $default,) {final _that = this;
 switch (_that) {
 case _Series() when $default != null:
 return $default(_that.id,_that.name,_that.libraryId,_that.nameIgnorePrefix,_that.description,_that.addedAt,_that.updatedAt,_that.books,_that.numBooks,_that.sequence,_that.seriesSequenceList,_that.progress,_that.inProgress,_that.hasActiveBook,_that.hideFromContinueListening,_that.bookInProgressLastUpdate,_that.firstBookUnread);case _:
@@ -248,7 +248,7 @@ return $default(_that.id,_that.name,_that.libraryId,_that.nameIgnorePrefix,_that
 @DateTimeEpochConverter()
 @DurationPreciseSecondsConverter()
 class _Series implements Series {
-  const _Series({required this.id, required this.name, this.libraryId, this.nameIgnorePrefix, this.description, this.addedAt, this.updatedAt, @JsonKey(readValue: readBooksOrItems) final  List<LibraryItem> books = const [], this.numBooks, this.sequence, this.seriesSequenceList, this.progress, this.inProgress, this.hasActiveBook, this.hideFromContinueListening, this.bookInProgressLastUpdate, this.firstBookUnread}): _books = books;
+  const _Series({required this.id, required this.name, this.libraryId, this.nameIgnorePrefix, this.description, this.addedAt, this.updatedAt, @JsonKey(readValue: _booksOrItems) final  List<LibraryItem> books = const [], this.numBooks, this.sequence, this.seriesSequenceList, this.progress, this.inProgress, this.hasActiveBook, this.hideFromContinueListening, this.bookInProgressLastUpdate, this.firstBookUnread}): _books = books;
   factory _Series.fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);
 
 @override final  String id;
@@ -262,7 +262,7 @@ class _Series implements Series {
 // Content / Collections
  final  List<LibraryItem> _books;
 // Content / Collections
-@override@JsonKey(readValue: readBooksOrItems) List<LibraryItem> get books {
+@override@JsonKey(readValue: _booksOrItems) List<LibraryItem> get books {
   if (_books is EqualUnmodifiableListView) return _books;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_books);
@@ -313,7 +313,7 @@ abstract mixin class _$SeriesCopyWith<$Res> implements $SeriesCopyWith<$Res> {
   factory _$SeriesCopyWith(_Series value, $Res Function(_Series) _then) = __$SeriesCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String? libraryId, String? nameIgnorePrefix, String? description, DateTime? addedAt, DateTime? updatedAt,@JsonKey(readValue: readBooksOrItems) List<LibraryItem> books, int? numBooks, String? sequence, String? seriesSequenceList, SeriesProgress? progress, bool? inProgress, bool? hasActiveBook, bool? hideFromContinueListening, DateTime? bookInProgressLastUpdate, LibraryItem? firstBookUnread
+ String id, String name, String? libraryId, String? nameIgnorePrefix, String? description, DateTime? addedAt, DateTime? updatedAt,@JsonKey(readValue: _booksOrItems) List<LibraryItem> books, int? numBooks, String? sequence, String? seriesSequenceList, SeriesProgress? progress, bool? inProgress, bool? hasActiveBook, bool? hideFromContinueListening, DateTime? bookInProgressLastUpdate, LibraryItem? firstBookUnread
 });
 
 

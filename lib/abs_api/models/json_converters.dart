@@ -90,35 +90,3 @@ class FilterConverter implements JsonConverter<Filter?, String?> {
   @override
   String? toJson(Filter? filter) => filter?.toString();
 }
-
-Object? readDuration(Map json, String key) {
-  final value = json[key];
-  if (value is num) return value;
-  return num.tryParse(value);
-}
-
-Object? readSeries(Map json, String key) {
-  final value = json[key];
-  if (value is Map) return [value];
-  return value;
-}
-
-Object? readBooksOrItems(Map json, String key) {
-  return json['books'] ?? json['items'];
-}
-
-Object? readLibraryItemList(Map json, String key) {
-  final list = json[key] as List<dynamic>?;
-  return list?.map((e) => e['libraryItem']).toList();
-}
-
-Object? readSeriesWithBooks(Map json, String key) {
-  final list = json[key] as List<dynamic>?;
-  if (list == null) return null;
-
-  return list.map((item) {
-    final seriesMap = item['series'] as Map<String, dynamic>;
-    final booksList = item['books'] as List<dynamic>?;
-    return {...seriesMap, 'books': booksList};
-  }).toList();
-}

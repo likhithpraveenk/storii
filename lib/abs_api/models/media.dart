@@ -14,25 +14,32 @@ part 'media.g.dart';
 sealed class Media with _$Media {
   @DurationPreciseSecondsConverter()
   const factory Media.book({
+    required String id,
     required MediaMetadata metadata,
-    required List<String> tags,
-    required Duration duration,
-    required int size,
+    String? libraryItemId,
+    @Default([]) List<String> tags,
+    Duration? duration,
     String? coverPath,
     List<AudioFile>? audioFiles,
+    int? numAudioFiles,
     List<AudioTrack>? tracks,
+    int? numTracks,
     List<BookChapter>? chapters,
+    int? numChapters,
+    int? size,
   }) = BookMedia;
 
   @DateTimeEpochConverter()
   const factory Media.podcast({
+    required String id,
     required MediaMetadata metadata,
-    required List<String> tags,
-    required int size,
-    required bool autoDownloadEpisodes,
+    String? libraryItemId,
+    @Default([]) List<String> tags,
+    @Default(false) bool autoDownloadEpisodes,
+    @Default([]) List<PodcastEpisode> episodes,
     String? coverPath,
     DateTime? lastEpisodeCheck,
-    List<PodcastEpisode>? episodes,
+    int? size,
     int? numEpisodes,
   }) = PodcastMedia;
 
@@ -48,10 +55,10 @@ class MediaConverter implements JsonConverter<Media, Map<String, dynamic>> {
     if (json.containsKey('runtimeType')) return _$MediaFromJson(json);
 
     final MediaType mediaType;
-    if (json.containsKey('duration')) {
-      mediaType = .book;
-    } else {
+    if (json.containsKey('episodes')) {
       mediaType = .podcast;
+    } else {
+      mediaType = .book;
     }
 
     return switch (mediaType) {

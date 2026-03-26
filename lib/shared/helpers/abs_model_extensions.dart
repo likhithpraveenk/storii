@@ -230,7 +230,7 @@ extension AudiobookX on LibraryItem {
       media.metadata.mapOrNull(book: (m) => m.publishedYear);
 
   Duration get duration => media.map(
-    book: (m) => m.duration,
+    book: (m) => m.duration ?? Duration.zero,
     podcast: (m) => throw UnsupportedError('Podcast duration unsupported'),
   );
   List<BookChapter> get chapters =>
@@ -241,7 +241,7 @@ extension AudiobookX on LibraryItem {
   );
   List<PodcastEpisode> get episodes => media.map(
     book: (m) => throw UnsupportedError('Audiobook episodes unsupported'),
-    podcast: (m) => m.episodes ?? [],
+    podcast: (m) => m.episodes,
   );
   DateTime? get lastEpisodeCheck => media.map(
     book: (m) => throw UnsupportedError('Audiobook episode unsupported'),

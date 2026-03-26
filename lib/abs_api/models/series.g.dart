@@ -21,7 +21,7 @@ _Series _$SeriesFromJson(Map<String, dynamic> json) => _Series(
     const DateTimeEpochConverter().fromJson,
   ),
   books:
-      (readBooksOrItems(json, 'books') as List<dynamic>?)
+      (_booksOrItems(json, 'books') as List<dynamic>?)
           ?.map((e) => LibraryItem.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const [],

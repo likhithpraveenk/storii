@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:storii/abs_api/models/author.dart';
 import 'package:storii/abs_api/models/enums.dart';
-import 'package:storii/abs_api/models/json_converters.dart';
 import 'package:storii/abs_api/models/series.dart';
 
 part 'media_metadata.freezed.dart';
@@ -17,7 +16,7 @@ sealed class MediaMetadata with _$MediaMetadata {
     String? subtitle,
     List<Author>? authors,
     List<String>? narrators,
-    @JsonKey(readValue: readSeries) List<Series>? series,
+    @JsonKey(readValue: _readSeries) List<Series>? series,
     @Default([]) List<String> genres,
     String? publishedYear,
     String? publishedDate,
@@ -85,4 +84,10 @@ class MediaMetadataConverter
 
   @override
   Map<String, dynamic> toJson(MediaMetadata metadata) => metadata.toJson();
+}
+
+Object? _readSeries(Map json, String key) {
+  final value = json[key];
+  if (value is Map) return [value];
+  return value;
 }
