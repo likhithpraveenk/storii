@@ -7,21 +7,6 @@ import 'package:storii/storage/hive/hive_adapters.dart';
 
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
-    registerAdapter(AudioMetaTagsAdapter());
-    registerAdapter(AudioTrackAdapter());
-    registerAdapter(AuthorAdapter());
-    registerAdapter(BookChapterAdapter());
-    registerAdapter(BookMediaAdapter());
-    registerAdapter(BookMetadataAdapter());
-    registerAdapter(FileMetadataAdapter());
-    registerAdapter(LibraryItemAdapter());
-    registerAdapter(MediaProgressAdapter());
-    registerAdapter(PodcastEpisodeAdapter());
-    registerAdapter(PodcastEpisodeEnclosureAdapter());
-    registerAdapter(PodcastMediaAdapter());
-    registerAdapter(PodcastMetadataAdapter());
-    registerAdapter(SeriesAdapter());
-    registerAdapter(SeriesProgressAdapter());
     registerAdapter(ServerAdapter());
     registerAdapter(UserDomainAdapter());
   }
@@ -29,21 +14,6 @@ extension HiveRegistrar on HiveInterface {
 
 extension IsolatedHiveRegistrar on IsolatedHiveInterface {
   void registerAdapters() {
-    registerAdapter(AudioMetaTagsAdapter());
-    registerAdapter(AudioTrackAdapter());
-    registerAdapter(AuthorAdapter());
-    registerAdapter(BookChapterAdapter());
-    registerAdapter(BookMediaAdapter());
-    registerAdapter(BookMetadataAdapter());
-    registerAdapter(FileMetadataAdapter());
-    registerAdapter(LibraryItemAdapter());
-    registerAdapter(MediaProgressAdapter());
-    registerAdapter(PodcastEpisodeAdapter());
-    registerAdapter(PodcastEpisodeEnclosureAdapter());
-    registerAdapter(PodcastMediaAdapter());
-    registerAdapter(PodcastMetadataAdapter());
-    registerAdapter(SeriesAdapter());
-    registerAdapter(SeriesProgressAdapter());
     registerAdapter(ServerAdapter());
     registerAdapter(UserDomainAdapter());
   }
