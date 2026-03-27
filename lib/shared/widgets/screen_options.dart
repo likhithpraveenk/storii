@@ -18,7 +18,32 @@ class ScreenOptionsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.filter_list),
+      icon: Consumer(
+        builder: (context, ref, _) {
+          final isFilterSet = ref
+              .watch(libraryFiltersProvider(screen))
+              .isFilterSet;
+          return Stack(
+            clipBehavior: .none,
+            children: [
+              const Icon(Icons.filter_list),
+              if (isFilterSet)
+                Positioned(
+                  top: -4,
+                  right: -4,
+                  child: Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.error,
+                      shape: .circle,
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
       tooltip: AppLocalizations.of(context)!.filter,
       onPressed: () {
         final scaffoldContext = shellScaffoldKey.currentContext;

@@ -11,12 +11,16 @@ enum CurrentScreen { authors, library, series }
 
 @freezed
 sealed class FilterState with _$FilterState {
+  const FilterState._();
+
   const factory FilterState({
     required EnumHasValue sortType,
     @Default(NoFilter()) Filter filter,
     @Default(true) bool sortAscending,
     @Default(false) bool collapseSeries,
   }) = _FilterState;
+
+  bool get isFilterSet => filter != const NoFilter();
 }
 
 @Riverpod(keepAlive: true)
