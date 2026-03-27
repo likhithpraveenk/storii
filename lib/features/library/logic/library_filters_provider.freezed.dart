@@ -202,8 +202,8 @@ return $default(_that.sortType,_that.filter,_that.sortAscending,_that.collapseSe
 /// @nodoc
 
 
-class _FilterState implements FilterState {
-  const _FilterState({required this.sortType, this.filter = const NoFilter(), this.sortAscending = true, this.collapseSeries = false});
+class _FilterState extends FilterState {
+  const _FilterState({required this.sortType, this.filter = const NoFilter(), this.sortAscending = true, this.collapseSeries = false}): super._();
   
 
 @override final  EnumHasValue sortType;

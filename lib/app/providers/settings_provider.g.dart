@@ -183,6 +183,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setLibraryDisplayMode(DisplayMode value) =>
       _save(state?.copyWith(libraryDisplayMode: value));
 
+  Future<void> setCollapseSeries(bool value) =>
+      _save(state?.copyWith(collapseSeries: value));
+
   Future<void> setSeriesDisplayMode(DisplayMode value) =>
       _save(state?.copyWith(seriesDisplayMode: value));
 
@@ -233,6 +236,14 @@ final libraryDisplayModeProvider = Provider<DisplayMode>(
   (ref) => ref.watch(
     userSettingsProvider.select(
       (s) => s?.libraryDisplayMode ?? DefaultUserSettings.libraryDisplayMode,
+    ),
+  ),
+);
+
+final collapseSeriesProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.collapseSeries ?? DefaultUserSettings.collapseSeries,
     ),
   ),
 );

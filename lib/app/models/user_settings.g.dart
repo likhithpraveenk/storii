@@ -21,6 +21,7 @@ _UserSettings _$UserSettingsFromJson(
   libraryDisplayMode:
       $enumDecodeNullable(_$DisplayModeEnumMap, json['libraryDisplayMode']) ??
       DisplayMode.comfortable,
+  collapseSeries: json['collapseSeries'] as bool? ?? false,
   seriesDisplayMode:
       $enumDecodeNullable(_$DisplayModeEnumMap, json['seriesDisplayMode']) ??
       DisplayMode.comfortable,
@@ -55,6 +56,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'currentLibrary': ?instance.currentLibrary?.toJson(),
   'navTargets': instance.navTargets.map((e) => _$NavTargetEnumMap[e]!).toList(),
   'libraryDisplayMode': _$DisplayModeEnumMap[instance.libraryDisplayMode]!,
+  'collapseSeries': instance.collapseSeries,
   'seriesDisplayMode': _$DisplayModeEnumMap[instance.seriesDisplayMode]!,
   'authorDisplayMode': _$DisplayModeEnumMap[instance.authorDisplayMode]!,
   'startupNav': _$NavTargetEnumMap[instance.startupNav]!,

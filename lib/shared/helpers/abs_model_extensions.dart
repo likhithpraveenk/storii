@@ -2,6 +2,7 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/models/enums.dart';
 import 'package:storii/l10n/l10n.dart';
 
 extension AudiobookSortX on Iterable<LibraryItem> {
@@ -40,9 +41,9 @@ extension MissingFilterValueX on MissingFilterValue {
       .publishedYear => l.publishedYear,
       .series => l.series,
       .description => l.description,
-      .genres => l.genre,
-      .tags => l.tag,
-      .narrators => l.narrator,
+      .genres => l.genres,
+      .tags => l.tags,
+      .narrators => l.narrators,
       .publisher => l.publisher,
       .language => l.language,
     };
@@ -89,12 +90,12 @@ extension FilterGroupX on FilterGroup {
     final l = AppLocalizations.of(context)!;
     return switch (this) {
       .all => l.all,
-      .genres => l.genre,
-      .tags => l.tag,
+      .genres => l.genres,
+      .tags => l.tags,
       .series => l.series,
       .authors => l.author,
       .progress => l.progress,
-      .narrators => l.narrator,
+      .narrators => l.narrators,
       .languages => l.language,
       .tracks => l.tracks,
       .missing => l.missingMetadata,
@@ -230,7 +231,7 @@ extension AudiobookX on LibraryItem {
       media.metadata.mapOrNull(book: (m) => m.publishedYear);
 
   Duration get duration => media.map(
-    book: (m) => m.duration,
+    book: (m) => m.duration ?? Duration.zero,
     podcast: (m) => throw UnsupportedError('Podcast duration unsupported'),
   );
   List<BookChapter> get chapters =>
@@ -241,7 +242,7 @@ extension AudiobookX on LibraryItem {
   );
   List<PodcastEpisode> get episodes => media.map(
     book: (m) => throw UnsupportedError('Audiobook episodes unsupported'),
-    podcast: (m) => m.episodes ?? [],
+    podcast: (m) => m.episodes,
   );
   DateTime? get lastEpisodeCheck => media.map(
     book: (m) => throw UnsupportedError('Audiobook episode unsupported'),
@@ -270,5 +271,21 @@ extension SeriesX on Series {
 
     if (count == 0) return 0.0;
     return (finished / count);
+  }
+}
+
+extension SearchX on SearchResponse {
+  List<SearchFilter> filterTabs() {
+    final tabs = <SearchFilter>[.all];
+    if (book.isNotEmpty) tabs.add(.books);
+    if (series.isNotEmpty) tabs.add(.series);
+    if (authors.isNotEmpty) tabs.add(.authors);
+    if (podcast.isNotEmpty) tabs.add(.podcasts);
+    if (episodes.isNotEmpty) tabs.add(.episodes);
+    if (narrators.isNotEmpty) tabs.add(.narrators);
+    if (genres.isNotEmpty) tabs.add(.genres);
+    if (tags.isNotEmpty) tabs.add(.tags);
+
+    return tabs;
   }
 }

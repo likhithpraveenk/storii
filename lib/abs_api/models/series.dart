@@ -22,7 +22,7 @@ sealed class Series with _$Series {
     DateTime? updatedAt,
 
     // Content / Collections
-    @JsonKey(readValue: readBooksOrItems) @Default([]) List<LibraryItem> books,
+    @JsonKey(readValue: _booksOrItems) @Default([]) List<LibraryItem> books,
     int? numBooks,
 
     // Sequence & Sorting
@@ -30,6 +30,7 @@ sealed class Series with _$Series {
     String? seriesSequenceList,
 
     // Progress & States
+    List<String>? libraryItemIds,
     SeriesProgress? progress,
     bool? inProgress,
     bool? hasActiveBook,
@@ -42,4 +43,8 @@ sealed class Series with _$Series {
   }) = _Series;
 
   factory Series.fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);
+}
+
+Object? _booksOrItems(Map json, String key) {
+  return json['books'] ?? json['items'];
 }

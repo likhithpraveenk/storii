@@ -4,6 +4,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/library_items_provider.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
+import 'package:storii/features/search/ui/search_button.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
@@ -37,7 +38,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: const LibrarySwitcher(),
-        actions: const [ScreenOptionsButton(.library)],
+        actions: const [SearchButton(), ScreenOptionsButton(.library)],
       ),
       body: RefreshIndicator(
         onRefresh: () async {

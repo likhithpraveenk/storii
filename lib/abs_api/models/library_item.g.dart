@@ -18,7 +18,7 @@ _LibraryItem _$LibraryItemFromJson(Map<String, dynamic> json) => _LibraryItem(
   isMissing: json['isMissing'] as bool,
   mediaType: $enumDecode(_$MediaTypeEnumMap, json['mediaType']),
   media: Media.fromJson(json['media'] as Map<String, dynamic>),
-  size: (json['size'] as num).toInt(),
+  size: (json['size'] as num?)?.toInt(),
   sequence: json['sequence'] as String?,
   seriesSequence: json['seriesSequence'] as String?,
   userMediaProgress: json['userMediaProgress'] == null
@@ -29,6 +29,9 @@ _LibraryItem _$LibraryItemFromJson(Map<String, dynamic> json) => _LibraryItem(
   episodesDownloading: (json['episodesDownloading'] as List<dynamic>?)
       ?.map((e) => PodcastEpisodeDownload.fromJson(e as Map<String, dynamic>))
       .toList(),
+  collapsedSeries: json['collapsedSeries'] == null
+      ? null
+      : Series.fromJson(json['collapsedSeries'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$LibraryItemToJson(_LibraryItem instance) =>
@@ -40,13 +43,14 @@ Map<String, dynamic> _$LibraryItemToJson(_LibraryItem instance) =>
       'isMissing': instance.isMissing,
       'mediaType': _$MediaTypeEnumMap[instance.mediaType]!,
       'media': instance.media.toJson(),
-      'size': instance.size,
+      'size': ?instance.size,
       'sequence': ?instance.sequence,
       'seriesSequence': ?instance.seriesSequence,
       'userMediaProgress': ?instance.userMediaProgress?.toJson(),
       'episodesDownloading': ?instance.episodesDownloading
           ?.map((e) => e.toJson())
           .toList(),
+      'collapsedSeries': ?instance.collapsedSeries?.toJson(),
     };
 
 const _$MediaTypeEnumMap = {

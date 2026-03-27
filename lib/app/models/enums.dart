@@ -213,3 +213,30 @@ enum FilterSeries {
 }
 
 enum DisplayMode { listView, compact, comfortable, coverOnly }
+
+enum SearchFilter {
+  all,
+  books,
+  series,
+  authors,
+  narrators,
+  tags,
+  genres,
+  podcasts,
+  episodes;
+
+  String getDisplayString(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return switch (this) {
+      .all => l.all,
+      .books => l.books,
+      .series => l.series,
+      .authors => l.authors,
+      .narrators => l.narrators,
+      .tags => l.tags,
+      .genres => l.genres,
+      .podcasts => l.podcasts,
+      .episodes => l.episodes,
+    };
+  }
+}

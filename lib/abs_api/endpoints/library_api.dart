@@ -7,6 +7,7 @@ import 'package:storii/abs_api/models/library.dart';
 import 'package:storii/abs_api/models/library_items_request_params.dart';
 import 'package:storii/abs_api/models/library_items_response.dart';
 import 'package:storii/abs_api/models/library_response.dart';
+import 'package:storii/abs_api/models/search_response.dart';
 import 'package:storii/abs_api/models/series.dart';
 import 'package:storii/abs_api/models/series_request_params.dart';
 import 'package:storii/abs_api/models/series_response.dart';
@@ -105,5 +106,18 @@ class LibraryApi {
       query: params?.toJson(),
     );
     return listFromJsonKey(response.data, 'authors', Author.fromJson);
+  }
+
+  Future<SearchResponse> search(
+    String libraryId, {
+    required String query,
+    int? limit,
+  }) async {
+    final response = await api.request(
+      ApiRoutes.librarySearch(libraryId),
+      method: .get,
+      query: {'q': query, 'limit': ?limit},
+    );
+    return fromJson(response.data, SearchResponse.fromJson);
   }
 }

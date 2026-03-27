@@ -15,11 +15,12 @@ sealed class LibraryItem with _$LibraryItem {
     required bool isMissing,
     required MediaType mediaType,
     required Media media,
-    required int size,
+    int? size,
     String? sequence,
     String? seriesSequence,
     MediaProgress? userMediaProgress,
     List<PodcastEpisodeDownload>? episodesDownloading,
+    Series? collapsedSeries,
   }) = _LibraryItem;
 
   factory LibraryItem.fromJson(Map<String, dynamic> json) =>

@@ -6,6 +6,7 @@ import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
+import 'package:storii/features/search/ui/search_button.dart';
 import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
@@ -26,6 +27,7 @@ class HomeScreen extends ConsumerWidget {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: const LibrarySwitcher(),
+        actions: const [SearchButton()],
       ),
       body: RefreshIndicator(
         onRefresh: () async {

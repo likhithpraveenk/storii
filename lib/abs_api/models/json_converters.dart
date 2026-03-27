@@ -90,19 +90,3 @@ class FilterConverter implements JsonConverter<Filter?, String?> {
   @override
   String? toJson(Filter? filter) => filter?.toString();
 }
-
-Object? readDuration(Map json, String key) {
-  final value = json[key];
-  if (value is num) return value;
-  return num.tryParse(value);
-}
-
-Object? readSeries(Map json, String key) {
-  final value = json[key];
-  if (value is Map) return [value];
-  return value;
-}
-
-Object? readBooksOrItems(Map json, String key) {
-  return json['books'] ?? json['items'];
-}

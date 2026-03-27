@@ -16,7 +16,7 @@ BookMetadata _$BookMetadataFromJson(Map<String, dynamic> json) => BookMetadata(
   narrators: (json['narrators'] as List<dynamic>?)
       ?.map((e) => e as String)
       .toList(),
-  series: (readSeries(json, 'series') as List<dynamic>?)
+  series: (_readSeries(json, 'series') as List<dynamic>?)
       ?.map((e) => Series.fromJson(e as Map<String, dynamic>))
       .toList(),
   genres:

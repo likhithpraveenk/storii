@@ -12,6 +12,7 @@ class DefaultUserSettings {
   static const Library? currentLibrary = null;
   static const navTargets = defaultNavTargets;
   static const DisplayMode libraryDisplayMode = .comfortable;
+  static const collapseSeries = false;
   static const DisplayMode seriesDisplayMode = .comfortable;
   static const DisplayMode authorDisplayMode = .comfortable;
   static const startupNav = NavTarget.home;
@@ -35,6 +36,8 @@ sealed class UserSettings with _$UserSettings {
     @Default(defaultNavTargets) List<NavTarget> navTargets,
 
     @Default(DisplayMode.comfortable) DisplayMode libraryDisplayMode,
+
+    @Default(false) bool collapseSeries,
 
     @Default(DisplayMode.comfortable) DisplayMode seriesDisplayMode,
 

@@ -4,6 +4,7 @@ import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/features/library/logic/filter_data_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
+import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 
 class FilterBottomSheet extends StatefulWidget {
@@ -63,6 +64,24 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
       child: Column(
         children: [
           ActiveFiltersChips(widget.screen),
+          if (widget.screen == .library)
+            Consumer(
+              builder: (context, ref, _) {
+                final isSelected = ref
+                    .watch(libraryFiltersProvider(widget.screen))
+                    .collapseSeries;
+                return CheckboxListTile(
+                  title: Text(AppLocalizations.of(context)!.collapseSeries),
+                  contentPadding: const .only(left: 24, right: 24),
+                  value: isSelected,
+                  onChanged: (_) {
+                    ref
+                        .read(libraryFiltersProvider(widget.screen).notifier)
+                        .toggleCollapseSeries();
+                  },
+                );
+              },
+            ),
           ...groups.map((group) {
             if (group.isImmediate) {
               return ListTile(
