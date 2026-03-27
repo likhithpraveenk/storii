@@ -17,7 +17,10 @@ _LibraryItemsRequestParams _$LibraryItemsRequestParamsFromJson(
     const BoolBinaryConverter().fromJson,
   ),
   filter: const FilterConverter().fromJson(json['filter'] as String?),
-  collapseSeries: json['collapseseries'] as bool?,
+  collapseSeries: _$JsonConverterFromJson<int, bool>(
+    json['collapseseries'],
+    const BoolBinaryConverter().fromJson,
+  ),
 );
 
 Map<String, dynamic> _$LibraryItemsRequestParamsToJson(
@@ -31,7 +34,10 @@ Map<String, dynamic> _$LibraryItemsRequestParamsToJson(
     const BoolBinaryConverter().toJson,
   ),
   'filter': ?const FilterConverter().toJson(instance.filter),
-  'collapseseries': ?instance.collapseSeries,
+  'collapseseries': ?_$JsonConverterToJson<int, bool>(
+    instance.collapseSeries,
+    const BoolBinaryConverter().toJson,
+  ),
 };
 
 Value? _$JsonConverterFromJson<Json, Value>(

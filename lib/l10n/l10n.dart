@@ -706,6 +706,12 @@ abstract class AppLocalizations {
   /// **'Has no supplementary ebook'**
   String get hasNoSupplementary;
 
+  /// No description provided for @collapseSeries.
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse Series'**
+  String get collapseSeries;
+
   /// No description provided for @filter.
   ///
   /// In en, this message translates to:

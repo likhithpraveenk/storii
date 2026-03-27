@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/logic/authors_list_provider.dart';
@@ -61,41 +62,20 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
                 ),
               );
             }
-            final height = ref.watch(authorsGridHeightProvider);
 
-            final displayMode = ref.watch(authorDisplayModeProvider);
-            final isListView = displayMode == .listView;
+            final isListView =
+                ref.watch(authorDisplayModeProvider) == .listView;
 
             return AppScrollbar(
               controller: _scrollController,
-              child: !isListView
-                  ? GridView.builder(
-                      key: const ValueKey('author_grid_view'),
-                      controller: _scrollController,
-                      itemCount: authors.length,
-                      padding: const .symmetric(horizontal: 16),
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: maxCardWidthInGrid,
-                        mainAxisExtent: height,
-                        crossAxisSpacing: 16,
-                      ),
-                      itemBuilder: (context, index) {
-                        return AuthorCard(
-                          key: ValueKey(authors[index].id),
-                          authors[index],
-                        );
-                      },
+              child: isListView
+                  ? AuthorsListView(
+                      scrollController: _scrollController,
+                      authors: authors,
                     )
-                  : ListView.builder(
-                      key: const ValueKey('author_list_view'),
-                      controller: _scrollController,
-                      itemCount: authors.length,
-                      itemBuilder: (context, index) {
-                        return AuthorCardListView(
-                          key: ValueKey(authors[index].id),
-                          authors[index],
-                        );
-                      },
+                  : AuthorsGridView(
+                      scrollController: _scrollController,
+                      authors: authors,
                     ),
             );
           },
@@ -106,6 +86,63 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class AuthorsListView extends StatelessWidget {
+  const AuthorsListView({
+    super.key,
+    this.scrollController,
+    required this.authors,
+  });
+
+  final ScrollController? scrollController;
+  final List<Author> authors;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      key: const ValueKey('author_list_view'),
+      controller: scrollController,
+      itemCount: authors.length,
+      itemBuilder: (context, index) {
+        return AuthorCardListView(
+          key: ValueKey(authors[index].id),
+          authors[index],
+        );
+      },
+    );
+  }
+}
+
+class AuthorsGridView extends ConsumerWidget {
+  const AuthorsGridView({
+    super.key,
+    this.scrollController,
+    required this.authors,
+  });
+
+  final ScrollController? scrollController;
+  final List<Author> authors;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final height = ref.watch(authorsGridHeightProvider);
+
+    return GridView.builder(
+      key: const ValueKey('author_grid_view'),
+      controller: scrollController,
+      itemCount: authors.length,
+      padding: const .symmetric(horizontal: 16),
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: maxCardWidthInGrid,
+        mainAxisExtent: height,
+        crossAxisSpacing: 16,
+      ),
+      itemBuilder: (context, index) {
+        return AuthorCard(key: ValueKey(authors[index].id), authors[index]);
+      },
     );
   }
 }

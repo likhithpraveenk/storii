@@ -116,6 +116,7 @@
   "hasNoEbook": "Has no ebook",
   "hasSupplementary": "Has supplementary ebook",
   "hasNoSupplementary": "Has no supplementary ebook",
+  "collapseSeries": "Collapse Series",
   "filter": "Filter",
   "sort": "Sort",
   "display": "Display",

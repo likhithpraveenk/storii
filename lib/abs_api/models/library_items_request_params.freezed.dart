@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LibraryItemsRequestParams {
 
- int get limit; int get page; String? get sort;@BoolBinaryConverter() bool? get desc;@FilterConverter() Filter? get filter;@JsonKey(name: 'collapseseries') bool? get collapseSeries;
+ int get limit; int get page; String? get sort;@BoolBinaryConverter() bool? get desc;@FilterConverter() Filter? get filter;@BoolBinaryConverter()@JsonKey(name: 'collapseseries') bool? get collapseSeries;
 /// Create a copy of LibraryItemsRequestParams
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $LibraryItemsRequestParamsCopyWith<$Res>  {
   factory $LibraryItemsRequestParamsCopyWith(LibraryItemsRequestParams value, $Res Function(LibraryItemsRequestParams) _then) = _$LibraryItemsRequestParamsCopyWithImpl;
 @useResult
 $Res call({
- int limit, int page, String? sort,@BoolBinaryConverter() bool? desc,@FilterConverter() Filter? filter,@JsonKey(name: 'collapseseries') bool? collapseSeries
+ int limit, int page, String? sort,@BoolBinaryConverter() bool? desc,@FilterConverter() Filter? filter,@BoolBinaryConverter()@JsonKey(name: 'collapseseries') bool? collapseSeries
 });
 
 
@@ -158,7 +158,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int limit,  int page,  String? sort, @BoolBinaryConverter()  bool? desc, @FilterConverter()  Filter? filter, @JsonKey(name: 'collapseseries')  bool? collapseSeries)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int limit,  int page,  String? sort, @BoolBinaryConverter()  bool? desc, @FilterConverter()  Filter? filter, @BoolBinaryConverter()@JsonKey(name: 'collapseseries')  bool? collapseSeries)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LibraryItemsRequestParams() when $default != null:
 return $default(_that.limit,_that.page,_that.sort,_that.desc,_that.filter,_that.collapseSeries);case _:
@@ -179,7 +179,7 @@ return $default(_that.limit,_that.page,_that.sort,_that.desc,_that.filter,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int limit,  int page,  String? sort, @BoolBinaryConverter()  bool? desc, @FilterConverter()  Filter? filter, @JsonKey(name: 'collapseseries')  bool? collapseSeries)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int limit,  int page,  String? sort, @BoolBinaryConverter()  bool? desc, @FilterConverter()  Filter? filter, @BoolBinaryConverter()@JsonKey(name: 'collapseseries')  bool? collapseSeries)  $default,) {final _that = this;
 switch (_that) {
 case _LibraryItemsRequestParams():
 return $default(_that.limit,_that.page,_that.sort,_that.desc,_that.filter,_that.collapseSeries);case _:
@@ -199,7 +199,7 @@ return $default(_that.limit,_that.page,_that.sort,_that.desc,_that.filter,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int limit,  int page,  String? sort, @BoolBinaryConverter()  bool? desc, @FilterConverter()  Filter? filter, @JsonKey(name: 'collapseseries')  bool? collapseSeries)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int limit,  int page,  String? sort, @BoolBinaryConverter()  bool? desc, @FilterConverter()  Filter? filter, @BoolBinaryConverter()@JsonKey(name: 'collapseseries')  bool? collapseSeries)?  $default,) {final _that = this;
 switch (_that) {
 case _LibraryItemsRequestParams() when $default != null:
 return $default(_that.limit,_that.page,_that.sort,_that.desc,_that.filter,_that.collapseSeries);case _:
@@ -214,7 +214,7 @@ return $default(_that.limit,_that.page,_that.sort,_that.desc,_that.filter,_that.
 @JsonSerializable()
 
 class _LibraryItemsRequestParams extends LibraryItemsRequestParams {
-  const _LibraryItemsRequestParams({this.limit = 0, this.page = 0, this.sort, @BoolBinaryConverter() this.desc, @FilterConverter() this.filter, @JsonKey(name: 'collapseseries') this.collapseSeries}): super._();
+  const _LibraryItemsRequestParams({this.limit = 0, this.page = 0, this.sort, @BoolBinaryConverter() this.desc, @FilterConverter() this.filter, @BoolBinaryConverter()@JsonKey(name: 'collapseseries') this.collapseSeries}): super._();
   factory _LibraryItemsRequestParams.fromJson(Map<String, dynamic> json) => _$LibraryItemsRequestParamsFromJson(json);
 
 @override@JsonKey() final  int limit;
@@ -222,7 +222,7 @@ class _LibraryItemsRequestParams extends LibraryItemsRequestParams {
 @override final  String? sort;
 @override@BoolBinaryConverter() final  bool? desc;
 @override@FilterConverter() final  Filter? filter;
-@override@JsonKey(name: 'collapseseries') final  bool? collapseSeries;
+@override@BoolBinaryConverter()@JsonKey(name: 'collapseseries') final  bool? collapseSeries;
 
 /// Create a copy of LibraryItemsRequestParams
 /// with the given fields replaced by the non-null parameter values.
@@ -257,7 +257,7 @@ abstract mixin class _$LibraryItemsRequestParamsCopyWith<$Res> implements $Libra
   factory _$LibraryItemsRequestParamsCopyWith(_LibraryItemsRequestParams value, $Res Function(_LibraryItemsRequestParams) _then) = __$LibraryItemsRequestParamsCopyWithImpl;
 @override @useResult
 $Res call({
- int limit, int page, String? sort,@BoolBinaryConverter() bool? desc,@FilterConverter() Filter? filter,@JsonKey(name: 'collapseseries') bool? collapseSeries
+ int limit, int page, String? sort,@BoolBinaryConverter() bool? desc,@FilterConverter() Filter? filter,@BoolBinaryConverter()@JsonKey(name: 'collapseseries') bool? collapseSeries
 });
 
 

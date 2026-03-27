@@ -30,6 +30,7 @@ sealed class Series with _$Series {
     String? seriesSequenceList,
 
     // Progress & States
+    List<String>? libraryItemIds,
     SeriesProgress? progress,
     bool? inProgress,
     bool? hasActiveBook,

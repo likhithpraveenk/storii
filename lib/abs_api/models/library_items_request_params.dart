@@ -15,7 +15,10 @@ abstract class LibraryItemsRequestParams with _$LibraryItemsRequestParams {
     String? sort,
     @BoolBinaryConverter() bool? desc,
     @FilterConverter() Filter? filter,
-    @JsonKey(name: 'collapseseries') bool? collapseSeries,
+
+    @BoolBinaryConverter()
+    @JsonKey(name: 'collapseseries')
+    bool? collapseSeries,
   }) = _LibraryItemsRequestParams;
 
   factory LibraryItemsRequestParams.fromJson(Map<String, dynamic> json) =>

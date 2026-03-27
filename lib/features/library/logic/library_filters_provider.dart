@@ -28,8 +28,9 @@ class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
       .authors => AuthorSort.name,
       .series => SeriesSort.name,
     };
+    final initialCollapse = ref.read(collapseSeriesProvider);
 
-    return FilterState(sortType: initialSort);
+    return FilterState(sortType: initialSort, collapseSeries: initialCollapse);
   }
 
   void setSortType(EnumHasValue type) {
@@ -37,7 +38,9 @@ class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
   }
 
   void toggleCollapseSeries() {
-    state = state.copyWith(collapseSeries: !state.collapseSeries);
+    final currentState = state.collapseSeries;
+    ref.read(userSettingsProvider.notifier).setCollapseSeries(!currentState);
+    state = state.copyWith(collapseSeries: !currentState);
   }
 
   void toggleSortOrder() {

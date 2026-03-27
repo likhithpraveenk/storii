@@ -320,6 +320,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hasNoSupplementary => 'Has no supplementary ebook';
 
   @override
+  String get collapseSeries => 'Collapse Series';
+
+  @override
   String get filter => 'Filter';
 
   @override

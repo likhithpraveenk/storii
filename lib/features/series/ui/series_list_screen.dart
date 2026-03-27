@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
@@ -57,42 +58,20 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
                 ),
               );
             }
-            final height = ref.watch(seriesGridHeightProvider);
 
-            final displayMode = ref.watch(seriesDisplayModeProvider);
-            final isListView = displayMode == .listView;
+            final isListView =
+                ref.watch(seriesDisplayModeProvider) == .listView;
 
             return AppScrollbar(
               controller: _scrollController,
-              child: !isListView
-                  ? GridView.builder(
-                      key: const ValueKey('series_grid_view'),
-                      controller: _scrollController,
-                      padding: const .symmetric(horizontal: 16),
-                      itemCount: series.length,
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: maxSeriesCardWidthInGrid,
-                        mainAxisExtent: height,
-                        mainAxisSpacing: 16,
-                        crossAxisSpacing: 16,
-                      ),
-                      itemBuilder: (context, index) {
-                        return SeriesCard(
-                          key: ValueKey(series[index].id),
-                          series[index],
-                        );
-                      },
+              child: isListView
+                  ? SeriesListView(
+                      scrollController: _scrollController,
+                      series: series,
                     )
-                  : ListView.builder(
-                      key: const ValueKey('series_list_view'),
-                      controller: _scrollController,
-                      itemCount: series.length,
-                      itemBuilder: (context, index) {
-                        return SeriesCardListView(
-                          key: ValueKey(series[index].id),
-                          series[index],
-                        );
-                      },
+                  : SeriesGridView(
+                      scrollController: _scrollController,
+                      series: series,
                     ),
             );
           },
@@ -103,6 +82,64 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class SeriesListView extends StatelessWidget {
+  const SeriesListView({
+    super.key,
+    this.scrollController,
+    required this.series,
+  });
+
+  final ScrollController? scrollController;
+  final List<Series> series;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      key: const ValueKey('series_list_view'),
+      controller: scrollController,
+      itemCount: series.length,
+      itemBuilder: (context, index) {
+        return SeriesCardListView(
+          key: ValueKey(series[index].id),
+          series[index],
+        );
+      },
+    );
+  }
+}
+
+class SeriesGridView extends ConsumerWidget {
+  const SeriesGridView({
+    super.key,
+    this.scrollController,
+    required this.series,
+  });
+
+  final ScrollController? scrollController;
+  final List<Series> series;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final height = ref.watch(seriesGridHeightProvider);
+
+    return GridView.builder(
+      key: const ValueKey('series_grid_view'),
+      controller: scrollController,
+      padding: const .symmetric(horizontal: 16),
+      itemCount: series.length,
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: maxSeriesCardWidthInGrid,
+        mainAxisExtent: height,
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
+      ),
+      itemBuilder: (context, index) {
+        return SeriesCard(key: ValueKey(series[index].id), series[index]);
+      },
     );
   }
 }

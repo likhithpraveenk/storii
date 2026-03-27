@@ -20,6 +20,7 @@ sealed class LibraryItem with _$LibraryItem {
     String? seriesSequence,
     MediaProgress? userMediaProgress,
     List<PodcastEpisodeDownload>? episodesDownloading,
+    Series? collapsedSeries,
   }) = _LibraryItem;
 
   factory LibraryItem.fromJson(Map<String, dynamic> json) =>

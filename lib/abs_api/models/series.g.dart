@@ -28,6 +28,9 @@ _Series _$SeriesFromJson(Map<String, dynamic> json) => _Series(
   numBooks: (json['numBooks'] as num?)?.toInt(),
   sequence: json['sequence'] as String?,
   seriesSequenceList: json['seriesSequenceList'] as String?,
+  libraryItemIds: (json['libraryItemIds'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
   progress: json['progress'] == null
       ? null
       : SeriesProgress.fromJson(json['progress'] as Map<String, dynamic>),
@@ -61,6 +64,7 @@ Map<String, dynamic> _$SeriesToJson(_Series instance) => <String, dynamic>{
   'numBooks': ?instance.numBooks,
   'sequence': ?instance.sequence,
   'seriesSequenceList': ?instance.seriesSequenceList,
+  'libraryItemIds': ?instance.libraryItemIds,
   'progress': ?instance.progress?.toJson(),
   'inProgress': ?instance.inProgress,
   'hasActiveBook': ?instance.hasActiveBook,
