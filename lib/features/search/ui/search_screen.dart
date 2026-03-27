@@ -1,41 +1,138 @@
-import 'package:flutter/material.dart';
-import 'package:storii/l10n/l10n.dart';
+import 'dart:async';
 
-class SearchScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/models/enums.dart';
+import 'package:storii/features/search/logic/search_provider.dart';
+import 'package:storii/features/search/ui/search_button.dart';
+import 'package:storii/features/search/ui/search_results.dart';
+import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/shared/widgets/empty_state.dart';
+import 'package:storii/shared/widgets/error_retry.dart';
+import 'package:storii/shared/widgets/waveform.dart';
+
+class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key});
 
   @override
+  ConsumerState<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends ConsumerState<SearchScreen> {
+  final _controller = TextEditingController();
+  String _query = '';
+  Timer? _debounce;
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final l = AppLocalizations.of(context)!;
+    final searchAsync = ref.watch(searchProvider(_query));
 
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            automaticallyImplyLeading: false,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        automaticallyImplyLeading: false,
+        title: Hero(
+          tag: searchHeroTag,
+          child: Material(
+            type: .transparency,
+            child: TextField(
+              autofocus: true,
+              controller: _controller,
+              onChanged: (value) {
+                _debounce?.cancel();
 
-            title: Material(
-              child: Container(
-                decoration: BoxDecoration(color: scheme.surfaceContainer),
-                child: TextField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    contentPadding: const .symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
-                    hint: Text(
-                      AppLocalizations.of(context)!.search,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    border: .none,
-                  ),
+                _debounce = Timer(const Duration(milliseconds: 500), () {
+                  setState(() {
+                    _query = value;
+                  });
+                });
+              },
+              decoration: InputDecoration(
+                hint: Text(
+                  l.search,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
+                suffixIcon: _controller.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          _controller.clear();
+                          setState(() {
+                            _query = '';
+                          });
+                        },
+                      )
+                    : null,
               ),
             ),
           ),
-          const SliverToBoxAdapter(child: Center(child: Text('search to be'))),
-        ],
+        ),
+      ),
+      body: searchAsync.when(
+        data: (response) {
+          if (response == null || _controller.text.isEmpty) {
+            return const EmptyState();
+          }
+          return Column(
+            children: [
+              FilterChipsRow(response.filterTabs()),
+              Expanded(
+                child: SearchResultsView(
+                  response,
+                  onViewAll: (filter) {
+                    ref.read(searchFilterProvider.notifier).set(filter);
+                  },
+                ),
+              ),
+            ],
+          );
+        },
+        loading: () => const Center(child: RandomWaveform()),
+        error: (error, _) => ErrorRetryWidget(
+          '$error',
+          onRetry: () => ref.invalidate(searchProvider),
+        ),
+      ),
+    );
+  }
+}
+
+class FilterChipsRow extends ConsumerWidget {
+  const FilterChipsRow(this.filterTabs, {super.key});
+
+  final List<SearchFilter> filterTabs;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final active = ref.watch(searchFilterProvider);
+    return SizedBox(
+      height: 48,
+      child: ListView.separated(
+        scrollDirection: .horizontal,
+        itemCount: filterTabs.length,
+        padding: const .symmetric(horizontal: 16),
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
+        itemBuilder: (_, i) {
+          final f = filterTabs[i];
+          return FilterChip(
+            label: Text(f.getDisplayString(context)),
+            selected: active == f,
+            onSelected: (_) {
+              ref.read(searchFilterProvider.notifier).set(f);
+            },
+            visualDensity: .compact,
+          );
+        },
       ),
     );
   }

@@ -364,6 +364,12 @@ abstract class AppLocalizations {
   /// **'Podcasts'**
   String get podcasts;
 
+  /// No description provided for @episodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Episodes'**
+  String get episodes;
+
   /// No description provided for @search.
   ///
   /// In en, this message translates to:
@@ -730,17 +736,17 @@ abstract class AppLocalizations {
   /// **'Display'**
   String get display;
 
-  /// No description provided for @genre.
+  /// No description provided for @genres.
   ///
   /// In en, this message translates to:
-  /// **'Genre'**
-  String get genre;
+  /// **'Genres'**
+  String get genres;
 
-  /// No description provided for @tag.
+  /// No description provided for @tags.
   ///
   /// In en, this message translates to:
-  /// **'Tag'**
-  String get tag;
+  /// **'Tags'**
+  String get tags;
 
   /// No description provided for @publisher.
   ///
@@ -760,11 +766,11 @@ abstract class AppLocalizations {
   /// **'Progress'**
   String get progress;
 
-  /// No description provided for @narrator.
+  /// No description provided for @narrators.
   ///
   /// In en, this message translates to:
-  /// **'Narrator'**
-  String get narrator;
+  /// **'Narrators'**
+  String get narrators;
 
   /// No description provided for @tracks.
   ///
@@ -1137,6 +1143,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sync Interval'**
   String get syncInterval;
+
+  /// No description provided for @emptyMsg.
+  ///
+  /// In en, this message translates to:
+  /// **'So empty...'**
+  String get emptyMsg;
 }
 
 class _AppLocalizationsDelegate

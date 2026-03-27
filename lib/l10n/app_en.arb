@@ -59,6 +59,7 @@
   "deleteLogsQ": "Delete all logs?",
   "audiobooks": "Audiobooks",
   "podcasts": "Podcasts",
+  "episodes": "Episodes",
   "search": "Search",
   "dateFormat": "Date Format",
   "custom": "Custom",
@@ -120,12 +121,12 @@
   "filter": "Filter",
   "sort": "Sort",
   "display": "Display",
-  "genre": "Genre",
-  "tag": "Tag",
+  "genres": "Genres",
+  "tags": "Tags",
   "publisher": "Publisher",
   "publishedDecade": "Published Decade",
   "progress": "Progress",
-  "narrator": "Narrator",
+  "narrators": "Narrators",
   "tracks": "Tracks",
   "missingMetadata": "Missing Metadata",
   "ebooks": "Ebooks",
@@ -241,5 +242,6 @@
   "alwaysShow": "Always show",
   "onlyShowSelected": "Only show when selected",
   "alwaysHide": "Always hide",
-  "syncInterval": "Sync Interval"
+  "syncInterval": "Sync Interval",
+  "emptyMsg": "So empty..."
 }

@@ -148,6 +148,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get podcasts => 'Podcasts';
 
   @override
+  String get episodes => 'Episodes';
+
+  @override
   String get search => 'Search';
 
   @override
@@ -332,10 +335,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get display => 'Display';
 
   @override
-  String get genre => 'Genre';
+  String get genres => 'Genres';
 
   @override
-  String get tag => 'Tag';
+  String get tags => 'Tags';
 
   @override
   String get publisher => 'Publisher';
@@ -347,7 +350,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get progress => 'Progress';
 
   @override
-  String get narrator => 'Narrator';
+  String get narrators => 'Narrators';
 
   @override
   String get tracks => 'Tracks';
@@ -566,4 +569,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get syncInterval => 'Sync Interval';
+
+  @override
+  String get emptyMsg => 'So empty...';
 }
