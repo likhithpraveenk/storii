@@ -54,11 +54,18 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
             resValue("string", "app_name", "Storii")
-            signingConfig = if (keystorePropertiesFile?.exists() ?: false) {
-                signingConfigs.getByName("release")
-            } else {
-                signingConfigs.getByName("debug")
+            signingConfig = when {
+                System.getenv("KEY_ALIAS") != null -> signingConfigs.getByName("release")
+                keystorePropertiesFile?.exists() == true -> signingConfigs.getByName("release")
+                else -> {
+                    println("WARNING: No signing credentials found. Signing with debug key.")
+                    signingConfigs.getByName("debug")
+                }
             }
         }
         debug {
@@ -66,6 +73,11 @@ android {
             resValue("string", "app_name", "Storii (Debug)")
             signingConfig = signingConfigs.getByName("debug")
         }
+    }
+
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
     }
 }
 
