@@ -82,6 +82,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
     required String itemId,
     String? episodeId,
     BookChapter? chapter,
+    Duration? initialPosition,
   }) async {
     state = AudioPlayerState(
       loadingItemId: itemId,
@@ -106,7 +107,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       if (chapter != null) {
         (index, position) = session.chapterToTrackOffset(chapter);
       } else {
-        (index, position) = session.getIndexAndOffset();
+        (index, position) = session.getIndexAndOffset(initialPosition);
       }
 
       final sources = session.toAudioSources(user.serverUrl, token);

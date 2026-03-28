@@ -8,7 +8,7 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/chapter.dart';
 import 'package:storii/features/player/logic/position_resolver.dart';
 
-enum AudioHandlerEvent { play, pause, seek, stop, complete, buffering }
+enum AudioHandlerEvent { play, pause, seek, stop, complete, buffering, error }
 
 class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final _player = AudioPlayer();
@@ -103,22 +103,24 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
               playbackState.map((s) => s.processingState).distinct(),
               (playing, state) => (playing, state),
             )
-            .skipWhile((t) => t.$1 == false) // skipping until play
-            .map(
-              (t) => switch (t) {
-                (_, .idle) => AudioHandlerEvent.stop,
-                (_, .completed) => AudioHandlerEvent.complete,
-                (_, .buffering) => AudioHandlerEvent.buffering,
-                (_, .loading) => AudioHandlerEvent.buffering,
-                (true, _) => AudioHandlerEvent.play,
-                (false, _) => AudioHandlerEvent.pause,
-              },
-            )
+            .skipWhile((t) => !t.$1 && t.$2 == .idle) // skip until first play
+            .debounceTime(const Duration(milliseconds: 120))
+            .map((t) {
+              final (playing, state) = t;
+              return switch (state) {
+                .idle => AudioHandlerEvent.stop,
+                .completed => AudioHandlerEvent.complete,
+                .buffering => AudioHandlerEvent.buffering,
+                .loading => AudioHandlerEvent.buffering,
+                .error => AudioHandlerEvent.error,
+                _ => playing ? AudioHandlerEvent.play : AudioHandlerEvent.pause,
+              };
+            })
             .distinct();
 
     final seekEvents = _player.positionDiscontinuityStream
         .where((d) => d.reason == .seek)
-        .debounceTime(const Duration(milliseconds: 200))
+        .debounceTime(const Duration(milliseconds: 120))
         .map((_) => AudioHandlerEvent.seek);
 
     return Rx.merge([stateEvents, seekEvents]);
@@ -251,6 +253,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   @override
   Future<void> stop() async {
+    log('AppAudioHandler.stop called');
     await _player.stop();
     queue.add([]);
     mediaItem.add(null);

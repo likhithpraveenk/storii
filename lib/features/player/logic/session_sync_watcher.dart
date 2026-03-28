@@ -1,9 +1,13 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/models/playback_event.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/playback_history.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
 
 part 'session_sync_watcher.g.dart';
 
@@ -42,65 +46,91 @@ class ListenTimeAccumulator {
 }
 
 @Riverpod(keepAlive: true)
-class ListenTimeNotifier extends _$ListenTimeNotifier {
-  final _accumulator = ListenTimeAccumulator();
+void sessionSyncWatcher(Ref ref) {
+  final session = ref.watch(sessionProvider);
+  if (session == null) return;
 
-  @override
-  void build() {}
+  final interval = ref.watch(syncIntervalProvider);
+  final accumulator = ListenTimeAccumulator();
 
-  Future<void> sync({required bool keepRunning}) async {
-    final listened = _accumulator.snapshotAndReset(keepRunning: keepRunning);
-    if (listened.inMilliseconds < 999) return;
+  final history = ref.read(
+    playbackHistoryProvider(
+      mediaItemIdKey(session.libraryItemId, session.episodeId),
+    ).notifier,
+  );
+
+  Future<ServerSyncResult> sync({required bool keepRunning}) async {
+    final listened = accumulator.snapshotAndReset(keepRunning: keepRunning);
+    if (listened.inMilliseconds < 999) {
+      return const ServerSyncResult(attempted: false, success: false);
+    }
     try {
       await ref.read(sessionProvider.notifier).sync(listened);
+      return const ServerSyncResult(attempted: true, success: true);
     } catch (_) {
-      _accumulator.rollback(listened);
+      accumulator.rollback(listened);
+      return const ServerSyncResult(attempted: true, success: false);
     }
   }
 
   Future<void> stop({bool didComplete = false}) async {
+    log('stop called, didComplete: $didComplete');
+    ServerSyncResult? result;
     try {
-      await sync(keepRunning: false);
+      result = await sync(keepRunning: false);
       await ref.read(sessionProvider.notifier).close(didComplete: didComplete);
     } catch (_) {
     } finally {
-      _accumulator.reset();
+      await history.addEvent(
+        session.id,
+        didComplete ? .complete : .stop,
+        syncResult: result,
+      );
+      accumulator.reset();
     }
   }
 
-  void startClock() => _accumulator.start();
-  void pauseClock() => _accumulator.pause();
-}
-
-@Riverpod(keepAlive: true)
-void sessionSyncWatcher(Ref ref) {
-  final session = ref.watch(sessionProvider);
-  if (session == null) return;
-  final interval = ref.watch(syncIntervalProvider);
-
-  ref.listen(audioHandlerEventsProvider, (_, next) {
-    final listenTime = ref.read(listenTimeProvider.notifier);
+  ref.listen(audioHandlerEventsProvider, (_, next) async {
     switch (next.value) {
       case .play:
-        listenTime.startClock();
+        accumulator.start();
+        await history.addEvent(session.id, .play);
+
       case .buffering:
-        listenTime.pauseClock();
+        accumulator.pause();
+
       case .pause:
-        listenTime.sync(keepRunning: false);
+        final result = await sync(keepRunning: false);
+        await history.addEvent(session.id, .pause, syncResult: result);
+
       case .seek:
-        listenTime.sync(keepRunning: ref.read(isPlayingProvider));
+        final result = await sync(keepRunning: ref.read(isPlayingProvider));
+        await history.addEvent(session.id, .seek, syncResult: result);
+
       case .stop:
-        listenTime.stop();
+        await stop();
+
       case .complete:
-        listenTime.stop(didComplete: true);
+        await stop(didComplete: true);
+
+      case .error:
+        await history.addEvent(
+          session.id,
+          .stop,
+          syncResult: const ServerSyncResult(attempted: false, success: false),
+        );
+        await stop();
+
       default:
         break;
     }
   });
 
-  final timer = Timer.periodic(interval, (_) {
-    if (ref.read(isPlayingProvider)) {
-      ref.read(listenTimeProvider.notifier).sync(keepRunning: true);
+  final timer = Timer.periodic(interval, (_) async {
+    if (!ref.read(isPlayingProvider)) return;
+    final result = await sync(keepRunning: true);
+    if (result.attempted) {
+      await history.addEvent(session.id, .sync, syncResult: result);
     }
   });
 

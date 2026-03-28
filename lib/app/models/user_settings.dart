@@ -24,6 +24,7 @@ class DefaultUserSettings {
   static const skipForward = Duration(seconds: 30);
   static const skipBackward = Duration(seconds: 10);
   static const speed = 1.0;
+  static const historyLimit = 200;
 }
 
 @freezed
@@ -59,6 +60,8 @@ sealed class UserSettings with _$UserSettings {
     @Default(Duration(seconds: 10)) Duration skipBackward,
 
     @Default(1.0) double speed,
+
+    @Default(200) int historyLimit,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

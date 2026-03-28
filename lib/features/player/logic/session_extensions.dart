@@ -4,6 +4,9 @@ import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/models/chapter.dart';
 
 extension PlaybackSessionX on PlaybackSession {
+  String get mediaItemIdKey =>
+      episodeId != null ? '$libraryItemId$episodeId' : libraryItemId;
+
   List<AudioSource> toAudioSources(Uri serverUrl, String? token) {
     final coverUri = serverUrl
         .resolve(ApiRoutes.itemCover(libraryItemId))
@@ -67,13 +70,14 @@ extension PlaybackSessionX on PlaybackSession {
     return sources;
   }
 
-  (int, Duration) getIndexAndOffset() {
+  (int, Duration) getIndexAndOffset([Duration? position]) {
+    final target = position ?? currentTime;
     var accumulated = Duration.zero;
     final tracks = audioTracks ?? [];
     for (var i = 0; i < tracks.length; i++) {
       final trackLen = tracks[i].duration;
-      if (currentTime < accumulated + trackLen) {
-        return (i, currentTime - accumulated);
+      if (target < accumulated + trackLen) {
+        return (i, target - accumulated);
       }
       accumulated += trackLen;
     }

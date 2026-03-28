@@ -21,7 +21,7 @@ class AppError implements Exception {
       );
     }
 
-    return const AppError('An unexpected error occurred');
+    return AppError('An unexpected error occurred: $error');
   }
 
   @override

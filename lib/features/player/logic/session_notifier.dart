@@ -8,6 +8,7 @@ import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/local_position_provider.dart';
 import 'package:storii/features/player/logic/play_request_params.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/storage/hive/boxes.dart';
@@ -22,17 +23,9 @@ class SessionNotifier extends _$SessionNotifier {
       final position = next.value;
       final session = state;
       if (position == null || session == null) return;
-      _saveLocalPosition(session.id, position);
+      ref.read(localPositionProvider(session.id).notifier).save(position);
     });
     return null;
-  }
-
-  void _saveLocalPosition(String sessionId, Duration position) {
-    Hive.box<Duration>(localPositionBox).put(sessionId, position);
-  }
-
-  Duration? _getLocalPosition(String sessionId) {
-    return Hive.box<Duration>(localPositionBox).get(sessionId);
   }
 
   Future<PlaybackSession> create({
@@ -62,7 +55,7 @@ class SessionNotifier extends _$SessionNotifier {
       // log('no session to sync');
       return;
     }
-    final position = _getLocalPosition(session.id);
+    final position = ref.read(localPositionProvider(session.id));
     if (position == null) return;
 
     final user = await ref.read(authenticatedUserProvider.future);
@@ -90,8 +83,6 @@ class SessionNotifier extends _$SessionNotifier {
       await ref
           .read(sessionsApiProvider(user))
           .closeSession(sessionId: session.id);
-      await Hive.box<String>(sessionIdBox).delete(session.id);
-      await Hive.box<Duration>(localPositionBox).delete(session.id);
 
       if (didComplete) {
         await ref
@@ -103,6 +94,9 @@ class SessionNotifier extends _$SessionNotifier {
             )
             .markComplete();
       }
+
+      await Hive.box<String>(sessionIdBox).delete(session.id);
+      await ref.read(localPositionProvider(session.id).notifier).clear();
     } finally {
       log('session closed${didComplete ? ' (completed)' : ''}');
       state = null;
