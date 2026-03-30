@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +11,7 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
+import 'package:storii/features/player/logic/local_position_provider.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
@@ -21,7 +23,10 @@ late final AppAudioHandler audioHandler;
 
 @riverpod
 Stream<AudioHandlerEvent> audioHandlerEvents(Ref ref) {
-  return audioHandler.events;
+  return audioHandler.events.map((e) {
+    log('audio handler event: $e');
+    return e;
+  });
 }
 
 @riverpod
@@ -100,6 +105,10 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       final session = await ref
           .read(sessionProvider.notifier)
           .create(itemId: itemId, episodeId: episodeId);
+
+      await ref
+          .read(localPositionProvider(session.id).notifier)
+          .save(initialPosition ?? chapter?.start ?? session.currentTime);
 
       final int index;
       final Duration position;

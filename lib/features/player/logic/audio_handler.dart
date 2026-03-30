@@ -10,6 +10,8 @@ import 'package:storii/features/player/logic/position_resolver.dart';
 
 enum AudioHandlerEvent { play, pause, seek, stop, complete, buffering, error }
 
+const _kSeekDebounce = Duration(milliseconds: 500);
+
 class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final _player = AudioPlayer();
   PositionResolver _resolver = PositionResolver.empty;
@@ -103,24 +105,33 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
               playbackState.map((s) => s.processingState).distinct(),
               (playing, state) => (playing, state),
             )
-            .skipWhile((t) => !t.$1 && t.$2 == .idle) // skip until first play
-            .debounceTime(const Duration(milliseconds: 120))
-            .map((t) {
-              final (playing, state) = t;
-              return switch (state) {
-                .idle => AudioHandlerEvent.stop,
-                .completed => AudioHandlerEvent.complete,
-                .buffering => AudioHandlerEvent.buffering,
-                .loading => AudioHandlerEvent.buffering,
-                .error => AudioHandlerEvent.error,
-                _ => playing ? AudioHandlerEvent.play : AudioHandlerEvent.pause,
-              };
-            })
-            .distinct();
+            .skipWhile((t) => !t.$1 && t.$2 == .idle) // initial (false, .idle)
+            .map(
+              (t) => switch (t) {
+                (_, .idle) => AudioHandlerEvent.stop,
+                (_, .completed) => AudioHandlerEvent.complete,
+                (_, .loading) => AudioHandlerEvent.buffering,
+                (_, .buffering) => AudioHandlerEvent.buffering,
+                (_, .error) => AudioHandlerEvent.error,
+                (true, .ready) => AudioHandlerEvent.play,
+                (false, .ready) => AudioHandlerEvent.pause,
+              },
+            )
+            .distinct()
+            // debounce to skip transient states
+            .debounceTime(const Duration(milliseconds: 80))
+            .pairwise()
+            .where(
+              (p) =>
+                  !(p.first == .buffering &&
+                      (p.last == .pause || p.last == .play)),
+              // skipping any pause or play after buffering
+            )
+            .map((p) => p.last);
 
     final seekEvents = _player.positionDiscontinuityStream
         .where((d) => d.reason == .seek)
-        .debounceTime(const Duration(milliseconds: 120))
+        .debounceTime(_kSeekDebounce)
         .map((_) => AudioHandlerEvent.seek);
 
     return Rx.merge([stateEvents, seekEvents]);

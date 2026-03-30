@@ -49,7 +49,7 @@ final class AudioHandlerEventsProvider
 }
 
 String _$audioHandlerEventsHash() =>
-    r'89300f8f2050779248cfb6b4760491979895517a';
+    r'ec5f659b2e76b0ec291afb1901d7e0722c2c60aa';
 
 @ProviderFor(playbackState)
 final playbackStateProvider = PlaybackStateProvider._();
@@ -353,7 +353,7 @@ final class AudioPlayerNotifierProvider
 }
 
 String _$audioPlayerNotifierHash() =>
-    r'e1760264104bff0f1be20e6ac1d8621c08e788d4';
+    r'b6fa1463d48a663f64fdb755baa35c577d1e71f9';
 
 abstract class _$AudioPlayerNotifier extends $Notifier<AudioPlayerState> {
   AudioPlayerState build();

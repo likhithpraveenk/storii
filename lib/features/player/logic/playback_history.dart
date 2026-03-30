@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:hive_ce/hive_ce.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/models/playback_event.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/player/logic/local_position_provider.dart';
 import 'package:storii/storage/hive/boxes.dart';
 
 part 'playback_history.g.dart';
@@ -25,16 +22,14 @@ class PlaybackHistory extends _$PlaybackHistory {
 
   Future<void> addEvent(
     String sessionId,
-    PlaybackEventKind type, {
+    PlaybackEventKind kind, {
+    required Duration position,
     ServerSyncResult? syncResult,
   }) async {
-    final position = ref.read(localPositionProvider(sessionId));
-    if (position == null) return;
-
     final event = PlaybackEvent(
       timestamp: DateTime.now(),
       position: position,
-      kind: type,
+      kind: kind,
     );
 
     final currentHistory = [...state];
@@ -58,7 +53,7 @@ class PlaybackHistory extends _$PlaybackHistory {
     state = currentHistory;
     final raw = currentHistory.map((e) => e.toJson()).toList();
     await _box.put(mediaItemId, raw);
-    log('playback history event: ${state.lastOrNull}');
+    // log('playback history event: ${state.lastOrNull}');
   }
 
   Future<void> clearHistory() async {

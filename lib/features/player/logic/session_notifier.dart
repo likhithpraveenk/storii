@@ -49,14 +49,12 @@ class SessionNotifier extends _$SessionNotifier {
     return session;
   }
 
-  Future<void> sync(Duration totalListened) async {
+  Future<void> sync(Duration totalListened, Duration position) async {
     final session = state;
     if (session == null) {
       // log('no session to sync');
       return;
     }
-    final position = ref.read(localPositionProvider(session.id));
-    if (position == null) return;
 
     final user = await ref.read(authenticatedUserProvider.future);
     await ref
@@ -97,6 +95,8 @@ class SessionNotifier extends _$SessionNotifier {
 
       await Hive.box<String>(sessionIdBox).delete(session.id);
       await ref.read(localPositionProvider(session.id).notifier).clear();
+    } catch (_) {
+      log('session close failed will be cleaned up on app start');
     } finally {
       log('session closed${didComplete ? ' (completed)' : ''}');
       state = null;
