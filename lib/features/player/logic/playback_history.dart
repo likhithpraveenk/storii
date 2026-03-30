@@ -30,6 +30,7 @@ class PlaybackHistory extends _$PlaybackHistory {
       timestamp: DateTime.now(),
       position: position,
       kind: kind,
+      syncResult: syncResult,
     );
 
     final currentHistory = [...state];

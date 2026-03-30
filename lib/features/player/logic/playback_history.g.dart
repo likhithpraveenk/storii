@@ -58,7 +58,7 @@ final class PlaybackHistoryProvider
   }
 }
 
-String _$playbackHistoryHash() => r'31b36a00af88ce0ad4e4703c3a315c2e888f2dec';
+String _$playbackHistoryHash() => r'b00aaf7f02a1bcd0f21e4660fd78cd2e907aee66';
 
 final class PlaybackHistoryFamily extends $Family
     with
