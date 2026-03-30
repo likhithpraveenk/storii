@@ -68,12 +68,15 @@ void sessionSyncWatcher(Ref ref) {
     }
 
     final listened = accumulator.snapshotAndReset(keepRunning: keepRunning);
-    if (listened.inMilliseconds < 999) {
+    if (listened.inMilliseconds < 500) {
       await history.addEvent(
         session.id,
-        kind,
+        PlaybackEvent(
+          timestamp: DateTime.now(),
+          position: position,
+          kind: kind,
+        ),
         position: position,
-        syncResult: const ServerSyncResult(attempted: false, success: false),
       );
       return;
     }
@@ -82,17 +85,27 @@ void sessionSyncWatcher(Ref ref) {
       await ref.read(sessionProvider.notifier).sync(listened, position);
       await history.addEvent(
         session.id,
-        kind,
+        PlaybackEvent(
+          timestamp: DateTime.now(),
+          position: position,
+          kind: kind,
+          syncAttempt: true,
+          syncSuccess: true,
+        ),
         position: position,
-        syncResult: const ServerSyncResult(attempted: true, success: true),
       );
     } catch (_) {
       accumulator.rollback(listened);
       await history.addEvent(
         session.id,
-        kind,
+        PlaybackEvent(
+          timestamp: DateTime.now(),
+          position: position,
+          kind: kind,
+          syncAttempt: true,
+          syncSuccess: false,
+        ),
         position: position,
-        syncResult: const ServerSyncResult(attempted: true, success: false),
       );
     }
   }
@@ -134,13 +147,13 @@ void sessionSyncWatcher(Ref ref) {
         if (position == null) return;
         await history.addEvent(
           session.id,
-          .stop,
-          position: position,
-          syncResult: const ServerSyncResult(
-            attempted: false,
-            success: false,
-            message: 'playback error',
+          PlaybackEvent(
+            timestamp: DateTime.now(),
+            position: position,
+            kind: .stop,
+            errorMessage: 'playback error',
           ),
+          position: position,
         );
         await stop();
     }

@@ -8,13 +8,14 @@ part 'playback_history.g.dart';
 
 @Riverpod(keepAlive: true)
 class PlaybackHistory extends _$PlaybackHistory {
-  late Box<List<dynamic>> _box;
+  Box<List<dynamic>> get box => Hive.box<List<dynamic>>(playbackHistoryBox);
 
   @override
   List<PlaybackEvent> build(String mediaItemId) {
-    _box = Hive.box<List<dynamic>>(playbackHistoryBox);
+    final user = ref.watch(currentUserProvider);
+    if (user == null) return [];
 
-    final raw = _box.get(mediaItemId);
+    final raw = box.get('${user.id}_$mediaItemId');
     return (raw ?? [])
         .map((e) => PlaybackEvent.fromJson(Map<String, dynamic>.from(e as Map)))
         .toList();
@@ -22,24 +23,16 @@ class PlaybackHistory extends _$PlaybackHistory {
 
   Future<void> addEvent(
     String sessionId,
-    PlaybackEventKind kind, {
+    PlaybackEvent event, {
     required Duration position,
-    ServerSyncResult? syncResult,
   }) async {
-    final event = PlaybackEvent(
-      timestamp: DateTime.now(),
-      position: position,
-      kind: kind,
-      syncResult: syncResult,
-    );
-
     final currentHistory = [...state];
     final last = currentHistory.lastOrNull;
 
     final isConsecutiveSync =
         last?.kind == .sync &&
         event.kind == .sync &&
-        last?.syncResult?.success == event.syncResult?.success;
+        last?.syncSuccess == event.syncSuccess;
 
     if (isConsecutiveSync) {
       currentHistory[currentHistory.length - 1] = event;
@@ -53,12 +46,12 @@ class PlaybackHistory extends _$PlaybackHistory {
 
     state = currentHistory;
     final raw = currentHistory.map((e) => e.toJson()).toList();
-    await _box.put(mediaItemId, raw);
+    await box.put(mediaItemId, raw);
     // log('playback history event: ${state.lastOrNull}');
   }
 
   Future<void> clearHistory() async {
     state = [];
-    await _box.delete(mediaItemId);
+    await box.delete(mediaItemId);
   }
 }

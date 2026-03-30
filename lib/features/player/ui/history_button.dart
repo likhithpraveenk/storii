@@ -191,7 +191,6 @@ class _HistoryEventTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final syncResult = event.syncResult;
     final timeStr = event.timestamp.fString(format: 'HH:mm');
 
     return InkWell(
@@ -215,13 +214,13 @@ class _HistoryEventTile extends StatelessWidget {
                 style: theme.textTheme.bodyMedium,
               ),
             ),
-            if (syncResult != null && syncResult.attempted) ...[
+            if (event.syncAttempt) ...[
               Icon(
-                syncResult.success
+                event.syncSuccess
                     ? Icons.cloud_done_outlined
                     : Icons.error_outline,
                 size: 14,
-                color: syncResult.success
+                color: event.syncSuccess
                     ? theme.colorScheme.primary
                     : theme.colorScheme.error,
               ),
