@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:audio_service/audio_service.dart';
@@ -8,11 +9,13 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/chapter.dart';
 import 'package:storii/features/player/logic/position_resolver.dart';
 
-enum AudioHandlerEvent { play, pause, seek, stop, complete, buffering }
+enum AudioHandlerEvent { play, pause, seek, stop, complete, buffering, error }
 
 class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final _player = AudioPlayer();
   PositionResolver _resolver = PositionResolver.empty;
+
+  final _eventController = StreamController<AudioHandlerEvent>.broadcast();
 
   final Duration Function() getSkipForward;
   final Duration Function() getSkipBackward;
@@ -23,6 +26,10 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     required this.getSkipBackward,
   }) {
     _player.playbackEventStream.listen(_broadcastState, onError: logError);
+    _player.processingStateStream.listen((state) {
+      if (state == .completed) _eventController.add(.complete);
+      if (state == .buffering) _eventController.add(.buffering);
+    });
     setSpeed(speed);
     _initAudioSession();
   }
@@ -85,8 +92,8 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   void logError(Object e, StackTrace st) {
+    log('Error from player stream: $e');
     if (e is PlayerException) {
-      log('Error from player stream: ${e.message}');
       playbackState.add(
         playbackState.value.copyWith(
           processingState: .error,
@@ -94,35 +101,10 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         ),
       );
     }
+    _eventController.add(.error);
   }
 
-  Stream<AudioHandlerEvent> get events {
-    final stateEvents =
-        Rx.combineLatest2(
-              playbackState.map((s) => s.playing).distinct(),
-              playbackState.map((s) => s.processingState).distinct(),
-              (playing, state) => (playing, state),
-            )
-            .skipWhile((t) => t.$1 == false) // skipping until play
-            .map(
-              (t) => switch (t) {
-                (_, .idle) => AudioHandlerEvent.stop,
-                (_, .completed) => AudioHandlerEvent.complete,
-                (_, .buffering) => AudioHandlerEvent.buffering,
-                (_, .loading) => AudioHandlerEvent.buffering,
-                (true, _) => AudioHandlerEvent.play,
-                (false, _) => AudioHandlerEvent.pause,
-              },
-            )
-            .distinct();
-
-    final seekEvents = _player.positionDiscontinuityStream
-        .where((d) => d.reason == .seek)
-        .debounceTime(const Duration(milliseconds: 200))
-        .map((_) => AudioHandlerEvent.seek);
-
-    return Rx.merge([stateEvents, seekEvents]);
-  }
+  Stream<AudioHandlerEvent> get events => _eventController.stream;
 
   Stream<Duration> get positionStream => Rx.combineLatest2(
     _player.currentIndexStream.startWith(_player.currentIndex ?? 0),
@@ -193,11 +175,13 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   @override
   Future<void> play() async {
+    _eventController.add(.play);
     await _player.play();
   }
 
   @override
   Future<void> pause() async {
+    _eventController.add(.pause);
     await _player.pause();
   }
 
@@ -220,6 +204,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     final target = _resolver.resolveSeek(chapterIndex, position);
 
     if (target != null) {
+      _eventController.add(.seek);
       await _player.seek(target.trackPosition, index: target.trackIndex);
     }
   }
@@ -251,10 +236,10 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   @override
   Future<void> stop() async {
+    _eventController.add(.stop);
     await _player.stop();
     queue.add([]);
     mediaItem.add(null);
-
     _resolver = PositionResolver.empty;
     await super.stop();
   }

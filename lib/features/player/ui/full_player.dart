@@ -4,6 +4,7 @@ import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/features/player/ui/chapter_button.dart';
+import 'package:storii/features/player/ui/history_button.dart';
 import 'package:storii/features/player/ui/play_button.dart';
 import 'package:storii/features/player/ui/seek_button.dart';
 import 'package:storii/features/player/ui/sleep_button.dart';
@@ -92,6 +93,11 @@ class FullPlayer extends ConsumerWidget {
               mainAxisAlignment: .center,
               crossAxisAlignment: .start,
               children: [
+                HistoryButton(
+                  itemId: session.libraryItemId,
+                  episodeId: session.episodeId,
+                ),
+                const SizedBox(width: 16),
                 ChapterButton(session.chapters),
                 const SizedBox(width: 16),
                 const SleepButton(),

@@ -31,7 +31,7 @@ Future<ProviderContainer> setupProviders() async {
   //! session cleanup
   final settings = container.read(appSettingsProvider);
   if (settings.currentUser != null) {
-    container.read(sessionsCleanupProvider.notifier).cleanup();
+    await container.read(sessionsCleanupProvider.notifier).cleanup();
   }
 
   return container;

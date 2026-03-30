@@ -289,3 +289,6 @@ extension SearchX on SearchResponse {
     return tabs;
   }
 }
+
+String mediaItemIdKey(String id, [String? episodeId]) =>
+    episodeId != null ? '$id$episodeId' : id;

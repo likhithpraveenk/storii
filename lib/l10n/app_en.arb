@@ -243,5 +243,12 @@
   "onlyShowSelected": "Only show when selected",
   "alwaysHide": "Always hide",
   "syncInterval": "Sync Interval",
-  "emptyMsg": "So empty..."
+  "emptyMsg": "So empty...",
+  "history": "History",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "seek": "Seek",
+  "stop": "Stop",
+  "complete": "Complete",
+  "sync": "Sync"
 }

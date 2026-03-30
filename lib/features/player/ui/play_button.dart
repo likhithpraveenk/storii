@@ -11,8 +11,8 @@ class PlayButton extends ConsumerWidget {
     final isPlaying = ref.watch(isPlayingProvider);
     final processingState = ref.watch(processingStateProvider);
 
-    final isLoading = processingState == .loading;
-    final isBuffering = processingState == .buffering;
+    final isLoading = processingState == .loading && !isPlaying;
+    final isBuffering = processingState == .buffering && !isPlaying;
     final width = isPlaying ? 110.0 : 80.0;
     const height = 80.0;
     final scheme = Theme.of(context).colorScheme;

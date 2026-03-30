@@ -572,4 +572,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emptyMsg => 'So empty...';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String get seek => 'Seek';
+
+  @override
+  String get stop => 'Stop';
+
+  @override
+  String get complete => 'Complete';
+
+  @override
+  String get sync => 'Sync';
 }

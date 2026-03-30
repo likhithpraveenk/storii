@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/log_entry.dart';
+import 'package:storii/app/models/playback_event.dart';
 import 'package:storii/l10n/l10n.dart';
 
 extension IterableExtensions<T> on Iterable<T> {
@@ -80,7 +81,7 @@ extension LocalFormatterX on DateTime {
     final pattern = forLogs ? '$format, HH:mm:ss.SSS' : format;
 
     final formatter = _cache.putIfAbsent(pattern, () => DateFormat(pattern));
-    return formatter.format(toLocal());
+    return formatter.format(this);
   }
 }
 
@@ -112,12 +113,15 @@ extension DurationPreciseX on Duration {
   double get inSecondsPrecise =>
       inMicroseconds / Duration.microsecondsPerSecond;
 
-  String toTime() {
+  String toTime({bool padHours = false}) {
     final hours = inHours;
     final minutes = inMinutes.remainder(60);
     final seconds = inSeconds.remainder(60);
-
-    final hoursString = hours > 0 ? '${hours.toString().padLeft(1, '0')}:' : '';
+    final hoursString = hours > 0
+        ? '${hours.toString().padLeft(padHours ? 2 : 1, '0')}:'
+        : padHours
+        ? '00:'
+        : '';
     final minutesString = minutes.toString().padLeft(2, '0');
     final secondsString = seconds.toString().padLeft(2, '0');
     return '$hoursString$minutesString:$secondsString';
@@ -144,4 +148,19 @@ extension DurationPreciseX on Duration {
 extension DoubleToDurationX on double {
   Duration get toDuration =>
       Duration(microseconds: (this * Duration.microsecondsPerSecond).round());
+}
+
+extension PlaybackEventKindX on PlaybackEventKind {
+  String localized(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+
+    return switch (this) {
+      .play => l.play,
+      .pause => l.pause,
+      .seek => l.seek,
+      .complete => l.complete,
+      .stop => l.stop,
+      .sync => l.sync,
+    };
+  }
 }

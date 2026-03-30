@@ -47,6 +47,7 @@ _UserSettings _$UserSettingsFromJson(
       ? const Duration(seconds: 10)
       : Duration(microseconds: (json['skipBackward'] as num).toInt()),
   speed: (json['speed'] as num?)?.toDouble() ?? 1.0,
+  historyLimit: (json['historyLimit'] as num?)?.toInt() ?? 200,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -68,6 +69,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'skipForward': instance.skipForward.inMicroseconds,
   'skipBackward': instance.skipBackward.inMicroseconds,
   'speed': instance.speed,
+  'historyLimit': instance.historyLimit,
 };
 
 const _$NavTargetEnumMap = {

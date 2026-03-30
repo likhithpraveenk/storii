@@ -214,6 +214,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
       _save(state?.copyWith(skipBackward: value));
 
   Future<void> setSpeed(double value) => _save(state?.copyWith(speed: value));
+
+  Future<void> setHistoryLimit(int value) =>
+      _save(state?.copyWith(historyLimit: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -323,5 +326,13 @@ final skipBackwardProvider = Provider<Duration>(
 final speedProvider = Provider<double>(
   (ref) => ref.watch(
     userSettingsProvider.select((s) => s?.speed ?? DefaultUserSettings.speed),
+  ),
+);
+
+final historyLimitProvider = Provider<int>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.historyLimit ?? DefaultUserSettings.historyLimit,
+    ),
   ),
 );

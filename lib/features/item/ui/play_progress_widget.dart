@@ -5,6 +5,7 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
+import 'package:storii/features/player/ui/history_button.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -81,6 +82,7 @@ class PlayProgressWidget extends ConsumerWidget {
             //   ),
             //   icon: const Icon(Icons.download_outlined),
             // ),
+            HistoryButton(itemId: item.id),
             if (progress != 1.0)
               IconButton(
                 onPressed: () => AppBottomSheet.show(
