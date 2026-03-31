@@ -25,6 +25,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     required this.getSkipForward,
     required this.getSkipBackward,
   }) {
+     // TODO: Unable to catch exoplayer playback error
     _player.playbackEventStream.listen(_broadcastState, onError: logError);
     _player.processingStateStream.listen((state) {
       if (state == .completed) _eventController.add(.complete);

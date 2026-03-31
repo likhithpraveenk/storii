@@ -52,6 +52,7 @@ class SleepTimer extends _$SleepTimer {
 
   Future<void> _stopAudio() async {
     try {
+      log('timer end. calling audio handler stop');
       await audioHandler.stop();
     } catch (e, st) {
       log('audioHandler.stop() failed: $e\n$st', name: 'SleepTimer');
