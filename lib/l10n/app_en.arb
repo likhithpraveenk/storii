@@ -250,5 +250,6 @@
   "seek": "Seek",
   "stop": "Stop",
   "complete": "Complete",
-  "sync": "Sync"
+  "sync": "Sync",
+  "playbackError": "playback error"
 }

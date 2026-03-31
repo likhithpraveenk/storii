@@ -6,7 +6,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
-import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/local_position_provider.dart';
 import 'package:storii/features/player/logic/play_request_params.dart';
@@ -69,7 +68,7 @@ class SessionNotifier extends _$SessionNotifier {
     log('sync at ${position.toTime()} listen ${totalListened.inSeconds}s');
   }
 
-  Future<void> close({bool didComplete = false}) async {
+  Future<void> close() async {
     final session = state;
     if (session == null) {
       // log('no session to close');
@@ -82,23 +81,12 @@ class SessionNotifier extends _$SessionNotifier {
           .read(sessionsApiProvider(user))
           .closeSession(sessionId: session.id);
 
-      if (didComplete) {
-        await ref
-            .read(
-              mediaProgressProvider(
-                session.libraryItemId,
-                session.episodeId,
-              ).notifier,
-            )
-            .markComplete();
-      }
-
       await Hive.box<String>(sessionIdBox).delete(session.id);
       await ref.read(localPositionProvider(session.id).notifier).clear();
     } catch (_) {
       log('session close failed will be cleaned up on app start');
     } finally {
-      log('session closed${didComplete ? ' (completed)' : ''}');
+      log('session closed');
       state = null;
     }
   }

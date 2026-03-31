@@ -13,7 +13,7 @@ sealed class PlaybackEvent with _$PlaybackEvent {
     required PlaybackEventKind kind,
     @Default(false) bool syncAttempt,
     @Default(false) bool syncSuccess,
-    String? errorMessage,
+    @Default(false) bool playbackError,
   }) = _PlaybackEvent;
 
   factory PlaybackEvent.fromJson(Map<String, dynamic> json) =>

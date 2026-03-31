@@ -10,12 +10,15 @@ part 'playback_history.g.dart';
 class PlaybackHistory extends _$PlaybackHistory {
   Box<List<dynamic>> get box => Hive.box<List<dynamic>>(playbackHistoryBox);
 
+  String _key(String mediaItemId) {
+    final user = ref.read(currentUserProvider);
+    return '${user?.id}_$mediaItemId';
+  }
+
+
   @override
   List<PlaybackEvent> build(String mediaItemId) {
-    final user = ref.watch(currentUserProvider);
-    if (user == null) return [];
-
-    final raw = box.get('${user.id}_$mediaItemId');
+    final raw = box.get(_key(mediaItemId));
     return (raw ?? [])
         .map((e) => PlaybackEvent.fromJson(Map<String, dynamic>.from(e as Map)))
         .toList();
@@ -46,12 +49,24 @@ class PlaybackHistory extends _$PlaybackHistory {
 
     state = currentHistory;
     final raw = currentHistory.map((e) => e.toJson()).toList();
-    await box.put(mediaItemId, raw);
+    await box.put(_key(mediaItemId), raw);
     // log('playback history event: ${state.lastOrNull}');
+  }
+
+  Future<void> updateEvent(PlaybackEvent event) async {
+    final index = state.indexWhere((e) => e.timestamp == event.timestamp);
+    if (index == -1) return;
+
+    final updated = [...state];
+    updated[index] = event;
+
+    state = updated;
+    final raw = updated.map((e) => e.toJson()).toList();
+    await box.put(_key(mediaItemId), raw);
   }
 
   Future<void> clearHistory() async {
     state = [];
-    await box.delete(mediaItemId);
+    await box.delete(_key(mediaItemId));
   }
 }

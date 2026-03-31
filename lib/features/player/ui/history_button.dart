@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/models/playback_event.dart';
@@ -117,19 +119,21 @@ class HistorySheet extends ConsumerWidget {
                     final event = item as PlaybackEvent;
                     return _HistoryEventTile(
                       event: event,
-                      onTap: () async {
+                      onTap: () {
                         if (isCurrentItem) {
-                          await audioHandler.seek(event.position);
+                          unawaited(audioHandler.seek(event.position));
                         } else {
-                          await ref
-                              .read(audioPlayerProvider.notifier)
-                              .play(
-                                itemId: itemId,
-                                episodeId: episodeId,
-                                initialPosition: event.position,
-                              );
+                          unawaited(
+                            ref
+                                .read(audioPlayerProvider.notifier)
+                                .play(
+                                  itemId: itemId,
+                                  episodeId: episodeId,
+                                  initialPosition: event.position,
+                                ),
+                          );
                         }
-                        if (context.mounted) Navigator.pop(context);
+                        Navigator.pop(context);
                       },
                     );
                   },
@@ -214,6 +218,17 @@ class _HistoryEventTile extends StatelessWidget {
                 style: theme.textTheme.bodyMedium,
               ),
             ),
+            if (event.playbackError) ...[
+              Text(
+                AppLocalizations.of(context)!.playbackError,
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: theme.colorScheme.error,
+                  fontStyle: .italic,
+                  overflow: .ellipsis,
+                ),
+              ),
+              const SizedBox(width: 6),
+            ],
             if (event.syncAttempt) ...[
               Icon(
                 event.syncSuccess

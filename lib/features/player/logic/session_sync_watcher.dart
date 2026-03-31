@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/models/playback_event.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/local_position_provider.dart';
 import 'package:storii/features/player/logic/playback_history.dart';
@@ -60,52 +61,36 @@ void sessionSyncWatcher(Ref ref) {
     ).notifier,
   );
 
-  Future<void> sync(PlaybackEventKind kind, {required bool keepRunning}) async {
+  Future<void> sync(
+    PlaybackEventKind kind, {
+    required bool keepRunning,
+    bool playbackError = false,
+  }) async {
     final position = ref.read(localPositionProvider(session.id));
     if (position == null) {
       log('no position to sync');
       return;
     }
+    final event = PlaybackEvent(
+      timestamp: DateTime.now(),
+      position: position,
+      kind: kind,
+      playbackError: playbackError,
+    );
+    await history.addEvent(session.id, event, position: position);
 
     final listened = accumulator.snapshotAndReset(keepRunning: keepRunning);
-    if (listened.inMilliseconds < 500) {
-      await history.addEvent(
-        session.id,
-        PlaybackEvent(
-          timestamp: DateTime.now(),
-          position: position,
-          kind: kind,
-        ),
-        position: position,
-      );
-      return;
-    }
+    if (listened.inMilliseconds < 500) return;
 
     try {
       await ref.read(sessionProvider.notifier).sync(listened, position);
-      await history.addEvent(
-        session.id,
-        PlaybackEvent(
-          timestamp: DateTime.now(),
-          position: position,
-          kind: kind,
-          syncAttempt: true,
-          syncSuccess: true,
-        ),
-        position: position,
+      await history.updateEvent(
+        event.copyWith(syncAttempt: true, syncSuccess: true),
       );
     } catch (_) {
       accumulator.rollback(listened);
-      await history.addEvent(
-        session.id,
-        PlaybackEvent(
-          timestamp: DateTime.now(),
-          position: position,
-          kind: kind,
-          syncAttempt: true,
-          syncSuccess: false,
-        ),
-        position: position,
+      await history.updateEvent(
+        event.copyWith(syncAttempt: true, syncSuccess: false),
       );
     }
   }
@@ -152,19 +137,7 @@ void sessionSyncWatcher(Ref ref) {
         accumulator.reset();
 
       case .error:
-        final position = ref.read(localPositionProvider(session.id));
-        if (position == null) return;
-        await history.addEvent(
-          session.id,
-          PlaybackEvent(
-            timestamp: DateTime.now(),
-            position: position,
-            kind: .stop,
-            errorMessage: 'playback error',
-          ),
-          position: position,
-        );
-        await stop();
+        await sync(.stop, keepRunning: false, playbackError: true);
     }
   });
 
