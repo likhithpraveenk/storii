@@ -35,6 +35,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        resValue("string", "app_name", "Storii")
     }
 
     signingConfigs {
@@ -58,13 +59,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            resValue("string", "app_name", "Storii")
             signingConfig = when {
                 System.getenv("KEY_ALIAS") != null -> signingConfigs.getByName("release")
                 keystorePropertiesFile?.exists() == true -> signingConfigs.getByName("release")
                 else -> {
-                    println("WARNING: No signing credentials found. Signing with debug key.")
-                    signingConfigs.getByName("debug")
+                    println("WARNING: No signing credentials found. Building unsigned apk")
+                    null
                 }
             }
         }
