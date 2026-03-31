@@ -11,21 +11,24 @@ class PlayButton extends ConsumerWidget {
     final isPlaying = ref.watch(isPlayingProvider);
     final processingState = ref.watch(processingStateProvider);
 
-    final isLoading = processingState == .loading && !isPlaying;
-    final isBuffering = processingState == .buffering && !isPlaying;
-    final width = isPlaying ? 110.0 : 80.0;
-    const height = 80.0;
     final scheme = Theme.of(context).colorScheme;
+    final iconColor = scheme.onInverseSurface;
+
+    final isWide = isPlaying || processingState == .buffering;
 
     return InkWell(
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
-      onTap: isLoading ? null : audioHandler.togglePlay,
+      onTap: switch (processingState) {
+        .loading => null,
+        .completed => audioHandler.seekToStart,
+        _ => audioHandler.togglePlay,
+      },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeIn,
-        width: width,
-        height: height,
+        width: isWide ? 110.0 : 80.0,
+        height: 80.0,
         decoration: BoxDecoration(
           color: scheme.inverseSurface,
           borderRadius: .circular(isPlaying ? 30 : 40),
@@ -36,14 +39,31 @@ class PlayButton extends ConsumerWidget {
             transitionBuilder: (child, animation) {
               return ScaleTransition(scale: animation, child: child);
             },
-            child: isLoading || isBuffering
-                ? RandomWaveform(color: scheme.onInverseSurface, barCount: 6)
-                : Icon(
-                    isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
-                    key: ValueKey<bool>(isPlaying),
-                    size: 36,
-                    color: scheme.onInverseSurface,
-                  ),
+            child: switch (processingState) {
+              .loading || .buffering => RandomWaveform(
+                key: ValueKey(processingState),
+                color: iconColor,
+                barCount: 6,
+              ),
+              .completed => Icon(
+                Icons.replay_rounded,
+                key: ValueKey(processingState),
+                size: 36,
+                color: iconColor,
+              ),
+              .error => Icon(
+                Icons.error_outline_rounded,
+                key: ValueKey(processingState),
+                size: 36,
+                color: scheme.error,
+              ),
+              _ => Icon(
+                isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                key: ValueKey(isPlaying),
+                size: 36,
+                color: iconColor,
+              ),
+            },
           ),
         ),
       ),

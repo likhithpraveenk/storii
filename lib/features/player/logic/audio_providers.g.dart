@@ -96,11 +96,11 @@ final processingStateProvider = ProcessingStateProvider._();
 final class ProcessingStateProvider
     extends
         $FunctionalProvider<
-          AudioProcessingState,
-          AudioProcessingState,
-          AudioProcessingState
+          AudioProcessingState?,
+          AudioProcessingState?,
+          AudioProcessingState?
         >
-    with $Provider<AudioProcessingState> {
+    with $Provider<AudioProcessingState?> {
   ProcessingStateProvider._()
     : super(
         from: null,
@@ -117,25 +117,25 @@ final class ProcessingStateProvider
 
   @$internal
   @override
-  $ProviderElement<AudioProcessingState> $createElement(
+  $ProviderElement<AudioProcessingState?> $createElement(
     $ProviderPointer pointer,
   ) => $ProviderElement(pointer);
 
   @override
-  AudioProcessingState create(Ref ref) {
+  AudioProcessingState? create(Ref ref) {
     return processingState(ref);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(AudioProcessingState value) {
+  Override overrideWithValue(AudioProcessingState? value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<AudioProcessingState>(value),
+      providerOverride: $SyncValueProvider<AudioProcessingState?>(value),
     );
   }
 }
 
-String _$processingStateHash() => r'0f04b82bad3d9956ff74fb511e221553c8a75b80';
+String _$processingStateHash() => r'577ac059992ef75e191e5498b2bedce98eb1a911';
 
 @ProviderFor(isPlaying)
 final isPlayingProvider = IsPlayingProvider._();
@@ -353,7 +353,7 @@ final class AudioPlayerNotifierProvider
 }
 
 String _$audioPlayerNotifierHash() =>
-    r'b6fa1463d48a663f64fdb755baa35c577d1e71f9';
+    r'302a6cea1b485ab72bc471ac3ca0999b20526a6c';
 
 abstract class _$AudioPlayerNotifier extends $Notifier<AudioPlayerState> {
   AudioPlayerState build();

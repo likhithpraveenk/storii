@@ -110,10 +110,10 @@ void sessionSyncWatcher(Ref ref) {
     }
   }
 
-  Future<void> stop({bool didComplete = false}) async {
+  Future<void> stop() async {
     try {
-      await sync(didComplete ? .complete : .stop, keepRunning: false);
-      await ref.read(sessionProvider.notifier).close(didComplete: didComplete);
+      await sync(.stop, keepRunning: false);
+      await ref.read(sessionProvider.notifier).close();
     } finally {
       accumulator.reset();
     }
@@ -140,7 +140,16 @@ void sessionSyncWatcher(Ref ref) {
         await stop();
 
       case .complete:
-        await stop(didComplete: true);
+        await sync(.complete, keepRunning: false);
+        await ref
+            .read(
+              mediaProgressProvider(
+                session.libraryItemId,
+                session.episodeId,
+              ).notifier,
+            )
+            .markComplete();
+        accumulator.reset();
 
       case .error:
         final position = ref.read(localPositionProvider(session.id));
