@@ -128,6 +128,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       );
 
       state = const AudioPlayerState();
+      await audioHandler.processingStateStream.firstWhere((s) => s == .ready);
       await audioHandler.play();
     } catch (e) {
       final error = AppError.resolve(e);

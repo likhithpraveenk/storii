@@ -15,7 +15,6 @@ class PlaybackHistory extends _$PlaybackHistory {
     return '${user?.id}_$mediaItemId';
   }
 
-
   @override
   List<PlaybackEvent> build(String mediaItemId) {
     final raw = box.get(_key(mediaItemId));
