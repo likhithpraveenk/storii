@@ -593,4 +593,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sync => 'Sync';
+
+  @override
+  String get playbackError => 'playback error';
 }

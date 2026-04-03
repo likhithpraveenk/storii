@@ -1191,6 +1191,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sync'**
   String get sync;
+
+  /// No description provided for @playbackError.
+  ///
+  /// In en, this message translates to:
+  /// **'playback error'**
+  String get playbackError;
 }
 
 class _AppLocalizationsDelegate

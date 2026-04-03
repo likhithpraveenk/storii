@@ -13,7 +13,7 @@ _PlaybackEvent _$PlaybackEventFromJson(Map<String, dynamic> json) =>
       kind: $enumDecode(_$PlaybackEventKindEnumMap, json['kind']),
       syncAttempt: json['syncAttempt'] as bool? ?? false,
       syncSuccess: json['syncSuccess'] as bool? ?? false,
-      errorMessage: json['errorMessage'] as String?,
+      playbackError: json['playbackError'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$PlaybackEventToJson(_PlaybackEvent instance) =>
@@ -23,7 +23,7 @@ Map<String, dynamic> _$PlaybackEventToJson(_PlaybackEvent instance) =>
       'kind': _$PlaybackEventKindEnumMap[instance.kind]!,
       'syncAttempt': instance.syncAttempt,
       'syncSuccess': instance.syncSuccess,
-      'errorMessage': ?instance.errorMessage,
+      'playbackError': instance.playbackError,
     };
 
 const _$PlaybackEventKindEnumMap = {

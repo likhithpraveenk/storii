@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
@@ -48,7 +50,7 @@ class PlayerScreen extends ConsumerWidget {
     return PlayerBuilder(
       maxHeight: screenHeight,
       onDismiss: () async {
-        // log('miniplayer dismissed');
+        log('player dismissed. audio handler stop');
         return await audioHandler.stop();
       },
       builder: (context, f) {

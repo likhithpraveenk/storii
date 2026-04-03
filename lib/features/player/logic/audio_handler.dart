@@ -104,6 +104,9 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     _eventController.add(.error);
   }
 
+  Stream<ProcessingState> get processingStateStream =>
+      _player.processingStateStream;
+
   Stream<AudioHandlerEvent> get events => _eventController.stream;
 
   Stream<Duration> get positionStream => Rx.combineLatest2(
@@ -209,6 +212,11 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     }
   }
 
+  Future<void> seekToStart() async {
+    await _player.seek(Duration.zero, index: 0);
+    await play();
+  }
+
   @override
   Future<void> skipToNext() async {
     final next = (playbackState.value.queueIndex ?? 0) + 1;
@@ -230,6 +238,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   Future<void> skipToQueueItem(int index) async {
     final target = _resolver.resolveSeek(index, Duration.zero);
     if (target != null) {
+      _eventController.add(.seek);
       await _player.seek(target.trackPosition, index: target.trackIndex);
     }
   }

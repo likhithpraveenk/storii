@@ -35,9 +35,9 @@ Stream<PlaybackState> playbackState(Ref ref) {
 }
 
 @riverpod
-AudioProcessingState processingState(Ref ref) {
+AudioProcessingState? processingState(Ref ref) {
   return ref.watch(
-    playbackStateProvider.select((s) => s.value?.processingState ?? .idle),
+    playbackStateProvider.select((s) => s.value?.processingState),
   );
 }
 
@@ -99,6 +99,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
 
       final oldSession = ref.read(sessionProvider);
       if (oldSession != null) {
+        log('old session exists. calling audio handler stop');
         await audioHandler.stop();
       }
 
@@ -127,6 +128,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       );
 
       state = const AudioPlayerState();
+      await audioHandler.processingStateStream.firstWhere((s) => s == .ready);
       await audioHandler.play();
     } catch (e) {
       final error = AppError.resolve(e);
