@@ -30,19 +30,22 @@ jobs:
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/release.keystore
 
+      - name: Get dependencies
+        run: flutter pub get --no-example
+
       - name: Build Signed APKs
         env:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEYSTORE_PATH: "release.keystore"
-        run: flutter build apk --release --split-per-abi
+        run: flutter build apk --release --split-per-abi --no-pub
 
       - name: Rename APKs for Release
         run: |
           cd build/app/outputs/flutter-apk/
           mv app-arm64-v8a-release.apk ${{ github.event.repository.name }}-${{ github.ref_name }}-arm64.apk
-          mv app-armeabi-v7a-release.apk ${{ github.event.repository.name }}-${{ github.ref_name }}-arm32.apk
+          mv app-armeabi-v7a-release.apk ${{ github.event.repository.name }}-${{ github.ref_name }}-armeabi.apk
           mv app-x86_64-release.apk ${{ github.event.repository.name }}-${{ github.ref_name }}-x86_64.apk
 
       - name: Create GitHub Release
