@@ -58,12 +58,13 @@ class AddUserNotifier extends _$AddUserNotifier {
       await ref.read(appSettingsProvider.notifier).setCurrentUser(storeUser);
       LogService.log('${storeUser.username} logged in', level: .info);
       state = state.copyWith(status: .success);
-    } catch (e) {
+    } catch (e, st) {
       final error = AppError.resolve(e);
       LogService.log(
         'Error while adding $username',
         source: 'AddUserNotifier',
         level: .error,
+        stackTrace: st,
       );
       state = state.copyWith(status: .error, message: error.message);
     }
