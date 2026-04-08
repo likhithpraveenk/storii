@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserPermissions {
 
- bool get download; bool get update; bool get delete; bool get upload; bool get createEreader; bool get accessAllLibraries; bool get accessAllTags; bool get accessExplicitContent; bool get selectedTagsNotAccessible;
+ bool? get download; bool? get update; bool? get delete; bool? get upload; bool? get createEreader; bool? get accessAllLibraries; bool? get accessAllTags; bool? get accessExplicitContent; bool? get selectedTagsNotAccessible;
 /// Create a copy of UserPermissions
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $UserPermissionsCopyWith<$Res>  {
   factory $UserPermissionsCopyWith(UserPermissions value, $Res Function(UserPermissions) _then) = _$UserPermissionsCopyWithImpl;
 @useResult
 $Res call({
- bool download, bool update, bool delete, bool upload, bool createEreader, bool accessAllLibraries, bool accessAllTags, bool accessExplicitContent, bool selectedTagsNotAccessible
+ bool? download, bool? update, bool? delete, bool? upload, bool? createEreader, bool? accessAllLibraries, bool? accessAllTags, bool? accessExplicitContent, bool? selectedTagsNotAccessible
 });
 
 
@@ -65,18 +65,18 @@ class _$UserPermissionsCopyWithImpl<$Res>
 
 /// Create a copy of UserPermissions
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? download = null,Object? update = null,Object? delete = null,Object? upload = null,Object? createEreader = null,Object? accessAllLibraries = null,Object? accessAllTags = null,Object? accessExplicitContent = null,Object? selectedTagsNotAccessible = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? download = freezed,Object? update = freezed,Object? delete = freezed,Object? upload = freezed,Object? createEreader = freezed,Object? accessAllLibraries = freezed,Object? accessAllTags = freezed,Object? accessExplicitContent = freezed,Object? selectedTagsNotAccessible = freezed,}) {
   return _then(_self.copyWith(
-download: null == download ? _self.download : download // ignore: cast_nullable_to_non_nullable
-as bool,update: null == update ? _self.update : update // ignore: cast_nullable_to_non_nullable
-as bool,delete: null == delete ? _self.delete : delete // ignore: cast_nullable_to_non_nullable
-as bool,upload: null == upload ? _self.upload : upload // ignore: cast_nullable_to_non_nullable
-as bool,createEreader: null == createEreader ? _self.createEreader : createEreader // ignore: cast_nullable_to_non_nullable
-as bool,accessAllLibraries: null == accessAllLibraries ? _self.accessAllLibraries : accessAllLibraries // ignore: cast_nullable_to_non_nullable
-as bool,accessAllTags: null == accessAllTags ? _self.accessAllTags : accessAllTags // ignore: cast_nullable_to_non_nullable
-as bool,accessExplicitContent: null == accessExplicitContent ? _self.accessExplicitContent : accessExplicitContent // ignore: cast_nullable_to_non_nullable
-as bool,selectedTagsNotAccessible: null == selectedTagsNotAccessible ? _self.selectedTagsNotAccessible : selectedTagsNotAccessible // ignore: cast_nullable_to_non_nullable
-as bool,
+download: freezed == download ? _self.download : download // ignore: cast_nullable_to_non_nullable
+as bool?,update: freezed == update ? _self.update : update // ignore: cast_nullable_to_non_nullable
+as bool?,delete: freezed == delete ? _self.delete : delete // ignore: cast_nullable_to_non_nullable
+as bool?,upload: freezed == upload ? _self.upload : upload // ignore: cast_nullable_to_non_nullable
+as bool?,createEreader: freezed == createEreader ? _self.createEreader : createEreader // ignore: cast_nullable_to_non_nullable
+as bool?,accessAllLibraries: freezed == accessAllLibraries ? _self.accessAllLibraries : accessAllLibraries // ignore: cast_nullable_to_non_nullable
+as bool?,accessAllTags: freezed == accessAllTags ? _self.accessAllTags : accessAllTags // ignore: cast_nullable_to_non_nullable
+as bool?,accessExplicitContent: freezed == accessExplicitContent ? _self.accessExplicitContent : accessExplicitContent // ignore: cast_nullable_to_non_nullable
+as bool?,selectedTagsNotAccessible: freezed == selectedTagsNotAccessible ? _self.selectedTagsNotAccessible : selectedTagsNotAccessible // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 
@@ -158,7 +158,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool download,  bool update,  bool delete,  bool upload,  bool createEreader,  bool accessAllLibraries,  bool accessAllTags,  bool accessExplicitContent,  bool selectedTagsNotAccessible)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool? download,  bool? update,  bool? delete,  bool? upload,  bool? createEreader,  bool? accessAllLibraries,  bool? accessAllTags,  bool? accessExplicitContent,  bool? selectedTagsNotAccessible)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserPermissions() when $default != null:
 return $default(_that.download,_that.update,_that.delete,_that.upload,_that.createEreader,_that.accessAllLibraries,_that.accessAllTags,_that.accessExplicitContent,_that.selectedTagsNotAccessible);case _:
@@ -179,7 +179,7 @@ return $default(_that.download,_that.update,_that.delete,_that.upload,_that.crea
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool download,  bool update,  bool delete,  bool upload,  bool createEreader,  bool accessAllLibraries,  bool accessAllTags,  bool accessExplicitContent,  bool selectedTagsNotAccessible)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool? download,  bool? update,  bool? delete,  bool? upload,  bool? createEreader,  bool? accessAllLibraries,  bool? accessAllTags,  bool? accessExplicitContent,  bool? selectedTagsNotAccessible)  $default,) {final _that = this;
 switch (_that) {
 case _UserPermissions():
 return $default(_that.download,_that.update,_that.delete,_that.upload,_that.createEreader,_that.accessAllLibraries,_that.accessAllTags,_that.accessExplicitContent,_that.selectedTagsNotAccessible);}
@@ -196,7 +196,7 @@ return $default(_that.download,_that.update,_that.delete,_that.upload,_that.crea
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool download,  bool update,  bool delete,  bool upload,  bool createEreader,  bool accessAllLibraries,  bool accessAllTags,  bool accessExplicitContent,  bool selectedTagsNotAccessible)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool? download,  bool? update,  bool? delete,  bool? upload,  bool? createEreader,  bool? accessAllLibraries,  bool? accessAllTags,  bool? accessExplicitContent,  bool? selectedTagsNotAccessible)?  $default,) {final _that = this;
 switch (_that) {
 case _UserPermissions() when $default != null:
 return $default(_that.download,_that.update,_that.delete,_that.upload,_that.createEreader,_that.accessAllLibraries,_that.accessAllTags,_that.accessExplicitContent,_that.selectedTagsNotAccessible);case _:
@@ -211,18 +211,18 @@ return $default(_that.download,_that.update,_that.delete,_that.upload,_that.crea
 @JsonSerializable()
 
 class _UserPermissions implements UserPermissions {
-  const _UserPermissions({required this.download, required this.update, required this.delete, required this.upload, required this.createEreader, required this.accessAllLibraries, required this.accessAllTags, required this.accessExplicitContent, required this.selectedTagsNotAccessible});
+  const _UserPermissions({this.download, this.update, this.delete, this.upload, this.createEreader, this.accessAllLibraries, this.accessAllTags, this.accessExplicitContent, this.selectedTagsNotAccessible});
   factory _UserPermissions.fromJson(Map<String, dynamic> json) => _$UserPermissionsFromJson(json);
 
-@override final  bool download;
-@override final  bool update;
-@override final  bool delete;
-@override final  bool upload;
-@override final  bool createEreader;
-@override final  bool accessAllLibraries;
-@override final  bool accessAllTags;
-@override final  bool accessExplicitContent;
-@override final  bool selectedTagsNotAccessible;
+@override final  bool? download;
+@override final  bool? update;
+@override final  bool? delete;
+@override final  bool? upload;
+@override final  bool? createEreader;
+@override final  bool? accessAllLibraries;
+@override final  bool? accessAllTags;
+@override final  bool? accessExplicitContent;
+@override final  bool? selectedTagsNotAccessible;
 
 /// Create a copy of UserPermissions
 /// with the given fields replaced by the non-null parameter values.
@@ -257,7 +257,7 @@ abstract mixin class _$UserPermissionsCopyWith<$Res> implements $UserPermissions
   factory _$UserPermissionsCopyWith(_UserPermissions value, $Res Function(_UserPermissions) _then) = __$UserPermissionsCopyWithImpl;
 @override @useResult
 $Res call({
- bool download, bool update, bool delete, bool upload, bool createEreader, bool accessAllLibraries, bool accessAllTags, bool accessExplicitContent, bool selectedTagsNotAccessible
+ bool? download, bool? update, bool? delete, bool? upload, bool? createEreader, bool? accessAllLibraries, bool? accessAllTags, bool? accessExplicitContent, bool? selectedTagsNotAccessible
 });
 
 
@@ -274,18 +274,18 @@ class __$UserPermissionsCopyWithImpl<$Res>
 
 /// Create a copy of UserPermissions
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? download = null,Object? update = null,Object? delete = null,Object? upload = null,Object? createEreader = null,Object? accessAllLibraries = null,Object? accessAllTags = null,Object? accessExplicitContent = null,Object? selectedTagsNotAccessible = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? download = freezed,Object? update = freezed,Object? delete = freezed,Object? upload = freezed,Object? createEreader = freezed,Object? accessAllLibraries = freezed,Object? accessAllTags = freezed,Object? accessExplicitContent = freezed,Object? selectedTagsNotAccessible = freezed,}) {
   return _then(_UserPermissions(
-download: null == download ? _self.download : download // ignore: cast_nullable_to_non_nullable
-as bool,update: null == update ? _self.update : update // ignore: cast_nullable_to_non_nullable
-as bool,delete: null == delete ? _self.delete : delete // ignore: cast_nullable_to_non_nullable
-as bool,upload: null == upload ? _self.upload : upload // ignore: cast_nullable_to_non_nullable
-as bool,createEreader: null == createEreader ? _self.createEreader : createEreader // ignore: cast_nullable_to_non_nullable
-as bool,accessAllLibraries: null == accessAllLibraries ? _self.accessAllLibraries : accessAllLibraries // ignore: cast_nullable_to_non_nullable
-as bool,accessAllTags: null == accessAllTags ? _self.accessAllTags : accessAllTags // ignore: cast_nullable_to_non_nullable
-as bool,accessExplicitContent: null == accessExplicitContent ? _self.accessExplicitContent : accessExplicitContent // ignore: cast_nullable_to_non_nullable
-as bool,selectedTagsNotAccessible: null == selectedTagsNotAccessible ? _self.selectedTagsNotAccessible : selectedTagsNotAccessible // ignore: cast_nullable_to_non_nullable
-as bool,
+download: freezed == download ? _self.download : download // ignore: cast_nullable_to_non_nullable
+as bool?,update: freezed == update ? _self.update : update // ignore: cast_nullable_to_non_nullable
+as bool?,delete: freezed == delete ? _self.delete : delete // ignore: cast_nullable_to_non_nullable
+as bool?,upload: freezed == upload ? _self.upload : upload // ignore: cast_nullable_to_non_nullable
+as bool?,createEreader: freezed == createEreader ? _self.createEreader : createEreader // ignore: cast_nullable_to_non_nullable
+as bool?,accessAllLibraries: freezed == accessAllLibraries ? _self.accessAllLibraries : accessAllLibraries // ignore: cast_nullable_to_non_nullable
+as bool?,accessAllTags: freezed == accessAllTags ? _self.accessAllTags : accessAllTags // ignore: cast_nullable_to_non_nullable
+as bool?,accessExplicitContent: freezed == accessExplicitContent ? _self.accessExplicitContent : accessExplicitContent // ignore: cast_nullable_to_non_nullable
+as bool?,selectedTagsNotAccessible: freezed == selectedTagsNotAccessible ? _self.selectedTagsNotAccessible : selectedTagsNotAccessible // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 

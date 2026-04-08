@@ -21,8 +21,8 @@ _User _$UserFromJson(Map<String, dynamic> json) => _User(
   bookmarks: (json['bookmarks'] as List<dynamic>)
       .map((e) => Bookmark.fromJson(e as Map<String, dynamic>))
       .toList(),
-  isActive: json['isActive'] as bool,
-  isLocked: json['isLocked'] as bool,
+  isActive: json['isActive'] as bool?,
+  isLocked: json['isLocked'] as bool?,
   lastSeen: _$JsonConverterFromJson<int, DateTime>(
     json['lastSeen'],
     const DateTimeEpochConverter().fromJson,
@@ -39,7 +39,7 @@ _User _$UserFromJson(Map<String, dynamic> json) => _User(
   itemTagsSelected: (json['itemTagsSelected'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
-  hasOpenIDLink: json['hasOpenIDLink'] as bool,
+  hasOpenIDLink: json['hasOpenIDLink'] as bool?,
   accessToken: json['accessToken'] as String?,
   refreshToken: json['refreshToken'] as String?,
 );
@@ -52,8 +52,8 @@ Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
   'mediaProgress': instance.mediaProgress.map((e) => e.toJson()).toList(),
   'seriesHideFromContinueListening': instance.seriesHideFromContinueListening,
   'bookmarks': instance.bookmarks.map((e) => e.toJson()).toList(),
-  'isActive': instance.isActive,
-  'isLocked': instance.isLocked,
+  'isActive': ?instance.isActive,
+  'isLocked': ?instance.isLocked,
   'lastSeen': ?_$JsonConverterToJson<int, DateTime>(
     instance.lastSeen,
     const DateTimeEpochConverter().toJson,
@@ -62,7 +62,7 @@ Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
   'permissions': instance.permissions.toJson(),
   'librariesAccessible': instance.librariesAccessible,
   'itemTagsSelected': instance.itemTagsSelected,
-  'hasOpenIDLink': instance.hasOpenIDLink,
+  'hasOpenIDLink': ?instance.hasOpenIDLink,
   'accessToken': ?instance.accessToken,
   'refreshToken': ?instance.refreshToken,
 };
