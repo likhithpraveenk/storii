@@ -13,12 +13,16 @@ class ApiRoutes {
 
   // Server
   static const healthCheck = '/healthcheck';
+  static const status = '/status';
+  static const ping = '/ping';
 
   // Auth Routes
   static const login = '/login';
   static const authRefresh = '/auth/refresh';
   static const authorize = '/api/authorize';
   static const logout = '/logout';
+  static const oauth = '/auth/openid';
+  static const oauthCallback = '/auth/openid/callback';
 
   // Library
   static const libraries = '/api/libraries';
