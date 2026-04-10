@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/config/abs_urls.dart';
 import 'package:storii/features/auth/logic/add_user_notifier.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserLoginForm extends ConsumerStatefulWidget {
   const UserLoginForm({
@@ -79,14 +81,74 @@ class _UserLoginFormState extends ConsumerState<UserLoginForm> {
             const SizedBox(height: 16),
           ],
           if (supportsOidc) ...[
-            SizedBox(
-              width: double.infinity,
-              child: AppFilledButton(
-                icon: const Icon(Icons.open_in_browser),
-                text: oidcButtonText,
-                loading: widget.isLoading,
-                onPressed: _loginWithOidc,
-              ),
+            Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: AppFilledButton(
+                    icon: const Icon(Icons.open_in_browser),
+                    text: oidcButtonText,
+                    loading: widget.isLoading,
+                    onPressed: _loginWithOidc,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    Icon(Icons.info_outline, size: 13, color: scheme.error),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Wrap(
+                        crossAxisAlignment: .center,
+                        children: [
+                          Text(
+                            l.oidcRedirectUriHintPrefix,
+                            style: textTheme.bodySmall?.copyWith(
+                              color: scheme.onSurfaceVariant,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Container(
+                            padding: const .symmetric(
+                              horizontal: 6,
+                              vertical: 1,
+                            ),
+                            decoration: BoxDecoration(
+                              color: scheme.surfaceContainer,
+                              borderRadius: .circular(4),
+                            ),
+                            child: SelectableText(
+                              'storii://oauth',
+                              style: textTheme.bodySmall?.copyWith(
+                                color: scheme.onSurface,
+                                fontFamily: 'monospace',
+                                fontWeight: .bold,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            l.oidcRedirectUriHintSuffix,
+                            style: textTheme.bodySmall?.copyWith(
+                              color: scheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        launchUrl(AbsUrls.authConfig(widget.serverUrl));
+                      },
+                      icon: Icon(
+                        Icons.open_in_new,
+                        size: 16,
+                        color: scheme.error,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
             if (supportsLocal)
               Padding(

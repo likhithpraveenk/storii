@@ -602,4 +602,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get or => 'Or';
+
+  @override
+  String get oidcRedirectUriHintPrefix => 'Requires';
+
+  @override
+  String get oidcRedirectUriHintSuffix =>
+      'in ABS → Settings → Authentication → Allowed Mobile Redirect URIs';
 }
