@@ -41,6 +41,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.13.10"
+  app_links:
+    dependency: "direct main"
+    description:
+      name: app_links
+      sha256: "3462d9defc61565fde4944858b59bec5be2b9d5b05f20aed190adb3ad08a7abc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.0"
+  app_links_linux:
+    dependency: transitive
+    description:
+      name: app_links_linux
+      sha256: f5f7173a78609f3dfd4c2ff2c95bd559ab43c80a87dc6a095921d96c05688c81
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
+  app_links_platform_interface:
+    dependency: transitive
+    description:
+      name: app_links_platform_interface
+      sha256: "05f5379577c513b534a29ddea68176a4d4802c46180ee8e2e966257158772a3f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
+  app_links_web:
+    dependency: transitive
+    description:
+      name: app_links_web
+      sha256: af060ed76183f9e2b87510a9480e56a5352b6c249778d07bd2c95fc35632a555
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
   args:
     dependency: transitive
     description:
@@ -329,14 +361,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.12"
-  desktop_webview_window:
-    dependency: transitive
-    description:
-      name: desktop_webview_window
-      sha256: "57cf20d81689d5cbb1adfd0017e96b669398a669d927906073b0e42fc64111c0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.3"
   device_info_plus:
     dependency: "direct main"
     description:
@@ -520,22 +544,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_web_auth_2:
-    dependency: "direct main"
-    description:
-      name: flutter_web_auth_2
-      sha256: "432ff8c7b2834eaeec3378d99e24a0210b9ac2f453b3f7a7d739a5c09069fba3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.1"
-  flutter_web_auth_2_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_web_auth_2_platform_interface
-      sha256: ba0fbba55bffb47242025f96852ad1ffba34bc451568f56ef36e613612baffab
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -597,6 +605,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+  gtk:
+    dependency: transitive
+    description:
+      name: gtk
+      sha256: e8ce9ca4b1df106e4d72dad201d345ea1a036cc12c360f1a7d5a758f78ffa42c
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   hive_ce:
     dependency: "direct main"
     description:
@@ -1466,14 +1482,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  window_to_front:
-    dependency: transitive
-    description:
-      name: window_to_front
-      sha256: "7aef379752b7190c10479e12b5fd7c0b9d92adc96817d9e96c59937929512aee"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.3"
   xdg_directories:
     dependency: transitive
     description:

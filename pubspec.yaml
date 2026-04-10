@@ -9,6 +9,7 @@ environment:
   flutter: ^3.41.6
 
 dependencies:
+  app_links: ^7.0.0
   audio_service: ^0.18.18
   audio_session: ^0.2.3
   cached_network_image: ^3.4.1
@@ -26,7 +27,6 @@ dependencies:
     sdk: flutter
   flutter_riverpod: ^3.1.0
   flutter_secure_storage: ^10.0.0
-  flutter_web_auth_2: ^5.0.1
   freezed_annotation: ^3.1.0
   go_router: ^17.1.0
   hive_ce: ^2.19.3

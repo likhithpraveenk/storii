@@ -18,6 +18,7 @@ void main() async {
   await FontService.loadFonts();
 
   final container = await init.setupProviders();
+  await init.setupGlobals();
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 }
 
@@ -29,6 +30,10 @@ class MyApp extends ConsumerWidget {
     ref.watch(appControllerProvider);
 
     final router = ref.watch(routerProvider);
+    init.appLinks.uriLinkStream.listen((url) {
+      router.go('/${url.host}${url.path}', extra: url);
+    });
+
     final themeMode = ref.watch(themeModeProvider);
     final textScaler = ref.watch(textScalerProvider);
 

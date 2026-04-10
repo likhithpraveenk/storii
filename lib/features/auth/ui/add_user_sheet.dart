@@ -81,11 +81,10 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
             width: double.infinity,
             child: AppTextButton(
               text: l.cancel,
-              onPressed: state.status == .loading
-                  ? null
-                  : () {
-                      Navigator.of(context).pop();
-                    },
+              onPressed: () {
+                ref.invalidate(addUserProvider);
+                Navigator.of(context).pop();
+              },
             ),
           ),
           if (state.message != null) ...[

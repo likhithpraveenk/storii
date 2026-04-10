@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
@@ -12,6 +11,7 @@ import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/oauth_helpers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'add_user_notifier.g.dart';
 
@@ -33,7 +33,8 @@ class UserState {
 
 @riverpod
 class AddUserNotifier extends _$AddUserNotifier {
-  static const _appScheme = 'audiobookshelf';
+  static const _redirectUri = 'storii://oauth';
+  Completer<Uri>? _oidcCompleter;
 
   @override
   UserState build() => const UserState();
@@ -54,6 +55,8 @@ class AddUserNotifier extends _$AddUserNotifier {
     }
   }
 
+  void handleOidcCallback(Uri url) => _oidcCompleter?.complete(url);
+
   Future<void> loginWithOIDC(Uri url) async {
     state = state.copyWith(status: .loading);
     try {
@@ -64,10 +67,14 @@ class AddUserNotifier extends _$AddUserNotifier {
         level: .info,
       );
       state = state.copyWith(status: .success);
+    } on TimeoutException catch (e) {
+      state = state.copyWith(status: .error, message: e.message);
     } on PlatformException catch (e) {
       state = state.copyWith(status: .error, message: e.message);
     } catch (e, st) {
       _handleError(e, st, 'OIDC login error');
+    } finally {
+      _oidcCompleter = null;
     }
   }
 
@@ -78,18 +85,19 @@ class AddUserNotifier extends _$AddUserNotifier {
 
     final (providerUri, cookie) = await authApi.oauthRequest(
       codeChallenge: challenge,
-      redirectUri: '$_appScheme://oauth',
+      redirectUri: _redirectUri,
       clientId: 'Storii',
     );
 
     if (providerUri == null) throw Exception('OIDC not available');
 
-    final callbackUrl = await FlutterWebAuth2.authenticate(
-      url: providerUri.toString(),
-      callbackUrlScheme: _appScheme,
-    );
+    _oidcCompleter = Completer<Uri>();
+    await launchUrl(providerUri, mode: .externalApplication);
 
-    final callbackUri = Uri.parse(callbackUrl);
+    final callbackUri = await _oidcCompleter!.future.timeout(
+      const Duration(minutes: 5),
+      onTimeout: () => throw Exception('OIDC login timed out'),
+    );
     final code = callbackUri.queryParameters['code'];
     final returnedState = callbackUri.queryParameters['state'];
 

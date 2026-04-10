@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_links/app_links.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,12 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/sessions_cleanup.dart';
+
+late final AppLinks appLinks;
+
+Future<void> setupGlobals() async {
+  appLinks = AppLinks();
+}
 
 Future<void> setupLicenses() async {
   LicenseRegistry.addLicense(() async* {
