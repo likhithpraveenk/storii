@@ -45,6 +45,7 @@ export 'series_progress.dart';
 export 'series_request_params.dart';
 export 'series_response.dart';
 export 'server_settings.dart';
+export 'server_status_response.dart';
 export 'session_user.dart';
 export 'sessions_response.dart';
 export 'shelf.dart';

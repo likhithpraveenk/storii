@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:storii/abs_api/client/base_api_client.dart';
 import 'package:storii/abs_api/endpoints/api_exception.dart';
@@ -85,7 +83,7 @@ class AuthApi {
 
   Future<(Uri?, String?)> oauthRequest({
     required String codeChallenge,
-    String codeChallengeMethod = 'RS256',
+    String codeChallengeMethod = 'S256',
     String responseType = 'code',
     required String redirectUri,
     required String clientId,
@@ -110,7 +108,8 @@ class AuthApi {
     );
     if (response.statusCode == 302) {
       final location = response.headers.value('location');
-      final cookie = response.headers.value('set-cookie');
+      final rawCookies = response.headers.map['set-cookie'] ?? [];
+      final cookie = rawCookies.map((c) => c.split(';').first).join('; ');
       if (location != null) {
         final authUri = Uri.parse(location);
         return (authUri, cookie);
@@ -123,23 +122,27 @@ class AuthApi {
     required String code,
     required String state,
     required String codeVerifier,
-    required Cookie cookie,
+    String? cookie,
   }) async {
     try {
-    final response = await api.dio.request(
-      ApiRoutes.oauthCallback,
-      queryParameters: {
-        'code': code,
-        'state': state,
-        'code_verifier': codeVerifier,
-      },
-      options: Options(
-        method: 'GET',
-        headers: {'cookie': cookie, 'x-return-tokens': true},
-      ),
-    );
+      final response = await api.dio.get(
+        ApiRoutes.oauthCallback,
+        queryParameters: {
+          'code': code,
+          'state': state,
+          'code_verifier': codeVerifier,
+        },
+        options: Options(
+          followRedirects: false,
+          headers: {'cookie': ?cookie, 'x-return-tokens': true},
+          validateStatus: (s) => s != null && s < 400,
+        ),
+      );
 
-    return fromJson(response.data, LoginResponse.fromJson);
+      // log('oauth callback status: ${response.statusCode}');
+      // log('oauth callback body: ${response.data}');
+
+      return fromJson(response.data, LoginResponse.fromJson);
     } on DioException catch (e, st) {
       throw ApiException(
         mapDioToMessage(e),
@@ -147,8 +150,6 @@ class AuthApi {
         originalError: e.error,
         stackTrace: st,
       );
-    } catch (e) {
-      rethrow;
     }
   }
 }
