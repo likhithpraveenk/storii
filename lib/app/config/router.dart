@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/auth/logic/add_user_notifier.dart';
 import 'package:storii/features/auth/ui/server_list_screen.dart';
 import 'package:storii/features/author/ui/author_detail_screen.dart';
 import 'package:storii/features/author/ui/author_list_screen.dart';
@@ -28,6 +29,7 @@ import 'package:storii/shared/widgets/shell_scaffold.dart';
 enum AppRoute {
   splash('/splash'),
   login('/login'),
+  oauth('/oauth'),
   about('/about'),
   logs('/logs'),
   home('/'),
@@ -55,6 +57,7 @@ final publicRoutes = [
   AppRoute.logs.path,
   AppRoute.about.path,
   AppRoute.login.path,
+  AppRoute.oauth.path,
 ];
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -82,6 +85,16 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoute.login.path,
         builder: (context, state) => const ServerListScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.oauth.path,
+        redirect: (context, state) {
+          final url = state.extra as Uri?;
+          if (url != null) {
+            ref.read(addUserProvider.notifier).handleOidcCallback(url);
+          }
+          return AppRoute.login.path;
+        },
       ),
       GoRoute(
         path: AppRoute.about.path,

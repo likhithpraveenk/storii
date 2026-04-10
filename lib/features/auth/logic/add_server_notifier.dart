@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/providers/api_providers.dart';
@@ -46,5 +47,23 @@ class AddServerNotifier extends _$AddServerNotifier {
       );
       state = ServerState(status: .unavailable, message: error.message);
     }
+  }
+}
+
+@riverpod
+Future<ServerStatusResponse> serverStatus(Ref ref, Uri url) async {
+  final api = ref.read(authApiProvider(url));
+  try {
+    final response = await api.status();
+    return response;
+  } catch (e, st) {
+    final error = AppError.resolve(e);
+    LogService.log(
+      'getting server status failed: $error',
+      level: .error,
+      source: 'serverStatus',
+      stackTrace: st,
+    );
+    throw error;
   }
 }

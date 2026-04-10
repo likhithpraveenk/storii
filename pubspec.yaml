@@ -2,16 +2,18 @@ name: storii
 description: An audiobookshelf client
 publish_to: none
 
-version: 0.1.4+34
+version: 0.1.5-beta.1+35
 
 environment:
   sdk: ^3.11.4
   flutter: ^3.41.6
 
 dependencies:
+  app_links: ^7.0.0
   audio_service: ^0.18.18
   audio_session: ^0.2.3
   cached_network_image: ^3.4.1
+  crypto: ^3.0.7
   cupertino_icons: ^1.0.9
   device_info_plus: ^12.3.0
   dio: ^5.9.2

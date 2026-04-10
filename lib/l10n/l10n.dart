@@ -1197,6 +1197,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'playback error'**
   String get playbackError;
+
+  /// No description provided for @loginOidc.
+  ///
+  /// In en, this message translates to:
+  /// **'Login with OpenID'**
+  String get loginOidc;
+
+  /// No description provided for @or.
+  ///
+  /// In en, this message translates to:
+  /// **'Or'**
+  String get or;
+
+  /// No description provided for @oidcRedirectUriHintPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Requires'**
+  String get oidcRedirectUriHintPrefix;
+
+  /// No description provided for @oidcRedirectUriHintSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'in ABS → Settings → Authentication → Allowed Mobile Redirect URIs'**
+  String get oidcRedirectUriHintSuffix;
 }
 
 class _AppLocalizationsDelegate

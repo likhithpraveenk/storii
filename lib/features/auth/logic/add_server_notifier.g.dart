@@ -60,3 +60,80 @@ abstract class _$AddServerNotifier extends $Notifier<ServerState> {
     element.handleCreate(ref, build);
   }
 }
+
+@ProviderFor(serverStatus)
+final serverStatusProvider = ServerStatusFamily._();
+
+final class ServerStatusProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<ServerStatusResponse>,
+          ServerStatusResponse,
+          FutureOr<ServerStatusResponse>
+        >
+    with
+        $FutureModifier<ServerStatusResponse>,
+        $FutureProvider<ServerStatusResponse> {
+  ServerStatusProvider._({
+    required ServerStatusFamily super.from,
+    required Uri super.argument,
+  }) : super(
+         retry: null,
+         name: r'serverStatusProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$serverStatusHash();
+
+  @override
+  String toString() {
+    return r'serverStatusProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<ServerStatusResponse> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<ServerStatusResponse> create(Ref ref) {
+    final argument = this.argument as Uri;
+    return serverStatus(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ServerStatusProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$serverStatusHash() => r'078dc48ae7c89b20a7d61d80c56d26949cc8b7de';
+
+final class ServerStatusFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<ServerStatusResponse>, Uri> {
+  ServerStatusFamily._()
+    : super(
+        retry: null,
+        name: r'serverStatusProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  ServerStatusProvider call(Uri url) =>
+      ServerStatusProvider._(argument: url, from: this);
+
+  @override
+  String toString() => r'serverStatusProvider';
+}

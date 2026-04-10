@@ -251,5 +251,9 @@
   "stop": "Stop",
   "complete": "Complete",
   "sync": "Sync",
-  "playbackError": "playback error"
+  "playbackError": "playback error",
+  "loginOidc": "Login with OpenID",
+  "or": "Or",
+  "oidcRedirectUriHintPrefix": "Requires",
+  "oidcRedirectUriHintSuffix": "in ABS → Settings → Authentication → Allowed Mobile Redirect URIs"
 }

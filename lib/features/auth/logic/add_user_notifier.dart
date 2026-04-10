@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:flutter/services.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
@@ -6,6 +10,8 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
+import 'package:storii/shared/helpers/oauth_helpers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'add_user_notifier.g.dart';
 
@@ -27,45 +33,112 @@ class UserState {
 
 @riverpod
 class AddUserNotifier extends _$AddUserNotifier {
+  static const _redirectUri = 'storii://oauth';
+  Completer<Uri>? _oidcCompleter;
+
   @override
   UserState build() => const UserState();
 
   Future<void> login(Uri url, String username, String password) async {
     state = state.copyWith(status: .loading);
-
     try {
       final authApi = ref.read(authApiProvider(url));
       final response = await authApi.login(
         username: username.trim(),
         password: password,
       );
-
-      final storeUser = UserDomain(
-        id: response.user.id,
-        username: response.user.username,
-        userType: response.user.type.name,
-        serverUrl: url,
-      );
-
-      await ref.read(usersProvider.notifier).add(storeUser);
-      await ref
-          .read(tokenProvider)
-          .saveTokens(
-            response.user.id,
-            response.user.accessToken,
-            response.user.refreshToken,
-          );
-      await ref.read(appSettingsProvider.notifier).setCurrentUser(storeUser);
-      LogService.log('${storeUser.username} logged in', level: .info);
+      await _finalize(response, url);
+      LogService.log('${username.trim()} logged in', level: .info);
       state = state.copyWith(status: .success);
-    } catch (e) {
-      final error = AppError.resolve(e);
-      LogService.log(
-        'Error while adding $username',
-        source: 'AddUserNotifier',
-        level: .error,
-      );
-      state = state.copyWith(status: .error, message: error.message);
+    } catch (e, st) {
+      _handleError(e, st, 'Error while adding ${username.trim()}');
     }
+  }
+
+  void handleOidcCallback(Uri url) => _oidcCompleter?.complete(url);
+
+  Future<void> loginWithOIDC(Uri url) async {
+    state = state.copyWith(status: .loading);
+    try {
+      final response = await _performOidcFlow(url);
+      await _finalize(response, url);
+      LogService.log(
+        '${response.user.username} logged in via OIDC',
+        level: .info,
+      );
+      state = state.copyWith(status: .success);
+    } on TimeoutException catch (e) {
+      state = state.copyWith(status: .error, message: e.message);
+    } on PlatformException catch (e) {
+      state = state.copyWith(status: .error, message: e.message);
+    } catch (e, st) {
+      _handleError(e, st, 'OIDC login error');
+    } finally {
+      _oidcCompleter = null;
+    }
+  }
+
+  Future<LoginResponse> _performOidcFlow(Uri url) async {
+    final verifier = generateRandom();
+    final challenge = generateCodeChallenge(verifier);
+    final authApi = ref.read(authApiProvider(url));
+
+    final (providerUri, cookie) = await authApi.oauthRequest(
+      codeChallenge: challenge,
+      redirectUri: _redirectUri,
+      clientId: 'Storii',
+    );
+
+    if (providerUri == null) throw Exception('OIDC not available');
+
+    _oidcCompleter = Completer<Uri>();
+    await launchUrl(providerUri, mode: .externalApplication);
+
+    final callbackUri = await _oidcCompleter!.future.timeout(
+      const Duration(minutes: 5),
+      onTimeout: () => throw Exception('OIDC login timed out'),
+    );
+    final code = callbackUri.queryParameters['code'];
+    final returnedState = callbackUri.queryParameters['state'];
+
+    if (code == null || returnedState == null) {
+      throw Exception('Invalid OIDC callback');
+    }
+
+    return authApi.oauthCallback(
+      code: code,
+      state: returnedState,
+      codeVerifier: verifier,
+      cookie: cookie,
+    );
+  }
+
+  Future<void> _finalize(LoginResponse response, Uri serverUrl) async {
+    final user = UserDomain(
+      id: response.user.id,
+      username: response.user.username,
+      userType: response.user.type.name,
+      serverUrl: serverUrl,
+    );
+    await ref.read(usersProvider.notifier).add(user);
+    await ref
+        .read(tokenProvider)
+        .saveTokens(
+          user.id,
+          response.user.accessToken,
+          response.user.refreshToken,
+        );
+    await ref.read(appSettingsProvider.notifier).setCurrentUser(user);
+  }
+
+  void _handleError(Object e, StackTrace st, String message) {
+    final error = AppError.resolve(e);
+    LogService.log(
+      message,
+      source: 'AddUserNotifier',
+      level: .error,
+      stackTrace: st,
+    );
+    state = state.copyWith(status: .error, message: error.message);
   }
 }
