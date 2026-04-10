@@ -16,6 +16,19 @@
         android:enableOnBackInvokedCallback="false"
         android:icon="@mipmap/ic_launcher">
         <activity
+            android:name="com.linusu.flutter_web_auth_2.CallbackActivity"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="audiobookshelf" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name="com.ryanheise.audioservice.AudioServiceActivity"
             android:exported="true"
             android:launchMode="singleInstance"

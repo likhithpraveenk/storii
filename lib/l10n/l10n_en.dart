@@ -596,4 +596,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get playbackError => 'playback error';
+
+  @override
+  String get loginOidc => 'Login with OpenID';
+
+  @override
+  String get or => 'Or';
 }
