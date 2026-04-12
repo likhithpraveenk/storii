@@ -1221,6 +1221,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'in ABS → Settings → Authentication → Allowed Mobile Redirect URIs'**
   String get oidcRedirectUriHintSuffix;
+
+  /// No description provided for @queued.
+  ///
+  /// In en, this message translates to:
+  /// **'Queued'**
+  String get queued;
+
+  /// No description provided for @downloading.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading'**
+  String get downloading;
+
+  /// No description provided for @paused.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get paused;
+
+  /// No description provided for @failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get failed;
 }
 
 class _AppLocalizationsDelegate

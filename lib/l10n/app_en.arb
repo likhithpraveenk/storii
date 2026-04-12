@@ -255,5 +255,9 @@
   "loginOidc": "Login with OpenID",
   "or": "Or",
   "oidcRedirectUriHintPrefix": "Requires",
-  "oidcRedirectUriHintSuffix": "in ABS → Settings → Authentication → Allowed Mobile Redirect URIs"
+  "oidcRedirectUriHintSuffix": "in ABS → Settings → Authentication → Allowed Mobile Redirect URIs",
+  "queued": "Queued",
+  "downloading": "Downloading",
+  "paused": "Paused",
+  "failed": "Failed"
 }

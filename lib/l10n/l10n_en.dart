@@ -609,4 +609,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get oidcRedirectUriHintSuffix =>
       'in ABS → Settings → Authentication → Allowed Mobile Redirect URIs';
+
+  @override
+  String get queued => 'Queued';
+
+  @override
+  String get downloading => 'Downloading';
+
+  @override
+  String get paused => 'Paused';
+
+  @override
+  String get failed => 'Failed';
 }
