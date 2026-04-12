@@ -2,10 +2,20 @@
 
 A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf) focused on simple UX, and maintainable architecture.
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge&logo=gnu&logoColor=white)](https://www.gnu.org/licenses/gpl-3.0)
+[![GitHub Version](https://img.shields.io/github/v/release/likhithpraveenk/storii.svg?logo=github&label=GitHub&style=for-the-badge)](https://github.com/likhithpraveenk/storii/releases)
+[![IzzyOnDroid Version](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.likhithpraveenk.storii&label=IzzyOnDroid&style=for-the-badge)](https://apt.izzysoft.de/fdroid/index/apk/com.likhithpraveenk.storii)
+
+[![Get it on GitHub](https://img.shields.io/badge/Get%20it%20on-GitHub-black?style=for-the-badge&logo=github)](https://github.com/likhithpraveenk/storii/releases/latest)
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="50" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/com.likhithpraveenk.storii)
+
+![GitHub all releases](https://img.shields.io/github/downloads/likhithpraveenk/storii/total?logo=github)
+[![IzzyOnDroid Monthly Downloads](https://img.shields.io/badge/dynamic/json?url=https://dlstats.izzyondroid.org/iod-stats-collector/stats/basic/monthly/rolling.json&query=$.['com.likhithpraveenk.storii']&label=IzzyOnDroid%20monthly%20downloads)](https://apt.izzysoft.de/packages/com.likhithpraveenk.storii)
+
 ## Features
 
 - Audiobook streaming with background playback and progress sync  
-- Multi-user, multi-server support with persistent sessions  
+- Multi-user, multi-server and OIDC support with persistent sessions  
 - Advanced library browsing with filters, sorting, and series grouping  
 - Responsive UI with reusable components across feature modules  
 
