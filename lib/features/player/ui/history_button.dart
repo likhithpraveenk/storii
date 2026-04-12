@@ -203,10 +203,13 @@ class _HistoryEventTile extends StatelessWidget {
         padding: const .symmetric(horizontal: 24, vertical: 10),
         child: Row(
           children: [
-            Text(
-              timeStr,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
+            SizedBox(
+              width: 48,
+              child: Text(
+                timeStr,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
               ),
             ),
             const SizedBox(width: 8),

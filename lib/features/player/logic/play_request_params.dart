@@ -7,7 +7,7 @@ import 'package:storii/app/providers/device_info_provider.dart';
 
 part 'play_request_params.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
   final package = await ref.watch(packageInfoProvider.future);
   final device = await ref.watch(deviceInfoProvider.future);

@@ -29,7 +29,7 @@ class ImageWidget extends ConsumerWidget {
         id,
         type: type,
         updatedAt: updatedAt,
-        width: 400,
+        width: 600,
         raw: isRaw,
       ),
     );

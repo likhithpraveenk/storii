@@ -6,6 +6,7 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/downloads/logic/download_notifier.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
@@ -20,6 +21,11 @@ class LibraryItemCard extends ConsumerWidget {
     final sequence = item.seriesSequence;
     final scheme = Theme.of(context).colorScheme;
     final displayMode = ref.watch(libraryDisplayModeProvider);
+
+    final isDownloaded = ref.watch(
+      downloadsProvider.select((d) => d[item.id]?.status == .complete),
+    );
+
     final stackTitle = displayMode == .compact;
     final showTitle = displayMode != .coverOnly;
 
@@ -93,6 +99,12 @@ class LibraryItemCard extends ConsumerWidget {
                       right: 4,
                       child: StackBadge('$seriesNumBooks'),
                     ),
+                  if (isDownloaded)
+                    const Positioned(
+                      bottom: 6,
+                      right: 6,
+                      child: DownloadBadge(),
+                    ),
                 ],
               ),
             ),
@@ -158,77 +170,6 @@ class TitleWidget extends StatelessWidget {
                   : theme.colorScheme.onSurface,
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class LibraryItemCardListView extends StatelessWidget {
-  const LibraryItemCardListView(this.item, {super.key});
-  final LibraryItem item;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-    final title = item.collapsedSeries != null
-        ? item.collapsedSeries!.name
-        : item.title ?? l.noTitle;
-
-    final seriesNumBooks = item.collapsedSeries?.numBooks;
-    final progress = item.collapsedSeries != null ? 0 : item.progress;
-
-    return ListTile(
-      onTap: () {
-        if (item.collapsedSeries != null) {
-          context.push(
-            AppRoute.seriesDetail.path,
-            extra: item.collapsedSeries!.id,
-          );
-        } else {
-          context.push(AppRoute.itemDetail.path, extra: item.id);
-        }
-      },
-      contentPadding: const .fromLTRB(16, 8, 16, 8),
-      leading: AspectRatio(
-        aspectRatio: 1,
-        child: ClipRRect(
-          borderRadius: .circular(4),
-          child: ImageWidget(
-            id: item.id,
-            type: .item,
-            updatedAt: item.updatedAt,
-          ),
-        ),
-      ),
-      trailing: seriesNumBooks == null ? null : Text('$seriesNumBooks'),
-      minVerticalPadding: 0,
-      titleAlignment: .center,
-      title: Column(
-        crossAxisAlignment: .start,
-        children: [
-          Text(
-            title,
-            maxLines: 2,
-            overflow: .ellipsis,
-            style: theme.textTheme.titleSmall,
-          ),
-          const SizedBox(height: 2),
-          Text(
-            item.authorName ?? l.noAuthor,
-            maxLines: 1,
-            overflow: .ellipsis,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 2),
-          if (progress > 0)
-            Text(
-              '${(progress * 100).toStringAsFixed(1)}%',
-              style: theme.textTheme.labelSmall,
-            ),
         ],
       ),
     );
