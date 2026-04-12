@@ -2,17 +2,22 @@ import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/models/chapter.dart';
+import 'package:storii/storage/local/download_service.dart';
 
 extension PlaybackSessionX on PlaybackSession {
   String get mediaItemIdKey =>
       episodeId != null ? '$libraryItemId$episodeId' : libraryItemId;
 
-  List<AudioSource> toAudioSources(Uri serverUrl, String? token) {
+  List<ProgressiveAudioSource> toAudioSources(
+    Uri serverUrl,
+    String? token, {
+    Map<int, String> localPaths = const {},
+  }) {
     final coverUri = serverUrl
         .resolve(ApiRoutes.itemCover(libraryItemId))
         .replace(queryParameters: {'raw': '1'});
     Duration accumulated = Duration.zero;
-    final sources = <AudioSource>[];
+    final sources = <ProgressiveAudioSource>[];
 
     List<Map<String, dynamic>> jsonChapters;
     if (chapters.isNotEmpty) {
@@ -46,28 +51,54 @@ extension PlaybackSessionX on PlaybackSession {
     for (final (index, track) in (audioTracks ?? <AudioTrack>[]).indexed) {
       final startOffset = accumulated;
       accumulated += track.duration;
+
+      final localPath = localPaths[track.index];
+      final isLocal = localPath != null;
+
+      final uri = isLocal
+          ? Uri.file(localPath)
+          : serverUrl.resolve(track.contentUrl);
+
+      final tag = MediaItem(
+        id: track.contentUrl,
+        title: displayTitle,
+        artist: displayAuthor,
+        duration: track.duration,
+        album: mediaMetadata.mapOrNull(book: (b) => b.seriesName),
+        artUri: coverUri,
+        extras: {
+          if (index == 0) 'chapters': jsonChapters,
+          'startOffset': startOffset.inMicroseconds,
+          'itemId': libraryItemId,
+          if (mediaType == .podcast) 'episodeId': episodeId,
+          'isLocal': isLocal,
+        },
+      );
+
       sources.add(
-        AudioSource.uri(
-          serverUrl.resolve(track.contentUrl),
-          headers: {'Authorization': 'Bearer $token'},
-          tag: MediaItem(
-            id: track.contentUrl,
-            title: displayTitle,
-            artist: displayAuthor,
-            duration: track.duration,
-            album: mediaMetadata.mapOrNull(book: (b) => b.seriesName),
-            artUri: coverUri,
-            extras: {
-              if (index == 0) 'chapters': jsonChapters,
-              'startOffset': startOffset.inMicroseconds,
-              'itemId': libraryItemId,
-              if (mediaType == .podcast) 'episodeId': episodeId,
-            },
-          ),
+        ProgressiveAudioSource(
+          uri,
+          headers: isLocal ? null : {'Authorization': 'Bearer $token'},
+          tag: tag,
         ),
       );
     }
     return sources;
+  }
+
+  Future<Map<int, String>> resolveLocalPaths() async {
+    final tracks = audioTracks;
+    if (tracks == null || tracks.isEmpty) return {};
+
+    final result = <int, String>{};
+    for (final track in tracks) {
+      final local = await DownloadService.localPathIfDownloaded(
+        libraryItemId,
+        track,
+      );
+      if (local != null) result[track.index] = local;
+    }
+    return result;
   }
 
   (int, Duration) getIndexAndOffset([Duration? position]) {

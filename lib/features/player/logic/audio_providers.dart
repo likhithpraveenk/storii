@@ -120,7 +120,19 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
         (index, position) = session.getIndexAndOffset(initialPosition);
       }
 
-      final sources = session.toAudioSources(user.serverUrl, token);
+      final localPaths = await session.resolveLocalPaths();
+      final localCount = localPaths.length;
+      final totalTracks = session.audioTracks?.length ?? 0;
+      if (localCount > 0) {
+        log('local playback has $localCount/$totalTracks tracks');
+      }
+
+      final sources = session.toAudioSources(
+        user.serverUrl,
+        token,
+        localPaths: localPaths,
+      );
+
       await audioHandler.setSources(
         sources,
         initialIndex: index,

@@ -621,4 +621,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get failed => 'Failed';
+
+  @override
+  String get download => 'Download';
+
+  @override
+  String get resumeDownload => 'Resume Download';
+
+  @override
+  String get removeDownloadQ => 'Remove Download?';
+
+  @override
+  String willBeFreed(String bytes) {
+    return '$bytes will by freed';
+  }
+
+  @override
+  String get downloadFailed => 'Download failed - tap to retry';
+
+  @override
+  String get directPlay => 'Direct Play';
+
+  @override
+  String get directStream => 'Direct Stream';
+
+  @override
+  String get transcode => 'Transcode';
+
+  @override
+  String get local => 'Local';
 }

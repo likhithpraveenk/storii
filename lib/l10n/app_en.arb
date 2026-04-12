@@ -259,5 +259,21 @@
   "queued": "Queued",
   "downloading": "Downloading",
   "paused": "Paused",
-  "failed": "Failed"
+  "failed": "Failed",
+  "download": "Download",
+  "resumeDownload": "Resume Download",
+  "removeDownloadQ": "Remove Download?",
+  "willBeFreed": "{bytes} will by freed",
+  "@willBeFreed": {
+    "placeholders": {
+      "bytes": {
+        "type": "String"
+      }
+    }
+  },
+  "downloadFailed": "Download failed - tap to retry",
+  "directPlay": "Direct Play",
+  "directStream": "Direct Stream",
+  "transcode": "Transcode",
+  "local": "Local"
 }

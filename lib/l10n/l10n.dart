@@ -1245,6 +1245,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed'**
   String get failed;
+
+  /// No description provided for @download.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get download;
+
+  /// No description provided for @resumeDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume Download'**
+  String get resumeDownload;
+
+  /// No description provided for @removeDownloadQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Download?'**
+  String get removeDownloadQ;
+
+  /// No description provided for @willBeFreed.
+  ///
+  /// In en, this message translates to:
+  /// **'{bytes} will by freed'**
+  String willBeFreed(String bytes);
+
+  /// No description provided for @downloadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed - tap to retry'**
+  String get downloadFailed;
+
+  /// No description provided for @directPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct Play'**
+  String get directPlay;
+
+  /// No description provided for @directStream.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct Stream'**
+  String get directStream;
+
+  /// No description provided for @transcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Transcode'**
+  String get transcode;
+
+  /// No description provided for @local.
+  ///
+  /// In en, this message translates to:
+  /// **'Local'**
+  String get local;
 }
 
 class _AppLocalizationsDelegate
