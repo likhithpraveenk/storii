@@ -46,6 +46,7 @@ dependencies:
   socket_io_client: ^3.1.4
   ttf_metadata: ^0.0.6
   url_launcher: ^6.3.2
+  uuid: ^4.5.3
 
 dev_dependencies:
   analyzer: ^8.4.0

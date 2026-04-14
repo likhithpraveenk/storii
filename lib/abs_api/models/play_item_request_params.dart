@@ -1,3 +1,4 @@
+import 'package:storii/abs_api/models/device_info.dart';
 import 'package:storii/abs_api/models/json_converters.dart';
 import 'package:storii/abs_api/models/json_helpers.dart';
 
@@ -50,4 +51,16 @@ class ClientDeviceInfo {
   });
 
   Map<String, dynamic>? toJson() => _$ClientDeviceInfoToJson(this).nullIfEmpty;
+
+  DeviceInfo toDeviceInfo() {
+    return DeviceInfo(
+      deviceId: deviceId,
+      clientName: clientName,
+      deviceName: deviceName,
+      clientVersion: clientVersion,
+      manufacturer: manufacturer,
+      model: model,
+      sdkVersion: sdkVersion,
+    );
+  }
 }

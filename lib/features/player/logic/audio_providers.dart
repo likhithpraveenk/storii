@@ -10,8 +10,9 @@ import 'package:storii/app/models/chapter.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
+import 'package:storii/features/downloads/logic/download_notifier.dart';
+import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
-import 'package:storii/features/player/logic/local_position_provider.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
@@ -103,14 +104,21 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
         await audioHandler.stop();
       }
 
-      final session = await ref
-          .read(sessionProvider.notifier)
-          .create(itemId: itemId, episodeId: episodeId);
+      final download = ref.read(downloadsProvider)[itemId];
+      final isFullyDownloaded = download?.isComplete == true;
 
-      await ref
-          .read(localPositionProvider(session.id).notifier)
-          .save(initialPosition ?? chapter?.start ?? session.currentTime);
+      final PlaybackSession session;
 
+      if (isFullyDownloaded) {
+        final item = await ref.read(itemDetailProvider(itemId).future);
+        session = await ref
+            .read(sessionProvider.notifier)
+            .createLocal(item: item, episodeId: episodeId);
+      } else {
+        session = await ref
+            .read(sessionProvider.notifier)
+            .create(itemId: itemId, episodeId: episodeId);
+      }
       final int index;
       final Duration position;
 

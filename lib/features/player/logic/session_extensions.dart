@@ -1,8 +1,12 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/models/chapter.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/storage/local/download_service.dart';
+import 'package:uuid/uuid.dart';
 
 extension PlaybackSessionX on PlaybackSession {
   String get mediaItemIdKey =>
@@ -126,5 +130,41 @@ extension PlaybackSessionX on PlaybackSession {
       accumulated += trackLen;
     }
     return (0, Duration.zero);
+  }
+}
+
+extension ToPlaybackSession on LibraryItem {
+  PlaybackSession toPlaybackSession(
+    String userId, {
+    ClientDeviceInfo? deviceInfo,
+    String? episodeId,
+  }) {
+    final now = DateTime.now();
+    final today = DayOfTheWeek.byValue[now.weekday % 7]!.name;
+    return PlaybackSession(
+      id: const Uuid().v4(),
+      userId: userId,
+      libraryId: libraryId,
+      libraryItemId: id,
+      mediaType: mediaType,
+      mediaMetadata: media.metadata,
+      chapters: chapters,
+      displayTitle: title ?? '',
+      displayAuthor: authorName ?? '',
+      duration: duration,
+      playMethod: .local,
+      mediaPlayer: '$appName just_audio',
+      date: now.fString(format: 'yyyy-mm-dd'),
+      dayOfWeek: today,
+      timeListening: Duration.zero,
+      startTime: currentOffset,
+      currentTime: currentOffset,
+      startedAt: now,
+      updatedAt: now,
+      audioTracks: tracks,
+      libraryItem: this,
+      deviceInfo: deviceInfo?.toDeviceInfo(),
+      episodeId: episodeId,
+    );
   }
 }
