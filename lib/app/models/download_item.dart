@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:storii/abs_api/abs_api.dart';
 
 part 'download_item.freezed.dart';
 part 'download_item.g.dart';
@@ -8,10 +9,8 @@ enum DownloadStatus { queued, downloading, complete, failed, paused }
 @freezed
 sealed class DownloadTrack with _$DownloadTrack {
   const factory DownloadTrack({
-    required int index,
-    required String contentUrl,
+    required AudioTrack audioTrack,
     required String localPath,
-    required String mimeType,
     @Default(0) int bytesReceived,
     @Default(0) int bytesTotal,
     @Default(DownloadStatus.queued) DownloadStatus status,
@@ -34,7 +33,6 @@ sealed class DownloadItem with _$DownloadItem {
     @Default(0) int totalBytes,
     @Default(0) int receivedBytes,
     DateTime? startedAt,
-    DateTime? completedAt,
   }) = _DownloadItem;
 
   factory DownloadItem.fromJson(Map<String, dynamic> json) =>
