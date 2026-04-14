@@ -28,7 +28,7 @@ class DownloadsScreen extends ConsumerWidget {
       body: downloads.isEmpty
           ? const EmptyState()
           : ListView.builder(
-              padding: const .symmetric(vertical: 8),
+              padding: const .only(bottom: 8),
               itemCount: downloads.length,
               itemBuilder: (context, index) {
                 final item = downloads.values.elementAt(index);

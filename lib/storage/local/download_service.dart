@@ -6,50 +6,60 @@ import 'package:path_provider/path_provider.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/models/download_item.dart';
-import 'package:storii/shared/helpers/abs_model_extensions.dart';
 
-class DownloadService {
-  final Dio _dio = Dio();
+abstract final class DownloadsHelper {
+  static Directory? _cachedRoot;
 
-  static Future<Directory> _rootDir() async {
+  static Future<Directory> rootDirectory() async {
+    if (_cachedRoot != null) return _cachedRoot!;
+
     final base = await getApplicationDocumentsDirectory();
     final dir = Directory(p.join(base.path, downloadsDir));
 
     if (!await dir.exists()) await dir.create(recursive: true);
-    return dir;
+
+    _cachedRoot = dir;
+    return _cachedRoot!;
   }
 
-  static Future<Directory> itemDir(String libraryItemId) async {
-    final root = await _rootDir();
+  static Future<Directory> itemDirectory(String libraryItemId) async {
+    final root = await rootDirectory();
     final dir = Directory(p.join(root.path, libraryItemId));
 
     if (!await dir.exists()) await dir.create();
     return dir;
   }
 
+  static String extFromUrl(String contentUrl) {
+    final ext = p.extension(Uri.parse(contentUrl).path);
+    return ext.isNotEmpty ? ext : '.audio';
+  }
+
+  static const int _trackIndexPadding = 3;
+
   static Future<String> trackPath(
     String libraryItemId,
     int trackIndex,
-    String mimeType,
+    String contentUrl,
   ) async {
-    final dir = await itemDir(libraryItemId);
-    final ext = _extForMime(mimeType);
-
-    return p.join(
-      dir.path,
-      'track_${trackIndex.toString().padLeft(3, '0')}$ext',
-    );
+    final dir = await itemDirectory(libraryItemId);
+    final ext = extFromUrl(contentUrl);
+    final name =
+        'track_${trackIndex.toString().padLeft(_trackIndexPadding, '0')}$ext';
+    return p.join(dir.path, name);
   }
+}
 
-  static String _extForMime(String mime) {
-    if (mime.contains('mpeg')) return '.mp3';
-    if (mime.contains('mp4') || mime.contains('m4a')) return '.m4a';
-    if (mime.contains('ogg')) return '.ogg';
-    if (mime.contains('opus')) return '.opus';
-    if (mime.contains('flac')) return '.flac';
-    if (mime.contains('wav')) return '.wav';
-    return '.audio';
-  }
+class DownloadService {
+  DownloadService._();
+  static final DownloadService instance = DownloadService._();
+
+  final Dio _dio = Dio(
+    BaseOptions(
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(minutes: 10),
+    ),
+  );
 
   Future<String> downloadTrack({
     required Uri serverUrl,
@@ -59,57 +69,63 @@ class DownloadService {
     required void Function(int received, int total) onProgress,
     CancelToken? cancelToken,
   }) async {
-    final localPath = await trackPath(
+    final localPath = await DownloadsHelper.trackPath(
       libraryItemId,
       track.index,
-      track.mimeType,
+      track.contentUrl,
     );
 
-    final file = File(localPath);
-    if (await file.exists()) {
-      final size = await file.length();
-      if (size > 0) return localPath;
-    }
+    if (await _isFileIntact(localPath, track)) return localPath;
 
     final url = serverUrl.resolve(track.contentUrl).toString();
+    final file = File(localPath);
 
-    await _dio.download(
-      url,
-      localPath,
-      options: Options(headers: {'Authorization': 'Bearer $token'}),
-      onReceiveProgress: onProgress,
-      cancelToken: cancelToken,
-    );
+    try {
+      await _dio.download(
+        url,
+        localPath,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        onReceiveProgress: onProgress,
+        cancelToken: cancelToken,
+      );
+    } catch (_) {
+      await _deleteIfExists(file);
+      rethrow;
+    }
 
     return localPath;
   }
 
   static Future<void> deleteItem(String libraryItemId) async {
-    final dir = await itemDir(libraryItemId);
+    final dir = await DownloadsHelper.itemDirectory(libraryItemId);
     if (await dir.exists()) await dir.delete(recursive: true);
   }
 
   static Future<int> itemSizeOnDisk(String libraryItemId) async {
-    final dir = await itemDir(libraryItemId);
+    final dir = await DownloadsHelper.itemDirectory(libraryItemId);
     if (!await dir.exists()) return 0;
+
     int total = 0;
-    await for (final f in dir.list()) {
-      if (f is File) total += await f.length();
+    await for (final entity in dir.list()) {
+      if (entity is File) total += await entity.length();
     }
     return total;
   }
 
-  static Future<List<DownloadTrack>> buildTrackStubs(LibraryItem item) async {
-    final tracks = item.tracks;
+  static Future<List<DownloadTrack>> buildTrackStubs(
+    String itemId,
+    List<AudioTrack> tracks,
+  ) async {
+    await DownloadsHelper.itemDirectory(itemId);
+
     return Future.wait(
       tracks.map((t) async {
-        final path = await trackPath(item.id, t.index, t.mimeType);
-        return DownloadTrack(
-          index: t.index,
-          contentUrl: t.contentUrl,
-          localPath: path,
-          mimeType: t.mimeType,
+        final path = await DownloadsHelper.trackPath(
+          itemId,
+          t.index,
+          t.contentUrl,
         );
+        return DownloadTrack(audioTrack: t, localPath: path);
       }),
     );
   }
@@ -118,7 +134,11 @@ class DownloadService {
     String libraryItemId,
     AudioTrack track,
   ) async {
-    final path = await trackPath(libraryItemId, track.index, track.mimeType);
+    final path = await DownloadsHelper.trackPath(
+      libraryItemId,
+      track.index,
+      track.contentUrl,
+    );
     final file = File(path);
     if (await file.exists() && await file.length() > 0) return path;
     return null;
@@ -128,10 +148,20 @@ class DownloadService {
     String libraryItemId,
     List<AudioTrack> tracks,
   ) async {
-    for (final track in tracks) {
-      final local = await localPathIfDownloaded(libraryItemId, track);
-      if (local == null) return false;
-    }
-    return tracks.isNotEmpty;
+    if (tracks.isEmpty) return false;
+
+    final results = await Future.wait(
+      tracks.map((t) => localPathIfDownloaded(libraryItemId, t)),
+    );
+    return results.every((path) => path != null);
+  }
+
+  static Future<bool> _isFileIntact(String path, AudioTrack track) async {
+    final file = File(path);
+    return await file.exists() && await file.length() > 0;
+  }
+
+  static Future<void> _deleteIfExists(File file) async {
+    if (await file.exists()) await file.delete();
   }
 }

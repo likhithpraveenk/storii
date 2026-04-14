@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/download_item.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
@@ -22,7 +21,6 @@ part 'download_notifier.g.dart';
 class DownloadsNotifier extends _$DownloadsNotifier {
   late Box<String> _box;
   final Map<String, CancelToken> _cancelTokens = {};
-  final _service = DownloadService();
 
   @override
   Map<String, DownloadItem> build() {
@@ -44,14 +42,17 @@ class DownloadsNotifier extends _$DownloadsNotifier {
 
       if (token == null) throw const AppError('No access token');
 
-      final trackStubs = await DownloadService.buildTrackStubs(item);
+      final trackStubs = await DownloadService.buildTrackStubs(
+        item.id,
+        item.tracks,
+      );
 
       final di = DownloadItem(
         libraryItemId: libraryItemId,
         title: item.title ?? libraryItemId,
         author: item.authorName ?? '',
         tracks: trackStubs,
-        status: DownloadStatus.downloading,
+        status: .downloading,
         startedAt: DateTime.now(),
       );
 
@@ -78,7 +79,7 @@ class DownloadsNotifier extends _$DownloadsNotifier {
     final item = state[libraryItemId];
     if (item == null) return;
 
-    final updated = item.copyWith(status: DownloadStatus.paused);
+    final updated = item.copyWith(status: .paused);
     _update(updated);
     _persist(updated);
   }
@@ -109,32 +110,25 @@ class DownloadsNotifier extends _$DownloadsNotifier {
 
     for (int i = 0; i < current.tracks.length; i++) {
       final track = current.tracks[i];
-      if (track.status == DownloadStatus.complete) {
+      if (track.status == .complete) {
         totalBytes += track.bytesTotal;
         receivedBytes += track.bytesReceived;
         continue;
       }
 
       try {
-        await _service.downloadTrack(
+        await DownloadService.instance.downloadTrack(
           serverUrl: serverUrl,
           token: token,
           libraryItemId: current.libraryItemId,
-          track: AudioTrack(
-            index: track.index,
-            startOffset: Duration.zero,
-            duration: Duration.zero,
-            title: '',
-            contentUrl: track.contentUrl,
-            mimeType: track.mimeType,
-          ),
+          track: track.audioTrack,
           cancelToken: cancelToken,
           onProgress: (rcv, total) {
             if (total <= 0) return;
             final updatedTrack = track.copyWith(
               bytesReceived: rcv,
               bytesTotal: total,
-              status: DownloadStatus.downloading,
+              status: .downloading,
             );
             final updatedTracks = List<DownloadTrack>.from(current.tracks);
             updatedTracks[i] = updatedTrack;
@@ -153,9 +147,7 @@ class DownloadsNotifier extends _$DownloadsNotifier {
           },
         );
 
-        final completedTrack = current.tracks[i].copyWith(
-          status: DownloadStatus.complete,
-        );
+        final completedTrack = current.tracks[i].copyWith(status: .complete);
         final updatedTracks = List<DownloadTrack>.from(current.tracks);
         updatedTracks[i] = completedTrack;
         totalBytes += completedTrack.bytesTotal;
@@ -171,7 +163,7 @@ class DownloadsNotifier extends _$DownloadsNotifier {
       } on DioException catch (e) {
         if (CancelToken.isCancel(e)) return;
         LogService.log(
-          'Track ${track.index} download error: $e',
+          'Track ${track.audioTrack.index} download error: $e',
           source: 'DownloadsNotifier',
           level: .warning,
         );
@@ -182,10 +174,7 @@ class DownloadsNotifier extends _$DownloadsNotifier {
 
     _cancelTokens.remove(current.libraryItemId);
 
-    final done = current.copyWith(
-      status: DownloadStatus.complete,
-      completedAt: DateTime.now(),
-    );
+    final done = current.copyWith(status: .complete);
     _update(done);
     _persist(done);
   }
@@ -193,7 +182,7 @@ class DownloadsNotifier extends _$DownloadsNotifier {
   void _markFailed(String libraryItemId) {
     final item = state[libraryItemId];
     if (item == null) return;
-    final updated = item.copyWith(status: DownloadStatus.failed);
+    final updated = item.copyWith(status: .failed);
     _update(updated);
     _persist(updated);
   }
@@ -206,7 +195,7 @@ class DownloadsNotifier extends _$DownloadsNotifier {
     try {
       _box.put(item.libraryItemId, jsonEncode(item.toJson()));
     } catch (e) {
-      if (kDebugMode) debugPrint('persist download failed: $e');
+      log('persist download failed: $e');
     }
   }
 
@@ -218,7 +207,7 @@ class DownloadsNotifier extends _$DownloadsNotifier {
         final item = DownloadItem.fromJson(json);
         result[item.libraryItemId] = item;
       } catch (e) {
-        if (kDebugMode) debugPrint('load download failed for $key: $e');
+        log('load download failed for $key: $e');
       }
     }
     return result;
