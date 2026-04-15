@@ -261,6 +261,8 @@
   "paused": "Paused",
   "failed": "Failed",
   "download": "Download",
+  "completed": "Completed",
+  "cancelled": "Cancelled",
   "resumeDownload": "Resume Download",
   "removeDownloadQ": "Remove Download?",
   "willBeFreed": "{bytes} will by freed",

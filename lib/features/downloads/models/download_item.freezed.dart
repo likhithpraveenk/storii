@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DownloadTrack {
 
- AudioTrack get audioTrack; String get localPath; int get bytesReceived; int get bytesTotal; DownloadStatus get status;
+ AudioTrack get audioTrack; String get localPath; int get bytesReceived; DownloadStatus get status;
 /// Create a copy of DownloadTrack
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $DownloadTrackCopyWith<DownloadTrack> get copyWith => _$DownloadTrackCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DownloadTrack&&(identical(other.audioTrack, audioTrack) || other.audioTrack == audioTrack)&&(identical(other.localPath, localPath) || other.localPath == localPath)&&(identical(other.bytesReceived, bytesReceived) || other.bytesReceived == bytesReceived)&&(identical(other.bytesTotal, bytesTotal) || other.bytesTotal == bytesTotal)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DownloadTrack&&(identical(other.audioTrack, audioTrack) || other.audioTrack == audioTrack)&&(identical(other.localPath, localPath) || other.localPath == localPath)&&(identical(other.bytesReceived, bytesReceived) || other.bytesReceived == bytesReceived)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,audioTrack,localPath,bytesReceived,bytesTotal,status);
+int get hashCode => Object.hash(runtimeType,audioTrack,localPath,bytesReceived,status);
 
 @override
 String toString() {
-  return 'DownloadTrack(audioTrack: $audioTrack, localPath: $localPath, bytesReceived: $bytesReceived, bytesTotal: $bytesTotal, status: $status)';
+  return 'DownloadTrack(audioTrack: $audioTrack, localPath: $localPath, bytesReceived: $bytesReceived, status: $status)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $DownloadTrackCopyWith<$Res>  {
   factory $DownloadTrackCopyWith(DownloadTrack value, $Res Function(DownloadTrack) _then) = _$DownloadTrackCopyWithImpl;
 @useResult
 $Res call({
- AudioTrack audioTrack, String localPath, int bytesReceived, int bytesTotal, DownloadStatus status
+ AudioTrack audioTrack, String localPath, int bytesReceived, DownloadStatus status
 });
 
 
@@ -65,12 +65,11 @@ class _$DownloadTrackCopyWithImpl<$Res>
 
 /// Create a copy of DownloadTrack
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? audioTrack = null,Object? localPath = null,Object? bytesReceived = null,Object? bytesTotal = null,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? audioTrack = null,Object? localPath = null,Object? bytesReceived = null,Object? status = null,}) {
   return _then(_self.copyWith(
 audioTrack: null == audioTrack ? _self.audioTrack : audioTrack // ignore: cast_nullable_to_non_nullable
 as AudioTrack,localPath: null == localPath ? _self.localPath : localPath // ignore: cast_nullable_to_non_nullable
 as String,bytesReceived: null == bytesReceived ? _self.bytesReceived : bytesReceived // ignore: cast_nullable_to_non_nullable
-as int,bytesTotal: null == bytesTotal ? _self.bytesTotal : bytesTotal // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as DownloadStatus,
   ));
@@ -163,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AudioTrack audioTrack,  String localPath,  int bytesReceived,  int bytesTotal,  DownloadStatus status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AudioTrack audioTrack,  String localPath,  int bytesReceived,  DownloadStatus status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DownloadTrack() when $default != null:
-return $default(_that.audioTrack,_that.localPath,_that.bytesReceived,_that.bytesTotal,_that.status);case _:
+return $default(_that.audioTrack,_that.localPath,_that.bytesReceived,_that.status);case _:
   return orElse();
 
 }
@@ -184,10 +183,10 @@ return $default(_that.audioTrack,_that.localPath,_that.bytesReceived,_that.bytes
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AudioTrack audioTrack,  String localPath,  int bytesReceived,  int bytesTotal,  DownloadStatus status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AudioTrack audioTrack,  String localPath,  int bytesReceived,  DownloadStatus status)  $default,) {final _that = this;
 switch (_that) {
 case _DownloadTrack():
-return $default(_that.audioTrack,_that.localPath,_that.bytesReceived,_that.bytesTotal,_that.status);}
+return $default(_that.audioTrack,_that.localPath,_that.bytesReceived,_that.status);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -201,10 +200,10 @@ return $default(_that.audioTrack,_that.localPath,_that.bytesReceived,_that.bytes
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AudioTrack audioTrack,  String localPath,  int bytesReceived,  int bytesTotal,  DownloadStatus status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AudioTrack audioTrack,  String localPath,  int bytesReceived,  DownloadStatus status)?  $default,) {final _that = this;
 switch (_that) {
 case _DownloadTrack() when $default != null:
-return $default(_that.audioTrack,_that.localPath,_that.bytesReceived,_that.bytesTotal,_that.status);case _:
+return $default(_that.audioTrack,_that.localPath,_that.bytesReceived,_that.status);case _:
   return null;
 
 }
@@ -215,14 +214,13 @@ return $default(_that.audioTrack,_that.localPath,_that.bytesReceived,_that.bytes
 /// @nodoc
 @JsonSerializable()
 
-class _DownloadTrack implements DownloadTrack {
-  const _DownloadTrack({required this.audioTrack, required this.localPath, this.bytesReceived = 0, this.bytesTotal = 0, this.status = DownloadStatus.queued});
+class _DownloadTrack extends DownloadTrack {
+  const _DownloadTrack({required this.audioTrack, required this.localPath, this.bytesReceived = 0, this.status = DownloadStatus.queued}): super._();
   factory _DownloadTrack.fromJson(Map<String, dynamic> json) => _$DownloadTrackFromJson(json);
 
 @override final  AudioTrack audioTrack;
 @override final  String localPath;
 @override@JsonKey() final  int bytesReceived;
-@override@JsonKey() final  int bytesTotal;
 @override@JsonKey() final  DownloadStatus status;
 
 /// Create a copy of DownloadTrack
@@ -238,16 +236,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DownloadTrack&&(identical(other.audioTrack, audioTrack) || other.audioTrack == audioTrack)&&(identical(other.localPath, localPath) || other.localPath == localPath)&&(identical(other.bytesReceived, bytesReceived) || other.bytesReceived == bytesReceived)&&(identical(other.bytesTotal, bytesTotal) || other.bytesTotal == bytesTotal)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DownloadTrack&&(identical(other.audioTrack, audioTrack) || other.audioTrack == audioTrack)&&(identical(other.localPath, localPath) || other.localPath == localPath)&&(identical(other.bytesReceived, bytesReceived) || other.bytesReceived == bytesReceived)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,audioTrack,localPath,bytesReceived,bytesTotal,status);
+int get hashCode => Object.hash(runtimeType,audioTrack,localPath,bytesReceived,status);
 
 @override
 String toString() {
-  return 'DownloadTrack(audioTrack: $audioTrack, localPath: $localPath, bytesReceived: $bytesReceived, bytesTotal: $bytesTotal, status: $status)';
+  return 'DownloadTrack(audioTrack: $audioTrack, localPath: $localPath, bytesReceived: $bytesReceived, status: $status)';
 }
 
 
@@ -258,7 +256,7 @@ abstract mixin class _$DownloadTrackCopyWith<$Res> implements $DownloadTrackCopy
   factory _$DownloadTrackCopyWith(_DownloadTrack value, $Res Function(_DownloadTrack) _then) = __$DownloadTrackCopyWithImpl;
 @override @useResult
 $Res call({
- AudioTrack audioTrack, String localPath, int bytesReceived, int bytesTotal, DownloadStatus status
+ AudioTrack audioTrack, String localPath, int bytesReceived, DownloadStatus status
 });
 
 
@@ -275,12 +273,11 @@ class __$DownloadTrackCopyWithImpl<$Res>
 
 /// Create a copy of DownloadTrack
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? audioTrack = null,Object? localPath = null,Object? bytesReceived = null,Object? bytesTotal = null,Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? audioTrack = null,Object? localPath = null,Object? bytesReceived = null,Object? status = null,}) {
   return _then(_DownloadTrack(
 audioTrack: null == audioTrack ? _self.audioTrack : audioTrack // ignore: cast_nullable_to_non_nullable
 as AudioTrack,localPath: null == localPath ? _self.localPath : localPath // ignore: cast_nullable_to_non_nullable
 as String,bytesReceived: null == bytesReceived ? _self.bytesReceived : bytesReceived // ignore: cast_nullable_to_non_nullable
-as int,bytesTotal: null == bytesTotal ? _self.bytesTotal : bytesTotal // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as DownloadStatus,
   ));

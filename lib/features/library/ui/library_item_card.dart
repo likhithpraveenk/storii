@@ -23,7 +23,7 @@ class LibraryItemCard extends ConsumerWidget {
     final displayMode = ref.watch(libraryDisplayModeProvider);
 
     final isDownloaded = ref.watch(
-      downloadsProvider.select((d) => d[item.id]?.status == .complete),
+      downloadsProvider.select((d) => d[item.id]?.status == .completed),
     );
 
     final stackTitle = displayMode == .compact;

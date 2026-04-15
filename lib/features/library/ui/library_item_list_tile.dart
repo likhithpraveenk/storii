@@ -22,7 +22,7 @@ class LibraryItemListTile extends ConsumerWidget {
         : item.title ?? l.noTitle;
 
     final isDownloaded = ref.watch(
-      downloadsProvider.select((d) => d[item.id]?.status == .complete),
+      downloadsProvider.select((d) => d[item.id]?.status == .completed),
     );
 
     final seriesNumBooks = item.collapsedSeries?.numBooks;

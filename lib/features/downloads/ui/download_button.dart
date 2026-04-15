@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/models/download_item.dart';
 import 'package:storii/features/downloads/logic/download_notifier.dart';
+import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
@@ -32,7 +32,7 @@ class DownloadButton extends ConsumerWidget {
         progress: item.progress,
         onCancel: () => notifier.cancel(libraryItemId),
       ),
-      .complete => Container(
+      .completed => Container(
         decoration: BoxDecoration(
           color: scheme.secondaryFixedDim,
           borderRadius: .circular(6),
@@ -51,7 +51,7 @@ class DownloadButton extends ConsumerWidget {
           onTap: () => _confirmDelete(context, ref, item),
         ),
       ),
-      .failed => IconButton(
+      .failed || .cancelled => IconButton(
         tooltip: l.downloadFailed,
         icon: Icon(Icons.error_outline, color: scheme.error),
         onPressed: () => notifier.download(libraryItemId),

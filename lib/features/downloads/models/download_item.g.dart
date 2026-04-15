@@ -13,7 +13,6 @@ _DownloadTrack _$DownloadTrackFromJson(Map<String, dynamic> json) =>
       ),
       localPath: json['localPath'] as String,
       bytesReceived: (json['bytesReceived'] as num?)?.toInt() ?? 0,
-      bytesTotal: (json['bytesTotal'] as num?)?.toInt() ?? 0,
       status:
           $enumDecodeNullable(_$DownloadStatusEnumMap, json['status']) ??
           DownloadStatus.queued,
@@ -24,16 +23,16 @@ Map<String, dynamic> _$DownloadTrackToJson(_DownloadTrack instance) =>
       'audioTrack': instance.audioTrack.toJson(),
       'localPath': instance.localPath,
       'bytesReceived': instance.bytesReceived,
-      'bytesTotal': instance.bytesTotal,
       'status': _$DownloadStatusEnumMap[instance.status]!,
     };
 
 const _$DownloadStatusEnumMap = {
   DownloadStatus.queued: 'queued',
   DownloadStatus.downloading: 'downloading',
-  DownloadStatus.complete: 'complete',
+  DownloadStatus.completed: 'completed',
   DownloadStatus.failed: 'failed',
   DownloadStatus.paused: 'paused',
+  DownloadStatus.cancelled: 'cancelled',
 };
 
 _DownloadItem _$DownloadItemFromJson(Map<String, dynamic> json) =>

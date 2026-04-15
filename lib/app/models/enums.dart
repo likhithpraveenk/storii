@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:storii/abs_api/abs_api.dart';
-import 'package:storii/app/models/download_item.dart';
 import 'package:storii/l10n/l10n.dart';
 
 enum Languages {
@@ -238,19 +237,6 @@ enum SearchFilter {
       .genres => l.genres,
       .podcasts => l.podcasts,
       .episodes => l.episodes,
-    };
-  }
-}
-
-extension DownloadStatusX on DownloadStatus {
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-    return switch (this) {
-      .queued => l.queued,
-      .paused => l.paused,
-      .downloading => l.downloading,
-      .failed => l.failed,
-      .complete => l.complete,
     };
   }
 }

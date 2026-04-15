@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:storii/app/config/theme.dart';
 
 class StackBadge extends StatelessWidget {
   const StackBadge(this.value, {super.key});
@@ -42,7 +43,7 @@ class DownloadBadge extends StatelessWidget {
       alignment: .center,
       padding: const .all(4),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondaryFixedDim,
+        color: appGreenColor,
         borderRadius: .circular(6),
         boxShadow: [
           BoxShadow(
@@ -52,12 +53,7 @@ class DownloadBadge extends StatelessWidget {
           ),
         ],
       ),
-      child: Icon(
-        Icons.download_done,
-        size: 12,
-        weight: 24,
-        color: Theme.of(context).colorScheme.onSecondaryFixed,
-      ),
+      child: const Icon(Icons.download_done, size: 12, color: Colors.black),
     );
   }
 }

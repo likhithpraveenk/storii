@@ -3,9 +3,9 @@ import 'package:just_audio/just_audio.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/models/chapter.dart';
+import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
-import 'package:storii/storage/local/download_service.dart';
 import 'package:uuid/uuid.dart';
 
 extension PlaybackSessionX on PlaybackSession {
@@ -96,9 +96,9 @@ extension PlaybackSessionX on PlaybackSession {
 
     final result = <int, String>{};
     for (final track in tracks) {
-      final local = await DownloadService.localPathIfDownloaded(
-        libraryItemId,
-        track,
+      final local = await DownloadsFilesystemHelper().trackPathIfExists(
+        filename: track.metadata.filename,
+        itemTitle: libraryItem?.title ?? libraryItemId,
       );
       if (local != null) result[track.index] = local;
     }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/app/models/download_item.dart';
 import 'package:storii/features/downloads/logic/download_notifier.dart';
+import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/helpers.dart';
@@ -128,11 +128,11 @@ class _StatusRow extends StatelessWidget {
           ),
         ],
       ),
-      .complete => Text(
+      .completed => Text(
         formatBytes(item.totalBytes),
         style: textTheme.labelSmall?.copyWith(color: scheme.primary),
       ),
-      .failed => Text(
+      .failed || .cancelled => Text(
         l.failed,
         style: textTheme.labelSmall?.copyWith(color: scheme.error),
       ),
@@ -159,12 +159,12 @@ class _TrailingActions extends StatelessWidget {
         tooltip: l.pause,
         onPressed: () => notifier.cancel(item.libraryItemId),
       ),
-      .paused || .failed => IconButton(
+      .paused || .failed || .cancelled => IconButton(
         icon: const Icon(Icons.play_circle_outline),
         tooltip: l.resume,
         onPressed: () => notifier.resume(item.libraryItemId),
       ),
-      .complete => IconButton(
+      .completed => IconButton(
         icon: Icon(
           Icons.delete_outline,
           color: Theme.of(context).colorScheme.error,
