@@ -8,6 +8,12 @@ import 'package:storii/storage/hive/boxes.dart';
 
 part 'download_storage.g.dart';
 
+@Riverpod(keepAlive: true)
+DownloadStorage downloadStorage(Ref ref) {
+  final box = Hive.box<String>(downloadsBox);
+  return DownloadStorage(box);
+}
+
 class DownloadStorage {
   final Box<String> _box;
 
@@ -32,17 +38,11 @@ class DownloadStorage {
     try {
       await _box.put(item.libraryItemId, jsonEncode(item.toJson()));
     } catch (e) {
-      log('Failed to save download item: $e');
+      log('Failed to save download item [${item.title}]: $e');
     }
   }
 
   Future<void> remove(String id) async {
     await _box.delete(id);
   }
-}
-
-@Riverpod(keepAlive: true)
-DownloadStorage downloadStorage(Ref ref) {
-  final box = Hive.box<String>(downloadsBox);
-  return DownloadStorage(box);
 }

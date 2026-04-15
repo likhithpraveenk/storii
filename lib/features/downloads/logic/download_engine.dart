@@ -1,26 +1,28 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 
-typedef ProgressCallback = void Function(int received, int total);
+part 'download_engine.g.dart';
+
+@Riverpod(keepAlive: true)
+DownloadEngine downloadEngine(Ref ref) => DownloadEngine(
+  Dio(
+    BaseOptions(
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(minutes: 10),
+    ),
+  ),
+  ref.watch(downloadsFsHelperProvider),
+);
 
 class DownloadEngine {
-  DownloadEngine({Dio? dio, DownloadsFilesystemHelper? fs})
-    : _dio =
-          dio ??
-          Dio(
-            BaseOptions(
-              connectTimeout: const Duration(seconds: 30),
-              receiveTimeout: const Duration(minutes: 10),
-            ),
-          ),
-      _filesystem = fs ?? DownloadsFilesystemHelper();
+  DownloadEngine(this._dio, this._filesystem);
 
   final Dio _dio;
   final DownloadsFilesystemHelper _filesystem;
+  final Map<String, CancelToken> _coverTokens = {};
   final Map<String, Map<int, CancelToken>> _tokens = {};
 
   Stream<DownloadItem> downloadItem({
@@ -34,12 +36,15 @@ class DownloadEngine {
     var current = item.copyWith(status: .downloading);
     yield current;
 
+    final coverToken = CancelToken();
+    _coverTokens[item.libraryItemId] = coverToken;
     await downloadCover(
       itemTitle: item.title,
       itemId: item.libraryItemId,
       serverUrl: serverUrl,
-      cancelToken: CancelToken(),
+      cancelToken: coverToken,
     );
+    _coverTokens.remove(item.libraryItemId);
 
     for (int i = 0; i < current.tracks.length; i++) {
       final track = current.tracks[i];
@@ -48,9 +53,9 @@ class DownloadEngine {
       final cancelToken = CancelToken();
       trackTokens[i] = cancelToken;
 
-      final file = File(track.localPath);
-      final exists = await file.exists();
-      final existingBytes = exists ? await file.length() : 0;
+      final existingBytes = await _filesystem.existingBytes(track.localPath);
+
+      final sink = await _filesystem.openAppendSink(track.localPath);
 
       try {
         final url = serverUrl.resolve(track.audioTrack.contentUrl).toString();
@@ -62,15 +67,26 @@ class DownloadEngine {
               'Authorization': 'Bearer $token',
               if (existingBytes > 0) 'Range': 'bytes=$existingBytes-',
             },
-            responseType: ResponseType.stream,
+            responseType: .stream,
           ),
           cancelToken: cancelToken,
         );
 
-        final sink = file.openWrite(mode: FileMode.append);
+        var received = existingBytes;
 
-        int received = existingBytes;
-        final total = existingBytes + res.data!.contentLength;
+        final isPartialContent = res.statusCode == 206;
+        if (!isPartialContent && existingBytes > 0) {
+          await sink.close();
+          await _filesystem.truncate(track.localPath);
+          received = 0;
+        }
+
+        final rawContentLength = res.data!.contentLength;
+        final knownTotal = rawContentLength > 0
+            ? (isPartialContent
+                  ? existingBytes + rawContentLength
+                  : rawContentLength)
+            : track.bytesTotal;
 
         await for (final chunk in res.data!.stream) {
           received += chunk.length;
@@ -79,7 +95,7 @@ class DownloadEngine {
           final updatedTracks = [...current.tracks];
           updatedTracks[i] = track.copyWith(
             status: .downloading,
-            bytesReceived: received,
+            bytesReceived: received.toInt(),
           );
 
           current = current.copyWith(
@@ -96,7 +112,7 @@ class DownloadEngine {
         final updatedTracks = [...current.tracks];
         updatedTracks[i] = track.copyWith(
           status: .completed,
-          bytesReceived: total,
+          bytesReceived: knownTotal > 0 ? knownTotal : received.toInt(),
         );
 
         current = current.copyWith(
@@ -107,18 +123,30 @@ class DownloadEngine {
 
         yield current;
       } on DioException catch (e) {
+        await sink.close();
         if (CancelToken.isCancel(e)) {
-          yield current.copyWith(status: DownloadStatus.paused);
+          final reason = e.message ?? '';
+          final status = reason == 'cancelled'
+              ? DownloadStatus.cancelled
+              : DownloadStatus.paused;
+          _tokens.remove(item.libraryItemId);
+          yield current.copyWith(status: status);
           return;
         }
 
-        yield current.copyWith(status: DownloadStatus.failed);
+        _tokens.remove(item.libraryItemId);
+        yield current.copyWith(status: .failed);
+        return;
+      } catch (e) {
+        await sink.close();
+        _tokens.remove(item.libraryItemId);
+        yield current.copyWith(status: .failed);
         return;
       }
     }
 
     _tokens.remove(item.libraryItemId);
-    yield current.copyWith(status: DownloadStatus.completed);
+    yield current.copyWith(status: .completed);
   }
 
   Future<void> downloadCover({
@@ -141,6 +169,7 @@ class DownloadEngine {
   }
 
   void pause(String itemId) {
+    _coverTokens[itemId]?.cancel('paused');
     final map = _tokens[itemId];
     if (map == null) return;
     for (final t in map.values) {
@@ -149,6 +178,8 @@ class DownloadEngine {
   }
 
   void cancel(String itemId) {
+    _coverTokens[itemId]?.cancel('cancelled');
+    _coverTokens.remove(itemId);
     final map = _tokens[itemId];
     if (map == null) return;
     for (final t in map.values) {

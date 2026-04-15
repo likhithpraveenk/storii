@@ -41,7 +41,7 @@ final class DownloadsNotifierProvider
   }
 }
 
-String _$downloadsNotifierHash() => r'abfe074ad03faf5c767e9967eeacb802ba31196a';
+String _$downloadsNotifierHash() => r'5fc7f5860057bff695470056e96b56d6960aa569';
 
 abstract class _$DownloadsNotifier
     extends $Notifier<Map<String, DownloadItem>> {

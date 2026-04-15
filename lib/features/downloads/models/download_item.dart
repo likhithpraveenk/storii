@@ -57,7 +57,14 @@ sealed class DownloadItem with _$DownloadItem {
 
   bool get isComplete => status == .completed;
   bool get isFailed => status == .failed;
-  bool get isActive => status == .downloading || status == .queued;
+  bool get isActive => status == .downloading;
+
+  bool get isStuck =>
+      status == .queued &&
+      startedAt != null &&
+      DateTime.now().difference(startedAt!).inMinutes > 5;
+
+  int get computedTotalBytes => tracks.fold(0, (s, t) => s + t.bytesTotal);
 }
 
 extension DownloadStatusX on DownloadStatus {

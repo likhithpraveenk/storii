@@ -18,10 +18,13 @@ part 'download_notifier.g.dart';
 
 @Riverpod(keepAlive: true)
 class DownloadsNotifier extends _$DownloadsNotifier {
-  final _engine = DownloadEngine();
-  final _filesystem = DownloadsFilesystemHelper();
+  DownloadEngine get _engine => ref.read(downloadEngineProvider);
+  DownloadsFilesystemHelper get _filesystem =>
+      ref.read(downloadsFsHelperProvider);
 
   DownloadStorage get _storage => ref.read(downloadStorageProvider);
+
+  final Set<String> _inFlight = {};
 
   @override
   Map<String, DownloadItem> build() {
@@ -78,15 +81,21 @@ class DownloadsNotifier extends _$DownloadsNotifier {
                   ))
               .copyWith(tracks: tracks, status: .queued);
 
-      _updateAndPersist(di);
+      await _updateAndPersist(di);
 
       await for (final updated in _engine.downloadItem(
         item: di,
         serverUrl: user.serverUrl,
         token: token,
       )) {
-        _updateAndPersist(updated);
+        state = {...state, updated.libraryItemId: updated};
+        final prev = state[updated.libraryItemId];
+        if (prev?.status != updated.status) {
+          await _storage.save(updated);
+        }
       }
+      final finalItem = state[libraryItemId];
+      if (finalItem != null) await _storage.save(finalItem);
     } catch (e, st) {
       LogService.log(
         'Download failed: $e',
@@ -94,35 +103,38 @@ class DownloadsNotifier extends _$DownloadsNotifier {
         level: .error,
         stackTrace: st,
       );
-      _markFailed(libraryItemId);
+      await _markFailed(libraryItemId);
+    } finally {
+      _inFlight.remove(libraryItemId);
     }
   }
 
-  void pause(String id) {
+  Future<void> pause(String id) async {
     _engine.pause(id);
     final item = state[id];
     if (item != null) {
-      _updateAndPersist(item.copyWith(status: .paused));
+      await _updateAndPersist(item.copyWith(status: .paused));
     }
   }
 
-  void cancel(String id) {
+  Future<void> cancel(String id) async {
     _engine.cancel(id);
     final item = state[id];
     if (item != null) {
-      _updateAndPersist(item.copyWith(status: .cancelled));
+      await _updateAndPersist(item.copyWith(status: .cancelled));
     }
   }
 
   Future<void> resume(String id) async {
     final item = state[id];
     if (item == null) return;
-
+    if (item.isActive || _inFlight.contains(id)) return;
     await download(id);
   }
 
   Future<void> delete(String libraryItemId) async {
     _engine.cancel(libraryItemId);
+    _inFlight.remove(libraryItemId);
     final item = state[libraryItemId];
     if (item != null) await _filesystem.deleteItem(item.title);
 
@@ -130,14 +142,14 @@ class DownloadsNotifier extends _$DownloadsNotifier {
     await _storage.remove(libraryItemId);
   }
 
-  void _updateAndPersist(DownloadItem item) {
+  Future<void> _updateAndPersist(DownloadItem item) async {
     state = {...state, item.libraryItemId: item};
-    _storage.save(item);
+    await _storage.save(item);
   }
 
-  void _markFailed(String id) {
+  Future<void> _markFailed(String id) async {
     final item = state[id];
     if (item == null) return;
-    _updateAndPersist(item.copyWith(status: .failed));
+    await _updateAndPersist(item.copyWith(status: .failed));
   }
 }
