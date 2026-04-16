@@ -10,6 +10,7 @@ import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/features/series/ui/series_list_card.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
+import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/screen_options.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -50,14 +51,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
         child: seriesAsync.when(
           data: (series) {
             if (series.isEmpty) {
-              return SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  alignment: .center,
-                  child: Text(l.empty),
-                ),
-              );
+              return const EmptyState();
             }
 
             final isListView =

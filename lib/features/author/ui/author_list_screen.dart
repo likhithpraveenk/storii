@@ -10,6 +10,7 @@ import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
+import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/screen_options.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -34,7 +35,6 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
   @override
   Widget build(BuildContext context) {
     final authorsAsync = ref.watch(authorsListProvider);
-    final l = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -54,14 +54,7 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
         child: authorsAsync.when(
           data: (authors) {
             if (authors.isEmpty) {
-              return SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  alignment: .center,
-                  child: Text(l.empty),
-                ),
-              );
+              return const EmptyState();
             }
 
             final isListView =

@@ -8,6 +8,7 @@ import 'package:storii/features/downloads/ui/download_widgets.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/widgets/empty_state.dart';
 
 enum DownloadsScreenTab { active, completed }
 
@@ -48,15 +49,18 @@ class DownloadsScreen extends ConsumerWidget {
         ),
         body: TabBarView(
           children: [
-            ListView.builder(
-              key: const ValueKey('active_downloads'),
-              padding: const .only(bottom: 16, top: 4),
-              itemCount: activeDownloads.length,
-              itemBuilder: (context, index) {
-                final item = activeDownloads.elementAt(index);
-                return DownloadTile(item: item);
-              },
-            ),
+            if (activeDownloads.isEmpty)
+              const EmptyState()
+            else
+              ListView.builder(
+                key: const ValueKey('active_downloads'),
+                padding: const .only(bottom: 16, top: 4),
+                itemCount: activeDownloads.length,
+                itemBuilder: (context, index) {
+                  final item = activeDownloads.elementAt(index);
+                  return DownloadTile(item: item);
+                },
+              ),
             ItemsGridView(
               key: const ValueKey('completed_downloads'),
               completedDownloads.map((d) => d.libraryItem).toList(),

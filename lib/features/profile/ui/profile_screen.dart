@@ -16,7 +16,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         title: Text(AppLocalizations.of(context)!.profile),
       ),
-      body: const Center(child: Text('todo')),
+      body: const Center(child: Text('coming soon')),
     );
   }
 }

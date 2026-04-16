@@ -19,7 +19,7 @@ class CollectionsScreen extends StatelessWidget {
         slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
-            child: Center(child: Text('todo')),
+            child: Center(child: Text('coming soon')),
           ),
         ],
       ),
