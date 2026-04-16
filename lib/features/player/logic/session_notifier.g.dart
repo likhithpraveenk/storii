@@ -41,7 +41,7 @@ final class SessionNotifierProvider
   }
 }
 
-String _$sessionNotifierHash() => r'616cd4a1e67c268f4ada347d88f5f78950302f08';
+String _$sessionNotifierHash() => r'802476dd69ddfdfadfc835044a2760c26fbe3380';
 
 abstract class _$SessionNotifier extends $Notifier<PlaybackSession?> {
   PlaybackSession? build();

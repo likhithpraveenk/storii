@@ -112,16 +112,16 @@ class SessionNotifier extends _$SessionNotifier {
 
     final user = await ref.read(authenticatedUserProvider.future);
     try {
-      await ref
-          .read(sessionsApiProvider(user))
-          .closeSession(sessionId: session.id);
-
+      if (!isLocal) {
+        await ref
+            .read(sessionsApiProvider(user))
+            .closeSession(sessionId: session.id);
+      }
       await Hive.box<String>(sessionIdBox).delete(session.id);
       await ref.read(localPositionProvider(session.id).notifier).clear();
     } catch (_) {
       log('session close failed will be cleaned up on app start');
     } finally {
-      log('session closed');
       state = null;
     }
   }
