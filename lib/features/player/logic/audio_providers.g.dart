@@ -353,7 +353,7 @@ final class AudioPlayerNotifierProvider
 }
 
 String _$audioPlayerNotifierHash() =>
-    r'9cded2718280f757790d93704b957713a7bf6d0d';
+    r'c1b84c102c6b866dec261b6de2be3270b551ca60';
 
 abstract class _$AudioPlayerNotifier extends $Notifier<AudioPlayerState> {
   AudioPlayerState build();

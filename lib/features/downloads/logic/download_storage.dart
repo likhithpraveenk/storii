@@ -27,8 +27,8 @@ class DownloadStorage {
         if (data != null) {
           out[key as String] = DownloadItem.fromJson(jsonDecode(data));
         }
-      } catch (e) {
-        log('Failed to load download item $key: $e');
+      } catch (e, st) {
+        log('Failed to load download item $key: $e', stackTrace: st);
       }
     }
     return out;

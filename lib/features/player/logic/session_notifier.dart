@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/local_position_provider.dart';
 import 'package:storii/features/player/logic/play_request_params.dart';
@@ -56,9 +57,9 @@ class SessionNotifier extends _$SessionNotifier {
     String? episodeId,
   }) async {
     final params = await ref.read(playRequestParamsProvider.future);
-    final user = await ref.read(authenticatedUserProvider.future);
+    final user = ref.read(currentUserProvider);
     final session = item.toPlaybackSession(
-      user.id,
+      user!.id,
       deviceInfo: params.deviceInfo,
       episodeId: episodeId,
     );

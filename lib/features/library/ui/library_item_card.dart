@@ -13,8 +13,9 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class LibraryItemCard extends ConsumerWidget {
-  const LibraryItemCard(this.item, {super.key});
+  const LibraryItemCard(this.item, {super.key, this.isOffline = false});
   final LibraryItem item;
+  final bool isOffline;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,7 +42,10 @@ class LibraryItemCard extends ConsumerWidget {
             extra: item.collapsedSeries!.id,
           );
         } else {
-          context.push(AppRoute.itemDetail.path, extra: item.id);
+          context.push(
+            AppRoute.itemDetail.path,
+            extra: {'id': item.id, 'isOffline': isOffline},
+          );
         }
       },
       splashFactory: NoSplash.splashFactory,

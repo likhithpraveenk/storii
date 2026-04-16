@@ -7,10 +7,16 @@ import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 
 class ItemsGridView extends ConsumerWidget {
-  const ItemsGridView(this.items, {super.key, this.scrollController});
+  const ItemsGridView(
+    this.items, {
+    super.key,
+    this.scrollController,
+    this.isOffline = false,
+  });
 
   final List<LibraryItem> items;
   final ScrollController? scrollController;
+  final bool isOffline;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,7 +39,11 @@ class ItemsGridView extends ConsumerWidget {
         childAspectRatio: 1,
       ),
       itemBuilder: (context, index) {
-        return LibraryItemCard(key: ValueKey(items[index].id), items[index]);
+        return LibraryItemCard(
+          key: ValueKey(items[index].id),
+          items[index],
+          isOffline: isOffline,
+        );
       },
     );
   }

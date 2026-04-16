@@ -60,9 +60,10 @@ class DownloadsFilesystemHelper {
     return p.join(dir.path, 'cover.jpg');
   }
 
-  Future<bool> coverExists(String itemTitle) async {
+  Future<String?> coverPathIfExists(String itemTitle) async {
     final path = await coverPath(itemTitle);
-    return await fileIntact(path);
+    final fileExists = await fileIntact(path);
+    return fileExists ? path : null;
   }
 
   Future<bool> fileIntact(String path) async {
@@ -82,8 +83,8 @@ class DownloadsFilesystemHelper {
 
   Future<bool> isFullyDownloaded(DownloadItem item) async {
     if (item.tracks.isEmpty) return false;
-
-    if (!await coverExists(item.title)) return false;
+    final coverPath = await coverPathIfExists(item.title);
+    if (coverPath == null) return false;
 
     final results = await Future.wait(
       item.tracks.map((t) => fileIntact(t.localPath)),

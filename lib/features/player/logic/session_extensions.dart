@@ -13,13 +13,16 @@ extension PlaybackSessionX on PlaybackSession {
       episodeId != null ? '$libraryItemId$episodeId' : libraryItemId;
 
   List<ProgressiveAudioSource> toAudioSources(
-    Uri serverUrl,
+    Uri? serverUrl,
     String? token, {
     Map<int, String> localPaths = const {},
   }) {
-    final coverUri = serverUrl
-        .resolve(ApiRoutes.itemCover(libraryItemId))
-        .replace(queryParameters: {'raw': '1'});
+    final localCover = localPaths[-1];
+    final coverUri = localCover != null
+        ? Uri.file(localCover)
+        : serverUrl
+              ?.resolve(ApiRoutes.itemCover(libraryItemId))
+              .replace(queryParameters: {'raw': '1'});
     Duration accumulated = Duration.zero;
     final sources = <ProgressiveAudioSource>[];
 
@@ -61,7 +64,8 @@ extension PlaybackSessionX on PlaybackSession {
 
       final uri = isLocal
           ? Uri.file(localPath)
-          : serverUrl.resolve(track.contentUrl);
+          : serverUrl!.resolve(track.contentUrl);
+      //! either we get local path or server url
 
       final tag = MediaItem(
         id: track.contentUrl,
@@ -95,6 +99,10 @@ extension PlaybackSessionX on PlaybackSession {
     if (tracks == null || tracks.isEmpty) return {};
 
     final result = <int, String>{};
+    final coverPath = await DownloadsFilesystemHelper().coverPathIfExists(
+      displayTitle,
+    );
+    if (coverPath != null) result[-1] = coverPath;
     for (final track in tracks) {
       final local = await DownloadsFilesystemHelper().trackPathIfExists(
         filename: track.metadata.filename,
@@ -102,6 +110,7 @@ extension PlaybackSessionX on PlaybackSession {
       );
       if (local != null) result[track.index] = local;
     }
+
     return result;
   }
 

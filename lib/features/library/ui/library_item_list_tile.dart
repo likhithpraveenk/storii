@@ -10,8 +10,9 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class LibraryItemListTile extends ConsumerWidget {
-  const LibraryItemListTile(this.item, {super.key});
+  const LibraryItemListTile(this.item, {super.key, this.isOffline = false});
   final LibraryItem item;
+  final bool isOffline;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,7 +37,10 @@ class LibraryItemListTile extends ConsumerWidget {
             extra: item.collapsedSeries!.id,
           );
         } else {
-          context.push(AppRoute.itemDetail.path, extra: item.id);
+          context.push(
+            AppRoute.itemDetail.path,
+            extra: {'id': item.id, 'isOffline': isOffline},
+          );
         }
       },
       contentPadding: const .fromLTRB(16, 8, 16, 8),

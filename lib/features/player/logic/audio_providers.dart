@@ -96,15 +96,6 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       loadingEpisodeId: episodeId,
     );
     try {
-      final user = await ref.read(authenticatedUserProvider.future);
-      final token = await ref.read(tokenProvider).getAccessToken(user.id);
-
-      final oldSession = ref.read(sessionProvider);
-      if (oldSession != null) {
-        log('old session exists. calling audio handler stop');
-        await audioHandler.stop();
-      }
-
       final download = ref.read(downloadsProvider)[itemId];
       final isFullyDownloaded =
           download != null &&
@@ -112,27 +103,40 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
           await DownloadsFilesystemHelper().isFullyDownloaded(download);
 
       final PlaybackSession session;
+      String? token;
+      Uri? serverUrl;
 
       if (isFullyDownloaded) {
         final item = await ref.read(
-          itemDetailProvider(itemId, includeProgress: true).future,
+          itemDetailProvider(
+            itemId,
+            includeProgress: true,
+            isOffline: true, //! TODO: only when no network
+          ).future,
         );
+
         session = await ref
             .read(sessionProvider.notifier)
             .createLocal(item: item, episodeId: episodeId);
       } else {
+        final user = await ref.read(authenticatedUserProvider.future);
+        token = await ref.read(tokenProvider).getAccessToken(user.id);
+        serverUrl = user.serverUrl;
+
         session = await ref
             .read(sessionProvider.notifier)
             .create(itemId: itemId, episodeId: episodeId);
       }
-      final int index;
-      final Duration position;
 
-      if (chapter != null) {
-        (index, position) = session.chapterToTrackOffset(chapter);
-      } else {
-        (index, position) = session.getIndexAndOffset(initialPosition);
+      final oldSession = ref.read(sessionProvider);
+      if (oldSession != null) {
+        log('old session exists. calling audio handler stop');
+        await audioHandler.stop();
       }
+
+      final (index, position) = (chapter != null)
+          ? session.chapterToTrackOffset(chapter)
+          : session.getIndexAndOffset(initialPosition);
 
       final localPaths = await session.resolveLocalPaths();
       final localCount = localPaths.length;
@@ -142,7 +146,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       }
 
       final sources = session.toAudioSources(
-        user.serverUrl,
+        serverUrl,
         token,
         localPaths: localPaths,
       );
@@ -156,12 +160,13 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       state = const AudioPlayerState();
       await audioHandler.processingStateStream.firstWhere((s) => s == .ready);
       await audioHandler.play();
-    } catch (e) {
+    } catch (e, st) {
       final error = AppError.resolve(e);
       LogService.log(
         'playing failed: $error',
         source: 'AudioPlayerNotifier',
         level: .error,
+        stackTrace: st,
       );
       state = const AudioPlayerState();
       throw error;
