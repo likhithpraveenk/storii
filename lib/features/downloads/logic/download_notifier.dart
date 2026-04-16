@@ -35,6 +35,7 @@ class DownloadsNotifier extends _$DownloadsNotifier {
   Future<void> download(String libraryItemId) async {
     final existing = state[libraryItemId];
     if (existing != null && existing.isActive) return;
+    _inFlight.add(libraryItemId);
 
     try {
       final item = await ref.read(itemDetailProvider(libraryItemId).future);
@@ -74,10 +75,13 @@ class DownloadsNotifier extends _$DownloadsNotifier {
           (existing ??
                   DownloadItem(
                     libraryItemId: libraryItemId,
+                    libraryItem: item,
                     title: item.title ?? libraryItemId,
                     author: item.authorName ?? '',
                     tracks: tracks,
                     startedAt: DateTime.now(),
+                    serverUrl: user.serverUrl,
+                    userId: user.id,
                   ))
               .copyWith(tracks: tracks, status: .queued);
 

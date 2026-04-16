@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
@@ -123,6 +125,7 @@ class DownloadEngine {
 
         yield current;
       } on DioException catch (e) {
+        log('download engine dio error: $e');
         await sink.close();
         if (CancelToken.isCancel(e)) {
           final reason = e.message ?? '';
@@ -138,6 +141,7 @@ class DownloadEngine {
         yield current.copyWith(status: .failed);
         return;
       } catch (e) {
+        log('download engine error: $e');
         await sink.close();
         _tokens.remove(item.libraryItemId);
         yield current.copyWith(status: .failed);

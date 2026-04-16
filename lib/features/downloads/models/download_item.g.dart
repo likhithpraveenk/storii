@@ -37,7 +37,12 @@ const _$DownloadStatusEnumMap = {
 
 _DownloadItem _$DownloadItemFromJson(Map<String, dynamic> json) =>
     _DownloadItem(
+      serverUrl: Uri.parse(json['serverUrl'] as String),
       libraryItemId: json['libraryItemId'] as String,
+      userId: json['userId'] as String,
+      libraryItem: LibraryItem.fromJson(
+        json['libraryItem'] as Map<String, dynamic>,
+      ),
       title: json['title'] as String,
       author: json['author'] as String,
       tracks: (json['tracks'] as List<dynamic>)
@@ -55,7 +60,10 @@ _DownloadItem _$DownloadItemFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$DownloadItemToJson(_DownloadItem instance) =>
     <String, dynamic>{
+      'serverUrl': instance.serverUrl.toString(),
       'libraryItemId': instance.libraryItemId,
+      'userId': instance.userId,
+      'libraryItem': instance.libraryItem.toJson(),
       'title': instance.title,
       'author': instance.author,
       'tracks': instance.tracks.map((e) => e.toJson()).toList(),

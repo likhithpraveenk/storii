@@ -299,7 +299,7 @@ $AudioTrackCopyWith<$Res> get audioTrack {
 /// @nodoc
 mixin _$DownloadItem {
 
- String get libraryItemId; String get title; String get author; List<DownloadTrack> get tracks; DownloadStatus get status; int get totalBytes; int get receivedBytes; DateTime? get startedAt;
+ Uri get serverUrl; String get libraryItemId; String get userId; LibraryItem get libraryItem; String get title; String get author; List<DownloadTrack> get tracks; DownloadStatus get status; int get totalBytes; int get receivedBytes; DateTime? get startedAt;
 /// Create a copy of DownloadItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -312,16 +312,16 @@ $DownloadItemCopyWith<DownloadItem> get copyWith => _$DownloadItemCopyWithImpl<D
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DownloadItem&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&const DeepCollectionEquality().equals(other.tracks, tracks)&&(identical(other.status, status) || other.status == status)&&(identical(other.totalBytes, totalBytes) || other.totalBytes == totalBytes)&&(identical(other.receivedBytes, receivedBytes) || other.receivedBytes == receivedBytes)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DownloadItem&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.libraryItem, libraryItem) || other.libraryItem == libraryItem)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&const DeepCollectionEquality().equals(other.tracks, tracks)&&(identical(other.status, status) || other.status == status)&&(identical(other.totalBytes, totalBytes) || other.totalBytes == totalBytes)&&(identical(other.receivedBytes, receivedBytes) || other.receivedBytes == receivedBytes)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,libraryItemId,title,author,const DeepCollectionEquality().hash(tracks),status,totalBytes,receivedBytes,startedAt);
+int get hashCode => Object.hash(runtimeType,serverUrl,libraryItemId,userId,libraryItem,title,author,const DeepCollectionEquality().hash(tracks),status,totalBytes,receivedBytes,startedAt);
 
 @override
 String toString() {
-  return 'DownloadItem(libraryItemId: $libraryItemId, title: $title, author: $author, tracks: $tracks, status: $status, totalBytes: $totalBytes, receivedBytes: $receivedBytes, startedAt: $startedAt)';
+  return 'DownloadItem(serverUrl: $serverUrl, libraryItemId: $libraryItemId, userId: $userId, libraryItem: $libraryItem, title: $title, author: $author, tracks: $tracks, status: $status, totalBytes: $totalBytes, receivedBytes: $receivedBytes, startedAt: $startedAt)';
 }
 
 
@@ -332,11 +332,11 @@ abstract mixin class $DownloadItemCopyWith<$Res>  {
   factory $DownloadItemCopyWith(DownloadItem value, $Res Function(DownloadItem) _then) = _$DownloadItemCopyWithImpl;
 @useResult
 $Res call({
- String libraryItemId, String title, String author, List<DownloadTrack> tracks, DownloadStatus status, int totalBytes, int receivedBytes, DateTime? startedAt
+ Uri serverUrl, String libraryItemId, String userId, LibraryItem libraryItem, String title, String author, List<DownloadTrack> tracks, DownloadStatus status, int totalBytes, int receivedBytes, DateTime? startedAt
 });
 
 
-
+$LibraryItemCopyWith<$Res> get libraryItem;
 
 }
 /// @nodoc
@@ -349,10 +349,13 @@ class _$DownloadItemCopyWithImpl<$Res>
 
 /// Create a copy of DownloadItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? libraryItemId = null,Object? title = null,Object? author = null,Object? tracks = null,Object? status = null,Object? totalBytes = null,Object? receivedBytes = null,Object? startedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? serverUrl = null,Object? libraryItemId = null,Object? userId = null,Object? libraryItem = null,Object? title = null,Object? author = null,Object? tracks = null,Object? status = null,Object? totalBytes = null,Object? receivedBytes = null,Object? startedAt = freezed,}) {
   return _then(_self.copyWith(
-libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+serverUrl: null == serverUrl ? _self.serverUrl : serverUrl // ignore: cast_nullable_to_non_nullable
+as Uri,libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String,libraryItem: null == libraryItem ? _self.libraryItem : libraryItem // ignore: cast_nullable_to_non_nullable
+as LibraryItem,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,author: null == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
 as String,tracks: null == tracks ? _self.tracks : tracks // ignore: cast_nullable_to_non_nullable
 as List<DownloadTrack>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
@@ -362,7 +365,16 @@ as int,startedAt: freezed == startedAt ? _self.startedAt : startedAt // ignore: 
 as DateTime?,
   ));
 }
-
+/// Create a copy of DownloadItem
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LibraryItemCopyWith<$Res> get libraryItem {
+  
+  return $LibraryItemCopyWith<$Res>(_self.libraryItem, (value) {
+    return _then(_self.copyWith(libraryItem: value));
+  });
+}
 }
 
 
@@ -441,10 +453,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String libraryItemId,  String title,  String author,  List<DownloadTrack> tracks,  DownloadStatus status,  int totalBytes,  int receivedBytes,  DateTime? startedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Uri serverUrl,  String libraryItemId,  String userId,  LibraryItem libraryItem,  String title,  String author,  List<DownloadTrack> tracks,  DownloadStatus status,  int totalBytes,  int receivedBytes,  DateTime? startedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DownloadItem() when $default != null:
-return $default(_that.libraryItemId,_that.title,_that.author,_that.tracks,_that.status,_that.totalBytes,_that.receivedBytes,_that.startedAt);case _:
+return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.libraryItem,_that.title,_that.author,_that.tracks,_that.status,_that.totalBytes,_that.receivedBytes,_that.startedAt);case _:
   return orElse();
 
 }
@@ -462,10 +474,10 @@ return $default(_that.libraryItemId,_that.title,_that.author,_that.tracks,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String libraryItemId,  String title,  String author,  List<DownloadTrack> tracks,  DownloadStatus status,  int totalBytes,  int receivedBytes,  DateTime? startedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Uri serverUrl,  String libraryItemId,  String userId,  LibraryItem libraryItem,  String title,  String author,  List<DownloadTrack> tracks,  DownloadStatus status,  int totalBytes,  int receivedBytes,  DateTime? startedAt)  $default,) {final _that = this;
 switch (_that) {
 case _DownloadItem():
-return $default(_that.libraryItemId,_that.title,_that.author,_that.tracks,_that.status,_that.totalBytes,_that.receivedBytes,_that.startedAt);}
+return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.libraryItem,_that.title,_that.author,_that.tracks,_that.status,_that.totalBytes,_that.receivedBytes,_that.startedAt);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -479,10 +491,10 @@ return $default(_that.libraryItemId,_that.title,_that.author,_that.tracks,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String libraryItemId,  String title,  String author,  List<DownloadTrack> tracks,  DownloadStatus status,  int totalBytes,  int receivedBytes,  DateTime? startedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Uri serverUrl,  String libraryItemId,  String userId,  LibraryItem libraryItem,  String title,  String author,  List<DownloadTrack> tracks,  DownloadStatus status,  int totalBytes,  int receivedBytes,  DateTime? startedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _DownloadItem() when $default != null:
-return $default(_that.libraryItemId,_that.title,_that.author,_that.tracks,_that.status,_that.totalBytes,_that.receivedBytes,_that.startedAt);case _:
+return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.libraryItem,_that.title,_that.author,_that.tracks,_that.status,_that.totalBytes,_that.receivedBytes,_that.startedAt);case _:
   return null;
 
 }
@@ -494,10 +506,13 @@ return $default(_that.libraryItemId,_that.title,_that.author,_that.tracks,_that.
 @JsonSerializable()
 
 class _DownloadItem extends DownloadItem {
-  const _DownloadItem({required this.libraryItemId, required this.title, required this.author, required final  List<DownloadTrack> tracks, this.status = DownloadStatus.queued, this.totalBytes = 0, this.receivedBytes = 0, this.startedAt}): _tracks = tracks,super._();
+  const _DownloadItem({required this.serverUrl, required this.libraryItemId, required this.userId, required this.libraryItem, required this.title, required this.author, required final  List<DownloadTrack> tracks, this.status = DownloadStatus.queued, this.totalBytes = 0, this.receivedBytes = 0, this.startedAt}): _tracks = tracks,super._();
   factory _DownloadItem.fromJson(Map<String, dynamic> json) => _$DownloadItemFromJson(json);
 
+@override final  Uri serverUrl;
 @override final  String libraryItemId;
+@override final  String userId;
+@override final  LibraryItem libraryItem;
 @override final  String title;
 @override final  String author;
  final  List<DownloadTrack> _tracks;
@@ -525,16 +540,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DownloadItem&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&const DeepCollectionEquality().equals(other._tracks, _tracks)&&(identical(other.status, status) || other.status == status)&&(identical(other.totalBytes, totalBytes) || other.totalBytes == totalBytes)&&(identical(other.receivedBytes, receivedBytes) || other.receivedBytes == receivedBytes)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DownloadItem&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.libraryItem, libraryItem) || other.libraryItem == libraryItem)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&const DeepCollectionEquality().equals(other._tracks, _tracks)&&(identical(other.status, status) || other.status == status)&&(identical(other.totalBytes, totalBytes) || other.totalBytes == totalBytes)&&(identical(other.receivedBytes, receivedBytes) || other.receivedBytes == receivedBytes)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,libraryItemId,title,author,const DeepCollectionEquality().hash(_tracks),status,totalBytes,receivedBytes,startedAt);
+int get hashCode => Object.hash(runtimeType,serverUrl,libraryItemId,userId,libraryItem,title,author,const DeepCollectionEquality().hash(_tracks),status,totalBytes,receivedBytes,startedAt);
 
 @override
 String toString() {
-  return 'DownloadItem(libraryItemId: $libraryItemId, title: $title, author: $author, tracks: $tracks, status: $status, totalBytes: $totalBytes, receivedBytes: $receivedBytes, startedAt: $startedAt)';
+  return 'DownloadItem(serverUrl: $serverUrl, libraryItemId: $libraryItemId, userId: $userId, libraryItem: $libraryItem, title: $title, author: $author, tracks: $tracks, status: $status, totalBytes: $totalBytes, receivedBytes: $receivedBytes, startedAt: $startedAt)';
 }
 
 
@@ -545,11 +560,11 @@ abstract mixin class _$DownloadItemCopyWith<$Res> implements $DownloadItemCopyWi
   factory _$DownloadItemCopyWith(_DownloadItem value, $Res Function(_DownloadItem) _then) = __$DownloadItemCopyWithImpl;
 @override @useResult
 $Res call({
- String libraryItemId, String title, String author, List<DownloadTrack> tracks, DownloadStatus status, int totalBytes, int receivedBytes, DateTime? startedAt
+ Uri serverUrl, String libraryItemId, String userId, LibraryItem libraryItem, String title, String author, List<DownloadTrack> tracks, DownloadStatus status, int totalBytes, int receivedBytes, DateTime? startedAt
 });
 
 
-
+@override $LibraryItemCopyWith<$Res> get libraryItem;
 
 }
 /// @nodoc
@@ -562,10 +577,13 @@ class __$DownloadItemCopyWithImpl<$Res>
 
 /// Create a copy of DownloadItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? libraryItemId = null,Object? title = null,Object? author = null,Object? tracks = null,Object? status = null,Object? totalBytes = null,Object? receivedBytes = null,Object? startedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? serverUrl = null,Object? libraryItemId = null,Object? userId = null,Object? libraryItem = null,Object? title = null,Object? author = null,Object? tracks = null,Object? status = null,Object? totalBytes = null,Object? receivedBytes = null,Object? startedAt = freezed,}) {
   return _then(_DownloadItem(
-libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+serverUrl: null == serverUrl ? _self.serverUrl : serverUrl // ignore: cast_nullable_to_non_nullable
+as Uri,libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String,libraryItem: null == libraryItem ? _self.libraryItem : libraryItem // ignore: cast_nullable_to_non_nullable
+as LibraryItem,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,author: null == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
 as String,tracks: null == tracks ? _self._tracks : tracks // ignore: cast_nullable_to_non_nullable
 as List<DownloadTrack>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
@@ -576,7 +594,16 @@ as DateTime?,
   ));
 }
 
-
+/// Create a copy of DownloadItem
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LibraryItemCopyWith<$Res> get libraryItem {
+  
+  return $LibraryItemCopyWith<$Res>(_self.libraryItem, (value) {
+    return _then(_self.copyWith(libraryItem: value));
+  });
+}
 }
 
 // dart format on

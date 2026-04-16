@@ -49,46 +49,126 @@ class _DownloadTile extends ConsumerWidget {
     final theme = Theme.of(context);
     final notifier = ref.read(downloadsProvider.notifier);
 
-    return ListTile(
-      contentPadding: const .fromLTRB(16, 8, 16, 8),
-      onTap: item.isComplete
-          ? () => context.push(
-              AppRoute.itemDetail.path,
-              extra: item.libraryItemId,
-            )
-          : null,
-      leading: AspectRatio(
-        aspectRatio: 1,
-        child: ClipRRect(
-          borderRadius: .circular(8),
-          child: ImageWidget(id: item.libraryItemId, type: .item),
-        ),
-      ),
-      title: Text(
-        item.title,
-        maxLines: 2,
-        overflow: .ellipsis,
-        style: theme.textTheme.titleSmall,
-      ),
-      subtitle: Column(
-        crossAxisAlignment: .start,
-        children: [
-          if (item.author.isNotEmpty)
-            Text(
-              item.author,
-              maxLines: 1,
-              overflow: .ellipsis,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
+    return Column(
+      mainAxisSize: .min,
+      children: [
+        ListTile(
+          contentPadding: const .fromLTRB(16, 8, 16, 4),
+          onTap: item.isComplete
+              ? () => context.push(
+                  AppRoute.itemDetail.path,
+                  extra: item.libraryItemId,
+                )
+              : null,
+          leading: AspectRatio(
+            aspectRatio: 1,
+            child: ClipRRect(
+              borderRadius: .circular(8),
+              child: ImageWidget(id: item.libraryItemId, type: .item),
             ),
-          const SizedBox(height: 4),
-          _StatusRow(item: item),
-        ],
-      ),
-      trailing: _TrailingActions(item: item, notifier: notifier),
+          ),
+          title: Text(
+            item.title,
+            maxLines: 2,
+            overflow: .ellipsis,
+            style: theme.textTheme.titleSmall,
+          ),
+          subtitle: Column(
+            crossAxisAlignment: .start,
+            children: [
+              if (item.author.isNotEmpty)
+                Text(
+                  item.author,
+                  maxLines: 1,
+                  overflow: .ellipsis,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              const SizedBox(height: 4),
+              _StatusRow(item: item),
+            ],
+          ),
+          trailing: _TrailingActions(item: item, notifier: notifier),
+        ),
+        if (item.status == .downloading || item.status == .paused)
+          _TrackProgress(item: item),
+      ],
     );
   }
+}
+
+class _TrackProgress extends StatelessWidget {
+  const _TrackProgress({required this.item});
+  final DownloadItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(32, 0, 32, 8),
+      child: Column(
+        crossAxisAlignment: .start,
+        children: [
+          for (final (i, track) in item.tracks.indexed) ...[
+            Column(
+              crossAxisAlignment: .start,
+              children: [
+                Text(
+                  track.audioTrack.metadata.filename,
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: scheme.onSurfaceVariant,
+                  ),
+                  overflow: .ellipsis,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  _trackLabel(track),
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: scheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 2),
+            LinearProgressIndicator(
+              value: _trackProgress(track),
+              borderRadius: .circular(2),
+              minHeight: 3,
+              color: _trackColor(track, scheme),
+              backgroundColor: scheme.surfaceContainerHighest,
+            ),
+            if (i < item.tracks.length - 1) const SizedBox(height: 6),
+          ],
+        ],
+      ),
+    );
+  }
+
+  double? _trackProgress(DownloadTrack t) {
+    if (t.status == .completed) return 1.0;
+    if (t.bytesTotal == 0) return null;
+    return (t.bytesReceived / t.bytesTotal).clamp(0.0, 1.0);
+  }
+
+  String _trackLabel(DownloadTrack t) {
+    return switch (t.status) {
+      .completed => formatBytes(t.bytesTotal),
+      .downloading when t.bytesTotal > 0 =>
+        '${formatBytes(t.bytesReceived)} / ${formatBytes(t.bytesTotal)}',
+      .paused => 'paused',
+      _ => '',
+    };
+  }
+
+  Color _trackColor(DownloadTrack t, ColorScheme scheme) => switch (t.status) {
+    .completed => scheme.primary,
+    .downloading => scheme.secondary,
+    .failed => scheme.error,
+    _ => scheme.outline,
+  };
 }
 
 class _StatusRow extends StatelessWidget {
@@ -113,19 +193,16 @@ class _StatusRow extends StatelessWidget {
           Text(l.queued, style: textTheme.labelSmall),
         ],
       ),
-      .downloading => Column(
-        crossAxisAlignment: .start,
+      .downloading => Row(
         children: [
-          LinearProgressIndicator(
-            value: item.progress > 0 ? item.progress : null,
-            borderRadius: BorderRadius.circular(4),
-          ),
-          const SizedBox(height: 2),
           Text(
-            '${(item.progress * 100).toStringAsFixed(0)}%'
-            '${item.totalBytes > 0 ? " | ${formatBytes(item.totalBytes)}" : ""}',
+            '${(item.progress * 100).toStringAsFixed(0)}%',
             style: textTheme.labelSmall,
           ),
+          if (item.totalBytes > 0) ...[
+            Text(' · ', style: textTheme.labelSmall),
+            Text(formatBytes(item.totalBytes), style: textTheme.labelSmall),
+          ],
         ],
       ),
       .completed => Text(
@@ -137,7 +214,9 @@ class _StatusRow extends StatelessWidget {
         style: textTheme.labelSmall?.copyWith(color: scheme.error),
       ),
       .paused => Text(
-        l.paused,
+        '${l.paused}'
+        ' · '
+        '${formatBytes(item.receivedBytes)} / ${formatBytes(item.totalBytes)}',
         style: textTheme.labelSmall?.copyWith(color: scheme.onSurfaceVariant),
       ),
     };
@@ -157,7 +236,7 @@ class _TrailingActions extends StatelessWidget {
       .downloading || .queued => IconButton(
         icon: const Icon(Icons.pause_circle_outline),
         tooltip: l.pause,
-        onPressed: () => notifier.cancel(item.libraryItemId),
+        onPressed: () => notifier.pause(item.libraryItemId),
       ),
       .paused || .failed || .cancelled => IconButton(
         icon: const Icon(Icons.play_circle_outline),
@@ -169,7 +248,7 @@ class _TrailingActions extends StatelessWidget {
           Icons.delete_outline,
           color: Theme.of(context).colorScheme.error,
         ),
-        tooltip: l.resumeDownload,
+        tooltip: l.delete,
         onPressed: () => confirmDelete(context),
       ),
     };
@@ -194,7 +273,7 @@ class _TrailingActions extends StatelessWidget {
             isDestructive: true,
             onPressed: () {
               Navigator.pop(context);
-              notifier.delete(item.libraryItemId);
+              notifier.delete(item.libraryItem.id);
             },
             text: l.remove,
           ),

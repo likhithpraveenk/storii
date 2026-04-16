@@ -37,7 +37,10 @@ sealed class DownloadItem with _$DownloadItem {
   const DownloadItem._();
 
   const factory DownloadItem({
+    required Uri serverUrl,
     required String libraryItemId,
+    required String userId,
+    required LibraryItem libraryItem,
     required String title,
     required String author,
     required List<DownloadTrack> tracks,
