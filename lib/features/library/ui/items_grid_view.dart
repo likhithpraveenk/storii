@@ -18,7 +18,7 @@ class ItemsGridView extends ConsumerWidget {
 
     return GridView.builder(
       controller: scrollController,
-      padding: const .symmetric(horizontal: 16),
+      padding: const .symmetric(horizontal: 16, vertical: 16),
       itemCount: items.length,
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: maxCardWidthInGrid,

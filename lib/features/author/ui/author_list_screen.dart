@@ -5,6 +5,7 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/logic/authors_list_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
+import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -43,7 +44,7 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
           AppLocalizations.of(context)!.authors,
           style: Theme.of(context).textTheme.titleLarge,
         ),
-        actions: const [ScreenOptionsButton(.authors)],
+        actions: const [ScreenOptionsButton(.authors), ActiveDownloadsButton()],
       ),
       body: RefreshIndicator(
         onRefresh: () async {

@@ -62,3 +62,98 @@ abstract class _$DownloadsNotifier
     element.handleCreate(ref, build);
   }
 }
+
+@ProviderFor(activeDownloads)
+final activeDownloadsProvider = ActiveDownloadsProvider._();
+
+final class ActiveDownloadsProvider
+    extends
+        $FunctionalProvider<
+          List<DownloadItem>,
+          List<DownloadItem>,
+          List<DownloadItem>
+        >
+    with $Provider<List<DownloadItem>> {
+  ActiveDownloadsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'activeDownloadsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$activeDownloadsHash();
+
+  @$internal
+  @override
+  $ProviderElement<List<DownloadItem>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  List<DownloadItem> create(Ref ref) {
+    return activeDownloads(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<DownloadItem> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<DownloadItem>>(value),
+    );
+  }
+}
+
+String _$activeDownloadsHash() => r'e078818e1f12a071f285c36e63eed3ae3cd7a097';
+
+@ProviderFor(completedDownloads)
+final completedDownloadsProvider = CompletedDownloadsProvider._();
+
+final class CompletedDownloadsProvider
+    extends
+        $FunctionalProvider<
+          List<DownloadItem>,
+          List<DownloadItem>,
+          List<DownloadItem>
+        >
+    with $Provider<List<DownloadItem>> {
+  CompletedDownloadsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'completedDownloadsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$completedDownloadsHash();
+
+  @$internal
+  @override
+  $ProviderElement<List<DownloadItem>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  List<DownloadItem> create(Ref ref) {
+    return completedDownloads(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<DownloadItem> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<DownloadItem>>(value),
+    );
+  }
+}
+
+String _$completedDownloadsHash() =>
+    r'0321fbf308e310273dffb4ce118480598c750645';

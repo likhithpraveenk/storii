@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/series/logic/series_list_provider.dart';
 import 'package:storii/features/series/ui/series_card.dart';
@@ -40,7 +41,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: Text(l.series, style: Theme.of(context).textTheme.titleLarge),
-        actions: const [ScreenOptionsButton(.series)],
+        actions: const [ScreenOptionsButton(.series), ActiveDownloadsButton()],
       ),
       body: RefreshIndicator(
         onRefresh: () async {

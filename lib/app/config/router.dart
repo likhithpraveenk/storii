@@ -136,8 +136,14 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: AppRoute.downloads.path,
-            pageBuilder: (context, state) =>
-                const NoTransitionPage(child: DownloadsScreen()),
+            pageBuilder: (context, state) {
+              final tab = state.extra as DownloadsScreenTab?;
+              return NoTransitionPage(
+                child: DownloadsScreen(
+                  tab: tab ?? DownloadsScreenTab.completed,
+                ),
+              );
+            },
           ),
           GoRoute(
             path: AppRoute.authors.path,

@@ -12,7 +12,6 @@ dependencies:
   app_links: ^7.0.0
   audio_service: ^0.18.18
   audio_session: ^0.2.3
-  background_downloader: ^9.5.4
   cached_network_image: ^3.4.1
   crypto: ^3.0.7
   cupertino_icons: ^1.0.9

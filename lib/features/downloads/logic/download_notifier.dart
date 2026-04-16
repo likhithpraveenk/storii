@@ -157,3 +157,15 @@ class DownloadsNotifier extends _$DownloadsNotifier {
     await _updateAndPersist(item.copyWith(status: .failed));
   }
 }
+
+@riverpod
+List<DownloadItem> activeDownloads(Ref ref) {
+  final downloads = ref.watch(downloadsProvider);
+  return downloads.values.where((item) => !item.isComplete).toList();
+}
+
+@riverpod
+List<DownloadItem> completedDownloads(Ref ref) {
+  final downloads = ref.watch(downloadsProvider);
+  return downloads.values.where((item) => item.isComplete).toList();
+}

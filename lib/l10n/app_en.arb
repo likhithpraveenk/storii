@@ -265,7 +265,7 @@
   "cancelled": "Cancelled",
   "resumeDownload": "Resume Download",
   "removeDownloadQ": "Remove Download?",
-  "willBeFreed": "{bytes} will by freed",
+  "willBeFreed": "{bytes} will be freed",
   "@willBeFreed": {
     "placeholders": {
       "bytes": {
@@ -277,5 +277,6 @@
   "directPlay": "Direct Play",
   "directStream": "Direct Stream",
   "transcode": "Transcode",
-  "local": "Local"
+  "local": "Local",
+  "downloaded": "Downloaded"
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/library/logic/library_items_provider.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/library_item_list_tile.dart';
@@ -38,7 +39,11 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: const LibrarySwitcher(),
-        actions: const [SearchButton(), ScreenOptionsButton(.library)],
+        actions: const [
+          SearchButton(),
+          ScreenOptionsButton(.library),
+          ActiveDownloadsButton(),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () async {

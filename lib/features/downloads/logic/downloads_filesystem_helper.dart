@@ -70,6 +70,11 @@ class DownloadsFilesystemHelper {
     return await f.exists() && await f.length() > 0;
   }
 
+  Future<int> fileSize(String path) async {
+    final f = File(path);
+    return await f.length();
+  }
+
   Future<void> deleteItem(String itemTitle) async {
     final dir = await itemDirectory(itemTitle);
     await dir.delete(recursive: true);

@@ -1279,7 +1279,7 @@ abstract class AppLocalizations {
   /// No description provided for @willBeFreed.
   ///
   /// In en, this message translates to:
-  /// **'{bytes} will by freed'**
+  /// **'{bytes} will be freed'**
   String willBeFreed(String bytes);
 
   /// No description provided for @downloadFailed.
@@ -1311,6 +1311,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Local'**
   String get local;
+
+  /// No description provided for @downloaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded'**
+  String get downloaded;
 }
 
 class _AppLocalizationsDelegate

@@ -639,7 +639,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String willBeFreed(String bytes) {
-    return '$bytes will by freed';
+    return '$bytes will be freed';
   }
 
   @override
@@ -656,4 +656,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get local => 'Local';
+
+  @override
+  String get downloaded => 'Downloaded';
 }

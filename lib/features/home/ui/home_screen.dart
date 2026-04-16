@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/features/author/ui/author_card.dart';
+import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
@@ -27,7 +28,7 @@ class HomeScreen extends ConsumerWidget {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: const LibrarySwitcher(),
-        actions: const [SearchButton()],
+        actions: const [SearchButton(), ActiveDownloadsButton()],
       ),
       body: RefreshIndicator(
         onRefresh: () async {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/features/downloads/logic/download_notifier.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
@@ -40,6 +41,10 @@ class PlayProgressWidget extends ConsumerWidget {
                     Duration.zero))
             .toReadableDuration(context, isLeft: true);
 
+    final isDownloaded = ref.watch(
+      downloadsProvider.select((d) => d[item.id]?.status == .completed),
+    );
+
     return Column(
       crossAxisAlignment: .stretch,
       children: [
@@ -70,14 +75,19 @@ class PlayProgressWidget extends ConsumerWidget {
         if (progress > 0) ...[
           const SizedBox(height: 10),
           _ProgressBar(progress: progress),
-          const SizedBox(height: 4),
+          const SizedBox(height: 12),
+          DownloadedBadge(item.id),
         ],
         Row(
-          mainAxisAlignment: .spaceEvenly,
+          mainAxisAlignment: .center,
           children: [
-            DownloadButton(libraryItemId: item.id),
+            if (!isDownloaded) ...[
+              DownloadButton(libraryItemId: item.id),
+              const SizedBox(width: 24),
+            ],
             HistoryButton(itemId: item.id),
-            if (progress != 1.0)
+            const SizedBox(width: 24),
+            if (progress != 1.0) ...[
               IconButton(
                 onPressed: () => AppBottomSheet.show(
                   context,
@@ -103,6 +113,8 @@ class PlayProgressWidget extends ConsumerWidget {
                 ),
                 icon: const Icon(Icons.check_rounded),
               ),
+              const SizedBox(width: 24),
+            ],
             if (mediaProgress != null)
               IconButton(
                 onPressed: () => AppBottomSheet.show(

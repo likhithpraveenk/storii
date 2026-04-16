@@ -40,13 +40,18 @@ class DownloadEngine {
 
     final coverToken = CancelToken();
     _coverTokens[item.libraryItemId] = coverToken;
-    await downloadCover(
+    final coverBytes = await downloadCover(
       itemTitle: item.title,
       itemId: item.libraryItemId,
       serverUrl: serverUrl,
       cancelToken: coverToken,
     );
     _coverTokens.remove(item.libraryItemId);
+
+    current = current.copyWith(
+      receivedBytes: _sumReceived(current.tracks) + coverBytes,
+    );
+    yield current;
 
     for (int i = 0; i < current.tracks.length; i++) {
       final track = current.tracks[i];
@@ -153,7 +158,7 @@ class DownloadEngine {
     yield current.copyWith(status: .completed);
   }
 
-  Future<void> downloadCover({
+  Future<int> downloadCover({
     required String itemTitle,
     required String itemId,
     required Uri serverUrl,
@@ -161,15 +166,24 @@ class DownloadEngine {
   }) async {
     try {
       final coverPath = await _filesystem.coverPath(itemTitle);
-      final coverExist = await _filesystem.fileIntact(coverPath);
-      if (!coverExist) {
-        final coverUrl = serverUrl
-            .resolve(ApiRoutes.itemCover(itemId))
-            .replace(queryParameters: {'raw': '1'})
-            .toString();
-        await _dio.download(coverUrl, coverPath, cancelToken: cancelToken);
+      if (await _filesystem.fileIntact(coverPath)) {
+        return await _filesystem.fileSize(coverPath);
       }
-    } catch (_) {} // cover optional
+      final coverUrl = serverUrl
+          .resolve(ApiRoutes.itemCover(itemId))
+          .replace(queryParameters: {'raw': '1'})
+          .toString();
+      final response = await _dio.download(
+        coverUrl,
+        coverPath,
+        cancelToken: cancelToken,
+      );
+      final size =
+          int.tryParse(response.headers.value('content-length') ?? '0') ?? 0;
+      return size;
+    } catch (_) {
+      return 0;
+    }
   }
 
   void pause(String itemId) {
