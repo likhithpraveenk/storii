@@ -8,11 +8,15 @@ import 'package:storii/shared/helpers/app_error.dart';
 part 'item_detail_provider.g.dart';
 
 @riverpod
-Future<LibraryItem> itemDetail(Ref ref, String id) async {
+Future<LibraryItem> itemDetail(
+  Ref ref,
+  String id, {
+  bool includeProgress = false,
+}) async {
   final user = await ref.read(authenticatedUserProvider.future);
   final api = ref.read(itemApiProvider(user));
   try {
-    final item = await api.get(id);
+    final item = await api.get(id, includeProgress: includeProgress);
     return item;
   } catch (e) {
     final error = AppError.resolve(e);
