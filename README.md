@@ -14,10 +14,11 @@ A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf)
 
 ## Features
 
-- Audiobook streaming with background playback and progress sync  
-- Multi-user, multi-server and OIDC support with persistent sessions  
-- Advanced library browsing with filters, sorting, and series grouping  
-- Responsive UI with reusable components across feature modules  
+- Audiobook streaming with background playback and progress sync
+- Multi-user, multi-server and OIDC support with persistent sessions
+- Advanced library browsing with filters, sorting, and series grouping
+- Supports downloads and offline sessions
+- Responsive UI with reusable components across feature modules
 
 ## Demo
 
