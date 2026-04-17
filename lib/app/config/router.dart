@@ -202,11 +202,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final extra = state.extra as Map<String, dynamic>;
               final id = extra['id'] as String;
-              final isOffline = extra['isOffline'] as bool?;
+              final isDownloaded = extra['isDownloaded'] as bool?;
               return ItemDetailScreen(
                 key: ValueKey(id),
                 id: id,
-                isOffline: isOffline ?? false,
+                isDownloaded: isDownloaded ?? false,
               );
             },
           ),

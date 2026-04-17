@@ -22,7 +22,7 @@ final class ItemDetailProvider
     with $FutureModifier<LibraryItem>, $FutureProvider<LibraryItem> {
   ItemDetailProvider._({
     required ItemDetailFamily super.from,
-    required (String, {bool includeProgress, bool isOffline}) super.argument,
+    required (String, {bool includeProgress, bool isDownloaded}) super.argument,
   }) : super(
          retry: null,
          name: r'itemDetailProvider',
@@ -50,12 +50,12 @@ final class ItemDetailProvider
   @override
   FutureOr<LibraryItem> create(Ref ref) {
     final argument =
-        this.argument as (String, {bool includeProgress, bool isOffline});
+        this.argument as (String, {bool includeProgress, bool isDownloaded});
     return itemDetail(
       ref,
       argument.$1,
       includeProgress: argument.includeProgress,
-      isOffline: argument.isOffline,
+      isDownloaded: argument.isDownloaded,
     );
   }
 
@@ -70,13 +70,13 @@ final class ItemDetailProvider
   }
 }
 
-String _$itemDetailHash() => r'01d8555ef4d878845dc108ef1b3ab29ae8d9032b';
+String _$itemDetailHash() => r'd84b62f30eb236d379e2cabc6f7251357dc56b3b';
 
 final class ItemDetailFamily extends $Family
     with
         $FunctionalFamilyOverride<
           FutureOr<LibraryItem>,
-          (String, {bool includeProgress, bool isOffline})
+          (String, {bool includeProgress, bool isDownloaded})
         > {
   ItemDetailFamily._()
     : super(
@@ -90,9 +90,13 @@ final class ItemDetailFamily extends $Family
   ItemDetailProvider call(
     String id, {
     bool includeProgress = false,
-    bool isOffline = false,
+    bool isDownloaded = false,
   }) => ItemDetailProvider._(
-    argument: (id, includeProgress: includeProgress, isOffline: isOffline),
+    argument: (
+      id,
+      includeProgress: includeProgress,
+      isDownloaded: isDownloaded,
+    ),
     from: this,
   );
 

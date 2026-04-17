@@ -64,7 +64,6 @@ class DownloadsScreen extends ConsumerWidget {
             ItemsGridView(
               key: const ValueKey('completed_downloads'),
               completedDownloads.map((d) => d.libraryItem).toList(),
-              isOffline: true,
             ),
           ],
         ),
@@ -97,7 +96,10 @@ class _DownloadTileState extends State<DownloadTile> {
           onTap: widget.item.isComplete
               ? () => context.push(
                   AppRoute.itemDetail.path,
-                  extra: {'id': widget.item.libraryItemId, 'isOffline': true},
+                  extra: {
+                    'id': widget.item.libraryItemId,
+                    'isDownloaded': true,
+                  },
                 )
               : null,
           leading: AspectRatio(

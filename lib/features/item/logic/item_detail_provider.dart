@@ -3,6 +3,7 @@ import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/features/downloads/logic/download_notifier.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
@@ -13,12 +14,13 @@ Future<LibraryItem> itemDetail(
   Ref ref,
   String id, {
   bool includeProgress = false,
-  bool isOffline = false,
+  bool isDownloaded = false,
 }) async {
-  if (isOffline) {
+  final isOnline = ref.watch(socketStatusProvider).value ?? false;
+  if (!isOnline && isDownloaded) {
     final item = ref.watch(downloadsProvider)[id];
     if (item == null) {
-      throw StateError('use isOffline for downloaded item only');
+      throw StateError('use isDownloaded for downloaded item only');
     }
     return item.libraryItem;
   }

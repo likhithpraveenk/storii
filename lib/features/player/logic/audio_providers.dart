@@ -111,7 +111,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
           itemDetailProvider(
             itemId,
             includeProgress: true,
-            isOffline: true, //! TODO: only when no network
+            isDownloaded: true,
           ).future,
         );
 

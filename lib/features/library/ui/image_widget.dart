@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/features/downloads/logic/download_notifier.dart';
+import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/features/library/logic/cover_url_provider.dart';
 import 'package:storii/features/settings/logic/app_cache.dart';
 import 'package:storii/l10n/l10n.dart';
@@ -23,7 +27,29 @@ class ImageWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context)!;
+    final download = ref.watch(downloadsProvider)[id];
+    if (download != null) {
+      return FutureBuilder<String?>(
+        future: ref
+            .read(downloadsFsHelperProvider)
+            .coverPathIfExists(download.title),
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return Image.file(
+              File(snapshot.data!),
+              fit: BoxFit.cover,
+              errorBuilder: (context, _, _) => _buildNetworkImage(context, ref),
+            );
+          }
+          return _buildNetworkImage(context, ref);
+        },
+      );
+    }
+
+    return _buildNetworkImage(context, ref);
+  }
+
+  Widget _buildNetworkImage(BuildContext context, WidgetRef ref) {
     final coverUrl = ref.watch(
       coverUrlProvider(
         id,
@@ -33,22 +59,19 @@ class ImageWidget extends ConsumerWidget {
         raw: isRaw,
       ),
     );
-    if (coverUrl == null) {
-      return PlaceholderImage(label: l.noImage);
-    }
+    final l = AppLocalizations.of(context)!;
+    if (coverUrl == null) return PlaceholderImage(label: l.noImage);
+
     return CachedNetworkImage(
       cacheManager: AppImageCacheManager.instance,
       imageUrl: coverUrl,
-      fit: .cover,
+      fit: BoxFit.cover,
       placeholder: (_, _) => const PlaceholderImage(),
       errorWidget: (context, url, error) {
-        if (kDebugMode) {
-          debugPrint('CachedNetworkImage: $error');
-        }
-        if (error.toString().contains('404')) {
-          return PlaceholderImage(label: l.noImage);
-        }
-        return PlaceholderImage(label: l.errorImage);
+        if (kDebugMode) debugPrint('CachedNetworkImage: $error');
+        return PlaceholderImage(
+          label: error.toString().contains('404') ? l.noImage : l.errorImage,
+        );
       },
     );
   }
