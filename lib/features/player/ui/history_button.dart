@@ -21,6 +21,7 @@ class HistoryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      tooltip: AppLocalizations.of(context)!.history,
       icon: const Icon(Icons.history),
       onPressed: () => showModalBottomSheet(
         context: context,

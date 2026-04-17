@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
-import 'package:storii/features/downloads/logic/download_notifier.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
@@ -41,10 +40,6 @@ class PlayProgressWidget extends ConsumerWidget {
                     Duration.zero))
             .toReadableDuration(context, isLeft: true);
 
-    final isDownloaded = ref.watch(
-      downloadsProvider.select((d) => d[item.id]?.status == .completed),
-    );
-
     return Column(
       crossAxisAlignment: .stretch,
       children: [
@@ -75,20 +70,16 @@ class PlayProgressWidget extends ConsumerWidget {
         if (progress > 0) ...[
           const SizedBox(height: 10),
           _ProgressBar(progress: progress),
-          const SizedBox(height: 12),
-          DownloadedBadge(item.id),
+          const SizedBox(height: 4),
         ],
         Row(
-          mainAxisAlignment: .center,
+          mainAxisAlignment: .spaceEvenly,
           children: [
-            if (!isDownloaded) ...[
-              DownloadButton(libraryItemId: item.id),
-              const SizedBox(width: 24),
-            ],
+            DownloadButton(libraryItemId: item.id),
             HistoryButton(itemId: item.id),
-            const SizedBox(width: 24),
-            if (progress != 1.0) ...[
+            if (progress != 1.0)
               IconButton(
+                tooltip: l.markAsComplete,
                 onPressed: () => AppBottomSheet.show(
                   context,
                   title: l.markAsComplete,
@@ -113,15 +104,14 @@ class PlayProgressWidget extends ConsumerWidget {
                 ),
                 icon: const Icon(Icons.check_rounded),
               ),
-              const SizedBox(width: 24),
-            ],
             if (mediaProgress != null)
               IconButton(
+                tooltip: l.removeProgressTitle,
                 onPressed: () => AppBottomSheet.show(
                   context,
                   title: l.removeProgressTitle,
                   body: Padding(
-                    padding: const .symmetric(horizontal: 24),
+                    padding: const .fromLTRB(24, 0, 24, 24),
                     child: Text(
                       l.removeProgressMessage,
                       style: theme.textTheme.bodyMedium?.copyWith(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/config/theme.dart';
 import 'package:storii/features/downloads/logic/download_notifier.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';
 import 'package:storii/features/downloads/ui/downloads_screen.dart';
@@ -71,28 +71,37 @@ class DownloadButton extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
     final l = AppLocalizations.of(context)!;
 
-    if (item == null) {
-      return IconButton(
+    return switch (item?.status) {
+      null || .cancelled => IconButton(
         tooltip: l.download,
         icon: const Icon(Icons.download_outlined),
         onPressed: () => notifier.download(libraryItemId),
-      );
-    }
-
-    return switch (item.status) {
-      .queued || .downloading => _ProgressButton(
-        progress: item.progress,
+      ),
+      .queued => IconButton(
+        tooltip: l.queued,
+        icon: Icon(Icons.schedule, color: scheme.outline),
+        onPressed: () => notifier.cancel(libraryItemId),
+      ),
+      .downloading => _ProgressButton(
+        progress: item!.progress,
         onCancel: () => notifier.cancel(libraryItemId),
       ),
-      .completed => const SizedBox.shrink(),
-      .failed || .cancelled => IconButton(
+      .completed => IconButton(
+        tooltip: l.downloaded,
+        icon: const Icon(
+          Icons.download_for_offline_outlined,
+          color: appGreenColor,
+        ),
+        onPressed: () => showDownloadsDeleteDialog(context, item: item!),
+      ),
+      .failed => IconButton(
         tooltip: l.downloadFailed,
-        icon: Icon(Icons.error_outline, color: scheme.error),
+        icon: Icon(Icons.refresh, color: scheme.error),
         onPressed: () => notifier.download(libraryItemId),
       ),
       .paused => IconButton(
         tooltip: l.resumeDownload,
-        icon: Icon(Icons.download_for_offline_outlined, color: scheme.tertiary),
+        icon: Icon(Icons.play_circle_outline, color: scheme.tertiary),
         onPressed: () => notifier.resume(libraryItemId),
       ),
     };
@@ -125,60 +134,6 @@ class _ProgressButton extends StatelessWidget {
           Icon(Icons.close, size: 12, color: scheme.onSurface),
         ],
       ),
-    );
-  }
-}
-
-class DownloadedBadge extends ConsumerWidget {
-  const DownloadedBadge(this.itemId, {super.key});
-
-  final String itemId;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final item = ref.watch(downloadsProvider)[itemId];
-    final isDownloaded = ref.watch(
-      downloadsProvider.select((d) => d[itemId]?.status == .completed),
-    );
-    if (!isDownloaded || item == null) return const SizedBox.shrink();
-
-    return Row(
-      mainAxisSize: .min,
-      mainAxisAlignment: .center,
-      children: [
-        DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: theme.colorScheme.primary.withValues(alpha: 0.5),
-            ),
-            borderRadius: .circular(kRadius),
-          ),
-          child: Row(
-            mainAxisSize: .min,
-            mainAxisAlignment: .center,
-            children: [
-              const SizedBox(width: 16),
-              Text(
-                AppLocalizations.of(context)!.downloaded,
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.primary,
-                  fontWeight: .w500,
-                ),
-                textAlign: .center,
-              ),
-              IconButton(
-                onPressed: () {
-                  showDownloadsDeleteDialog(context, item: item);
-                },
-                icon: const Icon(Icons.delete_outline, size: 16),
-                padding: .zero,
-                visualDensity: .compact,
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }
