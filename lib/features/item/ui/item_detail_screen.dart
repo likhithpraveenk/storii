@@ -34,7 +34,8 @@ class ItemDetailScreen extends ConsumerWidget {
         loading: () => const Center(child: RandomWaveform()),
         error: (e, s) => ErrorRetryWidget(
           '$e',
-          onRetry: () => ref.invalidate(itemDetailProvider(id, isOffline: isOffline)),
+          onRetry: () =>
+              ref.invalidate(itemDetailProvider(id, isOffline: isOffline)),
         ),
         data: (item) {
           return Stack(
@@ -42,7 +43,9 @@ class ItemDetailScreen extends ConsumerWidget {
               RefreshIndicator(
                 onRefresh: () async {
                   ref.invalidate(mediaProgressProvider(id));
-                  return await ref.refresh(itemDetailProvider(id, isOffline: isOffline).future);
+                  return await ref.refresh(
+                    itemDetailProvider(id, isOffline: isOffline).future,
+                  );
                 },
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),

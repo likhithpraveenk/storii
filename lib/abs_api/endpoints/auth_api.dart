@@ -23,12 +23,7 @@ class AuthApi {
 
       return fromJson(response.data, LoginResponse.fromJson);
     } on DioException catch (e, st) {
-      throw ApiException(
-        mapDioToMessage(e),
-        statusCode: e.response?.statusCode,
-        originalError: e.error,
-        stackTrace: st,
-      );
+      throw apiExceptionFromDio(e, st);
     } catch (e) {
       rethrow;
     }
@@ -38,12 +33,7 @@ class AuthApi {
     try {
       await api.dio.get(ApiRoutes.healthCheck);
     } on DioException catch (e, st) {
-      throw ApiException(
-        mapDioToMessage(e),
-        statusCode: e.response?.statusCode,
-        originalError: e.error,
-        stackTrace: st,
-      );
+      throw apiExceptionFromDio(e, st);
     } catch (e) {
       rethrow;
     }
@@ -54,12 +44,7 @@ class AuthApi {
       final response = await api.dio.get(ApiRoutes.ping);
       return fromJsonKey<bool>(response.data, 'success');
     } on DioException catch (e, st) {
-      throw ApiException(
-        mapDioToMessage(e),
-        statusCode: e.response?.statusCode,
-        originalError: e.error,
-        stackTrace: st,
-      );
+      throw apiExceptionFromDio(e, st);
     } catch (e) {
       rethrow;
     }
@@ -70,12 +55,7 @@ class AuthApi {
       final response = await api.dio.get(ApiRoutes.status);
       return fromJson(response.data, ServerStatusResponse.fromJson);
     } on DioException catch (e, st) {
-      throw ApiException(
-        mapDioToMessage(e),
-        statusCode: e.response?.statusCode,
-        originalError: e.error,
-        stackTrace: st,
-      );
+      throw apiExceptionFromDio(e, st);
     } catch (e) {
       rethrow;
     }
@@ -144,12 +124,7 @@ class AuthApi {
 
       return fromJson(response.data, LoginResponse.fromJson);
     } on DioException catch (e, st) {
-      throw ApiException(
-        mapDioToMessage(e),
-        statusCode: e.response?.statusCode,
-        originalError: e.error,
-        stackTrace: st,
-      );
+      throw apiExceptionFromDio(e, st);
     }
   }
 }

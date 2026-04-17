@@ -11,7 +11,6 @@ import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
-import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 part 'download_notifier.g.dart';
@@ -41,7 +40,7 @@ class DownloadsNotifier extends _$DownloadsNotifier {
       final item = await ref.read(itemDetailProvider(libraryItemId).future);
       final user = await ref.read(authenticatedUserProvider.future);
       final token = await ref.read(tokenProvider).getAccessToken(user.id);
-      if (token == null) throw const AppError('No access token');
+      if (token == null) throw StateError('No access token');
 
       final tracks = await Future.wait(
         item.tracks.map((track) async {
