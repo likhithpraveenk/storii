@@ -292,3 +292,15 @@ extension SearchX on SearchResponse {
 
 String mediaItemIdKey(String id, [String? episodeId]) =>
     episodeId != null ? '$id$episodeId' : id;
+
+extension PlayMethodX on PlayMethod {
+  String getDisplayString(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return switch (this) {
+      .directPlay => l.directPlay,
+      .directStream => l.directStream,
+      .transcode => l.transcode,
+      .local => l.local,
+    };
+  }
+}

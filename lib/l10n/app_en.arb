@@ -255,5 +255,52 @@
   "loginOidc": "Login with OpenID",
   "or": "Or",
   "oidcRedirectUriHintPrefix": "Requires",
-  "oidcRedirectUriHintSuffix": "in ABS → Settings → Authentication → Allowed Mobile Redirect URIs"
+  "oidcRedirectUriHintSuffix": "in ABS → Settings → Authentication → Allowed Mobile Redirect URIs",
+  "queued": "Queued",
+  "downloading": "Downloading",
+  "paused": "Paused",
+  "failed": "Failed",
+  "download": "Download",
+  "completed": "Completed",
+  "cancelled": "Cancelled",
+  "resumeDownload": "Resume Download",
+  "removeDownloadQ": "Remove Download?",
+  "willBeFreed": "{bytes} will be freed",
+  "@willBeFreed": {
+    "placeholders": {
+      "bytes": {
+        "type": "String"
+      }
+    }
+  },
+  "downloadFailed": "Download failed - tap to retry",
+  "directPlay": "Direct Play",
+  "directStream": "Direct Stream",
+  "transcode": "Transcode",
+  "local": "Local",
+  "downloaded": "Downloaded",
+  "connectionChecking": "Checking connection...",
+  "connectionPleaseWait": "Please wait",
+  "connectionServerConnected": "Connected to server",
+  "connectionServerDisconnected": "Not connected to server",
+  "connectionTypeWifi": "Wi-Fi",
+  "connectionTypeMobile": "Mobile data",
+  "connectionTypeEthernet": "Ethernet",
+  "connectionTypeNone": "No network",
+  "connectionCantReachServer": "Can't reach server ({networkType})",
+  "@connectionCantReachServer": {
+    "placeholders": {
+      "networkType": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionViaNetwork": "Connected via {networkType}",
+  "@connectionViaNetwork": {
+    "placeholders": {
+      "networkType": {
+        "type": "String"
+      }
+    }
+  }
 }

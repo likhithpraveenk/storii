@@ -28,7 +28,7 @@ final class PlayRequestParamsProvider
         argument: null,
         retry: null,
         name: r'playRequestParamsProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -48,4 +48,4 @@ final class PlayRequestParamsProvider
   }
 }
 
-String _$playRequestParamsHash() => r'240f79214301a3009104eb0a366f2620a668d532';
+String _$playRequestParamsHash() => r'4334a7d8ddd3d245cad89ea6c1bd5ff1e6f67796';

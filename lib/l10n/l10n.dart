@@ -1221,6 +1221,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'in ABS → Settings → Authentication → Allowed Mobile Redirect URIs'**
   String get oidcRedirectUriHintSuffix;
+
+  /// No description provided for @queued.
+  ///
+  /// In en, this message translates to:
+  /// **'Queued'**
+  String get queued;
+
+  /// No description provided for @downloading.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading'**
+  String get downloading;
+
+  /// No description provided for @paused.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get paused;
+
+  /// No description provided for @failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get failed;
+
+  /// No description provided for @download.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get download;
+
+  /// No description provided for @completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completed;
+
+  /// No description provided for @cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get cancelled;
+
+  /// No description provided for @resumeDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume Download'**
+  String get resumeDownload;
+
+  /// No description provided for @removeDownloadQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Download?'**
+  String get removeDownloadQ;
+
+  /// No description provided for @willBeFreed.
+  ///
+  /// In en, this message translates to:
+  /// **'{bytes} will be freed'**
+  String willBeFreed(String bytes);
+
+  /// No description provided for @downloadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed - tap to retry'**
+  String get downloadFailed;
+
+  /// No description provided for @directPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct Play'**
+  String get directPlay;
+
+  /// No description provided for @directStream.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct Stream'**
+  String get directStream;
+
+  /// No description provided for @transcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Transcode'**
+  String get transcode;
+
+  /// No description provided for @local.
+  ///
+  /// In en, this message translates to:
+  /// **'Local'**
+  String get local;
+
+  /// No description provided for @downloaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded'**
+  String get downloaded;
+
+  /// No description provided for @connectionChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking connection...'**
+  String get connectionChecking;
+
+  /// No description provided for @connectionPleaseWait.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait'**
+  String get connectionPleaseWait;
+
+  /// No description provided for @connectionServerConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to server'**
+  String get connectionServerConnected;
+
+  /// No description provided for @connectionServerDisconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not connected to server'**
+  String get connectionServerDisconnected;
+
+  /// No description provided for @connectionTypeWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'Wi-Fi'**
+  String get connectionTypeWifi;
+
+  /// No description provided for @connectionTypeMobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile data'**
+  String get connectionTypeMobile;
+
+  /// No description provided for @connectionTypeEthernet.
+  ///
+  /// In en, this message translates to:
+  /// **'Ethernet'**
+  String get connectionTypeEthernet;
+
+  /// No description provided for @connectionTypeNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No network'**
+  String get connectionTypeNone;
+
+  /// No description provided for @connectionCantReachServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t reach server ({networkType})'**
+  String connectionCantReachServer(String networkType);
+
+  /// No description provided for @connectionViaNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected via {networkType}'**
+  String connectionViaNetwork(String networkType);
 }
 
 class _AppLocalizationsDelegate

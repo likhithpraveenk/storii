@@ -10,8 +10,10 @@ import 'package:storii/app/models/chapter.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
+import 'package:storii/features/downloads/logic/download_notifier.dart';
+import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
+import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
-import 'package:storii/features/player/logic/local_position_provider.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
@@ -94,8 +96,37 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       loadingEpisodeId: episodeId,
     );
     try {
-      final user = await ref.read(authenticatedUserProvider.future);
-      final token = await ref.read(tokenProvider).getAccessToken(user.id);
+      final download = ref.read(downloadsProvider)[itemId];
+      final isFullyDownloaded =
+          download != null &&
+          download.isComplete &&
+          await DownloadsFilesystemHelper().isFullyDownloaded(download);
+
+      final PlaybackSession session;
+      String? token;
+      Uri? serverUrl;
+
+      if (isFullyDownloaded) {
+        final item = await ref.read(
+          itemDetailProvider(
+            itemId,
+            includeProgress: true,
+            isDownloaded: true,
+          ).future,
+        );
+
+        session = await ref
+            .read(sessionProvider.notifier)
+            .createLocal(item: item, episodeId: episodeId);
+      } else {
+        final user = await ref.read(authenticatedUserProvider.future);
+        token = await ref.read(tokenProvider).getAccessToken(user.id);
+        serverUrl = user.serverUrl;
+
+        session = await ref
+            .read(sessionProvider.notifier)
+            .create(itemId: itemId, episodeId: episodeId);
+      }
 
       final oldSession = ref.read(sessionProvider);
       if (oldSession != null) {
@@ -103,24 +134,23 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
         await audioHandler.stop();
       }
 
-      final session = await ref
-          .read(sessionProvider.notifier)
-          .create(itemId: itemId, episodeId: episodeId);
+      final (index, position) = (chapter != null)
+          ? session.chapterToTrackOffset(chapter)
+          : session.getIndexAndOffset(initialPosition);
 
-      await ref
-          .read(localPositionProvider(session.id).notifier)
-          .save(initialPosition ?? chapter?.start ?? session.currentTime);
-
-      final int index;
-      final Duration position;
-
-      if (chapter != null) {
-        (index, position) = session.chapterToTrackOffset(chapter);
-      } else {
-        (index, position) = session.getIndexAndOffset(initialPosition);
+      final localPaths = await session.resolveLocalPaths();
+      final localCount = localPaths.length;
+      final totalTracks = session.audioTracks?.length ?? 0;
+      if (localCount > 0) {
+        log('local playback has $localCount/$totalTracks tracks');
       }
 
-      final sources = session.toAudioSources(user.serverUrl, token);
+      final sources = session.toAudioSources(
+        serverUrl,
+        token,
+        localPaths: localPaths,
+      );
+
       await audioHandler.setSources(
         sources,
         initialIndex: index,
@@ -130,12 +160,13 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       state = const AudioPlayerState();
       await audioHandler.processingStateStream.firstWhere((s) => s == .ready);
       await audioHandler.play();
-    } catch (e) {
+    } catch (e, st) {
       final error = AppError.resolve(e);
       LogService.log(
         'playing failed: $error',
         source: 'AudioPlayerNotifier',
         level: .error,
+        stackTrace: st,
       );
       state = const AudioPlayerState();
       throw error;

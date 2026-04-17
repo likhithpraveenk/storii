@@ -6,6 +6,7 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/user_session_controller.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
+import 'package:storii/features/more/ui/connection_info_tile.dart';
 import 'package:storii/features/more/ui/logout_tile.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/logo_header.dart';
@@ -15,6 +16,7 @@ class MoreScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     final navTargets = ref.watch(navTargetsProvider);
     final remainingTargets = NavTarget.values
         .where((target) => !navTargets.contains(target))
@@ -27,6 +29,8 @@ class MoreScreen extends ConsumerWidget {
           children: [
             const SizedBox(height: 64),
             const LogoHeader(),
+            const Divider(),
+            const ConnectionInfoTile(),
             if (remainingTargets.isNotEmpty) ...[
               const Divider(),
               ...remainingTargets.map((target) {
@@ -43,22 +47,22 @@ class MoreScreen extends ConsumerWidget {
             ListTile(
               onTap: () => context.push(AppRoute.profile.path),
               leading: const Icon(Icons.query_stats),
-              title: Text(AppLocalizations.of(context)!.profile),
+              title: Text(l.profile),
             ),
             ListTile(
               onTap: () => context.push(AppRoute.settings.path),
               leading: const Icon(Icons.settings),
-              title: Text(AppLocalizations.of(context)!.settings),
+              title: Text(l.settings),
             ),
             ListTile(
               onTap: () => context.push(AppRoute.logs.path),
               leading: const Icon(Icons.bug_report),
-              title: Text(AppLocalizations.of(context)!.logs),
+              title: Text(l.logs),
             ),
             const LogoutTile(),
             ListTile(
               leading: const Icon(Icons.switch_account),
-              title: Text(AppLocalizations.of(context)!.switchAccount),
+              title: Text(l.switchAccount),
               onTap: () {
                 ref.read(userSessionControllerProvider.notifier).switchUser();
               },

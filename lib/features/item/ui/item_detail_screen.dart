@@ -16,20 +16,29 @@ import 'package:storii/shared/widgets/waveform.dart';
 
 class ItemDetailScreen extends ConsumerWidget {
   final String id;
-  const ItemDetailScreen({super.key, required this.id});
+  final bool isDownloaded;
+  const ItemDetailScreen({
+    super.key,
+    required this.id,
+    required this.isDownloaded,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context)!;
 
-    final itemAsync = ref.watch(itemDetailProvider(id));
+    final itemAsync = ref.watch(
+      itemDetailProvider(id, isDownloaded: isDownloaded),
+    );
 
     return Scaffold(
       body: itemAsync.when(
         loading: () => const Center(child: RandomWaveform()),
         error: (e, s) => ErrorRetryWidget(
           '$e',
-          onRetry: () => ref.invalidate(itemDetailProvider(id)),
+          onRetry: () => ref.invalidate(
+            itemDetailProvider(id, isDownloaded: isDownloaded),
+          ),
         ),
         data: (item) {
           return Stack(
@@ -37,7 +46,9 @@ class ItemDetailScreen extends ConsumerWidget {
               RefreshIndicator(
                 onRefresh: () async {
                   ref.invalidate(mediaProgressProvider(id));
-                  return await ref.refresh(itemDetailProvider(id).future);
+                  return await ref.refresh(
+                    itemDetailProvider(id, isDownloaded: isDownloaded).future,
+                  );
                 },
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),

@@ -133,17 +133,13 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   Future<void> setSources(
-    List<AudioSource> sources, {
+    List<ProgressiveAudioSource> sources, {
     required int initialIndex,
     required Duration initialPosition,
   }) async {
-    final trackItems = sources
-        .whereType<UriAudioSource>()
-        .map((s) => s.tag as MediaItem)
-        .toList();
+    final trackItems = sources.map((s) => s.tag as MediaItem).toList();
 
     _resolver = PositionResolver.from(trackItems);
-
     final chapterItems = _resolver.chapters
         .map((c) => c.toMediaItem(trackItems.first))
         .toList();

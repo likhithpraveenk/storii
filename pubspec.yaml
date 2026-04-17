@@ -13,6 +13,7 @@ dependencies:
   audio_service: ^0.18.18
   audio_session: ^0.2.3
   cached_network_image: ^3.4.1
+  connectivity_plus: ^7.1.1
   crypto: ^3.0.7
   cupertino_icons: ^1.0.9
   device_info_plus: ^12.3.0
@@ -45,6 +46,7 @@ dependencies:
   socket_io_client: ^3.1.4
   ttf_metadata: ^0.0.6
   url_launcher: ^6.3.2
+  uuid: ^4.5.3
 
 dev_dependencies:
   analyzer: ^8.4.0

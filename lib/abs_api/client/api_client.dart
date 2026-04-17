@@ -147,12 +147,7 @@ class ApiClient {
       );
       return response;
     } on DioException catch (e, stack) {
-      throw ApiException(
-        mapDioToMessage(e),
-        statusCode: e.response?.statusCode,
-        originalError: e.error,
-        stackTrace: stack,
-      );
+      throw apiExceptionFromDio(e, stack);
     } catch (e) {
       rethrow;
     }

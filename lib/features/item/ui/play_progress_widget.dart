@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
@@ -74,17 +75,11 @@ class PlayProgressWidget extends ConsumerWidget {
         Row(
           mainAxisAlignment: .spaceEvenly,
           children: [
-            // IconButton(
-            //   onPressed: () => AppBottomSheet.show(
-            //     context,
-            //     title: 'Download Item?',
-            //     body: const Text('coming soon'),
-            //   ),
-            //   icon: const Icon(Icons.download_outlined),
-            // ),
+            DownloadButton(libraryItemId: item.id),
             HistoryButton(itemId: item.id),
             if (progress != 1.0)
               IconButton(
+                tooltip: l.markAsComplete,
                 onPressed: () => AppBottomSheet.show(
                   context,
                   title: l.markAsComplete,
@@ -111,11 +106,12 @@ class PlayProgressWidget extends ConsumerWidget {
               ),
             if (mediaProgress != null)
               IconButton(
+                tooltip: l.removeProgressTitle,
                 onPressed: () => AppBottomSheet.show(
                   context,
                   title: l.removeProgressTitle,
                   body: Padding(
-                    padding: const .symmetric(horizontal: 24),
+                    padding: const .fromLTRB(24, 0, 24, 24),
                     child: Text(
                       l.removeProgressMessage,
                       style: theme.textTheme.bodyMedium?.copyWith(

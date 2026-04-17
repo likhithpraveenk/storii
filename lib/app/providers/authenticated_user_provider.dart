@@ -11,18 +11,18 @@ part 'authenticated_user_provider.g.dart';
 Future<UserDomain> authenticatedUser(Ref ref) async {
   final user = ref.watch(currentUserProvider);
   if (user == null) throw StateError('No current user');
+
   try {
     await ref.read(serverApiProvider(user)).authorize();
-    LogService.log(
-      'User Session validated',
-      source: 'authenticatedUser',
-      level: .info,
-    );
+    LogService.log('User validated', source: 'authenticatedUser', level: .info);
     return user;
   } catch (e) {
     final error = AppError.resolve(e);
+    if (error.type == .network || error.type == .timeout) {
+      return user;
+    }
     LogService.log(
-      'Error validating user session: $error',
+      'Error validating user: $error',
       source: 'authenticatedUser',
       level: .error,
     );

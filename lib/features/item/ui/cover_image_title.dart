@@ -65,7 +65,6 @@ class CoverImageTitle extends StatelessWidget {
                         id: item.id,
                         type: .item,
                         updatedAt: item.updatedAt,
-                        isRaw: true,
                       ),
                     ),
                   ),

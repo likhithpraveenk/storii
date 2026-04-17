@@ -136,8 +136,14 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: AppRoute.downloads.path,
-            pageBuilder: (context, state) =>
-                const NoTransitionPage(child: DownloadsScreen()),
+            pageBuilder: (context, state) {
+              final tab = state.extra as DownloadsScreenTab?;
+              return NoTransitionPage(
+                child: DownloadsScreen(
+                  tab: tab ?? DownloadsScreenTab.completed,
+                ),
+              );
+            },
           ),
           GoRoute(
             path: AppRoute.authors.path,
@@ -194,8 +200,14 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: AppRoute.itemDetail.path,
             builder: (context, state) {
-              final id = state.extra as String;
-              return ItemDetailScreen(key: ValueKey(id), id: id);
+              final extra = state.extra as Map<String, dynamic>;
+              final id = extra['id'] as String;
+              final isDownloaded = extra['isDownloaded'] as bool?;
+              return ItemDetailScreen(
+                key: ValueKey(id),
+                id: id,
+                isDownloaded: isDownloaded ?? false,
+              );
             },
           ),
         ],

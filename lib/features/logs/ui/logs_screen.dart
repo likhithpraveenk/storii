@@ -8,6 +8,7 @@ import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
+import 'package:storii/shared/widgets/empty_state.dart';
 
 class LogsScreen extends ConsumerStatefulWidget {
   const LogsScreen({super.key});
@@ -54,7 +55,7 @@ class _LogsScreenState extends ConsumerState<LogsScreen> {
         ],
       ),
       body: logs.isEmpty
-          ? Center(child: Text(l.empty, style: textTheme.bodyLarge))
+          ? const EmptyState()
           : AppScrollbar(
               controller: _scrollController,
               child: ListView.builder(

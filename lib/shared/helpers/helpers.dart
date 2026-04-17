@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 String cleanHtml(String data) {
   return data
       .replaceAll(RegExp(r'<\/?(p|div|br\s?\/?)>'), '\n')
@@ -7,10 +9,19 @@ String cleanHtml(String data) {
 }
 
 String formatBytes(int bytes) {
-  if (bytes >= 1024 * 1024) {
-    return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
-  } else if (bytes >= 1024) {
-    return '${(bytes / 1024).toStringAsFixed(1)} KB';
+  const units = [
+    (1073741824, 'GB'), // 1024^3
+    (1048576, 'MB'), // 1024^2
+    (1024, 'KB'),
+  ];
+
+  final formatter = NumberFormat('###.#');
+
+  for (final (value, label) in units) {
+    if (bytes >= value) {
+      return '${formatter.format(bytes / value)} $label';
+    }
   }
+
   return '$bytes B';
 }

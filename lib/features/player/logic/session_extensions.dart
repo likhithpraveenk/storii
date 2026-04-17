@@ -1,18 +1,30 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/models/chapter.dart';
+import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/shared/helpers/extensions.dart';
+import 'package:uuid/uuid.dart';
 
 extension PlaybackSessionX on PlaybackSession {
   String get mediaItemIdKey =>
       episodeId != null ? '$libraryItemId$episodeId' : libraryItemId;
 
-  List<AudioSource> toAudioSources(Uri serverUrl, String? token) {
-    final coverUri = serverUrl
-        .resolve(ApiRoutes.itemCover(libraryItemId))
-        .replace(queryParameters: {'raw': '1'});
+  List<ProgressiveAudioSource> toAudioSources(
+    Uri? serverUrl,
+    String? token, {
+    Map<int, String> localPaths = const {},
+  }) {
+    final localCover = localPaths[-1];
+    final coverUri = localCover != null
+        ? Uri.file(localCover)
+        : serverUrl
+              ?.resolve(ApiRoutes.itemCover(libraryItemId))
+              .replace(queryParameters: {'raw': '1'});
     Duration accumulated = Duration.zero;
-    final sources = <AudioSource>[];
+    final sources = <ProgressiveAudioSource>[];
 
     List<Map<String, dynamic>> jsonChapters;
     if (chapters.isNotEmpty) {
@@ -46,28 +58,60 @@ extension PlaybackSessionX on PlaybackSession {
     for (final (index, track) in (audioTracks ?? <AudioTrack>[]).indexed) {
       final startOffset = accumulated;
       accumulated += track.duration;
+
+      final localPath = localPaths[track.index];
+      final isLocal = localPath != null;
+
+      final uri = isLocal
+          ? Uri.file(localPath)
+          : serverUrl!.resolve(track.contentUrl);
+      //! either we get local path or server url
+
+      final tag = MediaItem(
+        id: track.contentUrl,
+        title: displayTitle,
+        artist: displayAuthor,
+        duration: track.duration,
+        album: mediaMetadata.mapOrNull(book: (b) => b.seriesName),
+        artUri: coverUri,
+        extras: {
+          if (index == 0) 'chapters': jsonChapters,
+          'startOffset': startOffset.inMicroseconds,
+          'itemId': libraryItemId,
+          if (mediaType == .podcast) 'episodeId': episodeId,
+          'isLocal': isLocal,
+        },
+      );
+
       sources.add(
-        AudioSource.uri(
-          serverUrl.resolve(track.contentUrl),
-          headers: {'Authorization': 'Bearer $token'},
-          tag: MediaItem(
-            id: track.contentUrl,
-            title: displayTitle,
-            artist: displayAuthor,
-            duration: track.duration,
-            album: mediaMetadata.mapOrNull(book: (b) => b.seriesName),
-            artUri: coverUri,
-            extras: {
-              if (index == 0) 'chapters': jsonChapters,
-              'startOffset': startOffset.inMicroseconds,
-              'itemId': libraryItemId,
-              if (mediaType == .podcast) 'episodeId': episodeId,
-            },
-          ),
+        ProgressiveAudioSource(
+          uri,
+          headers: isLocal ? null : {'Authorization': 'Bearer $token'},
+          tag: tag,
         ),
       );
     }
     return sources;
+  }
+
+  Future<Map<int, String>> resolveLocalPaths() async {
+    final tracks = audioTracks;
+    if (tracks == null || tracks.isEmpty) return {};
+
+    final result = <int, String>{};
+    final coverPath = await DownloadsFilesystemHelper().coverPathIfExists(
+      displayTitle,
+    );
+    if (coverPath != null) result[-1] = coverPath;
+    for (final track in tracks) {
+      final local = await DownloadsFilesystemHelper().trackPathIfExists(
+        filename: track.metadata.filename,
+        itemTitle: libraryItem?.title ?? libraryItemId,
+      );
+      if (local != null) result[track.index] = local;
+    }
+
+    return result;
   }
 
   (int, Duration) getIndexAndOffset([Duration? position]) {
@@ -95,5 +139,41 @@ extension PlaybackSessionX on PlaybackSession {
       accumulated += trackLen;
     }
     return (0, Duration.zero);
+  }
+}
+
+extension ToPlaybackSession on LibraryItem {
+  PlaybackSession toPlaybackSession(
+    String userId, {
+    ClientDeviceInfo? deviceInfo,
+    String? episodeId,
+  }) {
+    final now = DateTime.now();
+    final today = DayOfTheWeek.byValue[now.weekday % 7]!.name;
+    return PlaybackSession(
+      id: const Uuid().v4(),
+      userId: userId,
+      libraryId: libraryId,
+      libraryItemId: id,
+      mediaType: mediaType,
+      mediaMetadata: media.metadata,
+      chapters: chapters,
+      displayTitle: title ?? 'No Title',
+      displayAuthor: authorName ?? 'No Author',
+      duration: duration,
+      playMethod: .local,
+      mediaPlayer: '$appName just_audio',
+      date: now.fString(format: 'yyyy-mm-dd'), //! use server format
+      dayOfWeek: today,
+      timeListening: Duration.zero,
+      startTime: currentOffset,
+      currentTime: currentOffset,
+      startedAt: now,
+      updatedAt: now,
+      audioTracks: tracks,
+      libraryItem: this,
+      deviceInfo: deviceInfo?.toDeviceInfo(),
+      episodeId: episodeId,
+    );
   }
 }

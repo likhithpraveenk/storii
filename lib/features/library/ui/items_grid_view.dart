@@ -4,6 +4,7 @@ import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
+import 'package:storii/shared/widgets/empty_state.dart';
 
 class ItemsGridView extends ConsumerWidget {
   const ItemsGridView(this.items, {super.key, this.scrollController});
@@ -16,9 +17,13 @@ class ItemsGridView extends ConsumerWidget {
     final height = ref.watch(gridHeightProvider);
     final isSquare = height == maxCardWidthInGrid;
 
+    if (items.isEmpty) {
+      return const EmptyState();
+    }
+
     return GridView.builder(
       controller: scrollController,
-      padding: const .symmetric(horizontal: 16),
+      padding: const .symmetric(horizontal: 16, vertical: 16),
       itemCount: items.length,
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: maxCardWidthInGrid,

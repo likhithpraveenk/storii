@@ -1,31 +1,32 @@
-import 'package:flutter/foundation.dart';
 import 'package:storii/abs_api/abs_api.dart';
 
-class AppError implements Exception {
-  final String message;
-  const AppError(this.message);
+enum AppErrorType { network, timeout, auth, notFound, server, unknown }
 
-  factory AppError.resolve(Object error, [StackTrace? stack]) {
+class AppError implements Exception {
+  final AppErrorType type;
+  final String message;
+
+  const AppError(this.type, this.message);
+
+  factory AppError.resolve(Object error) {
     if (error is AppError) return error;
 
     if (error is ApiException) {
-      return AppError(error.message);
+      return switch (error.type) {
+        .network => const AppError(.network, 'No internet connection'),
+        .timeout => const AppError(.timeout, 'Request timed out'),
+        .unauthorized ||
+        .forbidden => const AppError(.auth, 'Please login again'),
+        .notFound => const AppError(.notFound, 'Resource not found'),
+        .server => const AppError(.server, 'Server error'),
+        _ => const AppError(.unknown, 'Something went wrong'),
+      };
     }
-
-    if (error is TypeError) {
-      if (kDebugMode) {
-        debugPrint('TypeError: $error\n$stack');
-      }
-      return AppError(
-        'Data processing error: ${error.toString().split('\n').first}',
-      );
-    }
-
-    return AppError('An unexpected error occurred: $error');
+    return const AppError(.unknown, 'Something went wrong');
   }
 
   @override
   String toString() {
-    return message;
+    return 'AppError (${type.name}): $message';
   }
 }

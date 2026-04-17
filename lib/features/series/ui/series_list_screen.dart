@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/series/logic/series_list_provider.dart';
 import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/features/series/ui/series_list_card.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
+import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/screen_options.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -40,7 +42,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: Text(l.series, style: Theme.of(context).textTheme.titleLarge),
-        actions: const [ScreenOptionsButton(.series)],
+        actions: const [ScreenOptionsButton(.series), ActiveDownloadsButton()],
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -49,14 +51,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
         child: seriesAsync.when(
           data: (series) {
             if (series.isEmpty) {
-              return SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  alignment: .center,
-                  child: Text(l.empty),
-                ),
-              );
+              return const EmptyState();
             }
 
             final isListView =

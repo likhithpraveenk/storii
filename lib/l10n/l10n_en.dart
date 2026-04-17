@@ -609,4 +609,88 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get oidcRedirectUriHintSuffix =>
       'in ABS → Settings → Authentication → Allowed Mobile Redirect URIs';
+
+  @override
+  String get queued => 'Queued';
+
+  @override
+  String get downloading => 'Downloading';
+
+  @override
+  String get paused => 'Paused';
+
+  @override
+  String get failed => 'Failed';
+
+  @override
+  String get download => 'Download';
+
+  @override
+  String get completed => 'Completed';
+
+  @override
+  String get cancelled => 'Cancelled';
+
+  @override
+  String get resumeDownload => 'Resume Download';
+
+  @override
+  String get removeDownloadQ => 'Remove Download?';
+
+  @override
+  String willBeFreed(String bytes) {
+    return '$bytes will be freed';
+  }
+
+  @override
+  String get downloadFailed => 'Download failed - tap to retry';
+
+  @override
+  String get directPlay => 'Direct Play';
+
+  @override
+  String get directStream => 'Direct Stream';
+
+  @override
+  String get transcode => 'Transcode';
+
+  @override
+  String get local => 'Local';
+
+  @override
+  String get downloaded => 'Downloaded';
+
+  @override
+  String get connectionChecking => 'Checking connection...';
+
+  @override
+  String get connectionPleaseWait => 'Please wait';
+
+  @override
+  String get connectionServerConnected => 'Connected to server';
+
+  @override
+  String get connectionServerDisconnected => 'Not connected to server';
+
+  @override
+  String get connectionTypeWifi => 'Wi-Fi';
+
+  @override
+  String get connectionTypeMobile => 'Mobile data';
+
+  @override
+  String get connectionTypeEthernet => 'Ethernet';
+
+  @override
+  String get connectionTypeNone => 'No network';
+
+  @override
+  String connectionCantReachServer(String networkType) {
+    return 'Can\'t reach server ($networkType)';
+  }
+
+  @override
+  String connectionViaNetwork(String networkType) {
+    return 'Connected via $networkType';
+  }
 }

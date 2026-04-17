@@ -9,6 +9,7 @@ import 'package:storii/features/player/ui/play_button.dart';
 import 'package:storii/features/player/ui/seek_button.dart';
 import 'package:storii/features/player/ui/sleep_button.dart';
 import 'package:storii/features/player/ui/speed_button.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 class FullPlayer extends ConsumerWidget {
@@ -105,7 +106,14 @@ class FullPlayer extends ConsumerWidget {
                 const SpeedButton(),
               ],
             ),
-            const SizedBox(height: 16),
+            Text(
+              session.playMethod.getDisplayString(context),
+              textAlign: .center,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.outlineVariant,
+                fontStyle: .italic,
+              ),
+            ),
           ],
         ),
       ),

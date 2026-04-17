@@ -1,4 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:storii/abs_api/models/audio_meta_tags.dart';
+import 'package:storii/abs_api/models/book_chapter.dart';
 import 'package:storii/abs_api/models/file_metadata.dart';
 import 'package:storii/abs_api/models/json_converters.dart';
 
@@ -7,15 +9,36 @@ part 'audio_track.g.dart';
 
 @freezed
 sealed class AudioTrack with _$AudioTrack {
+  @DateTimeEpochConverter()
   @DurationPreciseSecondsConverter()
   const factory AudioTrack({
     required int index,
     required Duration startOffset,
-    required Duration duration,
     required String title,
     required String contentUrl,
     required String mimeType,
-    FileMetadata? metadata,
+    required FileMetadata metadata,
+    required String ino,
+    required DateTime addedAt,
+    required DateTime updatedAt,
+    int? trackNumFromMeta,
+    int? discNumFromMeta,
+    int? trackNumFromFilename,
+    int? discNumFromFilename,
+    required bool manuallyVerified,
+    required bool exclude,
+    String? error,
+    String? format,
+    required Duration duration,
+    required int bitRate,
+    String? language,
+    required String codec,
+    required String timeBase,
+    required int channels,
+    required String channelLayout,
+    required List<BookChapter> chapters,
+    String? embeddedCoverArt,
+    required AudioMetaTags metaTags,
   }) = _AudioTrack;
 
   factory AudioTrack.fromJson(Map<String, dynamic> json) =>

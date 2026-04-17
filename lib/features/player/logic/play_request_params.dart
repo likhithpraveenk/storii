@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/abs_api/abs_api.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/device_info_provider.dart';
 
 part 'play_request_params.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
   final package = await ref.watch(packageInfoProvider.future);
   final device = await ref.watch(deviceInfoProvider.future);
@@ -22,7 +23,7 @@ Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
     mimeTypes,
   ) = switch (device) {
     AndroidDeviceInfo d => (
-      'ExoPlayer',
+      '$appName just_audio',
       d.id,
       '${d.brand} ${d.name}',
       d.manufacturer,
