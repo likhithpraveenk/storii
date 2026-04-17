@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/shared/helpers/helpers.dart';
 
 class MetadataWrap extends StatelessWidget {
   const MetadataWrap(this.item, {super.key});
@@ -16,6 +17,11 @@ class MetadataWrap extends StatelessWidget {
         spacing: 16,
         runSpacing: 8,
         children: [
+          if (item.size != null)
+            _MetaItem(
+              icon: Icons.storage_outlined,
+              label: formatBytes(item.size!),
+            ),
           _MetaItem(icon: Icons.business, label: item.publisher),
           _MetaItem(icon: Icons.calendar_today, label: item.publishedYear),
           _MetaItem(icon: Icons.language, label: item.language),
