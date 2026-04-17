@@ -7,6 +7,7 @@ class SocketApi {
   final Socket socket;
   late final UserSocketEvents user;
   bool _initialized = false;
+  late final Stream<bool> isConnected;
 
   SocketApi(String baseUrl, String token)
     : socket = io(
@@ -17,6 +18,13 @@ class SocketApi {
             .build(),
       ) {
     user = UserSocketEvents(socket);
+
+    final controller = StreamController<bool>.broadcast();
+    isConnected = controller.stream;
+    socket.onConnect((_) => controller.add(true));
+    socket.onDisconnect((_) => controller.add(false));
+    controller.onListen = () => controller.add(socket.connected);
+
     _init(token);
   }
 
@@ -25,14 +33,6 @@ class SocketApi {
     socket.onConnect((_) => socket.emit('auth', token));
     socket.connect();
     _initialized = true;
-  }
-
-  Stream<bool> get isConnected {
-    final controller = StreamController<bool>.broadcast();
-    controller.onListen = () => controller.add(socket.connected);
-    socket.onConnect((_) => controller.add(true));
-    socket.onDisconnect((_) => controller.add(false));
-    return controller.stream;
   }
 
   void dispose() => socket.dispose();

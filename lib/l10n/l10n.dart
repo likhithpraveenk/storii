@@ -1317,6 +1317,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Downloaded'**
   String get downloaded;
+
+  /// No description provided for @connectionChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking connection...'**
+  String get connectionChecking;
+
+  /// No description provided for @connectionPleaseWait.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait'**
+  String get connectionPleaseWait;
+
+  /// No description provided for @connectionServerConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to server'**
+  String get connectionServerConnected;
+
+  /// No description provided for @connectionServerDisconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not connected to server'**
+  String get connectionServerDisconnected;
+
+  /// No description provided for @connectionTypeWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'Wi-Fi'**
+  String get connectionTypeWifi;
+
+  /// No description provided for @connectionTypeMobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile data'**
+  String get connectionTypeMobile;
+
+  /// No description provided for @connectionTypeEthernet.
+  ///
+  /// In en, this message translates to:
+  /// **'Ethernet'**
+  String get connectionTypeEthernet;
+
+  /// No description provided for @connectionTypeNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No network'**
+  String get connectionTypeNone;
+
+  /// No description provided for @connectionCantReachServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t reach server ({networkType})'**
+  String connectionCantReachServer(String networkType);
+
+  /// No description provided for @connectionViaNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected via {networkType}'**
+  String connectionViaNetwork(String networkType);
 }
 
 class _AppLocalizationsDelegate

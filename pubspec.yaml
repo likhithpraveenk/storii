@@ -13,6 +13,7 @@ dependencies:
   audio_service: ^0.18.18
   audio_session: ^0.2.3
   cached_network_image: ^3.4.1
+  connectivity_plus: ^7.1.1
   crypto: ^3.0.7
   cupertino_icons: ^1.0.9
   device_info_plus: ^12.3.0

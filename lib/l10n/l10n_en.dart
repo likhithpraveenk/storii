@@ -659,4 +659,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get downloaded => 'Downloaded';
+
+  @override
+  String get connectionChecking => 'Checking connection...';
+
+  @override
+  String get connectionPleaseWait => 'Please wait';
+
+  @override
+  String get connectionServerConnected => 'Connected to server';
+
+  @override
+  String get connectionServerDisconnected => 'Not connected to server';
+
+  @override
+  String get connectionTypeWifi => 'Wi-Fi';
+
+  @override
+  String get connectionTypeMobile => 'Mobile data';
+
+  @override
+  String get connectionTypeEthernet => 'Ethernet';
+
+  @override
+  String get connectionTypeNone => 'No network';
+
+  @override
+  String connectionCantReachServer(String networkType) {
+    return 'Can\'t reach server ($networkType)';
+  }
+
+  @override
+  String connectionViaNetwork(String networkType) {
+    return 'Connected via $networkType';
+  }
 }

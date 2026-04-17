@@ -278,5 +278,29 @@
   "directStream": "Direct Stream",
   "transcode": "Transcode",
   "local": "Local",
-  "downloaded": "Downloaded"
+  "downloaded": "Downloaded",
+  "connectionChecking": "Checking connection...",
+  "connectionPleaseWait": "Please wait",
+  "connectionServerConnected": "Connected to server",
+  "connectionServerDisconnected": "Not connected to server",
+  "connectionTypeWifi": "Wi-Fi",
+  "connectionTypeMobile": "Mobile data",
+  "connectionTypeEthernet": "Ethernet",
+  "connectionTypeNone": "No network",
+  "connectionCantReachServer": "Can't reach server ({networkType})",
+  "@connectionCantReachServer": {
+    "placeholders": {
+      "networkType": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionViaNetwork": "Connected via {networkType}",
+  "@connectionViaNetwork": {
+    "placeholders": {
+      "networkType": {
+        "type": "String"
+      }
+    }
+  }
 }
