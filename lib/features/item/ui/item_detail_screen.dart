@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
-import 'package:storii/features/item/ui/chapters_list_widget.dart';
+import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/item/ui/cover_image_title.dart';
 import 'package:storii/features/item/ui/description_with_chips.dart';
 import 'package:storii/features/item/ui/metadata_wrap.dart';
@@ -26,6 +26,7 @@ class ItemDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context)!;
+    final textTheme = Theme.of(context).textTheme;
 
     final itemAsync = ref.watch(
       itemDetailProvider(id, isDownloaded: isDownloaded),
@@ -77,7 +78,24 @@ class ItemDetailScreen extends ConsumerWidget {
                       MetadataWrap(item),
                       const SizedBox(height: 16),
                       const Divider(height: 0),
-                      ChaptersListWidget(item),
+                      ListTile(
+                        leading: const Icon(Icons.list_rounded),
+                        title: Text(l.chapters),
+                        trailing: Text(
+                          '${item.chapters.length}',
+                          style: textTheme.titleSmall?.copyWith(
+                            fontStyle: .italic,
+                          ),
+                        ),
+                        onTap: () {
+                          showChapterListSheet(
+                            context,
+                            chapters: item.chapters,
+                            itemId: item.id,
+                            itemTitle: item.title ?? l.noTitle,
+                          );
+                        },
+                      ),
                       const SizedBox(height: 200),
                     ],
                   ),
