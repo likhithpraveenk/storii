@@ -15,10 +15,16 @@ A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf)
 ## Features
 
 - Audiobook streaming with background playback and progress sync
+- **Offline downloads** - fully functional download manager with pause/resume and local playback
 - Multi-user, multi-server and OIDC support with persistent sessions
+- Personalized home shelves: continue listening, recent series, newest authors, etc.
 - Advanced library browsing with filters, sorting, and series grouping
-- Supports downloads and offline sessions
-- Responsive UI with reusable components across feature modules
+- Search across books, series, authors, narrators, tags, and genres
+- Customizable player: sleep timer, speed control, seek buttons, chapter navigation, and listening history
+- Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling
+- Navigation customization: reorder tabs, choose startup screen, label behavior
+
+> **Note:** Podcast support is not yet available.
 
 ## Demo
 
@@ -26,38 +32,39 @@ A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf)
 
 ## Screenshots
 
-| Library | Server |
+| Library | Downloads |
 |:--------|:-------|
-| <img src="metadata/android/en-US/images/phoneScreenshots/1.jpg" width="300" alt="Storii library view showing audiobooks"> | <img src="metadata/android/en-US/images/phoneScreenshots/2.jpg" width="300" alt="Storii server connection screen"> |
+| <img src="metadata/android/en-US/images/phoneScreenshots/1.jpg" width="300" alt="library view showing audiobooks"> | <img src="metadata/android/en-US/images/phoneScreenshots/9.jpg" width="300" alt="active downloads screen"> |
 
 | Home with Player | Now Playing |
 |:-----------------|:------------|
-| <img src="metadata/android/en-US/images/phoneScreenshots/3.jpg" width="300" alt="Storii home screen with mini player"> | <img src="metadata/android/en-US/images/phoneScreenshots/4.jpg" width="300" alt="Storii now playing screen with playback controls"> |
+| <img src="metadata/android/en-US/images/phoneScreenshots/3.jpg" width="300" alt="home screen with mini player"> | <img src="metadata/android/en-US/images/phoneScreenshots/4.jpg" width="300" alt="now playing screen with playback controls"> |
 
 | Book Details | Series |
 |:-------------|:-------|
-| <img src="metadata/android/en-US/images/phoneScreenshots/5.jpg" width="300" alt="Storii audiobook detail screen with chapters"> | <img src="metadata/android/en-US/images/phoneScreenshots/6.jpg" width="300" alt="Storii series view listing related books"> |
+| <img src="metadata/android/en-US/images/phoneScreenshots/5.jpg" width="300" alt="audiobook detail screen with chapters"> | <img src="metadata/android/en-US/images/phoneScreenshots/6.jpg" width="300" alt="series view listing related books"> |
 
 | Settings | Appearance |
 |:---------|:-----------|
-| <img src="metadata/android/en-US/images/phoneScreenshots/7.jpg" width="300" alt="Storii application settings screen"> | <img src="metadata/android/en-US/images/phoneScreenshots/8.jpg" width="300" alt="Storii appearance and theme settings"> |
+| <img src="metadata/android/en-US/images/phoneScreenshots/7.jpg" width="300" alt="settings screen"> | <img src="metadata/android/en-US/images/phoneScreenshots/8.jpg" width="300" alt="appearance and theme settings"> |
 
 ## Roadmap
 
-- Offline downloads for audiobooks  
-- Podcast support  
+- User stats
+- Additional player enhancements (bookmarks, equalizer)
+- Collections / playlists support
+- Complete podcast playback and episode management
 
-## Tech Stack & Architecture
+## Tech Stack
 
-- Flutter (Dart) with feature-based modular architecture
-
-- Riverpod for scalable state management
-
-- Dio-based API layer with interceptors and endpoint abstraction
-
-- Background audio handling with persistent playback state
-
-- Local storage using Hive and secure storage for authentication
+| Layer           | Technologies |
+|-----------------|--------------|
+| **State**       | Riverpod |
+| **Networking**  | Dio (REST), Socket.IO (real‑time) |
+| **Audio**       | just_audio, audio_service, audio_session |
+| **Local Data**  | Hive CE, Flutter Secure Storage |
+| **Routing**     | GoRouter |
+| **Code Gen**    | Freezed, json_serializable, riverpod_generator, build_runner |
 
 ## Contributing
 
