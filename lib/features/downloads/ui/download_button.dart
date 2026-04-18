@@ -92,7 +92,8 @@ class DownloadButton extends ConsumerWidget {
           Icons.download_for_offline_outlined,
           color: appGreenColor,
         ),
-        onPressed: () => showDownloadsDeleteDialog(context, item: item!),
+        onPressed: () =>
+            showDownloadsDeleteDialog(context, item: item!, ref: ref),
       ),
       .failed => IconButton(
         tooltip: l.downloadFailed,

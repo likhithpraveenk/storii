@@ -134,10 +134,17 @@ class _DownloadTileState extends State<DownloadTile> {
           subtitle: Row(
             mainAxisAlignment: .spaceEvenly,
             children: [
-              IconButton(
-                icon: const Icon(Icons.delete_outline),
-                onPressed: () =>
-                    showDownloadsDeleteDialog(context, item: widget.item),
+              Consumer(
+                builder: (context, ref, _) {
+                  return IconButton(
+                    icon: const Icon(Icons.delete_outline),
+                    onPressed: () => showDownloadsDeleteDialog(
+                      context,
+                      item: widget.item,
+                      ref: ref,
+                    ),
+                  );
+                },
               ),
               DownloadTileTrailingActions(item: widget.item),
               IconButton(

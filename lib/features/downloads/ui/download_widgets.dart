@@ -4,7 +4,7 @@ import 'package:storii/features/downloads/logic/download_notifier.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/helpers.dart';
-import 'package:storii/shared/widgets/app_buttons.dart';
+import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class DownloadTrackProgress extends StatelessWidget {
@@ -158,7 +158,8 @@ class DownloadTileTrailingActions extends ConsumerWidget {
           color: Theme.of(context).colorScheme.error,
         ),
         tooltip: l.delete,
-        onPressed: () => showDownloadsDeleteDialog(context, item: item),
+        onPressed: () =>
+            showDownloadsDeleteDialog(context, item: item, ref: ref),
       ),
     };
   }
@@ -166,37 +167,23 @@ class DownloadTileTrailingActions extends ConsumerWidget {
 
 void showDownloadsDeleteDialog(
   BuildContext context, {
+  required WidgetRef ref,
   required DownloadItem item,
 }) {
-  showDialog<void>(
-    context: context,
-    builder: (context) => Consumer(
-      builder: (context, ref, _) {
-        final l = AppLocalizations.of(context)!;
-        return AlertDialog(
-          title: Text(l.removeDownloadQ),
-          content: Text(
-            '${item.title}\n${l.willBeFreed(formatBytes(item.receivedBytes))}',
-          ),
-          actionsAlignment: .spaceBetween,
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(l.cancel),
-            ),
-            AppFilledButton(
-              isDestructive: true,
-              onPressed: () {
-                Navigator.pop(context);
-                ref
-                    .read(downloadsProvider.notifier)
-                    .delete(item.libraryItem.id);
-              },
-              text: l.remove,
-            ),
-          ],
-        );
-      },
+  final l = AppLocalizations.of(context)!;
+  AppDialog.show(
+    context,
+    title: l.removeDownloadQ,
+    body: Column(
+      children: [
+        Text(item.title),
+        Text(l.willBeFreed(formatBytes(item.receivedBytes))),
+      ],
     ),
+    actionLabel: l.remove,
+    isDestructive: true,
+    onTap: () async {
+      await ref.read(downloadsProvider.notifier).delete(item.libraryItem.id);
+    },
   );
 }

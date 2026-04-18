@@ -10,7 +10,7 @@ import 'package:storii/features/auth/logic/users_provider.dart';
 import 'package:storii/features/auth/ui/add_user_sheet.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
-import 'package:storii/shared/widgets/app_buttons.dart';
+import 'package:storii/shared/widgets/app_dialog.dart';
 
 class UserTile extends ConsumerWidget {
   const UserTile({super.key, required this.user, required this.server});
@@ -74,34 +74,15 @@ class UserTile extends ConsumerWidget {
             ),
             const SizedBox(width: 8),
             InkWell(
-              borderRadius: BorderRadius.circular(48),
+              borderRadius: .circular(48),
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      actionsAlignment: .spaceBetween,
-                      actions: [
-                        AppTextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          text: l.cancel,
-                        ),
-                        AppFilledButton(
-                          text: l.delete,
-                          isDestructive: true,
-                          onPressed: () async {
-                            await ref.read(usersProvider.notifier).delete(user);
-                            if (context.mounted) {
-                              Navigator.of(context).pop();
-                            }
-                          },
-                        ),
-                      ],
-                      title: Text(
-                        l.deleteUserQ(user.username),
-                        style: textTheme.titleLarge,
-                      ),
-                    );
+                AppDialog.show(
+                  context,
+                  title: l.deleteUserQ(user.username),
+                  isDestructive: true,
+                  actionLabel: l.delete,
+                  onTap: () async {
+                    await ref.read(usersProvider.notifier).delete(user);
                   },
                 );
               },
