@@ -203,8 +203,8 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     final target = _resolver.resolveSeek(chapterIndex, position);
 
     if (target != null) {
-      _eventController.add(.seek);
       await _player.seek(target.trackPosition, index: target.trackIndex);
+      _eventController.add(.seek);
     }
   }
 
@@ -234,8 +234,8 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   Future<void> skipToQueueItem(int index) async {
     final target = _resolver.resolveSeek(index, Duration.zero);
     if (target != null) {
-      _eventController.add(.seek);
       await _player.seek(target.trackPosition, index: target.trackIndex);
+      _eventController.add(.seek);
     }
   }
 

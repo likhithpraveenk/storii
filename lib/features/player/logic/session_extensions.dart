@@ -15,11 +15,11 @@ extension PlaybackSessionX on PlaybackSession {
   List<ProgressiveAudioSource> toAudioSources(
     Uri? serverUrl,
     String? token, {
+    String? coverPath,
     Map<int, String> localPaths = const {},
   }) {
-    final localCover = localPaths[-1];
-    final coverUri = localCover != null
-        ? Uri.file(localCover)
+    final coverUri = coverPath != null
+        ? Uri.file(coverPath)
         : serverUrl
               ?.resolve(ApiRoutes.itemCover(libraryItemId))
               .replace(queryParameters: {'raw': '1'});
@@ -94,24 +94,23 @@ extension PlaybackSessionX on PlaybackSession {
     return sources;
   }
 
-  Future<Map<int, String>> resolveLocalPaths() async {
+  Future<(Map<int, String>, String?)> resolveLocalPaths() async {
     final tracks = audioTracks;
-    if (tracks == null || tracks.isEmpty) return {};
+    final trackPaths = <int, String>{};
+    if (tracks == null || tracks.isEmpty) return (trackPaths, null);
 
-    final result = <int, String>{};
     final coverPath = await DownloadsFilesystemHelper().coverPathIfExists(
       displayTitle,
     );
-    if (coverPath != null) result[-1] = coverPath;
     for (final track in tracks) {
       final local = await DownloadsFilesystemHelper().trackPathIfExists(
         filename: track.metadata.filename,
         itemTitle: libraryItem?.title ?? libraryItemId,
       );
-      if (local != null) result[track.index] = local;
+      if (local != null) trackPaths[track.index] = local;
     }
 
-    return result;
+    return (trackPaths, coverPath);
   }
 
   (int, Duration) getIndexAndOffset([Duration? position]) {

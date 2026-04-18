@@ -96,6 +96,12 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       loadingEpisodeId: episodeId,
     );
     try {
+      final oldSession = ref.read(sessionProvider);
+      if (oldSession != null) {
+        log('old session exists. calling audio handler stop');
+        await audioHandler.stop();
+      }
+
       final download = ref.read(downloadsProvider)[itemId];
       final isFullyDownloaded =
           download != null &&
@@ -114,7 +120,6 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
             isDownloaded: true,
           ).future,
         );
-
         session = await ref
             .read(sessionProvider.notifier)
             .createLocal(item: item, episodeId: episodeId);
@@ -122,23 +127,16 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
         final user = await ref.read(authenticatedUserProvider.future);
         token = await ref.read(tokenProvider).getAccessToken(user.id);
         serverUrl = user.serverUrl;
-
         session = await ref
             .read(sessionProvider.notifier)
             .create(itemId: itemId, episodeId: episodeId);
-      }
-
-      final oldSession = ref.read(sessionProvider);
-      if (oldSession != null) {
-        log('old session exists. calling audio handler stop');
-        await audioHandler.stop();
       }
 
       final (index, position) = (chapter != null)
           ? session.chapterToTrackOffset(chapter)
           : session.getIndexAndOffset(initialPosition);
 
-      final localPaths = await session.resolveLocalPaths();
+      final (localPaths, coverPath) = await session.resolveLocalPaths();
       final localCount = localPaths.length;
       final totalTracks = session.audioTracks?.length ?? 0;
       if (localCount > 0) {
@@ -149,6 +147,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
         serverUrl,
         token,
         localPaths: localPaths,
+        coverPath: coverPath,
       );
 
       await audioHandler.setSources(
