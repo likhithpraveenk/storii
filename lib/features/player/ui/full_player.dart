@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
-import 'package:storii/features/player/ui/chapter_button.dart';
 import 'package:storii/features/player/ui/history_button.dart';
 import 'package:storii/features/player/ui/play_button.dart';
 import 'package:storii/features/player/ui/seek_button.dart';
@@ -99,7 +99,15 @@ class FullPlayer extends ConsumerWidget {
                   episodeId: session.episodeId,
                 ),
                 const SizedBox(width: 16),
-                ChapterButton(session.chapters),
+                IconButton(
+                  icon: const Icon(Icons.list_rounded),
+                  onPressed: () => showChapterListSheet(
+                    context,
+                    chapters: session.chapters,
+                    itemId: session.libraryItemId,
+                    itemTitle: session.displayTitle,
+                  ),
+                ),
                 const SizedBox(width: 16),
                 const SleepButton(),
                 const SizedBox(width: 16),

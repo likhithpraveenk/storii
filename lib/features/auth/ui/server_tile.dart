@@ -3,14 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/models/server.dart';
+import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
 import 'package:storii/features/auth/ui/add_server_sheet.dart';
 import 'package:storii/features/auth/ui/add_user_sheet.dart';
-import 'package:storii/features/auth/ui/delete_server_dialog.dart';
 import 'package:storii/features/auth/ui/user_tile.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
+import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class ServerTile extends ConsumerStatefulWidget {
@@ -106,12 +107,24 @@ class _ServerTileState extends ConsumerState<ServerTile> {
                                 text: l.deleteServer,
                                 isDestructive: true,
                                 onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (_) => DeleteServerDialog(
-                                      widget.server,
-                                      users,
+                                  AppDialog.show(
+                                    context,
+                                    title: l.deleteServerQ,
+                                    body: Text(
+                                      '${widget.server.url.cleanString}\n\n'
+                                      '${users.isEmpty ? l.noUsersServer : '${l.followingUsers}\n'
+                                                '${users.map((e) => '• ${e.username}').join('\n')}'}',
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.bodyLarge,
                                     ),
+                                    isDestructive: true,
+                                    actionLabel: l.delete,
+                                    onTap: () async {
+                                      await ref
+                                          .read(serversProvider.notifier)
+                                          .delete(widget.server);
+                                    },
                                   );
                                 },
                               ),
