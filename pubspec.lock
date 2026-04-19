@@ -9,6 +9,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "91.0.0"
+  abs_api:
+    dependency: "direct main"
+    description:
+      path: "packages/abs_api"
+      relative: true
+    source: path
+    version: "1.0.0"
   analysis_server_plugin:
     dependency: transitive
     description:
@@ -1171,7 +1178,7 @@ packages:
     source: sdk
     version: "0.0.0"
   socket_io_client:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: socket_io_client
       sha256: ef6c989e5eee8d04baf18482ec3d7699b91bc41e279794a99d8e3bef897b074a

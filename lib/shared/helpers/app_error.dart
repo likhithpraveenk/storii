@@ -1,4 +1,4 @@
-import 'package:storii/abs_api/abs_api.dart';
+import 'package:abs_api/abs_api.dart';
 
 enum AppErrorType { network, timeout, auth, notFound, server, unknown }
 

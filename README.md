@@ -70,12 +70,6 @@ A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf)
 
 Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a PR.
 
-## Acknowledgements
-
-Adapted and extended from the original [audiobookshelf_api](https://github.com/audiobookshelf-flutter/audiobookshelf_api), which provided the initial API structure.
-Extended by migrating from http to Dio, adding interceptors and improved error handling.
-Full credit to the original contributors for the foundation.
-
 ## License
 
 Storii is licensed under the [GNU General Public License v3.0](LICENSE.txt).

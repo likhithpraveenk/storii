@@ -1,0 +1,20 @@
+name: abs_api
+description: dart API client for Audiobookshelf
+version: 1.0.0
+
+environment:
+  sdk: ^3.11.4
+
+dependencies:
+  dio: ^5.9.2
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
+  socket_io_client: ^3.1.4
+
+dev_dependencies:
+  build_runner: ^2.13.1
+  freezed: ^3.2.3
+  freezed_lint: ^0.0.12
+  json_serializable: ^6.11.2
+  lints: ^6.0.0
+  test: ^1.25.6
