@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:abs_api/abs_api.dart';
 import 'package:hive_ce/hive_ce.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/abs_api/models/sync_session_request_params.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';

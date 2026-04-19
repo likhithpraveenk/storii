@@ -1,6 +1,6 @@
+import 'package:abs_api/abs_api.dart';
 import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/l10n/l10n.dart';
 
 part 'download_item.freezed.dart';

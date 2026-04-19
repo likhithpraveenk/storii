@@ -1,7 +1,7 @@
+import 'package:abs_api/abs_api.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/logs/logs_interceptor.dart';
 import 'package:storii/app/models/user.dart';

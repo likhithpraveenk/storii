@@ -1,6 +1,6 @@
+import 'package:abs_api/abs_api.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:storii/abs_api/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/models/chapter.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
