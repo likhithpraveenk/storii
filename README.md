@@ -6,8 +6,9 @@ A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf)
 [![GitHub Version](https://img.shields.io/github/v/release/likhithpraveenk/storii.svg?logo=github&label=GitHub&style=for-the-badge)](https://github.com/likhithpraveenk/storii/releases)
 [![IzzyOnDroid Version](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.likhithpraveenk.storii&label=IzzyOnDroid&style=for-the-badge)](https://apt.izzysoft.de/fdroid/index/apk/com.likhithpraveenk.storii)
 
-[![Get it on GitHub](https://img.shields.io/badge/Get%20it%20on-GitHub-black?style=for-the-badge&logo=github)](https://github.com/likhithpraveenk/storii/releases/latest)
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="50" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/com.likhithpraveenk.storii)
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="50" alt="Get it on IzzyOnDroid">](https://apt.izzysoft.de/packages/com.likhithpraveenk.storii)
+[<img src="assets/get_it_on_github_badge.png" alt="Get it on GitHub" height="50">](https://github.com/likhithpraveenk/storii/releases/latest)
+[<img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="Get it on Obtainium" height="50">](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/likhithpraveenk/storii)
 
 ![GitHub all releases](https://img.shields.io/github/downloads/likhithpraveenk/storii/total?logo=github)
 [![IzzyOnDroid Monthly Downloads](https://img.shields.io/badge/dynamic/json?url=https://dlstats.izzyondroid.org/iod-stats-collector/stats/basic/monthly/rolling.json&query=$.['com.likhithpraveenk.storii']&label=IzzyOnDroid%20monthly%20downloads)](https://apt.izzysoft.de/packages/com.likhithpraveenk.storii)
