@@ -41,7 +41,7 @@ final class AddUserNotifierProvider
   }
 }
 
-String _$addUserNotifierHash() => r'e749ad2b5ed639a829e6ee75826ce5b4a2f950f6';
+String _$addUserNotifierHash() => r'2dd76b445da8840a88f45d530b2a1d50a4ce7b32';
 
 abstract class _$AddUserNotifier extends $Notifier<UserState> {
   UserState build();
