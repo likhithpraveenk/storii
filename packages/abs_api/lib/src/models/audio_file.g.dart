@@ -25,7 +25,7 @@ _AudioFile _$AudioFileFromJson(Map<String, dynamic> json) => _AudioFile(
   error: json['error'] as String?,
   format: json['format'] as String?,
   duration: const DurationPreciseSecondsConverter().fromJson(
-    json['duration'] as num,
+    json['duration'] as Object,
   ),
   bitRate: (json['bitRate'] as num).toInt(),
   language: json['language'] as String?,

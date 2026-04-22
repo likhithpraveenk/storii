@@ -19,7 +19,7 @@ _RssFeedEpisode _$RssFeedEpisodeFromJson(Map<String, dynamic> json) =>
       author: json['author'] as String,
       explicit: json['explicit'] as bool,
       duration: const DurationPreciseSecondsConverter().fromJson(
-        json['duration'] as num,
+        json['duration'] as Object,
       ),
       libraryItemId: json['libraryItemId'] as String,
       episodeId: json['episodeId'] as String?,

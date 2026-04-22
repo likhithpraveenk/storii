@@ -9,7 +9,7 @@ part of 'audio_track.dart';
 _AudioTrack _$AudioTrackFromJson(Map<String, dynamic> json) => _AudioTrack(
   index: (json['index'] as num).toInt(),
   startOffset: const DurationPreciseSecondsConverter().fromJson(
-    json['startOffset'] as num,
+    json['startOffset'] as Object,
   ),
   title: json['title'] as String,
   contentUrl: json['contentUrl'] as String,
@@ -31,7 +31,7 @@ _AudioTrack _$AudioTrackFromJson(Map<String, dynamic> json) => _AudioTrack(
   error: json['error'] as String?,
   format: json['format'] as String?,
   duration: const DurationPreciseSecondsConverter().fromJson(
-    json['duration'] as num,
+    json['duration'] as Object,
   ),
   bitRate: (json['bitRate'] as num).toInt(),
   language: json['language'] as String?,

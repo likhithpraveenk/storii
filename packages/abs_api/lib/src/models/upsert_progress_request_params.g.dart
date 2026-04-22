@@ -9,12 +9,12 @@ part of 'upsert_progress_request_params.dart';
 Map<String, dynamic> _$UpsertProgressRequestParamsToJson(
   UpsertProgressRequestParams instance,
 ) => <String, dynamic>{
-  'duration': ?_$JsonConverterToJson<num, Duration>(
+  'duration': ?_$JsonConverterToJson<Object, Duration>(
     instance.duration,
     const DurationPreciseSecondsConverter().toJson,
   ),
   'progress': ?instance.progress,
-  'currentTime': ?_$JsonConverterToJson<num, Duration>(
+  'currentTime': ?_$JsonConverterToJson<Object, Duration>(
     instance.currentTime,
     const DurationPreciseSecondsConverter().toJson,
   ),

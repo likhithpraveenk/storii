@@ -13,7 +13,7 @@ BookMedia _$BookMediaFromJson(Map<String, dynamic> json) => BookMedia(
   tags:
       (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
       const [],
-  duration: _$JsonConverterFromJson<num, Duration>(
+  duration: _$JsonConverterFromJson<Object, Duration>(
     json['duration'],
     const DurationPreciseSecondsConverter().fromJson,
   ),
@@ -39,7 +39,7 @@ Map<String, dynamic> _$BookMediaToJson(BookMedia instance) => <String, dynamic>{
   'metadata': instance.metadata.toJson(),
   'libraryItemId': ?instance.libraryItemId,
   'tags': instance.tags,
-  'duration': ?_$JsonConverterToJson<num, Duration>(
+  'duration': ?_$JsonConverterToJson<Object, Duration>(
     instance.duration,
     const DurationPreciseSecondsConverter().toJson,
   ),

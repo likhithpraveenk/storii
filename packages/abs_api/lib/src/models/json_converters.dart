@@ -40,12 +40,21 @@ class DateTimeEpochConverter implements JsonConverter<DateTime, int> {
   int toJson(DateTime object) => object.millisecondsSinceEpoch;
 }
 
-class DurationPreciseSecondsConverter implements JsonConverter<Duration, num> {
+class DurationPreciseSecondsConverter
+    implements JsonConverter<Duration, Object> {
   const DurationPreciseSecondsConverter();
 
   @override
-  Duration fromJson(num json) =>
-      PreciseDuration.fromPreciseSeconds(json.toDouble());
+  Duration fromJson(Object json) {
+    final num value = switch (json) {
+      final num n => n,
+      final String s => num.parse(s),
+      _ => throw FormatException(
+        'Expected num or String for Duration, got ${json.runtimeType}',
+      ),
+    };
+    return PreciseDuration.fromPreciseSeconds(value.toDouble());
+  }
 
   @override
   num toJson(Duration object) => object.inPreciseSeconds;

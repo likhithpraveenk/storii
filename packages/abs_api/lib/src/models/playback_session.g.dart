@@ -24,7 +24,7 @@ _PlaybackSession _$PlaybackSessionFromJson(Map<String, dynamic> json) =>
       displayAuthor: json['displayAuthor'] as String,
       coverPath: json['coverPath'] as String?,
       duration: const DurationPreciseSecondsConverter().fromJson(
-        json['duration'] as num,
+        json['duration'] as Object,
       ),
       playMethod: $enumDecode(_$PlayMethodEnumMap, json['playMethod']),
       mediaPlayer: json['mediaPlayer'] as String,
@@ -34,13 +34,13 @@ _PlaybackSession _$PlaybackSessionFromJson(Map<String, dynamic> json) =>
       date: json['date'] as String,
       dayOfWeek: json['dayOfWeek'] as String,
       timeListening: const DurationPreciseSecondsConverter().fromJson(
-        json['timeListening'] as num,
+        json['timeListening'] as Object,
       ),
       startTime: const DurationPreciseSecondsConverter().fromJson(
-        json['startTime'] as num,
+        json['startTime'] as Object,
       ),
       currentTime: const DurationPreciseSecondsConverter().fromJson(
-        json['currentTime'] as num,
+        json['currentTime'] as Object,
       ),
       startedAt: const DateTimeEpochConverter().fromJson(
         (json['startedAt'] as num).toInt(),
