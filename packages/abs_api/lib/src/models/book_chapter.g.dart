@@ -8,8 +8,10 @@ part of 'book_chapter.dart';
 
 _BookChapter _$BookChapterFromJson(Map<String, dynamic> json) => _BookChapter(
   id: (json['id'] as num).toInt(),
-  start: const DurationPreciseSecondsConverter().fromJson(json['start'] as num),
-  end: const DurationPreciseSecondsConverter().fromJson(json['end'] as num),
+  start: const DurationPreciseSecondsConverter().fromJson(
+    json['start'] as Object,
+  ),
+  end: const DurationPreciseSecondsConverter().fromJson(json['end'] as Object),
   title: json['title'] as String,
 );
 

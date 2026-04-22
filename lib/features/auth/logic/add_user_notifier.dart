@@ -138,6 +138,7 @@ class AddUserNotifier extends _$AddUserNotifier {
       source: 'AddUserNotifier',
       level: .error,
       stackTrace: st,
+      originalError: error.originalError,
     );
     state = state.copyWith(status: .error, message: error.message);
   }

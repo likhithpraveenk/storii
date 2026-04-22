@@ -18,16 +18,19 @@ class LogService {
     String? source,
     LogLevel level = LogLevel.debug,
     StackTrace? stackTrace,
+    Object? originalError,
   }) {
     final enableHttp = _container.read(enableHttpLogsProvider);
     if (level == .http && !enableHttp) return;
     if (level == .debug && !kDebugMode) return;
 
+    final msg = originalError != null ? '$message\n$originalError' : message;
+
     if (kDebugMode) {
       final label = source != null
           ? '[$source] [${level.name.toUpperCase()}]'
           : '[${level.name.toUpperCase()}]';
-      _outputToConsole(level, '$label $message', stackTrace);
+      _outputToConsole(level, '$label $msg', stackTrace);
     }
 
     _container
@@ -35,7 +38,7 @@ class LogService {
         .add(
           LogEntry(
             timestamp: DateTime.now(),
-            message: message,
+            message: msg,
             source: source,
             level: level,
             stackTrace: stackTrace?.toString(),

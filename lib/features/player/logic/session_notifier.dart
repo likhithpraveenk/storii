@@ -120,8 +120,8 @@ class SessionNotifier extends _$SessionNotifier {
       }
       await Hive.box<String>(sessionIdBox).delete(session.id);
       await ref.read(localPositionProvider(session.id).notifier).clear();
-    } catch (_) {
-      log('session close failed will be cleaned up on app start');
+    } catch (e) {
+      log('session close failed will be cleaned up on app start: $e');
     } finally {
       state = null;
     }

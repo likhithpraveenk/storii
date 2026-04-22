@@ -12,11 +12,11 @@ _MediaProgress _$MediaProgressFromJson(Map<String, dynamic> json) =>
       libraryItemId: json['libraryItemId'] as String,
       episodeId: json['episodeId'] as String?,
       duration: const DurationPreciseSecondsConverter().fromJson(
-        json['duration'] as num,
+        json['duration'] as Object,
       ),
       progress: (json['progress'] as num?)?.toDouble(),
       currentTime: const DurationPreciseSecondsConverter().fromJson(
-        _readDuration(json, 'currentTime') as num,
+        json['currentTime'] as Object,
       ),
       isFinished: json['isFinished'] as bool,
       hideFromContinueListening: json['hideFromContinueListening'] as bool,

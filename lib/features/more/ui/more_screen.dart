@@ -27,8 +27,23 @@ class MoreScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: .start,
           children: [
-            const SizedBox(height: 64),
-            const LogoHeader(),
+            const SizedBox(height: 48),
+            Stack(
+              children: [
+                const LogoHeader(),
+                Positioned(
+                  top: 0,
+                  right: 16,
+                  child: IconButton(
+                    tooltip: l.logs,
+                    onPressed: () {
+                      context.push(AppRoute.logs.path);
+                    },
+                    icon: const Icon(Icons.bug_report),
+                  ),
+                ),
+              ],
+            ),
             const Divider(),
             const ConnectionInfoTile(),
             if (remainingTargets.isNotEmpty) ...[
@@ -53,11 +68,6 @@ class MoreScreen extends ConsumerWidget {
               onTap: () => context.push(AppRoute.settings.path),
               leading: const Icon(Icons.settings),
               title: Text(l.settings),
-            ),
-            ListTile(
-              onTap: () => context.push(AppRoute.logs.path),
-              leading: const Icon(Icons.bug_report),
-              title: Text(l.logs),
             ),
             const LogoutTile(),
             ListTile(

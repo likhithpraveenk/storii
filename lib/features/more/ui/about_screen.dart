@@ -6,8 +6,8 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/device_info_provider.dart';
 import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/logo_header.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class AboutTile extends StatelessWidget {
   const AboutTile({super.key});
@@ -70,7 +70,13 @@ class AboutScreen extends ConsumerWidget {
                 ListTile(
                   title: Text(l.sourceCode),
                   leading: const Icon(Icons.open_in_new),
-                  onTap: () => _launchUrl(context),
+                  onTap: () => launchUrlHelper(context, githubLink),
+                ),
+                ListTile(
+                  title: Text(l.foundBugQ),
+                  subtitle: Text(l.foundBugQSubtitle),
+                  leading: const Icon(Icons.feedback_outlined),
+                  onTap: () => launchUrlHelper(context, githubIssueLink),
                 ),
               ],
             ),
@@ -100,18 +106,5 @@ class AboutScreen extends ConsumerWidget {
         ],
       ),
     );
-  }
-
-  Future<void> _launchUrl(BuildContext context) async {
-    final url = Uri.parse(githubLink);
-    if (!await launchUrl(url, mode: .externalApplication) && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            AppLocalizations.of(context)!.couldNotUrl(url.toString()),
-          ),
-        ),
-      );
-    }
   }
 }

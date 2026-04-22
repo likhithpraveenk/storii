@@ -693,4 +693,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String connectionViaNetwork(String networkType) {
     return 'Connected via $networkType';
   }
+
+  @override
+  String get foundBugQ => 'Found a bug?';
+
+  @override
+  String get foundBugQSubtitle =>
+      'Open a GitHub issue for any bug you encountered';
 }
