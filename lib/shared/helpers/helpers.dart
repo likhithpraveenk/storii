@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:storii/l10n/l10n.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 String cleanHtml(String data) {
   return data
@@ -24,4 +27,13 @@ String formatBytes(int bytes) {
   }
 
   return '$bytes B';
+}
+
+Future<void> launchUrlHelper(BuildContext context, String url) async {
+  final uri = Uri.parse(url);
+  if (!await launchUrl(uri, mode: .externalApplication) && context.mounted) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(AppLocalizations.of(context)!.couldNotUrl(url))),
+    );
+  }
 }

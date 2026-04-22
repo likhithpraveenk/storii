@@ -9,7 +9,9 @@ import 'package:storii/features/auth/ui/add_user_sheet.dart';
 import 'package:storii/features/auth/ui/server_tile.dart';
 import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
+import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -18,6 +20,7 @@ class ServerListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     final serversAsync = ref.watch(serversProvider);
     final scheme = Theme.of(context).colorScheme;
     final maxHeight = MediaQuery.sizeOf(context).height * 0.5;
@@ -31,10 +34,29 @@ class ServerListScreen extends ConsumerWidget {
         shadowColor: Colors.transparent,
         actions: [
           IconButton(
+            tooltip: l.logs,
             onPressed: () {
               context.push(AppRoute.logs.path);
             },
             icon: const Icon(Icons.bug_report),
+          ),
+          IconButton(
+            tooltip: l.foundBugQ,
+            onPressed: () {
+              AppDialog.show(
+                context,
+                title: l.foundBugQ,
+                body: Text(l.foundBugQSubtitle),
+                actionLabel: 'Github',
+                actionIcon: Icons.open_in_new,
+                onTap: () async {
+                  if (context.mounted) {
+                    await launchUrlHelper(context, githubIssueLink);
+                  }
+                },
+              );
+            },
+            icon: const Icon(Icons.feedback_outlined),
           ),
         ],
       ),
@@ -98,7 +120,7 @@ class ServerListScreen extends ConsumerWidget {
                 width: double.infinity,
                 child: AppOutlinedButton(
                   icon: const Icon(Icons.add),
-                  text: AppLocalizations.of(context)!.addServer,
+                  text: l.addServer,
                   onPressed: () async {
                     final serverUrl = await showAddServerSheet(context);
                     if (serverUrl != null && context.mounted) {

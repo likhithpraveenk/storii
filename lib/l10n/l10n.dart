@@ -1377,6 +1377,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Connected via {networkType}'**
   String connectionViaNetwork(String networkType);
+
+  /// No description provided for @foundBugQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Found a bug?'**
+  String get foundBugQ;
+
+  /// No description provided for @foundBugQSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open a GitHub issue for any bug you encountered'**
+  String get foundBugQSubtitle;
 }
 
 class _AppLocalizationsDelegate
