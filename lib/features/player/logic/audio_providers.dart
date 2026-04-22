@@ -96,11 +96,11 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       loadingEpisodeId: episodeId,
     );
     try {
-      final oldSession = ref.read(sessionProvider);
-      if (oldSession != null) {
-        log('old session exists. calling audio handler stop');
-        await audioHandler.stop();
-      }
+      // final oldSession = ref.read(sessionProvider);
+      // if (oldSession != null) {
+      //   log('old session exists. calling audio handler stop');
+      //   await audioHandler.stop();
+      // }
 
       final download = ref.read(downloadsProvider)[itemId];
       final isFullyDownloaded =
