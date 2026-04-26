@@ -166,6 +166,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
         source: 'AudioPlayerNotifier',
         level: .error,
         stackTrace: st,
+        originalError: error.originalError,
       );
       state = const AudioPlayerState();
       throw error;

@@ -133,7 +133,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   Future<void> setSources(
-    List<ProgressiveAudioSource> sources, {
+    List<UriAudioSource> sources, {
     required int initialIndex,
     required Duration initialPosition,
   }) async {

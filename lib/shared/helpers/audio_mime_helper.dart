@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:abs_api/abs_api.dart';
-
 enum AudioMimeType {
   // Progressive formats
   mp3,
@@ -111,20 +109,10 @@ class AudioMimeHelper {
     return false;
   }
 
-  static PlaybackCapability getPlaybackCapability({
-    required AudioMimeType mimeType,
-    required PlayMethod playMethod,
-  }) {
-    if (mimeType.isAdaptiveStream && canPlatformPlay(mimeType)) {
-      return .adaptiveStream;
-    }
+  static PlaybackCapability getPlaybackCapability(AudioMimeType mimeType) {
+    if (!canPlatformPlay(mimeType)) return .unsupported;
 
-    if ((playMethod == .directPlay || playMethod == .directStream) &&
-        canPlatformPlay(mimeType)) {
-      return .directPlay;
-    }
-
-    return .unsupported;
+    return mimeType.isAdaptiveStream ? .adaptiveStream : .directPlay;
   }
 
   static List<String> get platformSupportedMimeTypes {
