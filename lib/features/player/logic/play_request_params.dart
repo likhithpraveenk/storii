@@ -5,6 +5,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/device_info_provider.dart';
+import 'package:storii/shared/helpers/audio_mime_helper.dart';
 
 part 'play_request_params.g.dart';
 
@@ -20,7 +21,6 @@ Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
     manufacturer,
     model,
     sdkVersion,
-    mimeTypes,
   ) = switch (device) {
     AndroidDeviceInfo d => (
       '$appName just_audio',
@@ -29,14 +29,21 @@ Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
       d.manufacturer,
       d.model,
       d.version.sdkInt.toString(),
-      _androidSupportedMimeTypes,
     ),
-    _ => ('unknown', '', '', '', '', '', <String>[]),
+    IosDeviceInfo d => (
+      '$appName just_audio',
+      d.identifierForVendor ?? '',
+      (d.name),
+      'Apple',
+      d.model,
+      d.systemVersion,
+    ),
+    _ => ('unknown', '', '', '', '', ''),
   };
 
   return PlayItemRequestParams(
     mediaPlayer: mediaPlayer,
-    supportedMimeTypes: mimeTypes,
+    supportedMimeTypes: AudioMimeHelper.platformSupportedMimeTypes,
     deviceInfo: ClientDeviceInfo(
       clientName: 'storii',
       clientVersion: package.version,
@@ -48,17 +55,3 @@ Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
     ),
   );
 }
-
-const _androidSupportedMimeTypes = [
-  'audio/mpeg',
-  'audio/aac',
-  'audio/mp4',
-  'audio/flac',
-  'audio/x-flac',
-  'audio/ogg',
-  'audio/opus',
-  'audio/wav',
-  'audio/x-wav',
-  'application/x-mpegURL',
-  'application/dash+xml',
-];
