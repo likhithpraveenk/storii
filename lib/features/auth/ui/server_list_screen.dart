@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/config/theme.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/features/auth/ui/add_server_sheet.dart';
 import 'package:storii/features/auth/ui/add_user_sheet.dart';
@@ -66,7 +67,15 @@ class ServerListScreen extends ConsumerWidget {
           child: Column(
             mainAxisAlignment: .center,
             children: [
-              Center(child: Image.asset(appIcon, width: 150, height: 150)),
+              Center(
+                child: DecoratedBox(
+                  decoration: const BoxDecoration(
+                    shape: .circle,
+                    color: appPrimaryColor,
+                  ),
+                  child: Image.asset(appIcon, width: 150, height: 150),
+                ),
+              ),
               Padding(
                 padding: const .symmetric(vertical: 16),
                 child: Material(
