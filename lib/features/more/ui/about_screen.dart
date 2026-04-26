@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
@@ -87,17 +86,10 @@ class AboutScreen extends ConsumerWidget {
               alignment: .bottomCenter,
               padding: const .all(24),
               child: deviceInfo != null
-                  ? GestureDetector(
-                      onLongPress: () async {
-                        await Clipboard.setData(
-                          ClipboardData(text: deviceInfo),
-                        );
-                      },
-                      child: Text(
-                        deviceInfo,
-                        style: textTheme.bodySmall?.copyWith(
-                          color: scheme.onSurfaceVariant,
-                        ),
+                  ? SelectableText(
+                      deviceInfo,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: scheme.onSurfaceVariant,
                       ),
                     )
                   : const SizedBox.shrink(),

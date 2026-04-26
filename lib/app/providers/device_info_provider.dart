@@ -19,9 +19,11 @@ Future<String> deviceInfoString(Ref ref) async {
 
   final osDetails = switch (device) {
     final AndroidDeviceInfo d =>
-      'Android ${d.version.release} (SDK ${d.version.sdkInt}; build ${d.display})\n'
-          'Brand: ${d.brand} | Manufacturer: ${d.manufacturer}\n'
-          'Device: ${d.device} (${d.product}) | Model: ${d.model}',
+      'Android ${d.version.release} (SDK ${d.version.sdkInt}) | '
+          '${d.manufacturer} ${d.model}',
+
+    final IosDeviceInfo d => 'iOS ${d.systemVersion} | ${d.modelName}',
+
     _ => 'Unknown platform',
   };
 
