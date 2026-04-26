@@ -26,7 +26,8 @@ class DownloadTrackProgress extends StatelessWidget {
               crossAxisAlignment: .start,
               children: [
                 Text(
-                  track.audioTrack.metadata.filename,
+                  track.audioTrack.metadata?.filename ??
+                      track.audioTrack.index.toString(),
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: scheme.onSurfaceVariant,
                   ),

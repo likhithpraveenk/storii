@@ -1,7 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/downloads/logic/download_notifier.dart';
@@ -68,10 +68,11 @@ class ImageWidget extends ConsumerWidget {
       fit: BoxFit.cover,
       placeholder: (_, _) => const PlaceholderImage(),
       errorWidget: (context, url, error) {
-        if (kDebugMode) debugPrint('CachedNetworkImage: $error');
-        return PlaceholderImage(
-          label: error.toString().contains('404') ? l.noImage : l.errorImage,
-        );
+        final error404 = error.toString().contains('404');
+        if (!error404) {
+          log('$error', name: 'CachedNetworkImage');
+        }
+        return PlaceholderImage(label: error404 ? l.noImage : l.errorImage);
       },
     );
   }
