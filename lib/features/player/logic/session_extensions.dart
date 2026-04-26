@@ -104,7 +104,7 @@ extension PlaybackSessionX on PlaybackSession {
     );
     for (final track in tracks) {
       final local = await DownloadsFilesystemHelper().trackPathIfExists(
-        filename: track.metadata.filename,
+        filename: track.metadata?.filename ?? track.index.toString(),
         itemTitle: libraryItem?.title ?? libraryItemId,
       );
       if (local != null) trackPaths[track.index] = local;

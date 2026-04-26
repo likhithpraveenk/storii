@@ -46,7 +46,8 @@ class DownloadsNotifier extends _$DownloadsNotifier {
         item.tracks.map((track) async {
           final path = await _filesystem.trackPath(
             itemTitle: item.title ?? libraryItemId,
-            filename: track.metadata.filename,
+            filename: track.metadata?.filename ?? track.index.toString(),
+            //! TODO: fix this when fixing downloads
           );
           final prev = existing?.tracks.firstWhereOrNull(
             (dt) => dt.audioTrack.index == track.index,
