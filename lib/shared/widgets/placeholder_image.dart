@@ -18,7 +18,7 @@ class PlaceholderImage extends StatelessWidget {
           Opacity(
             opacity: label != null ? 0.05 : 0.2,
             child: Image.asset(
-              appForegroundIcon,
+              appIcon,
               width: 120,
               height: 120,
               color: scheme.onSurfaceVariant,

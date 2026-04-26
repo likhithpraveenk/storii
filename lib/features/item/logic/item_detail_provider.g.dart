@@ -26,7 +26,7 @@ final class ItemDetailProvider
   }) : super(
          retry: null,
          name: r'itemDetailProvider',
-         isAutoDispose: true,
+         isAutoDispose: false,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -70,7 +70,7 @@ final class ItemDetailProvider
   }
 }
 
-String _$itemDetailHash() => r'd84b62f30eb236d379e2cabc6f7251357dc56b3b';
+String _$itemDetailHash() => r'0dedbaea730e0d4d8bb9d9b9d585c934d1dc46de';
 
 final class ItemDetailFamily extends $Family
     with
@@ -84,7 +84,7 @@ final class ItemDetailFamily extends $Family
         name: r'itemDetailProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: true,
+        isAutoDispose: false,
       );
 
   ItemDetailProvider call(

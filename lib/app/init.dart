@@ -54,7 +54,7 @@ Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
     config: const AudioServiceConfig(
       androidNotificationChannelId: 'com.likhithpraveenk.storii.audio',
       androidNotificationChannelName: 'Audio Playback',
-      androidNotificationIcon: 'drawable/ic_launcher_foreground',
+      androidNotificationIcon: 'drawable/ic_notification',
       androidStopForegroundOnPause: true,
       androidNotificationOngoing: true,
     ),

@@ -14,6 +14,5 @@ const githubIssueLink = '$githubLink/issues/new?template=bug_report.md';
 const githubFeatureLink = '$githubLink/issues/new?template=feature_request.md';
 
 const appIcon = 'assets/icons/icon.png';
-const appForegroundIcon = 'assets/icons/foreground.png';
 
 const downloadsDir = 'downloads';

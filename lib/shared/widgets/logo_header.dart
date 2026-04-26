@@ -10,7 +10,7 @@ class LogoHeader extends StatelessWidget {
       padding: const .all(24),
       alignment: .center,
       child: Image.asset(
-        appForegroundIcon,
+        appIcon,
         width: 100,
         height: 100,
         color: Theme.of(context).colorScheme.onSurface,
