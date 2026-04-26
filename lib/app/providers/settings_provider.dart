@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:abs_api/abs_api.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
@@ -31,9 +31,7 @@ class AppSettingsNotifier extends _$AppSettingsNotifier {
       try {
         return AppSettings.fromJson(jsonDecode(settingsJson));
       } catch (e, st) {
-        if (kDebugMode) {
-          debugPrint('Error: decoding app settings $e Stacktrace: $st');
-        }
+        log('$e', stackTrace: st, level: 1000, name: 'AppSettings');
       }
     }
     return const AppSettings();
@@ -74,9 +72,7 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
       try {
         return UserSettings.fromJson(jsonDecode(settingsJson));
       } catch (e, st) {
-        if (kDebugMode) {
-          debugPrint('Error: decoding user settings $e Stacktrace: $st');
-        }
+        log('$e', stackTrace: st, level: 1000, name: 'UserSettings');
       }
     }
 
