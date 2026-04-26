@@ -9,7 +9,7 @@ import 'package:storii/shared/helpers/app_error.dart';
 
 part 'item_detail_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<LibraryItem> itemDetail(
   Ref ref,
   String id, {
