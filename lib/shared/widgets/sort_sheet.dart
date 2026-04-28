@@ -34,7 +34,7 @@ class SortBottomSheet extends ConsumerWidget {
           ...sortValues.map((type) {
             final isSelected = filterState.sortType == type;
             return ListTile(
-              title: Text(type.getDisplayString(context)),
+              title: Text(type.label),
               selected: isSelected,
               trailing: isSelected
                   ? Icon(

@@ -115,7 +115,7 @@ class FullPlayer extends ConsumerWidget {
               ],
             ),
             Text(
-              session.playMethod.getDisplayString(context),
+              session.playMethod.label,
               textAlign: .center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.outlineVariant,

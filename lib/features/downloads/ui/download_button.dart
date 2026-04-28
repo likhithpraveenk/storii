@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/downloads/logic/download_notifier.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';
 import 'package:storii/features/downloads/ui/downloads_screen.dart';
-import 'package:storii/l10n/l10n.dart';
 
 class ActiveDownloadsButton extends ConsumerWidget {
   const ActiveDownloadsButton({super.key});
@@ -24,7 +24,7 @@ class ActiveDownloadsButton extends ConsumerWidget {
     return Stack(
       children: [
         IconButton(
-          tooltip: AppLocalizations.of(context)!.downloads,
+          tooltip: l10n.downloads,
           onPressed: () {
             context.push(
               AppRoute.downloads.path,
@@ -69,16 +69,15 @@ class DownloadButton extends ConsumerWidget {
     final item = downloads[libraryItemId];
     final notifier = ref.read(downloadsProvider.notifier);
     final scheme = Theme.of(context).colorScheme;
-    final l = AppLocalizations.of(context)!;
 
     return switch (item?.status) {
       null || .cancelled => IconButton(
-        tooltip: l.download,
+        tooltip: l10n.download,
         icon: const Icon(Icons.download_outlined),
         onPressed: () => notifier.download(libraryItemId),
       ),
       .queued => IconButton(
-        tooltip: l.queued,
+        tooltip: l10n.queued,
         icon: Icon(Icons.schedule, color: scheme.outline),
         onPressed: () => notifier.cancel(libraryItemId),
       ),
@@ -87,7 +86,7 @@ class DownloadButton extends ConsumerWidget {
         onCancel: () => notifier.cancel(libraryItemId),
       ),
       .completed => IconButton(
-        tooltip: l.downloaded,
+        tooltip: l10n.downloaded,
         icon: const Icon(
           Icons.download_for_offline_outlined,
           color: appGreenColor,
@@ -96,12 +95,12 @@ class DownloadButton extends ConsumerWidget {
             showDownloadsDeleteDialog(context, item: item!, ref: ref),
       ),
       .failed => IconButton(
-        tooltip: l.downloadFailed,
+        tooltip: l10n.downloadFailed,
         icon: Icon(Icons.refresh, color: scheme.error),
         onPressed: () => notifier.download(libraryItemId),
       ),
       .paused => IconButton(
-        tooltip: l.resumeDownload,
+        tooltip: l10n.resumeDownload,
         icon: Icon(Icons.play_circle_outline, color: scheme.tertiary),
         onPressed: () => notifier.resume(libraryItemId),
       ),

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/dashed_underline.dart';
@@ -18,7 +18,6 @@ class CoverImageTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
     final size = MediaQuery.sizeOf(context);
     final theme = Theme.of(context);
     final orientation = MediaQuery.orientationOf(context);
@@ -70,7 +69,7 @@ class CoverImageTitle extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  item.title ?? l.noTitle,
+                  item.title ?? l10n.noTitle,
                   style: theme.textTheme.headlineMedium,
                   textAlign: .center,
                 ),
@@ -112,7 +111,7 @@ class CoverImageTitle extends StatelessWidget {
                     children: [
                       const Icon(Icons.schedule, size: 16),
                       Text(
-                        item.duration.toReadableDuration(context),
+                        item.duration.toReadableDuration(),
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: .w600,
                           color: theme.colorScheme.onSurfaceVariant,

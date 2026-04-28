@@ -1,6 +1,5 @@
 import 'package:abs_api/abs_api.dart';
-import 'package:flutter/widgets.dart';
-import 'package:storii/l10n/l10n.dart';
+import 'package:storii/app/init.dart';
 
 enum Languages {
   en('English');
@@ -11,7 +10,7 @@ enum Languages {
 
 abstract class EnumHasValue {
   String get value;
-  String getDisplayString(BuildContext context);
+  String get label;
 }
 
 enum AudiobookSort implements EnumHasValue {
@@ -34,8 +33,7 @@ enum AudiobookSort implements EnumHasValue {
   const AudiobookSort(this.value);
 
   @override
-  String getDisplayString(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+  String get label {
     return switch (this) {
       title => l10n.title,
       authorName => l10n.author,
@@ -68,8 +66,7 @@ enum SeriesSort implements EnumHasValue {
   const SeriesSort(this.value);
 
   @override
-  String getDisplayString(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+  String get label {
     return switch (this) {
       numBooks => l10n.numOfBooks,
       addedAt => l10n.dateAdded,
@@ -94,8 +91,7 @@ enum AuthorSort implements EnumHasValue {
   const AuthorSort(this.value);
 
   @override
-  String getDisplayString(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+  String get label {
     return switch (this) {
       name => l10n.name,
       lastFirst => l10n.lastFirst,
@@ -121,8 +117,7 @@ enum PodcastSort implements EnumHasValue {
   const PodcastSort(this.value);
 
   @override
-  String getDisplayString(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+  String get label {
     return switch (this) {
       addedAt => l10n.dateAdded,
       size => l10n.size,
@@ -225,18 +220,17 @@ enum SearchFilter {
   podcasts,
   episodes;
 
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
+  String get label {
     return switch (this) {
-      .all => l.all,
-      .books => l.books,
-      .series => l.series,
-      .authors => l.authors,
-      .narrators => l.narrators,
-      .tags => l.tags,
-      .genres => l.genres,
-      .podcasts => l.podcasts,
-      .episodes => l.episodes,
+      .all => l10n.all,
+      .books => l10n.books,
+      .series => l10n.series,
+      .authors => l10n.authors,
+      .narrators => l10n.narrators,
+      .tags => l10n.tags,
+      .genres => l10n.genres,
+      .podcasts => l10n.podcasts,
+      .episodes => l10n.episodes,
     };
   }
 }

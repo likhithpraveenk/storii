@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:storii/app/config/theme.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/app/models/playback_event.dart';
-import 'package:storii/l10n/l10n.dart';
 
 extension IterableExtensions<T> on Iterable<T> {
   T? firstWhereOrNull(bool Function(T element) test) {
@@ -127,21 +127,16 @@ extension DurationPreciseX on Duration {
     return '$hoursString$minutesString:$secondsString';
   }
 
-  String toReadableDuration(
-    BuildContext context, {
-    bool isLeft = false,
-    bool showSeconds = false,
-  }) {
-    final l = AppLocalizations.of(context)!;
+  String toReadableDuration({bool isLeft = false, bool showSeconds = false}) {
     final hours = inHours;
     final minutes = inMinutes.remainder(60);
     final seconds = inSeconds.remainder(60);
 
     return isLeft
-        ? l.durationLeft(hours, minutes)
+        ? l10n.durationLeft(hours, minutes)
         : showSeconds
-        ? l.readableDurationFull(hours, minutes, seconds)
-        : l.readableDuration(hours, minutes);
+        ? l10n.readableDurationFull(hours, minutes, seconds)
+        : l10n.readableDuration(hours, minutes);
   }
 }
 
@@ -151,16 +146,14 @@ extension DoubleToDurationX on double {
 }
 
 extension PlaybackEventKindX on PlaybackEventKind {
-  String localized(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-
+  String get label {
     return switch (this) {
-      .play => l.play,
-      .pause => l.pause,
-      .seek => l.seek,
-      .complete => l.complete,
-      .stop => l.stop,
-      .sync => l.sync,
+      .play => l10n.play,
+      .pause => l10n.pause,
+      .seek => l10n.seek,
+      .complete => l10n.complete,
+      .stop => l10n.stop,
+      .sync => l10n.sync,
     };
   }
 }

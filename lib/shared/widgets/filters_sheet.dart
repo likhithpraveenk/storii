@@ -1,10 +1,10 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/features/library/logic/filter_data_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 
 class FilterBottomSheet extends StatefulWidget {
@@ -71,7 +71,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     .watch(libraryFiltersProvider(widget.screen))
                     .collapseSeries;
                 return CheckboxListTile(
-                  title: Text(AppLocalizations.of(context)!.collapseSeries),
+                  title: Text(l10n.collapseSeries),
                   contentPadding: const .only(left: 24, right: 24),
                   value: isSelected,
                   onChanged: (_) {
@@ -86,7 +86,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             if (group.isImmediate) {
               return ListTile(
                 contentPadding: const .only(left: 24, right: 24),
-                title: Text(group.getDisplayString(context)),
+                title: Text(group.label),
                 selected: widget.currentFilter.group == group,
                 onTap: () =>
                     widget.notifier.setFilter(group.toImmediateFilter()),
@@ -94,7 +94,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             }
             return ExpansionTile(
               key: ValueKey('filter_${group.name}_${_expandedGroup == group}'),
-              title: Text(group.getDisplayString(context)),
+              title: Text(group.label),
               initiallyExpanded: _expandedGroup == group,
               tilePadding: const .only(left: 24, right: 12),
               onExpansionChanged: (isExpanded) {
@@ -174,8 +174,8 @@ class ActiveFiltersChips extends ConsumerWidget {
 
     final filterData = ref.watch(filterDataProvider);
 
-    final groupLabel = filter.group.getDisplayString(context);
-    final valueLabel = filter.getDisplayLabel(context, filterData);
+    final groupLabel = filter.group.label;
+    final valueLabel = filter.label(context, filterData);
 
     void removeFilter() {
       ref.read(libraryFiltersProvider(screen).notifier).setFilter(null);

@@ -2,6 +2,7 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
@@ -9,7 +10,6 @@ import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/features/search/ui/search_button.dart';
 import 'package:storii/features/series/ui/series_card.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/library_switcher.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -21,7 +21,6 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final shelvesAsync = ref.watch(shelvesProvider);
     final theme = Theme.of(context);
-    final l = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -37,7 +36,7 @@ class HomeScreen extends ConsumerWidget {
         child: shelvesAsync.when(
           data: (shelves) {
             if (shelves.isEmpty) {
-              return Center(child: Text(l.empty));
+              return Center(child: Text(l10n.empty));
             }
             final displayList =
                 shelves.where((s) => s.identity != null).toList()..sort(

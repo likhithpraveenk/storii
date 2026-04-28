@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/item/ui/chapter_list.dart';
@@ -9,7 +10,6 @@ import 'package:storii/features/item/ui/description_with_chips.dart';
 import 'package:storii/features/item/ui/metadata_wrap.dart';
 import 'package:storii/features/item/ui/play_progress_widget.dart';
 import 'package:storii/features/item/ui/series_chips_list.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -25,7 +25,6 @@ class ItemDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
 
     final itemAsync = ref.watch(
@@ -69,7 +68,7 @@ class ItemDetailScreen extends ConsumerWidget {
                       SeriesChipsList(item.series),
                       const SizedBox(height: 8),
                       ExpandableDescriptionWithChips(
-                        data: item.description ?? l.noDescription,
+                        data: item.description ?? l10n.noDescription,
                         collapsedHeight: 60,
                         genres: item.genres,
                         tags: item.tags,
@@ -80,7 +79,7 @@ class ItemDetailScreen extends ConsumerWidget {
                       const Divider(height: 0),
                       ListTile(
                         leading: const Icon(Icons.list_rounded),
-                        title: Text(l.chapters),
+                        title: Text(l10n.chapters),
                         trailing: Text(
                           '${item.chapters.length}',
                           style: textTheme.titleSmall?.copyWith(
@@ -92,7 +91,7 @@ class ItemDetailScreen extends ConsumerWidget {
                             context,
                             chapters: item.chapters,
                             itemId: item.id,
-                            itemTitle: item.title ?? l.noTitle,
+                            itemTitle: item.title ?? l10n.noTitle,
                           );
                         },
                       ),

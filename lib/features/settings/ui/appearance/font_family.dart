@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:storii/app/config/keys.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/settings/logic/user_fonts.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -18,18 +18,17 @@ class FontFamilyTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final fontFamily = ref.watch(fontFamilyProvider);
-    final l = AppLocalizations.of(context)!;
 
     return ListTile(
-      title: Text(l.fontFamily),
-      subtitle: Text(fontFamily ?? l.system),
+      title: Text(l10n.fontFamily),
+      subtitle: Text(fontFamily ?? l10n.system),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
         final scaffoldContext = shellScaffoldKey.currentContext;
         if (scaffoldContext == null) return;
         AppBottomSheet.show(
           scaffoldContext,
-          title: l.fontFamily,
+          title: l10n.fontFamily,
           body: const FontFamilySheet(),
         );
       },
@@ -52,14 +51,13 @@ class _FontFamilySheetState extends ConsumerState<FontFamilySheet> {
     final userFontsAsync = ref.watch(userFontsProvider);
     _selected ??= currentFont ?? 'system';
     final theme = Theme.of(context);
-    final l = AppLocalizations.of(context)!;
 
     return Column(
       children: [
         Padding(
           padding: const .fromLTRB(24, 0, 24, 24),
           child: Text(
-            l.sampleText,
+            l10n.sampleText,
             style: theme.textTheme.bodyMedium?.copyWith(
               fontFamily: _selected,
               color: theme.colorScheme.onSurfaceVariant,
@@ -68,7 +66,7 @@ class _FontFamilySheetState extends ConsumerState<FontFamilySheet> {
           ),
         ),
         _FontTile(
-          label: l.system,
+          label: l10n.system,
           value: 'system',
           selected: _selected,
           onTap: (v) => setState(() => _selected = v),
@@ -100,7 +98,7 @@ class _FontFamilySheetState extends ConsumerState<FontFamilySheet> {
           child: SizedBox(
             width: double.infinity,
             child: AppFilledButton(
-              text: l.save,
+              text: l10n.save,
               onPressed: () async {
                 final val = _selected;
                 await ref
@@ -119,7 +117,7 @@ class _FontFamilySheetState extends ConsumerState<FontFamilySheet> {
             children: [
               Expanded(
                 child: AppOutlinedButton(
-                  text: l.remove,
+                  text: l10n.remove,
                   isDestructive: true,
                   icon: Icon(Icons.delete, color: theme.colorScheme.error),
                   onPressed: () async {
@@ -131,7 +129,7 @@ class _FontFamilySheetState extends ConsumerState<FontFamilySheet> {
               const SizedBox(width: 16),
               Expanded(
                 child: AppOutlinedButton(
-                  text: l.addFonts,
+                  text: l10n.addFonts,
                   icon: const Icon(Icons.folder_open),
                   onPressed: () async {
                     if (Platform.isAndroid) {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/downloads/logic/download_notifier.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -90,7 +90,6 @@ class DownloadStatusRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final l = AppLocalizations.of(context)!;
 
     return switch (item.status) {
       .queued => Row(
@@ -100,7 +99,7 @@ class DownloadStatusRow extends StatelessWidget {
             child: RandomWaveform(barCount: 4, barMaxHeight: 12, barWidth: 2),
           ),
           const SizedBox(width: 6),
-          Text(l.queued, style: textTheme.labelSmall),
+          Text(l10n.queued, style: textTheme.labelSmall),
         ],
       ),
       .downloading => Row(
@@ -120,11 +119,11 @@ class DownloadStatusRow extends StatelessWidget {
         style: textTheme.labelSmall?.copyWith(color: scheme.primary),
       ),
       .failed || .cancelled => Text(
-        l.failed,
+        l10n.failed,
         style: textTheme.labelSmall?.copyWith(color: scheme.error),
       ),
       .paused => Text(
-        '${l.paused}'
+        '${l10n.paused}'
         ' · '
         '${formatBytes(item.receivedBytes)} / ${formatBytes(item.totalBytes)}',
         style: textTheme.labelSmall?.copyWith(color: scheme.onSurfaceVariant),
@@ -141,16 +140,16 @@ class DownloadTileTrailingActions extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(downloadsProvider.notifier);
-    final l = AppLocalizations.of(context)!;
+
     return switch (item.status) {
       .downloading || .queued => IconButton(
         icon: const Icon(Icons.pause_circle_outline),
-        tooltip: l.pause,
+        tooltip: l10n.pause,
         onPressed: () => notifier.pause(item.libraryItemId),
       ),
       .paused || .failed || .cancelled => IconButton(
         icon: const Icon(Icons.play_circle_outline),
-        tooltip: l.resume,
+        tooltip: l10n.resume,
         onPressed: () => notifier.resume(item.libraryItemId),
       ),
       .completed => IconButton(
@@ -158,7 +157,7 @@ class DownloadTileTrailingActions extends ConsumerWidget {
           Icons.delete_outline,
           color: Theme.of(context).colorScheme.error,
         ),
-        tooltip: l.delete,
+        tooltip: l10n.delete,
         onPressed: () =>
             showDownloadsDeleteDialog(context, item: item, ref: ref),
       ),
@@ -171,17 +170,16 @@ void showDownloadsDeleteDialog(
   required WidgetRef ref,
   required DownloadItem item,
 }) {
-  final l = AppLocalizations.of(context)!;
   AppDialog.show(
     context,
-    title: l.removeDownloadQ,
+    title: l10n.removeDownloadQ,
     body: Column(
       children: [
         Text(item.title),
-        Text(l.willBeFreed(formatBytes(item.receivedBytes))),
+        Text(l10n.willBeFreed(formatBytes(item.receivedBytes))),
       ],
     ),
-    actionLabel: l.remove,
+    actionLabel: l10n.remove,
     isDestructive: true,
     onTap: () async {
       await ref.read(downloadsProvider.notifier).delete(item.libraryItem.id);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
@@ -8,7 +9,6 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/user_auth_status.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
 import 'package:storii/features/auth/ui/add_user_sheet.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
 
@@ -22,7 +22,6 @@ class UserTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final l = AppLocalizations.of(context)!;
     final color = server.url.color;
     final authStatus = ref.watch(userAuthStatusProvider(user.id)).value;
     final loginNeeded = authStatus == .loginRequired;
@@ -32,7 +31,7 @@ class UserTile extends ConsumerWidget {
       borderRadius: .circular(kRadius),
       onTap: () async {
         if (isActive) {
-          LogService.log(l.switchingToUser(user.username), level: .info);
+          LogService.log(l10n.switchingToUser(user.username), level: .info);
           await ref.read(appSettingsProvider.notifier).setCurrentUser(user);
         } else if (loginNeeded) {
           await showAddUserSheet(context, server.url, user.username);
@@ -63,10 +62,10 @@ class UserTile extends ConsumerWidget {
             const SizedBox(width: 8),
             Text(
               loginNeeded
-                  ? l.noSession
+                  ? l10n.noSession
                   : isActive
-                  ? l.active
-                  : '${l.loading}...',
+                  ? l10n.active
+                  : '${l10n.loading}...',
               style: textTheme.labelSmall?.copyWith(
                 color: scheme.onSurface,
                 fontStyle: FontStyle.italic,
@@ -78,9 +77,9 @@ class UserTile extends ConsumerWidget {
               onTap: () {
                 AppDialog.show(
                   context,
-                  title: l.deleteUserQ(user.username),
+                  title: l10n.deleteUserQ(user.username),
                   isDestructive: true,
-                  actionLabel: l.delete,
+                  actionLabel: l10n.delete,
                   onTap: () async {
                     await ref.read(usersProvider.notifier).delete(user);
                   },

@@ -27,7 +27,7 @@ class MiniPlayer extends ConsumerWidget {
     final globalPosition =
         ref.watch(globalPositionProvider).value ?? Duration.zero;
     final remaining = totalDuration - globalPosition;
-    final remainingStr = remaining.toReadableDuration(context, isLeft: true);
+    final remainingStr = remaining.toReadableDuration(isLeft: true);
 
     return Container(
       padding: const .all(8),

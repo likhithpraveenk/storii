@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/download_notifier.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
@@ -127,11 +127,10 @@ class TitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final title = item.collapsedSeries != null
         ? item.collapsedSeries!.name
-        : item.title ?? l.noTitle;
+        : item.title ?? l10n.noTitle;
 
     return Container(
       padding: !inStack ? const .only(top: 8) : const .all(8),
@@ -164,7 +163,7 @@ class TitleWidget extends StatelessWidget {
             ),
           ),
           Text(
-            item.authorName ?? l.noAuthor,
+            item.authorName ?? l10n.noAuthor,
             maxLines: 1,
             overflow: .ellipsis,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(

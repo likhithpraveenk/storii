@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/l10n/l10n.dart';
+import 'package:storii/app/init.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -14,7 +14,7 @@ class ProfileScreen extends StatelessWidget {
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
         ),
-        title: Text(AppLocalizations.of(context)!.profile),
+        title: Text(l10n.profile),
       ),
       body: const Center(child: Text('coming soon')),
     );

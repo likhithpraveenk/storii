@@ -51,6 +51,7 @@ class MyApp extends ConsumerWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       builder: (context, child) {
+        init.l10n = AppLocalizations.of(context)!;
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(textScaler: textScaler),
           child: child ?? const SizedBox.shrink(),

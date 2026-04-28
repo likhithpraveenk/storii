@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/logic/cache_notifier.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -16,7 +16,7 @@ class AppCacheTile extends ConsumerWidget {
 
     return ListTile(
       leading: const Icon(Icons.cached),
-      title: Text(AppLocalizations.of(context)!.appCache),
+      title: Text(l10n.appCache),
       subtitle: cacheAsync.when(
         data: (size) => Text(formatBytes(size)),
         loading: () => const RandomWaveform(barMaxHeight: 16, barCount: 8),

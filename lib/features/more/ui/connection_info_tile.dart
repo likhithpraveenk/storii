@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/theme.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/connection_providers.dart';
-import 'package:storii/l10n/l10n.dart';
 
 class ConnectionInfoTile extends ConsumerWidget {
   const ConnectionInfoTile({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context)!;
     final socketAsync = ref.watch(socketStatusProvider);
     final connectionType = ref.watch(connectionTypeProvider);
 
@@ -20,23 +19,23 @@ class ConnectionInfoTile extends ConsumerWidget {
         (!socketAsync.hasValue && !socketAsync.hasError);
 
     final titleText = isLoading
-        ? l.connectionChecking
+        ? l10n.connectionChecking
         : (isConnected
-              ? l.connectionServerConnected
-              : l.connectionServerDisconnected);
+              ? l10n.connectionServerConnected
+              : l10n.connectionServerDisconnected);
 
     final networkTypeStr = switch (connectionType) {
-      .wifi => l.connectionTypeWifi,
-      .mobile => l.connectionTypeMobile,
-      .ethernet => l.connectionTypeEthernet,
-      .none => l.connectionTypeNone,
+      .wifi => l10n.connectionTypeWifi,
+      .mobile => l10n.connectionTypeMobile,
+      .ethernet => l10n.connectionTypeEthernet,
+      .none => l10n.connectionTypeNone,
     };
 
     final subtitleText = isLoading
-        ? l.connectionPleaseWait
+        ? l10n.connectionPleaseWait
         : (isConnected
-              ? l.connectionViaNetwork(networkTypeStr)
-              : l.connectionCantReachServer(networkTypeStr));
+              ? l10n.connectionViaNetwork(networkTypeStr)
+              : l10n.connectionCantReachServer(networkTypeStr));
 
     final leadingIcon = isLoading
         ? const SizedBox.square(

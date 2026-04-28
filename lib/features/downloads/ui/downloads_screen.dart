@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/downloads/logic/download_notifier.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 
 enum DownloadsScreenTab { active, completed }
@@ -21,7 +21,6 @@ class DownloadsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final activeDownloads = ref.watch(activeDownloadsProvider);
     final completedDownloads = ref.watch(completedDownloadsProvider);
-    final l = AppLocalizations.of(context)!;
 
     return DefaultTabController(
       length: 2,
@@ -29,20 +28,20 @@ class DownloadsScreen extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            l.downloads,
+            l10n.downloads,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           bottom: TabBar(
             tabs: [
               Tab(
                 text: activeDownloads.isEmpty
-                    ? l.active
-                    : '${l.active} (${activeDownloads.length})',
+                    ? l10n.active
+                    : '${l10n.active} (${activeDownloads.length})',
               ),
               Tab(
                 text: completedDownloads.isEmpty
-                    ? l.completed
-                    : '${l.completed} (${completedDownloads.length})',
+                    ? l10n.completed
+                    : '${l10n.completed} (${completedDownloads.length})',
               ),
             ],
           ),

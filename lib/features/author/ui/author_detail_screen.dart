@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/author/logic/author_provider.dart';
 import 'package:storii/features/author/ui/author_content.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/expandable_text.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -17,7 +17,6 @@ class AuthorDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context)!;
     final size = MediaQuery.sizeOf(context);
 
     final authorAsync = ref.watch(authorProvider(id));
@@ -57,7 +56,7 @@ class AuthorDetailScreen extends ConsumerWidget {
               Padding(
                 padding: const .symmetric(horizontal: 16),
                 child: ExpandableHtml(
-                  data: author.description ?? l.noDescription,
+                  data: author.description ?? l10n.noDescription,
                 ),
               ),
               AuthorContent(

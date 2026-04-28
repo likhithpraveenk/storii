@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storii/l10n/l10n.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 class ErrorRetryScreen extends StatelessWidget {
@@ -28,10 +28,7 @@ class ErrorRetryScreen extends StatelessWidget {
                 textAlign: .center,
               ),
               const SizedBox(height: 4),
-              AppFilledButton(
-                text: AppLocalizations.of(context)!.retry,
-                onPressed: onRetry,
-              ),
+              AppFilledButton(text: l10n.retry, onPressed: onRetry),
             ],
           ),
         ),
@@ -65,10 +62,7 @@ class ErrorRetryWidget extends StatelessWidget {
             ),
             if (onRetry != null) ...[
               const SizedBox(height: 4),
-              AppFilledButton(
-                text: AppLocalizations.of(context)!.retry,
-                onPressed: onRetry,
-              ),
+              AppFilledButton(text: l10n.retry, onPressed: onRetry),
             ],
           ],
         ),
@@ -102,10 +96,7 @@ class SliverErrorRetryWidget extends StatelessWidget {
                 textAlign: .center,
               ),
               const SizedBox(height: 4),
-              AppFilledButton(
-                text: AppLocalizations.of(context)!.retry,
-                onPressed: onRetry,
-              ),
+              AppFilledButton(text: l10n.retry, onPressed: onRetry),
             ],
           ),
         ),

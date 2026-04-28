@@ -1,6 +1,14 @@
 import 'package:abs_api/abs_api.dart';
 
-enum AppErrorType { network, timeout, auth, notFound, server, unknown }
+enum AppErrorType {
+  network,
+  timeout,
+  auth,
+  forbidden,
+  notFound,
+  server,
+  unknown,
+}
 
 class AppError implements Exception {
   final AppErrorType type;
@@ -24,11 +32,12 @@ class AppError implements Exception {
           'Request timed out',
           error.originalError,
         ),
-        .unauthorized || .forbidden => AppError(
+        .unauthorized => AppError(
           .auth,
           'Please login again',
           error.originalError,
         ),
+        .forbidden => AppError(.forbidden, 'Forbidden', error.originalError),
         .notFound => AppError(
           .notFound,
           'Resource not found',

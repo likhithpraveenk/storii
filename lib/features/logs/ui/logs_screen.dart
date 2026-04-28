@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/features/logs/ui/log_entry_sheet.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
@@ -31,11 +31,10 @@ class _LogsScreenState extends ConsumerState<LogsScreen> {
     final logs = ref.watch(filteredLogsProvider);
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final l = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.logs, style: textTheme.titleLarge),
+        title: Text(l10n.logs, style: textTheme.titleLarge),
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
@@ -151,7 +150,6 @@ class _DeleteLogsButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context)!;
     final logs = ref.watch(logsProvider);
     if (logs.isEmpty) {
       return const SizedBox.shrink();
@@ -165,10 +163,10 @@ class _DeleteLogsButton extends ConsumerWidget {
             actions: [
               AppTextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                text: l.cancel,
+                text: l10n.cancel,
               ),
               AppFilledButton(
-                text: l.delete,
+                text: l10n.delete,
                 isDestructive: true,
                 onPressed: () {
                   ref.read(logsProvider.notifier).clear();
@@ -177,7 +175,7 @@ class _DeleteLogsButton extends ConsumerWidget {
               ),
             ],
             title: Text(
-              l.deleteLogsQ,
+              l10n.deleteLogsQ,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           );

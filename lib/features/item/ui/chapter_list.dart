@@ -4,9 +4,9 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
@@ -34,7 +34,7 @@ void showChapterListSheet(
             Padding(
               padding: const .fromLTRB(24, 24, 24, 16),
               child: Text(
-                AppLocalizations.of(context)!.chapters,
+                l10n.chapters,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontSize: 20,
                   fontWeight: .w600,
@@ -157,7 +157,6 @@ class _ChapterTile extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
     final completedColor = scheme.primary.withValues(alpha: 0.12);
     final activeColor = scheme.primary.withValues(alpha: 0.1);
-    final l = AppLocalizations.of(context)!;
 
     return InkWell(
       borderRadius: .circular(kRadius),
@@ -167,7 +166,7 @@ class _ChapterTile extends ConsumerWidget {
         } else {
           await AppDialog.show(
             context,
-            title: l.startPlayback,
+            title: l10n.startPlayback,
             body: Row(
               children: [
                 Flexible(child: Text(itemTitle)),
@@ -177,7 +176,7 @@ class _ChapterTile extends ConsumerWidget {
                 Text(chapter.start.toTime()),
               ],
             ),
-            actionLabel: l.confirm,
+            actionLabel: l10n.confirm,
             onTap: () async {
               unawaited(
                 ref
@@ -254,7 +253,7 @@ class _ChapterTile extends ConsumerWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    chapterDuration.toReadableDuration(context),
+                    chapterDuration.toReadableDuration(),
                     style: textTheme.bodySmall?.copyWith(
                       color: scheme.onSurfaceVariant.withValues(
                         alpha: isCompleted ? 0.5 : 0.8,
