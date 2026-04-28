@@ -75,6 +75,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                   : ListView.builder(
                       key: const ValueKey('items_list_view'),
                       controller: _scrollController,
+                      padding: const .symmetric(vertical: 16),
                       itemCount: items.length,
                       itemBuilder: (context, index) {
                         return LibraryItemListTile(

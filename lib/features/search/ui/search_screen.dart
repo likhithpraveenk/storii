@@ -40,7 +40,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         title: Hero(
           tag: searchHeroTag,
           child: Material(

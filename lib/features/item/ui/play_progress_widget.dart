@@ -188,12 +188,7 @@ class _ProgressBar extends StatelessWidget {
                   height: 20,
                   width: barWidth,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        theme.colorScheme.inverseSurface,
-                        theme.colorScheme.primary,
-                      ],
-                    ),
+                    color: theme.colorScheme.primary,
                     borderRadius: .circular(kRadius),
                     boxShadow: [
                       BoxShadow(

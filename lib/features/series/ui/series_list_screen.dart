@@ -97,6 +97,7 @@ class SeriesListView extends StatelessWidget {
       key: const ValueKey('series_list_view'),
       controller: scrollController,
       itemCount: series.length,
+      padding: const .symmetric(vertical: 16),
       itemBuilder: (context, index) {
         return SeriesCardListView(
           key: ValueKey(series[index].id),
@@ -124,7 +125,7 @@ class SeriesGridView extends ConsumerWidget {
     return GridView.builder(
       key: const ValueKey('series_grid_view'),
       controller: scrollController,
-      padding: const .symmetric(horizontal: 16),
+      padding: const .symmetric(horizontal: 16, vertical: 16),
       itemCount: series.length,
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: maxSeriesCardWidthInGrid,

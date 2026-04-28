@@ -100,6 +100,7 @@ class AuthorsListView extends StatelessWidget {
       key: const ValueKey('author_list_view'),
       controller: scrollController,
       itemCount: authors.length,
+      padding: const .symmetric(vertical: 16),
       itemBuilder: (context, index) {
         return AuthorCardListView(
           key: ValueKey(authors[index].id),
@@ -128,7 +129,7 @@ class AuthorsGridView extends ConsumerWidget {
       key: const ValueKey('author_grid_view'),
       controller: scrollController,
       itemCount: authors.length,
-      padding: const .symmetric(horizontal: 16),
+      padding: const .symmetric(horizontal: 16, vertical: 16),
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: maxCardWidthInGrid,
         mainAxisExtent: height,

@@ -45,6 +45,7 @@ class HomeScreen extends ConsumerWidget {
                 );
 
             return ListView.builder(
+              padding: const .symmetric(vertical: 16),
               itemCount: displayList.length,
               itemBuilder: (context, index) {
                 final shelf = displayList[index];
