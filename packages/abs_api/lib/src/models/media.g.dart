@@ -18,18 +18,24 @@ BookMedia _$BookMediaFromJson(Map<String, dynamic> json) => BookMedia(
     const DurationPreciseSecondsConverter().fromJson,
   ),
   coverPath: json['coverPath'] as String?,
-  audioFiles: (json['audioFiles'] as List<dynamic>?)
-      ?.map((e) => AudioFile.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  numAudioFiles: (json['numAudioFiles'] as num?)?.toInt(),
-  tracks: (json['tracks'] as List<dynamic>?)
-      ?.map((e) => AudioTrack.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  numTracks: (json['numTracks'] as num?)?.toInt(),
-  chapters: (json['chapters'] as List<dynamic>?)
-      ?.map((e) => BookChapter.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  numChapters: (json['numChapters'] as num?)?.toInt(),
+  audioFiles:
+      (json['audioFiles'] as List<dynamic>?)
+          ?.map((e) => AudioFile.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  numAudioFiles: (json['numAudioFiles'] as num?)?.toInt() ?? 0,
+  tracks:
+      (json['tracks'] as List<dynamic>?)
+          ?.map((e) => AudioTrack.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  numTracks: (json['numTracks'] as num?)?.toInt() ?? 0,
+  chapters:
+      (json['chapters'] as List<dynamic>?)
+          ?.map((e) => BookChapter.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  numChapters: (json['numChapters'] as num?)?.toInt() ?? 0,
   size: (json['size'] as num?)?.toInt(),
   $type: json['runtimeType'] as String?,
 );
@@ -44,12 +50,12 @@ Map<String, dynamic> _$BookMediaToJson(BookMedia instance) => <String, dynamic>{
     const DurationPreciseSecondsConverter().toJson,
   ),
   'coverPath': ?instance.coverPath,
-  'audioFiles': ?instance.audioFiles?.map((e) => e.toJson()).toList(),
-  'numAudioFiles': ?instance.numAudioFiles,
-  'tracks': ?instance.tracks?.map((e) => e.toJson()).toList(),
-  'numTracks': ?instance.numTracks,
-  'chapters': ?instance.chapters?.map((e) => e.toJson()).toList(),
-  'numChapters': ?instance.numChapters,
+  'audioFiles': instance.audioFiles.map((e) => e.toJson()).toList(),
+  'numAudioFiles': instance.numAudioFiles,
+  'tracks': instance.tracks.map((e) => e.toJson()).toList(),
+  'numTracks': instance.numTracks,
+  'chapters': instance.chapters.map((e) => e.toJson()).toList(),
+  'numChapters': instance.numChapters,
   'size': ?instance.size,
   'runtimeType': instance.$type,
 };

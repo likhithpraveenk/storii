@@ -226,9 +226,13 @@ extension AudiobookX on LibraryItem {
     podcast: (m) => throw UnsupportedError('Podcast duration unsupported'),
   );
   List<BookChapter> get chapters =>
-      media.map(book: (m) => m.chapters ?? [], podcast: (m) => []);
+      media.map(book: (m) => m.chapters, podcast: (m) => []);
   List<AudioTrack> get tracks => media.map(
-    book: (m) => m.tracks ?? [],
+    book: (m) => m.tracks,
+    podcast: (m) => throw UnsupportedError('Podcast tracks unsupported'),
+  );
+  List<AudioFile> get audioFiles => media.map(
+    book: (m) => m.audioFiles,
     podcast: (m) => throw UnsupportedError('Podcast tracks unsupported'),
   );
   List<PodcastEpisode> get episodes => media.map(

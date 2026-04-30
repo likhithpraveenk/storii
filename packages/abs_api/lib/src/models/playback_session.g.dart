@@ -20,8 +20,8 @@ _PlaybackSession _$PlaybackSessionFromJson(Map<String, dynamic> json) =>
       chapters: (json['chapters'] as List<dynamic>)
           .map((e) => BookChapter.fromJson(e as Map<String, dynamic>))
           .toList(),
-      displayTitle: json['displayTitle'] as String,
-      displayAuthor: json['displayAuthor'] as String,
+      displayTitle: json['displayTitle'] as String?,
+      displayAuthor: json['displayAuthor'] as String?,
       coverPath: json['coverPath'] as String?,
       duration: const DurationPreciseSecondsConverter().fromJson(
         json['duration'] as Object,
@@ -70,8 +70,8 @@ Map<String, dynamic> _$PlaybackSessionToJson(
   'mediaType': _$MediaTypeEnumMap[instance.mediaType]!,
   'mediaMetadata': instance.mediaMetadata.toJson(),
   'chapters': instance.chapters.map((e) => e.toJson()).toList(),
-  'displayTitle': instance.displayTitle,
-  'displayAuthor': instance.displayAuthor,
+  'displayTitle': ?instance.displayTitle,
+  'displayAuthor': ?instance.displayAuthor,
   'coverPath': ?instance.coverPath,
   'duration': const DurationPreciseSecondsConverter().toJson(instance.duration),
   'playMethod': _$PlayMethodEnumMap[instance.playMethod]!,

@@ -20,12 +20,12 @@ sealed class Media with _$Media {
     @Default([]) List<String> tags,
     Duration? duration,
     String? coverPath,
-    List<AudioFile>? audioFiles,
-    int? numAudioFiles,
-    List<AudioTrack>? tracks,
-    int? numTracks,
-    List<BookChapter>? chapters,
-    int? numChapters,
+    @Default([]) List<AudioFile> audioFiles,
+    @Default(0) int numAudioFiles,
+    @Default([]) List<AudioTrack> tracks,
+    @Default(0) int numTracks,
+    @Default([]) List<BookChapter> chapters,
+    @Default(0) int numChapters,
     int? size,
   }) = BookMedia;
 

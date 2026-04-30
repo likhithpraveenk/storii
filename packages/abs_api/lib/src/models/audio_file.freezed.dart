@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AudioFile {
 
- int get index; String get ino; FileMetadata get metadata; DateTime get addedAt; DateTime get updatedAt; int? get trackNumFromMeta; int? get discNumFromMeta; int? get trackNumFromFilename; int? get discNumFromFilename; bool get manuallyVerified; bool get exclude; String? get error; String? get format; Duration get duration; int get bitRate; String? get language; String get codec; String get timeBase; int get channels; String get channelLayout; List<BookChapter> get chapters; String? get embeddedCoverArt; AudioMetaTags get metaTags; String get mimeType;
+ int get index; String get ino; FileMetadata get metadata; DateTime? get addedAt; DateTime? get updatedAt; int? get trackNumFromMeta; int? get discNumFromMeta; int? get trackNumFromFilename; int? get discNumFromFilename; bool? get manuallyVerified; bool? get exclude; String? get error; String? get format; Duration? get duration; int? get bitRate; String? get language; String? get codec; String? get timeBase; int? get channels; String? get channelLayout; List<BookChapter> get chapters; String? get embeddedCoverArt; AudioMetaTags? get metaTags; String? get mimeType;
 /// Create a copy of AudioFile
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,11 +48,11 @@ abstract mixin class $AudioFileCopyWith<$Res>  {
   factory $AudioFileCopyWith(AudioFile value, $Res Function(AudioFile) _then) = _$AudioFileCopyWithImpl;
 @useResult
 $Res call({
- int index, String ino, FileMetadata metadata, DateTime addedAt, DateTime updatedAt, int? trackNumFromMeta, int? discNumFromMeta, int? trackNumFromFilename, int? discNumFromFilename, bool manuallyVerified, bool exclude, String? error, String? format, Duration duration, int bitRate, String? language, String codec, String timeBase, int channels, String channelLayout, List<BookChapter> chapters, String? embeddedCoverArt, AudioMetaTags metaTags, String mimeType
+ int index, String ino, FileMetadata metadata, DateTime? addedAt, DateTime? updatedAt, int? trackNumFromMeta, int? discNumFromMeta, int? trackNumFromFilename, int? discNumFromFilename, bool? manuallyVerified, bool? exclude, String? error, String? format, Duration? duration, int? bitRate, String? language, String? codec, String? timeBase, int? channels, String? channelLayout, List<BookChapter> chapters, String? embeddedCoverArt, AudioMetaTags? metaTags, String? mimeType
 });
 
 
-$FileMetadataCopyWith<$Res> get metadata;$AudioMetaTagsCopyWith<$Res> get metaTags;
+$FileMetadataCopyWith<$Res> get metadata;$AudioMetaTagsCopyWith<$Res>? get metaTags;
 
 }
 /// @nodoc
@@ -65,33 +65,33 @@ class _$AudioFileCopyWithImpl<$Res>
 
 /// Create a copy of AudioFile
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? index = null,Object? ino = null,Object? metadata = null,Object? addedAt = null,Object? updatedAt = null,Object? trackNumFromMeta = freezed,Object? discNumFromMeta = freezed,Object? trackNumFromFilename = freezed,Object? discNumFromFilename = freezed,Object? manuallyVerified = null,Object? exclude = null,Object? error = freezed,Object? format = freezed,Object? duration = null,Object? bitRate = null,Object? language = freezed,Object? codec = null,Object? timeBase = null,Object? channels = null,Object? channelLayout = null,Object? chapters = null,Object? embeddedCoverArt = freezed,Object? metaTags = null,Object? mimeType = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? index = null,Object? ino = null,Object? metadata = null,Object? addedAt = freezed,Object? updatedAt = freezed,Object? trackNumFromMeta = freezed,Object? discNumFromMeta = freezed,Object? trackNumFromFilename = freezed,Object? discNumFromFilename = freezed,Object? manuallyVerified = freezed,Object? exclude = freezed,Object? error = freezed,Object? format = freezed,Object? duration = freezed,Object? bitRate = freezed,Object? language = freezed,Object? codec = freezed,Object? timeBase = freezed,Object? channels = freezed,Object? channelLayout = freezed,Object? chapters = null,Object? embeddedCoverArt = freezed,Object? metaTags = freezed,Object? mimeType = freezed,}) {
   return _then(_self.copyWith(
 index: null == index ? _self.index : index // ignore: cast_nullable_to_non_nullable
 as int,ino: null == ino ? _self.ino : ino // ignore: cast_nullable_to_non_nullable
 as String,metadata: null == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
-as FileMetadata,addedAt: null == addedAt ? _self.addedAt : addedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,trackNumFromMeta: freezed == trackNumFromMeta ? _self.trackNumFromMeta : trackNumFromMeta // ignore: cast_nullable_to_non_nullable
+as FileMetadata,addedAt: freezed == addedAt ? _self.addedAt : addedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,trackNumFromMeta: freezed == trackNumFromMeta ? _self.trackNumFromMeta : trackNumFromMeta // ignore: cast_nullable_to_non_nullable
 as int?,discNumFromMeta: freezed == discNumFromMeta ? _self.discNumFromMeta : discNumFromMeta // ignore: cast_nullable_to_non_nullable
 as int?,trackNumFromFilename: freezed == trackNumFromFilename ? _self.trackNumFromFilename : trackNumFromFilename // ignore: cast_nullable_to_non_nullable
 as int?,discNumFromFilename: freezed == discNumFromFilename ? _self.discNumFromFilename : discNumFromFilename // ignore: cast_nullable_to_non_nullable
-as int?,manuallyVerified: null == manuallyVerified ? _self.manuallyVerified : manuallyVerified // ignore: cast_nullable_to_non_nullable
-as bool,exclude: null == exclude ? _self.exclude : exclude // ignore: cast_nullable_to_non_nullable
-as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as int?,manuallyVerified: freezed == manuallyVerified ? _self.manuallyVerified : manuallyVerified // ignore: cast_nullable_to_non_nullable
+as bool?,exclude: freezed == exclude ? _self.exclude : exclude // ignore: cast_nullable_to_non_nullable
+as bool?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,format: freezed == format ? _self.format : format // ignore: cast_nullable_to_non_nullable
-as String?,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
-as Duration,bitRate: null == bitRate ? _self.bitRate : bitRate // ignore: cast_nullable_to_non_nullable
-as int,language: freezed == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
-as String?,codec: null == codec ? _self.codec : codec // ignore: cast_nullable_to_non_nullable
-as String,timeBase: null == timeBase ? _self.timeBase : timeBase // ignore: cast_nullable_to_non_nullable
-as String,channels: null == channels ? _self.channels : channels // ignore: cast_nullable_to_non_nullable
-as int,channelLayout: null == channelLayout ? _self.channelLayout : channelLayout // ignore: cast_nullable_to_non_nullable
-as String,chapters: null == chapters ? _self.chapters : chapters // ignore: cast_nullable_to_non_nullable
+as String?,duration: freezed == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
+as Duration?,bitRate: freezed == bitRate ? _self.bitRate : bitRate // ignore: cast_nullable_to_non_nullable
+as int?,language: freezed == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
+as String?,codec: freezed == codec ? _self.codec : codec // ignore: cast_nullable_to_non_nullable
+as String?,timeBase: freezed == timeBase ? _self.timeBase : timeBase // ignore: cast_nullable_to_non_nullable
+as String?,channels: freezed == channels ? _self.channels : channels // ignore: cast_nullable_to_non_nullable
+as int?,channelLayout: freezed == channelLayout ? _self.channelLayout : channelLayout // ignore: cast_nullable_to_non_nullable
+as String?,chapters: null == chapters ? _self.chapters : chapters // ignore: cast_nullable_to_non_nullable
 as List<BookChapter>,embeddedCoverArt: freezed == embeddedCoverArt ? _self.embeddedCoverArt : embeddedCoverArt // ignore: cast_nullable_to_non_nullable
-as String?,metaTags: null == metaTags ? _self.metaTags : metaTags // ignore: cast_nullable_to_non_nullable
-as AudioMetaTags,mimeType: null == mimeType ? _self.mimeType : mimeType // ignore: cast_nullable_to_non_nullable
-as String,
+as String?,metaTags: freezed == metaTags ? _self.metaTags : metaTags // ignore: cast_nullable_to_non_nullable
+as AudioMetaTags?,mimeType: freezed == mimeType ? _self.mimeType : mimeType // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of AudioFile
@@ -107,9 +107,12 @@ $FileMetadataCopyWith<$Res> get metadata {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$AudioMetaTagsCopyWith<$Res> get metaTags {
-  
-  return $AudioMetaTagsCopyWith<$Res>(_self.metaTags, (value) {
+$AudioMetaTagsCopyWith<$Res>? get metaTags {
+    if (_self.metaTags == null) {
+    return null;
+  }
+
+  return $AudioMetaTagsCopyWith<$Res>(_self.metaTags!, (value) {
     return _then(_self.copyWith(metaTags: value));
   });
 }
@@ -191,7 +194,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int index,  String ino,  FileMetadata metadata,  DateTime addedAt,  DateTime updatedAt,  int? trackNumFromMeta,  int? discNumFromMeta,  int? trackNumFromFilename,  int? discNumFromFilename,  bool manuallyVerified,  bool exclude,  String? error,  String? format,  Duration duration,  int bitRate,  String? language,  String codec,  String timeBase,  int channels,  String channelLayout,  List<BookChapter> chapters,  String? embeddedCoverArt,  AudioMetaTags metaTags,  String mimeType)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int index,  String ino,  FileMetadata metadata,  DateTime? addedAt,  DateTime? updatedAt,  int? trackNumFromMeta,  int? discNumFromMeta,  int? trackNumFromFilename,  int? discNumFromFilename,  bool? manuallyVerified,  bool? exclude,  String? error,  String? format,  Duration? duration,  int? bitRate,  String? language,  String? codec,  String? timeBase,  int? channels,  String? channelLayout,  List<BookChapter> chapters,  String? embeddedCoverArt,  AudioMetaTags? metaTags,  String? mimeType)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AudioFile() when $default != null:
 return $default(_that.index,_that.ino,_that.metadata,_that.addedAt,_that.updatedAt,_that.trackNumFromMeta,_that.discNumFromMeta,_that.trackNumFromFilename,_that.discNumFromFilename,_that.manuallyVerified,_that.exclude,_that.error,_that.format,_that.duration,_that.bitRate,_that.language,_that.codec,_that.timeBase,_that.channels,_that.channelLayout,_that.chapters,_that.embeddedCoverArt,_that.metaTags,_that.mimeType);case _:
@@ -212,7 +215,7 @@ return $default(_that.index,_that.ino,_that.metadata,_that.addedAt,_that.updated
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int index,  String ino,  FileMetadata metadata,  DateTime addedAt,  DateTime updatedAt,  int? trackNumFromMeta,  int? discNumFromMeta,  int? trackNumFromFilename,  int? discNumFromFilename,  bool manuallyVerified,  bool exclude,  String? error,  String? format,  Duration duration,  int bitRate,  String? language,  String codec,  String timeBase,  int channels,  String channelLayout,  List<BookChapter> chapters,  String? embeddedCoverArt,  AudioMetaTags metaTags,  String mimeType)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int index,  String ino,  FileMetadata metadata,  DateTime? addedAt,  DateTime? updatedAt,  int? trackNumFromMeta,  int? discNumFromMeta,  int? trackNumFromFilename,  int? discNumFromFilename,  bool? manuallyVerified,  bool? exclude,  String? error,  String? format,  Duration? duration,  int? bitRate,  String? language,  String? codec,  String? timeBase,  int? channels,  String? channelLayout,  List<BookChapter> chapters,  String? embeddedCoverArt,  AudioMetaTags? metaTags,  String? mimeType)  $default,) {final _that = this;
 switch (_that) {
 case _AudioFile():
 return $default(_that.index,_that.ino,_that.metadata,_that.addedAt,_that.updatedAt,_that.trackNumFromMeta,_that.discNumFromMeta,_that.trackNumFromFilename,_that.discNumFromFilename,_that.manuallyVerified,_that.exclude,_that.error,_that.format,_that.duration,_that.bitRate,_that.language,_that.codec,_that.timeBase,_that.channels,_that.channelLayout,_that.chapters,_that.embeddedCoverArt,_that.metaTags,_that.mimeType);}
@@ -229,7 +232,7 @@ return $default(_that.index,_that.ino,_that.metadata,_that.addedAt,_that.updated
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int index,  String ino,  FileMetadata metadata,  DateTime addedAt,  DateTime updatedAt,  int? trackNumFromMeta,  int? discNumFromMeta,  int? trackNumFromFilename,  int? discNumFromFilename,  bool manuallyVerified,  bool exclude,  String? error,  String? format,  Duration duration,  int bitRate,  String? language,  String codec,  String timeBase,  int channels,  String channelLayout,  List<BookChapter> chapters,  String? embeddedCoverArt,  AudioMetaTags metaTags,  String mimeType)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int index,  String ino,  FileMetadata metadata,  DateTime? addedAt,  DateTime? updatedAt,  int? trackNumFromMeta,  int? discNumFromMeta,  int? trackNumFromFilename,  int? discNumFromFilename,  bool? manuallyVerified,  bool? exclude,  String? error,  String? format,  Duration? duration,  int? bitRate,  String? language,  String? codec,  String? timeBase,  int? channels,  String? channelLayout,  List<BookChapter> chapters,  String? embeddedCoverArt,  AudioMetaTags? metaTags,  String? mimeType)?  $default,) {final _that = this;
 switch (_that) {
 case _AudioFile() when $default != null:
 return $default(_that.index,_that.ino,_that.metadata,_that.addedAt,_that.updatedAt,_that.trackNumFromMeta,_that.discNumFromMeta,_that.trackNumFromFilename,_that.discNumFromFilename,_that.manuallyVerified,_that.exclude,_that.error,_that.format,_that.duration,_that.bitRate,_that.language,_that.codec,_that.timeBase,_that.channels,_that.channelLayout,_that.chapters,_that.embeddedCoverArt,_that.metaTags,_that.mimeType);case _:
@@ -245,39 +248,39 @@ return $default(_that.index,_that.ino,_that.metadata,_that.addedAt,_that.updated
 @DateTimeEpochConverter()
 @DurationPreciseSecondsConverter()
 class _AudioFile implements AudioFile {
-  const _AudioFile({required this.index, required this.ino, required this.metadata, required this.addedAt, required this.updatedAt, this.trackNumFromMeta, this.discNumFromMeta, this.trackNumFromFilename, this.discNumFromFilename, required this.manuallyVerified, required this.exclude, this.error, this.format, required this.duration, required this.bitRate, this.language, required this.codec, required this.timeBase, required this.channels, required this.channelLayout, required final  List<BookChapter> chapters, this.embeddedCoverArt, required this.metaTags, required this.mimeType}): _chapters = chapters;
+  const _AudioFile({required this.index, required this.ino, required this.metadata, this.addedAt, this.updatedAt, this.trackNumFromMeta, this.discNumFromMeta, this.trackNumFromFilename, this.discNumFromFilename, this.manuallyVerified, this.exclude, this.error, this.format, this.duration, this.bitRate, this.language, this.codec, this.timeBase, this.channels, this.channelLayout, final  List<BookChapter> chapters = const [], this.embeddedCoverArt, this.metaTags, this.mimeType}): _chapters = chapters;
   factory _AudioFile.fromJson(Map<String, dynamic> json) => _$AudioFileFromJson(json);
 
 @override final  int index;
 @override final  String ino;
 @override final  FileMetadata metadata;
-@override final  DateTime addedAt;
-@override final  DateTime updatedAt;
+@override final  DateTime? addedAt;
+@override final  DateTime? updatedAt;
 @override final  int? trackNumFromMeta;
 @override final  int? discNumFromMeta;
 @override final  int? trackNumFromFilename;
 @override final  int? discNumFromFilename;
-@override final  bool manuallyVerified;
-@override final  bool exclude;
+@override final  bool? manuallyVerified;
+@override final  bool? exclude;
 @override final  String? error;
 @override final  String? format;
-@override final  Duration duration;
-@override final  int bitRate;
+@override final  Duration? duration;
+@override final  int? bitRate;
 @override final  String? language;
-@override final  String codec;
-@override final  String timeBase;
-@override final  int channels;
-@override final  String channelLayout;
+@override final  String? codec;
+@override final  String? timeBase;
+@override final  int? channels;
+@override final  String? channelLayout;
  final  List<BookChapter> _chapters;
-@override List<BookChapter> get chapters {
+@override@JsonKey() List<BookChapter> get chapters {
   if (_chapters is EqualUnmodifiableListView) return _chapters;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_chapters);
 }
 
 @override final  String? embeddedCoverArt;
-@override final  AudioMetaTags metaTags;
-@override final  String mimeType;
+@override final  AudioMetaTags? metaTags;
+@override final  String? mimeType;
 
 /// Create a copy of AudioFile
 /// with the given fields replaced by the non-null parameter values.
@@ -312,11 +315,11 @@ abstract mixin class _$AudioFileCopyWith<$Res> implements $AudioFileCopyWith<$Re
   factory _$AudioFileCopyWith(_AudioFile value, $Res Function(_AudioFile) _then) = __$AudioFileCopyWithImpl;
 @override @useResult
 $Res call({
- int index, String ino, FileMetadata metadata, DateTime addedAt, DateTime updatedAt, int? trackNumFromMeta, int? discNumFromMeta, int? trackNumFromFilename, int? discNumFromFilename, bool manuallyVerified, bool exclude, String? error, String? format, Duration duration, int bitRate, String? language, String codec, String timeBase, int channels, String channelLayout, List<BookChapter> chapters, String? embeddedCoverArt, AudioMetaTags metaTags, String mimeType
+ int index, String ino, FileMetadata metadata, DateTime? addedAt, DateTime? updatedAt, int? trackNumFromMeta, int? discNumFromMeta, int? trackNumFromFilename, int? discNumFromFilename, bool? manuallyVerified, bool? exclude, String? error, String? format, Duration? duration, int? bitRate, String? language, String? codec, String? timeBase, int? channels, String? channelLayout, List<BookChapter> chapters, String? embeddedCoverArt, AudioMetaTags? metaTags, String? mimeType
 });
 
 
-@override $FileMetadataCopyWith<$Res> get metadata;@override $AudioMetaTagsCopyWith<$Res> get metaTags;
+@override $FileMetadataCopyWith<$Res> get metadata;@override $AudioMetaTagsCopyWith<$Res>? get metaTags;
 
 }
 /// @nodoc
@@ -329,33 +332,33 @@ class __$AudioFileCopyWithImpl<$Res>
 
 /// Create a copy of AudioFile
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? index = null,Object? ino = null,Object? metadata = null,Object? addedAt = null,Object? updatedAt = null,Object? trackNumFromMeta = freezed,Object? discNumFromMeta = freezed,Object? trackNumFromFilename = freezed,Object? discNumFromFilename = freezed,Object? manuallyVerified = null,Object? exclude = null,Object? error = freezed,Object? format = freezed,Object? duration = null,Object? bitRate = null,Object? language = freezed,Object? codec = null,Object? timeBase = null,Object? channels = null,Object? channelLayout = null,Object? chapters = null,Object? embeddedCoverArt = freezed,Object? metaTags = null,Object? mimeType = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? index = null,Object? ino = null,Object? metadata = null,Object? addedAt = freezed,Object? updatedAt = freezed,Object? trackNumFromMeta = freezed,Object? discNumFromMeta = freezed,Object? trackNumFromFilename = freezed,Object? discNumFromFilename = freezed,Object? manuallyVerified = freezed,Object? exclude = freezed,Object? error = freezed,Object? format = freezed,Object? duration = freezed,Object? bitRate = freezed,Object? language = freezed,Object? codec = freezed,Object? timeBase = freezed,Object? channels = freezed,Object? channelLayout = freezed,Object? chapters = null,Object? embeddedCoverArt = freezed,Object? metaTags = freezed,Object? mimeType = freezed,}) {
   return _then(_AudioFile(
 index: null == index ? _self.index : index // ignore: cast_nullable_to_non_nullable
 as int,ino: null == ino ? _self.ino : ino // ignore: cast_nullable_to_non_nullable
 as String,metadata: null == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
-as FileMetadata,addedAt: null == addedAt ? _self.addedAt : addedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,trackNumFromMeta: freezed == trackNumFromMeta ? _self.trackNumFromMeta : trackNumFromMeta // ignore: cast_nullable_to_non_nullable
+as FileMetadata,addedAt: freezed == addedAt ? _self.addedAt : addedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,trackNumFromMeta: freezed == trackNumFromMeta ? _self.trackNumFromMeta : trackNumFromMeta // ignore: cast_nullable_to_non_nullable
 as int?,discNumFromMeta: freezed == discNumFromMeta ? _self.discNumFromMeta : discNumFromMeta // ignore: cast_nullable_to_non_nullable
 as int?,trackNumFromFilename: freezed == trackNumFromFilename ? _self.trackNumFromFilename : trackNumFromFilename // ignore: cast_nullable_to_non_nullable
 as int?,discNumFromFilename: freezed == discNumFromFilename ? _self.discNumFromFilename : discNumFromFilename // ignore: cast_nullable_to_non_nullable
-as int?,manuallyVerified: null == manuallyVerified ? _self.manuallyVerified : manuallyVerified // ignore: cast_nullable_to_non_nullable
-as bool,exclude: null == exclude ? _self.exclude : exclude // ignore: cast_nullable_to_non_nullable
-as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as int?,manuallyVerified: freezed == manuallyVerified ? _self.manuallyVerified : manuallyVerified // ignore: cast_nullable_to_non_nullable
+as bool?,exclude: freezed == exclude ? _self.exclude : exclude // ignore: cast_nullable_to_non_nullable
+as bool?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,format: freezed == format ? _self.format : format // ignore: cast_nullable_to_non_nullable
-as String?,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
-as Duration,bitRate: null == bitRate ? _self.bitRate : bitRate // ignore: cast_nullable_to_non_nullable
-as int,language: freezed == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
-as String?,codec: null == codec ? _self.codec : codec // ignore: cast_nullable_to_non_nullable
-as String,timeBase: null == timeBase ? _self.timeBase : timeBase // ignore: cast_nullable_to_non_nullable
-as String,channels: null == channels ? _self.channels : channels // ignore: cast_nullable_to_non_nullable
-as int,channelLayout: null == channelLayout ? _self.channelLayout : channelLayout // ignore: cast_nullable_to_non_nullable
-as String,chapters: null == chapters ? _self._chapters : chapters // ignore: cast_nullable_to_non_nullable
+as String?,duration: freezed == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
+as Duration?,bitRate: freezed == bitRate ? _self.bitRate : bitRate // ignore: cast_nullable_to_non_nullable
+as int?,language: freezed == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
+as String?,codec: freezed == codec ? _self.codec : codec // ignore: cast_nullable_to_non_nullable
+as String?,timeBase: freezed == timeBase ? _self.timeBase : timeBase // ignore: cast_nullable_to_non_nullable
+as String?,channels: freezed == channels ? _self.channels : channels // ignore: cast_nullable_to_non_nullable
+as int?,channelLayout: freezed == channelLayout ? _self.channelLayout : channelLayout // ignore: cast_nullable_to_non_nullable
+as String?,chapters: null == chapters ? _self._chapters : chapters // ignore: cast_nullable_to_non_nullable
 as List<BookChapter>,embeddedCoverArt: freezed == embeddedCoverArt ? _self.embeddedCoverArt : embeddedCoverArt // ignore: cast_nullable_to_non_nullable
-as String?,metaTags: null == metaTags ? _self.metaTags : metaTags // ignore: cast_nullable_to_non_nullable
-as AudioMetaTags,mimeType: null == mimeType ? _self.mimeType : mimeType // ignore: cast_nullable_to_non_nullable
-as String,
+as String?,metaTags: freezed == metaTags ? _self.metaTags : metaTags // ignore: cast_nullable_to_non_nullable
+as AudioMetaTags?,mimeType: freezed == mimeType ? _self.mimeType : mimeType // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -372,9 +375,12 @@ $FileMetadataCopyWith<$Res> get metadata {
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$AudioMetaTagsCopyWith<$Res> get metaTags {
-  
-  return $AudioMetaTagsCopyWith<$Res>(_self.metaTags, (value) {
+$AudioMetaTagsCopyWith<$Res>? get metaTags {
+    if (_self.metaTags == null) {
+    return null;
+  }
+
+  return $AudioMetaTagsCopyWith<$Res>(_self.metaTags!, (value) {
     return _then(_self.copyWith(metaTags: value));
   });
 }
