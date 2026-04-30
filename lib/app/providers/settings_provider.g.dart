@@ -217,6 +217,12 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setHistoryLimit(int value) =>
       _save(state?.copyWith(historyLimit: value));
+
+  Future<void> setParallelTracks(int value) =>
+      _save(state?.copyWith(parallelTracks: value));
+
+  Future<void> setParallelItems(int value) =>
+      _save(state?.copyWith(parallelItems: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -333,6 +339,22 @@ final historyLimitProvider = Provider<int>(
   (ref) => ref.watch(
     userSettingsProvider.select(
       (s) => s?.historyLimit ?? DefaultUserSettings.historyLimit,
+    ),
+  ),
+);
+
+final parallelTracksProvider = Provider<int>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.parallelTracks ?? DefaultUserSettings.parallelTracks,
+    ),
+  ),
+);
+
+final parallelItemsProvider = Provider<int>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.parallelItems ?? DefaultUserSettings.parallelItems,
     ),
   ),
 );
