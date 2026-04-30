@@ -117,6 +117,7 @@ class ApiClient {
     Cookie? cookie,
     ResponseType? responseType,
     Options? options,
+    CancelToken? requestCancelToken,
   }) async {
     try {
       final response = await _dio.request<T>(
@@ -137,7 +138,7 @@ class ApiClient {
               },
               followRedirects: followRedirects,
             ),
-        cancelToken: cancelToken,
+        cancelToken: requestCancelToken ?? cancelToken,
       );
       return response;
     } on DioException catch (e, stack) {

@@ -46,14 +46,15 @@ class ApiRoutes {
 
   // Items
   static const _itemById = '/api/items/:id';
-  static const _itemDownload = '/api/items/:id/download';
+  static const _itemAudioFileDownload = '/api/items/:id/file/:ino/download';
   static const _itemMedia = '/api/items/:id/media';
   static const _itemCover = '/api/items/:id/cover';
   static const _itemPlay = '/api/items/:id/play';
   static const _itemPlayEpisode = '/api/items/:id/play/:episodeId';
 
   static String itemById(String id) => _build(_itemById, {'id': id});
-  static String itemDownload(String id) => _build(_itemDownload, {'id': id});
+  static String itemAudioFileDownload(String id, String ino) =>
+      _build(_itemAudioFileDownload, {'id': id, 'ino': ino});
   static String itemMedia(String id) => _build(_itemMedia, {'id': id});
   static String itemCover(String id) => _build(_itemCover, {'id': id});
   static String itemPlay(String id) => _build(_itemPlay, {'id': id});
