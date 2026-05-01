@@ -2,7 +2,7 @@ const kEpsilon = 0.001;
 const kRadius = 12.0;
 
 const maxCardWidthInGrid = 180.0;
-const maxSeriesCardWidthInGrid = 360.0;
+const maxSeriesCardWidthInGrid = 400.0;
 
 const imgSizeInMiniPlayer = 64.0;
 const imgLeftPaddingInMiniPlayer = 8.0;

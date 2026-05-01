@@ -15,7 +15,7 @@ double gridHeight(Ref ref) {
       final scaler = ref.watch(textScalerProvider);
       final titleSlot = scaler.scale(32.0);
       final authorSlot = scaler.scale(20.0);
-      const padding = 12.0;
+      const padding = 16.0;
       final metadataHeight = titleSlot + padding + authorSlot;
 
       return maxCardWidthInGrid + metadataHeight;
