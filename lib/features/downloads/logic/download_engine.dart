@@ -20,7 +20,7 @@ class DownloadEngine extends _$DownloadEngine {
     ),
   );
   DownloadsFilesystemHelper get _filesystem =>
-      ref.watch(downloadsFsHelperProvider);
+      ref.read(downloadsFsHelperProvider);
   final Map<String, CancelToken> _coverTokens = {};
   final Map<String, Map<int, CancelToken>> _tokens = {};
 
@@ -45,7 +45,7 @@ class DownloadEngine extends _$DownloadEngine {
 
     final coverToken = CancelToken();
     _coverTokens[item.libraryItemId] = coverToken;
-    final coverBytes = await downloadCover(
+    await _downloadCover(
       itemTitle: item.title,
       itemId: item.libraryItemId,
       user: user,
@@ -53,27 +53,27 @@ class DownloadEngine extends _$DownloadEngine {
     );
     _coverTokens.remove(item.libraryItemId);
 
-    current = current.copyWith(
-      receivedBytes: _sumReceived(current.tracks) + coverBytes,
-    );
-    yield current;
-
     for (int i = 0; i < current.tracks.length; i++) {
-      final track = current.tracks[i];
-      if (track.status == .completed) continue;
-      if (track.ino == null) continue;
+      final initialTrack = current.tracks[i];
+      if (initialTrack.status == .completed) continue;
+      if (initialTrack.ino == null) continue;
 
       final cancelToken = CancelToken();
       trackTokens[i] = cancelToken;
 
-      final existingBytes = await _filesystem.existingBytes(track.localPath);
+      final existingBytes = await _filesystem.existingBytes(
+        initialTrack.localPath,
+      );
 
-      final sink = await _filesystem.openAppendSink(track.localPath);
+      final sink = await _filesystem.openAppendSink(initialTrack.localPath);
 
       try {
         final url = user.serverUrl
             .resolve(
-              ApiRoutes.itemAudioFileDownload(item.libraryItemId, track.ino!),
+              ApiRoutes.itemAudioFileDownload(
+                item.libraryItemId,
+                initialTrack.ino!,
+              ),
             )
             .toString();
 
@@ -89,55 +89,42 @@ class DownloadEngine extends _$DownloadEngine {
           cancelToken: cancelToken,
         );
 
-        var received = existingBytes;
-
-        final isPartialContent = res.statusCode == 206;
-        if (!isPartialContent && existingBytes > 0) {
-          await sink.close();
-          await _filesystem.truncate(track.localPath);
-          received = 0;
+        if (res.data == null) {
+          throw StateError(
+            'No response body for track ${initialTrack.ino} of item ${item.libraryItemId}',
+          );
         }
 
+        var received = existingBytes;
         final rawContentLength = res.data!.contentLength;
         final knownTotal = rawContentLength > 0
-            ? (isPartialContent
-                  ? existingBytes + rawContentLength
-                  : rawContentLength)
-            : track.bytesTotal;
+            ? existingBytes + rawContentLength
+            : current.tracks[i].bytesTotal;
 
         await for (final chunk in res.data!.stream) {
           received += chunk.length;
           sink.add(chunk);
 
           final updatedTracks = [...current.tracks];
-          updatedTracks[i] = track.copyWith(
+          updatedTracks[i] = current.tracks[i].copyWith(
             status: .downloading,
-            bytesReceived: received.toInt(),
+            bytesReceived: received,
+            bytesTotal: knownTotal,
           );
-
-          current = current.copyWith(
-            tracks: updatedTracks,
-            receivedBytes: _sumReceived(updatedTracks),
-            totalBytes: _sumTotal(updatedTracks),
-          );
-
+          current = current.copyWith(tracks: updatedTracks);
           yield current;
         }
 
         await sink.close();
 
         final updatedTracks = [...current.tracks];
-        updatedTracks[i] = track.copyWith(
+        updatedTracks[i] = current.tracks[i].copyWith(
           status: .completed,
-          bytesReceived: knownTotal > 0 ? knownTotal : received.toInt(),
+          bytesTotal: current.tracks[i].bytesTotal > 0
+              ? current.tracks[i].bytesTotal
+              : received,
         );
-
-        current = current.copyWith(
-          tracks: updatedTracks,
-          receivedBytes: _sumReceived(updatedTracks),
-          totalBytes: _sumTotal(updatedTracks),
-        );
-
+        current = current.copyWith(tracks: updatedTracks);
         yield current;
       } on DioException catch (e) {
         log('download engine dio error: $e');
@@ -168,7 +155,7 @@ class DownloadEngine extends _$DownloadEngine {
     yield current.copyWith(status: .completed);
   }
 
-  Future<int> downloadCover({
+  Future<void> _downloadCover({
     required UserDomain user,
     required String itemTitle,
     required String itemId,
@@ -180,12 +167,10 @@ class DownloadEngine extends _$DownloadEngine {
           .getCover(libraryItemId: itemId, cancelToken: cancelToken);
       if (imageBytes != null) {
         await _filesystem.saveCover(itemTitle, imageBytes);
-        return imageBytes.length;
       }
     } catch (e) {
       log('$e', name: 'downloadCover');
     }
-    return 0;
   }
 
   void pause(String itemId) {
@@ -210,10 +195,4 @@ class DownloadEngine extends _$DownloadEngine {
 
   bool isDownloading(String libraryItemId) =>
       _tokens.containsKey(libraryItemId);
-
-  int _sumReceived(List<DownloadTrack> tracks) =>
-      tracks.fold(0, (s, t) => s + t.bytesReceived);
-
-  int _sumTotal(List<DownloadTrack> tracks) =>
-      tracks.fold(0, (s, t) => s + t.bytesTotal);
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -22,8 +21,6 @@ class DownloadsNotifier extends _$DownloadsNotifier {
 
   DownloadStorage get _storage => ref.read(downloadStorageProvider);
 
-  final Set<String> _inFlight = {};
-
   @override
   Map<String, DownloadItem> build() {
     final loaded = _storage.loadAll();
@@ -40,7 +37,6 @@ class DownloadsNotifier extends _$DownloadsNotifier {
   Future<void> download(String libraryItemId) async {
     final existing = state[libraryItemId];
     if (existing != null && existing.isActive) return;
-    _inFlight.add(libraryItemId);
 
     try {
       final item = await ref.read(itemDetailProvider(libraryItemId).future);
@@ -88,8 +84,6 @@ class DownloadsNotifier extends _$DownloadsNotifier {
         stackTrace: st,
       );
       await _markFailed(libraryItemId);
-    } finally {
-      _inFlight.remove(libraryItemId);
     }
   }
 
@@ -111,9 +105,7 @@ class DownloadsNotifier extends _$DownloadsNotifier {
         final intact =
             prev?.status == .completed && await _filesystem.fileIntact(path);
 
-        final existingBytes = await File(path).exists()
-            ? await File(path).length()
-            : 0;
+        final existingBytes = await _filesystem.existingBytes(path);
 
         final audioFile = item.audioFiles.firstWhere(
           (f) => f.index == track.index,
@@ -148,13 +140,12 @@ class DownloadsNotifier extends _$DownloadsNotifier {
   Future<void> resume(String id) async {
     final item = state[id];
     if (item == null) return;
-    if (item.isActive || _inFlight.contains(id)) return;
+    if (item.isActive) return;
     await download(id);
   }
 
   Future<void> delete(String libraryItemId) async {
     ref.read(downloadEngineProvider.notifier).cancel(libraryItemId);
-    _inFlight.remove(libraryItemId);
     final item = state[libraryItemId];
     if (item != null) await _filesystem.deleteItem(item.title);
 
