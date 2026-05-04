@@ -52,6 +52,7 @@ class ItemApi {
       method: .get,
       query: {'raw': '1'},
       requestCancelToken: cancelToken,
+      responseType: .bytes,
     );
     return response.data;
   }
