@@ -14,6 +14,7 @@ _DownloadTrack _$DownloadTrackFromJson(Map<String, dynamic> json) =>
       localPath: json['localPath'] as String,
       ino: json['ino'] as String?,
       bytesReceived: (json['bytesReceived'] as num?)?.toInt() ?? 0,
+      bytesTotal: (json['bytesTotal'] as num?)?.toInt() ?? 0,
       status:
           $enumDecodeNullable(_$DownloadStatusEnumMap, json['status']) ??
           DownloadStatus.queued,
@@ -25,6 +26,7 @@ Map<String, dynamic> _$DownloadTrackToJson(_DownloadTrack instance) =>
       'localPath': instance.localPath,
       'ino': ?instance.ino,
       'bytesReceived': instance.bytesReceived,
+      'bytesTotal': instance.bytesTotal,
       'status': _$DownloadStatusEnumMap[instance.status]!,
     };
 
@@ -53,8 +55,6 @@ _DownloadItem _$DownloadItemFromJson(Map<String, dynamic> json) =>
       status:
           $enumDecodeNullable(_$DownloadStatusEnumMap, json['status']) ??
           DownloadStatus.queued,
-      totalBytes: (json['totalBytes'] as num?)?.toInt() ?? 0,
-      receivedBytes: (json['receivedBytes'] as num?)?.toInt() ?? 0,
       startedAt: json['startedAt'] == null
           ? null
           : DateTime.parse(json['startedAt'] as String),
@@ -70,7 +70,5 @@ Map<String, dynamic> _$DownloadItemToJson(_DownloadItem instance) =>
       'author': instance.author,
       'tracks': instance.tracks.map((e) => e.toJson()).toList(),
       'status': _$DownloadStatusEnumMap[instance.status]!,
-      'totalBytes': instance.totalBytes,
-      'receivedBytes': instance.receivedBytes,
       'startedAt': ?instance.startedAt?.toIso8601String(),
     };

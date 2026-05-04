@@ -23,10 +23,9 @@ sealed class DownloadTrack with _$DownloadTrack {
     required String localPath,
     required String? ino,
     @Default(0) int bytesReceived,
+    @Default(0) int bytesTotal,
     @Default(DownloadStatus.queued) DownloadStatus status,
   }) = _DownloadTrack;
-
-  int get bytesTotal => audioTrack.metadata?.size ?? 0;
 
   factory DownloadTrack.fromJson(Map<String, dynamic> json) =>
       _$DownloadTrackFromJson(json);
@@ -45,8 +44,6 @@ sealed class DownloadItem with _$DownloadItem {
     required String author,
     required List<DownloadTrack> tracks,
     @Default(DownloadStatus.queued) DownloadStatus status,
-    @Default(0) int totalBytes,
-    @Default(0) int receivedBytes,
     DateTime? startedAt,
   }) = _DownloadItem;
 
@@ -58,16 +55,17 @@ sealed class DownloadItem with _$DownloadItem {
     return (receivedBytes / totalBytes).clamp(0.0, 1.0);
   }
 
+  int get receivedBytes => tracks.fold(0, (s, t) => s + t.bytesReceived);
+  int get totalBytes => tracks.fold(0, (s, t) => s + t.bytesTotal);
+
   bool get isComplete => status == .completed;
   bool get isFailed => status == .failed;
-  bool get isActive => status == .downloading;
+  bool get isActive => status == .downloading || status == .queued;
 
   bool get isStuck =>
       status == .queued &&
       startedAt != null &&
       DateTime.now().difference(startedAt!).inMinutes > 5;
-
-  int get computedTotalBytes => tracks.fold(0, (s, t) => s + t.bytesTotal);
 }
 
 extension DownloadStatusX on DownloadStatus {
