@@ -55,20 +55,4 @@ class ItemApi {
     );
     return response.data;
   }
-
-  Future<ResponseBody?> itemAudioFileDownload({
-    required String libraryItemId,
-    required String ino,
-    required CancelToken cancelToken,
-    required int existingBytes,
-  }) async {
-    final response = await api.request<ResponseBody>(
-      ApiRoutes.itemAudioFileDownload(libraryItemId, ino),
-      method: .get,
-      headers: {if (existingBytes > 0) 'Range': 'bytes=$existingBytes-'},
-      responseType: .stream,
-      requestCancelToken: cancelToken,
-    );
-    return response.data;
-  }
 }
