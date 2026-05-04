@@ -3,35 +3,40 @@ import 'dart:developer';
 import 'package:abs_api/abs_api.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/models/user.dart';
+import 'package:storii/app/providers/api_providers.dart';
+import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 
 part 'download_engine.g.dart';
 
 @Riverpod(keepAlive: true)
-DownloadEngine downloadEngine(Ref ref) => DownloadEngine(
-  Dio(
+class DownloadEngine extends _$DownloadEngine {
+  late final _dio = Dio(
     BaseOptions(
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(minutes: 10),
     ),
-  ),
-  ref.watch(downloadsFsHelperProvider),
-);
-
-class DownloadEngine {
-  DownloadEngine(this._dio, this._filesystem);
-
-  final Dio _dio;
-  final DownloadsFilesystemHelper _filesystem;
+  );
+  DownloadsFilesystemHelper get _filesystem =>
+      ref.watch(downloadsFsHelperProvider);
   final Map<String, CancelToken> _coverTokens = {};
   final Map<String, Map<int, CancelToken>> _tokens = {};
 
+  @override
+  void build() {}
+
   Stream<DownloadItem> downloadItem({
     required DownloadItem item,
-    required Uri serverUrl,
-    required String token,
+    required UserDomain user,
   }) async* {
+    final token = await ref.read(tokenProvider).getAccessToken(user.id);
+    if (token == null) {
+      yield item.copyWith(status: .failed);
+      return;
+    }
+
     final trackTokens = <int, CancelToken>{};
     _tokens[item.libraryItemId] = trackTokens;
 
@@ -43,7 +48,7 @@ class DownloadEngine {
     final coverBytes = await downloadCover(
       itemTitle: item.title,
       itemId: item.libraryItemId,
-      serverUrl: serverUrl,
+      user: user,
       cancelToken: coverToken,
     );
     _coverTokens.remove(item.libraryItemId);
@@ -56,6 +61,7 @@ class DownloadEngine {
     for (int i = 0; i < current.tracks.length; i++) {
       final track = current.tracks[i];
       if (track.status == .completed) continue;
+      if (track.ino == null) continue;
 
       final cancelToken = CancelToken();
       trackTokens[i] = cancelToken;
@@ -65,7 +71,11 @@ class DownloadEngine {
       final sink = await _filesystem.openAppendSink(track.localPath);
 
       try {
-        final url = serverUrl.resolve(track.audioTrack.contentUrl).toString();
+        final url = user.serverUrl
+            .resolve(
+              ApiRoutes.itemAudioFileDownload(item.libraryItemId, track.ino!),
+            )
+            .toString();
 
         final res = await _dio.get<ResponseBody>(
           url,
@@ -159,31 +169,23 @@ class DownloadEngine {
   }
 
   Future<int> downloadCover({
+    required UserDomain user,
     required String itemTitle,
     required String itemId,
-    required Uri serverUrl,
     required CancelToken cancelToken,
   }) async {
     try {
-      final coverPath = await _filesystem.coverPath(itemTitle);
-      if (await _filesystem.fileIntact(coverPath)) {
-        return await _filesystem.fileSize(coverPath);
+      final imageBytes = await ref
+          .read(itemApiProvider(user))
+          .getCover(libraryItemId: itemId, cancelToken: cancelToken);
+      if (imageBytes != null) {
+        await _filesystem.saveCover(itemTitle, imageBytes);
+        return imageBytes.length;
       }
-      final coverUrl = serverUrl
-          .resolve(ApiRoutes.itemCover(itemId))
-          .replace(queryParameters: {'raw': '1'})
-          .toString();
-      final response = await _dio.download(
-        coverUrl,
-        coverPath,
-        cancelToken: cancelToken,
-      );
-      final size =
-          int.tryParse(response.headers.value('content-length') ?? '0') ?? 0;
-      return size;
-    } catch (_) {
-      return 0;
+    } catch (e) {
+      log('$e', name: 'downloadCover');
     }
+    return 0;
   }
 
   void pause(String itemId) {

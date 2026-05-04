@@ -17,6 +17,7 @@ import 'package:storii/shared/widgets/waveform.dart';
 class ItemDetailScreen extends ConsumerWidget {
   final String id;
   final bool isDownloaded;
+
   const ItemDetailScreen({
     super.key,
     required this.id,

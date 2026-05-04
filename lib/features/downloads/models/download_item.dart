@@ -21,12 +21,12 @@ sealed class DownloadTrack with _$DownloadTrack {
   const factory DownloadTrack({
     required AudioTrack audioTrack,
     required String localPath,
+    required String? ino,
     @Default(0) int bytesReceived,
     @Default(DownloadStatus.queued) DownloadStatus status,
   }) = _DownloadTrack;
 
   int get bytesTotal => audioTrack.metadata?.size ?? 0;
-  //! TODO: fix this when fixing downloads
 
   factory DownloadTrack.fromJson(Map<String, dynamic> json) =>
       _$DownloadTrackFromJson(json);

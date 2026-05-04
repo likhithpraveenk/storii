@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -60,6 +61,11 @@ class DownloadsFilesystemHelper {
     return p.join(dir.path, 'cover.jpg');
   }
 
+  Future<void> saveCover(String itemTitle, Uint8List data) async {
+    final path = await coverPath(itemTitle);
+    await File(path).writeAsBytes(data);
+  }
+
   Future<String?> coverPathIfExists(String itemTitle) async {
     final path = await coverPath(itemTitle);
     final fileExists = await fileIntact(path);
@@ -83,9 +89,6 @@ class DownloadsFilesystemHelper {
 
   Future<bool> isFullyDownloaded(DownloadItem item) async {
     if (item.tracks.isEmpty) return false;
-    final coverPath = await coverPathIfExists(item.title);
-    if (coverPath == null) return false;
-
     final results = await Future.wait(
       item.tracks.map((t) => fileIntact(t.localPath)),
     );

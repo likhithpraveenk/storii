@@ -29,6 +29,9 @@ Future<LibraryItem> itemDetail(
   final api = ref.read(itemApiProvider(user));
   try {
     final item = await api.get(id, includeProgress: includeProgress);
+    if (isDownloaded) {
+      ref.read(downloadsProvider.notifier).updateItem(item);
+    }
     return item;
   } catch (e) {
     final error = AppError.resolve(e);

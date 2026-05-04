@@ -183,6 +183,7 @@ class _ChapterTile extends ConsumerWidget {
                     .read(audioPlayerProvider.notifier)
                     .play(itemId: itemId, chapter: chapter),
               );
+              Navigator.of(context).pop();
             },
           );
         }

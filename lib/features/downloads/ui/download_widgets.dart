@@ -68,8 +68,7 @@ class DownloadTrackProgress extends StatelessWidget {
       .completed => formatBytes(t.bytesTotal),
       .downloading when t.bytesTotal > 0 =>
         '${formatBytes(t.bytesReceived)} / ${formatBytes(t.bytesTotal)}',
-      .paused => 'paused',
-      _ => '',
+      _ => t.status.label,
     };
   }
 

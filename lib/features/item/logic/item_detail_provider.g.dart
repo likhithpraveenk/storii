@@ -70,7 +70,7 @@ final class ItemDetailProvider
   }
 }
 
-String _$itemDetailHash() => r'0dedbaea730e0d4d8bb9d9b9d585c934d1dc46de';
+String _$itemDetailHash() => r'53f9f4191e16a514d77c8a9a76d2583b2462578e';
 
 final class ItemDetailFamily extends $Family
     with

@@ -12,6 +12,7 @@ _DownloadTrack _$DownloadTrackFromJson(Map<String, dynamic> json) =>
         json['audioTrack'] as Map<String, dynamic>,
       ),
       localPath: json['localPath'] as String,
+      ino: json['ino'] as String?,
       bytesReceived: (json['bytesReceived'] as num?)?.toInt() ?? 0,
       status:
           $enumDecodeNullable(_$DownloadStatusEnumMap, json['status']) ??
@@ -22,6 +23,7 @@ Map<String, dynamic> _$DownloadTrackToJson(_DownloadTrack instance) =>
     <String, dynamic>{
       'audioTrack': instance.audioTrack.toJson(),
       'localPath': instance.localPath,
+      'ino': ?instance.ino,
       'bytesReceived': instance.bytesReceived,
       'status': _$DownloadStatusEnumMap[instance.status]!,
     };
