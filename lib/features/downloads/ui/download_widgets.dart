@@ -16,12 +16,16 @@ class DownloadTrackProgress extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
 
+    final activeTracks = item.tracks
+        .where((track) => track.status != .completed)
+        .toList();
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
       child: Column(
         crossAxisAlignment: .start,
         children: [
-          for (final (i, track) in item.tracks.indexed) ...[
+          for (final (i, track) in activeTracks.indexed) ...[
             Column(
               crossAxisAlignment: .start,
               children: [
