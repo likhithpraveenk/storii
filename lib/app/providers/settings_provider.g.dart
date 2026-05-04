@@ -218,11 +218,14 @@ extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setHistoryLimit(int value) =>
       _save(state?.copyWith(historyLimit: value));
 
-  Future<void> setParallelTracks(int value) =>
-      _save(state?.copyWith(parallelTracks: value));
+  Future<void> setMaxConcurrentDownloads(int value) =>
+      _save(state?.copyWith(maxConcurrentDownloads: value));
 
-  Future<void> setParallelItems(int value) =>
-      _save(state?.copyWith(parallelItems: value));
+  Future<void> setMaxTracksPerItem(int value) =>
+      _save(state?.copyWith(maxTracksPerItem: value));
+
+  Future<void> setDownloadOnWifiOnly(bool value) =>
+      _save(state?.copyWith(downloadOnWifiOnly: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -343,18 +346,28 @@ final historyLimitProvider = Provider<int>(
   ),
 );
 
-final parallelTracksProvider = Provider<int>(
+final maxConcurrentDownloadsProvider = Provider<int>(
   (ref) => ref.watch(
     userSettingsProvider.select(
-      (s) => s?.parallelTracks ?? DefaultUserSettings.parallelTracks,
+      (s) =>
+          s?.maxConcurrentDownloads ??
+          DefaultUserSettings.maxConcurrentDownloads,
     ),
   ),
 );
 
-final parallelItemsProvider = Provider<int>(
+final maxTracksPerItemProvider = Provider<int>(
   (ref) => ref.watch(
     userSettingsProvider.select(
-      (s) => s?.parallelItems ?? DefaultUserSettings.parallelItems,
+      (s) => s?.maxTracksPerItem ?? DefaultUserSettings.maxTracksPerItem,
+    ),
+  ),
+);
+
+final downloadOnWifiOnlyProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.downloadOnWifiOnly ?? DefaultUserSettings.downloadOnWifiOnly,
     ),
   ),
 );

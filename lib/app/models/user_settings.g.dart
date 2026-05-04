@@ -53,12 +53,15 @@ _UserSettings _$UserSettingsFromJson(
   historyLimit:
       (json['historyLimit'] as num?)?.toInt() ??
       DefaultUserSettings.historyLimit,
-  parallelTracks:
-      (json['parallelTracks'] as num?)?.toInt() ??
-      DefaultUserSettings.parallelTracks,
-  parallelItems:
-      (json['parallelItems'] as num?)?.toInt() ??
-      DefaultUserSettings.parallelItems,
+  maxConcurrentDownloads:
+      (json['maxConcurrentDownloads'] as num?)?.toInt() ??
+      DefaultUserSettings.maxConcurrentDownloads,
+  maxTracksPerItem:
+      (json['maxTracksPerItem'] as num?)?.toInt() ??
+      DefaultUserSettings.maxTracksPerItem,
+  downloadOnWifiOnly:
+      json['downloadOnWifiOnly'] as bool? ??
+      DefaultUserSettings.downloadOnWifiOnly,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -81,8 +84,9 @@ Map<String, dynamic> _$UserSettingsToJson(
   'skipBackward': instance.skipBackward.inMicroseconds,
   'speed': instance.speed,
   'historyLimit': instance.historyLimit,
-  'parallelTracks': instance.parallelTracks,
-  'parallelItems': instance.parallelItems,
+  'maxConcurrentDownloads': instance.maxConcurrentDownloads,
+  'maxTracksPerItem': instance.maxTracksPerItem,
+  'downloadOnWifiOnly': instance.downloadOnWifiOnly,
 };
 
 const _$NavTargetEnumMap = {

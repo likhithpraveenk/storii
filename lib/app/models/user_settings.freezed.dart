@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserSettings {
 
-@noCodeGen String get userId; Library? get currentLibrary; List<NavTarget> get navTargets; DisplayMode get libraryDisplayMode; bool get collapseSeries; DisplayMode get seriesDisplayMode; DisplayMode get authorDisplayMode; NavTarget get startupNav; NavigationDestinationLabelBehavior get navLabelBehavior; String get dateTimeFormat; String? get fontFamily; double get fontScale; Duration get skipForward; Duration get skipBackward; double get speed; int get historyLimit; int get parallelTracks; int get parallelItems;
+@noCodeGen String get userId; Library? get currentLibrary; List<NavTarget> get navTargets; DisplayMode get libraryDisplayMode; bool get collapseSeries; DisplayMode get seriesDisplayMode; DisplayMode get authorDisplayMode; NavTarget get startupNav; NavigationDestinationLabelBehavior get navLabelBehavior; String get dateTimeFormat; String? get fontFamily; double get fontScale; Duration get skipForward; Duration get skipBackward; double get speed; int get historyLimit; int get maxConcurrentDownloads; int get maxTracksPerItem; bool get downloadOnWifiOnly;
 /// Create a copy of UserSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserSettingsCopyWith<UserSettings> get copyWith => _$UserSettingsCopyWithImpl<U
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserSettings&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.currentLibrary, currentLibrary) || other.currentLibrary == currentLibrary)&&const DeepCollectionEquality().equals(other.navTargets, navTargets)&&(identical(other.libraryDisplayMode, libraryDisplayMode) || other.libraryDisplayMode == libraryDisplayMode)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries)&&(identical(other.seriesDisplayMode, seriesDisplayMode) || other.seriesDisplayMode == seriesDisplayMode)&&(identical(other.authorDisplayMode, authorDisplayMode) || other.authorDisplayMode == authorDisplayMode)&&(identical(other.startupNav, startupNav) || other.startupNav == startupNav)&&(identical(other.navLabelBehavior, navLabelBehavior) || other.navLabelBehavior == navLabelBehavior)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.skipForward, skipForward) || other.skipForward == skipForward)&&(identical(other.skipBackward, skipBackward) || other.skipBackward == skipBackward)&&(identical(other.speed, speed) || other.speed == speed)&&(identical(other.historyLimit, historyLimit) || other.historyLimit == historyLimit)&&(identical(other.parallelTracks, parallelTracks) || other.parallelTracks == parallelTracks)&&(identical(other.parallelItems, parallelItems) || other.parallelItems == parallelItems));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserSettings&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.currentLibrary, currentLibrary) || other.currentLibrary == currentLibrary)&&const DeepCollectionEquality().equals(other.navTargets, navTargets)&&(identical(other.libraryDisplayMode, libraryDisplayMode) || other.libraryDisplayMode == libraryDisplayMode)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries)&&(identical(other.seriesDisplayMode, seriesDisplayMode) || other.seriesDisplayMode == seriesDisplayMode)&&(identical(other.authorDisplayMode, authorDisplayMode) || other.authorDisplayMode == authorDisplayMode)&&(identical(other.startupNav, startupNav) || other.startupNav == startupNav)&&(identical(other.navLabelBehavior, navLabelBehavior) || other.navLabelBehavior == navLabelBehavior)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.skipForward, skipForward) || other.skipForward == skipForward)&&(identical(other.skipBackward, skipBackward) || other.skipBackward == skipBackward)&&(identical(other.speed, speed) || other.speed == speed)&&(identical(other.historyLimit, historyLimit) || other.historyLimit == historyLimit)&&(identical(other.maxConcurrentDownloads, maxConcurrentDownloads) || other.maxConcurrentDownloads == maxConcurrentDownloads)&&(identical(other.maxTracksPerItem, maxTracksPerItem) || other.maxTracksPerItem == maxTracksPerItem)&&(identical(other.downloadOnWifiOnly, downloadOnWifiOnly) || other.downloadOnWifiOnly == downloadOnWifiOnly));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,currentLibrary,const DeepCollectionEquality().hash(navTargets),libraryDisplayMode,collapseSeries,seriesDisplayMode,authorDisplayMode,startupNav,navLabelBehavior,dateTimeFormat,fontFamily,fontScale,skipForward,skipBackward,speed,historyLimit,parallelTracks,parallelItems);
+int get hashCode => Object.hashAll([runtimeType,userId,currentLibrary,const DeepCollectionEquality().hash(navTargets),libraryDisplayMode,collapseSeries,seriesDisplayMode,authorDisplayMode,startupNav,navLabelBehavior,dateTimeFormat,fontFamily,fontScale,skipForward,skipBackward,speed,historyLimit,maxConcurrentDownloads,maxTracksPerItem,downloadOnWifiOnly]);
 
 @override
 String toString() {
-  return 'UserSettings(userId: $userId, currentLibrary: $currentLibrary, navTargets: $navTargets, libraryDisplayMode: $libraryDisplayMode, collapseSeries: $collapseSeries, seriesDisplayMode: $seriesDisplayMode, authorDisplayMode: $authorDisplayMode, startupNav: $startupNav, navLabelBehavior: $navLabelBehavior, dateTimeFormat: $dateTimeFormat, fontFamily: $fontFamily, fontScale: $fontScale, skipForward: $skipForward, skipBackward: $skipBackward, speed: $speed, historyLimit: $historyLimit, parallelTracks: $parallelTracks, parallelItems: $parallelItems)';
+  return 'UserSettings(userId: $userId, currentLibrary: $currentLibrary, navTargets: $navTargets, libraryDisplayMode: $libraryDisplayMode, collapseSeries: $collapseSeries, seriesDisplayMode: $seriesDisplayMode, authorDisplayMode: $authorDisplayMode, startupNav: $startupNav, navLabelBehavior: $navLabelBehavior, dateTimeFormat: $dateTimeFormat, fontFamily: $fontFamily, fontScale: $fontScale, skipForward: $skipForward, skipBackward: $skipBackward, speed: $speed, historyLimit: $historyLimit, maxConcurrentDownloads: $maxConcurrentDownloads, maxTracksPerItem: $maxTracksPerItem, downloadOnWifiOnly: $downloadOnWifiOnly)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserSettingsCopyWith<$Res>  {
   factory $UserSettingsCopyWith(UserSettings value, $Res Function(UserSettings) _then) = _$UserSettingsCopyWithImpl;
 @useResult
 $Res call({
-@noCodeGen String userId, Library? currentLibrary, List<NavTarget> navTargets, DisplayMode libraryDisplayMode, bool collapseSeries, DisplayMode seriesDisplayMode, DisplayMode authorDisplayMode, NavTarget startupNav, NavigationDestinationLabelBehavior navLabelBehavior, String dateTimeFormat, String? fontFamily, double fontScale, Duration skipForward, Duration skipBackward, double speed, int historyLimit, int parallelTracks, int parallelItems
+@noCodeGen String userId, Library? currentLibrary, List<NavTarget> navTargets, DisplayMode libraryDisplayMode, bool collapseSeries, DisplayMode seriesDisplayMode, DisplayMode authorDisplayMode, NavTarget startupNav, NavigationDestinationLabelBehavior navLabelBehavior, String dateTimeFormat, String? fontFamily, double fontScale, Duration skipForward, Duration skipBackward, double speed, int historyLimit, int maxConcurrentDownloads, int maxTracksPerItem, bool downloadOnWifiOnly
 });
 
 
@@ -65,7 +65,7 @@ class _$UserSettingsCopyWithImpl<$Res>
 
 /// Create a copy of UserSettings
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? currentLibrary = freezed,Object? navTargets = null,Object? libraryDisplayMode = null,Object? collapseSeries = null,Object? seriesDisplayMode = null,Object? authorDisplayMode = null,Object? startupNav = null,Object? navLabelBehavior = null,Object? dateTimeFormat = null,Object? fontFamily = freezed,Object? fontScale = null,Object? skipForward = null,Object? skipBackward = null,Object? speed = null,Object? historyLimit = null,Object? parallelTracks = null,Object? parallelItems = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? currentLibrary = freezed,Object? navTargets = null,Object? libraryDisplayMode = null,Object? collapseSeries = null,Object? seriesDisplayMode = null,Object? authorDisplayMode = null,Object? startupNav = null,Object? navLabelBehavior = null,Object? dateTimeFormat = null,Object? fontFamily = freezed,Object? fontScale = null,Object? skipForward = null,Object? skipBackward = null,Object? speed = null,Object? historyLimit = null,Object? maxConcurrentDownloads = null,Object? maxTracksPerItem = null,Object? downloadOnWifiOnly = null,}) {
   return _then(_self.copyWith(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,currentLibrary: freezed == currentLibrary ? _self.currentLibrary : currentLibrary // ignore: cast_nullable_to_non_nullable
@@ -83,9 +83,10 @@ as double,skipForward: null == skipForward ? _self.skipForward : skipForward // 
 as Duration,skipBackward: null == skipBackward ? _self.skipBackward : skipBackward // ignore: cast_nullable_to_non_nullable
 as Duration,speed: null == speed ? _self.speed : speed // ignore: cast_nullable_to_non_nullable
 as double,historyLimit: null == historyLimit ? _self.historyLimit : historyLimit // ignore: cast_nullable_to_non_nullable
-as int,parallelTracks: null == parallelTracks ? _self.parallelTracks : parallelTracks // ignore: cast_nullable_to_non_nullable
-as int,parallelItems: null == parallelItems ? _self.parallelItems : parallelItems // ignore: cast_nullable_to_non_nullable
-as int,
+as int,maxConcurrentDownloads: null == maxConcurrentDownloads ? _self.maxConcurrentDownloads : maxConcurrentDownloads // ignore: cast_nullable_to_non_nullable
+as int,maxTracksPerItem: null == maxTracksPerItem ? _self.maxTracksPerItem : maxTracksPerItem // ignore: cast_nullable_to_non_nullable
+as int,downloadOnWifiOnly: null == downloadOnWifiOnly ? _self.downloadOnWifiOnly : downloadOnWifiOnly // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 /// Create a copy of UserSettings
@@ -179,10 +180,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@noCodeGen  String userId,  Library? currentLibrary,  List<NavTarget> navTargets,  DisplayMode libraryDisplayMode,  bool collapseSeries,  DisplayMode seriesDisplayMode,  DisplayMode authorDisplayMode,  NavTarget startupNav,  NavigationDestinationLabelBehavior navLabelBehavior,  String dateTimeFormat,  String? fontFamily,  double fontScale,  Duration skipForward,  Duration skipBackward,  double speed,  int historyLimit,  int parallelTracks,  int parallelItems)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@noCodeGen  String userId,  Library? currentLibrary,  List<NavTarget> navTargets,  DisplayMode libraryDisplayMode,  bool collapseSeries,  DisplayMode seriesDisplayMode,  DisplayMode authorDisplayMode,  NavTarget startupNav,  NavigationDestinationLabelBehavior navLabelBehavior,  String dateTimeFormat,  String? fontFamily,  double fontScale,  Duration skipForward,  Duration skipBackward,  double speed,  int historyLimit,  int maxConcurrentDownloads,  int maxTracksPerItem,  bool downloadOnWifiOnly)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserSettings() when $default != null:
-return $default(_that.userId,_that.currentLibrary,_that.navTargets,_that.libraryDisplayMode,_that.collapseSeries,_that.seriesDisplayMode,_that.authorDisplayMode,_that.startupNav,_that.navLabelBehavior,_that.dateTimeFormat,_that.fontFamily,_that.fontScale,_that.skipForward,_that.skipBackward,_that.speed,_that.historyLimit,_that.parallelTracks,_that.parallelItems);case _:
+return $default(_that.userId,_that.currentLibrary,_that.navTargets,_that.libraryDisplayMode,_that.collapseSeries,_that.seriesDisplayMode,_that.authorDisplayMode,_that.startupNav,_that.navLabelBehavior,_that.dateTimeFormat,_that.fontFamily,_that.fontScale,_that.skipForward,_that.skipBackward,_that.speed,_that.historyLimit,_that.maxConcurrentDownloads,_that.maxTracksPerItem,_that.downloadOnWifiOnly);case _:
   return orElse();
 
 }
@@ -200,10 +201,10 @@ return $default(_that.userId,_that.currentLibrary,_that.navTargets,_that.library
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@noCodeGen  String userId,  Library? currentLibrary,  List<NavTarget> navTargets,  DisplayMode libraryDisplayMode,  bool collapseSeries,  DisplayMode seriesDisplayMode,  DisplayMode authorDisplayMode,  NavTarget startupNav,  NavigationDestinationLabelBehavior navLabelBehavior,  String dateTimeFormat,  String? fontFamily,  double fontScale,  Duration skipForward,  Duration skipBackward,  double speed,  int historyLimit,  int parallelTracks,  int parallelItems)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@noCodeGen  String userId,  Library? currentLibrary,  List<NavTarget> navTargets,  DisplayMode libraryDisplayMode,  bool collapseSeries,  DisplayMode seriesDisplayMode,  DisplayMode authorDisplayMode,  NavTarget startupNav,  NavigationDestinationLabelBehavior navLabelBehavior,  String dateTimeFormat,  String? fontFamily,  double fontScale,  Duration skipForward,  Duration skipBackward,  double speed,  int historyLimit,  int maxConcurrentDownloads,  int maxTracksPerItem,  bool downloadOnWifiOnly)  $default,) {final _that = this;
 switch (_that) {
 case _UserSettings():
-return $default(_that.userId,_that.currentLibrary,_that.navTargets,_that.libraryDisplayMode,_that.collapseSeries,_that.seriesDisplayMode,_that.authorDisplayMode,_that.startupNav,_that.navLabelBehavior,_that.dateTimeFormat,_that.fontFamily,_that.fontScale,_that.skipForward,_that.skipBackward,_that.speed,_that.historyLimit,_that.parallelTracks,_that.parallelItems);}
+return $default(_that.userId,_that.currentLibrary,_that.navTargets,_that.libraryDisplayMode,_that.collapseSeries,_that.seriesDisplayMode,_that.authorDisplayMode,_that.startupNav,_that.navLabelBehavior,_that.dateTimeFormat,_that.fontFamily,_that.fontScale,_that.skipForward,_that.skipBackward,_that.speed,_that.historyLimit,_that.maxConcurrentDownloads,_that.maxTracksPerItem,_that.downloadOnWifiOnly);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -217,10 +218,10 @@ return $default(_that.userId,_that.currentLibrary,_that.navTargets,_that.library
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@noCodeGen  String userId,  Library? currentLibrary,  List<NavTarget> navTargets,  DisplayMode libraryDisplayMode,  bool collapseSeries,  DisplayMode seriesDisplayMode,  DisplayMode authorDisplayMode,  NavTarget startupNav,  NavigationDestinationLabelBehavior navLabelBehavior,  String dateTimeFormat,  String? fontFamily,  double fontScale,  Duration skipForward,  Duration skipBackward,  double speed,  int historyLimit,  int parallelTracks,  int parallelItems)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@noCodeGen  String userId,  Library? currentLibrary,  List<NavTarget> navTargets,  DisplayMode libraryDisplayMode,  bool collapseSeries,  DisplayMode seriesDisplayMode,  DisplayMode authorDisplayMode,  NavTarget startupNav,  NavigationDestinationLabelBehavior navLabelBehavior,  String dateTimeFormat,  String? fontFamily,  double fontScale,  Duration skipForward,  Duration skipBackward,  double speed,  int historyLimit,  int maxConcurrentDownloads,  int maxTracksPerItem,  bool downloadOnWifiOnly)?  $default,) {final _that = this;
 switch (_that) {
 case _UserSettings() when $default != null:
-return $default(_that.userId,_that.currentLibrary,_that.navTargets,_that.libraryDisplayMode,_that.collapseSeries,_that.seriesDisplayMode,_that.authorDisplayMode,_that.startupNav,_that.navLabelBehavior,_that.dateTimeFormat,_that.fontFamily,_that.fontScale,_that.skipForward,_that.skipBackward,_that.speed,_that.historyLimit,_that.parallelTracks,_that.parallelItems);case _:
+return $default(_that.userId,_that.currentLibrary,_that.navTargets,_that.libraryDisplayMode,_that.collapseSeries,_that.seriesDisplayMode,_that.authorDisplayMode,_that.startupNav,_that.navLabelBehavior,_that.dateTimeFormat,_that.fontFamily,_that.fontScale,_that.skipForward,_that.skipBackward,_that.speed,_that.historyLimit,_that.maxConcurrentDownloads,_that.maxTracksPerItem,_that.downloadOnWifiOnly);case _:
   return null;
 
 }
@@ -232,7 +233,7 @@ return $default(_that.userId,_that.currentLibrary,_that.navTargets,_that.library
 @JsonSerializable()
 
 class _UserSettings implements UserSettings {
-  const _UserSettings({@noCodeGen required this.userId, this.currentLibrary = DefaultUserSettings.currentLibrary, final  List<NavTarget> navTargets = DefaultUserSettings.navTargets, this.libraryDisplayMode = DefaultUserSettings.libraryDisplayMode, this.collapseSeries = DefaultUserSettings.collapseSeries, this.seriesDisplayMode = DefaultUserSettings.seriesDisplayMode, this.authorDisplayMode = DefaultUserSettings.authorDisplayMode, this.startupNav = DefaultUserSettings.startupNav, this.navLabelBehavior = DefaultUserSettings.navLabelBehavior, this.dateTimeFormat = DefaultUserSettings.dateTimeFormat, this.fontFamily = DefaultUserSettings.fontFamily, this.fontScale = DefaultUserSettings.fontScale, this.skipForward = DefaultUserSettings.skipForward, this.skipBackward = DefaultUserSettings.skipBackward, this.speed = DefaultUserSettings.speed, this.historyLimit = DefaultUserSettings.historyLimit, this.parallelTracks = DefaultUserSettings.parallelTracks, this.parallelItems = DefaultUserSettings.parallelItems}): _navTargets = navTargets;
+  const _UserSettings({@noCodeGen required this.userId, this.currentLibrary = DefaultUserSettings.currentLibrary, final  List<NavTarget> navTargets = DefaultUserSettings.navTargets, this.libraryDisplayMode = DefaultUserSettings.libraryDisplayMode, this.collapseSeries = DefaultUserSettings.collapseSeries, this.seriesDisplayMode = DefaultUserSettings.seriesDisplayMode, this.authorDisplayMode = DefaultUserSettings.authorDisplayMode, this.startupNav = DefaultUserSettings.startupNav, this.navLabelBehavior = DefaultUserSettings.navLabelBehavior, this.dateTimeFormat = DefaultUserSettings.dateTimeFormat, this.fontFamily = DefaultUserSettings.fontFamily, this.fontScale = DefaultUserSettings.fontScale, this.skipForward = DefaultUserSettings.skipForward, this.skipBackward = DefaultUserSettings.skipBackward, this.speed = DefaultUserSettings.speed, this.historyLimit = DefaultUserSettings.historyLimit, this.maxConcurrentDownloads = DefaultUserSettings.maxConcurrentDownloads, this.maxTracksPerItem = DefaultUserSettings.maxTracksPerItem, this.downloadOnWifiOnly = DefaultUserSettings.downloadOnWifiOnly}): _navTargets = navTargets;
   factory _UserSettings.fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);
 
 @override@noCodeGen final  String userId;
@@ -257,8 +258,9 @@ class _UserSettings implements UserSettings {
 @override@JsonKey() final  Duration skipBackward;
 @override@JsonKey() final  double speed;
 @override@JsonKey() final  int historyLimit;
-@override@JsonKey() final  int parallelTracks;
-@override@JsonKey() final  int parallelItems;
+@override@JsonKey() final  int maxConcurrentDownloads;
+@override@JsonKey() final  int maxTracksPerItem;
+@override@JsonKey() final  bool downloadOnWifiOnly;
 
 /// Create a copy of UserSettings
 /// with the given fields replaced by the non-null parameter values.
@@ -273,16 +275,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserSettings&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.currentLibrary, currentLibrary) || other.currentLibrary == currentLibrary)&&const DeepCollectionEquality().equals(other._navTargets, _navTargets)&&(identical(other.libraryDisplayMode, libraryDisplayMode) || other.libraryDisplayMode == libraryDisplayMode)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries)&&(identical(other.seriesDisplayMode, seriesDisplayMode) || other.seriesDisplayMode == seriesDisplayMode)&&(identical(other.authorDisplayMode, authorDisplayMode) || other.authorDisplayMode == authorDisplayMode)&&(identical(other.startupNav, startupNav) || other.startupNav == startupNav)&&(identical(other.navLabelBehavior, navLabelBehavior) || other.navLabelBehavior == navLabelBehavior)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.skipForward, skipForward) || other.skipForward == skipForward)&&(identical(other.skipBackward, skipBackward) || other.skipBackward == skipBackward)&&(identical(other.speed, speed) || other.speed == speed)&&(identical(other.historyLimit, historyLimit) || other.historyLimit == historyLimit)&&(identical(other.parallelTracks, parallelTracks) || other.parallelTracks == parallelTracks)&&(identical(other.parallelItems, parallelItems) || other.parallelItems == parallelItems));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserSettings&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.currentLibrary, currentLibrary) || other.currentLibrary == currentLibrary)&&const DeepCollectionEquality().equals(other._navTargets, _navTargets)&&(identical(other.libraryDisplayMode, libraryDisplayMode) || other.libraryDisplayMode == libraryDisplayMode)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries)&&(identical(other.seriesDisplayMode, seriesDisplayMode) || other.seriesDisplayMode == seriesDisplayMode)&&(identical(other.authorDisplayMode, authorDisplayMode) || other.authorDisplayMode == authorDisplayMode)&&(identical(other.startupNav, startupNav) || other.startupNav == startupNav)&&(identical(other.navLabelBehavior, navLabelBehavior) || other.navLabelBehavior == navLabelBehavior)&&(identical(other.dateTimeFormat, dateTimeFormat) || other.dateTimeFormat == dateTimeFormat)&&(identical(other.fontFamily, fontFamily) || other.fontFamily == fontFamily)&&(identical(other.fontScale, fontScale) || other.fontScale == fontScale)&&(identical(other.skipForward, skipForward) || other.skipForward == skipForward)&&(identical(other.skipBackward, skipBackward) || other.skipBackward == skipBackward)&&(identical(other.speed, speed) || other.speed == speed)&&(identical(other.historyLimit, historyLimit) || other.historyLimit == historyLimit)&&(identical(other.maxConcurrentDownloads, maxConcurrentDownloads) || other.maxConcurrentDownloads == maxConcurrentDownloads)&&(identical(other.maxTracksPerItem, maxTracksPerItem) || other.maxTracksPerItem == maxTracksPerItem)&&(identical(other.downloadOnWifiOnly, downloadOnWifiOnly) || other.downloadOnWifiOnly == downloadOnWifiOnly));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,currentLibrary,const DeepCollectionEquality().hash(_navTargets),libraryDisplayMode,collapseSeries,seriesDisplayMode,authorDisplayMode,startupNav,navLabelBehavior,dateTimeFormat,fontFamily,fontScale,skipForward,skipBackward,speed,historyLimit,parallelTracks,parallelItems);
+int get hashCode => Object.hashAll([runtimeType,userId,currentLibrary,const DeepCollectionEquality().hash(_navTargets),libraryDisplayMode,collapseSeries,seriesDisplayMode,authorDisplayMode,startupNav,navLabelBehavior,dateTimeFormat,fontFamily,fontScale,skipForward,skipBackward,speed,historyLimit,maxConcurrentDownloads,maxTracksPerItem,downloadOnWifiOnly]);
 
 @override
 String toString() {
-  return 'UserSettings(userId: $userId, currentLibrary: $currentLibrary, navTargets: $navTargets, libraryDisplayMode: $libraryDisplayMode, collapseSeries: $collapseSeries, seriesDisplayMode: $seriesDisplayMode, authorDisplayMode: $authorDisplayMode, startupNav: $startupNav, navLabelBehavior: $navLabelBehavior, dateTimeFormat: $dateTimeFormat, fontFamily: $fontFamily, fontScale: $fontScale, skipForward: $skipForward, skipBackward: $skipBackward, speed: $speed, historyLimit: $historyLimit, parallelTracks: $parallelTracks, parallelItems: $parallelItems)';
+  return 'UserSettings(userId: $userId, currentLibrary: $currentLibrary, navTargets: $navTargets, libraryDisplayMode: $libraryDisplayMode, collapseSeries: $collapseSeries, seriesDisplayMode: $seriesDisplayMode, authorDisplayMode: $authorDisplayMode, startupNav: $startupNav, navLabelBehavior: $navLabelBehavior, dateTimeFormat: $dateTimeFormat, fontFamily: $fontFamily, fontScale: $fontScale, skipForward: $skipForward, skipBackward: $skipBackward, speed: $speed, historyLimit: $historyLimit, maxConcurrentDownloads: $maxConcurrentDownloads, maxTracksPerItem: $maxTracksPerItem, downloadOnWifiOnly: $downloadOnWifiOnly)';
 }
 
 
@@ -293,7 +295,7 @@ abstract mixin class _$UserSettingsCopyWith<$Res> implements $UserSettingsCopyWi
   factory _$UserSettingsCopyWith(_UserSettings value, $Res Function(_UserSettings) _then) = __$UserSettingsCopyWithImpl;
 @override @useResult
 $Res call({
-@noCodeGen String userId, Library? currentLibrary, List<NavTarget> navTargets, DisplayMode libraryDisplayMode, bool collapseSeries, DisplayMode seriesDisplayMode, DisplayMode authorDisplayMode, NavTarget startupNav, NavigationDestinationLabelBehavior navLabelBehavior, String dateTimeFormat, String? fontFamily, double fontScale, Duration skipForward, Duration skipBackward, double speed, int historyLimit, int parallelTracks, int parallelItems
+@noCodeGen String userId, Library? currentLibrary, List<NavTarget> navTargets, DisplayMode libraryDisplayMode, bool collapseSeries, DisplayMode seriesDisplayMode, DisplayMode authorDisplayMode, NavTarget startupNav, NavigationDestinationLabelBehavior navLabelBehavior, String dateTimeFormat, String? fontFamily, double fontScale, Duration skipForward, Duration skipBackward, double speed, int historyLimit, int maxConcurrentDownloads, int maxTracksPerItem, bool downloadOnWifiOnly
 });
 
 
@@ -310,7 +312,7 @@ class __$UserSettingsCopyWithImpl<$Res>
 
 /// Create a copy of UserSettings
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? currentLibrary = freezed,Object? navTargets = null,Object? libraryDisplayMode = null,Object? collapseSeries = null,Object? seriesDisplayMode = null,Object? authorDisplayMode = null,Object? startupNav = null,Object? navLabelBehavior = null,Object? dateTimeFormat = null,Object? fontFamily = freezed,Object? fontScale = null,Object? skipForward = null,Object? skipBackward = null,Object? speed = null,Object? historyLimit = null,Object? parallelTracks = null,Object? parallelItems = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? currentLibrary = freezed,Object? navTargets = null,Object? libraryDisplayMode = null,Object? collapseSeries = null,Object? seriesDisplayMode = null,Object? authorDisplayMode = null,Object? startupNav = null,Object? navLabelBehavior = null,Object? dateTimeFormat = null,Object? fontFamily = freezed,Object? fontScale = null,Object? skipForward = null,Object? skipBackward = null,Object? speed = null,Object? historyLimit = null,Object? maxConcurrentDownloads = null,Object? maxTracksPerItem = null,Object? downloadOnWifiOnly = null,}) {
   return _then(_UserSettings(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,currentLibrary: freezed == currentLibrary ? _self.currentLibrary : currentLibrary // ignore: cast_nullable_to_non_nullable
@@ -328,9 +330,10 @@ as double,skipForward: null == skipForward ? _self.skipForward : skipForward // 
 as Duration,skipBackward: null == skipBackward ? _self.skipBackward : skipBackward // ignore: cast_nullable_to_non_nullable
 as Duration,speed: null == speed ? _self.speed : speed // ignore: cast_nullable_to_non_nullable
 as double,historyLimit: null == historyLimit ? _self.historyLimit : historyLimit // ignore: cast_nullable_to_non_nullable
-as int,parallelTracks: null == parallelTracks ? _self.parallelTracks : parallelTracks // ignore: cast_nullable_to_non_nullable
-as int,parallelItems: null == parallelItems ? _self.parallelItems : parallelItems // ignore: cast_nullable_to_non_nullable
-as int,
+as int,maxConcurrentDownloads: null == maxConcurrentDownloads ? _self.maxConcurrentDownloads : maxConcurrentDownloads // ignore: cast_nullable_to_non_nullable
+as int,maxTracksPerItem: null == maxTracksPerItem ? _self.maxTracksPerItem : maxTracksPerItem // ignore: cast_nullable_to_non_nullable
+as int,downloadOnWifiOnly: null == downloadOnWifiOnly ? _self.downloadOnWifiOnly : downloadOnWifiOnly // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
