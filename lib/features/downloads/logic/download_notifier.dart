@@ -24,7 +24,20 @@ class DownloadsNotifier extends _$DownloadsNotifier {
   @override
   Map<String, DownloadItem> build() {
     final loaded = _storage.loadAll();
+
+    _pauseActiveItemsOnStart(loaded);
+
     return loaded;
+  }
+
+  void _pauseActiveItemsOnStart(Map<String, DownloadItem> items) {
+    Future.microtask(() async {
+      for (final item in items.values) {
+        if (item.isActive) {
+          await _updateAndPersist(item.copyWith(status: .paused));
+        }
+      }
+    });
   }
 
   void updateItem(LibraryItem item) async {
