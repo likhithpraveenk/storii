@@ -116,6 +116,7 @@ class DownloadsNotifier extends _$DownloadsNotifier {
           ino: audioFile.ino,
           status: intact ? .completed : (existingBytes > 0 ? .paused : .queued),
           bytesReceived: existingBytes,
+          bytesTotal: audioFile.metadata.size,
         );
       }),
     );

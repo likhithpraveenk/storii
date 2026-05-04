@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:abs_api/abs_api.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/token_provider.dart';
@@ -96,11 +97,6 @@ class DownloadEngine extends _$DownloadEngine {
         }
 
         var received = existingBytes;
-        final rawContentLength = res.data!.contentLength;
-        final knownTotal = rawContentLength > 0
-            ? existingBytes + rawContentLength
-            : current.tracks[i].bytesTotal;
-
         await for (final chunk in res.data!.stream) {
           received += chunk.length;
           sink.add(chunk);
@@ -109,7 +105,6 @@ class DownloadEngine extends _$DownloadEngine {
           updatedTracks[i] = current.tracks[i].copyWith(
             status: .downloading,
             bytesReceived: received,
-            bytesTotal: knownTotal,
           );
           current = current.copyWith(tracks: updatedTracks);
           yield current;
@@ -118,16 +113,11 @@ class DownloadEngine extends _$DownloadEngine {
         await sink.close();
 
         final updatedTracks = [...current.tracks];
-        updatedTracks[i] = current.tracks[i].copyWith(
-          status: .completed,
-          bytesTotal: current.tracks[i].bytesTotal > 0
-              ? current.tracks[i].bytesTotal
-              : received,
-        );
+        updatedTracks[i] = current.tracks[i].copyWith(status: .completed);
         current = current.copyWith(tracks: updatedTracks);
         yield current;
       } on DioException catch (e) {
-        log('download engine dio error: $e');
+        LogService.log('download engine dio error: $e');
         await sink.close();
         if (CancelToken.isCancel(e)) {
           final reason = e.message ?? '';
@@ -143,7 +133,7 @@ class DownloadEngine extends _$DownloadEngine {
         yield current.copyWith(status: .failed);
         return;
       } catch (e) {
-        log('download engine error: $e');
+        LogService.log('download engine error: $e');
         await sink.close();
         _tokens.remove(item.libraryItemId);
         yield current.copyWith(status: .failed);
