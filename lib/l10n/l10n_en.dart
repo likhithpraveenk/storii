@@ -700,4 +700,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get foundBugQSubtitle =>
       'Open a GitHub issue for any bug you encountered';
+
+  @override
+  String get avoidMobileData => 'Avoid mobile data';
+
+  @override
+  String get avoidMobileDataSubtitle =>
+      'Downloads will pause on mobile networks';
 }

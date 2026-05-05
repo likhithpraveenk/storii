@@ -25,10 +25,7 @@ class DefaultUserSettings {
   static const skipBackward = Duration(seconds: 10);
   static const speed = 1.0;
   static const historyLimit = 200;
-  static const maxConcurrentDownloads = 2; // TODO: parallel downloads
-  static const maxTracksPerItem = 4; // TODO: parallel downloads
-  static const downloadOnWifiOnly =
-      false; // TODO: setting to download on wifi only
+  static const downloadOnUnMeteredOnly = false;
 }
 
 @freezed
@@ -70,12 +67,8 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.historyLimit) int historyLimit,
 
-    @Default(DefaultUserSettings.maxConcurrentDownloads)
-    int maxConcurrentDownloads,
-
-    @Default(DefaultUserSettings.maxTracksPerItem) int maxTracksPerItem,
-
-    @Default(DefaultUserSettings.downloadOnWifiOnly) bool downloadOnWifiOnly,
+    @Default(DefaultUserSettings.downloadOnUnMeteredOnly)
+    bool downloadOnUnMeteredOnly,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

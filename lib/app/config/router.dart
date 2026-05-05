@@ -20,6 +20,7 @@ import 'package:storii/features/search/ui/search_screen.dart';
 import 'package:storii/features/series/ui/series_detail_screen.dart';
 import 'package:storii/features/series/ui/series_list_screen.dart';
 import 'package:storii/features/settings/ui/appearance/appearance_screen.dart';
+import 'package:storii/features/settings/ui/downloads/downloads_settings_screen.dart';
 import 'package:storii/features/settings/ui/navigation/config_nav_screen.dart';
 import 'package:storii/features/settings/ui/player_settings/player_settings_screen.dart';
 import 'package:storii/features/settings/ui/settings_screen.dart';
@@ -47,6 +48,7 @@ enum AppRoute {
   appearanceSettings('/more/settings/appearance'),
   playerSettings('/more/settings/player'),
   navigationSettings('/more/settings/navigation'),
+  downloadsSettings('/more/settings/downloads'),
   profile('/more/profile');
 
   final String path;
@@ -184,6 +186,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: 'navigation',
                     builder: (context, state) => const ConfigNavScreen(),
+                  ),
+                  GoRoute(
+                    path: 'downloads',
+                    builder: (context, state) =>
+                        const DownloadsSettingsScreen(),
                   ),
                 ],
               ),

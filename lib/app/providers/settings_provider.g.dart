@@ -218,14 +218,8 @@ extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setHistoryLimit(int value) =>
       _save(state?.copyWith(historyLimit: value));
 
-  Future<void> setMaxConcurrentDownloads(int value) =>
-      _save(state?.copyWith(maxConcurrentDownloads: value));
-
-  Future<void> setMaxTracksPerItem(int value) =>
-      _save(state?.copyWith(maxTracksPerItem: value));
-
-  Future<void> setDownloadOnWifiOnly(bool value) =>
-      _save(state?.copyWith(downloadOnWifiOnly: value));
+  Future<void> setDownloadOnUnMeteredOnly(bool value) =>
+      _save(state?.copyWith(downloadOnUnMeteredOnly: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -346,28 +340,12 @@ final historyLimitProvider = Provider<int>(
   ),
 );
 
-final maxConcurrentDownloadsProvider = Provider<int>(
+final downloadOnUnMeteredOnlyProvider = Provider<bool>(
   (ref) => ref.watch(
     userSettingsProvider.select(
       (s) =>
-          s?.maxConcurrentDownloads ??
-          DefaultUserSettings.maxConcurrentDownloads,
-    ),
-  ),
-);
-
-final maxTracksPerItemProvider = Provider<int>(
-  (ref) => ref.watch(
-    userSettingsProvider.select(
-      (s) => s?.maxTracksPerItem ?? DefaultUserSettings.maxTracksPerItem,
-    ),
-  ),
-);
-
-final downloadOnWifiOnlyProvider = Provider<bool>(
-  (ref) => ref.watch(
-    userSettingsProvider.select(
-      (s) => s?.downloadOnWifiOnly ?? DefaultUserSettings.downloadOnWifiOnly,
+          s?.downloadOnUnMeteredOnly ??
+          DefaultUserSettings.downloadOnUnMeteredOnly,
     ),
   ),
 );
