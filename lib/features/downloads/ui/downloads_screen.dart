@@ -7,8 +7,10 @@ import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
-import 'package:storii/features/library/ui/items_grid_view.dart';
+import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
+import 'package:storii/shared/widgets/marquee_text.dart';
 
 enum DownloadsScreenTab { active, completed }
 
@@ -53,7 +55,6 @@ class DownloadsScreen extends ConsumerWidget {
               const EmptyState()
             else
               ListView.builder(
-                key: const ValueKey('active_downloads'),
                 padding: const .only(bottom: 16, top: 4),
                 itemCount: activeDownloads.length,
                 itemBuilder: (context, index) {
@@ -61,12 +62,77 @@ class DownloadsScreen extends ConsumerWidget {
                   return DownloadTile(item: item);
                 },
               ),
-            ItemsGridView(
-              key: const ValueKey('completed_downloads'),
-              completedDownloads.map((d) => d.libraryItem).toList(),
+            ListView.builder(
+              padding: const .only(bottom: 16, top: 4),
+              itemCount: completedDownloads.length,
+              itemBuilder: (context, index) {
+                final item = completedDownloads.elementAt(index);
+                return CompletedItemTile(item);
+              },
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CompletedItemTile extends StatelessWidget {
+  const CompletedItemTile(this.item, {super.key});
+  final DownloadItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return ListTile(
+      onTap: () {
+        context.push(
+          AppRoute.itemDetail.path,
+          extra: {'id': item.libraryItemId},
+        );
+      },
+      contentPadding: const .fromLTRB(16, 8, 0, 8),
+      leading: AspectRatio(
+        aspectRatio: 1,
+        child: ClipRRect(
+          borderRadius: .circular(4),
+          child: ImageWidget(id: item.libraryItemId, type: .item),
+        ),
+      ),
+      minVerticalPadding: 0,
+      horizontalTitleGap: 8,
+      titleAlignment: .center,
+      title: Column(
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
+        children: [
+          MarqueeText(item.title, style: theme.textTheme.titleSmall),
+          const SizedBox(height: 2),
+          MarqueeText(
+            item.author,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 2),
+        ],
+      ),
+      subtitle: Text(
+        formatBytes(item.receivedBytes),
+        style: theme.textTheme.labelSmall,
+      ),
+      trailing: Consumer(
+        builder: (context, ref, _) {
+          return IconButton(
+            onPressed: () {
+              ref
+                  .read(audioPlayerProvider.notifier)
+                  .play(itemId: item.libraryItemId);
+            },
+            icon: const Icon(Icons.play_arrow),
+          );
+        },
       ),
     );
   }

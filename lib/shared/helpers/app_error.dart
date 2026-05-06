@@ -13,7 +13,7 @@ enum AppErrorType {
 class AppError implements Exception {
   final AppErrorType type;
   final String message;
-  final Object originalError;
+  final dynamic originalError;
 
   const AppError(this.type, this.message, this.originalError);
 

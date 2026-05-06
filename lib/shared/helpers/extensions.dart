@@ -98,11 +98,15 @@ extension ColorExtensions on Color {
 }
 
 extension SnackBarShorthand on ScaffoldMessengerState {
-  void showAppSnackBar(String message, {bool isError = false}) {
+  void showAppSnackBar(
+    String message, {
+    bool isError = false,
+    Duration? duration,
+  }) {
     showSnackBar(
       SnackBar(
         content: Text(message),
-        duration: const Duration(seconds: 2),
+        duration: duration ?? const Duration(seconds: 2),
         backgroundColor: isError ? appRedColor : null,
       ),
     );
