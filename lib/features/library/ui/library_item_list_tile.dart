@@ -9,19 +9,16 @@ import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
-class LibraryItemListTile extends ConsumerWidget {
+class LibraryItemListTile extends StatelessWidget {
   const LibraryItemListTile(this.item, {super.key});
   final LibraryItem item;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final title = item.collapsedSeries != null
         ? item.collapsedSeries!.name
         : item.title ?? l10n.noTitle;
-
-    final isDownloaded =
-        ref.watch(downloadItemProvider(item.id))?.status == .completed;
 
     final seriesNumBooks = item.collapsedSeries?.numBooks;
     final progress = item.collapsedSeries != null ? 0 : item.progress;
@@ -34,10 +31,7 @@ class LibraryItemListTile extends ConsumerWidget {
             extra: item.collapsedSeries!.id,
           );
         } else {
-          context.push(
-            AppRoute.itemDetail.path,
-            extra: {'id': item.id, 'isDownloaded': isDownloaded},
-          );
+          context.push(AppRoute.itemDetail.path, extra: {'id': item.id});
         }
       },
       contentPadding: const .fromLTRB(16, 8, 16, 8),
@@ -86,7 +80,15 @@ class LibraryItemListTile extends ConsumerWidget {
               ],
             ),
           ),
-          if (isDownloaded) const DownloadBadge(),
+          Consumer(
+            builder: (context, ref, _) {
+              final isDownloaded =
+                  ref.watch(downloadItemProvider(item.id))?.status ==
+                  .completed;
+              if (isDownloaded) const DownloadBadge();
+              return const SizedBox.shrink();
+            },
+          ),
         ],
       ),
     );

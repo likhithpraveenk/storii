@@ -174,9 +174,7 @@ void showDownloadsDeleteDialog(
     actionLabel: l10n.remove,
     isDestructive: true,
     onTap: () async {
-      await ref
-          .read(downloadQueueProvider.notifier)
-          .delete(item.libraryItem.id);
+      await ref.read(downloadQueueProvider.notifier).delete(item.libraryItemId);
     },
   );
 }

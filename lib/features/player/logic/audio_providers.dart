@@ -113,13 +113,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       Uri? serverUrl;
 
       if (isFullyDownloaded) {
-        final item = await ref.read(
-          itemDetailProvider(
-            itemId,
-            includeProgress: true,
-            isDownloaded: true,
-          ).future,
-        );
+        final item = await ref.read(itemDetailProvider(itemId).future);
         session = await ref
             .read(sessionProvider.notifier)
             .createLocal(item: item, episodeId: episodeId);

@@ -22,7 +22,7 @@ final class ItemDetailProvider
     with $FutureModifier<LibraryItem>, $FutureProvider<LibraryItem> {
   ItemDetailProvider._({
     required ItemDetailFamily super.from,
-    required (String, {bool includeProgress, bool isDownloaded}) super.argument,
+    required String super.argument,
   }) : super(
          retry: null,
          name: r'itemDetailProvider',
@@ -38,7 +38,7 @@ final class ItemDetailProvider
   String toString() {
     return r'itemDetailProvider'
         ''
-        '$argument';
+        '($argument)';
   }
 
   @$internal
@@ -49,14 +49,8 @@ final class ItemDetailProvider
 
   @override
   FutureOr<LibraryItem> create(Ref ref) {
-    final argument =
-        this.argument as (String, {bool includeProgress, bool isDownloaded});
-    return itemDetail(
-      ref,
-      argument.$1,
-      includeProgress: argument.includeProgress,
-      isDownloaded: argument.isDownloaded,
-    );
+    final argument = this.argument as String;
+    return itemDetail(ref, argument);
   }
 
   @override
@@ -70,14 +64,10 @@ final class ItemDetailProvider
   }
 }
 
-String _$itemDetailHash() => r'ee3c651391ea3148383c54ce2626bb3cb049a224';
+String _$itemDetailHash() => r'154c38d4dd54c738bbd14f07af1e7c6ca8f7a86f';
 
 final class ItemDetailFamily extends $Family
-    with
-        $FunctionalFamilyOverride<
-          FutureOr<LibraryItem>,
-          (String, {bool includeProgress, bool isDownloaded})
-        > {
+    with $FunctionalFamilyOverride<FutureOr<LibraryItem>, String> {
   ItemDetailFamily._()
     : super(
         retry: null,
@@ -87,18 +77,8 @@ final class ItemDetailFamily extends $Family
         isAutoDispose: false,
       );
 
-  ItemDetailProvider call(
-    String id, {
-    bool includeProgress = false,
-    bool isDownloaded = false,
-  }) => ItemDetailProvider._(
-    argument: (
-      id,
-      includeProgress: includeProgress,
-      isDownloaded: isDownloaded,
-    ),
-    from: this,
-  );
+  ItemDetailProvider call(String id) =>
+      ItemDetailProvider._(argument: id, from: this);
 
   @override
   String toString() => r'itemDetailProvider';

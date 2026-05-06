@@ -104,7 +104,7 @@ class LibraryItemCard extends ConsumerWidget {
                   if (isDownloaded)
                     const Positioned(
                       bottom: 6,
-                      right: 6,
+                      left: 6,
                       child: DownloadBadge(),
                     ),
                 ],

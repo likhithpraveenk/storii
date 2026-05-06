@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:abs_api/abs_api.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
@@ -42,12 +41,6 @@ class DownloadsNotifier extends _$DownloadsNotifier {
     } catch (e) {
       log('Failed to save download item [${item.title}]: $e');
     }
-  }
-
-  Future<void> updateItem(LibraryItem item) async {
-    final download = state.value?[item.id];
-    if (download == null) return;
-    await save(download.copyWith(libraryItem: item));
   }
 
   Future<void> remove(String id) async {

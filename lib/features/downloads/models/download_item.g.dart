@@ -12,7 +12,7 @@ _DownloadTrack _$DownloadTrackFromJson(Map<String, dynamic> json) =>
         json['audioTrack'] as Map<String, dynamic>,
       ),
       localPath: json['localPath'] as String,
-      ino: json['ino'] as String? ?? 'oldDownload',
+      ino: json['ino'] as String? ?? 'migrateOldDownload',
       bytesReceived: (json['bytesReceived'] as num?)?.toInt() ?? 0,
       bytesTotal: (json['bytesTotal'] as num?)?.toInt() ?? 0,
       status:
@@ -43,9 +43,6 @@ _DownloadItem _$DownloadItemFromJson(Map<String, dynamic> json) =>
       serverUrl: Uri.parse(json['serverUrl'] as String),
       libraryItemId: json['libraryItemId'] as String,
       userId: json['userId'] as String,
-      libraryItem: LibraryItem.fromJson(
-        json['libraryItem'] as Map<String, dynamic>,
-      ),
       title: json['title'] as String,
       author: json['author'] as String,
       tracks: (json['tracks'] as List<dynamic>)
@@ -64,7 +61,6 @@ Map<String, dynamic> _$DownloadItemToJson(_DownloadItem instance) =>
       'serverUrl': instance.serverUrl.toString(),
       'libraryItemId': instance.libraryItemId,
       'userId': instance.userId,
-      'libraryItem': instance.libraryItem.toJson(),
       'title': instance.title,
       'author': instance.author,
       'tracks': instance.tracks.map((e) => e.toJson()).toList(),

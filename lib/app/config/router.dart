@@ -209,12 +209,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final extra = state.extra as Map<String, dynamic>;
               final id = extra['id'] as String;
-              final isDownloaded = extra['isDownloaded'] as bool?;
-              return ItemDetailScreen(
-                key: ValueKey(id),
-                id: id,
-                isDownloaded: isDownloaded ?? false,
-              );
+              return ItemDetailScreen(key: ValueKey(id), id: id);
             },
           ),
         ],

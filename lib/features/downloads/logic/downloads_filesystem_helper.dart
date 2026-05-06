@@ -166,7 +166,6 @@ extension ToDownloadItemX on LibraryItem {
         existing?.copyWith(tracks: downloadTracks, status: .queued) ??
         DownloadItem(
           libraryItemId: id,
-          libraryItem: this,
           title: title ?? id,
           author: authorName ?? l10n.noAuthor,
           tracks: downloadTracks,

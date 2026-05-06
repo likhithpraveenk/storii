@@ -14,7 +14,7 @@ sealed class DownloadTrack with _$DownloadTrack {
   const factory DownloadTrack({
     required AudioTrack audioTrack,
     required String localPath,
-    @Default('oldDownload') String ino,
+    @Default('migrateOldDownload') String ino,
     @Default(0) int bytesReceived,
     @Default(0) int bytesTotal,
     @Default(DownloadStatus.queued) DownloadStatus status,
@@ -32,7 +32,6 @@ sealed class DownloadItem with _$DownloadItem {
     required Uri serverUrl,
     required String libraryItemId,
     required String userId,
-    required LibraryItem libraryItem,
     required String title,
     required String author,
     required List<DownloadTrack> tracks,
