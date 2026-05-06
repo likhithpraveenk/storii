@@ -57,7 +57,6 @@ class DownloadEngine extends _$DownloadEngine {
     for (int i = 0; i < current.tracks.length; i++) {
       final initialTrack = current.tracks[i];
       if (initialTrack.status == .completed) continue;
-      if (initialTrack.ino == null) continue;
 
       final cancelToken = CancelToken();
       trackTokens[i] = cancelToken;
@@ -73,7 +72,7 @@ class DownloadEngine extends _$DownloadEngine {
             .resolve(
               ApiRoutes.itemAudioFileDownload(
                 item.libraryItemId,
-                initialTrack.ino!,
+                initialTrack.ino,
               ),
             )
             .toString();
@@ -92,7 +91,7 @@ class DownloadEngine extends _$DownloadEngine {
 
         if (res.data == null) {
           throw StateError(
-            'No response body for track ${initialTrack.ino} of item ${item.libraryItemId}',
+            'No response body for track ${initialTrack.audioTrack.index} of item ${item.title}',
           );
         }
 
@@ -120,12 +119,8 @@ class DownloadEngine extends _$DownloadEngine {
         LogService.log('download engine dio error: $e');
         await sink.close();
         if (CancelToken.isCancel(e)) {
-          final reason = e.message ?? '';
-          final status = reason == 'cancelled'
-              ? DownloadStatus.cancelled
-              : DownloadStatus.paused;
           _tokens.remove(item.libraryItemId);
-          yield current.copyWith(status: status);
+          yield current.copyWith(status: .paused);
           return;
         }
 

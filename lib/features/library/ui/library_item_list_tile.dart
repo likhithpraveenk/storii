@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/features/downloads/logic/download_notifier.dart';
+import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
@@ -20,9 +20,8 @@ class LibraryItemListTile extends ConsumerWidget {
         ? item.collapsedSeries!.name
         : item.title ?? l10n.noTitle;
 
-    final isDownloaded = ref.watch(
-      downloadsProvider.select((d) => d[item.id]?.status == .completed),
-    );
+    final isDownloaded =
+        ref.watch(downloadItemProvider(item.id))?.status == .completed;
 
     final seriesNumBooks = item.collapsedSeries?.numBooks;
     final progress = item.collapsedSeries != null ? 0 : item.progress;

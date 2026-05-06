@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/connection_providers.dart';
-import 'package:storii/features/downloads/logic/download_notifier.dart';
+import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
 part 'item_detail_provider.g.dart';
@@ -18,7 +20,7 @@ Future<LibraryItem> itemDetail(
 }) async {
   final isOnline = ref.watch(socketStatusProvider).value ?? false;
   if (!isOnline && isDownloaded) {
-    final item = ref.watch(downloadsProvider)[id];
+    final item = ref.watch(downloadsProvider).value?[id];
     if (item == null) {
       throw StateError('use isDownloaded for downloaded item only');
     }
@@ -30,7 +32,7 @@ Future<LibraryItem> itemDetail(
   try {
     final item = await api.get(id, includeProgress: includeProgress);
     if (isDownloaded) {
-      ref.read(downloadsProvider.notifier).updateItem(item);
+      unawaited(ref.read(downloadsProvider.notifier).updateItem(item));
     }
     return item;
   } catch (e) {

@@ -7,7 +7,7 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/downloads/logic/download_notifier.dart';
+import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
@@ -22,9 +22,8 @@ class LibraryItemCard extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
     final displayMode = ref.watch(libraryDisplayModeProvider);
 
-    final isDownloaded = ref.watch(
-      downloadsProvider.select((d) => d[item.id]?.status == .completed),
-    );
+    final isDownloaded =
+        ref.watch(downloadItemProvider(item.id))?.status == .completed;
 
     final stackTitle = displayMode == .compact;
     final showTitle = displayMode != .coverOnly;

@@ -12,7 +12,7 @@ _DownloadTrack _$DownloadTrackFromJson(Map<String, dynamic> json) =>
         json['audioTrack'] as Map<String, dynamic>,
       ),
       localPath: json['localPath'] as String,
-      ino: json['ino'] as String?,
+      ino: json['ino'] as String? ?? 'oldDownload',
       bytesReceived: (json['bytesReceived'] as num?)?.toInt() ?? 0,
       bytesTotal: (json['bytesTotal'] as num?)?.toInt() ?? 0,
       status:
@@ -24,7 +24,7 @@ Map<String, dynamic> _$DownloadTrackToJson(_DownloadTrack instance) =>
     <String, dynamic>{
       'audioTrack': instance.audioTrack.toJson(),
       'localPath': instance.localPath,
-      'ino': ?instance.ino,
+      'ino': instance.ino,
       'bytesReceived': instance.bytesReceived,
       'bytesTotal': instance.bytesTotal,
       'status': _$DownloadStatusEnumMap[instance.status]!,
@@ -36,7 +36,6 @@ const _$DownloadStatusEnumMap = {
   DownloadStatus.completed: 'completed',
   DownloadStatus.failed: 'failed',
   DownloadStatus.paused: 'paused',
-  DownloadStatus.cancelled: 'cancelled',
 };
 
 _DownloadItem _$DownloadItemFromJson(Map<String, dynamic> json) =>

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/features/downloads/logic/download_notifier.dart';
+import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
-import 'package:storii/shared/widgets/waveform.dart';
 
 class DownloadTrackProgress extends StatelessWidget {
   const DownloadTrackProgress({super.key, required this.item});
@@ -62,22 +61,15 @@ class DownloadTrackProgress extends StatelessWidget {
   }
 
   double? _trackProgress(DownloadTrack t) {
-    if (t.status == .completed) return 1.0;
     if (t.bytesTotal == 0) return null;
     return (t.bytesReceived / t.bytesTotal).clamp(0.0, 1.0);
   }
 
   String _trackLabel(DownloadTrack t) {
-    return switch (t.status) {
-      .completed => formatBytes(t.bytesTotal),
-      .downloading when t.bytesTotal > 0 =>
-        '${formatBytes(t.bytesReceived)} / ${formatBytes(t.bytesTotal)}',
-      _ => t.status.label,
-    };
+    return '${formatBytes(t.bytesReceived)} / ${formatBytes(t.bytesTotal)}';
   }
 
   Color _trackColor(DownloadTrack t, ColorScheme scheme) => switch (t.status) {
-    .completed => scheme.primary,
     .downloading => scheme.secondary,
     .failed => scheme.error,
     _ => scheme.outline,
@@ -97,10 +89,7 @@ class DownloadStatusRow extends StatelessWidget {
     return switch (item.status) {
       .queued => Row(
         children: [
-          const SizedBox.square(
-            dimension: 16,
-            child: RandomWaveform(barCount: 4, barMaxHeight: 12, barWidth: 2),
-          ),
+          Icon(Icons.schedule, color: scheme.outline, size: 12),
           const SizedBox(width: 6),
           Text(l10n.queued, style: textTheme.labelSmall),
         ],
@@ -121,7 +110,7 @@ class DownloadStatusRow extends StatelessWidget {
         formatBytes(item.totalBytes),
         style: textTheme.labelSmall?.copyWith(color: scheme.primary),
       ),
-      .failed || .cancelled => Text(
+      .failed => Text(
         l10n.failed,
         style: textTheme.labelSmall?.copyWith(color: scheme.error),
       ),
@@ -142,18 +131,18 @@ class DownloadTileTrailingActions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.read(downloadsProvider.notifier);
+    final queue = ref.read(downloadQueueProvider.notifier);
 
     return switch (item.status) {
       .downloading || .queued => IconButton(
         icon: const Icon(Icons.pause_circle_outline),
         tooltip: l10n.pause,
-        onPressed: () => notifier.pause(item.libraryItemId),
+        onPressed: () => queue.pause(item.libraryItemId),
       ),
-      .paused || .failed || .cancelled => IconButton(
+      .paused || .failed => IconButton(
         icon: const Icon(Icons.play_circle_outline),
         tooltip: l10n.resume,
-        onPressed: () => notifier.resume(item.libraryItemId),
+        onPressed: () => queue.enqueue(item.libraryItemId),
       ),
       .completed => IconButton(
         icon: Icon(
@@ -185,7 +174,9 @@ void showDownloadsDeleteDialog(
     actionLabel: l10n.remove,
     isDestructive: true,
     onTap: () async {
-      await ref.read(downloadsProvider.notifier).delete(item.libraryItem.id);
+      await ref
+          .read(downloadQueueProvider.notifier)
+          .delete(item.libraryItem.id);
     },
   );
 }

@@ -5,14 +5,7 @@ import 'package:storii/app/init.dart';
 part 'download_item.freezed.dart';
 part 'download_item.g.dart';
 
-enum DownloadStatus {
-  queued,
-  downloading,
-  completed,
-  failed,
-  paused,
-  cancelled,
-}
+enum DownloadStatus { queued, downloading, completed, failed, paused }
 
 @freezed
 sealed class DownloadTrack with _$DownloadTrack {
@@ -21,7 +14,7 @@ sealed class DownloadTrack with _$DownloadTrack {
   const factory DownloadTrack({
     required AudioTrack audioTrack,
     required String localPath,
-    required String? ino,
+    @Default('oldDownload') String ino,
     @Default(0) int bytesReceived,
     @Default(0) int bytesTotal,
     @Default(DownloadStatus.queued) DownloadStatus status,
@@ -76,7 +69,6 @@ extension DownloadStatusX on DownloadStatus {
       .downloading => l10n.downloading,
       .failed => l10n.failed,
       .completed => l10n.completed,
-      .cancelled => l10n.cancelled,
     };
   }
 }

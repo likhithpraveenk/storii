@@ -10,8 +10,8 @@ import 'package:storii/app/models/chapter.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
-import 'package:storii/features/downloads/logic/download_notifier.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
+import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
@@ -102,7 +102,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       //   await audioHandler.stop();
       // }
 
-      final download = ref.read(downloadsProvider)[itemId];
+      final download = ref.read(downloadItemProvider(itemId));
       final isFullyDownloaded =
           download != null &&
           download.isComplete &&

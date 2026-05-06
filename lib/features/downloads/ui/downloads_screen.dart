@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/features/downloads/logic/download_notifier.dart';
+import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
@@ -19,8 +19,9 @@ class DownloadsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activeDownloads = ref.watch(activeDownloadsProvider);
-    final completedDownloads = ref.watch(completedDownloadsProvider);
+    final activeDownloads = ref.watch(activeDownloadsProvider).value ?? [];
+    final completedDownloads =
+        ref.watch(completedDownloadsProvider).value ?? [];
 
     return DefaultTabController(
       length: 2,
