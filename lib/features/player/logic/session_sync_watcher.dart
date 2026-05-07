@@ -1,15 +1,20 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:hive_ce/hive_ce.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/models/playback_event.dart';
+import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/local_position_provider.dart';
 import 'package:storii/features/player/logic/playback_history.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
+import 'package:storii/features/player/logic/sessions_cleanup.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/storage/hive/boxes.dart';
 
 part 'session_sync_watcher.g.dart';
 
@@ -50,6 +55,25 @@ class ListenTimeAccumulator {
 @Riverpod(keepAlive: true)
 void sessionSyncWatcher(Ref ref) {
   final session = ref.watch(sessionProvider);
+
+  ref.listen(socketStatusProvider, (prev, next) {
+    final prevConnected = prev?.value ?? false;
+    final nextConnected = next.value ?? false;
+    if (!prevConnected && nextConnected) {
+      // Fire-and-forget: resolve user, then sync
+      ref
+          .read(authenticatedUserProvider.future)
+          .then((user) {
+            ref
+                .read(sessionsCleanupProvider.notifier)
+                .syncLocalSessions(user, Hive.box<String>(localSessionsBox));
+          })
+          .catchError((e) {
+            log('reconnect sync skipped: $e');
+          });
+    }
+  });
+
   if (session == null) return;
 
   final interval = ref.watch(syncIntervalProvider);
