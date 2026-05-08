@@ -37,6 +37,12 @@ class SessionsCleanup extends _$SessionsCleanup {
         final sessionJson = box.get(id);
         if (sessionJson == null) continue;
         final session = PlaybackSession.fromJson(jsonDecode(sessionJson));
+        if (session.userId != user.id) {
+          await box.delete(id);
+          await ref.read(localPositionProvider(id).notifier).clear();
+          LogService.log('local session from another user removed');
+          continue;
+        }
 
         try {
           if (session.playMethod == .local) {
