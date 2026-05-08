@@ -75,11 +75,13 @@ class UserSessionController extends _$UserSessionController {
       ref.invalidate(apiClientProvider(user));
     }
     await ref.read(appSettingsProvider.notifier).setCurrentUser(null);
+    await ref.read(appSettingsProvider.notifier).setServerUrl(null);
   }
 
   Future<void> _clearLocalSession(UserDomain user) async {
     await ref.read(tokenProvider).clearTokens(user.id);
     await ref.read(appSettingsProvider.notifier).setCurrentUser(null);
+    await ref.read(appSettingsProvider.notifier).setServerUrl(null);
     ref.invalidate(apiClientProvider(user));
   }
 }

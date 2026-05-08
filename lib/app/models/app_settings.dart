@@ -16,6 +16,8 @@ sealed class AppSettings with _$AppSettings {
 
     UserDomain? currentUser,
 
+    Uri? serverUrl,
+
     @Default(100) int maxLogs,
 
     @Default(false) bool enableHttpLogs,
