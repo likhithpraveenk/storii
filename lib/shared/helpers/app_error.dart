@@ -32,11 +32,7 @@ class AppError implements Exception {
           'Request timed out',
           error.originalError,
         ),
-        .unauthorized => AppError(
-          .auth,
-          'Please login again',
-          error.originalError,
-        ),
+        .unauthorized => AppError(.auth, 'Unauthorized', error.originalError),
         .forbidden => AppError(.forbidden, 'Forbidden', error.originalError),
         .notFound => AppError(
           .notFound,
