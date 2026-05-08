@@ -114,9 +114,15 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
 
       if (isFullyDownloaded) {
         final item = await ref.read(itemDetailProvider(itemId).future);
+        final user = ref.read(currentUserProvider);
+        final isSameUser = download.userId == user?.id;
         session = await ref
             .read(sessionProvider.notifier)
-            .createLocal(item: item, episodeId: episodeId);
+            .createLocal(
+              item: item,
+              episodeId: episodeId,
+              isSameUser: isSameUser,
+            );
       } else {
         final user = await ref.read(authenticatedUserProvider.future);
         token = await ref.read(tokenProvider).getAccessToken(user.id);

@@ -62,14 +62,21 @@ class SessionNotifier extends _$SessionNotifier {
   Future<PlaybackSession> createLocal({
     required LibraryItem item,
     String? episodeId,
+    required bool isSameUser,
   }) async {
     final params = await ref.read(playRequestParamsProvider.future);
     final user = ref.read(currentUserProvider);
-    final session = item.toPlaybackSession(
+    var session = item.toPlaybackSession(
       user!.id,
       deviceInfo: params.deviceInfo,
       episodeId: episodeId,
     );
+    if (!isSameUser) {
+      session = session.copyWith(
+        currentTime: Duration.zero,
+        timeListening: Duration.zero,
+      );
+    }
     await ref
         .read(localPositionProvider(session.id).notifier)
         .save(session.currentTime);
