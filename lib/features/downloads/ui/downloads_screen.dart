@@ -7,71 +7,100 @@ import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
-import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
 
 enum DownloadsScreenTab { active, completed }
 
-class DownloadsScreen extends ConsumerWidget {
+class DownloadsScreen extends ConsumerStatefulWidget {
   const DownloadsScreen({super.key, required this.tab});
 
   final DownloadsScreenTab tab;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DownloadsScreen> createState() => _DownloadsScreenState();
+}
+
+class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+      length: 2,
+      vsync: this,
+      initialIndex: widget.tab.index,
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant DownloadsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.tab != widget.tab) {
+      _tabController.index = widget.tab.index;
+    }
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final activeDownloads = ref.watch(activeDownloadsProvider).value ?? [];
     final completedDownloads =
         ref.watch(completedDownloadsProvider).value ?? [];
 
-    return DefaultTabController(
-      length: 2,
-      initialIndex: tab.index,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            l10n.downloads,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          bottom: TabBar(
-            tabs: [
-              Tab(
-                text: activeDownloads.isEmpty
-                    ? l10n.active
-                    : '${l10n.active} (${activeDownloads.length})',
-              ),
-              Tab(
-                text: completedDownloads.isEmpty
-                    ? l10n.completed
-                    : '${l10n.completed} (${completedDownloads.length})',
-              ),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          l10n.downloads,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
-        body: TabBarView(
-          children: [
-            if (activeDownloads.isEmpty)
-              const EmptyState()
-            else
-              ListView.builder(
-                padding: const .only(bottom: 16, top: 4),
-                itemCount: activeDownloads.length,
-                itemBuilder: (context, index) {
-                  final item = activeDownloads.elementAt(index);
-                  return DownloadTile(item: item);
-                },
-              ),
-            ListView.builder(
-              padding: const .only(bottom: 16, top: 4),
-              itemCount: completedDownloads.length,
-              itemBuilder: (context, index) {
-                final item = completedDownloads.elementAt(index);
-                return CompletedItemTile(item);
-              },
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(
+              text: activeDownloads.isEmpty
+                  ? l10n.active
+                  : '${l10n.active} (${activeDownloads.length})',
+            ),
+            Tab(
+              text: completedDownloads.isEmpty
+                  ? l10n.completed
+                  : '${l10n.completed} (${completedDownloads.length})',
             ),
           ],
         ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          if (activeDownloads.isEmpty)
+            const EmptyState()
+          else
+            ListView.builder(
+              padding: const .only(bottom: 16, top: 4),
+              itemCount: activeDownloads.length,
+              itemBuilder: (context, index) {
+                final item = activeDownloads.elementAt(index);
+                return DownloadTile(item: item);
+              },
+            ),
+          ListView.builder(
+            padding: const .only(bottom: 16, top: 4),
+            itemCount: completedDownloads.length,
+            itemBuilder: (context, index) {
+              final item = completedDownloads.elementAt(index);
+              return CompletedItemTile(item);
+            },
+          ),
+        ],
       ),
     );
   }
@@ -126,11 +155,9 @@ class CompletedItemTile extends StatelessWidget {
         builder: (context, ref, _) {
           return IconButton(
             onPressed: () {
-              ref
-                  .read(audioPlayerProvider.notifier)
-                  .play(itemId: item.libraryItemId);
+              showDownloadsDeleteDialog(context, item: item, ref: ref);
             },
-            icon: const Icon(Icons.play_arrow),
+            icon: const Icon(Icons.delete_outline),
           );
         },
       ),
