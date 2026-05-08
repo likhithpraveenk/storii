@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/app_error.dart';
@@ -15,16 +16,24 @@ part 'item_detail_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 Future<LibraryItem> itemDetail(Ref ref, String id) async {
-  final downloads = await ref.watch(downloadsProvider.future);
+  final downloads = await ref.read(downloadsProvider.future);
   final download = downloads[id];
 
-  final box = Hive.box<String>(itemsBox);
-  final localJson = box.get(id);
-
-  if (download != null && download.isComplete && localJson != null) {
-    final localItem = LibraryItem.fromJson(
-      jsonDecode(localJson) as Map<String, dynamic>,
-    );
+  if (download != null && download.isComplete) {
+    final box = Hive.box<String>(itemsBox);
+    final localJson = box.get(id);
+    final localItem = localJson != null
+        ? LibraryItem.fromJson(jsonDecode(localJson) as Map<String, dynamic>)
+        : null;
+    final serverUrl = ref.read(serverUrlProvider);
+    if (download.serverUrl != serverUrl) {
+      if (localItem == null) {
+        throw StateError(
+          'old download from different server. item details not saved',
+        );
+      }
+      return localItem;
+    }
 
     try {
       final user = await ref.read(authenticatedUserProvider.future);
@@ -36,13 +45,14 @@ Future<LibraryItem> itemDetail(Ref ref, String id) async {
       return remoteItem;
     } catch (e) {
       LogService.log(
-        'Failed to refresh ${localItem.title}, using local: $e',
+        'Failed to refresh ${localItem?.title}, using local: $e',
         source: 'itemDetail',
         level: .warning,
       );
     }
-
-    return localItem;
+    if (localItem != null) {
+      return localItem;
+    }
   }
 
   final user = await ref.read(authenticatedUserProvider.future);

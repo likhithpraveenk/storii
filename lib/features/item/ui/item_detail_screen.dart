@@ -26,83 +26,81 @@ class ItemDetailScreen extends ConsumerWidget {
     final itemAsync = ref.watch(itemDetailProvider(id));
 
     return Scaffold(
-      body: itemAsync.when(
-        loading: () => const Center(child: RandomWaveform()),
-        error: (e, s) => ErrorRetryWidget(
-          '$e',
-          onRetry: () => ref.invalidate(itemDetailProvider(id)),
-        ),
-        data: (item) {
-          return Stack(
-            children: [
-              RefreshIndicator(
-                onRefresh: () async {
-                  ref.invalidate(mediaProgressProvider(id));
-                  return await ref.refresh(itemDetailProvider(id).future);
-                },
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: .stretch,
-                    children: [
-                      Padding(
-                        padding: const .fromLTRB(16, 16, 16, 0),
-                        child: Column(
-                          children: [
-                            CoverImageTitle(item),
-                            const SizedBox(height: 8),
-                            PlayProgressWidget(item),
-                          ],
+      body: Stack(
+        children: [
+          itemAsync.when(
+            loading: () => const Center(child: RandomWaveform()),
+            error: (e, s) => ErrorRetryWidget(
+              '$e',
+              onRetry: () => ref.invalidate(itemDetailProvider(id)),
+            ),
+            data: (item) => RefreshIndicator(
+              onRefresh: () async {
+                ref.invalidate(mediaProgressProvider(id));
+                return await ref.refresh(itemDetailProvider(id).future);
+              },
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: .stretch,
+                  children: [
+                    Padding(
+                      padding: const .fromLTRB(16, 16, 16, 0),
+                      child: Column(
+                        children: [
+                          CoverImageTitle(item),
+                          const SizedBox(height: 8),
+                          PlayProgressWidget(item),
+                        ],
+                      ),
+                    ),
+                    SeriesChipsList(item.series),
+                    const SizedBox(height: 8),
+                    ExpandableDescriptionWithChips(
+                      data: item.description ?? l10n.noDescription,
+                      collapsedHeight: 60,
+                      genres: item.genres,
+                      tags: item.tags,
+                    ),
+                    const SizedBox(height: 8),
+                    MetadataWrap(item),
+                    const SizedBox(height: 16),
+                    const Divider(height: 0),
+                    ListTile(
+                      leading: const Icon(Icons.list_rounded),
+                      title: Text(l10n.chapters),
+                      trailing: Text(
+                        '${item.chapters.length}',
+                        style: textTheme.titleSmall?.copyWith(
+                          fontStyle: .italic,
                         ),
                       ),
-                      SeriesChipsList(item.series),
-                      const SizedBox(height: 8),
-                      ExpandableDescriptionWithChips(
-                        data: item.description ?? l10n.noDescription,
-                        collapsedHeight: 60,
-                        genres: item.genres,
-                        tags: item.tags,
-                      ),
-                      const SizedBox(height: 8),
-                      MetadataWrap(item),
-                      const SizedBox(height: 16),
-                      const Divider(height: 0),
-                      ListTile(
-                        leading: const Icon(Icons.list_rounded),
-                        title: Text(l10n.chapters),
-                        trailing: Text(
-                          '${item.chapters.length}',
-                          style: textTheme.titleSmall?.copyWith(
-                            fontStyle: .italic,
-                          ),
-                        ),
-                        onTap: () {
-                          showChapterListSheet(
-                            context,
-                            chapters: item.chapters,
-                            itemId: item.id,
-                            itemTitle: item.title ?? l10n.noTitle,
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 200),
-                    ],
-                  ),
+                      onTap: () {
+                        showChapterListSheet(
+                          context,
+                          chapters: item.chapters,
+                          itemId: item.id,
+                          itemTitle: item.title ?? l10n.noTitle,
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 200),
+                  ],
                 ),
               ),
-              Positioned(
-                top: MediaQuery.paddingOf(context).top,
-                left: 4,
-                child: IconButton(
-                  onPressed: () {
-                    context.pop();
-                  },
-                  icon: const Icon(Icons.arrow_back),
-                ),
-              ),
-            ],
-          );
-        },
+            ),
+          ),
+          Positioned(
+            top: MediaQuery.paddingOf(context).top,
+            left: 4,
+            child: IconButton(
+              onPressed: () {
+                context.pop();
+              },
+              icon: const Icon(Icons.arrow_back),
+            ),
+          ),
+        ],
       ),
     );
   }
