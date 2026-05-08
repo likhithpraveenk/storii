@@ -25,7 +25,7 @@ class DefaultUserSettings {
   static const skipBackward = Duration(seconds: 10);
   static const speed = 1.0;
   static const historyLimit = 200;
-  static const downloadOnUnMeteredOnly = false;
+  static const downloadOnUnmeteredOnly = false;
 }
 
 @freezed
@@ -67,8 +67,8 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.historyLimit) int historyLimit,
 
-    @Default(DefaultUserSettings.downloadOnUnMeteredOnly)
-    bool downloadOnUnMeteredOnly,
+    @Default(DefaultUserSettings.downloadOnUnmeteredOnly)
+    bool downloadOnUnmeteredOnly,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

@@ -218,8 +218,8 @@ extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setHistoryLimit(int value) =>
       _save(state?.copyWith(historyLimit: value));
 
-  Future<void> setDownloadOnUnMeteredOnly(bool value) =>
-      _save(state?.copyWith(downloadOnUnMeteredOnly: value));
+  Future<void> setDownloadOnUnmeteredOnly(bool value) =>
+      _save(state?.copyWith(downloadOnUnmeteredOnly: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -340,12 +340,12 @@ final historyLimitProvider = Provider<int>(
   ),
 );
 
-final downloadOnUnMeteredOnlyProvider = Provider<bool>(
+final downloadOnUnmeteredOnlyProvider = Provider<bool>(
   (ref) => ref.watch(
     userSettingsProvider.select(
       (s) =>
-          s?.downloadOnUnMeteredOnly ??
-          DefaultUserSettings.downloadOnUnMeteredOnly,
+          s?.downloadOnUnmeteredOnly ??
+          DefaultUserSettings.downloadOnUnmeteredOnly,
     ),
   ),
 );

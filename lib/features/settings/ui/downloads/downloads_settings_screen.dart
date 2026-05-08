@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/features/settings/ui/downloads/un_metered_only_tile.dart';
+import 'package:storii/features/settings/ui/downloads/unmetered_only_tile.dart';
 
 class DownloadsTile extends StatelessWidget {
   const DownloadsTile({super.key});
@@ -39,7 +39,7 @@ class DownloadsSettingsScreen extends StatelessWidget {
         ),
       ),
       body: const SingleChildScrollView(
-        child: Column(children: [UnMeteredOnlyTile()]),
+        child: Column(children: [UnmeteredOnlyTile()]),
       ),
     );
   }

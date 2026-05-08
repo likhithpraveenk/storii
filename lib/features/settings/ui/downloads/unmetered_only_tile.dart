@@ -3,12 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 
-class UnMeteredOnlyTile extends ConsumerWidget {
-  const UnMeteredOnlyTile({super.key});
+class UnmeteredOnlyTile extends ConsumerWidget {
+  const UnmeteredOnlyTile({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final unMeteredOnly = ref.watch(downloadOnUnMeteredOnlyProvider);
+    final unMeteredOnly = ref.watch(downloadOnUnmeteredOnlyProvider);
 
     return SwitchListTile(
       title: Text(l10n.avoidMobileData),
@@ -17,7 +17,7 @@ class UnMeteredOnlyTile extends ConsumerWidget {
       onChanged: (value) {
         ref
             .read(userSettingsProvider.notifier)
-            .setDownloadOnUnMeteredOnly(value);
+            .setDownloadOnUnmeteredOnly(value);
       },
     );
   }

@@ -102,6 +102,6 @@ class DownloadQueue extends _$DownloadQueue {
     final downloads = ref.read(downloadsProvider).value ?? {};
     final item = downloads[id];
     if (item == null) return;
-    await _downloads.save(item.copyWith(status: .failed));
+    await _downloads.save(item.copyWith(status: status));
   }
 }

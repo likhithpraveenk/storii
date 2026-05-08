@@ -53,9 +53,9 @@ _UserSettings _$UserSettingsFromJson(
   historyLimit:
       (json['historyLimit'] as num?)?.toInt() ??
       DefaultUserSettings.historyLimit,
-  downloadOnUnMeteredOnly:
-      json['downloadOnUnMeteredOnly'] as bool? ??
-      DefaultUserSettings.downloadOnUnMeteredOnly,
+  downloadOnUnmeteredOnly:
+      json['downloadOnUnmeteredOnly'] as bool? ??
+      DefaultUserSettings.downloadOnUnmeteredOnly,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -78,7 +78,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'skipBackward': instance.skipBackward.inMicroseconds,
   'speed': instance.speed,
   'historyLimit': instance.historyLimit,
-  'downloadOnUnMeteredOnly': instance.downloadOnUnMeteredOnly,
+  'downloadOnUnmeteredOnly': instance.downloadOnUnmeteredOnly,
 };
 
 const _$NavTargetEnumMap = {
