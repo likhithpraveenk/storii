@@ -41,7 +41,7 @@ final class DownloadQueueProvider
   }
 }
 
-String _$downloadQueueHash() => r'912c260b5a2a8bffe9200b2ad30d2798c1e0a82b';
+String _$downloadQueueHash() => r'8e745e8b14bead1b68d4fbe2b53a88f5802ad4b9';
 
 abstract class _$DownloadQueue extends $Notifier<List<String>> {
   List<String> build();

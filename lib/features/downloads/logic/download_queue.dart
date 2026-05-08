@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:hive_ce/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
@@ -8,6 +10,7 @@ import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
+import 'package:storii/storage/hive/boxes.dart';
 
 part 'download_queue.g.dart';
 
@@ -25,6 +28,8 @@ class DownloadQueue extends _$DownloadQueue {
 
     try {
       final item = await ref.read(itemDetailProvider(libraryItemId).future);
+      await Hive.box<String>(itemsBox).put(item.id, jsonEncode(item));
+
       final user = await ref.read(authenticatedUserProvider.future);
 
       final downloadItem = await item.toDownloadItem(
@@ -95,6 +100,7 @@ class DownloadQueue extends _$DownloadQueue {
     if (item != null) {
       await ref.read(downloadsFsHelperProvider).deleteItem(item.title);
     }
+    await Hive.box<String>(itemsBox).delete(id);
     await _downloads.remove(id);
   }
 
