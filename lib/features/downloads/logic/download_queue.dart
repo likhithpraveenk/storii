@@ -87,7 +87,7 @@ class DownloadQueue extends _$DownloadQueue {
   }
 
   Future<void> pause(String id) async {
-    ref.read(downloadEngineProvider.notifier).pause(id);
+    ref.read(downloadEngineProvider.notifier).cancel(id);
     state = state.where((i) => i != id).toList();
     final item = ref.read(downloadsProvider).value?[id];
     if (item != null) await _downloads.save(item.copyWith(status: .paused));

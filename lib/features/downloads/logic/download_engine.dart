@@ -107,6 +107,12 @@ class DownloadEngine extends _$DownloadEngine {
           );
           current = current.copyWith(tracks: updatedTracks);
           yield current;
+
+          if (!_tokens.containsKey(item.libraryItemId)) {
+            await sink.close();
+            yield current.copyWith(status: .paused);
+            return;
+          }
         }
 
         await sink.close();
@@ -158,26 +164,13 @@ class DownloadEngine extends _$DownloadEngine {
     }
   }
 
-  void pause(String itemId) {
-    _coverTokens[itemId]?.cancel('paused');
-    final map = _tokens[itemId];
-    if (map == null) return;
-    for (final t in map.values) {
-      t.cancel('paused');
-    }
-  }
-
   void cancel(String itemId) {
     _coverTokens[itemId]?.cancel('cancelled');
     _coverTokens.remove(itemId);
-    final map = _tokens[itemId];
+    final map = _tokens.remove(itemId);
     if (map == null) return;
     for (final t in map.values) {
       t.cancel('cancelled');
     }
-    _tokens.remove(itemId);
   }
-
-  bool isDownloading(String libraryItemId) =>
-      _tokens.containsKey(libraryItemId);
 }
