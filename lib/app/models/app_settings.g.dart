@@ -15,6 +15,9 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
   currentUser: json['currentUser'] == null
       ? null
       : UserDomain.fromJson(json['currentUser'] as Map<String, dynamic>),
+  serverUrl: json['serverUrl'] == null
+      ? null
+      : Uri.parse(json['serverUrl'] as String),
   maxLogs: (json['maxLogs'] as num?)?.toInt() ?? 100,
   enableHttpLogs: json['enableHttpLogs'] as bool? ?? false,
   syncInterval: json['syncInterval'] == null
@@ -28,6 +31,7 @@ Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
       'useDynamicColor': instance.useDynamicColor,
       'usePureBlack': instance.usePureBlack,
       'currentUser': ?instance.currentUser?.toJson(),
+      'serverUrl': ?instance.serverUrl?.toString(),
       'maxLogs': instance.maxLogs,
       'enableHttpLogs': instance.enableHttpLogs,
       'syncInterval': instance.syncInterval.inMicroseconds,

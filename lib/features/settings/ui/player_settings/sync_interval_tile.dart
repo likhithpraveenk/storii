@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/keys.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
@@ -25,7 +25,6 @@ class _SyncIntervalTileState extends ConsumerState<SyncIntervalTile> {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
     final syncInterval = ref.watch(syncIntervalProvider);
     final notifier = ref.read(appSettingsProvider.notifier);
 
@@ -33,7 +32,7 @@ class _SyncIntervalTileState extends ConsumerState<SyncIntervalTile> {
 
     return ListTile(
       leading: const Icon(Icons.sync_rounded),
-      title: Text(l.syncInterval),
+      title: Text(l10n.syncInterval),
       subtitle: Text('${syncInterval.inSeconds}s'),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
@@ -41,7 +40,7 @@ class _SyncIntervalTileState extends ConsumerState<SyncIntervalTile> {
         if (scaffoldContext == null) return;
         AppBottomSheet.show(
           scaffoldContext,
-          title: l.syncInterval,
+          title: l10n.syncInterval,
           body: Builder(
             builder: (context) {
               return Padding(
@@ -65,7 +64,7 @@ class _SyncIntervalTileState extends ConsumerState<SyncIntervalTile> {
                         notifier.setSyncInterval(Duration(seconds: _selected));
                         Navigator.of(context).pop();
                       },
-                      text: l.save,
+                      text: l10n.save,
                     ),
                   ],
                 ),

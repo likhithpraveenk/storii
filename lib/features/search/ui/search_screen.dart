@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/features/search/logic/search_provider.dart';
 import 'package:storii/features/search/ui/search_button.dart';
 import 'package:storii/features/search/ui/search_results.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
@@ -33,7 +33,6 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
     final searchAsync = ref.watch(searchProvider(_query));
 
     return Scaffold(
@@ -59,7 +58,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               },
               decoration: InputDecoration(
                 hint: Text(
-                  l.search,
+                  l10n.search,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 suffixIcon: _controller.text.isNotEmpty
@@ -125,7 +124,7 @@ class FilterChipsRow extends ConsumerWidget {
         itemBuilder: (_, i) {
           final f = filterTabs[i];
           return FilterChip(
-            label: Text(f.getDisplayString(context)),
+            label: Text(f.label),
             selected: active == f,
             onSelected: (_) {
               ref.read(searchFilterProvider.notifier).set(f);

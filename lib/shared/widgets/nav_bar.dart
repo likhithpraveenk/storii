@@ -27,7 +27,7 @@ class NavBar extends ConsumerWidget {
         for (final target in targets)
           NavigationDestination(
             icon: Icon(target.item.icon),
-            label: target.label(context),
+            label: target.label,
             selectedIcon: Icon(target.item.selectedIcon),
           ),
       ],

@@ -2,6 +2,7 @@ import 'package:abs_api/abs_api.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/models/chapter.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
@@ -36,7 +37,7 @@ extension PlaybackSessionX on PlaybackSession {
               start: c.start,
               end: c.end,
               title: c.title,
-              subtitle: displayTitle,
+              subtitle: displayTitle ?? l10n.noTitle,
             ).toJson(),
           )
           .toList();
@@ -48,8 +49,8 @@ extension PlaybackSessionX on PlaybackSession {
                   displayIndex: t.index + 1,
                   start: t.startOffset,
                   end: t.startOffset + t.duration,
-                  title: displayTitle,
-                  subtitle: displayAuthor,
+                  title: displayTitle ?? l10n.noTitle,
+                  subtitle: displayAuthor ?? l10n.noAuthor,
                 ).toJson(),
               )
               .toList() ??
@@ -70,7 +71,7 @@ extension PlaybackSessionX on PlaybackSession {
 
       final tag = MediaItem(
         id: track.contentUrl,
-        title: displayTitle,
+        title: displayTitle ?? l10n.noTitle,
         artist: displayAuthor,
         duration: track.duration,
         album: mediaMetadata.mapOrNull(book: (b) => b.seriesName),
@@ -134,7 +135,7 @@ extension PlaybackSessionX on PlaybackSession {
     if (tracks == null || tracks.isEmpty) return (trackPaths, null);
 
     final coverPath = await DownloadsFilesystemHelper().coverPathIfExists(
-      displayTitle,
+      displayTitle ?? l10n.noTitle,
     );
     for (final track in tracks) {
       final local = await DownloadsFilesystemHelper().trackPathIfExists(

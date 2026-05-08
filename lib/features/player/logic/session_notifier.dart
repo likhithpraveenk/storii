@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:abs_api/abs_api.dart';
@@ -45,8 +46,14 @@ class SessionNotifier extends _$SessionNotifier {
           params: params,
           episodeId: episodeId,
         );
+    await ref
+        .read(localPositionProvider(session.id).notifier)
+        .save(session.currentTime);
 
-    await Hive.box<String>(sessionIdBox).put(session.id, session.id);
+    unawaited(
+      Hive.box<String>(localSessionsBox).put(session.id, jsonEncode(session)),
+    );
+
     state = session;
     log('session created for ${session.displayTitle}');
     return session;
@@ -55,16 +62,29 @@ class SessionNotifier extends _$SessionNotifier {
   Future<PlaybackSession> createLocal({
     required LibraryItem item,
     String? episodeId,
+    required bool isSameUser,
   }) async {
     final params = await ref.read(playRequestParamsProvider.future);
     final user = ref.read(currentUserProvider);
-    final session = item.toPlaybackSession(
+    var session = item.toPlaybackSession(
       user!.id,
       deviceInfo: params.deviceInfo,
       episodeId: episodeId,
     );
+    if (!isSameUser) {
+      session = session.copyWith(
+        currentTime: Duration.zero,
+        timeListening: Duration.zero,
+      );
+    }
+    await ref
+        .read(localPositionProvider(session.id).notifier)
+        .save(session.currentTime);
 
-    await Hive.box<String>(sessionIdBox).put(session.id, session.id);
+    unawaited(
+      Hive.box<String>(localSessionsBox).put(session.id, jsonEncode(session)),
+    );
+
     state = session;
     log('local session created for ${session.displayTitle}');
     return session;
@@ -76,20 +96,23 @@ class SessionNotifier extends _$SessionNotifier {
       // log('no session to sync');
       return;
     }
-    final user = await ref.read(authenticatedUserProvider.future);
 
+    final updated = session.copyWith(
+      currentTime: position,
+      timeListening: totalListened,
+      updatedAt: DateTime.now(),
+    );
+
+    unawaited(
+      Hive.box<String>(localSessionsBox).put(updated.id, jsonEncode(updated)),
+    );
+    state = updated;
+
+    final user = await ref.read(authenticatedUserProvider.future);
     if (isLocal) {
-      final updated = session.copyWith(
-        currentTime: position,
-        timeListening: totalListened,
-        updatedAt: DateTime.now(),
-      );
       await ref
           .read(sessionsApiProvider(user))
           .syncLocal(localSession: updated);
-      log(
-        'local sync at ${position.toTime()} listen ${totalListened.inSeconds}s',
-      );
     } else {
       await ref
           .read(sessionsApiProvider(user))
@@ -100,8 +123,8 @@ class SessionNotifier extends _$SessionNotifier {
               timeListened: totalListened,
             ),
           );
-      log('sync at ${position.toTime()} listen ${totalListened.inSeconds}s');
     }
+    log('sync success at ${position.toTime()}');
   }
 
   Future<void> close() async {
@@ -111,17 +134,18 @@ class SessionNotifier extends _$SessionNotifier {
       return;
     }
 
-    final user = await ref.read(authenticatedUserProvider.future);
     try {
+      final user = await ref.read(authenticatedUserProvider.future);
       if (!isLocal) {
         await ref
             .read(sessionsApiProvider(user))
             .closeSession(sessionId: session.id);
       }
-      await Hive.box<String>(sessionIdBox).delete(session.id);
+      await Hive.box<String>(localSessionsBox).delete(session.id);
       await ref.read(localPositionProvider(session.id).notifier).clear();
+      log('session closed: ${session.id}');
     } catch (e) {
-      log('session close failed will be cleaned up on app start: $e');
+      log('session close failed: $e');
     } finally {
       state = null;
     }

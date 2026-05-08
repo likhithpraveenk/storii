@@ -4,11 +4,11 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/features/downloads/logic/download_notifier.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
+import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/logic/cover_url_provider.dart';
 import 'package:storii/features/settings/logic/app_cache.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/placeholder_image.dart';
 
 class ImageWidget extends ConsumerWidget {
@@ -27,7 +27,7 @@ class ImageWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final download = ref.watch(downloadsProvider)[id];
+    final download = ref.watch(downloadItemProvider(id));
     if (download != null) {
       return FutureBuilder<String?>(
         future: ref
@@ -59,8 +59,7 @@ class ImageWidget extends ConsumerWidget {
         raw: isRaw,
       ),
     );
-    final l = AppLocalizations.of(context)!;
-    if (coverUrl == null) return PlaceholderImage(label: l.noImage);
+    if (coverUrl == null) return PlaceholderImage(label: l10n.noImage);
 
     return CachedNetworkImage(
       cacheManager: AppImageCacheManager.instance,
@@ -72,7 +71,9 @@ class ImageWidget extends ConsumerWidget {
         if (!error404) {
           log('$error', name: 'CachedNetworkImage');
         }
-        return PlaceholderImage(label: error404 ? l.noImage : l.errorImage);
+        return PlaceholderImage(
+          label: error404 ? l10n.noImage : l10n.errorImage,
+        );
       },
     );
   }

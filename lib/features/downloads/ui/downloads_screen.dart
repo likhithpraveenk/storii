@@ -2,71 +2,164 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/features/downloads/logic/download_notifier.dart';
+import 'package:storii/app/init.dart';
+import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
-import 'package:storii/features/library/ui/items_grid_view.dart';
-import 'package:storii/l10n/l10n.dart';
+import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
+import 'package:storii/shared/widgets/marquee_text.dart';
 
 enum DownloadsScreenTab { active, completed }
 
-class DownloadsScreen extends ConsumerWidget {
+class DownloadsScreen extends ConsumerStatefulWidget {
   const DownloadsScreen({super.key, required this.tab});
 
   final DownloadsScreenTab tab;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final activeDownloads = ref.watch(activeDownloadsProvider);
-    final completedDownloads = ref.watch(completedDownloadsProvider);
-    final l = AppLocalizations.of(context)!;
+  ConsumerState<DownloadsScreen> createState() => _DownloadsScreenState();
+}
 
-    return DefaultTabController(
+class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
       length: 2,
-      initialIndex: tab.index,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            l.downloads,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          bottom: TabBar(
-            tabs: [
-              Tab(
-                text: activeDownloads.isEmpty
-                    ? l.active
-                    : '${l.active} (${activeDownloads.length})',
-              ),
-              Tab(
-                text: completedDownloads.isEmpty
-                    ? l.completed
-                    : '${l.completed} (${completedDownloads.length})',
-              ),
-            ],
-          ),
+      vsync: this,
+      initialIndex: widget.tab.index,
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant DownloadsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.tab != widget.tab) {
+      _tabController.index = widget.tab.index;
+    }
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final activeDownloads = ref.watch(activeDownloadsProvider).value ?? [];
+    final completedDownloads =
+        ref.watch(completedDownloadsProvider).value ?? [];
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          l10n.downloads,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
-        body: TabBarView(
-          children: [
-            if (activeDownloads.isEmpty)
-              const EmptyState()
-            else
-              ListView.builder(
-                key: const ValueKey('active_downloads'),
-                padding: const .only(bottom: 16, top: 4),
-                itemCount: activeDownloads.length,
-                itemBuilder: (context, index) {
-                  final item = activeDownloads.elementAt(index);
-                  return DownloadTile(item: item);
-                },
-              ),
-            ItemsGridView(
-              key: const ValueKey('completed_downloads'),
-              completedDownloads.map((d) => d.libraryItem).toList(),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(
+              text: activeDownloads.isEmpty
+                  ? l10n.active
+                  : '${l10n.active} (${activeDownloads.length})',
+            ),
+            Tab(
+              text: completedDownloads.isEmpty
+                  ? l10n.completed
+                  : '${l10n.completed} (${completedDownloads.length})',
             ),
           ],
         ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          if (activeDownloads.isEmpty)
+            const EmptyState()
+          else
+            ListView.builder(
+              padding: const .only(bottom: 16, top: 4),
+              itemCount: activeDownloads.length,
+              itemBuilder: (context, index) {
+                final item = activeDownloads.elementAt(index);
+                return DownloadTile(item: item);
+              },
+            ),
+          ListView.builder(
+            padding: const .only(bottom: 16, top: 4),
+            itemCount: completedDownloads.length,
+            itemBuilder: (context, index) {
+              final item = completedDownloads.elementAt(index);
+              return CompletedItemTile(item);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CompletedItemTile extends StatelessWidget {
+  const CompletedItemTile(this.item, {super.key});
+  final DownloadItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return ListTile(
+      onTap: () {
+        context.push(
+          AppRoute.itemDetail.path,
+          extra: {'id': item.libraryItemId},
+        );
+      },
+      contentPadding: const .fromLTRB(16, 8, 0, 8),
+      leading: AspectRatio(
+        aspectRatio: 1,
+        child: ClipRRect(
+          borderRadius: .circular(4),
+          child: ImageWidget(id: item.libraryItemId, type: .item),
+        ),
+      ),
+      minVerticalPadding: 0,
+      horizontalTitleGap: 8,
+      titleAlignment: .center,
+      title: Column(
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
+        children: [
+          MarqueeText(item.title, style: theme.textTheme.titleSmall),
+          const SizedBox(height: 2),
+          MarqueeText(
+            item.author,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 2),
+        ],
+      ),
+      subtitle: Text(
+        formatBytes(item.receivedBytes),
+        style: theme.textTheme.labelSmall,
+      ),
+      trailing: Consumer(
+        builder: (context, ref, _) {
+          return IconButton(
+            onPressed: () {
+              showDownloadsDeleteDialog(context, item: item, ref: ref);
+            },
+            icon: const Icon(Icons.delete_outline),
+          );
+        },
       ),
     );
   }

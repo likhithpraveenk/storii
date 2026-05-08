@@ -9,12 +9,11 @@ part of 'download_engine.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(downloadEngine)
+@ProviderFor(DownloadEngine)
 final downloadEngineProvider = DownloadEngineProvider._();
 
 final class DownloadEngineProvider
-    extends $FunctionalProvider<DownloadEngine, DownloadEngine, DownloadEngine>
-    with $Provider<DownloadEngine> {
+    extends $NotifierProvider<DownloadEngine, void> {
   DownloadEngineProvider._()
     : super(
         from: null,
@@ -31,21 +30,33 @@ final class DownloadEngineProvider
 
   @$internal
   @override
-  $ProviderElement<DownloadEngine> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  DownloadEngine create(Ref ref) {
-    return downloadEngine(ref);
-  }
+  DownloadEngine create() => DownloadEngine();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(DownloadEngine value) {
+  Override overrideWithValue(void value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<DownloadEngine>(value),
+      providerOverride: $SyncValueProvider<void>(value),
     );
   }
 }
 
-String _$downloadEngineHash() => r'231467fbaf9adf182a56e166766d37a308f1b91b';
+String _$downloadEngineHash() => r'9df13a36ad27d9ccb7067b1a25f98b500eb4357a';
+
+abstract class _$DownloadEngine extends $Notifier<void> {
+  void build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<void, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<void, void>,
+              void,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}

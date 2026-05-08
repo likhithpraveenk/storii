@@ -2,12 +2,12 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/history_button.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -20,7 +20,6 @@ class PlayProgressWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     final isLoading = ref.watch(
@@ -38,7 +37,7 @@ class PlayProgressWidget extends ConsumerWidget {
                 (mediaProgress?.currentTime ??
                     session?.currentTime ??
                     Duration.zero))
-            .toReadableDuration(context, isLeft: true);
+            .toReadableDuration(isLeft: true);
 
     return Column(
       crossAxisAlignment: .stretch,
@@ -60,12 +59,12 @@ class PlayProgressWidget extends ConsumerWidget {
             isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
           ),
           text: isPlaying
-              ? l.pause
+              ? l10n.pause
               : progress == 1.0
-              ? l.replay
+              ? l10n.replay
               : progress > 0
-              ? '${l.resume} • $remaining'
-              : l.play,
+              ? '${l10n.resume} • $remaining'
+              : l10n.play,
         ),
         if (progress > 0) ...[
           const SizedBox(height: 10),
@@ -79,11 +78,11 @@ class PlayProgressWidget extends ConsumerWidget {
             HistoryButton(itemId: item.id),
             if (progress != 1.0)
               IconButton(
-                tooltip: l.markAsComplete,
+                tooltip: l10n.markAsComplete,
                 onPressed: () => AppBottomSheet.show(
                   context,
-                  title: l.markAsComplete,
-                  actionLabel: l.confirm,
+                  title: l10n.markAsComplete,
+                  actionLabel: l10n.confirm,
                   actionIcon: Icons.check,
                   onTap: () async {
                     final success = await ref
@@ -94,8 +93,8 @@ class PlayProgressWidget extends ConsumerWidget {
                         SnackBar(
                           content: Text(
                             success
-                                ? l.progressMarkedComplete
-                                : l.progressMarkCompleteFailed,
+                                ? l10n.progressMarkedComplete
+                                : l10n.progressMarkCompleteFailed,
                           ),
                         ),
                       );
@@ -106,20 +105,20 @@ class PlayProgressWidget extends ConsumerWidget {
               ),
             if (mediaProgress != null)
               IconButton(
-                tooltip: l.removeProgressTitle,
+                tooltip: l10n.removeProgressTitle,
                 onPressed: () => AppBottomSheet.show(
                   context,
-                  title: l.removeProgressTitle,
+                  title: l10n.removeProgressTitle,
                   body: Padding(
                     padding: const .fromLTRB(24, 0, 24, 24),
                     child: Text(
-                      l.removeProgressMessage,
+                      l10n.removeProgressMessage,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
                   ),
-                  actionLabel: l.remove,
+                  actionLabel: l10n.remove,
                   actionIcon: Icons.delete_outline,
                   isDestructive: true,
                   onTap: () async {
@@ -135,8 +134,8 @@ class PlayProgressWidget extends ConsumerWidget {
                         SnackBar(
                           content: Text(
                             success
-                                ? l.progressRemoved
-                                : l.progressRemoveFailed,
+                                ? l10n.progressRemoved
+                                : l10n.progressRemoveFailed,
                           ),
                         ),
                       );

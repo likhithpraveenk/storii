@@ -2,13 +2,13 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/logic/authors_list_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
@@ -41,7 +41,7 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         title: Text(
-          AppLocalizations.of(context)!.authors,
+          l10n.authors,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         actions: const [ScreenOptionsButton(.authors), ActiveDownloadsButton()],

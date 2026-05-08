@@ -48,7 +48,7 @@ final class GridHeightProvider
   }
 }
 
-String _$gridHeightHash() => r'55050d2f10bccb03206703019161b96a4a7f9e66';
+String _$gridHeightHash() => r'42a934f400f872939be304b26ed02840589e52d3';
 
 @ProviderFor(authorsGridHeight)
 final authorsGridHeightProvider = AuthorsGridHeightProvider._();

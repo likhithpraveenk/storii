@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
@@ -37,7 +38,7 @@ class FullPlayer extends ConsumerWidget {
         child: Column(
           children: [
             Text(
-              currentChapter?.title ?? session.displayTitle,
+              currentChapter?.title ?? session.displayTitle ?? l10n.noTitle,
               style: theme.textTheme.titleLarge?.copyWith(fontSize: 22),
               textAlign: .center,
               maxLines: 1,
@@ -45,8 +46,8 @@ class FullPlayer extends ConsumerWidget {
             ),
             Text(
               currentChapter != null
-                  ? session.displayTitle
-                  : session.displayAuthor,
+                  ? session.displayTitle ?? l10n.noTitle
+                  : session.displayAuthor ?? l10n.noAuthor,
               style: theme.textTheme.titleSmall?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -105,7 +106,7 @@ class FullPlayer extends ConsumerWidget {
                     context,
                     chapters: session.chapters,
                     itemId: session.libraryItemId,
-                    itemTitle: session.displayTitle,
+                    itemTitle: session.displayTitle ?? l10n.noTitle,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -115,7 +116,7 @@ class FullPlayer extends ConsumerWidget {
               ],
             ),
             Text(
-              session.playMethod.getDisplayString(context),
+              session.playMethod.label,
               textAlign: .center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.outlineVariant,

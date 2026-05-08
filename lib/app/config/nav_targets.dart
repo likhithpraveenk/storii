@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/models/nav_item.dart';
-import 'package:storii/l10n/l10n.dart';
 
 enum NavTarget {
   home,
@@ -50,16 +50,15 @@ enum NavTarget {
     ),
   };
 
-  String label(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
+  String get label {
     return switch (this) {
-      .home => l.home,
-      .library => l.library,
-      .series => l.series,
-      .downloads => l.downloads,
-      .collections => l.collections,
-      .authors => l.authors,
-      .more => l.more,
+      .home => l10n.home,
+      .library => l10n.library,
+      .series => l10n.series,
+      .downloads => l10n.downloads,
+      .collections => l10n.collections,
+      .authors => l10n.authors,
+      .more => l10n.more,
     };
   }
 }

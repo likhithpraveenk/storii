@@ -190,7 +190,7 @@ return podcast(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  Duration? duration,  String? coverPath,  List<AudioFile>? audioFiles,  int? numAudioFiles,  List<AudioTrack>? tracks,  int? numTracks,  List<BookChapter>? chapters,  int? numChapters,  int? size)?  book,TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  bool autoDownloadEpisodes,  List<PodcastEpisode> episodes,  String? coverPath,  DateTime? lastEpisodeCheck,  int? size,  int? numEpisodes)?  podcast,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  Duration? duration,  String? coverPath,  List<AudioFile> audioFiles,  int numAudioFiles,  List<AudioTrack> tracks,  int numTracks,  List<BookChapter> chapters,  int numChapters,  int? size)?  book,TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  bool autoDownloadEpisodes,  List<PodcastEpisode> episodes,  String? coverPath,  DateTime? lastEpisodeCheck,  int? size,  int? numEpisodes)?  podcast,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case BookMedia() when book != null:
 return book(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.duration,_that.coverPath,_that.audioFiles,_that.numAudioFiles,_that.tracks,_that.numTracks,_that.chapters,_that.numChapters,_that.size);case PodcastMedia() when podcast != null:
@@ -212,7 +212,7 @@ return podcast(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.auto
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  Duration? duration,  String? coverPath,  List<AudioFile>? audioFiles,  int? numAudioFiles,  List<AudioTrack>? tracks,  int? numTracks,  List<BookChapter>? chapters,  int? numChapters,  int? size)  book,required TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  bool autoDownloadEpisodes,  List<PodcastEpisode> episodes,  String? coverPath,  DateTime? lastEpisodeCheck,  int? size,  int? numEpisodes)  podcast,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  Duration? duration,  String? coverPath,  List<AudioFile> audioFiles,  int numAudioFiles,  List<AudioTrack> tracks,  int numTracks,  List<BookChapter> chapters,  int numChapters,  int? size)  book,required TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  bool autoDownloadEpisodes,  List<PodcastEpisode> episodes,  String? coverPath,  DateTime? lastEpisodeCheck,  int? size,  int? numEpisodes)  podcast,}) {final _that = this;
 switch (_that) {
 case BookMedia():
 return book(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.duration,_that.coverPath,_that.audioFiles,_that.numAudioFiles,_that.tracks,_that.numTracks,_that.chapters,_that.numChapters,_that.size);case PodcastMedia():
@@ -230,7 +230,7 @@ return podcast(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.auto
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  Duration? duration,  String? coverPath,  List<AudioFile>? audioFiles,  int? numAudioFiles,  List<AudioTrack>? tracks,  int? numTracks,  List<BookChapter>? chapters,  int? numChapters,  int? size)?  book,TResult? Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  bool autoDownloadEpisodes,  List<PodcastEpisode> episodes,  String? coverPath,  DateTime? lastEpisodeCheck,  int? size,  int? numEpisodes)?  podcast,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  Duration? duration,  String? coverPath,  List<AudioFile> audioFiles,  int numAudioFiles,  List<AudioTrack> tracks,  int numTracks,  List<BookChapter> chapters,  int numChapters,  int? size)?  book,TResult? Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  bool autoDownloadEpisodes,  List<PodcastEpisode> episodes,  String? coverPath,  DateTime? lastEpisodeCheck,  int? size,  int? numEpisodes)?  podcast,}) {final _that = this;
 switch (_that) {
 case BookMedia() when book != null:
 return book(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.duration,_that.coverPath,_that.audioFiles,_that.numAudioFiles,_that.tracks,_that.numTracks,_that.chapters,_that.numChapters,_that.size);case PodcastMedia() when podcast != null:
@@ -246,7 +246,7 @@ return podcast(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.auto
 @JsonSerializable()
 @DurationPreciseSecondsConverter()
 class BookMedia implements Media {
-  const BookMedia({required this.id, required this.metadata, this.libraryItemId, final  List<String> tags = const [], this.duration, this.coverPath, final  List<AudioFile>? audioFiles, this.numAudioFiles, final  List<AudioTrack>? tracks, this.numTracks, final  List<BookChapter>? chapters, this.numChapters, this.size, final  String? $type}): _tags = tags,_audioFiles = audioFiles,_tracks = tracks,_chapters = chapters,$type = $type ?? 'book';
+  const BookMedia({required this.id, required this.metadata, this.libraryItemId, final  List<String> tags = const [], this.duration, this.coverPath, final  List<AudioFile> audioFiles = const [], this.numAudioFiles = 0, final  List<AudioTrack> tracks = const [], this.numTracks = 0, final  List<BookChapter> chapters = const [], this.numChapters = 0, this.size, final  String? $type}): _tags = tags,_audioFiles = audioFiles,_tracks = tracks,_chapters = chapters,$type = $type ?? 'book';
   factory BookMedia.fromJson(Map<String, dynamic> json) => _$BookMediaFromJson(json);
 
 @override final  String id;
@@ -261,36 +261,30 @@ class BookMedia implements Media {
 
  final  Duration? duration;
 @override final  String? coverPath;
- final  List<AudioFile>? _audioFiles;
- List<AudioFile>? get audioFiles {
-  final value = _audioFiles;
-  if (value == null) return null;
+ final  List<AudioFile> _audioFiles;
+@JsonKey() List<AudioFile> get audioFiles {
   if (_audioFiles is EqualUnmodifiableListView) return _audioFiles;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
+  return EqualUnmodifiableListView(_audioFiles);
 }
 
- final  int? numAudioFiles;
- final  List<AudioTrack>? _tracks;
- List<AudioTrack>? get tracks {
-  final value = _tracks;
-  if (value == null) return null;
+@JsonKey() final  int numAudioFiles;
+ final  List<AudioTrack> _tracks;
+@JsonKey() List<AudioTrack> get tracks {
   if (_tracks is EqualUnmodifiableListView) return _tracks;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
+  return EqualUnmodifiableListView(_tracks);
 }
 
- final  int? numTracks;
- final  List<BookChapter>? _chapters;
- List<BookChapter>? get chapters {
-  final value = _chapters;
-  if (value == null) return null;
+@JsonKey() final  int numTracks;
+ final  List<BookChapter> _chapters;
+@JsonKey() List<BookChapter> get chapters {
   if (_chapters is EqualUnmodifiableListView) return _chapters;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
+  return EqualUnmodifiableListView(_chapters);
 }
 
- final  int? numChapters;
+@JsonKey() final  int numChapters;
 @override final  int? size;
 
 @JsonKey(name: 'runtimeType')
@@ -330,7 +324,7 @@ abstract mixin class $BookMediaCopyWith<$Res> implements $MediaCopyWith<$Res> {
   factory $BookMediaCopyWith(BookMedia value, $Res Function(BookMedia) _then) = _$BookMediaCopyWithImpl;
 @override @useResult
 $Res call({
- String id, MediaMetadata metadata, String? libraryItemId, List<String> tags, Duration? duration, String? coverPath, List<AudioFile>? audioFiles, int? numAudioFiles, List<AudioTrack>? tracks, int? numTracks, List<BookChapter>? chapters, int? numChapters, int? size
+ String id, MediaMetadata metadata, String? libraryItemId, List<String> tags, Duration? duration, String? coverPath, List<AudioFile> audioFiles, int numAudioFiles, List<AudioTrack> tracks, int numTracks, List<BookChapter> chapters, int numChapters, int? size
 });
 
 
@@ -347,7 +341,7 @@ class _$BookMediaCopyWithImpl<$Res>
 
 /// Create a copy of Media
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? metadata = null,Object? libraryItemId = freezed,Object? tags = null,Object? duration = freezed,Object? coverPath = freezed,Object? audioFiles = freezed,Object? numAudioFiles = freezed,Object? tracks = freezed,Object? numTracks = freezed,Object? chapters = freezed,Object? numChapters = freezed,Object? size = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? metadata = null,Object? libraryItemId = freezed,Object? tags = null,Object? duration = freezed,Object? coverPath = freezed,Object? audioFiles = null,Object? numAudioFiles = null,Object? tracks = null,Object? numTracks = null,Object? chapters = null,Object? numChapters = null,Object? size = freezed,}) {
   return _then(BookMedia(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,metadata: null == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
@@ -355,13 +349,13 @@ as MediaMetadata,libraryItemId: freezed == libraryItemId ? _self.libraryItemId :
 as String?,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>,duration: freezed == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
 as Duration?,coverPath: freezed == coverPath ? _self.coverPath : coverPath // ignore: cast_nullable_to_non_nullable
-as String?,audioFiles: freezed == audioFiles ? _self._audioFiles : audioFiles // ignore: cast_nullable_to_non_nullable
-as List<AudioFile>?,numAudioFiles: freezed == numAudioFiles ? _self.numAudioFiles : numAudioFiles // ignore: cast_nullable_to_non_nullable
-as int?,tracks: freezed == tracks ? _self._tracks : tracks // ignore: cast_nullable_to_non_nullable
-as List<AudioTrack>?,numTracks: freezed == numTracks ? _self.numTracks : numTracks // ignore: cast_nullable_to_non_nullable
-as int?,chapters: freezed == chapters ? _self._chapters : chapters // ignore: cast_nullable_to_non_nullable
-as List<BookChapter>?,numChapters: freezed == numChapters ? _self.numChapters : numChapters // ignore: cast_nullable_to_non_nullable
-as int?,size: freezed == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
+as String?,audioFiles: null == audioFiles ? _self._audioFiles : audioFiles // ignore: cast_nullable_to_non_nullable
+as List<AudioFile>,numAudioFiles: null == numAudioFiles ? _self.numAudioFiles : numAudioFiles // ignore: cast_nullable_to_non_nullable
+as int,tracks: null == tracks ? _self._tracks : tracks // ignore: cast_nullable_to_non_nullable
+as List<AudioTrack>,numTracks: null == numTracks ? _self.numTracks : numTracks // ignore: cast_nullable_to_non_nullable
+as int,chapters: null == chapters ? _self._chapters : chapters // ignore: cast_nullable_to_non_nullable
+as List<BookChapter>,numChapters: null == numChapters ? _self.numChapters : numChapters // ignore: cast_nullable_to_non_nullable
+as int,size: freezed == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
 as int?,
   ));
 }

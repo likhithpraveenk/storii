@@ -2,13 +2,13 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/series/logic/series_list_provider.dart';
 import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/features/series/ui/series_list_card.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
@@ -35,13 +35,12 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
   @override
   Widget build(BuildContext context) {
     final seriesAsync = ref.watch(seriesListProvider);
-    final l = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        title: Text(l.series, style: Theme.of(context).textTheme.titleLarge),
+        title: Text(l10n.series, style: Theme.of(context).textTheme.titleLarge),
         actions: const [ScreenOptionsButton(.series), ActiveDownloadsButton()],
       ),
       body: RefreshIndicator(

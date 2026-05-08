@@ -11,43 +11,51 @@ _UserSettings _$UserSettingsFromJson(
 ) => _UserSettings(
   userId: json['userId'] as String,
   currentLibrary: json['currentLibrary'] == null
-      ? null
+      ? DefaultUserSettings.currentLibrary
       : Library.fromJson(json['currentLibrary'] as Map<String, dynamic>),
   navTargets:
       (json['navTargets'] as List<dynamic>?)
           ?.map((e) => $enumDecode(_$NavTargetEnumMap, e))
           .toList() ??
-      defaultNavTargets,
+      DefaultUserSettings.navTargets,
   libraryDisplayMode:
       $enumDecodeNullable(_$DisplayModeEnumMap, json['libraryDisplayMode']) ??
-      DisplayMode.comfortable,
-  collapseSeries: json['collapseSeries'] as bool? ?? false,
+      DefaultUserSettings.libraryDisplayMode,
+  collapseSeries:
+      json['collapseSeries'] as bool? ?? DefaultUserSettings.collapseSeries,
   seriesDisplayMode:
       $enumDecodeNullable(_$DisplayModeEnumMap, json['seriesDisplayMode']) ??
-      DisplayMode.comfortable,
+      DefaultUserSettings.seriesDisplayMode,
   authorDisplayMode:
       $enumDecodeNullable(_$DisplayModeEnumMap, json['authorDisplayMode']) ??
-      DisplayMode.comfortable,
+      DefaultUserSettings.authorDisplayMode,
   startupNav:
       $enumDecodeNullable(_$NavTargetEnumMap, json['startupNav']) ??
-      NavTarget.home,
+      DefaultUserSettings.startupNav,
   navLabelBehavior:
       $enumDecodeNullable(
         _$NavigationDestinationLabelBehaviorEnumMap,
         json['navLabelBehavior'],
       ) ??
-      NavigationDestinationLabelBehavior.alwaysShow,
-  dateTimeFormat: json['dateTimeFormat'] as String? ?? 'dd MMM y',
-  fontFamily: json['fontFamily'] as String? ?? 'AtkinsonHyperlegibleNext',
-  fontScale: (json['fontScale'] as num?)?.toDouble() ?? 1,
+      DefaultUserSettings.navLabelBehavior,
+  dateTimeFormat:
+      json['dateTimeFormat'] as String? ?? DefaultUserSettings.dateTimeFormat,
+  fontFamily: json['fontFamily'] as String? ?? DefaultUserSettings.fontFamily,
+  fontScale:
+      (json['fontScale'] as num?)?.toDouble() ?? DefaultUserSettings.fontScale,
   skipForward: json['skipForward'] == null
-      ? const Duration(seconds: 30)
+      ? DefaultUserSettings.skipForward
       : Duration(microseconds: (json['skipForward'] as num).toInt()),
   skipBackward: json['skipBackward'] == null
-      ? const Duration(seconds: 10)
+      ? DefaultUserSettings.skipBackward
       : Duration(microseconds: (json['skipBackward'] as num).toInt()),
-  speed: (json['speed'] as num?)?.toDouble() ?? 1.0,
-  historyLimit: (json['historyLimit'] as num?)?.toInt() ?? 200,
+  speed: (json['speed'] as num?)?.toDouble() ?? DefaultUserSettings.speed,
+  historyLimit:
+      (json['historyLimit'] as num?)?.toInt() ??
+      DefaultUserSettings.historyLimit,
+  downloadOnUnmeteredOnly:
+      json['downloadOnUnmeteredOnly'] as bool? ??
+      DefaultUserSettings.downloadOnUnmeteredOnly,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -70,6 +78,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'skipBackward': instance.skipBackward.inMicroseconds,
   'speed': instance.speed,
   'historyLimit': instance.historyLimit,
+  'downloadOnUnmeteredOnly': instance.downloadOnUnmeteredOnly,
 };
 
 const _$NavTargetEnumMap = {

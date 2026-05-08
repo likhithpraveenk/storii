@@ -2,8 +2,8 @@
 
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter/widgets.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/models/enums.dart';
-import 'package:storii/l10n/l10n.dart';
 
 extension AudiobookSortX on Iterable<LibraryItem> {
   List<LibraryItem> sortedBySequence() {
@@ -31,81 +31,76 @@ extension AudiobookSortX on Iterable<LibraryItem> {
 }
 
 extension MissingFilterValueX on MissingFilterValue {
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
+  String get label {
     return switch (this) {
-      .asin => l.asin,
-      .isbn => l.isbn,
-      .subtitle => l.subtitle,
-      .authors => l.authors,
-      .publishedYear => l.publishedYear,
-      .series => l.series,
-      .description => l.description,
-      .genres => l.genres,
-      .tags => l.tags,
-      .narrators => l.narrators,
-      .publisher => l.publisher,
-      .language => l.language,
+      .asin => l10n.asin,
+      .isbn => l10n.isbn,
+      .subtitle => l10n.subtitle,
+      .authors => l10n.authors,
+      .publishedYear => l10n.publishedYear,
+      .series => l10n.series,
+      .description => l10n.description,
+      .genres => l10n.genres,
+      .tags => l10n.tags,
+      .narrators => l10n.narrators,
+      .publisher => l10n.publisher,
+      .language => l10n.language,
     };
   }
 }
 
 extension ProgressFilterValueX on ProgressFilterValue {
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
+  String get label {
     return switch (this) {
-      .finished => l.finished,
-      .notStarted => l.notStarted,
-      .inProgress => l.inProgress,
-      .notFinished => l.notFinished,
+      .finished => l10n.finished,
+      .notStarted => l10n.notStarted,
+      .inProgress => l10n.inProgress,
+      .notFinished => l10n.notFinished,
     };
   }
 }
 
 extension EbooksFilterValueX on EbooksFilterValue {
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
+  String get label {
     return switch (this) {
-      .ebook => l.hasEbook,
-      .noEbook => l.hasNoEbook,
-      .supplementary => l.hasSupplementary,
-      .noSupplementary => l.hasNoSupplementary,
+      .ebook => l10n.hasEbook,
+      .noEbook => l10n.hasNoEbook,
+      .supplementary => l10n.hasSupplementary,
+      .noSupplementary => l10n.hasNoSupplementary,
     };
   }
 }
 
 extension TracksFilterValueX on TracksFilterValue {
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
+  String get label {
     return switch (this) {
-      .single => l.singleTrack,
-      .multi => l.multipleTracks,
-      .none => l.noTracks,
+      .single => l10n.singleTrack,
+      .multi => l10n.multipleTracks,
+      .none => l10n.noTracks,
     };
   }
 }
 
 extension FilterGroupX on FilterGroup {
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
+  String get label {
     return switch (this) {
-      .all => l.all,
-      .genres => l.genres,
-      .tags => l.tags,
-      .series => l.series,
-      .authors => l.author,
-      .progress => l.progress,
-      .narrators => l.narrators,
-      .languages => l.language,
-      .tracks => l.tracks,
-      .missing => l.missingMetadata,
-      .issues => l.itemsWithIssues,
-      .feedOpen => l.rssFeedOpen,
-      .abridged => l.abridged,
-      .explicit => l.explicit,
-      .publishers => l.publisher,
-      .publishedDecade => l.publishedDecade,
-      .ebooks => l.ebooks,
+      .all => l10n.all,
+      .genres => l10n.genres,
+      .tags => l10n.tags,
+      .series => l10n.series,
+      .authors => l10n.author,
+      .progress => l10n.progress,
+      .narrators => l10n.narrators,
+      .languages => l10n.language,
+      .tracks => l10n.tracks,
+      .missing => l10n.missingMetadata,
+      .issues => l10n.itemsWithIssues,
+      .feedOpen => l10n.rssFeedOpen,
+      .abridged => l10n.abridged,
+      .explicit => l10n.explicit,
+      .publishers => l10n.publisher,
+      .publishedDecade => l10n.publishedDecade,
+      .ebooks => l10n.ebooks,
     };
   }
 
@@ -133,7 +128,7 @@ extension FilterGroupX on FilterGroup {
         filterData.authors.map((a) => (a.name, AuthorFilter(a.id))).toList(),
       .progress =>
         ProgressFilterValue.values
-            .map((v) => (v.getDisplayString(context), ProgressFilter(v)))
+            .map((v) => (v.label, ProgressFilter(v)))
             .toList(),
       .tags => filterData.tags.map((t) => (t, TagFilter(t))).toList(),
       .series =>
@@ -150,17 +145,17 @@ extension FilterGroupX on FilterGroup {
         filterData.narrators.map((n) => (n, NarratorFilter(n))).toList(),
       .missing =>
         MissingFilterValue.values
-            .map((v) => (v.getDisplayString(context), MissingFilter(v)))
+            .map((v) => (v.label, MissingFilter(v)))
             .toList(),
       .languages =>
         filterData.languages.map((l) => (l, LanguageFilter(l))).toList(),
       .tracks =>
         TracksFilterValue.values
-            .map((v) => (v.getDisplayString(context), TracksFilter(v)))
+            .map((v) => (v.label, TracksFilter(v)))
             .toList(),
       .ebooks =>
         EbooksFilterValue.values
-            .map((v) => (v.getDisplayString(context), EbooksFilter(v)))
+            .map((v) => (v.label, EbooksFilter(v)))
             .toList(),
       _ => [],
     };
@@ -168,7 +163,7 @@ extension FilterGroupX on FilterGroup {
 }
 
 extension FilterDisplayX on Filter {
-  String getDisplayLabel(BuildContext context, LibraryFilterData data) {
+  String label(BuildContext context, LibraryFilterData data) {
     return switch (this) {
       AuthorFilter(value: final id) =>
         data.authors.firstWhere((a) => a.id == id).name,
@@ -176,17 +171,13 @@ extension FilterDisplayX on Filter {
         data.series.firstWhere((s) => s.id == id).name,
 
       ProgressFilter(value: final name) =>
-        ProgressFilterValue.byName[name]?.getDisplayString(context) ?? '',
+        ProgressFilterValue.byName[name]?.label ?? '',
       MissingFilter(value: final name) =>
-        MissingFilterValue.values
-            .firstWhere((v) => v.name == name)
-            .getDisplayString(context),
+        MissingFilterValue.values.firstWhere((v) => v.name == name).label,
       TracksFilter(value: final name) =>
-        TracksFilterValue.values
-            .firstWhere((v) => v.name == name)
-            .getDisplayString(context),
+        TracksFilterValue.values.firstWhere((v) => v.name == name).label,
       EbooksFilter(value: final name) =>
-        EbooksFilterValue.byName[name]?.getDisplayString(context) ?? '',
+        EbooksFilterValue.byName[name]?.label ?? '',
 
       GenreFilter(value: final v) ||
       TagFilter(value: final v) ||
@@ -235,9 +226,13 @@ extension AudiobookX on LibraryItem {
     podcast: (m) => throw UnsupportedError('Podcast duration unsupported'),
   );
   List<BookChapter> get chapters =>
-      media.map(book: (m) => m.chapters ?? [], podcast: (m) => []);
+      media.map(book: (m) => m.chapters, podcast: (m) => []);
   List<AudioTrack> get tracks => media.map(
-    book: (m) => m.tracks ?? [],
+    book: (m) => m.tracks,
+    podcast: (m) => throw UnsupportedError('Podcast tracks unsupported'),
+  );
+  List<AudioFile> get audioFiles => media.map(
+    book: (m) => m.audioFiles,
     podcast: (m) => throw UnsupportedError('Podcast tracks unsupported'),
   );
   List<PodcastEpisode> get episodes => media.map(
@@ -294,13 +289,12 @@ String mediaItemIdKey(String id, [String? episodeId]) =>
     episodeId != null ? '$id$episodeId' : id;
 
 extension PlayMethodX on PlayMethod {
-  String getDisplayString(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
+  String get label {
     return switch (this) {
-      .directPlay => l.directPlay,
-      .directStream => l.directStream,
-      .transcode => l.transcode,
-      .local => l.local,
+      .directPlay => l10n.directPlay,
+      .directStream => l10n.directStream,
+      .transcode => l10n.transcode,
+      .local => l10n.local,
     };
   }
 }

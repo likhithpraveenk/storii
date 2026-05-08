@@ -304,5 +304,7 @@
     }
   },
   "foundBugQ": "Found a bug?",
-  "foundBugQSubtitle": "Open a GitHub issue for any bug you encountered"
+  "foundBugQSubtitle": "Open a GitHub issue for any bug you encountered",
+  "avoidMobileData": "Avoid mobile data",
+  "avoidMobileDataSubtitle": "Downloads will pause on mobile networks"
 }

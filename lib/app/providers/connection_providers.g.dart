@@ -21,7 +21,7 @@ final class SocketStatusProvider
         argument: null,
         retry: null,
         name: r'socketStatusProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -40,7 +40,7 @@ final class SocketStatusProvider
   }
 }
 
-String _$socketStatusHash() => r'3b5a4cbf6e3305f5d17b2d8da9829d874ee49997';
+String _$socketStatusHash() => r'c5cd6a92e3767afdf9ed2d07918125accdafcb57';
 
 @ProviderFor(connectivityStream)
 final connectivityStreamProvider = ConnectivityStreamProvider._();

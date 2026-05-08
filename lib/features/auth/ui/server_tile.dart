@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
 import 'package:storii/features/auth/ui/add_server_sheet.dart';
 import 'package:storii/features/auth/ui/add_user_sheet.dart';
 import 'package:storii/features/auth/ui/user_tile.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
@@ -30,7 +30,6 @@ class _ServerTileState extends ConsumerState<ServerTile> {
   Widget build(BuildContext context) {
     final usersAsync = ref.watch(usersOfServerProvider(widget.server.url));
     final color = widget.server.url.color;
-    final l = AppLocalizations.of(context)!;
 
     return Column(
       children: [
@@ -43,7 +42,7 @@ class _ServerTileState extends ConsumerState<ServerTile> {
             );
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(l.urlCopied),
+                content: Text(l10n.urlCopied),
                 duration: const Duration(seconds: 1),
               ),
             );
@@ -83,7 +82,7 @@ class _ServerTileState extends ConsumerState<ServerTile> {
           error: (error, stack) => Center(
             child: Padding(
               padding: const .all(16),
-              child: Text('${l.errorLoadingUsers}: $error'),
+              child: Text('${l10n.errorLoadingUsers}: $error'),
             ),
           ),
           data: (users) => Column(
@@ -104,22 +103,22 @@ class _ServerTileState extends ConsumerState<ServerTile> {
                               width: double.infinity,
                               child: AppOutlinedButton(
                                 icon: const Icon(Icons.delete_forever),
-                                text: l.deleteServer,
+                                text: l10n.deleteServer,
                                 isDestructive: true,
                                 onPressed: () {
                                   AppDialog.show(
                                     context,
-                                    title: l.deleteServerQ,
+                                    title: l10n.deleteServerQ,
                                     body: Text(
                                       '${widget.server.url.cleanString}\n\n'
-                                      '${users.isEmpty ? l.noUsersServer : '${l.followingUsers}\n'
+                                      '${users.isEmpty ? l10n.noUsersServer : '${l10n.followingUsers}\n'
                                                 '${users.map((e) => '• ${e.username}').join('\n')}'}',
                                       style: Theme.of(
                                         context,
                                       ).textTheme.bodyLarge,
                                     ),
                                     isDestructive: true,
-                                    actionLabel: l.delete,
+                                    actionLabel: l10n.delete,
                                     onTap: () async {
                                       await ref
                                           .read(serversProvider.notifier)
@@ -134,7 +133,7 @@ class _ServerTileState extends ConsumerState<ServerTile> {
                               width: double.infinity,
                               child: AppOutlinedButton(
                                 icon: const Icon(Icons.edit),
-                                text: l.editServer,
+                                text: l10n.editServer,
                                 onPressed: () {
                                   showAddServerSheet(context, widget.server);
                                 },
@@ -145,7 +144,7 @@ class _ServerTileState extends ConsumerState<ServerTile> {
                               width: double.infinity,
                               child: AppFilledButton(
                                 icon: const Icon(Icons.add),
-                                text: l.addUser,
+                                text: l10n.addUser,
                                 onPressed: () {
                                   showAddUserSheet(context, widget.server.url);
                                 },

@@ -19,12 +19,13 @@ class DefaultUserSettings {
   static const NavigationDestinationLabelBehavior navLabelBehavior =
       .alwaysShow;
   static const dateTimeFormat = 'dd MMM y';
-  static const String? fontFamily = null;
+  static const String fontFamily = 'AtkinsonHyperlegibleNext';
   static const fontScale = 1.0;
   static const skipForward = Duration(seconds: 30);
   static const skipBackward = Duration(seconds: 10);
   static const speed = 1.0;
   static const historyLimit = 200;
+  static const downloadOnUnmeteredOnly = false;
 }
 
 @freezed
@@ -32,36 +33,42 @@ sealed class UserSettings with _$UserSettings {
   const factory UserSettings({
     @noCodeGen required String userId,
 
-    Library? currentLibrary,
+    @Default(DefaultUserSettings.currentLibrary) Library? currentLibrary,
 
-    @Default(defaultNavTargets) List<NavTarget> navTargets,
+    @Default(DefaultUserSettings.navTargets) List<NavTarget> navTargets,
 
-    @Default(DisplayMode.comfortable) DisplayMode libraryDisplayMode,
+    @Default(DefaultUserSettings.libraryDisplayMode)
+    DisplayMode libraryDisplayMode,
 
-    @Default(false) bool collapseSeries,
+    @Default(DefaultUserSettings.collapseSeries) bool collapseSeries,
 
-    @Default(DisplayMode.comfortable) DisplayMode seriesDisplayMode,
+    @Default(DefaultUserSettings.seriesDisplayMode)
+    DisplayMode seriesDisplayMode,
 
-    @Default(DisplayMode.comfortable) DisplayMode authorDisplayMode,
+    @Default(DefaultUserSettings.authorDisplayMode)
+    DisplayMode authorDisplayMode,
 
-    @Default(NavTarget.home) NavTarget startupNav,
+    @Default(DefaultUserSettings.startupNav) NavTarget startupNav,
 
-    @Default(NavigationDestinationLabelBehavior.alwaysShow)
+    @Default(DefaultUserSettings.navLabelBehavior)
     NavigationDestinationLabelBehavior navLabelBehavior,
 
-    @Default('dd MMM y') String dateTimeFormat,
+    @Default(DefaultUserSettings.dateTimeFormat) String dateTimeFormat,
 
-    @Default('AtkinsonHyperlegibleNext') String? fontFamily,
+    @Default(DefaultUserSettings.fontFamily) String? fontFamily,
 
-    @Default(1) double fontScale,
+    @Default(DefaultUserSettings.fontScale) double fontScale,
 
-    @Default(Duration(seconds: 30)) Duration skipForward,
+    @Default(DefaultUserSettings.skipForward) Duration skipForward,
 
-    @Default(Duration(seconds: 10)) Duration skipBackward,
+    @Default(DefaultUserSettings.skipBackward) Duration skipBackward,
 
-    @Default(1.0) double speed,
+    @Default(DefaultUserSettings.speed) double speed,
 
-    @Default(200) int historyLimit,
+    @Default(DefaultUserSettings.historyLimit) int historyLimit,
+
+    @Default(DefaultUserSettings.downloadOnUnmeteredOnly)
+    bool downloadOnUnmeteredOnly,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

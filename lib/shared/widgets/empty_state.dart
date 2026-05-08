@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:storii/l10n/l10n.dart';
+import 'package:storii/app/init.dart';
 
 const List<String> emojis = [
   '¯\\_(ツ)_/¯',
@@ -37,7 +37,7 @@ class EmptyState extends StatelessWidget {
             Text(emoji, style: theme.textTheme.displaySmall),
             const SizedBox(height: 16),
             Text(
-              AppLocalizations.of(context)!.emptyMsg,
+              l10n.emptyMsg,
               textAlign: .center,
               style: theme.textTheme.titleMedium,
             ),

@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/device_info_provider.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/logo_header.dart';
 
@@ -15,7 +15,7 @@ class AboutTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(Icons.info_outline),
-      title: Text(AppLocalizations.of(context)!.about),
+      title: Text(l10n.about),
       onTap: () {
         context.push(AppRoute.about.path);
       },
@@ -29,7 +29,6 @@ class AboutScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
-    final l = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
     final packageInfo = ref.watch(packageInfoProvider).value;
     final deviceInfo = ref.watch(deviceInfoStringProvider).value;
@@ -40,7 +39,7 @@ class AboutScreen extends ConsumerWidget {
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
         ),
-        title: Text(l.about, style: textTheme.titleLarge),
+        title: Text(l10n.about, style: textTheme.titleLarge),
       ),
       body: CustomScrollView(
         slivers: [
@@ -51,29 +50,29 @@ class AboutScreen extends ConsumerWidget {
                 const Divider(),
                 ListTile(
                   leading: const Icon(Icons.tag),
-                  title: Text(l.version),
+                  title: Text(l10n.version),
                   subtitle: Text(
                     '${packageInfo?.version} (${packageInfo?.buildNumber})',
                   ),
                 ),
                 ListTile(
-                  title: Text(l.licenses),
+                  title: Text(l10n.licenses),
                   leading: const Icon(Icons.gavel_outlined),
                   onTap: () => showLicensePage(
                     context: context,
                     applicationName: appName,
-                    applicationLegalese: l.licensedUnder,
+                    applicationLegalese: l10n.licensedUnder,
                     applicationVersion: '${packageInfo?.version}',
                   ),
                 ),
                 ListTile(
-                  title: Text(l.sourceCode),
+                  title: Text(l10n.sourceCode),
                   leading: const Icon(Icons.open_in_new),
                   onTap: () => launchUrlHelper(context, githubLink),
                 ),
                 ListTile(
-                  title: Text(l.foundBugQ),
-                  subtitle: Text(l.foundBugQSubtitle),
+                  title: Text(l10n.foundBugQ),
+                  subtitle: Text(l10n.foundBugQSubtitle),
                   leading: const Icon(Icons.feedback_outlined),
                   onTap: () => launchUrlHelper(context, githubIssueLink),
                 ),

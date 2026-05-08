@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/keys.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class FontScaleTile extends ConsumerWidget {
@@ -16,7 +16,7 @@ class FontScaleTile extends ConsumerWidget {
     return ListTile(
       title: Row(
         mainAxisAlignment: .spaceBetween,
-        children: [Text(AppLocalizations.of(context)!.fontScale)],
+        children: [Text(l10n.fontScale)],
       ),
       subtitle: Text(percent),
       trailing: const Icon(Icons.chevron_right),
@@ -25,7 +25,7 @@ class FontScaleTile extends ConsumerWidget {
         if (scaffoldContext == null) return;
         AppBottomSheet.show(
           scaffoldContext,
-          title: AppLocalizations.of(context)!.fontScale,
+          title: l10n.fontScale,
           body: const _FontScaleSheet(),
         );
       },
@@ -87,7 +87,7 @@ class _FontScaleSheetState extends ConsumerState<_FontScaleSheet> {
               context,
             ).copyWith(textScaler: .linear(_scale / 20)),
             child: Text(
-              AppLocalizations.of(context)!.sampleText,
+              l10n.sampleText,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),

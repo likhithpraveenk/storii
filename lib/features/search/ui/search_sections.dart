@@ -2,6 +2,7 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/author/ui/author_list_screen.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
@@ -9,7 +10,6 @@ import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/features/series/ui/series_list_screen.dart';
-import 'package:storii/l10n/l10n.dart';
 
 class _Section extends StatelessWidget {
   final String title;
@@ -39,7 +39,7 @@ class _Section extends StatelessWidget {
                 onPressed: () {
                   onViewAll?.call();
                 },
-                child: Text(AppLocalizations.of(context)!.viewAll),
+                child: Text(l10n.viewAll),
               ),
           ],
         ),
@@ -157,7 +157,7 @@ class AuthorsSection extends ConsumerWidget {
     }
     final height = ref.watch(shelfHeightProvider(.authors));
     return _Section(
-      title: AppLocalizations.of(context)!.authors,
+      title: l10n.authors,
       onViewAll: onViewAll,
       child: SizedBox(
         height: height,
@@ -197,7 +197,7 @@ class SeriesSection extends ConsumerWidget {
     }
     final height = ref.watch(shelfHeightProvider(.series));
     return _Section(
-      title: AppLocalizations.of(context)!.series,
+      title: l10n.series,
       onViewAll: onViewAll,
       child: SizedBox(
         height: height,

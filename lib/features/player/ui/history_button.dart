@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/models/playback_event.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/playback_history.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -21,7 +21,7 @@ class HistoryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      tooltip: AppLocalizations.of(context)!.history,
+      tooltip: l10n.history,
       icon: const Icon(Icons.history),
       onPressed: () => showModalBottomSheet(
         context: context,
@@ -67,12 +67,11 @@ class HistorySheet extends ConsumerWidget {
     final history = ref.watch(playbackHistoryProvider(key));
     final historyNotifier = ref.watch(playbackHistoryProvider(key).notifier);
     final theme = Theme.of(context);
-    final l = AppLocalizations.of(context)!;
     final session = ref.watch(sessionProvider);
     final isCurrentItem =
         (session?.libraryItemId, session?.episodeId) == (itemId, episodeId);
 
-    final items = _groupByDay(history, l, ref);
+    final items = _groupByDay(history, ref);
 
     return Column(
       children: [
@@ -84,7 +83,7 @@ class HistorySheet extends ConsumerWidget {
               Align(
                 alignment: .center,
                 child: Text(
-                  l.history,
+                  l10n.history,
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontSize: 20,
                     fontWeight: .w600,
@@ -217,14 +216,11 @@ class _HistoryEventTile extends StatelessWidget {
             Icon(_icon, size: 16, color: _color(context)),
             const SizedBox(width: 8),
             Expanded(
-              child: Text(
-                event.kind.localized(context),
-                style: theme.textTheme.bodyMedium,
-              ),
+              child: Text(event.kind.label, style: theme.textTheme.bodyMedium),
             ),
             if (event.playbackError) ...[
               Text(
-                AppLocalizations.of(context)!.playbackError,
+                l10n.playbackError,
                 style: theme.textTheme.labelSmall?.copyWith(
                   color: theme.colorScheme.error,
                   fontStyle: .italic,
@@ -258,27 +254,23 @@ class _HistoryEventTile extends StatelessWidget {
   }
 }
 
-String _dayLabel(DateTime day, AppLocalizations l, WidgetRef ref) {
+String _dayLabel(DateTime day, WidgetRef ref) {
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
   final target = DateTime(day.year, day.month, day.day);
   final diff = today.difference(target).inDays;
-  if (diff == 0) return l.today;
-  if (diff == 1) return l.yesterday;
+  if (diff == 0) return l10n.today;
+  if (diff == 1) return l10n.yesterday;
   final fmt = ref.read(dateTimeFormatProvider);
   return target.fString(format: fmt);
 }
 
-List<Object> _groupByDay(
-  List<PlaybackEvent> history,
-  AppLocalizations l,
-  WidgetRef ref,
-) {
+List<Object> _groupByDay(List<PlaybackEvent> history, WidgetRef ref) {
   final items = <Object>[];
   String? currentLabel;
 
   for (final event in history.reversed) {
-    final label = _dayLabel(event.timestamp, l, ref);
+    final label = _dayLabel(event.timestamp, ref);
     if (label != currentLabel) {
       items.add(label);
       currentLabel = label;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
 
@@ -16,7 +16,7 @@ class SpeedButton extends ConsumerWidget {
       onPressed: () {
         AppBottomSheet.show(
           context,
-          title: AppLocalizations.of(context)!.playbackSpeed,
+          title: l10n.playbackSpeed,
           body: WheelPicker.fromDoubleRange(
             initialValue: speed,
             min: 0.5,

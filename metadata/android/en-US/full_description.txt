@@ -1,13 +1,14 @@
 Storii is a modern, feature-rich client for [Audiobookshelf](https://github.com/advplyr/audiobookshelf) that focuses on a clean user experience and maintainable architecture.
 
-Features:
-• Stream audiobooks with background playback and automatic progress sync
-• Download books for offline listening – fully functional download manager with pause/resume
-• Multi-user and multi-server support, including OIDC authentication
-• Personalized home screen with continue listening, recent series, and more
-• Advanced library browsing: filters, sorting, series grouping, and search
-• Customizable player: sleep timer, playback speed, chapter navigation, and listening history
-• Appearance settings: light/dark/system themes, dynamic colors, pure black mode, custom fonts
-• Flexible navigation: reorder bottom tabs, choose startup screen
+## Features
 
-Note: Podcast support is under development and not yet available.
+- Stream audiobooks with background playback and automatic progress sync
+- Download books for offline listening – fully functional download manager with pause/resume
+- Multi-user and multi-server support, including OIDC authentication
+- Personalized home screen with continue listening, recent series, and more
+- Advanced library browsing: filters, sorting, series grouping, and search
+- Customizable player: sleep timer, playback speed, chapter navigation, and listening history
+- Appearance settings: light/dark/system themes, dynamic colors, pure black mode, custom fonts
+- Flexible navigation: reorder bottom tabs, choose startup screen
+
+    Note: Podcast support is under development and not yet available.

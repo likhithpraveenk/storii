@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/author/ui/standalone_books.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
-import 'package:storii/l10n/l10n.dart';
 
 class AuthorContent extends StatelessWidget {
   const AuthorContent({
@@ -29,7 +29,7 @@ class AuthorContent extends StatelessWidget {
       children: [
         if (books.isNotEmpty) ...[
           SectionHeader(
-            title: AppLocalizations.of(context)!.books,
+            title: l10n.books,
             count: books.length,
             onViewAll: () {
               Navigator.of(context).push(
@@ -104,7 +104,7 @@ class SectionHeader extends StatelessWidget {
           child: Row(
             mainAxisSize: .min,
             children: [
-              Text(AppLocalizations.of(context)!.viewAll),
+              Text(l10n.viewAll),
               const Icon(Icons.arrow_forward_ios, size: 12),
             ],
           ),

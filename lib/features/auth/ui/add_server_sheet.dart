@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/features/auth/logic/add_server_notifier.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
@@ -58,7 +58,6 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
     final state = ref.watch(addServerProvider);
     final isLoading = state.status == .checking;
     final theme = Theme.of(context);
-    final l = AppLocalizations.of(context)!;
 
     ref.listen<ServerState>(addServerProvider, (p, n) {
       if (p?.status != .available && n.status == .available) {
@@ -73,7 +72,7 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
         mainAxisSize: .min,
         children: [
           Text(
-            l.addServer,
+            l10n.addServer,
             style: theme.textTheme.titleLarge?.copyWith(
               fontSize: 20,
               fontWeight: .w600,
@@ -90,7 +89,7 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
             autofocus: true,
             onSubmitted: (_) => submit(),
             decoration: InputDecoration(
-              labelText: l.serverUrl,
+              labelText: l10n.serverUrl,
               labelStyle: theme.textTheme.titleSmall,
               hintText: 'https://abs.example.com',
             ),
@@ -100,7 +99,7 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
             width: double.infinity,
             child: AppFilledButton(
               icon: const Icon(Icons.monitor_heart_outlined),
-              text: l.validateServer,
+              text: l10n.validateServer,
               loading: isLoading,
               onPressed: submit,
             ),
@@ -109,7 +108,7 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
           SizedBox(
             width: double.infinity,
             child: AppTextButton(
-              text: l.cancel,
+              text: l10n.cancel,
               onPressed: () {
                 Navigator.of(context).pop();
               },

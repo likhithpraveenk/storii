@@ -129,6 +129,7 @@ class AddUserNotifier extends _$AddUserNotifier {
           response.user.refreshToken,
         );
     await ref.read(appSettingsProvider.notifier).setCurrentUser(user);
+    await ref.read(appSettingsProvider.notifier).setServerUrl(user.serverUrl);
   }
 
   void _handleError(Object e, StackTrace st, String message) {

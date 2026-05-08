@@ -5,7 +5,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 
 part 'connection_providers.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Stream<bool> socketStatus(Ref ref) async* {
   final user = ref.watch(currentUserProvider);
   if (user == null) {
@@ -27,6 +27,7 @@ Stream<List<ConnectivityResult>> connectivityStream(Ref ref) {
 @Riverpod(keepAlive: true)
 ConnectionType connectionType(Ref ref) {
   final results = ref.watch(connectivityStreamProvider).value ?? [];
+  // log('available connections: $results');
   if (results.contains(ConnectivityResult.wifi)) return .wifi;
   if (results.contains(ConnectivityResult.ethernet)) return .ethernet;
   if (results.contains(ConnectivityResult.mobile)) return .mobile;

@@ -132,6 +132,9 @@ extension AppSettingsSetters on AppSettingsNotifier {
   Future<void> setCurrentUser(UserDomain? value) =>
       _save(state.copyWith(currentUser: value));
 
+  Future<void> setServerUrl(Uri? value) =>
+      _save(state.copyWith(serverUrl: value));
+
   Future<void> setMaxLogs(int value) => _save(state.copyWith(maxLogs: value));
 
   Future<void> setEnableHttpLogs(bool value) =>
@@ -155,6 +158,10 @@ final usePureBlackProvider = Provider<bool>(
 
 final currentUserProvider = Provider<UserDomain?>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.currentUser)),
+);
+
+final serverUrlProvider = Provider<Uri?>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.serverUrl)),
 );
 
 final maxLogsProvider = Provider<int>(
@@ -217,6 +224,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setHistoryLimit(int value) =>
       _save(state?.copyWith(historyLimit: value));
+
+  Future<void> setDownloadOnUnmeteredOnly(bool value) =>
+      _save(state?.copyWith(downloadOnUnmeteredOnly: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -333,6 +343,16 @@ final historyLimitProvider = Provider<int>(
   (ref) => ref.watch(
     userSettingsProvider.select(
       (s) => s?.historyLimit ?? DefaultUserSettings.historyLimit,
+    ),
+  ),
+);
+
+final downloadOnUnmeteredOnlyProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.downloadOnUnmeteredOnly ??
+          DefaultUserSettings.downloadOnUnmeteredOnly,
     ),
   ),
 );

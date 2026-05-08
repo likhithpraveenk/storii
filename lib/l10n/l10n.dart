@@ -1389,6 +1389,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open a GitHub issue for any bug you encountered'**
   String get foundBugQSubtitle;
+
+  /// No description provided for @avoidMobileData.
+  ///
+  /// In en, this message translates to:
+  /// **'Avoid mobile data'**
+  String get avoidMobileData;
+
+  /// No description provided for @avoidMobileDataSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloads will pause on mobile networks'**
+  String get avoidMobileDataSubtitle;
 }
 
 class _AppLocalizationsDelegate

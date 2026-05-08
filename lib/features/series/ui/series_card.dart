@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/placeholder_image.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
@@ -64,7 +64,6 @@ class _SeriesBookStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
     final progress = series.finishRatio;
 
     return LayoutBuilder(
@@ -72,7 +71,7 @@ class _SeriesBookStack extends StatelessWidget {
         if (series.books.isEmpty) {
           return ClipRRect(
             borderRadius: .circular(kRadius),
-            child: PlaceholderImage(label: l.noImage),
+            child: PlaceholderImage(label: l10n.noImage),
           );
         }
 

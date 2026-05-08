@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/placeholder_image.dart';
 
@@ -15,7 +15,6 @@ class SeriesCardListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l = AppLocalizations.of(context)!;
     final authorName = series.books.firstOrNull?.authorName;
     final seriesProgress = series.books.isEmpty
         ? 0.0
@@ -29,7 +28,7 @@ class SeriesCardListView extends StatelessWidget {
         child: series.books.isEmpty
             ? ClipRRect(
                 borderRadius: .circular(kRadius),
-                child: PlaceholderImage(label: l.noImage),
+                child: PlaceholderImage(label: l10n.noImage),
               )
             : ClipRRect(
                 borderRadius: .circular(kRadius),
@@ -53,7 +52,7 @@ class SeriesCardListView extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(
-            authorName ?? l.noAuthor,
+            authorName ?? l10n.noAuthor,
             maxLines: 1,
             overflow: .ellipsis,
             style: theme.textTheme.bodyMedium?.copyWith(

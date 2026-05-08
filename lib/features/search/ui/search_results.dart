@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/search/logic/search_provider.dart';
 import 'package:storii/features/search/ui/search_sections.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 
 class SearchResultsView extends ConsumerWidget {
@@ -18,11 +18,10 @@ class SearchResultsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context)!;
     final filter = ref.watch(searchFilterProvider);
 
     Widget buildBooks({bool isSeparate = false}) => ItemsSection(
-      title: l.audiobooks,
+      title: l10n.audiobooks,
       isSeparate: isSeparate,
       items: response.book,
       onViewAll: () {
@@ -47,7 +46,7 @@ class SearchResultsView extends ConsumerWidget {
     );
 
     Widget buildPodcasts({bool isSeparate = false}) => ItemsSection(
-      title: l.podcasts,
+      title: l10n.podcasts,
       isSeparate: isSeparate,
       items: response.podcast,
       onViewAll: () {
@@ -56,7 +55,7 @@ class SearchResultsView extends ConsumerWidget {
     );
 
     Widget buildEpisodes({bool isSeparate = false}) => ItemsSection(
-      title: l.episodes,
+      title: l10n.episodes,
       isSeparate: isSeparate,
       items: response.episodes,
       onViewAll: () {
@@ -65,7 +64,7 @@ class SearchResultsView extends ConsumerWidget {
     );
 
     Widget buildNarrators({bool isSeparate = false}) => SearchChipsSection(
-      title: l.narrators,
+      title: l10n.narrators,
       isSeparate: isSeparate,
       items: response.narrators,
       icon: Icons.mic,
@@ -80,7 +79,7 @@ class SearchResultsView extends ConsumerWidget {
     );
 
     Widget buildTags({bool isSeparate = false}) => SearchChipsSection(
-      title: l.tags,
+      title: l10n.tags,
       isSeparate: isSeparate,
       items: response.tags,
       icon: Icons.tag,
@@ -95,7 +94,7 @@ class SearchResultsView extends ConsumerWidget {
     );
 
     Widget buildGenres({bool isSeparate = false}) => SearchChipsSection(
-      title: l.genres,
+      title: l10n.genres,
       items: response.genres,
       isSeparate: isSeparate,
       icon: Icons.category,

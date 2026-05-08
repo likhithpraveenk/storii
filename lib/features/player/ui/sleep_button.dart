@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/player/logic/sleep_timer_provider.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
@@ -13,20 +13,19 @@ class SleepButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sleep = ref.watch(sleepTimerProvider);
-    final l = AppLocalizations.of(context)!;
 
     return IconButton(
       onPressed: () {
         AppBottomSheet.show(
           context,
-          title: l.sleepTimer,
+          title: l10n.sleepTimer,
           body: const SleepTimerSheet(),
         );
       },
       icon: sleep == null
           ? const Icon(Icons.bedtime_outlined)
           : Text(
-              sleep.toReadableDuration(context),
+              sleep.toReadableDuration(),
               style: Theme.of(context).textTheme.labelLarge,
             ),
     );
@@ -47,7 +46,6 @@ class _SleepTimerSheetState extends ConsumerState<SleepTimerSheet> {
     final sleep = ref.watch(sleepTimerProvider);
     final notifier = ref.read(sleepTimerProvider.notifier);
     final textTheme = Theme.of(context).textTheme;
-    final l = AppLocalizations.of(context)!;
 
     return Padding(
       padding: const .symmetric(horizontal: 24),
@@ -58,7 +56,7 @@ class _SleepTimerSheetState extends ConsumerState<SleepTimerSheet> {
           if (sleep != null) ...[
             Center(
               child: Text(
-                sleep.toReadableDuration(context, showSeconds: true),
+                sleep.toReadableDuration(showSeconds: true),
                 style: textTheme.displaySmall,
               ),
             ),
@@ -69,7 +67,7 @@ class _SleepTimerSheetState extends ConsumerState<SleepTimerSheet> {
                 for (final delta in [5, 15, 30])
                   TextButton(
                     onPressed: () => notifier.add(Duration(minutes: delta)),
-                    child: Text('+${l.timeMinutes(delta)}'),
+                    child: Text('+${l10n.timeMinutes(delta)}'),
                   ),
               ],
             ),
@@ -80,7 +78,7 @@ class _SleepTimerSheetState extends ConsumerState<SleepTimerSheet> {
                 notifier.cancel();
                 Navigator.of(context).pop();
               },
-              text: l.cancelTimer,
+              text: l10n.cancelTimer,
             ),
           ] else ...[
             WheelPicker.fromIntRange(
@@ -88,7 +86,7 @@ class _SleepTimerSheetState extends ConsumerState<SleepTimerSheet> {
               min: 0,
               max: 150,
               step: 15,
-              labelBuilder: l.timeMinutes,
+              labelBuilder: l10n.timeMinutes,
               onChangedEnd: (min) => _selectedMinutes = min,
               presets: [30, 60, 90, 120],
             ),
@@ -98,7 +96,7 @@ class _SleepTimerSheetState extends ConsumerState<SleepTimerSheet> {
                 notifier.set(Duration(minutes: _selectedMinutes));
                 Navigator.of(context).pop();
               },
-              text: l.confirm,
+              text: l10n.confirm,
             ),
           ],
         ],

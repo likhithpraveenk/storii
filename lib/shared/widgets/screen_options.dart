@@ -2,10 +2,10 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/keys.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/filter_data_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/display_sheet.dart';
 import 'package:storii/shared/widgets/filters_sheet.dart';
@@ -44,7 +44,7 @@ class ScreenOptionsButton extends StatelessWidget {
           );
         },
       ),
-      tooltip: AppLocalizations.of(context)!.filter,
+      tooltip: l10n.filter,
       onPressed: () {
         final scaffoldContext = shellScaffoldKey.currentContext;
         if (scaffoldContext == null) return;
@@ -81,7 +81,6 @@ class _ScreenOptionsSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context)!;
     final filterState = ref.watch(libraryFiltersProvider(screen));
     final filterData = ref.watch(filterDataProvider);
     final notifier = ref.read(libraryFiltersProvider(screen).notifier);
@@ -100,9 +99,9 @@ class _ScreenOptionsSheet extends ConsumerWidget {
         children: [
           TabBar(
             tabs: [
-              if (screen != .authors) Tab(text: l.filter),
-              Tab(text: l.sort),
-              Tab(text: l.display),
+              if (screen != .authors) Tab(text: l10n.filter),
+              Tab(text: l10n.sort),
+              Tab(text: l10n.display),
             ],
           ),
           Expanded(

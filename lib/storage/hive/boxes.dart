@@ -13,8 +13,8 @@ const appSettingsBox = 'app_settings_box';
 const userSettingsBox = 'user_settings_box';
 const usersBox = 'users_box';
 const serversBox = 'servers_box';
-// const itemsBox = 'items_box';
-const sessionIdBox = 'session_id_box';
+const itemsBox = 'items_box';
+const localSessionsBox = 'local_sessions_box';
 const localPositionBox = 'local_position_box';
 const playbackHistoryBox = 'playback_history_box';
 const downloadsBox = 'downloads_box';
@@ -31,7 +31,8 @@ Future<void> setupHive() async {
     Hive.openBox<String>(userSettingsBox),
     Hive.openBox<UserDomain>(usersBox),
     Hive.openBox<Server>(serversBox),
-    Hive.openBox<String>(sessionIdBox),
+    Hive.openBox<String>(itemsBox),
+    Hive.openBox<String>(localSessionsBox),
     Hive.openBox<Duration>(localPositionBox),
     Hive.openBox<List<dynamic>>(playbackHistoryBox),
     Hive.openBox<String>(downloadsBox),

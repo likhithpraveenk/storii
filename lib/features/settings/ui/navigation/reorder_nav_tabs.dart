@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/nav_targets.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
@@ -13,16 +13,15 @@ class ReorderNavTabsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
     return ListTile(
       leading: const Icon(Icons.swap_vert),
       trailing: const Icon(Icons.chevron_right),
-      title: Text(l.settingsReorderNavTitle),
-      subtitle: Text(l.settingsReorderNavSubtitle),
+      title: Text(l10n.settingsReorderNavTitle),
+      subtitle: Text(l10n.settingsReorderNavSubtitle),
       onTap: () {
         AppBottomSheet.show(
           context,
-          title: l.settingsReorderNavTitle,
+          title: l10n.settingsReorderNavTitle,
           body: const ReorderNavTabs(),
         );
       },
@@ -77,7 +76,6 @@ class _ReorderNavTabsState extends ConsumerState<ReorderNavTabs> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final l = AppLocalizations.of(context)!;
 
     return Column(
       children: [
@@ -110,7 +108,7 @@ class _ReorderNavTabsState extends ConsumerState<ReorderNavTabs> {
               child: ListTile(
                 contentPadding: const .symmetric(horizontal: 16, vertical: 4),
                 title: Text(
-                  target.label(context),
+                  target.label,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontWeight: .w600,
                     color: isEnabled
@@ -157,7 +155,7 @@ class _ReorderNavTabsState extends ConsumerState<ReorderNavTabs> {
                   context.pop();
                 }
               },
-              text: l.save,
+              text: l10n.save,
             ),
           ),
         ),

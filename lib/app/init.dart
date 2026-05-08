@@ -10,8 +10,10 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/sessions_cleanup.dart';
+import 'package:storii/l10n/l10n.dart';
 
 late final AppLinks appLinks;
+late AppLocalizations l10n;
 
 Future<void> setupGlobals() async {
   appLinks = AppLinks();

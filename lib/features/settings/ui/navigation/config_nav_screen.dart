@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/navigation/nav_label_tile.dart';
 import 'package:storii/features/settings/ui/navigation/reorder_nav_tabs.dart';
 import 'package:storii/features/settings/ui/navigation/startup_nav.dart';
-import 'package:storii/l10n/l10n.dart';
 
 class ConfigNavTile extends StatelessWidget {
   const ConfigNavTile({super.key});
@@ -14,7 +14,7 @@ class ConfigNavTile extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.explore_outlined),
       trailing: const Icon(Icons.chevron_right),
-      title: Text(AppLocalizations.of(context)!.configNav),
+      title: Text(l10n.configNav),
       onTap: () {
         context.push(AppRoute.navigationSettings.path);
       },
@@ -27,8 +27,6 @@ class ConfigNavScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -37,7 +35,10 @@ class ConfigNavScreen extends StatelessWidget {
           },
           icon: const Icon(Icons.arrow_back),
         ),
-        title: Text(l.configNav, style: Theme.of(context).textTheme.titleLarge),
+        title: Text(
+          l10n.configNav,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
       ),
       body: const SingleChildScrollView(
         child: Column(

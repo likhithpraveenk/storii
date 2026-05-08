@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/keys.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
@@ -17,7 +17,7 @@ class DateTimeFormatTile extends ConsumerWidget {
 
     return ListTile(
       leading: const Icon(Icons.calendar_month_outlined),
-      title: Text(AppLocalizations.of(context)!.dateFormat),
+      title: Text(l10n.dateFormat),
       subtitle: Text(DateFormat(currentFormat).format(DateTime.now())),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
@@ -25,7 +25,7 @@ class DateTimeFormatTile extends ConsumerWidget {
         if (scaffoldContext == null) return;
         AppBottomSheet.show(
           scaffoldContext,
-          title: AppLocalizations.of(context)!.dateFormat,
+          title: l10n.dateFormat,
           body: const DateTimeFormatSheet(),
         );
       },
@@ -77,7 +77,6 @@ class _DateTimeFormatSheetState extends ConsumerState<DateTimeFormatSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
     final isValid = _isValid(_previewPattern);
 
     return Padding(
@@ -100,7 +99,7 @@ class _DateTimeFormatSheetState extends ConsumerState<DateTimeFormatSheet> {
             padding: const .all(24),
             child: TextField(
               controller: _controller,
-              decoration: InputDecoration(labelText: l.customPattern),
+              decoration: InputDecoration(labelText: l10n.customPattern),
               onChanged: (val) => setState(() => _previewPattern = val),
               textInputAction: .done,
               onSubmitted: (_) {
@@ -115,7 +114,7 @@ class _DateTimeFormatSheetState extends ConsumerState<DateTimeFormatSheet> {
             child: SizedBox(
               width: double.infinity,
               child: AppFilledButton(
-                text: l.save,
+                text: l10n.save,
                 onPressed: () async {
                   if (_isValid(_previewPattern)) {
                     await ref
@@ -155,7 +154,7 @@ class _PreviewBox extends StatelessWidget {
       child: Text(
         isValid
             ? DateFormat(previewPattern).format(DateTime.now())
-            : AppLocalizations.of(context)!.invalidFormat,
+            : l10n.invalidFormat,
         style: TextStyle(
           color: isValid
               ? colorScheme.onPrimaryContainer

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storii/l10n/l10n.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 class AppDialog extends StatelessWidget {
@@ -87,9 +87,7 @@ class AppDialog extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    child: Text(
-                      cancelLabel ?? AppLocalizations.of(context)!.cancel,
-                    ),
+                    child: Text(cancelLabel ?? l10n.cancel),
                   ),
                   AppFilledButton(
                     isDestructive: isDestructive,

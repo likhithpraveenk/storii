@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storii/l10n/l10n.dart';
+import 'package:storii/app/init.dart';
 
 class CollectionsScreen extends StatelessWidget {
   const CollectionsScreen({super.key, this.fromMore = false});
@@ -11,7 +11,7 @@ class CollectionsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.collections,
+          l10n.collections,
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),

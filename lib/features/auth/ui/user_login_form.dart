@@ -2,8 +2,8 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/abs_urls.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/features/auth/logic/add_user_notifier.dart';
-import 'package:storii/l10n/l10n.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -59,13 +59,13 @@ class _UserLoginFormState extends ConsumerState<UserLoginForm> {
     final authMethods = widget.serverStatus.authMethods;
     final supportsLocal = authMethods?.contains(AuthMethod.local) == true;
     final supportsOidc = authMethods?.contains(AuthMethod.openid) == true;
-    final l = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
     final scheme = Theme.of(context).colorScheme;
     final customMessage =
         widget.serverStatus.authFormData?.authLoginCustomMessage;
     final oidcButtonText =
-        widget.serverStatus.authFormData?.authOpenIDButtonText ?? l.loginOidc;
+        widget.serverStatus.authFormData?.authOpenIDButtonText ??
+        l10n.loginOidc;
 
     return AutofillGroup(
       child: Column(
@@ -102,7 +102,7 @@ class _UserLoginFormState extends ConsumerState<UserLoginForm> {
                         crossAxisAlignment: .center,
                         children: [
                           Text(
-                            l.oidcRedirectUriHintPrefix,
+                            l10n.oidcRedirectUriHintPrefix,
                             style: textTheme.bodySmall?.copyWith(
                               color: scheme.onSurfaceVariant,
                             ),
@@ -128,7 +128,7 @@ class _UserLoginFormState extends ConsumerState<UserLoginForm> {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            l.oidcRedirectUriHintSuffix,
+                            l10n.oidcRedirectUriHintSuffix,
                             style: textTheme.bodySmall?.copyWith(
                               color: scheme.onSurfaceVariant,
                             ),
@@ -158,7 +158,7 @@ class _UserLoginFormState extends ConsumerState<UserLoginForm> {
                     const Expanded(child: Divider()),
                     Padding(
                       padding: const .symmetric(horizontal: 12),
-                      child: Text(l.or, style: textTheme.labelSmall),
+                      child: Text(l10n.or, style: textTheme.labelSmall),
                     ),
                     const Expanded(child: Divider()),
                   ],
@@ -174,7 +174,7 @@ class _UserLoginFormState extends ConsumerState<UserLoginForm> {
               keyboardType: .name,
               autofillHints: const [AutofillHints.username],
               decoration: InputDecoration(
-                labelText: l.username,
+                labelText: l10n.username,
                 labelStyle: textTheme.titleSmall,
               ),
             ),
@@ -187,7 +187,7 @@ class _UserLoginFormState extends ConsumerState<UserLoginForm> {
               onSubmitted: (_) => _login(),
               keyboardType: .visiblePassword,
               decoration: InputDecoration(
-                labelText: l.password,
+                labelText: l10n.password,
                 labelStyle: textTheme.titleSmall,
               ),
             ),
@@ -196,7 +196,7 @@ class _UserLoginFormState extends ConsumerState<UserLoginForm> {
               width: double.infinity,
               child: AppFilledButton(
                 icon: const Icon(Icons.login),
-                text: l.login,
+                text: l10n.login,
                 loading: widget.isLoading,
                 onPressed: _login,
               ),
