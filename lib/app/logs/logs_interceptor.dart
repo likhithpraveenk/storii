@@ -4,6 +4,10 @@ import 'package:storii/app/logs/log_service.dart';
 class LogsInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    if (!LogService.isHttpLoggingEnabled()) {
+      handler.next(options);
+      return;
+    }
     options.extra['startTime'] = DateTime.now().millisecondsSinceEpoch;
     final path = options.uri.path;
     final query = options.queryParameters.isNotEmpty
@@ -14,28 +18,32 @@ class LogsInterceptor extends Interceptor {
       source: 'ApiClient',
       level: .http,
     );
-    super.onRequest(options, handler);
+    handler.next(options);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
+    if (!LogService.isHttpLoggingEnabled()) {
+      handler.next(response);
+      return;
+    }
     final duration = _getDuration(response.requestOptions);
     final path = response.requestOptions.uri.path;
-
-    // final prettyBody = response.data != null
-    //     ? '\n${jsonEncode(response.data).toPrettyJson()}'
-    //     : '';
 
     LogService.log(
       'RESPONSE: [${response.statusCode}] (${duration}ms) $path',
       source: 'ApiClient',
       level: .http,
     );
-    super.onResponse(response, handler);
+    handler.next(response);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
+    if (!LogService.isHttpLoggingEnabled()) {
+      handler.next(err);
+      return;
+    }
     final duration = _getDuration(err.requestOptions);
     final path = err.requestOptions.uri.path;
     LogService.log(
@@ -45,7 +53,7 @@ class LogsInterceptor extends Interceptor {
       level: .http,
       stackTrace: err.stackTrace,
     );
-    super.onError(err, handler);
+    handler.next(err);
   }
 
   int _getDuration(RequestOptions options) {
