@@ -532,6 +532,12 @@ abstract class AppLocalizations {
   /// **'All'**
   String get all;
 
+  /// No description provided for @id.
+  ///
+  /// In en, this message translates to:
+  /// **'ID'**
+  String get id;
+
   /// No description provided for @series.
   ///
   /// In en, this message translates to:
@@ -568,6 +574,12 @@ abstract class AppLocalizations {
   /// **'View All'**
   String get viewAll;
 
+  /// No description provided for @metadata.
+  ///
+  /// In en, this message translates to:
+  /// **'Metadata'**
+  String get metadata;
+
   /// No description provided for @title.
   ///
   /// In en, this message translates to:
@@ -597,6 +609,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Published Year'**
   String get publishedYear;
+
+  /// No description provided for @publishedDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Published Date'**
+  String get publishedDate;
+
+  /// No description provided for @releaseDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Release Date'**
+  String get releaseDate;
 
   /// No description provided for @size.
   ///
@@ -711,6 +735,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Has no supplementary ebook'**
   String get hasNoSupplementary;
+
+  /// No description provided for @itunesId.
+  ///
+  /// In en, this message translates to:
+  /// **'iTunes ID'**
+  String get itunesId;
+
+  /// No description provided for @itunesArtistId.
+  ///
+  /// In en, this message translates to:
+  /// **'iTunes Artist ID'**
+  String get itunesArtistId;
+
+  /// No description provided for @itunesPageUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'iTunes Page Url'**
+  String get itunesPageUrl;
 
   /// No description provided for @collapseSeries.
   ///
@@ -861,6 +903,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'RSS Feed Open'**
   String get rssFeedOpen;
+
+  /// No description provided for @moreInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'More Info'**
+  String get moreInfo;
 
   /// No description provided for @explicit.
   ///

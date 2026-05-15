@@ -233,6 +233,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get all => 'All';
 
   @override
+  String get id => 'ID';
+
+  @override
   String get series => 'Series';
 
   @override
@@ -251,6 +254,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get viewAll => 'View All';
 
   @override
+  String get metadata => 'Metadata';
+
+  @override
   String get title => 'Title';
 
   @override
@@ -264,6 +270,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get publishedYear => 'Published Year';
+
+  @override
+  String get publishedDate => 'Published Date';
+
+  @override
+  String get releaseDate => 'Release Date';
 
   @override
   String get size => 'Size';
@@ -321,6 +333,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hasNoSupplementary => 'Has no supplementary ebook';
+
+  @override
+  String get itunesId => 'iTunes ID';
+
+  @override
+  String get itunesArtistId => 'iTunes Artist ID';
+
+  @override
+  String get itunesPageUrl => 'iTunes Page Url';
 
   @override
   String get collapseSeries => 'Collapse Series';
@@ -396,6 +417,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rssFeedOpen => 'RSS Feed Open';
+
+  @override
+  String get moreInfo => 'More Info';
 
   @override
   String get explicit => 'Explicit';
