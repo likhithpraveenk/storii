@@ -5,11 +5,10 @@ import 'dart:developer';
 import 'package:abs_api/abs_api.dart';
 import 'package:hive_ce/hive_ce.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/player/logic/audio_providers.dart';
-import 'package:storii/features/player/logic/local_position_provider.dart';
 import 'package:storii/features/player/logic/play_request_params.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -20,15 +19,7 @@ part 'session_notifier.g.dart';
 @Riverpod(keepAlive: true)
 class SessionNotifier extends _$SessionNotifier {
   @override
-  PlaybackSession? build() {
-    ref.listen(globalPositionProvider, (_, next) {
-      final position = next.value;
-      final session = state;
-      if (position == null || session == null) return;
-      ref.read(localPositionProvider(session.id).notifier).save(position);
-    });
-    return null;
-  }
+  PlaybackSession? build() => null;
 
   bool get isLocal => state?.playMethod == .local;
 
@@ -46,9 +37,6 @@ class SessionNotifier extends _$SessionNotifier {
           params: params,
           episodeId: episodeId,
         );
-    await ref
-        .read(localPositionProvider(session.id).notifier)
-        .save(session.currentTime);
 
     unawaited(
       Hive.box<String>(localSessionsBox).put(session.id, jsonEncode(session)),
@@ -77,9 +65,6 @@ class SessionNotifier extends _$SessionNotifier {
         timeListening: Duration.zero,
       );
     }
-    await ref
-        .read(localPositionProvider(session.id).notifier)
-        .save(session.currentTime);
 
     unawaited(
       Hive.box<String>(localSessionsBox).put(session.id, jsonEncode(session)),
@@ -142,10 +127,15 @@ class SessionNotifier extends _$SessionNotifier {
             .closeSession(sessionId: session.id);
       }
       await Hive.box<String>(localSessionsBox).delete(session.id);
-      await ref.read(localPositionProvider(session.id).notifier).clear();
       log('session closed: ${session.id}');
-    } catch (e) {
-      log('session close failed: $e');
+    } catch (e, st) {
+      LogService.log(
+        'session close failed',
+        originalError: e,
+        source: 'SessionNotifier',
+        level: .error,
+        stackTrace: st,
+      );
     } finally {
       state = null;
     }

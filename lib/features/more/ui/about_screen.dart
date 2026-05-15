@@ -84,14 +84,27 @@ class AboutScreen extends ConsumerWidget {
             child: Container(
               alignment: .bottomCenter,
               padding: const .all(24),
-              child: deviceInfo != null
-                  ? SelectableText(
+              child: Column(
+                mainAxisSize: .min,
+                children: [
+                  if (deviceInfo != null)
+                    SelectableText(
                       deviceInfo,
                       style: textTheme.bodySmall?.copyWith(
                         color: scheme.onSurfaceVariant,
                       ),
-                    )
-                  : const SizedBox.shrink(),
+                    ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisSize: .min,
+                    children: [
+                      const Text('Built with '),
+                      Icon(Icons.favorite, size: 16, color: scheme.error),
+                      const Text(' in Flutter'),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],

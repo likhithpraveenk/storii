@@ -67,6 +67,12 @@ A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf)
 | **Routing**     | GoRouter |
 | **Code Gen**    | Freezed, json_serializable, riverpod_generator, build_runner |
 
+## Acknowledgments
+
+- **[Audiobookshelf](https://github.com/advplyr/audiobookshelf)**: The open-source, self-hosted audiobook and podcast server this app is built for 
+- **[Finamp](https://github.com/unicornsonlsd/finamp)**: Inspiration for settings architecture
+- **[yaabsa](https://github.com/Vito0912/yaabsa)**: Bootstrapped the initial app structure
+
 ## Contributing
 
 Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a PR.

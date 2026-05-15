@@ -8,10 +8,17 @@ import 'package:storii/app/providers/settings_provider.dart';
 
 class LogService {
   static late final ProviderContainer _container;
+  static bool _httpLoggingEnabled = false;
 
   static void init(ProviderContainer container) {
     _container = container;
+    final sub = _container.listen(enableHttpLogsProvider, (_, next) {
+      _httpLoggingEnabled = next;
+    });
+    _httpLoggingEnabled = sub.read();
   }
+
+  static bool isHttpLoggingEnabled() => _httpLoggingEnabled;
 
   static void log(
     String message, {

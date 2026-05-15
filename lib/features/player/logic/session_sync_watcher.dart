@@ -1,72 +1,33 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:hive_ce/hive_ce.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/models/playback_event.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/connection_providers.dart';
-import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
-import 'package:storii/features/player/logic/local_position_provider.dart';
+import 'package:storii/features/player/logic/listen_time_accumulator.dart';
 import 'package:storii/features/player/logic/playback_history.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/logic/sessions_cleanup.dart';
+import 'package:storii/features/player/logic/sync_interval_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
-import 'package:storii/storage/hive/boxes.dart';
 
 part 'session_sync_watcher.g.dart';
-
-class ListenTimeAccumulator {
-  DateTime? _playStartedAt;
-  Duration _unsynced = Duration.zero;
-
-  void start() {
-    _playStartedAt ??= DateTime.now();
-  }
-
-  void pause() {
-    if (_playStartedAt == null) return;
-    _unsynced += DateTime.now().difference(_playStartedAt!);
-    _playStartedAt = null;
-  }
-
-  Duration snapshotAndReset({required bool keepRunning}) {
-    final now = DateTime.now();
-    final live = _playStartedAt != null
-        ? now.difference(_playStartedAt!)
-        : Duration.zero;
-
-    final total = _unsynced + live;
-    _unsynced = Duration.zero;
-    _playStartedAt = keepRunning ? now : null;
-    return total;
-  }
-
-  void reset() {
-    _playStartedAt = null;
-    _unsynced = Duration.zero;
-  }
-
-  void rollback(Duration unsynced) => _unsynced = unsynced;
-}
 
 @Riverpod(keepAlive: true)
 void sessionSyncWatcher(Ref ref) {
   final session = ref.watch(sessionProvider);
 
-  ref.listen(socketStatusProvider, (prev, next) {
+  ref.listen(socketStatusProvider, (prev, next) async {
     final prevConnected = prev?.value ?? false;
     final nextConnected = next.value ?? false;
     if (!prevConnected && nextConnected) {
-      // Fire-and-forget: resolve user, then sync
-      ref
+      await ref
           .read(authenticatedUserProvider.future)
           .then((user) {
-            ref
-                .read(sessionsCleanupProvider.notifier)
-                .syncLocalSessions(user, Hive.box<String>(localSessionsBox));
+            ref.read(sessionsCleanupProvider.notifier).syncLocalSessions(user);
           })
           .catchError((e) {
             log('reconnect sync skipped: $e');
@@ -76,7 +37,7 @@ void sessionSyncWatcher(Ref ref) {
 
   if (session == null) return;
 
-  final interval = ref.watch(syncIntervalProvider);
+  final interval = ref.watch(networkAwareSyncIntervalProvider);
   final accumulator = ListenTimeAccumulator();
 
   final history = ref.read(
@@ -90,11 +51,8 @@ void sessionSyncWatcher(Ref ref) {
     required bool keepRunning,
     bool playbackError = false,
   }) async {
-    final position = ref.read(localPositionProvider(session.id));
-    if (position == null) {
-      log('no position to sync');
-      return;
-    }
+    final position = audioHandler.currentPosition;
+
     final event = PlaybackEvent(
       timestamp: DateTime.now(),
       position: position,
@@ -120,12 +78,9 @@ void sessionSyncWatcher(Ref ref) {
   }
 
   Future<void> stop() async {
-    try {
-      await sync(.stop, keepRunning: false);
-      await ref.read(sessionProvider.notifier).close();
-    } finally {
-      accumulator.reset();
-    }
+    await sync(.stop, keepRunning: false);
+    await ref.read(sessionProvider.notifier).close();
+    accumulator.reset();
   }
 
   ref.listen(audioHandlerEventsProvider, (_, next) async {

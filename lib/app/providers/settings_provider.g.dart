@@ -73,7 +73,7 @@ final class UserSettingsNotifierProvider
         argument: null,
         retry: null,
         name: r'userSettingsProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'7fd93d4dc7503e55fcbef6fde91fbfaaea438f83';
+    r'8471fcbdc00a6db5391d0afa5307ef38451b61f6';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();

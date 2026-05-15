@@ -76,43 +76,43 @@ AuthApi authApi(Ref ref, Uri baseUrl) {
   );
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 ServerApi serverApi(Ref ref, UserDomain user) {
   final apiClient = ref.watch(apiClientProvider(user));
   return ServerApi(apiClient);
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 LibraryApi libraryApi(Ref ref, UserDomain user) {
   final apiClient = ref.watch(apiClientProvider(user));
   return LibraryApi(apiClient);
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 ItemApi itemApi(Ref ref, UserDomain user) {
   final apiClient = ref.watch(apiClientProvider(user));
   return ItemApi(apiClient);
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 AuthorApi authorApi(Ref ref, UserDomain user) {
   final apiClient = ref.watch(apiClientProvider(user));
   return AuthorApi(apiClient);
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 MeApi meApi(Ref ref, UserDomain user) {
   final apiClient = ref.watch(apiClientProvider(user));
   return MeApi(apiClient);
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 SessionsApi sessionsApi(Ref ref, UserDomain user) {
   final apiClient = ref.watch(apiClientProvider(user));
   return SessionsApi(apiClient);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
   final apiClient = ref.watch(apiClientProvider(user));
   final token = await apiClient.getAccessToken?.call();

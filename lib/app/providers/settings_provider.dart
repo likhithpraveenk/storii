@@ -58,7 +58,7 @@ class AppSettingsNotifier extends _$AppSettingsNotifier {
   Future<void> reset() => _save(AppSettings(currentUser: state.currentUser));
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 class UserSettingsNotifier extends _$UserSettingsNotifier {
   final _box = Hive.box<String>(userSettingsBox);
 
