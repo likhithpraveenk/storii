@@ -24,7 +24,7 @@ Stream<List<ConnectivityResult>> connectivityStream(Ref ref) {
   return Connectivity().onConnectivityChanged;
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 ConnectionType connectionType(Ref ref) {
   final results = ref.watch(connectivityStreamProvider).value ?? [];
   // log('available connections: $results');

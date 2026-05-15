@@ -175,7 +175,7 @@ final class ServerApiProvider
   }) : super(
          retry: null,
          name: r'serverApiProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -220,7 +220,7 @@ final class ServerApiProvider
   }
 }
 
-String _$serverApiHash() => r'74fc036dcd617bb5c9d388375448dca4fc33aaad';
+String _$serverApiHash() => r'bd8ebcf804558d00e001ce73427354e9464abdb8';
 
 final class ServerApiFamily extends $Family
     with $FunctionalFamilyOverride<ServerApi, UserDomain> {
@@ -230,7 +230,7 @@ final class ServerApiFamily extends $Family
         name: r'serverApiProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
   ServerApiProvider call(UserDomain user) =>
@@ -252,7 +252,7 @@ final class LibraryApiProvider
   }) : super(
          retry: null,
          name: r'libraryApiProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -297,7 +297,7 @@ final class LibraryApiProvider
   }
 }
 
-String _$libraryApiHash() => r'74ac2fa849095d406f54b4afe4b416d57611f767';
+String _$libraryApiHash() => r'4bd9e875da24553a29ce719ca0ad367f93e29fe3';
 
 final class LibraryApiFamily extends $Family
     with $FunctionalFamilyOverride<LibraryApi, UserDomain> {
@@ -307,7 +307,7 @@ final class LibraryApiFamily extends $Family
         name: r'libraryApiProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
   LibraryApiProvider call(UserDomain user) =>
@@ -329,7 +329,7 @@ final class ItemApiProvider
   }) : super(
          retry: null,
          name: r'itemApiProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -374,7 +374,7 @@ final class ItemApiProvider
   }
 }
 
-String _$itemApiHash() => r'd054bf2cab1918995ecd40fbb99a193690583744';
+String _$itemApiHash() => r'5ce8187dd18e11c5eb560b37c4c7dffab21a5129';
 
 final class ItemApiFamily extends $Family
     with $FunctionalFamilyOverride<ItemApi, UserDomain> {
@@ -384,7 +384,7 @@ final class ItemApiFamily extends $Family
         name: r'itemApiProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
   ItemApiProvider call(UserDomain user) =>
@@ -406,7 +406,7 @@ final class AuthorApiProvider
   }) : super(
          retry: null,
          name: r'authorApiProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -451,7 +451,7 @@ final class AuthorApiProvider
   }
 }
 
-String _$authorApiHash() => r'c64c6a14bf160c9571d050aafb4688ce1c95d2d4';
+String _$authorApiHash() => r'8cb243da4bda8e84b804a26c39864ddba42ebb9f';
 
 final class AuthorApiFamily extends $Family
     with $FunctionalFamilyOverride<AuthorApi, UserDomain> {
@@ -461,7 +461,7 @@ final class AuthorApiFamily extends $Family
         name: r'authorApiProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
   AuthorApiProvider call(UserDomain user) =>
@@ -482,7 +482,7 @@ final class MeApiProvider extends $FunctionalProvider<MeApi, MeApi, MeApi>
   }) : super(
          retry: null,
          name: r'meApiProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -527,7 +527,7 @@ final class MeApiProvider extends $FunctionalProvider<MeApi, MeApi, MeApi>
   }
 }
 
-String _$meApiHash() => r'9866bf41ab3d901c65134ea6064e768cc9fb0dfd';
+String _$meApiHash() => r'06902c1b406ac247da1c21001ecd197a8a0c9e0e';
 
 final class MeApiFamily extends $Family
     with $FunctionalFamilyOverride<MeApi, UserDomain> {
@@ -537,7 +537,7 @@ final class MeApiFamily extends $Family
         name: r'meApiProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
   MeApiProvider call(UserDomain user) =>
@@ -559,7 +559,7 @@ final class SessionsApiProvider
   }) : super(
          retry: null,
          name: r'sessionsApiProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -604,7 +604,7 @@ final class SessionsApiProvider
   }
 }
 
-String _$sessionsApiHash() => r'b9ceb2e72ac399fbbdbaccbb59dd296e23621746';
+String _$sessionsApiHash() => r'23a55f363bc614b327aab365693f2586ce1b5384';
 
 final class SessionsApiFamily extends $Family
     with $FunctionalFamilyOverride<SessionsApi, UserDomain> {
@@ -614,7 +614,7 @@ final class SessionsApiFamily extends $Family
         name: r'sessionsApiProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
   SessionsApiProvider call(UserDomain user) =>
@@ -641,7 +641,7 @@ final class SocketApiProvider
   }) : super(
          retry: null,
          name: r'socketApiProvider',
-         isAutoDispose: true,
+         isAutoDispose: false,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -678,7 +678,7 @@ final class SocketApiProvider
   }
 }
 
-String _$socketApiHash() => r'1d812ae111f3fd83e15d41bb150594ae9c6b600c';
+String _$socketApiHash() => r'42d11336d6fd0cb00a175352b0641b4599998018';
 
 final class SocketApiFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<SocketApi>, UserDomain> {
@@ -688,7 +688,7 @@ final class SocketApiFamily extends $Family
         name: r'socketApiProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: true,
+        isAutoDispose: false,
       );
 
   SocketApiProvider call(UserDomain user) =>

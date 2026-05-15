@@ -96,7 +96,7 @@ final class ConnectionTypeProvider
         argument: null,
         retry: null,
         name: r'connectionTypeProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -123,4 +123,4 @@ final class ConnectionTypeProvider
   }
 }
 
-String _$connectionTypeHash() => r'ac4f22daf36ed3faf6afdf9ab5031fabf818733a';
+String _$connectionTypeHash() => r'9ac7a3dcd4a644f0942d8b4ebecc849b48994d8a';
