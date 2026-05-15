@@ -13,7 +13,7 @@ enum AudioHandlerEvent { play, pause, seek, stop, complete, buffering, error }
 
 class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final _player = AudioPlayer();
-  PositionResolver _resolver = PositionResolver.empty;
+  PositionResolver resolver = PositionResolver.empty;
 
   final _eventController = StreamController<AudioHandlerEvent>.broadcast();
 
@@ -39,31 +39,45 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     await session.configure(const AudioSessionConfiguration.speech());
   }
 
+  bool _lastPlaying = false;
+  int _lastChapterIndex = -1;
+  ProcessingState _lastProcessingState = .idle;
+
   void _broadcastState(PlaybackEvent event) {
     final playing = _player.playing;
     final trackIndex = event.currentIndex ?? 0;
+    final processingState = event.processingState;
 
-    final resolved = _resolver.resolveChapter(trackIndex, event.updatePosition);
-    final resolvedBuffered = _resolver.resolveChapter(
+    final resolved = resolver.resolveChapter(trackIndex, event.updatePosition);
+    final chapterIndex = resolved?.chapterIndex ?? trackIndex;
+    final chapterPosition = resolved?.chapterPosition ?? event.updatePosition;
+
+    final playingChanged = playing != _lastPlaying;
+    final chapterChanged = chapterIndex != _lastChapterIndex;
+    final processingChanged = processingState != _lastProcessingState;
+
+    if (chapterChanged) {
+      mediaItem.add(queue.value.elementAtOrNull(chapterIndex));
+      _lastChapterIndex = chapterIndex;
+    }
+
+    if (!playingChanged && !chapterChanged && !processingChanged) {
+      return;
+    }
+
+    _lastPlaying = playing;
+    _lastProcessingState = processingState;
+
+    final resolvedBuffered = resolver.resolveChapter(
       trackIndex,
       event.bufferedPosition,
     );
-    final chapterIndex = resolved?.chapterIndex ?? trackIndex;
-    final chapterPosition = resolved?.chapterPosition ?? event.updatePosition;
     final chapterBuffered =
         resolvedBuffered?.chapterPosition ?? event.bufferedPosition;
 
-    mediaItem.add(queue.value.elementAtOrNull(chapterIndex));
-
     playbackState.add(
       playbackState.value.copyWith(
-        controls: [
-          .rewind,
-          playing ? .pause : .play,
-          .fastForward,
-          .skipToNext,
-          .skipToPrevious,
-        ],
+        controls: [.rewind, playing ? .pause : .play, .fastForward],
         systemActions: const {
           .seek,
           .seekForward,
@@ -71,11 +85,9 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
           .playPause,
           .rewind,
           .fastForward,
-          .skipToNext,
-          .skipToPrevious,
         },
         androidCompactActionIndices: const [0, 1, 2],
-        processingState: switch (event.processingState) {
+        processingState: switch (processingState) {
           .idle => .idle,
           .loading => .loading,
           .buffering => .buffering,
@@ -109,23 +121,27 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   Stream<AudioHandlerEvent> get events => _eventController.stream;
 
+  // position for sync operations
+  Duration get currentPosition =>
+      resolver.globalPositionFromTrack(_player.currentIndex, _player.position);
+
   Stream<Duration> get positionStream => Rx.combineLatest2(
     _player.currentIndexStream.startWith(_player.currentIndex ?? 0),
     _player.positionStream,
-    (index, position) => _resolver.globalPositionFromTrack(index, position),
+    (index, position) => resolver.globalPositionFromTrack(index, position),
   );
 
   Stream<Duration> get chapterPositionStream => Rx.combineLatest2(
     _player.currentIndexStream.startWith(_player.currentIndex ?? 0),
     _player.positionStream,
-    (index, position) => _resolver.chapterPositionFromTrack(index, position),
+    (index, position) => resolver.chapterPositionFromTrack(index, position),
   );
 
-  Stream<Chapter?> get currentChapterStream => playbackState.map(
-    (state) => state.queueIndex == null
-        ? null
-        : _resolver.chapterAt(state.queueIndex!),
-  );
+  Stream<Chapter?> get currentChapterStream => Rx.combineLatest2(
+    _player.currentIndexStream.startWith(_player.currentIndex ?? 0),
+    _player.positionStream,
+    (index, position) => resolver.chapterFromTrack(index, position),
+  ).distinct();
 
   @override
   Future<void> setSpeed(double speed) async {
@@ -139,8 +155,8 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }) async {
     final trackItems = sources.map((s) => s.tag as MediaItem).toList();
 
-    _resolver = PositionResolver.from(trackItems);
-    final chapterItems = _resolver.chapters
+    resolver = PositionResolver.from(trackItems);
+    final chapterItems = resolver.chapters
         .map((c) => c.toMediaItem(trackItems.first))
         .toList();
 
@@ -200,7 +216,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     if (queue.value.isEmpty) return;
 
     final chapterIndex = playbackState.value.queueIndex ?? 0;
-    final target = _resolver.resolveSeek(chapterIndex, position);
+    final target = resolver.resolveSeek(chapterIndex, position);
 
     if (target != null) {
       await _player.seek(target.trackPosition, index: target.trackIndex);
@@ -232,7 +248,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   @override
   Future<void> skipToQueueItem(int index) async {
-    final target = _resolver.resolveSeek(index, Duration.zero);
+    final target = resolver.resolveSeek(index, Duration.zero);
     if (target != null) {
       await _player.seek(target.trackPosition, index: target.trackIndex);
       _eventController.add(.seek);
@@ -245,7 +261,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     await _player.stop();
     queue.add([]);
     mediaItem.add(null);
-    _resolver = PositionResolver.empty;
+    resolver = PositionResolver.empty;
     await super.stop();
   }
 

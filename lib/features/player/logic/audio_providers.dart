@@ -8,6 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/chapter.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/is_background_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
@@ -52,16 +53,22 @@ bool isPlaying(Ref ref) {
 
 @riverpod
 Stream<Duration> globalPosition(Ref ref) {
+  final isBackground = ref.watch(isBackgroundProvider);
+  if (isBackground) return const Stream.empty();
   return audioHandler.positionStream;
 }
 
 @riverpod
 Stream<Duration> chapterPosition(Ref ref) {
+  final isBackground = ref.watch(isBackgroundProvider);
+  if (isBackground) return const Stream.empty();
   return audioHandler.chapterPositionStream;
 }
 
 @riverpod
 Stream<Chapter?> currentChapter(Ref ref) {
+  final isBackground = ref.watch(isBackgroundProvider);
+  if (isBackground) return const Stream.empty();
   return audioHandler.currentChapterStream;
 }
 

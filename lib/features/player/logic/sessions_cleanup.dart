@@ -8,27 +8,27 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
-import 'package:storii/features/player/logic/local_position_provider.dart';
 import 'package:storii/storage/hive/boxes.dart';
 
 part 'sessions_cleanup.g.dart';
 
 @Riverpod(keepAlive: true)
 class SessionsCleanup extends _$SessionsCleanup {
+  Box<String> get box => Hive.box<String>(localSessionsBox);
+
   @override
   void build() {}
 
   Future<void> cleanup() async {
-    final box = Hive.box<String>(localSessionsBox);
     final ids = box.keys.cast<String>().toList();
     if (ids.isEmpty) return;
 
     final user = await ref.read(authenticatedUserProvider.future);
-    await syncLocalSessions(user, box);
+    await syncLocalSessions(user);
     LogService.log('session cleanup complete');
   }
 
-  Future<void> syncLocalSessions(UserDomain user, Box<String> box) async {
+  Future<void> syncLocalSessions(UserDomain user) async {
     final sessionsApi = ref.read(sessionsApiProvider(user));
     final ids = box.keys.cast<String>().toList();
 
@@ -39,7 +39,6 @@ class SessionsCleanup extends _$SessionsCleanup {
         final session = PlaybackSession.fromJson(jsonDecode(sessionJson));
         if (session.userId != user.id) {
           await box.delete(id);
-          await ref.read(localPositionProvider(id).notifier).clear();
           LogService.log('local session from another user removed');
           continue;
         }
@@ -48,7 +47,7 @@ class SessionsCleanup extends _$SessionsCleanup {
           if (session.playMethod == .local) {
             await sessionsApi.syncLocal(localSession: session);
           } else {
-            await sessionsApi.closeSession(
+            await sessionsApi.syncSession(
               sessionId: session.id,
               params: SyncSessionRequestParams(
                 currentTime: session.currentTime,
@@ -65,7 +64,6 @@ class SessionsCleanup extends _$SessionsCleanup {
         }
 
         await box.delete(id);
-        await ref.read(localPositionProvider(id).notifier).clear();
         LogService.log('synced local session $id');
       } catch (e) {
         LogService.log(

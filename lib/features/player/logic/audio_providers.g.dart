@@ -209,7 +209,7 @@ final class GlobalPositionProvider
   }
 }
 
-String _$globalPositionHash() => r'd6f6086196f78b66be0d2c4dc0b105b7e2cb29f1';
+String _$globalPositionHash() => r'7a9801f0e293984810c87787cb71f022ccd2fa48';
 
 @ProviderFor(chapterPosition)
 final chapterPositionProvider = ChapterPositionProvider._();
@@ -243,7 +243,7 @@ final class ChapterPositionProvider
   }
 }
 
-String _$chapterPositionHash() => r'572c2bf41d91cc4a77c773755ffde9f1e2d4aded';
+String _$chapterPositionHash() => r'6241bcd99fd67f6aeca75fdf9e3bab269e3c36b0';
 
 @ProviderFor(currentChapter)
 final currentChapterProvider = CurrentChapterProvider._();
@@ -277,7 +277,7 @@ final class CurrentChapterProvider
   }
 }
 
-String _$currentChapterHash() => r'5f29b93de6cf1b2cda03d22d79909fc58a910d43';
+String _$currentChapterHash() => r'd5d37a74c6e89753ee6d43f692d414f070887c04';
 
 @ProviderFor(totalDuration)
 final totalDurationProvider = TotalDurationProvider._();

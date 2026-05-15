@@ -49,4 +49,4 @@ final class SessionSyncWatcherProvider
 }
 
 String _$sessionSyncWatcherHash() =>
-    r'8864e8c3964b26d6a1f422f8ffdc2b7e48104a89';
+    r'a0dfd5cb45109dfa76bba9a6c82f49f3587b66e2';
