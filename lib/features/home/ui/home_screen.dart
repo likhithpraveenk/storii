@@ -4,14 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/author/ui/author_card.dart';
-import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
-import 'package:storii/features/search/ui/search_button.dart';
 import 'package:storii/features/series/ui/series_card.dart';
+import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
-import 'package:storii/shared/widgets/library_switcher.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -23,12 +21,7 @@ class HomeScreen extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        title: const LibrarySwitcher(),
-        actions: const [SearchButton(), ActiveDownloadsButton()],
-      ),
+      appBar: const CommonAppBar(),
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(rawShelvesProvider);
