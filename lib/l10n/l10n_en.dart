@@ -661,6 +661,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get downloaded => 'Downloaded';
 
   @override
+  String get connectionStatus => 'Connection Status';
+
+  @override
   String get connectionChecking => 'Checking connection...';
 
   @override

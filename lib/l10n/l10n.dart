@@ -1318,6 +1318,12 @@ abstract class AppLocalizations {
   /// **'Downloaded'**
   String get downloaded;
 
+  /// No description provided for @connectionStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Status'**
+  String get connectionStatus;
+
   /// No description provided for @connectionChecking.
   ///
   /// In en, this message translates to:

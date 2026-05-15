@@ -279,6 +279,7 @@
   "transcode": "Transcode",
   "local": "Local",
   "downloaded": "Downloaded",
+  "connectionStatus": "Connection Status",
   "connectionChecking": "Checking connection...",
   "connectionPleaseWait": "Please wait",
   "connectionServerConnected": "Connected to server",

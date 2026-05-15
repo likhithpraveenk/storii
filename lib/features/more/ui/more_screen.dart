@@ -7,7 +7,6 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/user_session_controller.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
-import 'package:storii/features/more/ui/connection_info_tile.dart';
 import 'package:storii/features/more/ui/logout_tile.dart';
 import 'package:storii/shared/widgets/logo_header.dart';
 
@@ -43,8 +42,6 @@ class MoreScreen extends ConsumerWidget {
                 ),
               ],
             ),
-            const Divider(),
-            const ConnectionInfoTile(),
             if (remainingTargets.isNotEmpty) ...[
               const Divider(),
               ...remainingTargets.map((target) {

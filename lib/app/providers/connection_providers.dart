@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 
@@ -17,7 +18,21 @@ Stream<bool> socketStatus(Ref ref) async* {
   yield* socketApi.isConnected;
 }
 
-enum ConnectionType { none, wifi, mobile, ethernet }
+enum ConnectionType {
+  none,
+  wifi,
+  mobile,
+  ethernet;
+
+  String get label {
+    return switch (this) {
+      .none => l10n.connectionTypeNone,
+      .mobile => l10n.connectionTypeMobile,
+      .wifi => l10n.connectionTypeWifi,
+      .ethernet => l10n.connectionTypeEthernet,
+    };
+  }
+}
 
 @Riverpod(keepAlive: true)
 Stream<List<ConnectivityResult>> connectivityStream(Ref ref) {
