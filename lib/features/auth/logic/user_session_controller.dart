@@ -14,7 +14,7 @@ part 'user_session_controller.g.dart';
 
 enum UsesSessionState { idle, loading, success }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class UserSessionController extends _$UserSessionController {
   @override
   UsesSessionState build() => .idle;

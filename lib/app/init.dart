@@ -5,6 +5,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
@@ -32,7 +33,18 @@ Future<void> setupLicenses() async {
 }
 
 Future<ProviderContainer> setupProviders() async {
-  final container = ProviderContainer(overrides: ([]));
+  final observers = <ProviderObserver>[];
+  final overrides = <Override>[];
+
+  if (kDebugMode) {
+    //! uncomment for riverpod logs
+    // observers.add(const ProviderLogger());
+  }
+
+  final container = ProviderContainer(
+    observers: observers,
+    overrides: overrides,
+  );
 
   LogService.init(container);
   audioHandler = await setupAudioService(container);

@@ -53,7 +53,10 @@ class ShellScaffold extends ConsumerWidget {
   }
 }
 
-final lastNavIndexProvider = StateProvider<int>((ref) => 0);
+final lastNavIndexProvider = StateProvider<int>(
+  (ref) => 0,
+  name: 'lastNavIndexProvider',
+);
 
 class _ShellBottomBar extends ConsumerWidget {
   const _ShellBottomBar({required this.target, required this.navTargets});

@@ -61,7 +61,7 @@ final class ConnectivityStreamProvider
         argument: null,
         retry: null,
         name: r'connectivityStreamProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -82,7 +82,7 @@ final class ConnectivityStreamProvider
 }
 
 String _$connectivityStreamHash() =>
-    r'9f60aae6c128e0af3ad3f37236c4f05ce64c4a99';
+    r'dbd2c4ce5970f1f97dad2730821bb5ca0b99c327';
 
 @ProviderFor(connectionType)
 final connectionTypeProvider = ConnectionTypeProvider._();

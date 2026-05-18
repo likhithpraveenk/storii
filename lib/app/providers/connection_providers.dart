@@ -34,7 +34,7 @@ enum ConnectionType {
   }
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 Stream<List<ConnectivityResult>> connectivityStream(Ref ref) {
   return Connectivity().onConnectivityChanged;
 }
