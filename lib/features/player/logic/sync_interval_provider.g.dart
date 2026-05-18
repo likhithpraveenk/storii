@@ -49,4 +49,4 @@ final class NetworkAwareSyncIntervalProvider
 }
 
 String _$networkAwareSyncIntervalHash() =>
-    r'1611755ab10f4ecbd17c42bd88478345d9ccda7b';
+    r'35e01bc8bedb05161cdc61c420b1136dd7dd3dad';

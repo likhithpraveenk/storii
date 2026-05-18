@@ -142,6 +142,9 @@ extension AppSettingsSetters on AppSettingsNotifier {
 
   Future<void> setSyncInterval(Duration value) =>
       _save(state.copyWith(syncInterval: value));
+
+  Future<void> setSyncIntervalMetered(Duration value) =>
+      _save(state.copyWith(syncIntervalMetered: value));
 }
 
 final themeModeProvider = Provider<ThemeMode>(
@@ -182,6 +185,11 @@ final enableHttpLogsProvider = Provider<bool>(
 final syncIntervalProvider = Provider<Duration>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.syncInterval)),
   name: 'syncIntervalProvider',
+);
+
+final syncIntervalMeteredProvider = Provider<Duration>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.syncIntervalMetered)),
+  name: 'syncIntervalMeteredProvider',
 );
 
 // **************************************************************************

@@ -23,6 +23,8 @@ sealed class AppSettings with _$AppSettings {
     @Default(false) bool enableHttpLogs,
 
     @Default(Duration(seconds: 20)) Duration syncInterval,
+
+    @Default(Duration(minutes: 1)) Duration syncIntervalMetered,
   }) = _AppSettings;
 
   factory AppSettings.fromJson(Map<String, dynamic> json) =>
