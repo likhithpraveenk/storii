@@ -23,3 +23,19 @@ class MediaProgressMap extends _$MediaProgressMap {
     return map;
   }
 }
+
+@riverpod
+Future<int> totalFinishedBooks(Ref ref) async {
+  final progressMap = await ref.watch(mediaProgressMapProvider.future);
+  return progressMap.values
+      .where((p) => p.isFinished == true && p.episodeId == null)
+      .length;
+}
+
+@riverpod
+Future<int> totalFinishedEpisodes(Ref ref) async {
+  final progressMap = await ref.watch(mediaProgressMapProvider.future);
+  return progressMap.values
+      .where((p) => p.isFinished == true && p.episodeId != null)
+      .length;
+}

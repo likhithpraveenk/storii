@@ -36,7 +36,9 @@
   "loading": "Loading",
   "active": "Active",
   "noSession": "No session",
+  "recentSessions": "Recent Sessions",
   "noAuthor": "No Author",
+  "noArtist": "No Artist",
   "noTitle": "No Title",
   "noImage": "No Image",
   "errorImage": "Error loading image",
@@ -92,7 +94,7 @@
   "authors": "Authors",
   "more": "More",
   "books": "Books",
-  "profile": "Profile",
+  "stats": "Stats",
   "viewAll": "View All",
   "metadata": "Metadata",
   "title": "Title",
@@ -315,5 +317,21 @@
   "foundBugQ": "Found a bug?",
   "foundBugQSubtitle": "Open a GitHub issue for any bug you encountered",
   "avoidMobileData": "Avoid mobile data",
-  "avoidMobileDataSubtitle": "Downloads will pause on mobile networks"
+  "avoidMobileDataSubtitle": "Downloads will pause on mobile networks",
+  "totalListeningTime": "Total Listening Time",
+  "currentStreak": "Current streak",
+  "longestStreak": "Longest streak",
+  "thisMonth": "This month",
+  "thisYear": "This year",
+  "days": "days",
+  "daysAgo": "{days} days ago",
+  "@daysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "booksFinished": "Books finished",
+  "episodesFinished": "Episodes finished"
 }

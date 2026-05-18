@@ -79,7 +79,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noSession => 'No session';
 
   @override
+  String get recentSessions => 'Recent Sessions';
+
+  @override
   String get noAuthor => 'No Author';
+
+  @override
+  String get noArtist => 'No Artist';
 
   @override
   String get noTitle => 'No Title';
@@ -248,7 +254,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get books => 'Books';
 
   @override
-  String get profile => 'Profile';
+  String get stats => 'Stats';
 
   @override
   String get viewAll => 'View All';
@@ -734,4 +740,33 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get avoidMobileDataSubtitle =>
       'Downloads will pause on mobile networks';
+
+  @override
+  String get totalListeningTime => 'Total Listening Time';
+
+  @override
+  String get currentStreak => 'Current streak';
+
+  @override
+  String get longestStreak => 'Longest streak';
+
+  @override
+  String get thisMonth => 'This month';
+
+  @override
+  String get thisYear => 'This year';
+
+  @override
+  String get days => 'days';
+
+  @override
+  String daysAgo(int days) {
+    return '$days days ago';
+  }
+
+  @override
+  String get booksFinished => 'Books finished';
+
+  @override
+  String get episodesFinished => 'Episodes finished';
 }

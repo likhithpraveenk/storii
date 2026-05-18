@@ -15,7 +15,6 @@ import 'package:storii/features/library/ui/library_screen.dart';
 import 'package:storii/features/logs/ui/logs_screen.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
 import 'package:storii/features/more/ui/more_screen.dart';
-import 'package:storii/features/profile/ui/profile_screen.dart';
 import 'package:storii/features/search/ui/search_screen.dart';
 import 'package:storii/features/series/ui/series_detail_screen.dart';
 import 'package:storii/features/series/ui/series_list_screen.dart';
@@ -24,6 +23,7 @@ import 'package:storii/features/settings/ui/downloads/downloads_settings_screen.
 import 'package:storii/features/settings/ui/navigation/config_nav_screen.dart';
 import 'package:storii/features/settings/ui/player_settings/player_settings_screen.dart';
 import 'package:storii/features/settings/ui/settings_screen.dart';
+import 'package:storii/features/stats/ui/stats_screen.dart';
 import 'package:storii/shared/splash_screen.dart';
 import 'package:storii/shared/widgets/shell_scaffold.dart';
 
@@ -49,7 +49,7 @@ enum AppRoute {
   playerSettings('/more/settings/player'),
   navigationSettings('/more/settings/navigation'),
   downloadsSettings('/more/settings/downloads'),
-  profile('/more/profile');
+  stats('/more/stats');
 
   final String path;
   const AppRoute(this.path);
@@ -195,8 +195,8 @@ final routerProvider = Provider<GoRouter>((ref) {
                 ],
               ),
               GoRoute(
-                path: 'profile',
-                builder: (context, state) => const ProfileScreen(),
+                path: 'stats',
+                builder: (context, state) => const StatsScreen(),
               ),
             ],
           ),

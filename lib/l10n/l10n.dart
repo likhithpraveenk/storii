@@ -226,11 +226,23 @@ abstract class AppLocalizations {
   /// **'No session'**
   String get noSession;
 
+  /// No description provided for @recentSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Sessions'**
+  String get recentSessions;
+
   /// No description provided for @noAuthor.
   ///
   /// In en, this message translates to:
   /// **'No Author'**
   String get noAuthor;
+
+  /// No description provided for @noArtist.
+  ///
+  /// In en, this message translates to:
+  /// **'No Artist'**
+  String get noArtist;
 
   /// No description provided for @noTitle.
   ///
@@ -562,11 +574,11 @@ abstract class AppLocalizations {
   /// **'Books'**
   String get books;
 
-  /// No description provided for @profile.
+  /// No description provided for @stats.
   ///
   /// In en, this message translates to:
-  /// **'Profile'**
-  String get profile;
+  /// **'Stats'**
+  String get stats;
 
   /// No description provided for @viewAll.
   ///
@@ -1455,6 +1467,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Downloads will pause on mobile networks'**
   String get avoidMobileDataSubtitle;
+
+  /// No description provided for @totalListeningTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Listening Time'**
+  String get totalListeningTime;
+
+  /// No description provided for @currentStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Current streak'**
+  String get currentStreak;
+
+  /// No description provided for @longestStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'Longest streak'**
+  String get longestStreak;
+
+  /// No description provided for @thisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get thisMonth;
+
+  /// No description provided for @thisYear.
+  ///
+  /// In en, this message translates to:
+  /// **'This year'**
+  String get thisYear;
+
+  /// No description provided for @days.
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get days;
+
+  /// No description provided for @daysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days ago'**
+  String daysAgo(int days);
+
+  /// No description provided for @booksFinished.
+  ///
+  /// In en, this message translates to:
+  /// **'Books finished'**
+  String get booksFinished;
+
+  /// No description provided for @episodesFinished.
+  ///
+  /// In en, this message translates to:
+  /// **'Episodes finished'**
+  String get episodesFinished;
 }
 
 class _AppLocalizationsDelegate
