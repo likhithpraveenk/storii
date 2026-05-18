@@ -107,8 +107,6 @@ class _DateTimeFormatSheetState extends ConsumerState<DateTimeFormatSheet> {
               },
             ),
           ),
-          // TODO: launch url for learn more
-          // https://api.flutter.dev/flutter/package-intl_intl/DateFormat-class.html
           Padding(
             padding: const .fromLTRB(24, 8, 24, 36),
             child: SizedBox(

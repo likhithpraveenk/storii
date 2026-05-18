@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/features/search/logic/search_provider.dart';
-import 'package:storii/features/search/ui/search_button.dart';
 import 'package:storii/features/search/ui/search_results.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
@@ -40,39 +39,36 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         automaticallyImplyLeading: true,
-        title: Hero(
-          tag: searchHeroTag,
-          child: Material(
-            type: .transparency,
-            child: TextField(
-              autofocus: true,
-              controller: _controller,
-              onChanged: (value) {
-                _debounce?.cancel();
+        title: Material(
+          type: .transparency,
+          child: TextField(
+            autofocus: true,
+            controller: _controller,
+            onChanged: (value) {
+              _debounce?.cancel();
 
-                _debounce = Timer(const Duration(milliseconds: 500), () {
-                  setState(() {
-                    _query = value;
-                  });
+              _debounce = Timer(const Duration(milliseconds: 500), () {
+                setState(() {
+                  _query = value;
                 });
-              },
-              decoration: InputDecoration(
-                hint: Text(
-                  l10n.search,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                suffixIcon: _controller.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.close),
-                        onPressed: () {
-                          _controller.clear();
-                          setState(() {
-                            _query = '';
-                          });
-                        },
-                      )
-                    : null,
+              });
+            },
+            decoration: InputDecoration(
+              hint: Text(
+                l10n.search,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
+              suffixIcon: _controller.text.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        _controller.clear();
+                        setState(() {
+                          _query = '';
+                        });
+                      },
+                    )
+                  : null,
             ),
           ),
         ),

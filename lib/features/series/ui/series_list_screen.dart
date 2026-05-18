@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/series/logic/series_list_provider.dart';
 import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/features/series/ui/series_list_card.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
+import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/screen_options.dart';
@@ -37,11 +37,9 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
     final seriesAsync = ref.watch(seriesListProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
+      appBar: CommonAppBar(
         title: Text(l10n.series, style: Theme.of(context).textTheme.titleLarge),
-        actions: const [ScreenOptionsButton(.series), ActiveDownloadsButton()],
+        actions: const [ScreenOptionsButton(.series)],
       ),
       body: RefreshIndicator(
         onRefresh: () async {

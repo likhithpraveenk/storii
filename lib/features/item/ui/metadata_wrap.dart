@@ -1,5 +1,6 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
+import 'package:storii/features/item/ui/more_metadata.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 
@@ -25,16 +26,7 @@ class MetadataWrap extends StatelessWidget {
           _MetaItem(icon: Icons.business, label: item.publisher),
           _MetaItem(icon: Icons.calendar_today, label: item.publishedYear),
           _MetaItem(icon: Icons.language, label: item.language),
-          if (item.narrators.isNotEmpty)
-            _MetaItem(
-              icon: Icons.mic,
-              label:
-                  item.narrators.take(3).join(', ') +
-                  (item.narrators.length > 3
-                      ? ' +${item.narrators.length - 3}'
-                      : ''),
-            ),
-          // TODO: info icon to full metadata in a bottom sheet
+          MoreMetadataButton(item),
         ],
       ),
     );

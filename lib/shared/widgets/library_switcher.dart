@@ -19,7 +19,7 @@ class LibrarySwitcher extends ConsumerWidget {
       data: (details) => TextButton(
         onPressed: () => _showPicker(details.library.id),
         style: TextButton.styleFrom(
-          padding: const .fromLTRB(16, 8, 8, 8),
+          padding: const .all(8),
           shape: RoundedRectangleBorder(borderRadius: .circular(24)),
           textStyle: Theme.of(context).textTheme.titleLarge,
         ),

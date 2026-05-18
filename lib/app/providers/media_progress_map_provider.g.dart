@@ -62,3 +62,71 @@ abstract class _$MediaProgressMap
     element.handleCreate(ref, build);
   }
 }
+
+@ProviderFor(totalFinishedBooks)
+final totalFinishedBooksProvider = TotalFinishedBooksProvider._();
+
+final class TotalFinishedBooksProvider
+    extends $FunctionalProvider<AsyncValue<int>, int, FutureOr<int>>
+    with $FutureModifier<int>, $FutureProvider<int> {
+  TotalFinishedBooksProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'totalFinishedBooksProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$totalFinishedBooksHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<int> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<int> create(Ref ref) {
+    return totalFinishedBooks(ref);
+  }
+}
+
+String _$totalFinishedBooksHash() =>
+    r'b477eec071d2bf4456f3aa1a09775df871d6934c';
+
+@ProviderFor(totalFinishedEpisodes)
+final totalFinishedEpisodesProvider = TotalFinishedEpisodesProvider._();
+
+final class TotalFinishedEpisodesProvider
+    extends $FunctionalProvider<AsyncValue<int>, int, FutureOr<int>>
+    with $FutureModifier<int>, $FutureProvider<int> {
+  TotalFinishedEpisodesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'totalFinishedEpisodesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$totalFinishedEpisodesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<int> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<int> create(Ref ref) {
+    return totalFinishedEpisodes(ref);
+  }
+}
+
+String _$totalFinishedEpisodesHash() =>
+    r'121b41f5c82d4c6245dfa18fddcb4871ddca494f';

@@ -6,10 +6,10 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/logic/authors_list_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
-import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
+import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/screen_options.dart';
@@ -37,14 +37,12 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
     final authorsAsync = ref.watch(authorsListProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
+      appBar: CommonAppBar(
         title: Text(
           l10n.authors,
           style: Theme.of(context).textTheme.titleLarge,
         ),
-        actions: const [ScreenOptionsButton(.authors), ActiveDownloadsButton()],
+        actions: const [ScreenOptionsButton(.authors)],
       ),
       body: RefreshIndicator(
         onRefresh: () async {

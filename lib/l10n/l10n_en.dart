@@ -79,7 +79,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noSession => 'No session';
 
   @override
+  String get recentSessions => 'Recent Sessions';
+
+  @override
   String get noAuthor => 'No Author';
+
+  @override
+  String get noArtist => 'No Artist';
 
   @override
   String get noTitle => 'No Title';
@@ -233,6 +239,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get all => 'All';
 
   @override
+  String get id => 'ID';
+
+  @override
   String get series => 'Series';
 
   @override
@@ -245,10 +254,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get books => 'Books';
 
   @override
-  String get profile => 'Profile';
+  String get stats => 'Stats';
 
   @override
   String get viewAll => 'View All';
+
+  @override
+  String get metadata => 'Metadata';
 
   @override
   String get title => 'Title';
@@ -264,6 +276,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get publishedYear => 'Published Year';
+
+  @override
+  String get publishedDate => 'Published Date';
+
+  @override
+  String get releaseDate => 'Release Date';
 
   @override
   String get size => 'Size';
@@ -321,6 +339,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hasNoSupplementary => 'Has no supplementary ebook';
+
+  @override
+  String get itunesId => 'iTunes ID';
+
+  @override
+  String get itunesArtistId => 'iTunes Artist ID';
+
+  @override
+  String get itunesPageUrl => 'iTunes Page Url';
 
   @override
   String get collapseSeries => 'Collapse Series';
@@ -396,6 +423,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rssFeedOpen => 'RSS Feed Open';
+
+  @override
+  String get moreInfo => 'More Info';
 
   @override
   String get explicit => 'Explicit';
@@ -661,6 +691,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get downloaded => 'Downloaded';
 
   @override
+  String get connectionStatus => 'Connection Status';
+
+  @override
   String get connectionChecking => 'Checking connection...';
 
   @override
@@ -707,4 +740,33 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get avoidMobileDataSubtitle =>
       'Downloads will pause on mobile networks';
+
+  @override
+  String get totalListeningTime => 'Total Listening Time';
+
+  @override
+  String get currentStreak => 'Current streak';
+
+  @override
+  String get longestStreak => 'Longest streak';
+
+  @override
+  String get thisMonth => 'This month';
+
+  @override
+  String get thisYear => 'This year';
+
+  @override
+  String get days => 'days';
+
+  @override
+  String daysAgo(int days) {
+    return '$days days ago';
+  }
+
+  @override
+  String get booksFinished => 'Books finished';
+
+  @override
+  String get episodesFinished => 'Episodes finished';
 }
