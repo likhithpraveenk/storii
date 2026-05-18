@@ -37,7 +37,8 @@ extension AppSettingsSetters on AppSettingsNotifier {
 ''');
       providers.writeln('''
 final $providerName = Provider<$type>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.$name))
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.$name)),
+  name: '$providerName',
 );
 ''');
     }
@@ -85,6 +86,7 @@ final $providerName = Provider<$type>(
       (s) => s?.$name ?? DefaultUserSettings.$name,
     ),
   ),
+  name: '$providerName',
 );
 ''');
     }

@@ -33,11 +33,11 @@ class LogsNotifier extends _$LogsNotifier {
 
 final logFilterProvider = StateProvider<Set<LogLevel>>((ref) {
   return LogLevel.values.toSet();
-});
+}, name: 'logFilterProvider');
 
 final filteredLogsProvider = Provider<List<LogEntry>>((ref) {
   final allLogs = ref.watch(logsProvider);
   final activeFilters = ref.watch(logFilterProvider);
 
   return allLogs.where((entry) => activeFilters.contains(entry.level)).toList();
-});
+}, name: 'filteredLogsProvider');

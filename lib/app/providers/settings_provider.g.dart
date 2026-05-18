@@ -142,38 +142,54 @@ extension AppSettingsSetters on AppSettingsNotifier {
 
   Future<void> setSyncInterval(Duration value) =>
       _save(state.copyWith(syncInterval: value));
+
+  Future<void> setSyncIntervalMetered(Duration value) =>
+      _save(state.copyWith(syncIntervalMetered: value));
 }
 
 final themeModeProvider = Provider<ThemeMode>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.themeMode)),
+  name: 'themeModeProvider',
 );
 
 final useDynamicColorProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.useDynamicColor)),
+  name: 'useDynamicColorProvider',
 );
 
 final usePureBlackProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.usePureBlack)),
+  name: 'usePureBlackProvider',
 );
 
 final currentUserProvider = Provider<UserDomain?>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.currentUser)),
+  name: 'currentUserProvider',
 );
 
 final serverUrlProvider = Provider<Uri?>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.serverUrl)),
+  name: 'serverUrlProvider',
 );
 
 final maxLogsProvider = Provider<int>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.maxLogs)),
+  name: 'maxLogsProvider',
 );
 
 final enableHttpLogsProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.enableHttpLogs)),
+  name: 'enableHttpLogsProvider',
 );
 
 final syncIntervalProvider = Provider<Duration>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.syncInterval)),
+  name: 'syncIntervalProvider',
+);
+
+final syncIntervalMeteredProvider = Provider<Duration>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.syncIntervalMetered)),
+  name: 'syncIntervalMeteredProvider',
 );
 
 // **************************************************************************
@@ -235,6 +251,7 @@ final currentLibraryProvider = Provider<Library?>(
       (s) => s?.currentLibrary ?? DefaultUserSettings.currentLibrary,
     ),
   ),
+  name: 'currentLibraryProvider',
 );
 
 final navTargetsProvider = Provider<List<NavTarget>>(
@@ -243,6 +260,7 @@ final navTargetsProvider = Provider<List<NavTarget>>(
       (s) => s?.navTargets ?? DefaultUserSettings.navTargets,
     ),
   ),
+  name: 'navTargetsProvider',
 );
 
 final libraryDisplayModeProvider = Provider<DisplayMode>(
@@ -251,6 +269,7 @@ final libraryDisplayModeProvider = Provider<DisplayMode>(
       (s) => s?.libraryDisplayMode ?? DefaultUserSettings.libraryDisplayMode,
     ),
   ),
+  name: 'libraryDisplayModeProvider',
 );
 
 final collapseSeriesProvider = Provider<bool>(
@@ -259,6 +278,7 @@ final collapseSeriesProvider = Provider<bool>(
       (s) => s?.collapseSeries ?? DefaultUserSettings.collapseSeries,
     ),
   ),
+  name: 'collapseSeriesProvider',
 );
 
 final seriesDisplayModeProvider = Provider<DisplayMode>(
@@ -267,6 +287,7 @@ final seriesDisplayModeProvider = Provider<DisplayMode>(
       (s) => s?.seriesDisplayMode ?? DefaultUserSettings.seriesDisplayMode,
     ),
   ),
+  name: 'seriesDisplayModeProvider',
 );
 
 final authorDisplayModeProvider = Provider<DisplayMode>(
@@ -275,6 +296,7 @@ final authorDisplayModeProvider = Provider<DisplayMode>(
       (s) => s?.authorDisplayMode ?? DefaultUserSettings.authorDisplayMode,
     ),
   ),
+  name: 'authorDisplayModeProvider',
 );
 
 final startupNavProvider = Provider<NavTarget>(
@@ -283,6 +305,7 @@ final startupNavProvider = Provider<NavTarget>(
       (s) => s?.startupNav ?? DefaultUserSettings.startupNav,
     ),
   ),
+  name: 'startupNavProvider',
 );
 
 final navLabelBehaviorProvider = Provider<NavigationDestinationLabelBehavior>(
@@ -291,6 +314,7 @@ final navLabelBehaviorProvider = Provider<NavigationDestinationLabelBehavior>(
       (s) => s?.navLabelBehavior ?? DefaultUserSettings.navLabelBehavior,
     ),
   ),
+  name: 'navLabelBehaviorProvider',
 );
 
 final dateTimeFormatProvider = Provider<String>(
@@ -299,6 +323,7 @@ final dateTimeFormatProvider = Provider<String>(
       (s) => s?.dateTimeFormat ?? DefaultUserSettings.dateTimeFormat,
     ),
   ),
+  name: 'dateTimeFormatProvider',
 );
 
 final fontFamilyProvider = Provider<String?>(
@@ -307,6 +332,7 @@ final fontFamilyProvider = Provider<String?>(
       (s) => s?.fontFamily ?? DefaultUserSettings.fontFamily,
     ),
   ),
+  name: 'fontFamilyProvider',
 );
 
 final fontScaleProvider = Provider<double>(
@@ -315,6 +341,7 @@ final fontScaleProvider = Provider<double>(
       (s) => s?.fontScale ?? DefaultUserSettings.fontScale,
     ),
   ),
+  name: 'fontScaleProvider',
 );
 
 final skipForwardProvider = Provider<Duration>(
@@ -323,6 +350,7 @@ final skipForwardProvider = Provider<Duration>(
       (s) => s?.skipForward ?? DefaultUserSettings.skipForward,
     ),
   ),
+  name: 'skipForwardProvider',
 );
 
 final skipBackwardProvider = Provider<Duration>(
@@ -331,12 +359,14 @@ final skipBackwardProvider = Provider<Duration>(
       (s) => s?.skipBackward ?? DefaultUserSettings.skipBackward,
     ),
   ),
+  name: 'skipBackwardProvider',
 );
 
 final speedProvider = Provider<double>(
   (ref) => ref.watch(
     userSettingsProvider.select((s) => s?.speed ?? DefaultUserSettings.speed),
   ),
+  name: 'speedProvider',
 );
 
 final historyLimitProvider = Provider<int>(
@@ -345,6 +375,7 @@ final historyLimitProvider = Provider<int>(
       (s) => s?.historyLimit ?? DefaultUserSettings.historyLimit,
     ),
   ),
+  name: 'historyLimitProvider',
 );
 
 final downloadOnUnmeteredOnlyProvider = Provider<bool>(
@@ -355,4 +386,5 @@ final downloadOnUnmeteredOnlyProvider = Provider<bool>(
           DefaultUserSettings.downloadOnUnmeteredOnly,
     ),
   ),
+  name: 'downloadOnUnmeteredOnlyProvider',
 );

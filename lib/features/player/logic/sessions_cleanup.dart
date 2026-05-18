@@ -56,11 +56,12 @@ class SessionsCleanup extends _$SessionsCleanup {
             );
           }
         } catch (e) {
-          LogService.log(
-            'failed to sync/close session $id: $e',
-            level: .warning,
-          );
-          continue;
+          if (e is ApiException && e.type == .notFound) {
+            LogService.log('session not found: $id', level: .warning);
+          } else {
+            LogService.log('failed to sync session $id: $e', level: .warning);
+            continue;
+          }
         }
 
         await box.delete(id);

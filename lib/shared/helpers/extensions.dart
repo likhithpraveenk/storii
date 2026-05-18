@@ -161,3 +161,11 @@ extension PlaybackEventKindX on PlaybackEventKind {
     };
   }
 }
+
+extension DurationX on Duration {
+  Duration clamp(Duration start, Duration end) {
+    if (this < start) return start;
+    if (this > end) return end;
+    return this;
+  }
+}

@@ -216,4 +216,4 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
     ],
   );
-});
+}, name: 'GoRouterProvider');

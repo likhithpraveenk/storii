@@ -1521,6 +1521,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Episodes finished'**
   String get episodesFinished;
+
+  /// No description provided for @volume.
+  ///
+  /// In en, this message translates to:
+  /// **'Volume'**
+  String get volume;
+
+  /// No description provided for @increaseVolume.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase Volume'**
+  String get increaseVolume;
+
+  /// No description provided for @decreaseVolume.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrease Volume'**
+  String get decreaseVolume;
 }
 
 class _AppLocalizationsDelegate

@@ -8,9 +8,7 @@ part 'sync_interval_provider.g.dart';
 Duration networkAwareSyncInterval(Ref ref) {
   final connectionType = ref.watch(connectionTypeProvider);
   final syncInterval = ref.watch(syncIntervalProvider);
-  final syncIntervalMobile = syncInterval.inSeconds > 60
-      ? syncInterval
-      : const Duration(seconds: 60);
+  final syncIntervalMobile = ref.watch(syncIntervalMeteredProvider);
 
   return switch (connectionType) {
     .mobile => syncIntervalMobile,

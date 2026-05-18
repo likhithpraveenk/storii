@@ -769,4 +769,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get episodesFinished => 'Episodes finished';
+
+  @override
+  String get volume => 'Volume';
+
+  @override
+  String get increaseVolume => 'Increase Volume';
+
+  @override
+  String get decreaseVolume => 'Decrease Volume';
 }

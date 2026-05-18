@@ -224,6 +224,20 @@ void playerStateWatcher(Ref ref) {
 }
 
 @riverpod
+Stream<double> volume(Ref ref) => audioHandler.volumeStream;
+
+@Riverpod(keepAlive: true)
+class VolumeControl extends _$VolumeControl {
+  @override
+  double build() => audioHandler.volume;
+
+  Future<void> setVolume(double volume) async {
+    state = volume;
+    await audioHandler.setVolume(volume);
+  }
+}
+
+@riverpod
 void audioSettingsWatcher(Ref ref) {
   ref.listen(speedProvider, (_, next) {
     audioHandler.setSpeed(next);
