@@ -71,6 +71,7 @@ Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
       androidNotificationIcon: 'drawable/ic_notification',
       androidStopForegroundOnPause: true,
       androidNotificationOngoing: true,
+      preloadArtwork: true,
     ),
   );
 }

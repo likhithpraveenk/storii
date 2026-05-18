@@ -33,6 +33,7 @@ class PositionResolver {
   }
 
   int _trackIndexFor(Duration globalPosition) {
+    if (_trackOffsets.isEmpty) return 0;
     for (var i = _trackOffsets.length - 1; i >= 0; i--) {
       if (_trackOffsets[i] <= globalPosition) return i;
     }
@@ -40,6 +41,7 @@ class PositionResolver {
   }
 
   int _chapterIndexFor(Duration globalPosition) {
+    if (_chapters.isEmpty) return 0;
     for (var i = _chapters.length - 1; i >= 0; i--) {
       if (_chapters[i].start <= globalPosition) return i;
     }
@@ -47,7 +49,9 @@ class PositionResolver {
   }
 
   Duration globalPositionFromTrack(int? index, Duration position) {
-    if (index == null || index >= _trackOffsets.length) return Duration.zero;
+    if (index == null || index < 0 || index >= _trackOffsets.length) {
+      return Duration.zero;
+    }
     return _trackOffsets[index] + position;
   }
 
@@ -58,6 +62,15 @@ class PositionResolver {
     final global = globalPositionFromTrack(index, position);
     final chapterIndex = _chapterIndexFor(global);
     return global - _chapters[chapterIndex].start;
+  }
+
+  int chapterIndexFromTrack(int? index, Duration position) {
+    if (index == null || index < 0 || index >= _trackOffsets.length) {
+      return 0;
+    }
+    final global = globalPositionFromTrack(index, position);
+    final chapterIndex = _chapterIndexFor(global);
+    return chapterIndex;
   }
 
   Duration chapterPositionFromGlobal(Duration globalPosition) {
@@ -82,13 +95,15 @@ class PositionResolver {
     return _chapters[index];
   }
 
-  ({int chapterIndex, Duration chapterPosition})? resolveChapter(
-    int trackIndex,
-    Duration trackPosition,
+  ({int chapterIndex, Duration chapterPosition})? resolveChapterFromTrack(
+    int? index,
+    Duration position,
   ) {
-    if (trackIndex < 0 || trackIndex >= _trackOffsets.length) return null;
+    if (index == null || index < 0 || index >= _trackOffsets.length) {
+      return null;
+    }
 
-    final global = globalPositionFromTrack(trackIndex, trackPosition);
+    final global = globalPositionFromTrack(index, position);
     final chapterIndex = _chapterIndexFor(global);
 
     return (
@@ -102,6 +117,8 @@ class PositionResolver {
     Duration chapterPosition,
   ) {
     if (chapterIndex < 0 || chapterIndex >= _chapters.length) return null;
+
+    if (chapterPosition < Duration.zero) return null;
 
     final global = _chapters[chapterIndex].start + chapterPosition;
     final trackIndex = _trackIndexFor(global);
