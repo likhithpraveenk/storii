@@ -51,7 +51,6 @@ A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf)
 
 ## Roadmap
 
-- User stats
 - Additional player enhancements (bookmarks, equalizer)
 - Collections / playlists support
 - Complete podcast playback and episode management
