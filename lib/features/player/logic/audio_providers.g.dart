@@ -415,6 +415,91 @@ final class PlayerStateWatcherProvider
 String _$playerStateWatcherHash() =>
     r'd5330119981f458050209e322dbde7566da17261';
 
+@ProviderFor(volume)
+final volumeProvider = VolumeProvider._();
+
+final class VolumeProvider
+    extends $FunctionalProvider<AsyncValue<double>, double, Stream<double>>
+    with $FutureModifier<double>, $StreamProvider<double> {
+  VolumeProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'volumeProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$volumeHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<double> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<double> create(Ref ref) {
+    return volume(ref);
+  }
+}
+
+String _$volumeHash() => r'54055e2429339375a86ddb671ed28784322d870b';
+
+@ProviderFor(VolumeControl)
+final volumeControlProvider = VolumeControlProvider._();
+
+final class VolumeControlProvider
+    extends $NotifierProvider<VolumeControl, double> {
+  VolumeControlProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'volumeControlProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$volumeControlHash();
+
+  @$internal
+  @override
+  VolumeControl create() => VolumeControl();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(double value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<double>(value),
+    );
+  }
+}
+
+String _$volumeControlHash() => r'bcc679bf1703ec184631f7c99860d35e04f33b74';
+
+abstract class _$VolumeControl extends $Notifier<double> {
+  double build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<double, double>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<double, double>,
+              double,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
+
 @ProviderFor(audioSettingsWatcher)
 final audioSettingsWatcherProvider = AudioSettingsWatcherProvider._();
 

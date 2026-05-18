@@ -10,6 +10,7 @@ import 'package:storii/features/player/ui/play_button.dart';
 import 'package:storii/features/player/ui/seek_button.dart';
 import 'package:storii/features/player/ui/sleep_button.dart';
 import 'package:storii/features/player/ui/speed_button.dart';
+import 'package:storii/features/player/ui/volume_button.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
@@ -92,16 +93,16 @@ class FullPlayer extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: .center,
+              mainAxisAlignment: .spaceEvenly,
               crossAxisAlignment: .start,
               children: [
                 HistoryButton(
                   itemId: session.libraryItemId,
                   episodeId: session.episodeId,
                 ),
-                const SizedBox(width: 16),
                 IconButton(
                   icon: const Icon(Icons.list_rounded),
+                  tooltip: l10n.chapters,
                   onPressed: () => showChapterListSheet(
                     context,
                     chapters: session.chapters,
@@ -109,10 +110,9 @@ class FullPlayer extends ConsumerWidget {
                     itemTitle: session.displayTitle ?? l10n.noTitle,
                   ),
                 ),
-                const SizedBox(width: 16),
                 const SleepButton(),
-                const SizedBox(width: 16),
                 const SpeedButton(),
+                const VolumeButton(),
               ],
             ),
             Text(

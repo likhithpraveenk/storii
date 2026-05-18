@@ -146,6 +146,14 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     await _player.setSpeed(speed);
   }
 
+  double get volume => _player.volume;
+
+  Stream<double> get volumeStream => _player.volumeStream;
+
+  Future<void> setVolume(double volume) async {
+    await _player.setVolume(volume.clamp(0.0, 1.0));
+  }
+
   Future<void> setSources(
     List<UriAudioSource> sources, {
     required int initialIndex,

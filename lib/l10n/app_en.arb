@@ -333,5 +333,8 @@
     }
   },
   "booksFinished": "Books finished",
-  "episodesFinished": "Episodes finished"
+  "episodesFinished": "Episodes finished",
+  "volume": "Volume",
+  "increaseVolume": "Increase Volume",
+  "decreaseVolume": "Decrease Volume"
 }

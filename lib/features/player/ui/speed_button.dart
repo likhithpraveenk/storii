@@ -30,6 +30,7 @@ class SpeedButton extends ConsumerWidget {
           ),
         );
       },
+      tooltip: l10n.playbackSpeed,
       icon: Column(
         mainAxisSize: .min,
         children: [

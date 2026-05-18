@@ -22,6 +22,7 @@ class SleepButton extends ConsumerWidget {
           body: const SleepTimerSheet(),
         );
       },
+      tooltip: l10n.sleepTimer,
       icon: sleep == null
           ? const Icon(Icons.bedtime_outlined)
           : Text(
