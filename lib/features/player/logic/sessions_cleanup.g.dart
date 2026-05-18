@@ -41,7 +41,7 @@ final class SessionsCleanupProvider
   }
 }
 
-String _$sessionsCleanupHash() => r'd58e2dd3bcd99c86a0ba0da7be2f10c8b99ac658';
+String _$sessionsCleanupHash() => r'56a8346a9922ad3d9e119db7813b57aaf44902e0';
 
 abstract class _$SessionsCleanup extends $Notifier<void> {
   void build();
