@@ -67,6 +67,11 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   void _updatePlaybackState() {
+    if (_player.processingState == .idle ||
+        _player.processingState == .loading) {
+      return;
+    }
+
     final resolved = resolver.resolveChapterFromTrack(
       _player.currentIndex,
       _player.position,
@@ -213,17 +218,14 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   Future<void> rewind() => _seekRelative(-getSkipBackward());
 
   Future<void> _seekRelative(Duration offset) async {
-    await seek(currentPosition + offset);
+    await seek(playbackState.value.position + offset);
   }
-
-  int? get currentChapterIndex =>
-      resolver.chapterIndexFromTrack(_player.currentIndex, _player.position);
 
   @override
   Future<void> seek(Duration position) async {
     if (queue.value.isEmpty) return;
 
-    final chapterIndex = currentChapterIndex ?? 0;
+    final chapterIndex = playbackState.value.queueIndex ?? 0;
     final chapter = resolver.chapterAt(chapterIndex);
 
     final clampedPosition = chapter != null
@@ -245,13 +247,13 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   @override
   Future<void> skipToNext() async {
-    final next = (currentChapterIndex ?? 0) + 1;
+    final next = (playbackState.value.queueIndex ?? 0) + 1;
     if (next < queue.value.length) await skipToQueueItem(next);
   }
 
   @override
   Future<void> skipToPrevious() async {
-    final chapterIndex = currentChapterIndex ?? 0;
+    final chapterIndex = playbackState.value.queueIndex ?? 0;
     final chapterPosition = resolver.chapterPositionFromGlobal(currentPosition);
     if (chapterPosition.inSeconds > 5 || chapterIndex == 0) {
       await skipToQueueItem(0);
