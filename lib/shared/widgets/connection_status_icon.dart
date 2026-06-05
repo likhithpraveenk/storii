@@ -27,10 +27,12 @@ class ConnectionStatusIcon extends ConsumerWidget {
       onPressed: () {
         final scaffoldContext = shellScaffoldKey.currentContext;
         if (scaffoldContext == null) return;
-        AppBottomSheet.show(
-          scaffoldContext,
-          title: l10n.connectionStatus,
-          body: const _ConnectionDetailsSheet(),
+        showModalBottomSheet(
+          context: scaffoldContext,
+          shape: const RoundedRectangleBorder(
+            borderRadius: .vertical(top: .circular(24)),
+          ),
+          builder: (context) => const _ConnectionDetailsSheet(),
         );
       },
     );
@@ -71,10 +73,10 @@ class _ConnectionDetailsSheet extends ConsumerWidget {
         ? scheme.error
         : scheme.primary;
 
-    return Padding(
-      padding: const .fromLTRB(24, 0, 24, 32),
+    return Container(
+      padding: const .fromLTRB(24, 32, 24, 48),
+      decoration: bottomSheetDecoration(context),
       child: Row(
-        mainAxisSize: .min,
         mainAxisAlignment: .spaceEvenly,
         children: [
           Icon(
@@ -83,6 +85,7 @@ class _ConnectionDetailsSheet extends ConsumerWidget {
             size: 48,
           ),
           Column(
+            mainAxisSize: .min,
             children: [
               Text(
                 titleText,
