@@ -92,14 +92,17 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
                 return DownloadTile(item: item);
               },
             ),
-          ListView.builder(
-            padding: const .only(bottom: 16, top: 4),
-            itemCount: completedDownloads.length,
-            itemBuilder: (context, index) {
-              final item = completedDownloads.elementAt(index);
-              return CompletedItemTile(item);
-            },
-          ),
+          if (completedDownloads.isEmpty)
+            const EmptyState()
+          else
+            ListView.builder(
+              padding: const .only(bottom: 16, top: 4),
+              itemCount: completedDownloads.length,
+              itemBuilder: (context, index) {
+                final item = completedDownloads.elementAt(index);
+                return CompletedItemTile(item);
+              },
+            ),
         ],
       ),
     );

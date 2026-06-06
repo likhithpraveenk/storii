@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/sessions_cleanup.dart';
@@ -56,6 +57,10 @@ Future<ProviderContainer> setupProviders() async {
   }
 
   return container;
+}
+
+Future<void> setupDownloadServices() async {
+  await DownloadsNotificationService.instance.init();
 }
 
 Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
