@@ -7,6 +7,7 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/features/downloads/logic/download_engine.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
+import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
@@ -68,12 +69,30 @@ class DownloadQueue extends _$DownloadQueue {
       final downloadItem = current[libraryItemId];
       if (downloadItem == null) return;
 
+      await DownloadsNotificationService.instance.requestPermission();
+      await DownloadsNotificationService.instance.startForeground(
+        title: downloadItem.title,
+      );
+
       final user = await ref.read(authenticatedUserProvider.future);
       await for (final updated
           in ref
               .read(downloadEngineProvider.notifier)
               .downloadItem(item: downloadItem, user: user)) {
         await _downloads.save(updated);
+
+        await DownloadsNotificationService.instance.showProgressNotification(
+          title: updated.title,
+          progress: (updated.progress * 100).toInt(),
+          isComplete: updated.isComplete,
+          isFailed: updated.isFailed,
+          isPaused: updated.status == .paused,
+          totalBytes: updated.totalBytes,
+        );
+
+        if (updated.isComplete || updated.isFailed) {
+          await DownloadsNotificationService.instance.stopForeground();
+        }
       }
     } catch (e, st) {
       LogService.log(
@@ -83,18 +102,39 @@ class DownloadQueue extends _$DownloadQueue {
         stackTrace: st,
       );
       await _setStatus(libraryItemId, .failed);
+
+      await DownloadsNotificationService.instance.stopForeground();
+      await DownloadsNotificationService.instance.showProgressNotification(
+        title: libraryItemId,
+        progress: 0,
+        isComplete: false,
+        isFailed: true,
+        isPaused: false,
+      );
     }
   }
 
   Future<void> pause(String id) async {
     ref.read(downloadEngineProvider.notifier).cancel(id);
+    _processing = false;
     state = state.where((i) => i != id).toList();
     final item = ref.read(downloadsProvider).value?[id];
     if (item != null) await _downloads.save(item.copyWith(status: .paused));
+
+    await DownloadsNotificationService.instance.stopForeground();
+    await DownloadsNotificationService.instance.showProgressNotification(
+      title: item?.title ?? id,
+      progress: ((item?.progress ?? 0) * 100).toInt(),
+      isComplete: false,
+      isFailed: false,
+      isPaused: true,
+    );
   }
 
   Future<void> delete(String id) async {
     ref.read(downloadEngineProvider.notifier).cancel(id);
+    _processing = false;
+    await DownloadsNotificationService.instance.stopForeground();
     state = state.where((i) => i != id).toList();
     final item = ref.read(downloadsProvider).value?[id];
     if (item != null) {

@@ -19,6 +19,8 @@ void main() async {
 
   final container = await init.setupProviders();
   await init.setupGlobals();
+  await init.setupDownloadServices();
+
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 }
 

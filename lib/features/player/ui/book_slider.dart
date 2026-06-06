@@ -12,21 +12,30 @@ class BookSlider extends ConsumerStatefulWidget {
 
 class _BookSliderState extends ConsumerState<BookSlider> {
   double? _dragValue;
+  double? _latestSeekValue;
 
   @override
   Widget build(BuildContext context) {
     final chapter = ref.watch(currentChapterProvider).value;
     final position = ref.watch(chapterPositionProvider).value;
     final durationMs = (chapter?.duration.inMilliseconds ?? 0).toDouble();
-    final positionMs = (position?.inMilliseconds.toDouble() ?? 0.0).clamp(
+    double positionMs = (position?.inMilliseconds.toDouble() ?? 0.0).clamp(
       0.0,
       durationMs,
     );
 
+    if (_latestSeekValue != null) {
+      if ((positionMs - _latestSeekValue!).abs() < 1000) {
+        _latestSeekValue = null;
+      } else {
+        positionMs = _latestSeekValue!;
+      }
+    }
+
     String format(double ms) => Duration(milliseconds: ms.toInt()).toTime();
 
     return Column(
-      mainAxisSize: .min,
+      mainAxisSize: MainAxisSize.min,
       children: [
         SliderTheme(
           data: SliderTheme.of(
@@ -37,11 +46,11 @@ class _BookSliderState extends ConsumerState<BookSlider> {
             max: durationMs,
             onChanged: (value) => setState(() => _dragValue = value),
             onChangeEnd: (value) async {
+              setState(() {
+                _latestSeekValue = value;
+                _dragValue = null;
+              });
               await audioHandler.seek(Duration(milliseconds: value.toInt()));
-
-              if (mounted) {
-                setState(() => _dragValue = null);
-              }
             },
           ),
         ),
