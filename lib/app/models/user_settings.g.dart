@@ -56,6 +56,9 @@ _UserSettings _$UserSettingsFromJson(
   downloadOnUnmeteredOnly:
       json['downloadOnUnmeteredOnly'] as bool? ??
       DefaultUserSettings.downloadOnUnmeteredOnly,
+  showChapterPositionInHistory:
+      json['showChapterPositionInHistory'] as bool? ??
+      DefaultUserSettings.showChapterPositionInHistory,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -79,6 +82,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'speed': instance.speed,
   'historyLimit': instance.historyLimit,
   'downloadOnUnmeteredOnly': instance.downloadOnUnmeteredOnly,
+  'showChapterPositionInHistory': instance.showChapterPositionInHistory,
 };
 
 const _$NavTargetEnumMap = {

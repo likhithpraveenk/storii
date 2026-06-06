@@ -778,4 +778,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get decreaseVolume => 'Decrease Volume';
+
+  @override
+  String get showChapterPosition => 'Show chapter position';
 }

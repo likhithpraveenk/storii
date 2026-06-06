@@ -109,7 +109,10 @@ class SessionNotifier extends _$SessionNotifier {
             ),
           );
     }
-    log('sync success at ${position.toTime()}');
+    log(
+      '${position.toTime()}: sync success '
+      'listened: ${totalListened.toReadableDuration(showSeconds: true)}',
+    );
   }
 
   Future<void> close() async {

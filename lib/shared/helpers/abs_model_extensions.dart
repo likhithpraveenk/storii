@@ -4,6 +4,7 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/widgets.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/enums.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 
 extension AudiobookSortX on Iterable<LibraryItem> {
   List<LibraryItem> sortedBySequence() {
@@ -249,6 +250,24 @@ extension AudiobookX on LibraryItem {
   Duration get currentOffset => userMediaProgress?.currentTime ?? Duration.zero;
   bool get hideFromContinue =>
       userMediaProgress?.hideFromContinueListening ?? false;
+
+  String historyPosition(Duration position) {
+    if (chapters.isNotEmpty) {
+      final index = chapters.lastIndexWhere((c) => position >= c.start);
+      final chapter = chapters[index < 0 ? 0 : index];
+      final posString = (position - chapter.start).toTime(padHours: true);
+      return '#${chapter.id} $posString';
+    }
+
+    if (tracks.isNotEmpty) {
+      final index = tracks.lastIndexWhere((t) => position >= t.startOffset);
+      final track = tracks[index < 0 ? 0 : index];
+      final posString = (position - track.startOffset).toTime(padHours: true);
+      return '#${index + 1} $posString';
+    }
+
+    return position.toTime(padHours: true);
+  }
 }
 
 extension SeriesX on Series {
