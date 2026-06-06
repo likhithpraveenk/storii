@@ -1539,6 +1539,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Decrease Volume'**
   String get decreaseVolume;
+
+  /// No description provided for @showChapterPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Show chapter position'**
+  String get showChapterPosition;
 }
 
 class _AppLocalizationsDelegate

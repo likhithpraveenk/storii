@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/playback_event.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/playback_history.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
@@ -65,7 +66,7 @@ class HistorySheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final key = mediaItemIdKey(itemId, episodeId);
     final history = ref.watch(playbackHistoryProvider(key));
-    final historyNotifier = ref.watch(playbackHistoryProvider(key).notifier);
+
     final theme = Theme.of(context);
     final session = ref.watch(sessionProvider);
     final isCurrentItem =
@@ -91,20 +92,30 @@ class HistorySheet extends ConsumerWidget {
                   ),
                 ),
               ),
-              if (history.isNotEmpty)
-                Align(
-                  alignment: .centerRight,
-                  child: IconButton(
-                    visualDensity: .compact,
-                    padding: .zero,
-                    onPressed: () async {
-                      await historyNotifier.clearHistory();
-                    },
-                    icon: Icon(Icons.delete, color: theme.colorScheme.error),
-                  ),
-                ),
+              // if (history.isNotEmpty)
+              //   Align(
+              //     alignment: .centerRight,
+              //     child: IconButton(
+              //       visualDensity: .compact,
+              //       padding: .zero,
+              //       onPressed: () async {
+              //         await historyNotifier.clearHistory();
+              //       },
+              //       icon: Icon(Icons.delete, color: theme.colorScheme.error),
+              //     ),
+              //   ),
             ],
           ),
+        ),
+        SwitchListTile(
+          contentPadding: const .fromLTRB(24, 0, 16, 0),
+          title: Text(l10n.showChapterPosition),
+          value: ref.watch(showChapterPositionInHistoryProvider),
+          onChanged: (value) {
+            ref
+                .read(userSettingsProvider.notifier)
+                .setShowChapterPositionInHistory(value);
+          },
         ),
         history.isEmpty
             ? const Expanded(child: EmptyState())
@@ -118,6 +129,7 @@ class HistorySheet extends ConsumerWidget {
                     if (item is String) return _DayHeader(item);
                     final event = item as PlaybackEvent;
                     return _HistoryEventTile(
+                      itemId: itemId,
                       event: event,
                       onTap: () {
                         if (isCurrentItem) {
@@ -165,11 +177,16 @@ class _DayHeader extends StatelessWidget {
   }
 }
 
-class _HistoryEventTile extends StatelessWidget {
-  const _HistoryEventTile({required this.event, required this.onTap});
+class _HistoryEventTile extends ConsumerWidget {
+  const _HistoryEventTile({
+    required this.itemId,
+    required this.event,
+    required this.onTap,
+  });
 
   final PlaybackEvent event;
   final VoidCallback onTap;
+  final String itemId;
 
   IconData get _icon => switch (event.kind) {
     .play => Icons.play_circle_outline,
@@ -193,9 +210,12 @@ class _HistoryEventTile extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final timeStr = event.timestamp.fString(format: 'HH:mm');
+    final item = ref.watch(itemDetailProvider(itemId)).value;
+
+    final showChapter = ref.watch(showChapterPositionInHistoryProvider);
 
     return InkWell(
       onTap: onTap,
@@ -242,7 +262,9 @@ class _HistoryEventTile extends StatelessWidget {
               const SizedBox(width: 6),
             ],
             Text(
-              event.position.toTime(padHours: true),
+              showChapter
+                  ? '${item?.historyPosition(event.position)}'
+                  : event.position.toTime(padHours: true),
               style: theme.textTheme.bodySmall?.copyWith(
                 fontFeatures: [const .tabularFigures()],
               ),

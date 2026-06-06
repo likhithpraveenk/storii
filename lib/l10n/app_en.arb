@@ -336,5 +336,6 @@
   "episodesFinished": "Episodes finished",
   "volume": "Volume",
   "increaseVolume": "Increase Volume",
-  "decreaseVolume": "Decrease Volume"
+  "decreaseVolume": "Decrease Volume",
+  "showChapterPosition": "Show chapter position"
 }

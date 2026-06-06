@@ -243,6 +243,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setDownloadOnUnmeteredOnly(bool value) =>
       _save(state?.copyWith(downloadOnUnmeteredOnly: value));
+
+  Future<void> setShowChapterPositionInHistory(bool value) =>
+      _save(state?.copyWith(showChapterPositionInHistory: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -387,4 +390,15 @@ final downloadOnUnmeteredOnlyProvider = Provider<bool>(
     ),
   ),
   name: 'downloadOnUnmeteredOnlyProvider',
+);
+
+final showChapterPositionInHistoryProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.showChapterPositionInHistory ??
+          DefaultUserSettings.showChapterPositionInHistory,
+    ),
+  ),
+  name: 'showChapterPositionInHistoryProvider',
 );

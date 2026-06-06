@@ -26,6 +26,7 @@ class DefaultUserSettings {
   static const speed = 1.0;
   static const historyLimit = 200;
   static const downloadOnUnmeteredOnly = false;
+  static const showChapterPositionInHistory = false;
 }
 
 @freezed
@@ -69,6 +70,9 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.downloadOnUnmeteredOnly)
     bool downloadOnUnmeteredOnly,
+
+    @Default(DefaultUserSettings.showChapterPositionInHistory)
+    bool showChapterPositionInHistory,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>
