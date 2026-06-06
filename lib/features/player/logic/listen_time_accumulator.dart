@@ -29,5 +29,5 @@ class ListenTimeAccumulator {
     _unsynced = Duration.zero;
   }
 
-  void rollback(Duration unsynced) => _unsynced = unsynced;
+  void rollback(Duration unsynced) => _unsynced += unsynced;
 }

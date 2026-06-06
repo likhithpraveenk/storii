@@ -62,7 +62,10 @@ void sessionSyncWatcher(Ref ref) {
     await history.addEvent(session.id, event, position: position);
 
     final listened = accumulator.snapshotAndReset(keepRunning: keepRunning);
-    if (listened.inMilliseconds < 500) return;
+    if (listened.inMilliseconds < 200) {
+      accumulator.rollback(listened);
+      return;
+    }
 
     try {
       await ref.read(sessionProvider.notifier).sync(listened, position);
@@ -89,10 +92,12 @@ void sessionSyncWatcher(Ref ref) {
     switch (event) {
       case .play:
         accumulator.start();
-        await sync(.play, keepRunning: true);
 
       case .buffering:
         accumulator.pause();
+
+      case .bufferingComplete:
+        accumulator.start();
 
       case .pause:
         await sync(.pause, keepRunning: false);

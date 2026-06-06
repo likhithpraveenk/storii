@@ -10,7 +10,16 @@ import 'package:storii/app/models/chapter.dart';
 import 'package:storii/features/player/logic/position_resolver.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
-enum AudioHandlerEvent { play, pause, seek, stop, complete, buffering, error }
+enum AudioHandlerEvent {
+  play,
+  pause,
+  seek,
+  stop,
+  complete,
+  buffering,
+  error,
+  bufferingComplete,
+}
 
 class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final _player = AudioPlayer();
@@ -20,6 +29,8 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   final Duration Function() getSkipForward;
   final Duration Function() getSkipBackward;
+
+  ProcessingState? _lastProcessingState;
 
   AppAudioHandler({
     required double speed,
@@ -54,6 +65,13 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     _player.playbackEventStream.listen((event) {
       if (event.processingState == .completed) _eventController.add(.complete);
       if (event.processingState == .buffering) _eventController.add(.buffering);
+      if (_lastProcessingState == .buffering &&
+          event.processingState == .ready &&
+          _player.playing) {
+        _eventController.add(.bufferingComplete);
+      }
+
+      _lastProcessingState = event.processingState;
 
       _updatePlaybackState();
     }, onError: logError);
