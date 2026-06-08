@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:abs_api/abs_api.dart';
-import 'package:hive_ce/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
@@ -10,7 +7,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/app_error.dart';
-import 'package:storii/storage/hive/boxes.dart';
+import 'package:storii/storage/local/items_cache.dart';
 
 part 'item_detail_provider.g.dart';
 
@@ -20,11 +17,8 @@ Future<LibraryItem> itemDetail(Ref ref, String id) async {
   final download = downloads[id];
 
   if (download != null && download.isComplete) {
-    final box = Hive.box<String>(itemsBox);
-    final localJson = box.get(id);
-    final localItem = localJson != null
-        ? LibraryItem.fromJson(jsonDecode(localJson) as Map<String, dynamic>)
-        : null;
+    final cache = ref.read(itemsCacheProvider.notifier);
+    final localItem = cache.get(id);
     final serverUrl = ref.read(serverUrlProvider);
     if (download.serverUrl != serverUrl) {
       if (localItem == null) {
@@ -41,7 +35,7 @@ Future<LibraryItem> itemDetail(Ref ref, String id) async {
           .read(itemApiProvider(user))
           .get(id, includeProgress: true);
 
-      await box.put(id, jsonEncode(remoteItem));
+      await cache.put(remoteItem);
       return remoteItem;
     } catch (e) {
       LogService.log(

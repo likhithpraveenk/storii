@@ -26,8 +26,8 @@ void sessionSyncWatcher(Ref ref) {
     if (!prevConnected && nextConnected) {
       await ref
           .read(authenticatedUserProvider.future)
-          .then((user) {
-            ref.read(sessionsCleanupProvider.notifier).syncLocalSessions(user);
+          .then((_) {
+            ref.read(sessionsCleanupProvider.notifier).cleanup();
           })
           .catchError((e) {
             log('reconnect sync skipped: $e');

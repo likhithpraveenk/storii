@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:abs_api/abs_api.dart';
-import 'package:hive_ce/hive_ce.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
@@ -12,7 +10,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/play_request_params.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
-import 'package:storii/storage/hive/boxes.dart';
+import 'package:storii/storage/local/session_store.dart';
 
 part 'session_notifier.g.dart';
 
@@ -38,9 +36,7 @@ class SessionNotifier extends _$SessionNotifier {
           episodeId: episodeId,
         );
 
-    unawaited(
-      Hive.box<String>(localSessionsBox).put(session.id, jsonEncode(session)),
-    );
+    await ref.read(sessionStoreProvider.notifier).save(session);
 
     state = session;
     log('session created for ${session.displayTitle}');
@@ -66,9 +62,7 @@ class SessionNotifier extends _$SessionNotifier {
       );
     }
 
-    unawaited(
-      Hive.box<String>(localSessionsBox).put(session.id, jsonEncode(session)),
-    );
+    await ref.read(sessionStoreProvider.notifier).save(session);
 
     state = session;
     log('local session created for ${session.displayTitle}');
@@ -88,9 +82,7 @@ class SessionNotifier extends _$SessionNotifier {
       updatedAt: DateTime.now(),
     );
 
-    unawaited(
-      Hive.box<String>(localSessionsBox).put(updated.id, jsonEncode(updated)),
-    );
+    await ref.read(sessionStoreProvider.notifier).save(updated);
     state = updated;
 
     final user = await ref.read(authenticatedUserProvider.future);
@@ -129,7 +121,7 @@ class SessionNotifier extends _$SessionNotifier {
             .read(sessionsApiProvider(user))
             .closeSession(sessionId: session.id);
       }
-      await Hive.box<String>(localSessionsBox).delete(session.id);
+      await ref.read(sessionStoreProvider.notifier).delete(session.id);
       log('session closed: ${session.id}');
     } catch (e, st) {
       LogService.log(

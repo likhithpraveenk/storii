@@ -1,46 +1,37 @@
-import 'dart:async';
-
-import 'package:hive_ce/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
-import 'package:storii/storage/hive/boxes.dart';
+import 'package:storii/storage/local/servers_store.dart';
+import 'package:storii/storage/local/users_store.dart';
 
 part 'servers_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class ServersNotifier extends _$ServersNotifier {
-  final _box = Hive.box<Server>(serversBox);
-
   @override
-  Stream<List<Server>> build() {
-    return _box
-        .watch()
-        .map((_) => _box.values.toList())
-        .startWith(_box.values.toList());
+  Stream<List<Server>> build() async* {
+    final servers = await ref.watch(serversStoreProvider.future);
+    yield servers;
   }
 
   Future<void> add(Uri url) async {
     final id = DateTime.now().microsecondsSinceEpoch.toString();
     final server = Server(id: id, url: url);
-    await _box.put(id, server);
+    await ref.read(serversStoreProvider.notifier).add(server);
   }
 
   Future<void> edit(Uri oldUrl, Server server) async {
-    await _box.put(server.id, server);
-    await ref.read(usersProvider.notifier).editServerUrl(oldUrl, server.url);
+    await ref.read(serversStoreProvider.notifier).add(server);
+    await ref
+        .read(usersStoreProvider.notifier)
+        .updateServerUrl(oldUrl, server.url);
   }
 
   Future<void> delete(Server server) async {
-    await _box.delete(server.id);
     final users = await ref
         .read(usersProvider.notifier)
         .deleteUsersByServer(server.url);
     await ref.read(appSettingsProvider.notifier).deleteSettings(users);
-
-    LogService.log('Server deleted: ${server.url}', level: .info);
   }
 }
