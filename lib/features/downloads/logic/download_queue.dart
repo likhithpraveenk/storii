@@ -1,23 +1,21 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:hive_ce/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/features/downloads/logic/download_engine.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
-import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
-import 'package:storii/storage/hive/boxes.dart';
+import 'package:storii/storage/local/downloads_store.dart';
+import 'package:storii/storage/local/items_cache.dart';
 
 part 'download_queue.g.dart';
 
 @Riverpod(keepAlive: true)
 class DownloadQueue extends _$DownloadQueue {
-  DownloadsNotifier get _downloads => ref.read(downloadsProvider.notifier);
+  DownloadsStore get _store => ref.read(downloadsStoreProvider.notifier);
 
   bool _processing = false;
 
@@ -29,7 +27,7 @@ class DownloadQueue extends _$DownloadQueue {
 
     try {
       final item = await ref.read(itemDetailProvider(libraryItemId).future);
-      await Hive.box<String>(itemsBox).put(item.id, jsonEncode(item));
+      await ref.read(itemsCacheProvider.notifier).put(item);
 
       final user = await ref.read(authenticatedUserProvider.future);
 
@@ -37,7 +35,7 @@ class DownloadQueue extends _$DownloadQueue {
         userId: user.id,
         serverUrl: user.serverUrl,
       );
-      await _downloads.save(downloadItem);
+      await _store.save(downloadItem);
       state = [...state, libraryItemId];
       await _processQueue();
     } catch (e, st) {
@@ -65,8 +63,8 @@ class DownloadQueue extends _$DownloadQueue {
 
   Future<void> _downloadItem(String libraryItemId) async {
     try {
-      final current = ref.read(downloadsProvider).value ?? {};
-      final downloadItem = current[libraryItemId];
+      final downloads = _store.getAll();
+      final downloadItem = downloads[libraryItemId];
       if (downloadItem == null) return;
 
       await DownloadsNotificationService.instance.requestPermission();
@@ -79,7 +77,7 @@ class DownloadQueue extends _$DownloadQueue {
           in ref
               .read(downloadEngineProvider.notifier)
               .downloadItem(item: downloadItem, user: user)) {
-        await _downloads.save(updated);
+        await _store.save(updated);
 
         await DownloadsNotificationService.instance.showProgressNotification(
           title: updated.title,
@@ -118,8 +116,9 @@ class DownloadQueue extends _$DownloadQueue {
     ref.read(downloadEngineProvider.notifier).cancel(id);
     _processing = false;
     state = state.where((i) => i != id).toList();
-    final item = ref.read(downloadsProvider).value?[id];
-    if (item != null) await _downloads.save(item.copyWith(status: .paused));
+    final downloads = _store.getAll();
+    final item = downloads[id];
+    if (item != null) await _store.save(item.copyWith(status: .paused));
 
     await DownloadsNotificationService.instance.stopForeground();
     await DownloadsNotificationService.instance.showProgressNotification(
@@ -136,18 +135,19 @@ class DownloadQueue extends _$DownloadQueue {
     _processing = false;
     await DownloadsNotificationService.instance.stopForeground();
     state = state.where((i) => i != id).toList();
-    final item = ref.read(downloadsProvider).value?[id];
+    final downloads = _store.getAll();
+    final item = downloads[id];
     if (item != null) {
       await ref.read(downloadsFsHelperProvider).deleteItem(item.title);
     }
-    await Hive.box<String>(itemsBox).delete(id);
-    await _downloads.remove(id);
+    await ref.read(itemsCacheProvider.notifier).delete(id);
+    await _store.remove(id);
   }
 
   Future<void> _setStatus(String id, DownloadStatus status) async {
-    final downloads = ref.read(downloadsProvider).value ?? {};
+    final downloads = _store.getAll();
     final item = downloads[id];
     if (item == null) return;
-    await _downloads.save(item.copyWith(status: status));
+    await _store.save(item.copyWith(status: status));
   }
 }

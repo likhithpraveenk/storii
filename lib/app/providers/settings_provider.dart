@@ -1,58 +1,42 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/app/models/app_settings.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/models/user_settings.dart';
-import 'package:storii/storage/hive/boxes.dart';
+import 'package:storii/storage/local/settings_store.dart';
 
 export 'package:storii/app/models/app_settings.dart';
 export 'package:storii/app/models/user_settings.dart';
 
 part 'settings_provider.g.dart';
 
-const appSettingsKey = 'app_settings_key';
-
 @Riverpod(keepAlive: true)
 class AppSettingsNotifier extends _$AppSettingsNotifier {
-  final _box = Hive.box<String>(appSettingsBox);
+  SettingsStore get _store => ref.read(settingsStoreProvider.notifier);
 
   @override
   AppSettings build() {
-    final settingsJson = _box.get(appSettingsKey);
-    if (settingsJson != null) {
-      try {
-        return AppSettings.fromJson(jsonDecode(settingsJson));
-      } catch (e, st) {
-        log('$e', stackTrace: st, level: 1000, name: 'AppSettings');
-      }
-    }
-    return const AppSettings();
+    final settings = _store.getAppSettings();
+    return settings ?? const AppSettings();
   }
 
   Future<void> _save(AppSettings s) async {
     if (s == state) return;
     state = s;
-    await _box.put(appSettingsKey, jsonEncode(s));
+    await _store.updateAppSettings(s);
   }
 
   Future<void> deleteSettings(List<String> users) async {
-    if (users.isNotEmpty) {
-      await _box.deleteAll(users);
-    }
-
-    await _box.delete(appSettingsKey);
+    await _store.deleteUsers(users);
+    await _store.deleteAppSettings();
   }
 
   Future<void> deleteUserSettings(String userId) async {
-    await _box.delete(userId);
+    await _store.deleteUserSettings(userId);
   }
 
   Future<void> reset() => _save(AppSettings(currentUser: state.currentUser));
@@ -60,30 +44,22 @@ class AppSettingsNotifier extends _$AppSettingsNotifier {
 
 @riverpod
 class UserSettingsNotifier extends _$UserSettingsNotifier {
-  final _box = Hive.box<String>(userSettingsBox);
+  SettingsStore get _store => ref.read(settingsStoreProvider.notifier);
 
   @override
   UserSettings? build() {
     final user = ref.watch(currentUserProvider);
     if (user == null) return null;
 
-    final settingsJson = _box.get(user.id);
-    if (settingsJson != null) {
-      try {
-        return UserSettings.fromJson(jsonDecode(settingsJson));
-      } catch (e, st) {
-        log('$e', stackTrace: st, level: 1000, name: 'UserSettings');
-      }
-    }
-
-    return UserSettings(userId: user.id);
+    final settings = _store.getUserSettings(user.id);
+    return settings ?? UserSettings(userId: user.id);
   }
 
   Future<void> _save(UserSettings? s) async {
     if (s == state) return;
     state = s;
     if (s != null) {
-      await _box.put(s.userId, jsonEncode(s));
+      await _store.updateUserSettings(s.userId, s);
     }
   }
 

@@ -21,10 +21,9 @@ class FontService {
   }
 
   static Future<void> importFonts() async {
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       type: .custom,
       allowedExtensions: ['ttf', 'otf'],
-      allowMultiple: true,
     );
 
     if (result == null || result.files.isEmpty) return;

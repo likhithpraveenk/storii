@@ -30,6 +30,7 @@ targets:
         generate_for:
           - lib/app/providers/**
           - lib/features/**/logic/**
+          - lib/storage/**
 
 builders:
   settings_generator:

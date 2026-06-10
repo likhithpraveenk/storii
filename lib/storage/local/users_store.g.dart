@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'servers_provider.dart';
+part of 'users_store.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,43 +9,44 @@ part of 'servers_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(ServersNotifier)
-final serversProvider = ServersNotifierProvider._();
+@ProviderFor(UsersStore)
+final usersStoreProvider = UsersStoreProvider._();
 
-final class ServersNotifierProvider
-    extends $StreamNotifierProvider<ServersNotifier, List<Server>> {
-  ServersNotifierProvider._()
+final class UsersStoreProvider
+    extends $StreamNotifierProvider<UsersStore, List<UserDomain>> {
+  UsersStoreProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'serversProvider',
+        name: r'usersStoreProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$serversNotifierHash();
+  String debugGetCreateSourceHash() => _$usersStoreHash();
 
   @$internal
   @override
-  ServersNotifier create() => ServersNotifier();
+  UsersStore create() => UsersStore();
 }
 
-String _$serversNotifierHash() => r'1527cd6b9119d21c519bbadb3b37dabcc783ed15';
+String _$usersStoreHash() => r'7109718b2ab0d4a5efad77b5db412f24dcf41d71';
 
-abstract class _$ServersNotifier extends $StreamNotifier<List<Server>> {
-  Stream<List<Server>> build();
+abstract class _$UsersStore extends $StreamNotifier<List<UserDomain>> {
+  Stream<List<UserDomain>> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<List<Server>>, List<Server>>;
+    final ref =
+        this.ref as $Ref<AsyncValue<List<UserDomain>>, List<UserDomain>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<List<Server>>, List<Server>>,
-              AsyncValue<List<Server>>,
+              AnyNotifier<AsyncValue<List<UserDomain>>, List<UserDomain>>,
+              AsyncValue<List<UserDomain>>,
               Object?,
               Object?
             >;

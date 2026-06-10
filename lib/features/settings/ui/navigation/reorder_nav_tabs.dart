@@ -84,7 +84,7 @@ class _ReorderNavTabsState extends ConsumerState<ReorderNavTabs> {
           physics: const NeverScrollableScrollPhysics(),
           padding: const .symmetric(horizontal: 16, vertical: 12),
           itemCount: _masterOrder.length,
-          onReorder: _onReorder,
+          onReorderItem: _onReorder,
           proxyDecorator: (child, index, animation) =>
               Material(type: .transparency, child: child),
           itemBuilder: (context, index) {

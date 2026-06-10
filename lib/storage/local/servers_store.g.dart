@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'servers_provider.dart';
+part of 'servers_store.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,33 +9,33 @@ part of 'servers_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(ServersNotifier)
-final serversProvider = ServersNotifierProvider._();
+@ProviderFor(ServersStore)
+final serversStoreProvider = ServersStoreProvider._();
 
-final class ServersNotifierProvider
-    extends $StreamNotifierProvider<ServersNotifier, List<Server>> {
-  ServersNotifierProvider._()
+final class ServersStoreProvider
+    extends $StreamNotifierProvider<ServersStore, List<Server>> {
+  ServersStoreProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'serversProvider',
+        name: r'serversStoreProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$serversNotifierHash();
+  String debugGetCreateSourceHash() => _$serversStoreHash();
 
   @$internal
   @override
-  ServersNotifier create() => ServersNotifier();
+  ServersStore create() => ServersStore();
 }
 
-String _$serversNotifierHash() => r'1527cd6b9119d21c519bbadb3b37dabcc783ed15';
+String _$serversStoreHash() => r'30b0ba9394b8e3bc14adb67e049665369b5de8fa';
 
-abstract class _$ServersNotifier extends $StreamNotifier<List<Server>> {
+abstract class _$ServersStore extends $StreamNotifier<List<Server>> {
   Stream<List<Server>> build();
   @$mustCallSuper
   @override

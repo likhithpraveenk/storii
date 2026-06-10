@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'download_queue.dart';
+part of 'items_cache.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,51 +9,50 @@ part of 'download_queue.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(DownloadQueue)
-final downloadQueueProvider = DownloadQueueProvider._();
+@ProviderFor(ItemsCache)
+final itemsCacheProvider = ItemsCacheProvider._();
 
-final class DownloadQueueProvider
-    extends $NotifierProvider<DownloadQueue, List<String>> {
-  DownloadQueueProvider._()
+final class ItemsCacheProvider extends $NotifierProvider<ItemsCache, void> {
+  ItemsCacheProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'downloadQueueProvider',
+        name: r'itemsCacheProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$downloadQueueHash();
+  String debugGetCreateSourceHash() => _$itemsCacheHash();
 
   @$internal
   @override
-  DownloadQueue create() => DownloadQueue();
+  ItemsCache create() => ItemsCache();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<String> value) {
+  Override overrideWithValue(void value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<List<String>>(value),
+      providerOverride: $SyncValueProvider<void>(value),
     );
   }
 }
 
-String _$downloadQueueHash() => r'2c764c1e540cb1c1998d9bba31ca4fbaef1218c0';
+String _$itemsCacheHash() => r'ccbf39b6445041f0762068de59a7f753a21ea306';
 
-abstract class _$DownloadQueue extends $Notifier<List<String>> {
-  List<String> build();
+abstract class _$ItemsCache extends $Notifier<void> {
+  void build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<List<String>, List<String>>;
+    final ref = this.ref as $Ref<void, void>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<List<String>, List<String>>,
-              List<String>,
+              AnyNotifier<void, void>,
+              void,
               Object?,
               Object?
             >;
