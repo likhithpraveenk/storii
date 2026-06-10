@@ -11,12 +11,12 @@
       "label": "dart format",
       "type": "shell",
       "command": "dart format .",
-      "problemMatcher": [],
+      "problemMatcher": []
     },
     {
       "label": "build_runner build",
       "type": "shell",
-      "command": "dart run build_runner build -d",
+      "command": "dart run build_runner build",
       "problemMatcher": []
     },
     {
@@ -26,8 +26,7 @@
       "args": [
         "run",
         "build_runner",
-        "watch",
-        "--delete-conflicting-outputs"
+        "watch"
       ],
       "presentation": {
         "revealProblems": "onProblem",

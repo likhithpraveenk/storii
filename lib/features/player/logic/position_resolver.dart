@@ -10,10 +10,9 @@ class PositionResolver {
   bool get isEmpty => _trackOffsets.isEmpty || _chapters.isEmpty;
 
   const PositionResolver({
-    required List<Duration> trackOffsets,
-    required List<Chapter> chapters,
-  }) : _trackOffsets = trackOffsets,
-       _chapters = chapters;
+    required this._trackOffsets,
+    required this._chapters,
+  });
 
   static const empty = PositionResolver(trackOffsets: [], chapters: []);
 
