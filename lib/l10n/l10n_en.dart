@@ -781,4 +781,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get showChapterPosition => 'Show chapter position';
+
+  @override
+  String get errorNetwork => 'No internet connection';
+
+  @override
+  String get errorTimeout => 'Connection timed out';
+
+  @override
+  String get errorAuth => 'Session expired, please log in again';
+
+  @override
+  String get errorForbidden => 'Access denied';
+
+  @override
+  String get errorNotFound => 'Content not found';
+
+  @override
+  String get errorServer => 'Server error, please try again';
+
+  @override
+  String get errorUnknown => 'Something went wrong';
+
+  @override
+  String get errorType => 'Type error';
 }

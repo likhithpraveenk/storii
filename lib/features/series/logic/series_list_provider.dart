@@ -2,13 +2,12 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
-import 'package:storii/shared/helpers/app_error.dart';
+import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'series_list_provider.g.dart';
 
@@ -39,17 +38,11 @@ Future<List<Series>> rawSeriesList(Ref ref) async {
   final user = await ref.read(authenticatedUserProvider.future);
   final api = ref.read(libraryApiProvider(user));
 
-  try {
-    final data = await api.getSeriesRaw(libraryId, params);
-    final response = await compute(SeriesResponse.fromJson, data);
-    return response.results;
-  } catch (e) {
-    final error = AppError.resolve(e);
-    LogService.log(
-      'Error fetching series list: $error',
-      level: .error,
-      source: 'seriesList',
-    );
-    throw error;
-  }
+  final data = await ref.logApiCall(
+    () => api.getSeriesRaw(libraryId, params),
+    logMessage: 'Error fetching series list',
+    source: 'seriesList',
+  );
+  final response = await compute(SeriesResponse.fromJson, data);
+  return response.results;
 }

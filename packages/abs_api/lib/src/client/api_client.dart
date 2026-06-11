@@ -141,10 +141,8 @@ class ApiClient {
         cancelToken: requestCancelToken ?? cancelToken,
       );
       return response;
-    } on DioException catch (e, stack) {
-      throw apiExceptionFromDio(e, stack);
-    } catch (e) {
-      rethrow;
+    } catch (e, st) {
+      throw mapException(e, st);
     }
   }
 

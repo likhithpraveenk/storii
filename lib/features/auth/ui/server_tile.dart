@@ -79,10 +79,10 @@ class _ServerTileState extends ConsumerState<ServerTile> {
         ),
         usersAsync.when(
           loading: () => const Center(child: RandomWaveform()),
-          error: (error, stack) => Center(
+          error: (e, _) => Center(
             child: Padding(
               padding: const .all(16),
-              child: Text('${l10n.errorLoadingUsers}: $error'),
+              child: Text('${l10n.errorLoadingUsers}: ${e.toString()}'),
             ),
           ),
           data: (users) => Column(

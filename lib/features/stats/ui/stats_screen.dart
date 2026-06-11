@@ -63,8 +63,8 @@ class StatsScreen extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: RandomWaveform()),
-        error: (error, stackTrace) => ErrorRetryWidget(
-          '$error',
+        error: (e, _) => ErrorRetryWidget(
+          e.toString(),
           onRetry: () {
             ref.invalidate(statsProvider);
           },

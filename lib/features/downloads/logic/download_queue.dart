@@ -8,6 +8,7 @@ import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart
 import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
+import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/storage/local/downloads_store.dart';
 import 'package:storii/storage/local/items_cache.dart';
 
@@ -39,11 +40,13 @@ class DownloadQueue extends _$DownloadQueue {
       state = [...state, libraryItemId];
       await _processQueue();
     } catch (e, st) {
+      final error = AppError.from(e, st);
       LogService.log(
-        'Failed to enqueue $libraryItemId: $e',
+        'Failed to enqueue $libraryItemId: ${error.message}',
         source: 'DownloadQueue',
         level: .error,
-        stackTrace: st,
+        originalError: error.originalError,
+        stackTrace: error.stackTrace,
       );
     }
   }
@@ -93,11 +96,13 @@ class DownloadQueue extends _$DownloadQueue {
         }
       }
     } catch (e, st) {
+      final error = AppError.from(e, st);
       LogService.log(
-        'Download failed for $libraryItemId: $e',
+        'Download failed for $libraryItemId: ${error.message}',
         source: 'DownloadQueue',
         level: .error,
-        stackTrace: st,
+        originalError: error.originalError,
+        stackTrace: error.stackTrace,
       );
       await _setStatus(libraryItemId, .failed);
 

@@ -95,8 +95,8 @@ class HomeScreen extends ConsumerWidget {
             );
           },
           loading: () => const Center(child: RandomWaveform()),
-          error: (error, _) => ErrorRetryWidget(
-            '$error',
+          error: (e, _) => ErrorRetryWidget(
+            e.toString(),
             onRetry: () => ref.invalidate(shelvesProvider),
           ),
         ),

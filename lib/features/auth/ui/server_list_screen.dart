@@ -84,10 +84,10 @@ class ServerListScreen extends ConsumerWidget {
                   child: SizedBox(
                     width: double.infinity,
                     child: serversAsync.when(
-                      error: (error, _) => SizedBox(
+                      error: (e, _) => SizedBox(
                         height: 120,
                         child: ErrorRetryWidget(
-                          '$error',
+                          e.toString(),
                           onRetry: () => ref.invalidate(serversProvider),
                         ),
                       ),

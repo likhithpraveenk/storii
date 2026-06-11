@@ -103,12 +103,6 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       loadingEpisodeId: episodeId,
     );
     try {
-      // final oldSession = ref.read(sessionProvider);
-      // if (oldSession != null) {
-      //   log('old session exists. calling audio handler stop');
-      //   await audioHandler.stop();
-      // }
-
       final download = ref.read(downloadItemProvider(itemId));
       final isFullyDownloaded =
           download != null &&
@@ -167,12 +161,12 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       await audioHandler.processingStateStream.firstWhere((s) => s == .ready);
       await audioHandler.play();
     } catch (e, st) {
-      final error = AppError.resolve(e);
+      final error = AppError.from(e, st);
       LogService.log(
-        'playing failed: $error',
+        'playing failed: ${error.message}',
         source: 'AudioPlayerNotifier',
         level: .error,
-        stackTrace: st,
+        stackTrace: error.stackTrace,
         originalError: error.originalError,
       );
       state = const AudioPlayerState();

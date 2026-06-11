@@ -1545,6 +1545,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show chapter position'**
   String get showChapterPosition;
+
+  /// No description provided for @errorNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get errorNetwork;
+
+  /// No description provided for @errorTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection timed out'**
+  String get errorTimeout;
+
+  /// No description provided for @errorAuth.
+  ///
+  /// In en, this message translates to:
+  /// **'Session expired, please log in again'**
+  String get errorAuth;
+
+  /// No description provided for @errorForbidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Access denied'**
+  String get errorForbidden;
+
+  /// No description provided for @errorNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Content not found'**
+  String get errorNotFound;
+
+  /// No description provided for @errorServer.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error, please try again'**
+  String get errorServer;
+
+  /// No description provided for @errorUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get errorUnknown;
+
+  /// No description provided for @errorType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type error'**
+  String get errorType;
 }
 
 class _AppLocalizationsDelegate

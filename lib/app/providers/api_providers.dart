@@ -34,7 +34,7 @@ ApiClient apiClient(Ref ref, UserDomain user) {
       final token = await tokenService.getAccessToken(user.id);
       if (token == null) {
         LogService.log(
-          'Access token not available for user ${user.username}',
+          'Access token not available for ${user.username}',
           source: 'API Client',
           level: .error,
         );
@@ -45,7 +45,7 @@ ApiClient apiClient(Ref ref, UserDomain user) {
       final token = await tokenService.getRefreshToken(user.id);
       if (token == null) {
         LogService.log(
-          'Refresh token not available for user ${user.username}',
+          'Refresh token not available for ${user.username}',
           source: 'API Client',
           level: .error,
         );

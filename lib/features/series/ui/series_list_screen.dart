@@ -68,8 +68,8 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
             );
           },
           loading: () => const Center(child: RandomWaveform()),
-          error: (error, _) => ErrorRetryWidget(
-            '$error',
+          error: (e, _) => ErrorRetryWidget(
+            e.toString(),
             onRetry: () => ref.invalidate(seriesListProvider),
           ),
         ),

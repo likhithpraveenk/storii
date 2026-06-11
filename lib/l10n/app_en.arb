@@ -337,5 +337,13 @@
   "volume": "Volume",
   "increaseVolume": "Increase Volume",
   "decreaseVolume": "Decrease Volume",
-  "showChapterPosition": "Show chapter position"
+  "showChapterPosition": "Show chapter position",
+  "errorNetwork": "No internet connection",
+  "errorTimeout": "Connection timed out",
+  "errorAuth": "Session expired, please log in again",
+  "errorForbidden": "Access denied",
+  "errorNotFound": "Content not found",
+  "errorServer": "Server error, please try again",
+  "errorUnknown": "Something went wrong",
+  "errorType": "Type error"
 }

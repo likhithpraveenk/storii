@@ -41,7 +41,7 @@ final class AddServerNotifierProvider
   }
 }
 
-String _$addServerNotifierHash() => r'1835f5b8517eddd9aa2c5b35c12b72bffb2342c3';
+String _$addServerNotifierHash() => r'8e94db894c08cea45af9d3143da8baad3809e54c';
 
 abstract class _$AddServerNotifier extends $Notifier<ServerState> {
   ServerState build();
@@ -118,7 +118,7 @@ final class ServerStatusProvider
   }
 }
 
-String _$serverStatusHash() => r'078dc48ae7c89b20a7d61d80c56d26949cc8b7de';
+String _$serverStatusHash() => r'367af476ed90486a5e49c2735a5b78ddae5ff1b5';
 
 final class ServerStatusFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ServerStatusResponse>, Uri> {
