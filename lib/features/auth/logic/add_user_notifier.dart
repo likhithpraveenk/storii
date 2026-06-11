@@ -11,6 +11,7 @@ import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/oauth_helpers.dart';
+import 'package:storii/shared/helpers/ref_extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 part 'add_user_notifier.g.dart';
@@ -43,15 +44,16 @@ class AddUserNotifier extends _$AddUserNotifier {
     state = state.copyWith(status: .loading);
     try {
       final authApi = ref.read(authApiProvider(url));
-      final response = await authApi.login(
-        username: username.trim(),
-        password: password,
+      final response = await ref.logApiCall(
+        () => authApi.login(username: username.trim(), password: password),
+        source: 'AddUserNotifier',
+        logMessage: 'Error while adding ${username.trim()}',
       );
       await _finalize(response, url);
       LogService.log('${username.trim()} logged in', level: .info);
       state = state.copyWith(status: .success);
-    } catch (e, st) {
-      _handleError(e, st, 'Error while adding ${username.trim()}');
+    } on AppError catch (error) {
+      state = state.copyWith(status: .error, message: error.localizedMessage);
     }
   }
 
@@ -71,8 +73,8 @@ class AddUserNotifier extends _$AddUserNotifier {
       state = state.copyWith(status: .error, message: e.message);
     } on PlatformException catch (e) {
       state = state.copyWith(status: .error, message: e.message);
-    } catch (e, st) {
-      _handleError(e, st, 'OIDC login error');
+    } on AppError catch (error) {
+      state = state.copyWith(status: .error, message: error.localizedMessage);
     } finally {
       _oidcCompleter = null;
     }
@@ -83,10 +85,14 @@ class AddUserNotifier extends _$AddUserNotifier {
     final challenge = generateCodeChallenge(verifier);
     final authApi = ref.read(authApiProvider(url));
 
-    final (providerUri, cookie) = await authApi.oauthRequest(
-      codeChallenge: challenge,
-      redirectUri: _redirectUri,
-      clientId: 'Storii',
+    final (providerUri, cookie) = await ref.logApiCall(
+      () => authApi.oauthRequest(
+        codeChallenge: challenge,
+        redirectUri: _redirectUri,
+        clientId: 'Storii',
+      ),
+      source: 'AddUserNotifier',
+      logMessage: 'OIDC request failed',
     );
 
     if (providerUri == null) throw Exception('OIDC not available');
@@ -96,7 +102,7 @@ class AddUserNotifier extends _$AddUserNotifier {
 
     final callbackUri = await _oidcCompleter!.future.timeout(
       const Duration(minutes: 5),
-      onTimeout: () => throw Exception('OIDC login timed out'),
+      onTimeout: () => throw TimeoutException('OIDC login timed out'),
     );
     final code = callbackUri.queryParameters['code'];
     final returnedState = callbackUri.queryParameters['state'];
@@ -105,11 +111,15 @@ class AddUserNotifier extends _$AddUserNotifier {
       throw Exception('Invalid OIDC callback');
     }
 
-    return authApi.oauthCallback(
-      code: code,
-      state: returnedState,
-      codeVerifier: verifier,
-      cookie: cookie,
+    return ref.logApiCall(
+      () => authApi.oauthCallback(
+        code: code,
+        state: returnedState,
+        codeVerifier: verifier,
+        cookie: cookie,
+      ),
+      source: 'AddUserNotifier',
+      logMessage: 'OIDC callback failed',
     );
   }
 
@@ -130,17 +140,5 @@ class AddUserNotifier extends _$AddUserNotifier {
         );
     await ref.read(appSettingsProvider.notifier).setCurrentUser(user);
     await ref.read(appSettingsProvider.notifier).setServerUrl(user.serverUrl);
-  }
-
-  void _handleError(Object e, StackTrace st, String message) {
-    final error = AppError.resolve(e);
-    LogService.log(
-      message,
-      source: 'AddUserNotifier',
-      level: .error,
-      stackTrace: st,
-      originalError: error.originalError,
-    );
-    state = state.copyWith(status: .error, message: error.message);
   }
 }

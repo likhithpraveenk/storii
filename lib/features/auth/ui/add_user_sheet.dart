@@ -64,7 +64,7 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
           serverStatusAsync.when(
             loading: () => const Center(child: RandomWaveform()),
             error: (e, _) => ErrorRetryWidget(
-              '$e',
+              e.toString(),
               onRetry: () =>
                   ref.invalidate(serverStatusProvider(widget.serverUrl)),
             ),

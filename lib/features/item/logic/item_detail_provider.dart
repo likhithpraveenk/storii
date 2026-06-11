@@ -7,6 +7,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/app_error.dart';
+import 'package:storii/shared/helpers/ref_extensions.dart';
 import 'package:storii/storage/local/items_cache.dart';
 
 part 'item_detail_provider.g.dart';
@@ -37,11 +38,13 @@ Future<LibraryItem> itemDetail(Ref ref, String id) async {
 
       await cache.put(remoteItem);
       return remoteItem;
-    } catch (e) {
+    } on AppError catch (error) {
       LogService.log(
-        'Failed to refresh ${localItem?.title}, using local: $e',
+        'Failed to refresh ${localItem?.title}: ${error.message}',
         source: 'itemDetail',
         level: .warning,
+        originalError: error.originalError,
+        stackTrace: error.stackTrace,
       );
     }
     if (localItem != null) {
@@ -51,16 +54,9 @@ Future<LibraryItem> itemDetail(Ref ref, String id) async {
 
   final user = await ref.read(authenticatedUserProvider.future);
   final api = ref.read(itemApiProvider(user));
-  try {
-    final item = await api.get(id, includeProgress: true);
-    return item;
-  } catch (e) {
-    final error = AppError.resolve(e);
-    LogService.log(
-      'Error fetching library item details: $error',
-      source: 'itemDetail',
-      level: .error,
-    );
-    throw error;
-  }
+  return ref.logApiCall(
+    () => api.get(id, includeProgress: true),
+    source: 'itemDetail',
+    logMessage: 'Error fetching library item details',
+  );
 }

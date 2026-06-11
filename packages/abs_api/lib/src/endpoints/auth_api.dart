@@ -22,20 +22,16 @@ class AuthApi {
       );
 
       return fromJson(response.data, LoginResponse.fromJson);
-    } on DioException catch (e, st) {
-      throw apiExceptionFromDio(e, st);
-    } catch (e) {
-      rethrow;
+    } catch (e, st) {
+      throw mapException(e, st);
     }
   }
 
   Future<void> healthCheck() async {
     try {
       await api.dio.get(ApiRoutes.healthCheck);
-    } on DioException catch (e, st) {
-      throw apiExceptionFromDio(e, st);
-    } catch (e) {
-      rethrow;
+    } catch (e, st) {
+      throw mapException(e, st);
     }
   }
 
@@ -43,10 +39,8 @@ class AuthApi {
     try {
       final response = await api.dio.get(ApiRoutes.ping);
       return fromJsonKey<bool>(response.data, 'success');
-    } on DioException catch (e, st) {
-      throw apiExceptionFromDio(e, st);
-    } catch (e) {
-      rethrow;
+    } catch (e, st) {
+      throw mapException(e, st);
     }
   }
 
@@ -54,10 +48,8 @@ class AuthApi {
     try {
       final response = await api.dio.get(ApiRoutes.status);
       return fromJson(response.data, ServerStatusResponse.fromJson);
-    } on DioException catch (e, st) {
-      throw apiExceptionFromDio(e, st);
-    } catch (e) {
-      rethrow;
+    } catch (e, st) {
+      throw mapException(e, st);
     }
   }
 
@@ -123,8 +115,8 @@ class AuthApi {
       // log('oauth callback body: ${response.data}');
 
       return fromJson(response.data, LoginResponse.fromJson);
-    } on DioException catch (e, st) {
-      throw apiExceptionFromDio(e, st);
+    } catch (e, st) {
+      throw mapException(e, st);
     }
   }
 }

@@ -6,6 +6,7 @@ import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'add_server_notifier.g.dart';
 
@@ -26,26 +27,21 @@ class AddServerNotifier extends _$AddServerNotifier {
     state = const ServerState(status: .checking);
 
     try {
-      final authApi = ref.read(authApiProvider(url.normalizedUri));
-      await authApi.healthCheck();
-      LogService.log('Server is healthy ${url.normalizedUri}', level: .info);
-      if (server != null) {
-        await ref
-            .read(serversProvider.notifier)
-            .edit(server.url, server.copyWith(url: url.normalizedUri));
-      } else {
-        await ref.read(serversProvider.notifier).add(url.normalizedUri);
-      }
-      state = const ServerState(status: .available);
-    } catch (e, st) {
-      final error = AppError.resolve(e);
-      LogService.log(
-        'Server validation failed: ${url.normalizedUri}: $error',
-        source: 'AddServerNotifier',
-        level: .error,
-        stackTrace: st,
-      );
-      state = ServerState(status: .unavailable, message: error.message);
+      await ref.logApiCall(() async {
+        final authApi = ref.read(authApiProvider(url.normalizedUri));
+        await authApi.healthCheck();
+        LogService.log('Server is healthy ${url.normalizedUri}', level: .info);
+        if (server != null) {
+          await ref
+              .read(serversProvider.notifier)
+              .edit(server.url, server.copyWith(url: url.normalizedUri));
+        } else {
+          await ref.read(serversProvider.notifier).add(url.normalizedUri);
+        }
+        state = const ServerState(status: .available);
+      }, source: 'AddServerNotifier');
+    } on AppError catch (e) {
+      state = ServerState(status: .unavailable, message: e.localizedMessage);
     }
   }
 }
@@ -53,17 +49,5 @@ class AddServerNotifier extends _$AddServerNotifier {
 @riverpod
 Future<ServerStatusResponse> serverStatus(Ref ref, Uri url) async {
   final api = ref.read(authApiProvider(url));
-  try {
-    final response = await api.status();
-    return response;
-  } catch (e, st) {
-    final error = AppError.resolve(e);
-    LogService.log(
-      'getting server status failed: $error',
-      level: .error,
-      source: 'serverStatus',
-      stackTrace: st,
-    );
-    throw error;
-  }
+  return ref.logApiCall(api.status, source: 'serverStatus');
 }

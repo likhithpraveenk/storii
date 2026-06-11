@@ -1,54 +1,62 @@
 import 'package:abs_api/abs_api.dart';
-
-enum AppErrorType {
-  network,
-  timeout,
-  auth,
-  forbidden,
-  notFound,
-  server,
-  unknown,
-}
+import 'package:storii/app/init.dart';
 
 class AppError implements Exception {
-  final AppErrorType type;
   final String message;
-  final dynamic originalError;
+  final String localizedMessage;
+  final Object? originalError;
+  final StackTrace stackTrace;
+  final int? statusCode;
+  final ApiExceptionType? type;
 
-  const AppError(this.type, this.message, this.originalError);
+  const AppError(
+    this.message, {
+    required this.localizedMessage,
+    this.originalError,
+    required this.stackTrace,
+    this.statusCode,
+    this.type,
+  });
 
-  factory AppError.resolve(Object error) {
+  factory AppError.from(Object error, StackTrace stackTrace) {
     if (error is AppError) return error;
 
     if (error is ApiException) {
-      return switch (error.type) {
-        .network => AppError(
-          .network,
-          'No internet connection',
-          error.originalError,
-        ),
-        .timeout => AppError(
-          .timeout,
-          'Request timed out',
-          error.originalError,
-        ),
-        .unauthorized => AppError(.auth, 'Unauthorized', error.originalError),
-        .forbidden => AppError(.forbidden, 'Forbidden', error.originalError),
-        .notFound => AppError(
-          .notFound,
-          'Resource not found',
-          error.originalError,
-        ),
-        .server => AppError(.server, 'Server error', error.originalError),
-        _ => AppError(.unknown, 'Something went wrong', error.originalError),
-      };
+      return AppError(
+        error.message,
+        localizedMessage: error.type.localizedMessage,
+        originalError: error.originalError,
+        stackTrace: error.stackTrace ?? stackTrace,
+        statusCode: error.statusCode,
+        type: error.type,
+      );
     }
-    return AppError(.unknown, 'Something went wrong', error);
+
+    return AppError(
+      error.toString(),
+      localizedMessage: l10n.errorUnknown,
+      originalError: error,
+      stackTrace: stackTrace,
+    );
   }
 
   @override
-  String toString() {
-    return 'AppError (${type.name}): $message'
-        '\noriginal error: $originalError';
-  }
+  String toString() => localizedMessage;
+}
+
+extension AppErrorTypeX on ApiExceptionType {
+  String get localizedMessage => switch (this) {
+    .network => l10n.errorNetwork,
+    .timeout => l10n.errorTimeout,
+    .unauthorized => l10n.errorAuth,
+    .forbidden => l10n.errorForbidden,
+    .notFound => l10n.errorNotFound,
+    .server => l10n.errorServer,
+    .unknown => l10n.errorUnknown,
+    .typeError => l10n.errorType,
+    .badRequest => l10n.errorServer,
+    .conflict => l10n.errorServer,
+    .validation => l10n.errorServer,
+    .rateLimit => l10n.errorServer,
+  };
 }

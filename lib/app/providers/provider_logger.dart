@@ -6,10 +6,10 @@ final class ProviderLogger extends ProviderObserver {
   const ProviderLogger();
 
   static const _noisy = {
-    // 'globalPositionProvider',
-    // 'chapterPositionProvider',
-    // 'playbackStateProvider',
-    // 'processingStateProvider',
+    'globalPositionProvider',
+    'chapterPositionProvider',
+    'playbackStateProvider',
+    'processingStateProvider',
     'coverUrlProvider',
     'downloadItemProvider',
   };

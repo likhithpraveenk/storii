@@ -68,7 +68,7 @@ class AuthorDetailScreen extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: RandomWaveform()),
-        error: (e, s) => ErrorRetryWidget(
+        error: (e, _) => ErrorRetryWidget(
           e.toString(),
           onRetry: () {
             ref.invalidate(authorProvider(id));

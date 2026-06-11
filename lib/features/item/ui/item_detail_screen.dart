@@ -31,7 +31,7 @@ class ItemDetailScreen extends ConsumerWidget {
           itemAsync.when(
             loading: () => const Center(child: RandomWaveform()),
             error: (e, s) => ErrorRetryWidget(
-              '$e',
+              e.toString(),
               onRetry: () => ref.invalidate(itemDetailProvider(id)),
             ),
             data: (item) => RefreshIndicator(

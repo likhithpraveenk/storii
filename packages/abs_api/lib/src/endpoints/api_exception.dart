@@ -13,6 +13,7 @@ enum ApiExceptionType {
   rateLimit,
   server,
   badRequest,
+  typeError,
   unknown,
 }
 
@@ -37,7 +38,22 @@ class ApiException implements Exception {
       '\nError: $originalError';
 }
 
-ApiException apiExceptionFromDio(DioException e, StackTrace stack) {
+ApiException mapException(Object error, StackTrace stack) {
+  if (error is DioException) {
+    return _apiExceptionFromDio(error, stack);
+  }
+  if (error is TypeError) {
+    return ApiException(
+      'JSON serialization failed',
+      type: .typeError,
+      stackTrace: stack,
+      originalError: error,
+    );
+  }
+  return ApiException('Unknown error', stackTrace: stack, originalError: error);
+}
+
+ApiException _apiExceptionFromDio(DioException e, StackTrace stack) {
   final code = e.response?.statusCode ?? 0;
   final msg = e.message ?? 'Request failed';
 

@@ -1,9 +1,9 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
+import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'authenticated_user_provider.g.dart';
 
@@ -13,19 +13,16 @@ Future<UserDomain> authenticatedUser(Ref ref) async {
   if (user == null) throw StateError('No current user');
 
   try {
-    await ref.read(serverApiProvider(user)).authorize();
-    LogService.log('User validated', source: 'authenticatedUser', level: .info);
+    await ref.logApiCall(
+      () => ref.read(serverApiProvider(user)).authorize(),
+      source: 'authenticatedUser',
+      logMessage: 'Error authenticating user',
+    );
     return user;
-  } catch (e) {
-    final error = AppError.resolve(e);
+  } on AppError catch (error) {
     if (error.type == .network || error.type == .timeout) {
       return user;
     }
-    LogService.log(
-      'Error validating user: $error',
-      source: 'authenticatedUser',
-      level: .error,
-    );
-    throw error;
+    rethrow;
   }
 }

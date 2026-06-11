@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:abs_api/abs_api.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -9,6 +7,8 @@ import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
+import 'package:storii/shared/helpers/app_error.dart';
+import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'download_engine.g.dart';
 
@@ -121,8 +121,15 @@ class DownloadEngine extends _$DownloadEngine {
         updatedTracks[i] = current.tracks[i].copyWith(status: .completed);
         current = current.copyWith(tracks: updatedTracks);
         yield current;
-      } on DioException catch (e) {
-        LogService.log('download engine dio error: $e');
+      } on DioException catch (e, st) {
+        final error = AppError.from(e, st);
+        LogService.log(
+          error.message,
+          source: 'DownloadEngine',
+          level: .error,
+          originalError: error.originalError,
+          stackTrace: error.stackTrace,
+        );
         await sink.close();
         if (CancelToken.isCancel(e)) {
           _tokens.remove(item.libraryItemId);
@@ -133,8 +140,15 @@ class DownloadEngine extends _$DownloadEngine {
         _tokens.remove(item.libraryItemId);
         yield current.copyWith(status: .failed);
         return;
-      } catch (e) {
-        LogService.log('download engine error: $e');
+      } catch (e, st) {
+        final error = AppError.from(e, st);
+        LogService.log(
+          error.message,
+          source: 'DownloadEngine',
+          level: .error,
+          originalError: error.originalError,
+          stackTrace: error.stackTrace,
+        );
         await sink.close();
         _tokens.remove(item.libraryItemId);
         yield current.copyWith(status: .failed);
@@ -153,15 +167,17 @@ class DownloadEngine extends _$DownloadEngine {
     required CancelToken cancelToken,
   }) async {
     try {
-      final imageBytes = await ref
-          .read(itemApiProvider(user))
-          .getCover(libraryItemId: itemId, cancelToken: cancelToken);
+      final imageBytes = await ref.logApiCall(
+        () => ref
+            .read(itemApiProvider(user))
+            .getCover(libraryItemId: itemId, cancelToken: cancelToken),
+        source: 'DownloadEngine',
+        logMessage: 'Failed to download cover for $itemTitle',
+      );
       if (imageBytes != null) {
         await _filesystem.saveCover(itemTitle, imageBytes);
       }
-    } catch (e) {
-      log('$e', name: 'downloadCover');
-    }
+    } on AppError catch (_) {}
   }
 
   void cancel(String itemId) {
