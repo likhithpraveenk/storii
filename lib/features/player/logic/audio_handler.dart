@@ -1,13 +1,12 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/chapter.dart';
 import 'package:storii/features/player/logic/position_resolver.dart';
+import 'package:storii/features/player/models/app_audio_player.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 enum AudioHandlerEvent {
@@ -22,7 +21,7 @@ enum AudioHandlerEvent {
 }
 
 class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
-  final _player = AudioPlayer();
+  final AppAudioPlayer _player;
   PositionResolver resolver = PositionResolver.empty;
 
   final _eventController = StreamController<AudioHandlerEvent>.broadcast();
@@ -30,9 +29,10 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final Duration Function() getSkipForward;
   final Duration Function() getSkipBackward;
 
-  ProcessingState? _lastProcessingState;
+  AppProcessingState? _lastProcessingState;
 
   AppAudioHandler({
+    required this._player,
     required double speed,
     required this.getSkipForward,
     required this.getSkipBackward,
@@ -125,19 +125,17 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   void logError(Object e, StackTrace st) {
-    log('Error from player stream: $e');
-    if (e is PlayerException) {
-      playbackState.add(
-        playbackState.value.copyWith(
-          processingState: .error,
-          errorMessage: e.message,
-        ),
-      );
-    }
+    LogService.log('Error from player stream: $e', level: .error);
+    playbackState.add(
+      playbackState.value.copyWith(
+        processingState: .error,
+        errorMessage: e.toString(),
+      ),
+    );
     _eventController.add(.error);
   }
 
-  Stream<ProcessingState> get processingStateStream =>
+  Stream<AppProcessingState> get processingStateStream =>
       _player.processingStateStream;
 
   Stream<AudioHandlerEvent> get events => _eventController.stream;
@@ -178,7 +176,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   Future<void> setSources(
-    List<UriAudioSource> sources, {
+    List<AppAudioSource> sources, {
     required int initialIndex,
     required Duration initialPosition,
   }) async {
@@ -191,22 +189,11 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
     queue.add(chapterItems);
 
-    try {
-      await _player.setAudioSources(
-        sources,
-        initialIndex: initialIndex,
-        initialPosition: initialPosition,
-      );
-    } on PlayerException catch (e) {
-      LogService.log(
-        'Error code: ${e.code}; message: ${e.message}',
-        level: .error,
-      );
-    } on PlayerInterruptedException catch (e) {
-      LogService.log('Connection interrupted: ${e.message}', level: .error);
-    } catch (e) {
-      LogService.log('An unknown error occurred: $e', level: .error);
-    }
+    await _player.setAudioSources(
+      sources,
+      initialIndex: initialIndex,
+      initialPosition: initialPosition,
+    );
   }
 
   Future<void> togglePlay() async {

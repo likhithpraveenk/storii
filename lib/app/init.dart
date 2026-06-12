@@ -12,6 +12,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/just_audio_player.dart';
 import 'package:storii/features/player/logic/sessions_cleanup.dart';
 import 'package:storii/l10n/l10n.dart';
 
@@ -78,6 +79,7 @@ Future<void> setupDownloadServices() async {
 Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
   return await AudioService.init(
     builder: () => AppAudioHandler(
+      player: JustAudioPlayer(),
       speed: container.read(speedProvider),
       getSkipForward: () => container.read(skipForwardProvider),
       getSkipBackward: () => container.read(skipBackwardProvider),
