@@ -2,6 +2,8 @@ class ListenTimeAccumulator {
   DateTime? _playStartedAt;
   Duration _unsynced = Duration.zero;
 
+  bool get isRunning => _playStartedAt != null;
+
   void start() {
     _playStartedAt ??= DateTime.now();
   }
