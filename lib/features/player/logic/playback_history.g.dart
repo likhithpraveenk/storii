@@ -9,13 +9,13 @@ part of 'playback_history.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(PlaybackHistory)
-final playbackHistoryProvider = PlaybackHistoryFamily._();
+@ProviderFor(PlaybackHistoryNotifier)
+final playbackHistoryProvider = PlaybackHistoryNotifierFamily._();
 
-final class PlaybackHistoryProvider
-    extends $NotifierProvider<PlaybackHistory, List<PlaybackEvent>> {
-  PlaybackHistoryProvider._({
-    required PlaybackHistoryFamily super.from,
+final class PlaybackHistoryNotifierProvider
+    extends $NotifierProvider<PlaybackHistoryNotifier, List<PlaybackEvent>> {
+  PlaybackHistoryNotifierProvider._({
+    required PlaybackHistoryNotifierFamily super.from,
     required String super.argument,
   }) : super(
          retry: null,
@@ -26,7 +26,7 @@ final class PlaybackHistoryProvider
        );
 
   @override
-  String debugGetCreateSourceHash() => _$playbackHistoryHash();
+  String debugGetCreateSourceHash() => _$playbackHistoryNotifierHash();
 
   @override
   String toString() {
@@ -37,7 +37,7 @@ final class PlaybackHistoryProvider
 
   @$internal
   @override
-  PlaybackHistory create() => PlaybackHistory();
+  PlaybackHistoryNotifier create() => PlaybackHistoryNotifier();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(List<PlaybackEvent> value) {
@@ -49,7 +49,8 @@ final class PlaybackHistoryProvider
 
   @override
   bool operator ==(Object other) {
-    return other is PlaybackHistoryProvider && other.argument == argument;
+    return other is PlaybackHistoryNotifierProvider &&
+        other.argument == argument;
   }
 
   @override
@@ -58,18 +59,19 @@ final class PlaybackHistoryProvider
   }
 }
 
-String _$playbackHistoryHash() => r'75bcfa573948410de2123370f87dcf5f18f31765';
+String _$playbackHistoryNotifierHash() =>
+    r'208e86ac958d0f3db4f13a3b6391c624135b7197';
 
-final class PlaybackHistoryFamily extends $Family
+final class PlaybackHistoryNotifierFamily extends $Family
     with
         $ClassFamilyOverride<
-          PlaybackHistory,
+          PlaybackHistoryNotifier,
           List<PlaybackEvent>,
           List<PlaybackEvent>,
           List<PlaybackEvent>,
           String
         > {
-  PlaybackHistoryFamily._()
+  PlaybackHistoryNotifierFamily._()
     : super(
         retry: null,
         name: r'playbackHistoryProvider',
@@ -78,14 +80,15 @@ final class PlaybackHistoryFamily extends $Family
         isAutoDispose: false,
       );
 
-  PlaybackHistoryProvider call(String mediaItemId) =>
-      PlaybackHistoryProvider._(argument: mediaItemId, from: this);
+  PlaybackHistoryNotifierProvider call(String mediaItemId) =>
+      PlaybackHistoryNotifierProvider._(argument: mediaItemId, from: this);
 
   @override
   String toString() => r'playbackHistoryProvider';
 }
 
-abstract class _$PlaybackHistory extends $Notifier<List<PlaybackEvent>> {
+abstract class _$PlaybackHistoryNotifier
+    extends $Notifier<List<PlaybackEvent>> {
   late final _$args = ref.$arg as String;
   String get mediaItemId => _$args;
 
