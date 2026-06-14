@@ -13,12 +13,13 @@ import 'package:storii/storage/local/font_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await init.setupGlobals(
+    locale: WidgetsBinding.instance.platformDispatcher.locale,
+  );
   await setupHive();
   await init.setupLicenses();
   await FontService.loadFonts();
-
   final container = await init.setupProviders();
-  await init.setupGlobals();
   await init.setupDownloadServices();
 
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));

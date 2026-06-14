@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app_links/app_links.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,8 +18,15 @@ import 'package:storii/l10n/l10n.dart';
 late final AppLinks appLinks;
 late AppLocalizations l10n;
 
-Future<void> setupGlobals() async {
+Future<void> setupGlobals({Locale? locale}) async {
   appLinks = AppLinks();
+
+  // init localizations
+  final Locale supported =
+      locale != null && AppLocalizations.supportedLocales.contains(locale)
+      ? locale
+      : const Locale('en');
+  l10n = await AppLocalizations.delegate.load(supported);
 }
 
 Future<void> setupLicenses() async {
@@ -43,6 +51,10 @@ Future<ProviderContainer> setupProviders() async {
   }
 
   final container = ProviderContainer(
+    retry: (retryCount, error) {
+      if (retryCount > 2) return null;
+      return Duration(milliseconds: retryCount * 200);
+    },
     observers: observers,
     overrides: overrides,
   );
