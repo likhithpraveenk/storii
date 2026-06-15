@@ -345,5 +345,9 @@
   "errorNotFound": "Content not found",
   "errorServer": "Server error, please try again",
   "errorUnknown": "Something went wrong",
-  "errorType": "Type error"
+  "errorType": "Type error",
+  "playbackErrorNetwork": "Connection issue. Audio may be interrupted",
+  "playbackErrorSource": "audio file could not be loaded",
+  "playbackErrorDecoder": "File format unsupported",
+  "playbackErrorUnknown": "Something went wrong with playback"
 }

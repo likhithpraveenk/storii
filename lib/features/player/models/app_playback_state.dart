@@ -1,8 +1,9 @@
+import 'package:storii/features/player/models/app_playback_error.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 enum AppPlaybackStatus { idle, buffering, ready, completed }
 
-const _sentinel = Object();
+const _fakeNull = Object();
 
 class AppPlaybackState {
   final AppPlaybackStatus status;
@@ -21,7 +22,7 @@ class AppPlaybackState {
   /// track index
   final int? index;
 
-  final String? error;
+  final AppPlaybackError? error;
 
   const AppPlaybackState({
     this.status = .idle,
@@ -41,8 +42,8 @@ class AppPlaybackState {
     Duration? bufferedPosition,
     double? speed,
     double? volume,
-    Object? index = _sentinel,
-    Object? error = _sentinel,
+    Object? index = _fakeNull,
+    Object? error = _fakeNull,
   }) => AppPlaybackState(
     status: status ?? this.status,
     isPlaying: isPlaying ?? this.isPlaying,
@@ -50,8 +51,8 @@ class AppPlaybackState {
     bufferedPosition: bufferedPosition ?? this.bufferedPosition,
     speed: speed ?? this.speed,
     volume: volume ?? this.volume,
-    index: index == _sentinel ? this.index : index as int?,
-    error: error == _sentinel ? this.error : error as String?,
+    index: index == _fakeNull ? this.index : index as int?,
+    error: error == _fakeNull ? this.error : error as AppPlaybackError?,
   );
 
   @override

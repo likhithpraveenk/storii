@@ -1593,6 +1593,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Type error'**
   String get errorType;
+
+  /// No description provided for @playbackErrorNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection issue. Audio may be interrupted'**
+  String get playbackErrorNetwork;
+
+  /// No description provided for @playbackErrorSource.
+  ///
+  /// In en, this message translates to:
+  /// **'audio file could not be loaded'**
+  String get playbackErrorSource;
+
+  /// No description provided for @playbackErrorDecoder.
+  ///
+  /// In en, this message translates to:
+  /// **'File format unsupported'**
+  String get playbackErrorDecoder;
+
+  /// No description provided for @playbackErrorUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong with playback'**
+  String get playbackErrorUnknown;
 }
 
 class _AppLocalizationsDelegate

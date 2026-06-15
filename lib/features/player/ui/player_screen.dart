@@ -15,14 +15,18 @@ class PlayerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen(playbackStateProvider, (previous, next) {
-      final event = next.value;
-      if (event?.processingState == .error) {
-        final message = event?.errorMessage ?? 'Playback Error';
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(message)));
-      }
+    final scheme = Theme.of(context).colorScheme;
+    ref.listen(playbackErrorsProvider, (_, next) {
+      next.whenData((type) {
+        final messenger = ScaffoldMessenger.of(context);
+        messenger.hideCurrentSnackBar();
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(type.label),
+            backgroundColor: type == .network ? scheme.tertiary : scheme.error,
+          ),
+        );
+      });
     });
 
     final size = MediaQuery.sizeOf(context);

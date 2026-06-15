@@ -8,6 +8,7 @@ import 'package:storii/app/models/chapter.dart';
 import 'package:storii/features/player/logic/position_resolver.dart';
 import 'package:storii/features/player/models/app_audio_player.dart';
 import 'package:storii/features/player/models/app_audio_source.dart';
+import 'package:storii/features/player/models/app_playback_error.dart';
 import 'package:storii/features/player/models/app_playback_state.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
@@ -27,6 +28,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   PositionResolver resolver = PositionResolver.empty;
 
   final _eventController = StreamController<AudioHandlerEvent>.broadcast();
+  final _errorController = StreamController<AppPlaybackError>.broadcast();
 
   final Duration Function() getSkipForward;
   final Duration Function() getSkipBackward;
@@ -75,7 +77,12 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       _lastStatus = state.status;
 
       _updatePlaybackState(state);
-    }, onError: logError);
+
+      if (state.error != null) {
+        _handleError(state.error!);
+      }
+    });
+
     setSpeed(speed);
     _initAudioSession();
   }
@@ -86,13 +93,23 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   void _updatePlaybackState(AppPlaybackState state) {
-    if (state.status == .idle) return;
+    if (state.status == .idle && state.error == null) return;
 
     final resolved = resolver.resolveChapterFromTrack(
       state.index,
       state.position,
     );
-    if (resolved == null) return;
+    if (resolved == null) {
+      if (state.error != null) {
+        playbackState.add(
+          playbackState.value.copyWith(
+            processingState: .error,
+            errorMessage: state.error!.label,
+          ),
+        );
+      }
+      return;
+    }
 
     mediaItem.add(queue.value.elementAtOrNull(resolved.chapterIndex));
 
@@ -105,37 +122,47 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     playbackState.add(
       playbackState.value.copyWith(
         processingState: switch (state.status) {
+          // error takes priority over any other status
+          _ when state.error != null => .error,
           .idle => .idle,
           .buffering => .buffering,
           .ready => .ready,
           .completed => .completed,
         },
-        playing: _player.isPlaying,
+        playing: state.isPlaying,
         updatePosition: resolved.chapterPosition,
         bufferedPosition:
             resolvedBuffered?.chapterPosition ??
             oldPlaybackState.bufferedPosition,
         speed: state.speed,
         queueIndex: resolved.chapterIndex,
+        errorMessage: state.error?.name,
       ),
     );
   }
 
-  void logError(Object e, StackTrace st) {
-    LogService.log('Error from player stream: $e', level: .error);
-    playbackState.add(
-      playbackState.value.copyWith(
-        processingState: .error,
-        errorMessage: e.toString(),
-      ),
+  void _handleError(AppPlaybackError type) {
+    LogService.log(
+      'Player error: $type',
+      level: .error,
+      source: 'AppAudioHandler',
     );
-    _eventController.add(.error);
+
+    _errorController.add(type);
+    if (_isFatal(type)) _eventController.add(.error);
   }
+
+  bool _isFatal(AppPlaybackError type) => switch (type) {
+    .network => false,
+    .source || .decoder || .unknown => true,
+  };
 
   Stream<AppPlaybackStatus> get statusStream =>
       _player.stateStream.map((s) => s.status).distinct();
 
   Stream<AudioHandlerEvent> get events => _eventController.stream;
+
+  Stream<AppPlaybackError> get errors => _errorController.stream;
 
   // position for sync operations
   Duration get currentPosition =>
@@ -288,6 +315,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   Future<void> dispose() async {
     await _eventController.close();
+    await _errorController.close();
     await _player.dispose();
   }
 }

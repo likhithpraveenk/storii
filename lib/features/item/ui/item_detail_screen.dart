@@ -84,6 +84,7 @@ class ItemDetailScreen extends ConsumerWidget {
                         );
                       },
                     ),
+                    // TODO: add tracks
                     const SizedBox(height: 200),
                   ],
                 ),

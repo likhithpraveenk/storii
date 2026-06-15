@@ -18,6 +18,7 @@ import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
+import 'package:storii/features/player/models/app_playback_error.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
 part 'audio_providers.g.dart';
@@ -31,6 +32,9 @@ Stream<AudioHandlerEvent> audioHandlerEvents(Ref ref) {
     return e;
   });
 }
+
+@riverpod
+Stream<AppPlaybackError> playbackErrors(Ref ref) => audioHandler.errors;
 
 @riverpod
 Stream<PlaybackState> playbackState(Ref ref) {

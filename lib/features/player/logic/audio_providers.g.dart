@@ -51,6 +51,45 @@ final class AudioHandlerEventsProvider
 String _$audioHandlerEventsHash() =>
     r'16514a2023c2fc08955950514e158157d50630ad';
 
+@ProviderFor(playbackErrors)
+final playbackErrorsProvider = PlaybackErrorsProvider._();
+
+final class PlaybackErrorsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<AppPlaybackError>,
+          AppPlaybackError,
+          Stream<AppPlaybackError>
+        >
+    with $FutureModifier<AppPlaybackError>, $StreamProvider<AppPlaybackError> {
+  PlaybackErrorsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'playbackErrorsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$playbackErrorsHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<AppPlaybackError> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<AppPlaybackError> create(Ref ref) {
+    return playbackErrors(ref);
+  }
+}
+
+String _$playbackErrorsHash() => r'082f267393dde8dd0a4b53b2bff98bf9e2e5c2cb';
+
 @ProviderFor(playbackState)
 final playbackStateProvider = PlaybackStateProvider._();
 

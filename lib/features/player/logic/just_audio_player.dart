@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:just_audio/just_audio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/features/player/models/app_audio_player.dart';
 import 'package:storii/features/player/models/app_audio_source.dart';
+import 'package:storii/features/player/models/app_playback_error.dart';
 import 'package:storii/features/player/models/app_playback_state.dart';
 
 part 'just_audio_player.g.dart';
@@ -21,10 +25,13 @@ AppAudioPlayer justAudioPlayer(Ref ref) {
   return player;
 }
 
+const _source = 'JustAudioPlayer';
+
 class JustAudioPlayer implements AppAudioPlayer {
   JustAudioPlayer(this._player);
 
   late final AudioPlayer _player;
+  final _errorController = StreamController<AppPlaybackError>.broadcast();
 
   @override
   int? get index => _player.currentIndex;
@@ -47,18 +54,21 @@ class JustAudioPlayer implements AppAudioPlayer {
   );
 
   @override
-  Stream<AppPlaybackState> get stateStream => _player.playbackEventStream.map(
-    (event) => .new(
-      status: _mapState(event.processingState),
-      index: event.currentIndex,
-      position: event.updatePosition,
-      bufferedPosition: event.bufferedPosition,
-      error: event.errorMessage,
-      isPlaying: _player.playing,
-      speed: _player.speed,
-      volume: _player.volume,
+  Stream<AppPlaybackState> get stateStream => Rx.merge([
+    _player.playbackEventStream.map(
+      (event) => AppPlaybackState(
+        status: _mapState(event.processingState),
+        index: event.currentIndex,
+        position: event.updatePosition,
+        bufferedPosition: event.bufferedPosition,
+        error: null,
+        isPlaying: _player.playing,
+        speed: _player.speed,
+        volume: _player.volume,
+      ),
     ),
-  );
+    _errorController.stream.map((msg) => state.copyWith(error: msg)),
+  ]);
 
   @override
   Stream<Duration> get positionStream => _player.positionStream;
@@ -127,12 +137,51 @@ class JustAudioPlayer implements AppAudioPlayer {
       LogService.log(
         'Error code: ${e.code}; message: ${e.message}',
         level: .error,
+        source: _source,
       );
+      _errorController.add(_classifyMessage(e.message));
     } on PlayerInterruptedException catch (e) {
-      LogService.log('Connection interrupted: ${e.message}', level: .error);
+      LogService.log(
+        'Connection interrupted: ${e.message}',
+        level: .error,
+        source: _source,
+      );
+      _errorController.add(.network);
     } catch (e) {
-      LogService.log('An unknown error occurred: $e', level: .error);
+      LogService.log(
+        'An unknown error occurred',
+        originalError: e,
+        level: .error,
+        source: _source,
+      );
+      _errorController.add(_classifyMessage(e.toString()));
     }
+  }
+
+  AppPlaybackError _classifyMessage(String? message) {
+    final lower = message?.toLowerCase() ?? '';
+    if (lower.contains('network') ||
+        lower.contains('socket') ||
+        lower.contains('host lookup') ||
+        lower.contains('connection') ||
+        lower.contains('timeout') ||
+        lower.contains('timed out')) {
+      return .network;
+    }
+    if (lower.contains('source') ||
+        lower.contains('404') ||
+        lower.contains('403') ||
+        lower.contains('not found') ||
+        lower.contains('forbidden')) {
+      return .source;
+    }
+    if (lower.contains('decode') ||
+        lower.contains('format') ||
+        lower.contains('codec') ||
+        lower.contains('unsupported')) {
+      return .decoder;
+    }
+    return .unknown;
   }
 
   AppPlaybackStatus _mapState(ProcessingState state) {
@@ -147,6 +196,7 @@ class JustAudioPlayer implements AppAudioPlayer {
 
   @override
   Future<void> dispose() async {
+    await _errorController.close();
     await _player.dispose();
   }
 }
