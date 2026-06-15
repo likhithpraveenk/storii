@@ -18,6 +18,7 @@ class MediaProgressNotifier extends _$MediaProgressNotifier {
             .read(meApiProvider(user))
             .getMediaProgress(libraryItemId: itemId, episodeId: episodeId),
         source: 'mediaProgress',
+        debug: true,
       );
 
       final socket = await ref.watch(socketApiProvider(user).future);

@@ -7,6 +7,7 @@ extension RefExtensions on Ref {
     Future<T> Function() call, {
     required String source,
     String? logMessage,
+    bool debug = false,
   }) async {
     try {
       return await call();
@@ -18,7 +19,7 @@ extension RefExtensions on Ref {
       LogService.log(
         message,
         source: source,
-        level: .error,
+        level: debug ? .debug : .error,
         originalError: error.originalError,
         stackTrace: error.stackTrace,
       );
