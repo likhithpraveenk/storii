@@ -33,5 +33,6 @@ class ServersNotifier extends _$ServersNotifier {
         .read(usersProvider.notifier)
         .deleteUsersByServer(server.url);
     await ref.read(appSettingsProvider.notifier).deleteSettings(users);
+    await ref.read(serversStoreProvider.notifier).remove(server.id);
   }
 }

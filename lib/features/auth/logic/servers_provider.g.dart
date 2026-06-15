@@ -33,7 +33,7 @@ final class ServersNotifierProvider
   ServersNotifier create() => ServersNotifier();
 }
 
-String _$serversNotifierHash() => r'1527cd6b9119d21c519bbadb3b37dabcc783ed15';
+String _$serversNotifierHash() => r'ca10a204c9a52f94224714bb47c82e4ce51e646d';
 
 abstract class _$ServersNotifier extends $StreamNotifier<List<Server>> {
   Stream<List<Server>> build();
