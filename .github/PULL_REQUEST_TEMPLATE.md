@@ -15,7 +15,7 @@ Closes #
 
 - [ ] `dart format .` and `dart fix --apply` have been run
 - [ ] No lint errors or warnings (infos for TODOs are okay)
-- [ ] Code generation has been run if models or providers were changed (`dart run build_runner build -d`)
+- [ ] Code generation has been run if models or providers were changed (`dart run build_runner build`)
 - [ ] No `print` statements introduced
 - [ ] Tested against an Audiobookshelf server
 
