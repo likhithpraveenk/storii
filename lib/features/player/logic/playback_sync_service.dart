@@ -76,6 +76,12 @@ class PlaybackSyncService {
     required bool keepRunning,
     bool playbackError = false,
   }) async {
+    final listened = _accumulator.snapshotAndReset(keepRunning: keepRunning);
+    if (listened.inMilliseconds < 200 && kind != .play) {
+      _accumulator.rollback(listened);
+      return;
+    }
+
     final position = getPosition();
     final event = PlaybackEvent(
       timestamp: DateTime.now(),
@@ -84,12 +90,6 @@ class PlaybackSyncService {
       playbackError: playbackError,
     );
     await history.addEvent(session.id, event, position: position);
-
-    final listened = _accumulator.snapshotAndReset(keepRunning: keepRunning);
-    if (listened.inMilliseconds < 200 && kind != .play) {
-      _accumulator.rollback(listened);
-      return;
-    }
 
     try {
       await onSync(listened, position);

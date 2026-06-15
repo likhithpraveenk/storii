@@ -18,6 +18,7 @@ import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
+import 'package:storii/features/player/models/app_playback_error.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
 part 'audio_providers.g.dart';
@@ -27,10 +28,13 @@ late final AppAudioHandler audioHandler;
 @riverpod
 Stream<AudioHandlerEvent> audioHandlerEvents(Ref ref) {
   return audioHandler.events.map((e) {
-    log('audio handler event: $e');
+    log('audio handler event: ${e.name}');
     return e;
   });
 }
+
+@riverpod
+Stream<AppPlaybackError> playbackErrors(Ref ref) => audioHandler.errors;
 
 @riverpod
 Stream<PlaybackState> playbackState(Ref ref) {
@@ -157,8 +161,8 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
         initialPosition: position,
       );
 
+      await audioHandler.statusStream.firstWhere((s) => s == .ready);
       state = const AudioPlayerState();
-      await audioHandler.processingStateStream.firstWhere((s) => s == .ready);
       await audioHandler.play();
     } catch (e, st) {
       final error = AppError.from(e, st);

@@ -805,4 +805,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorType => 'Type error';
+
+  @override
+  String get playbackErrorNetwork =>
+      'Connection issue. Audio may be interrupted';
+
+  @override
+  String get playbackErrorSource => 'audio file could not be loaded';
+
+  @override
+  String get playbackErrorDecoder => 'File format unsupported';
+
+  @override
+  String get playbackErrorUnknown => 'Something went wrong with playback';
 }

@@ -1,10 +1,10 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:audio_service/audio_service.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/chapter.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
+import 'package:storii/features/player/models/app_audio_source.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/audio_mime_helper.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -14,7 +14,7 @@ extension PlaybackSessionX on PlaybackSession {
   String get mediaItemIdKey =>
       episodeId != null ? '$libraryItemId$episodeId' : libraryItemId;
 
-  List<UriAudioSource> toAudioSources(
+  List<AppAudioSource> toAudioSources(
     Uri? serverUrl,
     String? token, {
     String? coverPath,
@@ -26,7 +26,7 @@ extension PlaybackSessionX on PlaybackSession {
               ?.resolve(ApiRoutes.itemCover(libraryItemId))
               .replace(queryParameters: {'raw': '1'});
     Duration accumulated = Duration.zero;
-    final sources = <UriAudioSource>[];
+    final sources = <AppAudioSource>[];
 
     List<Map<String, dynamic>> jsonChapters;
     if (chapters.isNotEmpty) {
@@ -98,31 +98,13 @@ extension PlaybackSessionX on PlaybackSession {
       final headers = isLocal
           ? <String, String>{}
           : {'Authorization': 'Bearer $token'};
-      final UriAudioSource source;
-
-      switch (mimeType) {
-        case .hls:
-          source = HlsAudioSource(
-            uri,
-            headers: headers,
-            tag: tag,
-            duration: duration,
-          );
-        case .dash:
-          source = DashAudioSource(
-            uri,
-            headers: headers,
-            tag: tag,
-            duration: duration,
-          );
-        default:
-          source = ProgressiveAudioSource(
-            uri,
-            headers: headers,
-            tag: tag,
-            duration: duration,
-          );
-      }
+      final source = AppAudioSource(
+        uri: uri,
+        headers: headers,
+        tag: tag,
+        duration: duration,
+        type: mimeType,
+      );
 
       sources.add(source);
     }
