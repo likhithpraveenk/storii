@@ -38,7 +38,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
         title: Material(
           type: .transparency,
           child: TextField(
