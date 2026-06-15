@@ -6,7 +6,7 @@ import 'package:storii/storage/local/playback_history_store.dart';
 part 'playback_history.g.dart';
 
 @Riverpod(keepAlive: true)
-class PlaybackHistory extends _$PlaybackHistory {
+class PlaybackHistoryNotifier extends _$PlaybackHistoryNotifier {
   PlaybackHistoryStore get _store =>
       ref.read(playbackHistoryStoreProvider.notifier);
 

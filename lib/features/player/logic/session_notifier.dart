@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -44,7 +45,11 @@ class SessionNotifier extends _$SessionNotifier {
     await ref.read(sessionStoreProvider.notifier).save(session);
 
     state = session;
-    log('session created for ${session.displayTitle}');
+    LogService.log(
+      'session created for ${session.displayTitle}',
+      source: 'SessionNotifier',
+      level: .info,
+    );
     return session;
   }
 
@@ -70,7 +75,11 @@ class SessionNotifier extends _$SessionNotifier {
     await ref.read(sessionStoreProvider.notifier).save(session);
 
     state = session;
-    log('local session created for ${session.displayTitle}');
+    LogService.log(
+      'local session created for ${session.displayTitle}',
+      source: 'SessionNotifier',
+      level: .info,
+    );
     return session;
   }
 
@@ -133,11 +142,15 @@ class SessionNotifier extends _$SessionNotifier {
               .read(sessionsApiProvider(user))
               .closeSession(sessionId: session.id),
           source: 'SessionNotifier',
-          logMessage: 'session close failed',
+          logMessage: 'session close failed for ${session.displayTitle}',
         );
       }
       await ref.read(sessionStoreProvider.notifier).delete(session.id);
-      log('session closed: ${session.id}');
+      LogService.log(
+        'session closed for ${session.displayTitle}',
+        source: 'SessionNotifier',
+        level: .info,
+      );
     } on AppError catch (_) {
     } finally {
       state = null;

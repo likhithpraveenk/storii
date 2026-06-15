@@ -1,14 +1,11 @@
-import 'dart:async';
-import 'dart:developer';
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/app/models/playback_event.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
-import 'package:storii/features/player/logic/listen_time_accumulator.dart';
 import 'package:storii/features/player/logic/playback_history.dart';
+import 'package:storii/features/player/logic/playback_sync_service.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/logic/sessions_cleanup.dart';
 import 'package:storii/features/player/logic/sync_interval_provider.dart';
@@ -17,118 +14,84 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 part 'session_sync_watcher.g.dart';
 
 @Riverpod(keepAlive: true)
-void sessionSyncWatcher(Ref ref) {
-  final session = ref.watch(sessionProvider);
+class SessionSyncWatcher extends _$SessionSyncWatcher {
+  PlaybackSyncService? _service;
 
-  ref.listen(socketStatusProvider, (prev, next) async {
-    final prevConnected = prev?.value ?? false;
-    final nextConnected = next.value ?? false;
-    if (!prevConnected && nextConnected) {
-      await ref
-          .read(authenticatedUserProvider.future)
-          .then((_) {
-            ref.read(sessionsCleanupProvider.notifier).cleanup();
-          })
-          .catchError((e) {
-            log('reconnect sync skipped: $e');
-          });
-    }
-  });
+  @override
+  void build() {
+    ref.onDispose(() async => await _service?.dispose());
 
-  if (session == null) return;
+    ref.listen(sessionProvider, (prev, session) async {
+      final sameSession = prev?.id == session?.id;
+      if (sameSession) return;
 
-  final interval = ref.watch(networkAwareSyncIntervalProvider);
-  final accumulator = ListenTimeAccumulator();
+      await _service?.dispose();
+      _service = null;
 
-  final history = ref.read(
-    playbackHistoryProvider(
-      mediaItemIdKey(session.libraryItemId, session.episodeId),
-    ).notifier,
-  );
+      if (session == null) return;
 
-  Future<void> sync(
-    PlaybackEventKind kind, {
-    required bool keepRunning,
-    bool playbackError = false,
-  }) async {
-    final position = audioHandler.currentPosition;
-
-    final event = PlaybackEvent(
-      timestamp: DateTime.now(),
-      position: position,
-      kind: kind,
-      playbackError: playbackError,
-    );
-    await history.addEvent(session.id, event, position: position);
-
-    final listened = accumulator.snapshotAndReset(keepRunning: keepRunning);
-    if (listened.inMilliseconds < 200) {
-      accumulator.rollback(listened);
-      return;
-    }
-
-    try {
-      await ref.read(sessionProvider.notifier).sync(listened, position);
-      await history.updateEvent(
-        event.copyWith(syncAttempt: true, syncSuccess: true),
-      );
-    } catch (_) {
-      accumulator.rollback(listened);
-      await history.updateEvent(
-        event.copyWith(syncAttempt: true, syncSuccess: false),
-      );
-    }
-  }
-
-  Future<void> stop() async {
-    await sync(.stop, keepRunning: false);
-    await ref.read(sessionProvider.notifier).close();
-    accumulator.reset();
-  }
-
-  ref.listen(audioHandlerEventsProvider, (_, next) async {
-    final event = next.value;
-    if (event == null) return;
-    switch (event) {
-      case .play:
-        accumulator.start();
-
-      case .buffering:
-        accumulator.pause();
-
-      case .bufferingComplete:
-        accumulator.start();
-
-      case .pause:
-        await sync(.pause, keepRunning: false);
-
-      case .seek:
-        await sync(.seek, keepRunning: ref.read(isPlayingProvider));
-
-      case .stop:
-        await stop();
-
-      case .complete:
-        await sync(.complete, keepRunning: false);
-        await ref
+      _service = PlaybackSyncService(
+        session: session,
+        history: ref.read(
+          playbackHistoryProvider(
+            mediaItemIdKey(session.libraryItemId, session.episodeId),
+          ).notifier,
+        ),
+        syncInterval: ref.read(networkAwareSyncIntervalProvider),
+        getPosition: () => audioHandler.currentPosition,
+        isPlaying: () => ref.read(isPlayingProvider),
+        onSync: (listened, position) =>
+            ref.read(sessionProvider.notifier).sync(listened, position),
+        onClose: () => ref.read(sessionProvider.notifier).close(),
+        onMarkComplete: () => ref
             .read(
               mediaProgressProvider(
                 session.libraryItemId,
                 session.episodeId,
               ).notifier,
             )
-            .markComplete();
-        accumulator.reset();
+            .markComplete(),
+      );
+    });
 
-      case .error:
-        await sync(.stop, keepRunning: false, playbackError: true);
-    }
-  });
+    ref.listen(audioHandlerEventsProvider, (_, next) {
+      switch (next.value) {
+        case .buffering:
+          _service?.onBuffering();
+        case .bufferingComplete:
+          _service?.onBufferingComplete();
+        case .play:
+          _service?.onPlay();
+        case .pause:
+          _service?.onPause();
+        case .seek:
+          _service?.onSeek();
+        case .stop:
+          _service?.onStop();
+        case .complete:
+          _service?.onComplete();
+        case .error:
+          _service?.onError();
+        default:
+      }
+    });
 
-  final timer = Timer.periodic(interval, (_) async {
-    if (!ref.read(isPlayingProvider)) return;
-    await sync(.sync, keepRunning: true);
-  });
-
-  ref.onDispose(timer.cancel);
+    ref.listen(socketStatusProvider, (prev, next) async {
+      final wasConnected = prev?.value ?? false;
+      final isConnected = next.value ?? false;
+      if (!wasConnected && isConnected) {
+        await ref
+            .read(authenticatedUserProvider.future)
+            .then((_) => ref.read(sessionsCleanupProvider.notifier).cleanup())
+            .catchError(
+              (e) => LogService.log(
+                'reconnect sync skipped',
+                originalError: e,
+                level: .warning,
+                source: 'SessionSyncWatcher',
+              ),
+            );
+      }
+    });
+  }
 }
