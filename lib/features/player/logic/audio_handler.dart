@@ -7,6 +7,8 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/chapter.dart';
 import 'package:storii/features/player/logic/position_resolver.dart';
 import 'package:storii/features/player/models/app_audio_player.dart';
+import 'package:storii/features/player/models/app_audio_source.dart';
+import 'package:storii/features/player/models/app_playback_state.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 enum AudioHandlerEvent {
@@ -29,7 +31,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final Duration Function() getSkipForward;
   final Duration Function() getSkipBackward;
 
-  AppProcessingState? _lastProcessingState;
+  AppPlaybackStatus? _lastStatus;
 
   AppAudioHandler({
     required this._player,
@@ -62,18 +64,17 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         speed: speed,
       ),
     );
-    _player.playbackEventStream.listen((event) {
-      if (event.processingState == .completed) _eventController.add(.complete);
-      if (event.processingState == .buffering) _eventController.add(.buffering);
-      if (_lastProcessingState == .buffering &&
-          event.processingState == .ready &&
-          _player.playing) {
+    _player.stateStream.listen((state) {
+      // log('state stream: $state');
+      if (state.status == .completed) _eventController.add(.complete);
+      if (state.status == .buffering) _eventController.add(.buffering);
+      if (_lastStatus == .buffering && state.status == .ready) {
         _eventController.add(.bufferingComplete);
       }
 
-      _lastProcessingState = event.processingState;
+      _lastStatus = state.status;
 
-      _updatePlaybackState();
+      _updatePlaybackState(state);
     }, onError: logError);
     setSpeed(speed);
     _initAudioSession();
@@ -84,41 +85,37 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     await session.configure(const AudioSessionConfiguration.speech());
   }
 
-  void _updatePlaybackState() {
-    if (_player.processingState == .idle ||
-        _player.processingState == .loading) {
-      return;
-    }
+  void _updatePlaybackState(AppPlaybackState state) {
+    if (state.status == .idle) return;
 
     final resolved = resolver.resolveChapterFromTrack(
-      _player.currentIndex,
-      _player.position,
+      state.index,
+      state.position,
     );
     if (resolved == null) return;
 
     mediaItem.add(queue.value.elementAtOrNull(resolved.chapterIndex));
 
     final resolvedBuffered = resolver.resolveChapterFromTrack(
-      _player.currentIndex,
-      _player.bufferedPosition,
+      state.index,
+      state.bufferedPosition,
     );
 
     final oldPlaybackState = playbackState.value;
     playbackState.add(
       playbackState.value.copyWith(
-        processingState: switch (_player.processingState) {
+        processingState: switch (state.status) {
           .idle => .idle,
-          .loading => .loading,
           .buffering => .buffering,
           .ready => .ready,
           .completed => .completed,
         },
-        playing: _player.playing,
+        playing: _player.isPlaying,
         updatePosition: resolved.chapterPosition,
         bufferedPosition:
             resolvedBuffered?.chapterPosition ??
             oldPlaybackState.bufferedPosition,
-        speed: _player.speed,
+        speed: state.speed,
         queueIndex: resolved.chapterIndex,
       ),
     );
@@ -135,39 +132,36 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     _eventController.add(.error);
   }
 
-  Stream<AppProcessingState> get processingStateStream =>
-      _player.processingStateStream;
+  Stream<AppPlaybackStatus> get statusStream =>
+      _player.stateStream.map((s) => s.status).distinct();
 
   Stream<AudioHandlerEvent> get events => _eventController.stream;
 
   // position for sync operations
   Duration get currentPosition =>
-      resolver.globalPositionFromTrack(_player.currentIndex, _player.position);
+      resolver.globalPositionFromTrack(_player.index, _player.position);
 
-  Stream<Duration> get positionStream => Rx.combineLatest2(
-    _player.currentIndexStream.startWith(_player.currentIndex),
-    _player.positionStream,
-    (index, position) => resolver.globalPositionFromTrack(index, position),
-  ).throttleTime(const Duration(milliseconds: 200));
+  Stream<Duration> get positionStream => _player.positionStream
+      .map(
+        (position) => resolver.globalPositionFromTrack(_player.index, position),
+      )
+      .throttleTime(const Duration(milliseconds: 200));
 
-  Stream<Duration> get chapterPositionStream => Rx.combineLatest2(
-    _player.currentIndexStream.startWith(_player.currentIndex),
-    _player.positionStream,
-    (index, position) => resolver.chapterPositionFromTrack(index, position),
-  ).throttleTime(const Duration(milliseconds: 200));
+  Stream<Duration> get chapterPositionStream => _player.positionStream
+      .map(
+        (position) =>
+            resolver.chapterPositionFromTrack(_player.index, position),
+      )
+      .throttleTime(const Duration(milliseconds: 200));
 
-  Stream<Chapter?> get currentChapterStream => Rx.combineLatest2(
-    _player.currentIndexStream.startWith(_player.currentIndex),
-    _player.positionStream,
-    (index, position) => resolver.chapterFromTrack(index, position),
-  ).distinct();
+  Stream<Chapter?> get currentChapterStream => _player.positionStream
+      .map((position) => resolver.chapterFromTrack(_player.index, position))
+      .distinct();
 
   @override
-  Future<void> setSpeed(double speed) async {
-    await _player.setSpeed(speed);
-  }
+  Future<void> setSpeed(double speed) => _player.setSpeed(speed);
 
-  double get volume => _player.volume;
+  double get volume => _player.state.volume;
 
   Stream<double> get volumeStream => _player.volumeStream;
 
@@ -180,7 +174,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     required int initialIndex,
     required Duration initialPosition,
   }) async {
-    final trackItems = sources.map((s) => s.tag as MediaItem).toList();
+    final trackItems = sources.map((s) => s.tag).toList();
 
     resolver = PositionResolver.from(trackItems);
     final chapterItems = resolver.chapters
@@ -197,7 +191,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   Future<void> togglePlay() async {
-    if (_player.playing) {
+    if (_player.isPlaying) {
       await pause();
     } else {
       await play();
@@ -291,4 +285,9 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   @override
   Future<void> onTaskRemoved() => stop();
+
+  Future<void> dispose() async {
+    await _eventController.close();
+    await _player.dispose();
+  }
 }

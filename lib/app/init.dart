@@ -79,7 +79,7 @@ Future<void> setupDownloadServices() async {
 Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
   return await AudioService.init(
     builder: () => AppAudioHandler(
-      player: JustAudioPlayer(),
+      player: container.read(justAudioPlayerProvider),
       speed: container.read(speedProvider),
       getSkipForward: () => container.read(skipForwardProvider),
       getSkipBackward: () => container.read(skipBackwardProvider),

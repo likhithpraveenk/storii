@@ -1,52 +1,64 @@
 import 'package:just_audio/just_audio.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/features/player/models/app_audio_player.dart';
+import 'package:storii/features/player/models/app_audio_source.dart';
+import 'package:storii/features/player/models/app_playback_state.dart';
+
+part 'just_audio_player.g.dart';
+
+@Riverpod(keepAlive: true)
+AppAudioPlayer justAudioPlayer(Ref ref) {
+  final player = JustAudioPlayer(
+    AudioPlayer(
+      audioLoadConfiguration: const AudioLoadConfiguration(
+        // TODO: settings for audio buffer
+        androidLoadControl: AndroidLoadControl(),
+      ),
+    ),
+  );
+  ref.onDispose(player.dispose);
+  return player;
+}
 
 class JustAudioPlayer implements AppAudioPlayer {
-  JustAudioPlayer() {
-    _player = AudioPlayer();
-  }
+  JustAudioPlayer(this._player);
 
   late final AudioPlayer _player;
 
   @override
-  bool get playing => _player.playing;
-
-  @override
-  AppProcessingState get processingState => _mapState(_player.processingState);
-
-  @override
-  int? get currentIndex => _player.currentIndex;
+  int? get index => _player.currentIndex;
 
   @override
   Duration get position => _player.position;
 
   @override
-  Duration get bufferedPosition => _player.bufferedPosition;
+  bool get isPlaying => _player.playing;
 
   @override
-  double get speed => _player.speed;
+  AppPlaybackState get state => .new(
+    status: _mapState(_player.processingState),
+    index: _player.currentIndex,
+    position: _player.position,
+    bufferedPosition: _player.bufferedPosition,
+    isPlaying: _player.playing,
+    speed: _player.speed,
+    volume: _player.volume,
+  );
 
   @override
-  double get volume => _player.volume;
-
-  @override
-  Stream<AppPlaybackEvent> get playbackEventStream =>
-      _player.playbackEventStream.map(
-        (event) => AppPlaybackEvent(
-          processingState: _mapState(event.processingState),
-          currentIndex: event.currentIndex,
-          position: event.updatePosition,
-          bufferedPosition: event.bufferedPosition,
-        ),
-      );
-
-  @override
-  Stream<AppProcessingState> get processingStateStream =>
-      _player.processingStateStream.map(_mapState);
-
-  @override
-  Stream<int?> get currentIndexStream => _player.currentIndexStream;
+  Stream<AppPlaybackState> get stateStream => _player.playbackEventStream.map(
+    (event) => .new(
+      status: _mapState(event.processingState),
+      index: event.currentIndex,
+      position: event.updatePosition,
+      bufferedPosition: event.bufferedPosition,
+      error: event.errorMessage,
+      isPlaying: _player.playing,
+      speed: _player.speed,
+      volume: _player.volume,
+    ),
+  );
 
   @override
   Stream<Duration> get positionStream => _player.positionStream;
@@ -123,10 +135,10 @@ class JustAudioPlayer implements AppAudioPlayer {
     }
   }
 
-  AppProcessingState _mapState(ProcessingState state) {
+  AppPlaybackStatus _mapState(ProcessingState state) {
     return switch (state) {
       .idle => .idle,
-      .loading => .loading,
+      .loading => .buffering,
       .buffering => .buffering,
       .ready => .ready,
       .completed => .completed,

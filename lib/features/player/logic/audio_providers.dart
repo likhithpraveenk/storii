@@ -27,7 +27,7 @@ late final AppAudioHandler audioHandler;
 @riverpod
 Stream<AudioHandlerEvent> audioHandlerEvents(Ref ref) {
   return audioHandler.events.map((e) {
-    log('audio handler event: $e');
+    log('audio handler event: ${e.name}');
     return e;
   });
 }
@@ -157,8 +157,8 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
         initialPosition: position,
       );
 
+      await audioHandler.statusStream.firstWhere((s) => s == .ready);
       state = const AudioPlayerState();
-      await audioHandler.processingStateStream.firstWhere((s) => s == .ready);
       await audioHandler.play();
     } catch (e, st) {
       final error = AppError.from(e, st);

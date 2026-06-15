@@ -4,7 +4,7 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/chapter.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
-import 'package:storii/features/player/models/app_audio_player.dart';
+import 'package:storii/features/player/models/app_audio_source.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/audio_mime_helper.dart';
 import 'package:storii/shared/helpers/extensions.dart';
