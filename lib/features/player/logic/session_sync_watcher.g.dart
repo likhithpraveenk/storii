@@ -9,12 +9,11 @@ part of 'session_sync_watcher.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(sessionSyncWatcher)
+@ProviderFor(SessionSyncWatcher)
 final sessionSyncWatcherProvider = SessionSyncWatcherProvider._();
 
 final class SessionSyncWatcherProvider
-    extends $FunctionalProvider<void, void, void>
-    with $Provider<void> {
+    extends $NotifierProvider<SessionSyncWatcher, void> {
   SessionSyncWatcherProvider._()
     : super(
         from: null,
@@ -31,13 +30,7 @@ final class SessionSyncWatcherProvider
 
   @$internal
   @override
-  $ProviderElement<void> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  void create(Ref ref) {
-    return sessionSyncWatcher(ref);
-  }
+  SessionSyncWatcher create() => SessionSyncWatcher();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(void value) {
@@ -49,4 +42,22 @@ final class SessionSyncWatcherProvider
 }
 
 String _$sessionSyncWatcherHash() =>
-    r'5cfafd565622366099ea3200e76062b3fca33a89';
+    r'9c5dd46bea3c4c34051a9d8f8d623a11a26785d2';
+
+abstract class _$SessionSyncWatcher extends $Notifier<void> {
+  void build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<void, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<void, void>,
+              void,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
