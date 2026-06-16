@@ -23,7 +23,7 @@ Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
     sdkVersion,
   ) = switch (device) {
     AndroidDeviceInfo d => (
-      '$appName just_audio',
+      kMediaPlayer,
       d.id,
       '${d.brand} ${d.name}',
       d.manufacturer,
@@ -31,7 +31,7 @@ Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
       d.version.sdkInt.toString(),
     ),
     IosDeviceInfo d => (
-      '$appName just_audio',
+      kMediaPlayer,
       d.identifierForVendor ?? '',
       (d.name),
       'Apple',
