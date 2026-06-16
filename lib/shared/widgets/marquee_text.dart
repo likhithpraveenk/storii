@@ -13,6 +13,9 @@ class MarqueeText extends StatefulWidget {
 
 class _MarqueeTextState extends State<MarqueeText> {
   late final ScrollController _scrollController;
+  static const _gap = 64.0;
+  static const _speed = 40.0;
+  static const _pause = Duration(seconds: 2);
 
   @override
   void initState() {
@@ -21,25 +24,29 @@ class _MarqueeTextState extends State<MarqueeText> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _scroll());
   }
 
-  void _scroll() async {
+  double _textWidth() {
+    final painter = TextPainter(
+      text: TextSpan(text: widget.text, style: widget.style),
+      textDirection: .ltr,
+      maxLines: 1,
+    )..layout();
+    return painter.width;
+  }
+
+  Future<void> _scroll() async {
     while (mounted &&
         _scrollController.hasClients &&
         _scrollController.position.hasContentDimensions) {
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(_pause);
 
       if (!mounted || !_scrollController.hasClients) return;
 
-      final maxExtent = _scrollController.position.maxScrollExtent;
-      const speed = 40.0; // pixels per second
-      final durationInSeconds = (maxExtent / speed).round();
-
+      final loopWidth = _textWidth() + _gap;
       await _scrollController.animateTo(
-        maxExtent,
-        duration: Duration(seconds: durationInSeconds.clamp(1, 10)),
+        loopWidth,
+        duration: Duration(milliseconds: (loopWidth / _speed * 1000).round()),
         curve: Curves.linear,
       );
-
-      await Future.delayed(const Duration(seconds: 2));
 
       if (mounted && _scrollController.hasClients) {
         _scrollController.jumpTo(0.0);
@@ -58,11 +65,12 @@ class _MarqueeTextState extends State<MarqueeText> {
     return SingleChildScrollView(
       controller: _scrollController,
       scrollDirection: .horizontal,
-      child: Text(
-        widget.text,
-        style: widget.style,
-        maxLines: 1,
-        textAlign: widget.textAlign,
+      child: Row(
+        children: [
+          Text(widget.text, style: widget.style, maxLines: 1),
+          const SizedBox(width: _gap),
+          Text(widget.text, style: widget.style, maxLines: 1),
+        ],
       ),
     );
   }
