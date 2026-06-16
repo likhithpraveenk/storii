@@ -37,7 +37,7 @@ class SessionSyncWatcher extends _$SessionSyncWatcher {
             mediaItemIdKey(session.libraryItemId, session.episodeId),
           ).notifier,
         ),
-        syncInterval: ref.read(networkAwareSyncIntervalProvider),
+        getSyncInterval: () => ref.read(networkAwareSyncIntervalProvider),
         getPosition: () => audioHandler.currentPosition,
         isPlaying: () => ref.read(isPlayingProvider),
         onSync: (listened, position) =>
