@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/features/settings/ui/player_settings/audio_buffer_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/skip_tiles.dart';
 import 'package:storii/features/settings/ui/player_settings/sync_interval_tile.dart';
 
@@ -38,7 +39,12 @@ class PlayerSettingsScreen extends ConsumerWidget {
         title: Text(l10n.playerSettings, style: textTheme.titleLarge),
       ),
       body: const Column(
-        children: [SkipForwardTile(), SkipBackwardTile(), SyncIntervalTile()],
+        children: [
+          SkipForwardTile(),
+          SkipBackwardTile(),
+          SyncIntervalTile(),
+          AudioBufferTile(),
+        ],
       ),
     );
   }

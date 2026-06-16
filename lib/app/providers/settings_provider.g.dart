@@ -246,6 +246,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setShowChapterPositionInHistory(bool value) =>
       _save(state?.copyWith(showChapterPositionInHistory: value));
+
+  Future<void> setMinBufferDuration(Duration value) =>
+      _save(state?.copyWith(minBufferDuration: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -401,4 +404,13 @@ final showChapterPositionInHistoryProvider = Provider<bool>(
     ),
   ),
   name: 'showChapterPositionInHistoryProvider',
+);
+
+final minBufferDurationProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.minBufferDuration ?? DefaultUserSettings.minBufferDuration,
+    ),
+  ),
+  name: 'minBufferDurationProvider',
 );

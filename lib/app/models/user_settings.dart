@@ -27,6 +27,7 @@ class DefaultUserSettings {
   static const historyLimit = 200;
   static const downloadOnUnmeteredOnly = false;
   static const showChapterPositionInHistory = false;
+  static const minBufferDuration = Duration(seconds: 15);
 }
 
 @freezed
@@ -73,6 +74,8 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.showChapterPositionInHistory)
     bool showChapterPositionInHistory,
+
+    @Default(DefaultUserSettings.minBufferDuration) Duration minBufferDuration,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

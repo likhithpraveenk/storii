@@ -735,6 +735,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Open a GitHub issue for any bug you encountered';
 
   @override
+  String get audioBufferDuration => 'Audio Buffer Duration';
+
+  @override
+  String get audioBufferDurationDescription =>
+      'How much audio to keep ahead of playback. Higher values reduce interruptions on slow connections';
+
+  @override
   String get avoidMobileData => 'Avoid mobile data';
 
   @override
@@ -805,6 +812,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorType => 'Type error';
+
+  @override
+  String get changeRestartRequired => 'Changes take effect after restart';
 
   @override
   String get playbackErrorNetwork =>

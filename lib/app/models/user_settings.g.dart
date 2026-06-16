@@ -59,6 +59,9 @@ _UserSettings _$UserSettingsFromJson(
   showChapterPositionInHistory:
       json['showChapterPositionInHistory'] as bool? ??
       DefaultUserSettings.showChapterPositionInHistory,
+  minBufferDuration: json['minBufferDuration'] == null
+      ? DefaultUserSettings.minBufferDuration
+      : Duration(microseconds: (json['minBufferDuration'] as num).toInt()),
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -83,6 +86,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'historyLimit': instance.historyLimit,
   'downloadOnUnmeteredOnly': instance.downloadOnUnmeteredOnly,
   'showChapterPositionInHistory': instance.showChapterPositionInHistory,
+  'minBufferDuration': instance.minBufferDuration.inMicroseconds,
 };
 
 const _$NavTargetEnumMap = {

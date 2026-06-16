@@ -1456,6 +1456,18 @@ abstract class AppLocalizations {
   /// **'Open a GitHub issue for any bug you encountered'**
   String get foundBugQSubtitle;
 
+  /// No description provided for @audioBufferDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio Buffer Duration'**
+  String get audioBufferDuration;
+
+  /// No description provided for @audioBufferDurationDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'How much audio to keep ahead of playback. Higher values reduce interruptions on slow connections'**
+  String get audioBufferDurationDescription;
+
   /// No description provided for @avoidMobileData.
   ///
   /// In en, this message translates to:
@@ -1593,6 +1605,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Type error'**
   String get errorType;
+
+  /// No description provided for @changeRestartRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes take effect after restart'**
+  String get changeRestartRequired;
 
   /// No description provided for @playbackErrorNetwork.
   ///
