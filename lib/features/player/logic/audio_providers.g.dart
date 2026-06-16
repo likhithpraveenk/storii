@@ -539,6 +539,57 @@ abstract class _$VolumeControl extends $Notifier<double> {
   }
 }
 
+@ProviderFor(LocalSpeed)
+final localSpeedProvider = LocalSpeedProvider._();
+
+final class LocalSpeedProvider extends $NotifierProvider<LocalSpeed, double> {
+  LocalSpeedProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'localSpeedProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$localSpeedHash();
+
+  @$internal
+  @override
+  LocalSpeed create() => LocalSpeed();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(double value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<double>(value),
+    );
+  }
+}
+
+String _$localSpeedHash() => r'81a20c47998ebc2537c7f7290b4888ec051b342a';
+
+abstract class _$LocalSpeed extends $Notifier<double> {
+  double build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<double, double>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<double, double>,
+              double,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}
+
 @ProviderFor(audioSettingsWatcher)
 final audioSettingsWatcherProvider = AudioSettingsWatcherProvider._();
 
@@ -579,4 +630,4 @@ final class AudioSettingsWatcherProvider
 }
 
 String _$audioSettingsWatcherHash() =>
-    r'd87615e1af0ed39a75a2d9d5831d83889ebfe539';
+    r'49473a06d199a3ddcd990924cdcb9783520ac9b3';
