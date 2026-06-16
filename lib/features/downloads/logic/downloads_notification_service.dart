@@ -26,7 +26,11 @@ class DownloadsNotificationService {
     const androidInit = AndroidInitializationSettings(
       'drawable/ic_notification',
     );
-    const initSettings = InitializationSettings(android: androidInit);
+    const iosInit = IOSInitializationSettings();
+    const initSettings = InitializationSettings(
+      android: androidInit,
+      iOS: iosInit,
+    );
     await _plugin.initialize(settings: initSettings);
   }
 
