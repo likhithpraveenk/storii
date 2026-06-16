@@ -28,7 +28,7 @@ final libraries = await libraryApi.getAll();
 ## Code gen
 
 ```bash
-dart run build_runner build -d
+dart run build_runner build
 ```
 
 ## Acknowledgements
