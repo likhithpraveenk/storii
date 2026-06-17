@@ -352,5 +352,10 @@
   "playbackErrorNetwork": "Connection issue. Audio may be interrupted",
   "playbackErrorSource": "audio file could not be loaded",
   "playbackErrorDecoder": "File format unsupported",
-  "playbackErrorUnknown": "Something went wrong with playback"
+  "playbackErrorUnknown": "Something went wrong with playback",
+  "codec": "Codec",
+  "bitrate": "Bitrate",
+  "channels": "Channels",
+  "format": "Format",
+  "path": "Path"
 }

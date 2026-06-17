@@ -11,12 +11,13 @@ String cleanHtml(String data) {
       .trim();
 }
 
-String formatBytes(int bytes) {
-  const units = [
-    (1073741824, 'GB'), // 1024^3
-    (1048576, 'MB'), // 1024^2
-    (1024, 'KB'),
-  ];
+String formatBytes(int? bytes, {bool use1000 = false}) {
+  if (bytes == null) return '-';
+
+  const properUnits = [(1073741824, 'GB'), (1048576, 'MB'), (1024, 'KB')];
+  const uglyUnits = [(1000000000, 'GB'), (1000000, 'MB'), (1000, 'KB')];
+
+  final units = use1000 ? uglyUnits : properUnits;
 
   final formatter = NumberFormat('###.#');
 
@@ -27,6 +28,22 @@ String formatBytes(int bytes) {
   }
 
   return '$bytes B';
+}
+
+String formatBitrate(int? bitrate) {
+  if (bitrate == null) return '-';
+
+  const units = [(1000000000, 'Gbps'), (1000000, 'Mbps'), (1000, 'kbps')];
+
+  final formatter = NumberFormat('###.#');
+
+  for (final (value, label) in units) {
+    if (bitrate >= value) {
+      return '${formatter.format((bitrate / value))} $label';
+    }
+  }
+
+  return '$bitrate bps';
 }
 
 Future<void> launchUrlHelper(BuildContext context, String url) async {

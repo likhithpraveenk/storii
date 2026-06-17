@@ -828,4 +828,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get playbackErrorUnknown => 'Something went wrong with playback';
+
+  @override
+  String get codec => 'Codec';
+
+  @override
+  String get bitrate => 'Bitrate';
+
+  @override
+  String get channels => 'Channels';
+
+  @override
+  String get format => 'Format';
+
+  @override
+  String get path => 'Path';
 }

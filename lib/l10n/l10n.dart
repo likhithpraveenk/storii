@@ -1635,6 +1635,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong with playback'**
   String get playbackErrorUnknown;
+
+  /// No description provided for @codec.
+  ///
+  /// In en, this message translates to:
+  /// **'Codec'**
+  String get codec;
+
+  /// No description provided for @bitrate.
+  ///
+  /// In en, this message translates to:
+  /// **'Bitrate'**
+  String get bitrate;
+
+  /// No description provided for @channels.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get channels;
+
+  /// No description provided for @format.
+  ///
+  /// In en, this message translates to:
+  /// **'Format'**
+  String get format;
+
+  /// No description provided for @path.
+  ///
+  /// In en, this message translates to:
+  /// **'Path'**
+  String get path;
 }
 
 class _AppLocalizationsDelegate
