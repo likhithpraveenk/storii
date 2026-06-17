@@ -19,7 +19,7 @@ class DefaultUserSettings {
   static const NavigationDestinationLabelBehavior navLabelBehavior =
       .alwaysShow;
   static const dateTimeFormat = 'dd MMM y';
-  static const String fontFamily = 'AtkinsonHyperlegibleNext';
+  static const String? fontFamily = null;
   static const fontScale = 1.0;
   static const skipForward = Duration(seconds: 30);
   static const skipBackward = Duration(seconds: 10);
@@ -27,6 +27,7 @@ class DefaultUserSettings {
   static const historyLimit = 200;
   static const downloadOnUnmeteredOnly = false;
   static const showChapterPositionInHistory = false;
+  static const useBinaryBytes = true;
   static const minBufferDuration = Duration(seconds: 15);
 }
 
@@ -57,7 +58,7 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.dateTimeFormat) String dateTimeFormat,
 
-    @Default(DefaultUserSettings.fontFamily) String? fontFamily,
+    @Default('AtkinsonHyperlegibleNext') String? fontFamily,
 
     @Default(DefaultUserSettings.fontScale) double fontScale,
 
@@ -74,6 +75,8 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.showChapterPositionInHistory)
     bool showChapterPositionInHistory,
+
+    @Default(DefaultUserSettings.useBinaryBytes) bool useBinaryBytes,
 
     @Default(DefaultUserSettings.minBufferDuration) Duration minBufferDuration,
   }) = _UserSettings;

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
 
-class DownloadTrackProgress extends StatelessWidget {
+class DownloadTrackProgress extends ConsumerWidget {
   const DownloadTrackProgress({super.key, required this.item});
   final DownloadItem item;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final useBinary = ref.watch(useBinaryBytesProvider);
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
 
@@ -38,7 +40,7 @@ class DownloadTrackProgress extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  _trackLabel(track),
+                  _trackLabel(track, useBinary),
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: scheme.onSurfaceVariant,
                   ),
@@ -65,8 +67,10 @@ class DownloadTrackProgress extends StatelessWidget {
     return (t.bytesReceived / t.bytesTotal).clamp(0.0, 1.0);
   }
 
-  String _trackLabel(DownloadTrack t) {
-    return '${formatBytes(t.bytesReceived)} / ${formatBytes(t.bytesTotal)}';
+  String _trackLabel(DownloadTrack t, bool useBinary) {
+    final received = formatBytes(t.bytesReceived, useBinary: useBinary);
+    final total = formatBytes(t.bytesTotal, useBinary: useBinary);
+    return '$received / $total';
   }
 
   Color _trackColor(DownloadTrack t, ColorScheme scheme) => switch (t.status) {
@@ -76,15 +80,19 @@ class DownloadTrackProgress extends StatelessWidget {
   };
 }
 
-class DownloadStatusRow extends StatelessWidget {
+class DownloadStatusRow extends ConsumerWidget {
   const DownloadStatusRow({super.key, required this.item});
 
   final DownloadItem item;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final useBinary = ref.watch(useBinaryBytesProvider);
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+
+    final received = formatBytes(item.receivedBytes, useBinary: useBinary);
+    final total = formatBytes(item.totalBytes, useBinary: useBinary);
 
     return switch (item.status) {
       .queued => Row(
@@ -102,12 +110,12 @@ class DownloadStatusRow extends StatelessWidget {
           ),
           if (item.totalBytes > 0) ...[
             Text(' · ', style: textTheme.labelSmall),
-            Text(formatBytes(item.totalBytes), style: textTheme.labelSmall),
+            Text(total, style: textTheme.labelSmall),
           ],
         ],
       ),
       .completed => Text(
-        formatBytes(item.totalBytes),
+        total,
         style: textTheme.labelSmall?.copyWith(color: scheme.primary),
       ),
       .failed => Text(
@@ -117,7 +125,7 @@ class DownloadStatusRow extends StatelessWidget {
       .paused => Text(
         '${l10n.paused}'
         ' · '
-        '${formatBytes(item.receivedBytes)} / ${formatBytes(item.totalBytes)}',
+        '$received / $total',
         style: textTheme.labelSmall?.copyWith(color: scheme.onSurfaceVariant),
       ),
     };
@@ -168,7 +176,14 @@ void showDownloadsDeleteDialog(
     body: Column(
       children: [
         Text(item.title),
-        Text(l10n.willBeFreed(formatBytes(item.receivedBytes))),
+        Text(
+          l10n.willBeFreed(
+            formatBytes(
+              item.receivedBytes,
+              useBinary: ref.read(useBinaryBytesProvider),
+            ),
+          ),
+        ),
       ],
     ),
     actionLabel: l10n.remove,

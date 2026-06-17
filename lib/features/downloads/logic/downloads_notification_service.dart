@@ -66,6 +66,7 @@ class DownloadsNotificationService {
     required bool isFailed,
     required bool isPaused,
     int? totalBytes,
+    required bool useBinary,
   }) async {
     String body = '$progress%';
     if (isComplete) {
@@ -76,7 +77,7 @@ class DownloadsNotificationService {
       body = 'Download paused';
     }
     if (totalBytes != null) {
-      body = '$body - ${formatBytes(totalBytes)}';
+      body = '$body - ${formatBytes(totalBytes, useBinary: useBinary)}';
     }
 
     // final actions = <AndroidNotificationAction>[

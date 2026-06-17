@@ -11,13 +11,13 @@ String cleanHtml(String data) {
       .trim();
 }
 
-String formatBytes(int? bytes, {bool use1000 = false}) {
+String formatBytes(int? bytes, {bool useBinary = true}) {
   if (bytes == null) return '-';
 
   const properUnits = [(1073741824, 'GB'), (1048576, 'MB'), (1024, 'KB')];
   const uglyUnits = [(1000000000, 'GB'), (1000000, 'MB'), (1000, 'KB')];
 
-  final units = use1000 ? uglyUnits : properUnits;
+  final units = useBinary ? properUnits : uglyUnits;
 
   final formatter = NumberFormat('###.#');
 

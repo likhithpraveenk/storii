@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/item/ui/audio_tracks_sheet.dart';
@@ -99,6 +100,7 @@ class ItemDetailScreen extends ConsumerWidget {
                           context,
                           tracks: item.tracks,
                           audioFiles: item.audioFiles,
+                          useBinaryBytes: ref.read(useBinaryBytesProvider),
                         );
                       },
                     ),

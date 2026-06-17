@@ -843,4 +843,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get path => 'Path';
+
+  @override
+  String get binaryUnits => 'Binary units';
+
+  @override
+  String get binaryUnitsSubtitle => '1 KB = 1024 B';
+
+  @override
+  String get decimalUnits => 'Decimal units';
+
+  @override
+  String get decimalUnitsSubtitle => '1 KB = 1000 B';
 }

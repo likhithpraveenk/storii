@@ -1665,6 +1665,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Path'**
   String get path;
+
+  /// No description provided for @binaryUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'Binary units'**
+  String get binaryUnits;
+
+  /// No description provided for @binaryUnitsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'1 KB = 1024 B'**
+  String get binaryUnitsSubtitle;
+
+  /// No description provided for @decimalUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'Decimal units'**
+  String get decimalUnits;
+
+  /// No description provided for @decimalUnitsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'1 KB = 1000 B'**
+  String get decimalUnitsSubtitle;
 }
 
 class _AppLocalizationsDelegate

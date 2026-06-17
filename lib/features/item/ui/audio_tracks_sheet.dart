@@ -10,6 +10,7 @@ void showAudioTracksSheet(
   BuildContext context, {
   required List<AudioTrack> tracks,
   required List<AudioFile> audioFiles,
+  bool useBinaryBytes = true,
 }) {
   showModalBottomSheet(
     context: context,
@@ -46,6 +47,7 @@ void showAudioTracksSheet(
                   audioFile: audioFiles.length > index
                       ? audioFiles[index]
                       : null,
+                  useBinaryBytes: useBinaryBytes,
                 ),
               ),
             ),
@@ -61,11 +63,13 @@ class _AudioTrackTile extends StatefulWidget {
     required this.track,
     required this.index,
     this.audioFile,
+    required this.useBinaryBytes,
   });
 
   final AudioTrack track;
   final int index;
   final AudioFile? audioFile;
+  final bool useBinaryBytes;
 
   @override
   State<_AudioTrackTile> createState() => _AudioTrackTileState();
@@ -127,7 +131,7 @@ class _AudioTrackTileState extends State<_AudioTrackTile> {
                 ),
                 if (size != null)
                   Text(
-                    formatBytes(size),
+                    formatBytes(size, useBinary: widget.useBinaryBytes),
                     style: textTheme.labelSmall?.copyWith(
                       color: scheme.onSurfaceVariant,
                     ),
