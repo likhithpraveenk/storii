@@ -1689,6 +1689,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'1 KB = 1000 B'**
   String get decimalUnitsSubtitle;
+
+  /// No description provided for @marqueeSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Text Scroll Speed'**
+  String get marqueeSpeed;
 }
 
 class _AppLocalizationsDelegate

@@ -29,6 +29,7 @@ class DefaultUserSettings {
   static const showChapterPositionInHistory = false;
   static const useBinaryBytes = true;
   static const minBufferDuration = Duration(seconds: 15);
+  static const marqueeSpeed = 40.0;
 }
 
 @freezed
@@ -79,6 +80,8 @@ sealed class UserSettings with _$UserSettings {
     @Default(DefaultUserSettings.useBinaryBytes) bool useBinaryBytes,
 
     @Default(DefaultUserSettings.minBufferDuration) Duration minBufferDuration,
+
+    @Default(DefaultUserSettings.marqueeSpeed) double marqueeSpeed,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

@@ -252,6 +252,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setMinBufferDuration(Duration value) =>
       _save(state?.copyWith(minBufferDuration: value));
+
+  Future<void> setMarqueeSpeed(double value) =>
+      _save(state?.copyWith(marqueeSpeed: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -425,4 +428,13 @@ final minBufferDurationProvider = Provider<Duration>(
     ),
   ),
   name: 'minBufferDurationProvider',
+);
+
+final marqueeSpeedProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.marqueeSpeed ?? DefaultUserSettings.marqueeSpeed,
+    ),
+  ),
+  name: 'marqueeSpeedProvider',
 );

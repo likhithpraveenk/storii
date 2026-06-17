@@ -64,6 +64,9 @@ _UserSettings _$UserSettingsFromJson(
   minBufferDuration: json['minBufferDuration'] == null
       ? DefaultUserSettings.minBufferDuration
       : Duration(microseconds: (json['minBufferDuration'] as num).toInt()),
+  marqueeSpeed:
+      (json['marqueeSpeed'] as num?)?.toDouble() ??
+      DefaultUserSettings.marqueeSpeed,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -90,6 +93,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'showChapterPositionInHistory': instance.showChapterPositionInHistory,
   'useBinaryBytes': instance.useBinaryBytes,
   'minBufferDuration': instance.minBufferDuration.inMicroseconds,
+  'marqueeSpeed': instance.marqueeSpeed,
 };
 
 const _$NavTargetEnumMap = {
