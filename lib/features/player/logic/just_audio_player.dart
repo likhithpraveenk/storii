@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:just_audio/just_audio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/models/app_audio_player.dart';
 import 'package:storii/features/player/models/app_audio_source.dart';
 import 'package:storii/features/player/models/app_playback_error.dart';
@@ -13,11 +15,25 @@ part 'just_audio_player.g.dart';
 
 @Riverpod(keepAlive: true)
 AppAudioPlayer justAudioPlayer(Ref ref) {
+  final minBuffer = ref.read(minBufferDurationProvider);
+
   final player = JustAudioPlayer(
     AudioPlayer(
-      audioLoadConfiguration: const AudioLoadConfiguration(
-        // TODO: settings for audio buffer
-        androidLoadControl: AndroidLoadControl(),
+      audioLoadConfiguration: AudioLoadConfiguration(
+        androidLoadControl: AndroidLoadControl(
+          minBufferDuration: minBuffer,
+          maxBufferDuration: minBuffer * 2,
+          bufferForPlaybackDuration: Duration(
+            milliseconds: max(minBuffer.inMilliseconds * 0.05, 2000).round(),
+          ),
+          bufferForPlaybackAfterRebufferDuration: Duration(
+            milliseconds: max(minBuffer.inMilliseconds * 0.10, 5000).round(),
+          ),
+          prioritizeTimeOverSizeThresholds: true,
+        ),
+        darwinLoadControl: DarwinLoadControl(
+          preferredForwardBufferDuration: minBuffer,
+        ),
       ),
     ),
   );

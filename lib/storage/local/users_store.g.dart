@@ -33,7 +33,7 @@ final class UsersStoreProvider
   UsersStore create() => UsersStore();
 }
 
-String _$usersStoreHash() => r'7109718b2ab0d4a5efad77b5db412f24dcf41d71';
+String _$usersStoreHash() => r'2fcfa0f2f54de1f7bd5f3cdddfbfb4df537b82ba';
 
 abstract class _$UsersStore extends $StreamNotifier<List<UserDomain>> {
   Stream<List<UserDomain>> build();

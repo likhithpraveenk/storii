@@ -33,9 +33,9 @@ Refer to [build.yml](build.yaml) for the exact configuration.
 ### To run code gen
 
 ```bash
-dart run build_runner build -d
+dart run build_runner build
 # or
-dart run build_runner watch -d
+dart run build_runner watch
 ```
 
 ### Before Committing

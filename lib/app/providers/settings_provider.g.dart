@@ -246,6 +246,12 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setShowChapterPositionInHistory(bool value) =>
       _save(state?.copyWith(showChapterPositionInHistory: value));
+
+  Future<void> setUseBinaryBytes(bool value) =>
+      _save(state?.copyWith(useBinaryBytes: value));
+
+  Future<void> setMinBufferDuration(Duration value) =>
+      _save(state?.copyWith(minBufferDuration: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -401,4 +407,22 @@ final showChapterPositionInHistoryProvider = Provider<bool>(
     ),
   ),
   name: 'showChapterPositionInHistoryProvider',
+);
+
+final useBinaryBytesProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.useBinaryBytes ?? DefaultUserSettings.useBinaryBytes,
+    ),
+  ),
+  name: 'useBinaryBytesProvider',
+);
+
+final minBufferDurationProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.minBufferDuration ?? DefaultUserSettings.minBufferDuration,
+    ),
+  ),
+  name: 'minBufferDurationProvider',
 );

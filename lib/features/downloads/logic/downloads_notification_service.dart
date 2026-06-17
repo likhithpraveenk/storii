@@ -26,7 +26,11 @@ class DownloadsNotificationService {
     const androidInit = AndroidInitializationSettings(
       'drawable/ic_notification',
     );
-    const initSettings = InitializationSettings(android: androidInit);
+    const iosInit = IOSInitializationSettings();
+    const initSettings = InitializationSettings(
+      android: androidInit,
+      iOS: iosInit,
+    );
     await _plugin.initialize(settings: initSettings);
   }
 
@@ -62,6 +66,7 @@ class DownloadsNotificationService {
     required bool isFailed,
     required bool isPaused,
     int? totalBytes,
+    required bool useBinary,
   }) async {
     String body = '$progress%';
     if (isComplete) {
@@ -72,7 +77,7 @@ class DownloadsNotificationService {
       body = 'Download paused';
     }
     if (totalBytes != null) {
-      body = '$body - ${formatBytes(totalBytes)}';
+      body = '$body - ${formatBytes(totalBytes, useBinary: useBinary)}';
     }
 
     // final actions = <AndroidNotificationAction>[

@@ -40,7 +40,7 @@ _UserSettings _$UserSettingsFromJson(
       DefaultUserSettings.navLabelBehavior,
   dateTimeFormat:
       json['dateTimeFormat'] as String? ?? DefaultUserSettings.dateTimeFormat,
-  fontFamily: json['fontFamily'] as String? ?? DefaultUserSettings.fontFamily,
+  fontFamily: json['fontFamily'] as String? ?? 'AtkinsonHyperlegibleNext',
   fontScale:
       (json['fontScale'] as num?)?.toDouble() ?? DefaultUserSettings.fontScale,
   skipForward: json['skipForward'] == null
@@ -59,6 +59,11 @@ _UserSettings _$UserSettingsFromJson(
   showChapterPositionInHistory:
       json['showChapterPositionInHistory'] as bool? ??
       DefaultUserSettings.showChapterPositionInHistory,
+  useBinaryBytes:
+      json['useBinaryBytes'] as bool? ?? DefaultUserSettings.useBinaryBytes,
+  minBufferDuration: json['minBufferDuration'] == null
+      ? DefaultUserSettings.minBufferDuration
+      : Duration(microseconds: (json['minBufferDuration'] as num).toInt()),
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -83,6 +88,8 @@ Map<String, dynamic> _$UserSettingsToJson(
   'historyLimit': instance.historyLimit,
   'downloadOnUnmeteredOnly': instance.downloadOnUnmeteredOnly,
   'showChapterPositionInHistory': instance.showChapterPositionInHistory,
+  'useBinaryBytes': instance.useBinaryBytes,
+  'minBufferDuration': instance.minBufferDuration.inMicroseconds,
 };
 
 const _$NavTargetEnumMap = {

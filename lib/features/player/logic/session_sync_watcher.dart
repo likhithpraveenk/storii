@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/connection_providers.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/playback_history.dart';
@@ -28,6 +29,8 @@ class SessionSyncWatcher extends _$SessionSyncWatcher {
       await _service?.dispose();
       _service = null;
 
+      ref.read(localSpeedProvider.notifier).setSpeed(ref.read(speedProvider));
+
       if (session == null) return;
 
       _service = PlaybackSyncService(
@@ -37,7 +40,7 @@ class SessionSyncWatcher extends _$SessionSyncWatcher {
             mediaItemIdKey(session.libraryItemId, session.episodeId),
           ).notifier,
         ),
-        syncInterval: ref.read(networkAwareSyncIntervalProvider),
+        getSyncInterval: () => ref.read(networkAwareSyncIntervalProvider),
         getPosition: () => audioHandler.currentPosition,
         isPlaying: () => ref.read(isPlayingProvider),
         onSync: (listened, position) =>

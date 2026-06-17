@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/api_providers.dart';
@@ -9,8 +11,12 @@ part 'progress_notifier.g.dart';
 
 @riverpod
 class MediaProgressNotifier extends _$MediaProgressNotifier {
+  StreamSubscription? _sub;
+
   @override
   Future<MediaProgress?> build(String itemId, [String? episodeId]) async {
+    ref.onDispose(() => _sub?.cancel());
+    await _sub?.cancel();
     final user = await ref.watch(authenticatedUserProvider.future);
     try {
       final progress = await ref.logApiCall(
@@ -22,7 +28,7 @@ class MediaProgressNotifier extends _$MediaProgressNotifier {
       );
 
       final socket = await ref.watch(socketApiProvider(user).future);
-      socket.user.onProgressUpdate.listen((event) {
+      _sub = socket.user.onProgressUpdate.listen((event) {
         if (ref.mounted &&
             event.data.libraryItemId == itemId &&
             event.data.episodeId == episodeId) {

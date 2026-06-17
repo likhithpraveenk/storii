@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
+import 'package:storii/features/item/ui/audio_tracks_sheet.dart';
 import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/item/ui/cover_image_title.dart';
 import 'package:storii/features/item/ui/description_with_chips.dart';
@@ -84,7 +86,24 @@ class ItemDetailScreen extends ConsumerWidget {
                         );
                       },
                     ),
-                    // TODO: add tracks
+                    ListTile(
+                      leading: const Icon(Icons.audio_file_rounded),
+                      title: Text(l10n.tracks),
+                      trailing: Text(
+                        '${item.tracks.length}',
+                        style: textTheme.titleSmall?.copyWith(
+                          fontStyle: .italic,
+                        ),
+                      ),
+                      onTap: () {
+                        showAudioTracksSheet(
+                          context,
+                          tracks: item.tracks,
+                          audioFiles: item.audioFiles,
+                          useBinaryBytes: ref.read(useBinaryBytesProvider),
+                        );
+                      },
+                    ),
                     const SizedBox(height: 200),
                   ],
                 ),

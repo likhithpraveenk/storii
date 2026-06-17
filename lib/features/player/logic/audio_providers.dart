@@ -235,9 +235,19 @@ class VolumeControl extends _$VolumeControl {
   }
 }
 
+@Riverpod(keepAlive: true)
+class LocalSpeed extends _$LocalSpeed {
+  @override
+  double build() => ref.watch(speedProvider);
+
+  void setSpeed(double speed) {
+    state = speed;
+  }
+}
+
 @riverpod
 void audioSettingsWatcher(Ref ref) {
-  ref.listen(speedProvider, (_, next) {
+  ref.listen(localSpeedProvider, (_, next) {
     audioHandler.setSpeed(next);
   });
 }

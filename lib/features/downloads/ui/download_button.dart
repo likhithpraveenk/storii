@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/user_permissions_provider.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';
@@ -66,6 +67,10 @@ class DownloadButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final canDownload =
+        ref.watch(userPermissionsProvider).value?.download ?? false;
+    if (!canDownload) return const SizedBox.shrink();
+
     final item = ref.watch(downloadItemProvider(libraryItemId));
     final queue = ref.read(downloadQueueProvider.notifier);
     final scheme = Theme.of(context).colorScheme;

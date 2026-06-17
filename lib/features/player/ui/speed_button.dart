@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
 
@@ -10,7 +10,7 @@ class SpeedButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final speed = ref.watch(speedProvider);
+    final speed = ref.watch(localSpeedProvider);
     const speedPresets = [0.8, 1.0, 1.5, 2.0];
     return IconButton(
       onPressed: () {
@@ -24,7 +24,7 @@ class SpeedButton extends ConsumerWidget {
             step: 0.1,
             labelBuilder: (v) => '${v}x',
             onChangedEnd: (v) {
-              ref.read(userSettingsProvider.notifier).setSpeed(v);
+              ref.read(localSpeedProvider.notifier).setSpeed(v);
             },
             presets: speedPresets,
           ),

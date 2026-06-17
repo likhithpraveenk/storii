@@ -18,7 +18,7 @@ void main() {
     return PlaybackSyncService(
       session: fakeBookSession,
       history: FakePlaybackHistoryNotifier(),
-      syncInterval: const Duration(hours: 1),
+      getSyncInterval: () => const Duration(hours: 1),
       getPosition: () => const Duration(seconds: 30),
       isPlaying: () => playing,
       onSync:

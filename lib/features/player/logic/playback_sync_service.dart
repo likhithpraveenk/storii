@@ -16,10 +16,12 @@ class PlaybackSyncService {
   final OnMarkComplete onMarkComplete;
   final Duration Function() getPosition;
   final bool Function() isPlaying;
+  final Duration Function() getSyncInterval;
   final PlaybackHistoryNotifier history;
   final _accumulator = ListenTimeAccumulator();
 
-  late final Timer _timer;
+  Timer? _timer;
+  bool _disposed = false;
 
   PlaybackSyncService({
     required this.session,
@@ -27,13 +29,21 @@ class PlaybackSyncService {
     required this.onSync,
     required this.onClose,
     required this.onMarkComplete,
-    required Duration syncInterval,
+    required this.getSyncInterval,
     required this.getPosition,
     required this.isPlaying,
   }) {
-    _timer = Timer.periodic(syncInterval, (_) async {
-      if (!isPlaying()) return;
-      await _sync(.sync, keepRunning: true);
+    _scheduleNext();
+  }
+
+  void _scheduleNext() {
+    _timer?.cancel();
+    _timer = Timer(getSyncInterval(), () async {
+      if (_disposed) return;
+      if (isPlaying()) {
+        await _sync(.sync, keepRunning: true);
+      }
+      _scheduleNext();
     });
   }
 
@@ -105,7 +115,8 @@ class PlaybackSyncService {
   }
 
   Future<void> dispose() async {
-    _timer.cancel();
+    _disposed = true;
+    _timer?.cancel();
     _accumulator.reset();
   }
 }

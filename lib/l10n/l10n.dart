@@ -1456,6 +1456,18 @@ abstract class AppLocalizations {
   /// **'Open a GitHub issue for any bug you encountered'**
   String get foundBugQSubtitle;
 
+  /// No description provided for @audioBufferDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio Buffer Duration'**
+  String get audioBufferDuration;
+
+  /// No description provided for @audioBufferDurationDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'How much audio to keep ahead of playback. Higher values reduce interruptions on slow connections'**
+  String get audioBufferDurationDescription;
+
   /// No description provided for @avoidMobileData.
   ///
   /// In en, this message translates to:
@@ -1561,7 +1573,7 @@ abstract class AppLocalizations {
   /// No description provided for @errorAuth.
   ///
   /// In en, this message translates to:
-  /// **'Session expired, please log in again'**
+  /// **'Unauthorized'**
   String get errorAuth;
 
   /// No description provided for @errorForbidden.
@@ -1594,6 +1606,12 @@ abstract class AppLocalizations {
   /// **'Type error'**
   String get errorType;
 
+  /// No description provided for @changeRestartRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes take effect after restart'**
+  String get changeRestartRequired;
+
   /// No description provided for @playbackErrorNetwork.
   ///
   /// In en, this message translates to:
@@ -1617,6 +1635,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong with playback'**
   String get playbackErrorUnknown;
+
+  /// No description provided for @codec.
+  ///
+  /// In en, this message translates to:
+  /// **'Codec'**
+  String get codec;
+
+  /// No description provided for @bitrate.
+  ///
+  /// In en, this message translates to:
+  /// **'Bitrate'**
+  String get bitrate;
+
+  /// No description provided for @channels.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get channels;
+
+  /// No description provided for @format.
+  ///
+  /// In en, this message translates to:
+  /// **'Format'**
+  String get format;
+
+  /// No description provided for @path.
+  ///
+  /// In en, this message translates to:
+  /// **'Path'**
+  String get path;
+
+  /// No description provided for @binaryUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'Binary units'**
+  String get binaryUnits;
+
+  /// No description provided for @binaryUnitsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'1 KB = 1024 B'**
+  String get binaryUnitsSubtitle;
+
+  /// No description provided for @decimalUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'Decimal units'**
+  String get decimalUnits;
+
+  /// No description provided for @decimalUnitsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'1 KB = 1000 B'**
+  String get decimalUnitsSubtitle;
 }
 
 class _AppLocalizationsDelegate

@@ -20,7 +20,7 @@ class UsersStore extends _$UsersStore {
   @override
   Stream<List<UserDomain>> build() => _watch();
 
-  Future<void> add(UserDomain user) => _box.put(user.id, user);
+  Future<void> upsert(UserDomain user) => _box.put(user.id, user);
 
   Future<void> delete(String id) => _box.delete(id);
 
@@ -29,8 +29,6 @@ class UsersStore extends _$UsersStore {
       await _box.deleteAll(ids);
     }
   }
-
-  Future<void> edit(String id, UserDomain user) => _box.put(id, user);
 
   Future<void> updateServerUrl(Uri oldUrl, Uri newUrl) async {
     final usersToUpdate = _box.values

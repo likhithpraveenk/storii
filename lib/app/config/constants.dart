@@ -9,6 +9,7 @@ const imgLeftPaddingInMiniPlayer = 8.0;
 const maxImgSizeInFullPlayer = 360.0;
 
 const appName = 'Storii';
+const kMediaPlayer = '$appName just_audio';
 const githubLink = 'https://github.com/likhithpraveenk/storii';
 const githubIssueLink = '$githubLink/issues/new?template=bug_report.md';
 const githubFeatureLink = '$githubLink/issues/new?template=feature_request.md';

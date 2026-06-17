@@ -3,7 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/connection_providers.dart';
+import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/auth/logic/add_server_notifier.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
+import 'package:storii/shared/widgets/spoiler_text.dart';
 
 class ConnectionStatusIcon extends ConsumerWidget {
   const ConnectionStatusIcon({super.key});
@@ -56,6 +59,7 @@ class _ConnectionDetailsSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final socketAsync = ref.watch(socketStatusProvider);
     final connectionType = ref.watch(connectionTypeProvider);
+    final user = ref.watch(currentUserProvider);
 
     final isConnected = socketAsync.value ?? false;
     final scheme = Theme.of(context).colorScheme;
@@ -72,6 +76,10 @@ class _ConnectionDetailsSheet extends ConsumerWidget {
     final statusColor = !isConnected || connectionType == .none
         ? scheme.error
         : scheme.primary;
+
+    final serverStatus = user != null
+        ? ref.watch(serverStatusProvider(user.serverUrl))
+        : null;
 
     return Container(
       padding: const .fromLTRB(24, 32, 24, 48),
@@ -99,7 +107,31 @@ class _ConnectionDetailsSheet extends ConsumerWidget {
                 ),
                 textAlign: .center,
               ),
-              // TODO: add server details
+              if (user != null) ...[
+                const SizedBox(height: 12),
+                SpoilerText(
+                  Text(
+                    user.serverUrl.toString(),
+                    style: textTheme.bodySmall?.copyWith(
+                      color: scheme.onSurfaceVariant,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                if (serverStatus != null)
+                  serverStatus.maybeWhen(
+                    data: (status) => Text(
+                      status.serverVersion != null
+                          ? '(v${status.serverVersion})'
+                          : ' ',
+                      style: textTheme.bodySmall?.copyWith(
+                        color: scheme.onSurfaceVariant,
+                      ),
+                      textAlign: .center,
+                    ),
+                    orElse: () => Text(' ', style: textTheme.bodySmall),
+                  ),
+              ],
             ],
           ),
         ],

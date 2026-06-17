@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';
@@ -109,13 +110,14 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
   }
 }
 
-class CompletedItemTile extends StatelessWidget {
+class CompletedItemTile extends ConsumerWidget {
   const CompletedItemTile(this.item, {super.key});
   final DownloadItem item;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final useBinary = ref.watch(useBinaryBytesProvider);
 
     return ListTile(
       onTap: () {
@@ -151,7 +153,7 @@ class CompletedItemTile extends StatelessWidget {
         ],
       ),
       subtitle: Text(
-        formatBytes(item.receivedBytes),
+        formatBytes(item.receivedBytes, useBinary: useBinary),
         style: theme.textTheme.labelSmall,
       ),
       trailing: Consumer(

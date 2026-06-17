@@ -735,6 +735,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Open a GitHub issue for any bug you encountered';
 
   @override
+  String get audioBufferDuration => 'Audio Buffer Duration';
+
+  @override
+  String get audioBufferDurationDescription =>
+      'How much audio to keep ahead of playback. Higher values reduce interruptions on slow connections';
+
+  @override
   String get avoidMobileData => 'Avoid mobile data';
 
   @override
@@ -789,7 +796,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorTimeout => 'Connection timed out';
 
   @override
-  String get errorAuth => 'Session expired, please log in again';
+  String get errorAuth => 'Unauthorized';
 
   @override
   String get errorForbidden => 'Access denied';
@@ -807,6 +814,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorType => 'Type error';
 
   @override
+  String get changeRestartRequired => 'Changes take effect after restart';
+
+  @override
   String get playbackErrorNetwork =>
       'Connection issue. Audio may be interrupted';
 
@@ -818,4 +828,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get playbackErrorUnknown => 'Something went wrong with playback';
+
+  @override
+  String get codec => 'Codec';
+
+  @override
+  String get bitrate => 'Bitrate';
+
+  @override
+  String get channels => 'Channels';
+
+  @override
+  String get format => 'Format';
+
+  @override
+  String get path => 'Path';
+
+  @override
+  String get binaryUnits => 'Binary units';
+
+  @override
+  String get binaryUnitsSubtitle => '1 KB = 1024 B';
+
+  @override
+  String get decimalUnits => 'Decimal units';
+
+  @override
+  String get decimalUnitsSubtitle => '1 KB = 1000 B';
 }

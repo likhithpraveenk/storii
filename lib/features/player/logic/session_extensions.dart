@@ -178,8 +178,8 @@ extension ToPlaybackSession on LibraryItem {
       displayAuthor: authorName ?? 'No Author',
       duration: duration,
       playMethod: .local,
-      mediaPlayer: '$appName just_audio',
-      date: now.fString(format: 'yyyy-mm-dd'), //! use server format
+      mediaPlayer: kMediaPlayer,
+      date: now.fString(format: 'yyyy-MM-dd'), //! use server format
       dayOfWeek: today,
       timeListening: Duration.zero,
       startTime: currentOffset,

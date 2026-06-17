@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/download_engine.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
@@ -55,6 +56,11 @@ class DownloadQueue extends _$DownloadQueue {
     if (_processing) return;
     _processing = true;
 
+    // TODO: _processing is a plain bool field. If pause() or delete() is called
+    // while _processQueue is awaiting _downloadItem, _processing is set to false
+    // but the current await has already captured the old value. The queue can
+    // then re-enter _processQueue from a new enqueue() before the prior stream
+    // fully completes
     while (state.isNotEmpty) {
       final id = state.first;
       await _downloadItem(id);
@@ -89,6 +95,7 @@ class DownloadQueue extends _$DownloadQueue {
           isFailed: updated.isFailed,
           isPaused: updated.status == .paused,
           totalBytes: updated.totalBytes,
+          useBinary: ref.read(useBinaryBytesProvider),
         );
 
         if (updated.isComplete || updated.isFailed) {
@@ -108,11 +115,14 @@ class DownloadQueue extends _$DownloadQueue {
 
       await DownloadsNotificationService.instance.stopForeground();
       await DownloadsNotificationService.instance.showProgressNotification(
-        title: libraryItemId,
+        title:
+            ref.read(downloadsStoreProvider).value?[libraryItemId]?.title ??
+            libraryItemId,
         progress: 0,
         isComplete: false,
         isFailed: true,
         isPaused: false,
+        useBinary: ref.read(useBinaryBytesProvider),
       );
     }
   }
@@ -132,6 +142,7 @@ class DownloadQueue extends _$DownloadQueue {
       isComplete: false,
       isFailed: false,
       isPaused: true,
+      useBinary: ref.read(useBinaryBytesProvider),
     );
   }
 
