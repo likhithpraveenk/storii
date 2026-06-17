@@ -342,7 +342,7 @@
   "showChapterPosition": "Show chapter position",
   "errorNetwork": "No internet connection",
   "errorTimeout": "Connection timed out",
-  "errorAuth": "Session expired, please log in again",
+  "errorAuth": "Unauthorized",
   "errorForbidden": "Access denied",
   "errorNotFound": "Content not found",
   "errorServer": "Server error, please try again",

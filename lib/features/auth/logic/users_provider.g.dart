@@ -33,7 +33,7 @@ final class UsersNotifierProvider
   UsersNotifier create() => UsersNotifier();
 }
 
-String _$usersNotifierHash() => r'6151d7707adf1d74e51d8405f7304e13efdc120c';
+String _$usersNotifierHash() => r'2674777b5beb689b186f7516966869ff9dd82137';
 
 abstract class _$UsersNotifier extends $StreamNotifier<List<UserDomain>> {
   Stream<List<UserDomain>> build();

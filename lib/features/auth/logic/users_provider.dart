@@ -13,7 +13,7 @@ class UsersNotifier extends _$UsersNotifier {
   }
 
   Future<void> add(UserDomain user) async {
-    await ref.read(usersStoreProvider.notifier).add(user);
+    await ref.read(usersStoreProvider.notifier).upsert(user);
   }
 
   Future<void> delete(UserDomain user) async {

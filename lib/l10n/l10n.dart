@@ -1573,7 +1573,7 @@ abstract class AppLocalizations {
   /// No description provided for @errorAuth.
   ///
   /// In en, this message translates to:
-  /// **'Session expired, please log in again'**
+  /// **'Unauthorized'**
   String get errorAuth;
 
   /// No description provided for @errorForbidden.

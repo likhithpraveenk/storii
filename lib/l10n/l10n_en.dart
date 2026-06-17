@@ -796,7 +796,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorTimeout => 'Connection timed out';
 
   @override
-  String get errorAuth => 'Session expired, please log in again';
+  String get errorAuth => 'Unauthorized';
 
   @override
   String get errorForbidden => 'Access denied';
