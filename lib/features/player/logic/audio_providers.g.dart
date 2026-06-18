@@ -570,7 +570,7 @@ final class LocalSpeedProvider extends $NotifierProvider<LocalSpeed, double> {
   }
 }
 
-String _$localSpeedHash() => r'81a20c47998ebc2537c7f7290b4888ec051b342a';
+String _$localSpeedHash() => r'3f495550a5baef26599d605dfecc0ab6b0f3ec69';
 
 abstract class _$LocalSpeed extends $Notifier<double> {
   double build();

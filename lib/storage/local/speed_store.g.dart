@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'session_sync_watcher.dart';
+part of 'speed_store.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,28 +9,27 @@ part of 'session_sync_watcher.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(SessionSyncWatcher)
-final sessionSyncWatcherProvider = SessionSyncWatcherProvider._();
+@ProviderFor(SpeedStore)
+final speedStoreProvider = SpeedStoreProvider._();
 
-final class SessionSyncWatcherProvider
-    extends $NotifierProvider<SessionSyncWatcher, void> {
-  SessionSyncWatcherProvider._()
+final class SpeedStoreProvider extends $NotifierProvider<SpeedStore, void> {
+  SpeedStoreProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'sessionSyncWatcherProvider',
+        name: r'speedStoreProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$sessionSyncWatcherHash();
+  String debugGetCreateSourceHash() => _$speedStoreHash();
 
   @$internal
   @override
-  SessionSyncWatcher create() => SessionSyncWatcher();
+  SpeedStore create() => SpeedStore();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(void value) {
@@ -41,10 +40,9 @@ final class SessionSyncWatcherProvider
   }
 }
 
-String _$sessionSyncWatcherHash() =>
-    r'0c6089f4b0d1f9f882c4df9c4d99cdabe3813082';
+String _$speedStoreHash() => r'a8ddd1f72af1cf4cb92a397a1692d78cb915591e';
 
-abstract class _$SessionSyncWatcher extends $Notifier<void> {
+abstract class _$SpeedStore extends $Notifier<void> {
   void build();
   @$mustCallSuper
   @override

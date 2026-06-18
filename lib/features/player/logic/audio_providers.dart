@@ -20,6 +20,7 @@ import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/models/app_playback_error.dart';
 import 'package:storii/shared/helpers/app_error.dart';
+import 'package:storii/storage/local/speed_store.dart';
 
 part 'audio_providers.g.dart';
 
@@ -238,9 +239,22 @@ class VolumeControl extends _$VolumeControl {
 @Riverpod(keepAlive: true)
 class LocalSpeed extends _$LocalSpeed {
   @override
-  double build() => ref.watch(speedProvider);
+  double build() {
+    final session = ref.watch(sessionProvider);
+    if (session == null) return ref.watch(speedProvider);
+    final storedSpeed = ref
+        .read(speedStoreProvider.notifier)
+        .getSpeed(session.libraryItemId);
+    return storedSpeed ?? ref.watch(speedProvider);
+  }
 
-  void setSpeed(double speed) {
+  Future<void> setSpeed(double speed) async {
+    final session = ref.read(sessionProvider);
+    if (session != null) {
+      await ref
+          .read(speedStoreProvider.notifier)
+          .saveSpeed(session.libraryItemId, speed);
+    }
     state = speed;
   }
 }
