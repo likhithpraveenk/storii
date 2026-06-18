@@ -37,7 +37,7 @@ class _MarqueeTextState extends ConsumerState<MarqueeText> {
     super.initState();
     _scrollController = ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
+      if (!mounted || !_scrollController.hasClients) return;
       final textWidth = _measureText();
       final availableWidth = _scrollController.position.viewportDimension;
       if (textWidth > availableWidth) _startAnimation(textWidth);
@@ -79,7 +79,7 @@ class _MarqueeTextState extends ConsumerState<MarqueeText> {
         old.speed != widget.speed) {
       _animationId++;
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        if (!mounted) return;
+        if (!mounted || !_scrollController.hasClients) return;
         _scrollController.jumpTo(0);
 
         final textWidth = _measureText();
