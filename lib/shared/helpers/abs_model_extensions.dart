@@ -256,7 +256,7 @@ extension AudiobookX on LibraryItem {
       final index = chapters.lastIndexWhere((c) => position >= c.start);
       final chapter = chapters[index < 0 ? 0 : index];
       final posString = (position - chapter.start).toTime(padHours: true);
-      return '#${chapter.id} $posString';
+      return '#${index + 1} $posString';
     }
 
     if (tracks.isNotEmpty) {

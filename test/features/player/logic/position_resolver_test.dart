@@ -144,6 +144,40 @@ void main() {
     );
   });
 
+  test('chapterPositionFromGlobal returns correct index and position', () {
+    final chapters = [
+      chapterJson(
+        displayIndex: 1,
+        start: Duration.zero,
+        end: const Duration(seconds: 40),
+        title: 'Ch 1',
+      ),
+      chapterJson(
+        displayIndex: 2,
+        start: const Duration(seconds: 40),
+        end: const Duration(seconds: 80),
+        title: 'Ch 2',
+      ),
+      chapterJson(
+        displayIndex: 3,
+        start: const Duration(seconds: 80),
+        end: const Duration(seconds: 120),
+        title: 'Ch 3',
+      ),
+    ];
+    final resolver = makeFromItems([
+      makeTrack(startOffset: Duration.zero, chapters: chapters, id: 'track0'),
+      makeTrack(
+        startOffset: const Duration(seconds: 60),
+        chapters: null,
+        id: 'track1',
+      ),
+    ]);
+    final r = resolver.chapterPositionFromGlobal(const Duration(seconds: 50));
+    expect(r.chapterIndex, 1);
+    expect(r.chapterPosition, const Duration(seconds: 10));
+  });
+
   group('multiple tracks, no chapters (fromTracks)', () {
     late PositionResolver resolver;
 

@@ -72,9 +72,14 @@ class PositionResolver {
     return chapterIndex;
   }
 
-  Duration chapterPositionFromGlobal(Duration globalPosition) {
+  ({int chapterIndex, Duration chapterPosition}) chapterPositionFromGlobal(
+    Duration globalPosition,
+  ) {
     final chapterIndex = _chapterIndexFor(globalPosition);
-    return globalPosition - _chapters[chapterIndex].start;
+    return (
+      chapterIndex: chapterIndex,
+      chapterPosition: globalPosition - _chapters[chapterIndex].start,
+    );
   }
 
   Chapter? chapterFromTrack(int? index, Duration position) {

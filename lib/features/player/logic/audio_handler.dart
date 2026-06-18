@@ -247,6 +247,18 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     await seek(playbackState.value.position + offset);
   }
 
+  Future<void> seekFromGlobalPosition(Duration position) async {
+    final result = resolver.chapterPositionFromGlobal(position);
+    final target = resolver.resolveSeek(
+      result.chapterIndex,
+      result.chapterPosition,
+    );
+    if (target != null) {
+      await _player.seek(target.trackPosition, index: target.trackIndex);
+      _eventController.add(.seek);
+    }
+  }
+
   @override
   Future<void> seek(Duration position) async {
     if (queue.value.isEmpty) return;
@@ -279,12 +291,11 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   @override
   Future<void> skipToPrevious() async {
-    final chapterIndex = playbackState.value.queueIndex ?? 0;
-    final chapterPosition = resolver.chapterPositionFromGlobal(currentPosition);
-    if (chapterPosition.inSeconds > 5 || chapterIndex == 0) {
+    final result = resolver.chapterPositionFromGlobal(currentPosition);
+    if (result.chapterPosition.inSeconds > 5 || result.chapterIndex == 0) {
       await skipToQueueItem(0);
     } else {
-      await skipToQueueItem(chapterIndex - 1);
+      await skipToQueueItem(result.chapterIndex - 1);
     }
   }
 

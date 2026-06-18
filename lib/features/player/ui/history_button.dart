@@ -133,7 +133,9 @@ class HistorySheet extends ConsumerWidget {
                       event: event,
                       onTap: () {
                         if (isCurrentItem) {
-                          unawaited(audioHandler.seek(event.position));
+                          unawaited(
+                            audioHandler.seekFromGlobalPosition(event.position),
+                          );
                         } else {
                           unawaited(
                             ref
