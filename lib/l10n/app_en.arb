@@ -361,5 +361,6 @@
   "binaryUnits": "Binary units",
   "binaryUnitsSubtitle": "1 KB = 1024 B",
   "decimalUnits": "Decimal units",
-  "decimalUnitsSubtitle": "1 KB = 1000 B"
+  "decimalUnitsSubtitle": "1 KB = 1000 B",
+  "marqueeSpeed": "Text Scroll Speed"
 }

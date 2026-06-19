@@ -9,6 +9,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
+import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'user_session_controller.g.dart';
 
@@ -25,43 +26,36 @@ class UserSessionController extends _$UserSessionController {
       log('user logout. audio handler stop');
       await audioHandler.stop();
     }
-    try {
-      await ref.read(serverApiProvider(user)).logout();
-      LogService.log('"${user.username}" logged out', level: .info);
-      await _clearLocalSession(user);
-    } catch (e, st) {
-      LogService.log(
-        'Unexpected error during logout for ${user.username}: $e',
-        source: 'UserSessionController',
-        level: .error,
-        stackTrace: st,
-      );
-      await _clearLocalSession(user);
-    }
+    unawaited(
+      ref
+          .logApiCall(
+            ref.read(serverApiProvider(user)).logout,
+            source: 'UserSessionController',
+          )
+          .then(
+            (_) =>
+                LogService.log('"${user.username}" logged out', level: .info),
+          )
+          .catchError((_, _) {}),
+    );
+    await _clearLocalSession(user);
     state = .success;
   }
 
   Future<void> forceLogout(UserDomain user, {String? reason}) async {
+    final currentUser = ref.read(currentUserProvider);
+    if (currentUser != null && currentUser.id != user.id) return;
     state = .loading;
     if (ref.read(sessionProvider) != null) {
       log('user force logout. audio handler stop');
       await audioHandler.stop();
     }
-    try {
-      LogService.log(
-        'Forcing logout for user "${user.username}" - $reason',
-        level: .info,
-      );
-      await _clearLocalSession(user);
-    } catch (e, st) {
-      LogService.log(
-        'Unexpected error during force logout for ${user.username}: $e',
-        source: 'UserSessionController',
-        level: .error,
-        stackTrace: st,
-      );
-      await _clearLocalSession(user);
-    }
+
+    LogService.log(
+      'Forcing logout for user "${user.username}" - $reason',
+      level: .warning,
+    );
+    await _clearLocalSession(user);
     state = .success;
   }
 
@@ -79,7 +73,16 @@ class UserSessionController extends _$UserSessionController {
   }
 
   Future<void> _clearLocalSession(UserDomain user) async {
-    await ref.read(tokenProvider).clearTokens(user.id);
+    try {
+      await ref.read(tokenProvider).clearTokens(user.id);
+    } catch (e) {
+      LogService.log(
+        'clearing auth tokens failed',
+        source: 'UserSessionController',
+        originalError: e,
+        level: .error,
+      );
+    }
     await ref.read(appSettingsProvider.notifier).setCurrentUser(null);
     await ref.read(appSettingsProvider.notifier).setServerUrl(null);
     ref.invalidate(apiClientProvider(user));

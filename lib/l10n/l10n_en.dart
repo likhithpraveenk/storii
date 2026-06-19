@@ -855,4 +855,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get decimalUnitsSubtitle => '1 KB = 1000 B';
+
+  @override
+  String get marqueeSpeed => 'Text Scroll Speed';
 }

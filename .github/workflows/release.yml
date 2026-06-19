@@ -23,7 +23,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.44.1'
+          flutter-version: "3.44.1"
           channel: "stable"
           cache: true
 
@@ -48,10 +48,17 @@ jobs:
           mv app-armeabi-v7a-release.apk ${{ github.event.repository.name }}-${{ github.ref_name }}-armeabi.apk
           mv app-x86_64-release.apk ${{ github.event.repository.name }}-${{ github.ref_name }}-x86_64.apk
 
+      - name: Get Changelog Entry
+        id: changelog
+        uses: mindsers/changelog-reader-action@v2
+        with:
+          version: ${{ github.ref_name }}
+          path: ./CHANGELOG.md
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          generate_release_notes: true
+          body: ${{ steps.changelog.outputs.changes }}
           prerelease: ${{ contains(github.ref_name, 'beta') }}
           files: |
             build/app/outputs/flutter-apk/*.apk

@@ -1,0 +1,283 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Added
+
+- Per-book speed is now persisted across sessions
+- Marquee speed setting to control how fast scrolling title text animates
+
+### Fixed
+
+- Seeking to position from history sheet
+- Force logout when wrong user is active
+- Marquee scroll controller crash guard
+
+## [v0.3.0-beta.2] - 2026-06-17
+
+### Added
+
+- Binary units for size display (B, KB, MB, GB)
+- Audio tracks info sheet in item details
+- User permissions handling (download button hidden when not permitted)
+- Per-book speed setting (separate from global speed)
+- Audio buffer configuration in player settings
+- Server details in connection status
+
+### Fixed
+
+- Stream subscription cancellation
+- Timer sync interval accuracy
+- Marquee text display (scrolling title text)
+
+## [v0.3.0-beta.1] - 2026-06-15
+
+### Changed
+
+- Refactored internal playback, storage, and provider layers with no user-facing changes
+
+### Fixed
+
+- Server not being deleted properly
+- Search screen back arrow removed
+- App initialization order (localizations before runApp)
+
+## [v0.2.10] - 2026-06-06
+
+### Added
+
+- Chapter position display in playback history events
+
+### Fixed
+
+- Listen time accumulation (was rolling back instead of accumulating)
+
+## [v0.2.9] - 2026-06-06
+
+### Added
+
+- Download notifications with foreground service
+
+### Fixed
+
+- Seek position accuracy
+- Audio playback state updates
+- Connection detail sheet title
+
+## [v0.2.8] - 2026-05-18
+
+### Added
+
+- Volume slider control in the full player
+- Separate sync interval setting for metered connections
+
+### Fixed
+
+- Playback state update synchronization
+- Seeking within chapter boundaries
+- Session cleanup when server returns 404
+
+## [v0.2.7] - 2026-05-18
+
+### Added
+
+- Stats screen with listening statistics, streaks, and recent sessions
+- Full metadata sheet for detailed media information
+- Connection status icon in the UI
+- Consistent app bar across screens
+- Acknowledgments section in About screen
+- HTTP logging toggle in settings
+
+### Fixed
+
+- Battery drain from excessive background operations
+
+## [v0.2.6] - 2026-05-08
+
+### Added
+
+- Download queue with status tracking (downloading, completed, failed)
+- Completed download tiles in downloads tab
+- "Download only on unmetered networks" setting
+- Download status badges on library items and tabs
+- Offline playback for downloaded content
+
+### Fixed
+
+- Playback position resets when switching users/servers
+- Downloaded items from different servers handled correctly
+- Download pause delay
+- Downloads tab syncing across sessions
+- Stale library items after download cleanup
+
+## [v0.2.5] - 2026-04-27
+
+### Fixed
+
+- App icon padding in launcher
+
+## [v0.2.4] - 2026-04-26
+
+### Added
+
+- iOS platform support
+
+### Changed
+
+- New icon set
+
+### Fixed
+
+- Audio transcoding: audio sources now correctly selected based on MIME type
+
+## [v0.2.3] - 2026-04-22
+
+### Fixed
+
+- Null values in media progress tracking
+
+## [v0.2.2] - 2026-04-22
+
+### Added
+
+- Bug reporting with easy access from server list and logs screen
+- Logs button for quick access to debug logs
+
+### Fixed
+
+- Duration error message display
+- Old session cleanup
+
+## [v0.2.1] - 2026-04-18
+
+### Added
+
+- New bottom sheet for chapter list
+- Custom app dialog component
+
+### Fixed
+
+- Seek to correct time
+
+## [v0.2.0] - 2026-04-17
+
+### Added
+
+- Downloads: download audiobooks for offline playback
+- Download queue with status tracking
+- Download button with progress indicators on library items
+- Size information in media metadata
+- Connection info display
+
+### Fixed
+
+- Local session not closing properly
+- Error handling improvements across the app
+
+## [v0.1.5] - 2026-04-10
+
+### Added
+
+- OAuth / OIDC authentication: sign in with OpenID Connect providers
+- Custom login form for OAuth flow
+
+### Fixed
+
+- User login issue during OAuth flow
+
+## [v0.1.5-beta.1] - 2026-04-08
+
+### Added
+
+- OAuth / OIDC authentication support
+
+### Fixed
+
+- User login issue during OAuth flow
+
+## [v0.1.4] - 2026-04-03
+
+### Added
+
+- Seek to start button
+- Play button loading state indicator
+
+### Fixed
+
+- Playback history not being saved
+- Playback event synchronization
+- Player stops when logging out
+
+## [v0.1.3] - 2026-03-30
+
+### Added
+
+- Playback history: track what you have listened to, with a history button in the player
+
+## [v0.1.2] - 2026-03-28
+
+### Added
+
+- Search: find content across your library
+- Collapsible series filter
+- Filter active indicator dot on library screens
+
+## [v0.1.1] - 2026-03-24
+
+### Added
+
+- Sync interval setting (wheel picker)
+- Startup navigation preference to choose which tab opens on launch
+- Display mode setting (grid/list)
+- Reorderable navigation tabs
+- Clear app cache button
+
+## [v0.1] - 2026-03-16
+
+### Added
+
+- Initial release: core Audiobookshelf streaming client
+- Library browsing with tabs and filtering
+- Full player with playback controls and mini player
+- Series browsing and filtering
+- Chapter support with skip functionality
+- Skip interval settings
+- Speed control
+- Sleep timer
+- User authentication
+- Settings screen with user and player preferences
+- Session management with server sync
+- Media progress tracking across screens
+- WebSocket sync for real-time updates
+- Hive local storage for cache
+- Shell route navigation
+- Filter and sort buttons for library screens
+- Custom fonts support
+- Dynamic theme support
+
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.3.0-beta.2...HEAD
+[v0.3.0-beta.2]: https://github.com/likhithpraveenk/storii/compare/v0.3.0-beta.1...v0.3.0-beta.2
+[v0.3.0-beta.1]: https://github.com/likhithpraveenk/storii/compare/v0.2.10...v0.3.0-beta.1
+[v0.2.10]: https://github.com/likhithpraveenk/storii/compare/v0.2.9...v0.2.10
+[v0.2.9]: https://github.com/likhithpraveenk/storii/compare/v0.2.8...v0.2.9
+[v0.2.8]: https://github.com/likhithpraveenk/storii/compare/v0.2.7...v0.2.8
+[v0.2.7]: https://github.com/likhithpraveenk/storii/compare/v0.2.6...v0.2.7
+[v0.2.6]: https://github.com/likhithpraveenk/storii/compare/v0.2.5...v0.2.6
+[v0.2.5]: https://github.com/likhithpraveenk/storii/compare/v0.2.4...v0.2.5
+[v0.2.4]: https://github.com/likhithpraveenk/storii/compare/v0.2.3...v0.2.4
+[v0.2.3]: https://github.com/likhithpraveenk/storii/compare/v0.2.2...v0.2.3
+[v0.2.2]: https://github.com/likhithpraveenk/storii/compare/v0.2.1...v0.2.2
+[v0.2.1]: https://github.com/likhithpraveenk/storii/compare/v0.2.0...v0.2.1
+[v0.2.0]: https://github.com/likhithpraveenk/storii/compare/v0.1.5...v0.2.0
+[v0.1.5]: https://github.com/likhithpraveenk/storii/compare/v0.1.5-beta.1...v0.1.5
+[v0.1.5-beta.1]: https://github.com/likhithpraveenk/storii/compare/v0.1.4...v0.1.5-beta.1
+[v0.1.4]: https://github.com/likhithpraveenk/storii/compare/v0.1.3...v0.1.4
+[v0.1.3]: https://github.com/likhithpraveenk/storii/compare/v0.1.2...v0.1.3
+[v0.1.2]: https://github.com/likhithpraveenk/storii/compare/v0.1.1...v0.1.2
+[v0.1.1]: https://github.com/likhithpraveenk/storii/compare/v0.1...v0.1.1
+[v0.1]: https://github.com/likhithpraveenk/storii/compare/3fd448b...v0.1
