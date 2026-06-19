@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.3.0] - 2026-06-19
+
 ### Added
 
 - Per-book speed is now persisted across sessions
@@ -260,7 +262,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.3.0-beta.2...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.3.0...HEAD
+[v0.3.0]: https://github.com/likhithpraveenk/storii/compare/v0.3.0-beta.2...v0.3.0
 [v0.3.0-beta.2]: https://github.com/likhithpraveenk/storii/compare/v0.3.0-beta.1...v0.3.0-beta.2
 [v0.3.0-beta.1]: https://github.com/likhithpraveenk/storii/compare/v0.2.10...v0.3.0-beta.1
 [v0.2.10]: https://github.com/likhithpraveenk/storii/compare/v0.2.9...v0.2.10
