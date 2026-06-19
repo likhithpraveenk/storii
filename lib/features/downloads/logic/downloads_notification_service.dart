@@ -128,4 +128,6 @@ class DownloadsNotificationService {
   Future<void> stopForeground() async {
     await _androidPlugin?.stopForegroundService();
   }
+
+  // TODO: Add cancel method to dismiss notification when download is deleted
 }

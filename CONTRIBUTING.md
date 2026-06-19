@@ -23,8 +23,7 @@ flutter pub get
 
 Code generation only runs for files in these locations:
 
-- **Models:** `lib/**/models/`
-- **Drift:** `lib/storage/drift/`
+- **Models:** `lib/**/models/` or `lib/features/**/models/`
 - **Riverpod Providers:** `lib/app/providers/` or `lib/features/**/logic/`
 - **Settings:** add parameters in `app_settings.dart` or `user_settings.dart`
 
