@@ -224,17 +224,18 @@ extension AudiobookX on LibraryItem {
 
   Duration get duration => media.map(
     book: (m) => m.duration ?? Duration.zero,
-    podcast: (m) => throw UnsupportedError('Podcast duration unsupported'),
+    podcast: (m) =>
+        m.episodes.fold(Duration.zero, (total, e) => total + e.duration),
   );
   List<BookChapter> get chapters =>
       media.map(book: (m) => m.chapters, podcast: (m) => []);
   List<AudioTrack> get tracks => media.map(
     book: (m) => m.tracks,
-    podcast: (m) => throw UnsupportedError('Podcast tracks unsupported'),
+    podcast: (m) => m.episodes.map((e) => e.audioTrack).toList(),
   );
   List<AudioFile> get audioFiles => media.map(
     book: (m) => m.audioFiles,
-    podcast: (m) => throw UnsupportedError('Podcast tracks unsupported'),
+    podcast: (m) => m.episodes.map((e) => e.audioFile).toList(),
   );
   List<PodcastEpisode> get episodes => media.map(
     book: (m) => throw UnsupportedError('Audiobook episodes unsupported'),
@@ -268,6 +269,12 @@ extension AudiobookX on LibraryItem {
 
     return position.toTime(padHours: true);
   }
+
+  bool get isBook => mediaType == .book;
+
+  bool get isPodcast => mediaType == .podcast;
+
+  int get episodeCount => episodes.length;
 }
 
 extension SeriesX on Series {

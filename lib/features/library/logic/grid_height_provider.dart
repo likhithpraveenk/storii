@@ -61,7 +61,7 @@ double shelfHeight(Ref ref, ShelfType type) {
     _ => cardWidth,
   };
 
-  final isBook = type == .book || type == .podcast;
+  final isBook = type == .book || type == .podcast || type == .episode;
   if (isBook && (mode == .compact || mode == .coverOnly)) {
     return imageBaseHeight;
   }

@@ -189,7 +189,7 @@ final class ShelfHeightProvider
   }
 }
 
-String _$shelfHeightHash() => r'b31c1cae5884cd208f938ba1cf5cc7c4ab3d5486';
+String _$shelfHeightHash() => r'1c52790b5952202078f61baa3d491a9ce3cc3f1f';
 
 final class ShelfHeightFamily extends $Family
     with $FunctionalFamilyOverride<double, ShelfType> {

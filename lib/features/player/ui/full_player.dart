@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/features/player/ui/history_button.dart';
@@ -100,16 +101,17 @@ class FullPlayer extends ConsumerWidget {
                   itemId: session.libraryItemId,
                   episodeId: session.episodeId,
                 ),
-                IconButton(
-                  icon: const Icon(Icons.list_rounded),
-                  tooltip: l10n.chapters,
-                  onPressed: () => showChapterListSheet(
-                    context,
-                    chapters: session.chapters,
-                    itemId: session.libraryItemId,
-                    itemTitle: session.displayTitle ?? l10n.noTitle,
+                if (session.isBook)
+                  IconButton(
+                    icon: const Icon(Icons.list_rounded),
+                    tooltip: l10n.chapters,
+                    onPressed: () => showChapterListSheet(
+                      context,
+                      chapters: session.chapters,
+                      itemId: session.libraryItemId,
+                      itemTitle: session.displayTitle ?? l10n.noTitle,
+                    ),
                   ),
-                ),
                 const SleepButton(),
                 const SpeedButton(),
                 const VolumeButton(),

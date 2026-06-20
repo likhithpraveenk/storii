@@ -7,9 +7,9 @@ part of 'audio_file.dart';
 // **************************************************************************
 
 _AudioFile _$AudioFileFromJson(Map<String, dynamic> json) => _AudioFile(
-  index: (json['index'] as num).toInt(),
   ino: json['ino'] as String,
   metadata: FileMetadata.fromJson(json['metadata'] as Map<String, dynamic>),
+  index: (json['index'] as num?)?.toInt(),
   addedAt: _$JsonConverterFromJson<int, DateTime>(
     json['addedAt'],
     const DateTimeEpochConverter().fromJson,
@@ -50,9 +50,9 @@ _AudioFile _$AudioFileFromJson(Map<String, dynamic> json) => _AudioFile(
 
 Map<String, dynamic> _$AudioFileToJson(_AudioFile instance) =>
     <String, dynamic>{
-      'index': instance.index,
       'ino': instance.ino,
       'metadata': instance.metadata.toJson(),
+      'index': ?instance.index,
       'addedAt': ?_$JsonConverterToJson<int, DateTime>(
         instance.addedAt,
         const DateTimeEpochConverter().toJson,

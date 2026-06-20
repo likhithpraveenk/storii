@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
@@ -23,7 +24,7 @@ class StartupNavTile extends ConsumerWidget {
           title: l10n.settingsStartupRouteTitle,
           body: Consumer(
             builder: (context, ref, _) {
-              final navTargets = ref.read(navTargetsProvider);
+              final navTargets = ref.read(effectiveNavTargetsProvider);
               final startup = ref.watch(startupNavProvider);
 
               return RadioGroup<NavTarget>(

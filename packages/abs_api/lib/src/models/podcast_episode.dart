@@ -10,6 +10,7 @@ part 'podcast_episode.g.dart';
 @freezed
 sealed class PodcastEpisode with _$PodcastEpisode {
   @DateTimeEpochConverter()
+  @DurationPreciseSecondsConverter()
   const factory PodcastEpisode({
     required String libraryItemId,
     required String podcastId,

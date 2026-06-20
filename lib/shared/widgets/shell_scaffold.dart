@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/ui/player_screen.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -21,7 +21,7 @@ class ShellScaffold extends ConsumerWidget {
     final routerState = GoRouter.of(context).state;
     final path = routerState.matchedLocation;
 
-    final navTargets = ref.watch(navTargetsProvider);
+    final navTargets = ref.watch(effectiveNavTargetsProvider);
     final target = navTargets.firstWhereOrNull(
       (t) => t.item.route.path == path,
     );

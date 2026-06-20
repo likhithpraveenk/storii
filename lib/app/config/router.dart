@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/keys.dart';
+import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/add_user_notifier.dart';
 import 'package:storii/features/auth/ui/server_list_screen.dart';
@@ -66,7 +67,11 @@ final routerProvider = Provider<GoRouter>((ref) {
   final user = ref.watch(currentUserProvider);
   String initialRoute = AppRoute.home.path;
   if (user != null) {
-    initialRoute = ref.read(startupNavProvider).item.route.path;
+    final startup = ref.read(startupNavProvider);
+    final effective = ref.read(effectiveNavTargetsProvider);
+    initialRoute = effective.contains(startup)
+        ? startup.item.route.path
+        : AppRoute.home.path;
   }
 
   return GoRouter(

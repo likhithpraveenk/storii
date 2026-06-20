@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/features/auth/logic/user_session_controller.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
 import 'package:storii/features/more/ui/logout_tile.dart';
@@ -15,10 +14,7 @@ class MoreScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final navTargets = ref.watch(navTargetsProvider);
-    final remainingTargets = NavTarget.values
-        .where((target) => !navTargets.contains(target))
-        .toList();
+    final remainingTargets = ref.watch(remainingNavTargetsProvider);
 
     return Scaffold(
       body: SingleChildScrollView(

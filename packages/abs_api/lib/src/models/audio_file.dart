@@ -12,9 +12,9 @@ sealed class AudioFile with _$AudioFile {
   @DateTimeEpochConverter()
   @DurationPreciseSecondsConverter()
   const factory AudioFile({
-    required int index,
     required String ino,
     required FileMetadata metadata,
+    int? index,
     DateTime? addedAt,
     DateTime? updatedAt,
     int? trackNumFromMeta,

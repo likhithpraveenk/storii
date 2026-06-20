@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 
 class NavBar extends ConsumerWidget {
@@ -10,7 +11,7 @@ class NavBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final targets = ref.watch(navTargetsProvider);
+    final targets = ref.watch(effectiveNavTargetsProvider);
     final scheme = Theme.of(context).colorScheme;
     final labelBehavior = ref.watch(navLabelBehaviorProvider);
 
