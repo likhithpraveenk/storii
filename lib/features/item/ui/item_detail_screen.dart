@@ -5,12 +5,14 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
+import 'package:storii/features/item/ui/action_buttons.dart';
 import 'package:storii/features/item/ui/audio_tracks_sheet.dart';
 import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/item/ui/cover_image_title.dart';
 import 'package:storii/features/item/ui/description_with_chips.dart';
 import 'package:storii/features/item/ui/metadata_wrap.dart';
-import 'package:storii/features/item/ui/play_progress_widget.dart';
+import 'package:storii/features/item/ui/play_button.dart';
+import 'package:storii/features/item/ui/progress_bar.dart';
 import 'package:storii/features/item/ui/series_chips_list.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
@@ -49,10 +51,13 @@ class ItemDetailScreen extends ConsumerWidget {
                     Padding(
                       padding: const .fromLTRB(16, 16, 16, 0),
                       child: Column(
+                        crossAxisAlignment: .stretch,
                         children: [
                           CoverImageTitle(item),
                           const SizedBox(height: 8),
-                          PlayProgressWidget(item),
+                          PlayButton(item),
+                          ProgressBar(itemId: item.id),
+                          ActionButtons(item: item),
                         ],
                       ),
                     ),
