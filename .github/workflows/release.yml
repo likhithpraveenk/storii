@@ -33,6 +33,9 @@ jobs:
       - name: Get dependencies
         run: flutter pub get --no-example
 
+      - name: Patch Dart JNI for Reproducible Build
+        run: sed -i -e 's/-Wl,/-Wl,--build-id=none,/' ${PUB_CACHE}/hosted/*/jni-*/src/CMakeLists.txt
+
       - name: Build Signed APKs
         env:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
