@@ -25,7 +25,7 @@ A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf)
 - Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling
 - Navigation customization: reorder tabs, choose startup screen, label behavior
 
-> **Note:** Podcast support is not yet available.
+> **Note:** Podcast support is under development.
 
 ## Demo
 
