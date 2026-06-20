@@ -73,43 +73,47 @@ class ItemDetailScreen extends ConsumerWidget {
                     MetadataWrap(item),
                     const SizedBox(height: 16),
                     const Divider(height: 0),
-                    ListTile(
-                      leading: const Icon(Icons.list_rounded),
-                      title: Text(l10n.chapters),
-                      trailing: Text(
-                        '${item.chapters.length}',
-                        style: textTheme.titleSmall?.copyWith(
-                          fontStyle: .italic,
+                    if (item.isBook)
+                      ListTile(
+                        leading: const Icon(Icons.list_rounded),
+                        title: Text(l10n.chapters),
+                        trailing: Text(
+                          '${item.chapters.length}',
+                          style: textTheme.titleSmall?.copyWith(
+                            fontStyle: .italic,
+                          ),
                         ),
+                        onTap: () {
+                          showChapterListSheet(
+                            context,
+                            chapters: item.chapters,
+                            itemId: item.id,
+                            itemTitle: item.title ?? l10n.noTitle,
+                          );
+                        },
                       ),
-                      onTap: () {
-                        showChapterListSheet(
-                          context,
-                          chapters: item.chapters,
-                          itemId: item.id,
-                          itemTitle: item.title ?? l10n.noTitle,
-                        );
-                      },
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.audio_file_rounded),
-                      title: Text(l10n.tracks),
-                      trailing: Text(
-                        '${item.tracks.length}',
-                        style: textTheme.titleSmall?.copyWith(
-                          fontStyle: .italic,
+                    if (item.isBook)
+                      ListTile(
+                        leading: const Icon(Icons.audio_file_rounded),
+                        title: Text(l10n.tracks),
+                        trailing: Text(
+                          '${item.tracks.length}',
+                          style: textTheme.titleSmall?.copyWith(
+                            fontStyle: .italic,
+                          ),
                         ),
+                        onTap: () {
+                          showAudioTracksSheet(
+                            context,
+                            tracks: item.tracks,
+                            audioFiles: item.audioFiles,
+                            useBinaryBytes: ref.read(useBinaryBytesProvider),
+                          );
+                        },
                       ),
-                      onTap: () {
-                        showAudioTracksSheet(
-                          context,
-                          tracks: item.tracks,
-                          audioFiles: item.audioFiles,
-                          useBinaryBytes: ref.read(useBinaryBytesProvider),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 200),
+                    if (item.isPodcast)
+                      // TODO: episode list
+                      const SizedBox(height: 200),
                   ],
                 ),
               ),

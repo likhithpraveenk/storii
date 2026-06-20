@@ -48,7 +48,7 @@ class _MoreMetadataSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> bodyChildren = [];
-    if (item.media is BookMedia) {
+    if (item.isBook) {
       final bookMedia = item.media as BookMedia;
       final bookMetadata = bookMedia.metadata as BookMetadata;
 
@@ -75,7 +75,7 @@ class _MoreMetadataSheet extends StatelessWidget {
         _MetadataRow(l10n.explicit, bookMetadata.explicit.toString()),
         _MetadataRow(l10n.abridged, bookMetadata.abridged.toString()),
       ]);
-    } else if (item.media is PodcastMedia) {
+    } else {
       final podcastMedia = item.media as PodcastMedia;
       final podcastMetadata = podcastMedia.metadata as PodcastMetadata;
 
@@ -115,14 +115,14 @@ class _MetadataRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (value == null || value?.isEmpty == true) {
+    if (value == null || value?.isEmpty == true || value == 'null') {
       return const SizedBox.shrink();
     }
     final theme = Theme.of(context);
     return Padding(
       padding: const .symmetric(vertical: 4),
       child: Row(
-        crossAxisAlignment: .start,
+        crossAxisAlignment: .center,
         children: [
           SizedBox(
             width: 120,
