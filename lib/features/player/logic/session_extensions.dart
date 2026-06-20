@@ -156,6 +156,10 @@ extension PlaybackSessionX on PlaybackSession {
     }
     return (0, Duration.zero);
   }
+
+  bool get isPodcastEpisode => episodeId != null;
+
+  bool get isBook => episodeId == null;
 }
 
 extension ToPlaybackSession on LibraryItem {

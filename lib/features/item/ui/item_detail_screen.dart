@@ -10,6 +10,7 @@ import 'package:storii/features/item/ui/audio_tracks_sheet.dart';
 import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/item/ui/cover_image_title.dart';
 import 'package:storii/features/item/ui/description_with_chips.dart';
+import 'package:storii/features/item/ui/episode_list.dart';
 import 'package:storii/features/item/ui/metadata_wrap.dart';
 import 'package:storii/features/item/ui/play_button.dart';
 import 'package:storii/features/item/ui/progress_bar.dart';
@@ -61,7 +62,7 @@ class ItemDetailScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    SeriesChipsList(item.series),
+                    if (item.isBook) SeriesChipsList(item.series),
                     const SizedBox(height: 8),
                     ExpandableDescriptionWithChips(
                       data: item.description ?? l10n.noDescription,
@@ -112,8 +113,8 @@ class ItemDetailScreen extends ConsumerWidget {
                         },
                       ),
                     if (item.isPodcast)
-                      // TODO: episode list
-                      const SizedBox(height: 200),
+                      EpisodeList(itemId: item.id, episodes: item.episodes),
+                    const SizedBox(height: 200),
                   ],
                 ),
               ),

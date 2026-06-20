@@ -250,6 +250,7 @@ return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.s
 /// @nodoc
 @JsonSerializable()
 @DateTimeEpochConverter()
+@DurationPreciseSecondsConverter()
 class _PodcastEpisode implements PodcastEpisode {
   const _PodcastEpisode({required this.libraryItemId, required this.podcastId, required this.id, this.index, this.season, this.episode, this.episodeType, this.title, this.subtitle, this.description, this.enclosure, this.pubDate, required this.audioFile, required this.publishedAt, required this.addedAt, required this.updatedAt, required this.audioTrack, required this.duration, this.size});
   factory _PodcastEpisode.fromJson(Map<String, dynamic> json) => _$PodcastEpisodeFromJson(json);
