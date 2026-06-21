@@ -69,18 +69,32 @@ extension PlaybackSessionX on PlaybackSession {
           : serverUrl!.resolve(track.contentUrl);
       //! either we get local path or server url
 
+      final isEpisode = mediaType == .podcast && episodeId != null;
+      final episodeTitle = isEpisode
+          ? libraryItem?.episodes
+                .firstWhereOrNull((e) => e.id == episodeId)
+                ?.title
+          : null;
+      final episodeSubtitle = isEpisode
+          ? libraryItem?.episodes
+                .firstWhereOrNull((e) => e.id == episodeId)
+                ?.subtitle
+          : null;
+
       final tag = MediaItem(
         id: track.contentUrl,
-        title: displayTitle ?? l10n.noTitle,
-        artist: displayAuthor,
+        title: episodeTitle ?? displayTitle ?? l10n.noTitle,
+        artist: episodeSubtitle ?? displayAuthor,
         duration: track.duration,
-        album: mediaMetadata.mapOrNull(book: (b) => b.seriesName),
+        album: isEpisode
+            ? displayTitle
+            : mediaMetadata.mapOrNull(book: (b) => b.seriesName),
         artUri: coverUri,
         extras: {
           if (index == 0) 'chapters': jsonChapters,
           'startOffset': startOffset.inMicroseconds,
           'itemId': libraryItemId,
-          if (mediaType == .podcast) 'episodeId': episodeId,
+          if (isEpisode) 'episodeId': episodeId,
           'isLocal': isLocal,
         },
       );

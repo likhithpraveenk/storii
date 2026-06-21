@@ -382,6 +382,12 @@ abstract class AppLocalizations {
   /// **'Episodes'**
   String get episodes;
 
+  /// No description provided for @playEpisodeConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Play this episode?'**
+  String get playEpisodeConfirm;
+
   /// No description provided for @search.
   ///
   /// In en, this message translates to:
@@ -1695,6 +1701,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Text Scroll Speed'**
   String get marqueeSpeed;
+
+  /// No description provided for @type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get type;
+
+  /// No description provided for @pubDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Pub Date'**
+  String get pubDate;
+
+  /// No description provided for @added.
+  ///
+  /// In en, this message translates to:
+  /// **'Added'**
+  String get added;
+
+  /// No description provided for @mimeType.
+  ///
+  /// In en, this message translates to:
+  /// **'MIME Type'**
+  String get mimeType;
+
+  /// No description provided for @season.
+  ///
+  /// In en, this message translates to:
+  /// **'Season'**
+  String get season;
+
+  /// No description provided for @episode.
+  ///
+  /// In en, this message translates to:
+  /// **'Episode'**
+  String get episode;
 }
 
 class _AppLocalizationsDelegate
