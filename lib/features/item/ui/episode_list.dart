@@ -138,6 +138,8 @@ class _EpisodeTile extends ConsumerWidget {
               ),
             ),
             const SizedBox(width: 8),
+            // TODO: add download button for podcast episodes
+            // TODO: add mark complete / remove progress for podcast episodes
             IconButton(
               icon: Icon(
                 Icons.info_outline,

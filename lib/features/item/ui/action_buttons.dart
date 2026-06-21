@@ -21,6 +21,7 @@ class ActionButtons extends ConsumerWidget {
     return Row(
       mainAxisAlignment: .spaceEvenly,
       children: [
+        // TODO: support podcast episode downloads
         DownloadButton(libraryItemId: item.id),
         HistoryButton(itemId: item.id),
         if (progress != 1.0)
@@ -50,6 +51,7 @@ class ActionButtons extends ConsumerWidget {
             ),
             icon: const Icon(Icons.check_rounded),
           ),
+        // TODO: support removing podcast episode progress
         if (mediaProgress != null)
           IconButton(
             tooltip: l10n.removeProgressTitle,
