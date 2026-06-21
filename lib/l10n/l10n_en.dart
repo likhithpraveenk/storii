@@ -157,6 +157,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get episodes => 'Episodes';
 
   @override
+  String get playEpisodeConfirm => 'Play this episode?';
+
+  @override
   String get search => 'Search';
 
   @override
@@ -858,4 +861,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get marqueeSpeed => 'Text Scroll Speed';
+
+  @override
+  String get type => 'Type';
+
+  @override
+  String get pubDate => 'Pub Date';
+
+  @override
+  String get added => 'Added';
+
+  @override
+  String get mimeType => 'MIME Type';
+
+  @override
+  String get season => 'Season';
+
+  @override
+  String get episode => 'Episode';
 }

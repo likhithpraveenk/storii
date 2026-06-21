@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/session_extensions.dart';
+import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 class BookSlider extends ConsumerStatefulWidget {
@@ -16,10 +18,27 @@ class _BookSliderState extends ConsumerState<BookSlider> {
 
   @override
   Widget build(BuildContext context) {
+    final session = ref.watch(sessionProvider);
+    final isEpisode = session?.isPodcastEpisode ?? false;
+
     final chapter = ref.watch(currentChapterProvider).value;
-    final position = ref.watch(chapterPositionProvider).value;
-    final durationMs = (chapter?.duration.inMilliseconds ?? 0).toDouble();
-    double positionMs = (position?.inMilliseconds.toDouble() ?? 0.0).clamp(
+    final chapterPosition = ref.watch(chapterPositionProvider).value;
+    final globalPosition = ref.watch(globalPositionProvider).value;
+    final totalDuration = ref.watch(totalDurationProvider);
+
+    final Duration duration;
+    final Duration position;
+
+    if (isEpisode) {
+      duration = totalDuration;
+      position = globalPosition ?? Duration.zero;
+    } else {
+      duration = chapter?.duration ?? Duration.zero;
+      position = chapterPosition ?? Duration.zero;
+    }
+
+    final durationMs = duration.inMilliseconds.toDouble();
+    double positionMs = position.inMilliseconds.toDouble().clamp(
       0.0,
       durationMs,
     );
@@ -50,7 +69,13 @@ class _BookSliderState extends ConsumerState<BookSlider> {
                 _latestSeekValue = value;
                 _dragValue = null;
               });
-              await audioHandler.seek(Duration(milliseconds: value.toInt()));
+              if (isEpisode) {
+                await audioHandler.seekFromGlobalPosition(
+                  Duration(milliseconds: value.toInt()),
+                );
+              } else {
+                await audioHandler.seek(Duration(milliseconds: value.toInt()));
+              }
             },
           ),
         ),
@@ -60,7 +85,7 @@ class _BookSliderState extends ConsumerState<BookSlider> {
             mainAxisAlignment: .spaceBetween,
             children: [
               Text(format(_dragValue ?? positionMs)),
-              Text(chapter?.duration.toTime() ?? ''),
+              Text(duration.toTime()),
             ],
           ),
         ),

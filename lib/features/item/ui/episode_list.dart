@@ -5,11 +5,15 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/episode_filter_provider.dart';
+import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/item/ui/episode_list_header.dart';
+import 'package:storii/features/item/ui/episode_metadata_sheet.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/helpers/helpers.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
+import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/pulsing_dot.dart';
 
 class EpisodeList extends ConsumerWidget {
@@ -32,11 +36,7 @@ class EpisodeList extends ConsumerWidget {
         const Divider(height: 0),
         ...List.generate(
           filtered.length,
-          (index) => _EpisodeTile(
-            episode: filtered[index],
-            index: index,
-            itemId: itemId,
-          ),
+          (index) => _EpisodeTile(episode: filtered[index], itemId: itemId),
         ),
       ],
     );
@@ -44,14 +44,9 @@ class EpisodeList extends ConsumerWidget {
 }
 
 class _EpisodeTile extends ConsumerWidget {
-  const _EpisodeTile({
-    required this.episode,
-    required this.index,
-    required this.itemId,
-  });
+  const _EpisodeTile({required this.episode, required this.itemId});
 
   final PodcastEpisode episode;
-  final int index;
   final String itemId;
 
   @override
@@ -61,10 +56,10 @@ class _EpisodeTile extends ConsumerWidget {
         session != null && session.libraryItemId == itemId;
     final isCurrentEpisode =
         isCurrentItemPlaying && session.episodeId == episode.id;
-    final isPlaying = isCurrentEpisode && ref.watch(isPlayingProvider);
+    final progress = ref.watch(mediaProgressProvider(itemId, episode.id)).value;
 
-    final textTheme = Theme.of(context).textTheme;
     final scheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     final episodeNumber = episode.episode != null && episode.season != null
         ? 'S${episode.season} E${episode.episode}'
@@ -72,16 +67,37 @@ class _EpisodeTile extends ConsumerWidget {
         ? 'E${episode.episode}'
         : null;
 
+    final progressPct =
+        progress != null &&
+            progress.currentTime != null &&
+            episode.duration.inSeconds > 0
+        ? (progress.currentTime!.inSeconds / episode.duration.inSeconds * 100)
+              .round()
+        : null;
+
     return InkWell(
       borderRadius: .circular(kRadius),
       onTap: () {
-        if (!isCurrentEpisode) {
-          ref
-              .read(audioPlayerProvider.notifier)
-              .play(itemId: itemId, episodeId: episode.id);
-        }
+        if (isCurrentEpisode) return;
+        AppDialog.show(
+          context,
+          title: episode.title ?? l10n.noTitle,
+          body: Text(l10n.playEpisodeConfirm),
+          actionLabel: l10n.play,
+          onTap: () async {
+            await ref
+                .read(audioPlayerProvider.notifier)
+                .play(itemId: itemId, episodeId: episode.id);
+          },
+        );
       },
-      child: Padding(
+      child: Container(
+        decoration: BoxDecoration(
+          color: isCurrentEpisode
+              ? scheme.primary.withValues(alpha: 0.08)
+              : null,
+          borderRadius: .circular(kRadius),
+        ),
         padding: const .symmetric(horizontal: 16, vertical: 12),
         child: Row(
           crossAxisAlignment: .center,
@@ -116,62 +132,62 @@ class _EpisodeTile extends ConsumerWidget {
                       color: isCurrentEpisode ? scheme.primary : null,
                     ),
                   ),
-                  if (episode.subtitle != null) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      episode.subtitle!,
-                      maxLines: 1,
-                      overflow: .ellipsis,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: scheme.onSurfaceVariant.withValues(alpha: 0.7),
-                      ),
-                    ),
-                  ],
                   const SizedBox(height: 4),
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 4,
-                    children: [
-                      Text(
-                        episode.duration.toReadableDuration(),
-                        style: textTheme.labelSmall?.copyWith(
-                          color: scheme.onSurfaceVariant,
-                        ),
-                      ),
-                      Text(
-                        episode.publishedAt.fString(
-                          format: ref.watch(dateTimeFormatProvider),
-                        ),
-                        style: textTheme.labelSmall?.copyWith(
-                          color: scheme.onSurfaceVariant,
-                        ),
-                      ),
-                      if (episode.size != null)
-                        Text(
-                          formatBytes(
-                            episode.size!,
-                            useBinary: ref.watch(useBinaryBytesProvider),
-                          ),
-                          style: textTheme.labelSmall?.copyWith(
-                            color: scheme.onSurfaceVariant,
-                          ),
-                        ),
-                    ],
-                  ),
-                  // TODO: add description, progress, more metadata icon sheet
+                  _EpisodeMetaRow(episode: episode, progressPct: progressPct),
                 ],
               ),
             ),
-            Icon(
-              isPlaying ? Icons.pause_circle : Icons.play_circle_outline,
-              color: isCurrentEpisode
-                  ? scheme.primary
-                  : scheme.onSurfaceVariant,
-              size: 24,
+            const SizedBox(width: 8),
+            IconButton(
+              icon: Icon(
+                Icons.info_outline,
+                size: 20,
+                color: scheme.onSurfaceVariant.withValues(alpha: 0.6),
+              ),
+              padding: .zero,
+              constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
+              onPressed: () {
+                AppBottomSheet.show(
+                  context,
+                  title: l10n.metadata,
+                  body: EpisodeMetadataSheet(episode: episode),
+                );
+              },
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _EpisodeMetaRow extends ConsumerWidget {
+  const _EpisodeMetaRow({required this.episode, this.progressPct});
+
+  final PodcastEpisode episode;
+  final int? progressPct;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final style = Theme.of(context).textTheme.labelSmall?.copyWith(
+      color: Theme.of(context).colorScheme.onSurfaceVariant,
+    );
+    final parts = <String>[
+      if (progressPct != null) '$progressPct%',
+      episode.duration.toReadableDuration(),
+      episode.publishedAt.fString(format: ref.watch(dateTimeFormatProvider)),
+      if (episode.size != null)
+        formatBytes(
+          episode.size!,
+          useBinary: ref.watch(useBinaryBytesProvider),
+        ),
+    ];
+
+    return Text(
+      parts.join(' • '),
+      style: style,
+      maxLines: 1,
+      overflow: .ellipsis,
     );
   }
 }

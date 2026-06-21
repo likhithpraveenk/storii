@@ -24,7 +24,9 @@ class EpisodeListHeader extends ConsumerWidget {
       child: Row(
         children: [
           Text(
-            filter == .all ? l10n.episodes : '$episodeCount / $totalCount',
+            filter == .all
+                ? '${l10n.episodes} ($episodeCount)'
+                : '$episodeCount / $totalCount',
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: .w600),

@@ -62,6 +62,7 @@
   "audiobooks": "Audiobooks",
   "podcasts": "Podcasts",
   "episodes": "Episodes",
+  "playEpisodeConfirm": "Play this episode?",
   "search": "Search",
   "dateFormat": "Date Format",
   "custom": "Custom",
@@ -362,5 +363,11 @@
   "binaryUnitsSubtitle": "1 KB = 1024 B",
   "decimalUnits": "Decimal units",
   "decimalUnitsSubtitle": "1 KB = 1000 B",
-  "marqueeSpeed": "Text Scroll Speed"
+  "marqueeSpeed": "Text Scroll Speed",
+  "type": "Type",
+  "pubDate": "Pub Date",
+  "added": "Added",
+  "mimeType": "MIME Type",
+  "season": "Season",
+  "episode": "Episode"
 }
