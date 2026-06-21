@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Podcast episode metadata sheet with full details
+- Episode progress percentage displayed inline in episode list tiles
+- Play confirmation dialog when tapping an episode tile
+
+### Changed
+
+- Episode list tile simplified
+- Hide action buttons for podcasts
+
 ## [v0.4.0] - 2026-06-20
 
 ### Added
