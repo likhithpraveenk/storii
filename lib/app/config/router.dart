@@ -8,6 +8,7 @@ import 'package:storii/features/auth/logic/add_user_notifier.dart';
 import 'package:storii/features/auth/ui/server_list_screen.dart';
 import 'package:storii/features/author/ui/author_detail_screen.dart';
 import 'package:storii/features/author/ui/author_list_screen.dart';
+import 'package:storii/features/author/ui/standalone_books.dart';
 import 'package:storii/features/collections/ui/collections_screen.dart';
 import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/features/home/ui/home_screen.dart';
@@ -43,6 +44,7 @@ enum AppRoute {
   seriesDetail('/series/detail'),
   authors('/authors'),
   authorDetail('/authors/detail'),
+  authorBooks('/authors/detail/books'),
   collections('/collections'),
   downloads('/downloads'),
   more('/more'),
@@ -165,6 +167,15 @@ final routerProvider = Provider<GoRouter>((ref) {
                   final id = state.extra as String;
                   return AuthorDetailScreen(key: ValueKey(id), id: id);
                 },
+                routes: [
+                  GoRoute(
+                    path: 'books',
+                    builder: (context, state) {
+                      final id = state.extra as String;
+                      return StandaloneBooks(key: ValueKey(id), id: id);
+                    },
+                  ),
+                ],
               ),
             ],
           ),
