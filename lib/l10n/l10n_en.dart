@@ -236,6 +236,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get library => 'Library';
 
   @override
+  String get librarySettings => 'Library Settings';
+
+  @override
   String get collections => 'Collections';
 
   @override
@@ -861,6 +864,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get marqueeSpeed => 'Text Scroll Speed';
+
+  @override
+  String get rememberSort => 'Remember sort';
+
+  @override
+  String get rememberSortSubtitle => 'Persist sort order when app restarts';
 
   @override
   String get type => 'Type';

@@ -30,6 +30,14 @@ class DefaultUserSettings {
   static const useBinaryBytes = true;
   static const minBufferDuration = Duration(seconds: 15);
   static const marqueeSpeed = 40.0;
+  static const rememberSort = true;
+  static const librarySortAscending = true;
+  static const authorSortAscending = true;
+  static const seriesSortAscending = true;
+  static const AudiobookSort audiobookSortValue = .title;
+  static const PodcastSort podcastSortValue = .title;
+  static const AuthorSort authorSortValue = .name;
+  static const SeriesSort seriesSortValue = .name;
 }
 
 @freezed
@@ -82,6 +90,24 @@ sealed class UserSettings with _$UserSettings {
     @Default(DefaultUserSettings.minBufferDuration) Duration minBufferDuration,
 
     @Default(DefaultUserSettings.marqueeSpeed) double marqueeSpeed,
+
+    @Default(DefaultUserSettings.rememberSort) bool rememberSort,
+
+    @Default(DefaultUserSettings.librarySortAscending)
+    bool librarySortAscending,
+
+    @Default(DefaultUserSettings.authorSortAscending) bool authorSortAscending,
+
+    @Default(DefaultUserSettings.seriesSortAscending) bool seriesSortAscending,
+
+    @Default(DefaultUserSettings.audiobookSortValue)
+    AudiobookSort audiobookSortValue,
+
+    @Default(DefaultUserSettings.podcastSortValue) PodcastSort podcastSortValue,
+
+    @Default(DefaultUserSettings.authorSortValue) AuthorSort authorSortValue,
+
+    @Default(DefaultUserSettings.seriesSortValue) SeriesSort seriesSortValue,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>
