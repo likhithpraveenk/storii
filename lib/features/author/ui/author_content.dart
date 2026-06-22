@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/features/author/ui/standalone_books.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 
@@ -32,9 +31,7 @@ class AuthorContent extends StatelessWidget {
             title: l10n.books,
             count: books.length,
             onViewAll: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => StandaloneBooks(books)),
-              );
+              context.push(AppRoute.authorBooks.path, extra: authorId);
             },
           ),
           HorizontalBooksCarousel(books: books),
