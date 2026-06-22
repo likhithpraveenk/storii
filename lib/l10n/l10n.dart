@@ -538,6 +538,12 @@ abstract class AppLocalizations {
   /// **'Library'**
   String get library;
 
+  /// No description provided for @librarySettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Library Settings'**
+  String get librarySettings;
+
   /// No description provided for @collections.
   ///
   /// In en, this message translates to:
@@ -1701,6 +1707,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Text Scroll Speed'**
   String get marqueeSpeed;
+
+  /// No description provided for @rememberSort.
+  ///
+  /// In en, this message translates to:
+  /// **'Remember sort'**
+  String get rememberSort;
+
+  /// No description provided for @rememberSortSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Persist sort order when app restarts'**
+  String get rememberSortSubtitle;
 
   /// No description provided for @type.
   ///

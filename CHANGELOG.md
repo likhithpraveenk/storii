@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Library settings screen with "remember sort" toggle to persist sort
+
 ## [v0.4.1] - 2026-06-21
 
 ### Added

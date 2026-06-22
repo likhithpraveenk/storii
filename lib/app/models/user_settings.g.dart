@@ -67,6 +67,29 @@ _UserSettings _$UserSettingsFromJson(
   marqueeSpeed:
       (json['marqueeSpeed'] as num?)?.toDouble() ??
       DefaultUserSettings.marqueeSpeed,
+  rememberSort:
+      json['rememberSort'] as bool? ?? DefaultUserSettings.rememberSort,
+  librarySortAscending:
+      json['librarySortAscending'] as bool? ??
+      DefaultUserSettings.librarySortAscending,
+  authorSortAscending:
+      json['authorSortAscending'] as bool? ??
+      DefaultUserSettings.authorSortAscending,
+  seriesSortAscending:
+      json['seriesSortAscending'] as bool? ??
+      DefaultUserSettings.seriesSortAscending,
+  audiobookSortValue:
+      $enumDecodeNullable(_$AudiobookSortEnumMap, json['audiobookSortValue']) ??
+      DefaultUserSettings.audiobookSortValue,
+  podcastSortValue:
+      $enumDecodeNullable(_$PodcastSortEnumMap, json['podcastSortValue']) ??
+      DefaultUserSettings.podcastSortValue,
+  authorSortValue:
+      $enumDecodeNullable(_$AuthorSortEnumMap, json['authorSortValue']) ??
+      DefaultUserSettings.authorSortValue,
+  seriesSortValue:
+      $enumDecodeNullable(_$SeriesSortEnumMap, json['seriesSortValue']) ??
+      DefaultUserSettings.seriesSortValue,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -94,6 +117,14 @@ Map<String, dynamic> _$UserSettingsToJson(
   'useBinaryBytes': instance.useBinaryBytes,
   'minBufferDuration': instance.minBufferDuration.inMicroseconds,
   'marqueeSpeed': instance.marqueeSpeed,
+  'rememberSort': instance.rememberSort,
+  'librarySortAscending': instance.librarySortAscending,
+  'authorSortAscending': instance.authorSortAscending,
+  'seriesSortAscending': instance.seriesSortAscending,
+  'audiobookSortValue': _$AudiobookSortEnumMap[instance.audiobookSortValue]!,
+  'podcastSortValue': _$PodcastSortEnumMap[instance.podcastSortValue]!,
+  'authorSortValue': _$AuthorSortEnumMap[instance.authorSortValue]!,
+  'seriesSortValue': _$SeriesSortEnumMap[instance.seriesSortValue]!,
 };
 
 const _$NavTargetEnumMap = {
@@ -117,4 +148,49 @@ const _$NavigationDestinationLabelBehaviorEnumMap = {
   NavigationDestinationLabelBehavior.alwaysShow: 'alwaysShow',
   NavigationDestinationLabelBehavior.alwaysHide: 'alwaysHide',
   NavigationDestinationLabelBehavior.onlyShowSelected: 'onlyShowSelected',
+};
+
+const _$AudiobookSortEnumMap = {
+  AudiobookSort.title: 'title',
+  AudiobookSort.authorName: 'authorName',
+  AudiobookSort.authorNameLF: 'authorNameLF',
+  AudiobookSort.addedAt: 'addedAt',
+  AudiobookSort.publishedYear: 'publishedYear',
+  AudiobookSort.size: 'size',
+  AudiobookSort.duration: 'duration',
+  AudiobookSort.fileBirthTime: 'fileBirthTime',
+  AudiobookSort.fileModified: 'fileModified',
+  AudiobookSort.progressLastUpdated: 'progressLastUpdated',
+  AudiobookSort.progressStartedAt: 'progressStartedAt',
+  AudiobookSort.progressFinishedAt: 'progressFinishedAt',
+  AudiobookSort.random: 'random',
+};
+
+const _$PodcastSortEnumMap = {
+  PodcastSort.addedAt: 'addedAt',
+  PodcastSort.size: 'size',
+  PodcastSort.birthTime: 'birthTime',
+  PodcastSort.mtime: 'mtime',
+  PodcastSort.author: 'author',
+  PodcastSort.title: 'title',
+  PodcastSort.numEpisodes: 'numEpisodes',
+  PodcastSort.random: 'random',
+};
+
+const _$AuthorSortEnumMap = {
+  AuthorSort.name: 'name',
+  AuthorSort.lastFirst: 'lastFirst',
+  AuthorSort.addedAt: 'addedAt',
+  AuthorSort.updatedAt: 'updatedAt',
+  AuthorSort.numBooks: 'numBooks',
+};
+
+const _$SeriesSortEnumMap = {
+  SeriesSort.name: 'name',
+  SeriesSort.addedAt: 'addedAt',
+  SeriesSort.lastBookAdded: 'lastBookAdded',
+  SeriesSort.lastBookUpdated: 'lastBookUpdated',
+  SeriesSort.totalDuration: 'totalDuration',
+  SeriesSort.numBooks: 'numBooks',
+  SeriesSort.random: 'random',
 };

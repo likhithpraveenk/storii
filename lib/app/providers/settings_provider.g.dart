@@ -255,6 +255,30 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setMarqueeSpeed(double value) =>
       _save(state?.copyWith(marqueeSpeed: value));
+
+  Future<void> setRememberSort(bool value) =>
+      _save(state?.copyWith(rememberSort: value));
+
+  Future<void> setLibrarySortAscending(bool value) =>
+      _save(state?.copyWith(librarySortAscending: value));
+
+  Future<void> setAuthorSortAscending(bool value) =>
+      _save(state?.copyWith(authorSortAscending: value));
+
+  Future<void> setSeriesSortAscending(bool value) =>
+      _save(state?.copyWith(seriesSortAscending: value));
+
+  Future<void> setAudiobookSortValue(AudiobookSort value) =>
+      _save(state?.copyWith(audiobookSortValue: value));
+
+  Future<void> setPodcastSortValue(PodcastSort value) =>
+      _save(state?.copyWith(podcastSortValue: value));
+
+  Future<void> setAuthorSortValue(AuthorSort value) =>
+      _save(state?.copyWith(authorSortValue: value));
+
+  Future<void> setSeriesSortValue(SeriesSort value) =>
+      _save(state?.copyWith(seriesSortValue: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -437,4 +461,77 @@ final marqueeSpeedProvider = Provider<double>(
     ),
   ),
   name: 'marqueeSpeedProvider',
+);
+
+final rememberSortProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.rememberSort ?? DefaultUserSettings.rememberSort,
+    ),
+  ),
+  name: 'rememberSortProvider',
+);
+
+final librarySortAscendingProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.librarySortAscending ?? DefaultUserSettings.librarySortAscending,
+    ),
+  ),
+  name: 'librarySortAscendingProvider',
+);
+
+final authorSortAscendingProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.authorSortAscending ?? DefaultUserSettings.authorSortAscending,
+    ),
+  ),
+  name: 'authorSortAscendingProvider',
+);
+
+final seriesSortAscendingProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.seriesSortAscending ?? DefaultUserSettings.seriesSortAscending,
+    ),
+  ),
+  name: 'seriesSortAscendingProvider',
+);
+
+final audiobookSortValueProvider = Provider<AudiobookSort>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.audiobookSortValue ?? DefaultUserSettings.audiobookSortValue,
+    ),
+  ),
+  name: 'audiobookSortValueProvider',
+);
+
+final podcastSortValueProvider = Provider<PodcastSort>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.podcastSortValue ?? DefaultUserSettings.podcastSortValue,
+    ),
+  ),
+  name: 'podcastSortValueProvider',
+);
+
+final authorSortValueProvider = Provider<AuthorSort>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.authorSortValue ?? DefaultUserSettings.authorSortValue,
+    ),
+  ),
+  name: 'authorSortValueProvider',
+);
+
+final seriesSortValueProvider = Provider<SeriesSort>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.seriesSortValue ?? DefaultUserSettings.seriesSortValue,
+    ),
+  ),
+  name: 'seriesSortValueProvider',
 );

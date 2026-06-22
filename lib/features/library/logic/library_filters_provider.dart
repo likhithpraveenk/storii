@@ -25,30 +25,76 @@ sealed class FilterState with _$FilterState {
 
 @Riverpod(keepAlive: true)
 class LibraryFiltersNotifier extends _$LibraryFiltersNotifier {
+  bool get _rememberSort => ref.read(rememberSortProvider);
+  UserSettingsNotifier get _notifier => ref.read(userSettingsProvider.notifier);
+
   @override
   FilterState build(CurrentScreen screen) {
-    final EnumHasValue initialSort = switch (screen) {
-      .library => AudiobookSort.title,
-      .authors => AuthorSort.name,
-      .series => SeriesSort.name,
-    };
+    final EnumHasValue initialSort;
+    final bool initialAscending;
+    if (_rememberSort) {
+      initialSort = switch (screen) {
+        .library => ref.read(audiobookSortValueProvider),
+        .authors => ref.read(authorSortValueProvider),
+        .series => ref.read(seriesSortValueProvider),
+      };
+      initialAscending = switch (screen) {
+        .library => ref.read(librarySortAscendingProvider),
+        .authors => ref.read(authorSortAscendingProvider),
+        .series => ref.read(seriesSortAscendingProvider),
+      };
+    } else {
+      initialSort = switch (screen) {
+        .library => AudiobookSort.title,
+        .authors => AuthorSort.name,
+        .series => SeriesSort.name,
+      };
+      initialAscending = true;
+    }
     final initialCollapse = ref.read(collapseSeriesProvider);
 
-    return FilterState(sortType: initialSort, collapseSeries: initialCollapse);
+    return FilterState(
+      sortType: initialSort,
+      sortAscending: initialAscending,
+      collapseSeries: initialCollapse,
+    );
   }
 
   void setSortType(EnumHasValue type) {
     state = state.copyWith(sortType: type);
+    if (!_rememberSort) return;
+    switch (screen) {
+      case .library:
+        if (type is PodcastSort) {
+          _notifier.setPodcastSortValue(type);
+        } else if (type is AudiobookSort) {
+          _notifier.setAudiobookSortValue(type);
+        }
+      case .authors:
+        _notifier.setAuthorSortValue(type as AuthorSort);
+      case .series:
+        _notifier.setSeriesSortValue(type as SeriesSort);
+    }
   }
 
   void toggleCollapseSeries() {
     final currentState = state.collapseSeries;
-    ref.read(userSettingsProvider.notifier).setCollapseSeries(!currentState);
+    _notifier.setCollapseSeries(!currentState);
     state = state.copyWith(collapseSeries: !currentState);
   }
 
   void toggleSortOrder() {
-    state = state.copyWith(sortAscending: !state.sortAscending);
+    final newAscending = !state.sortAscending;
+    state = state.copyWith(sortAscending: newAscending);
+    if (!_rememberSort) return;
+    switch (screen) {
+      case .library:
+        _notifier.setLibrarySortAscending(newAscending);
+      case .authors:
+        _notifier.setAuthorSortAscending(newAscending);
+      case .series:
+        _notifier.setSeriesSortAscending(newAscending);
+    }
   }
 
   void setFilter(Filter? filter) {
