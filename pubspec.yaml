@@ -39,6 +39,9 @@ dependencies:
   intl: ^0.20.2
   json_annotation: ^4.9.0
   just_audio: ^0.10.5
+  just_audio_media_kit: ^2.1.0
+  media_kit_libs_linux: ^1.2.1
+  media_kit_libs_windows_audio: ^1.0.9
   package_info_plus: ^10.1.0
   palette_generator_master: ^1.1.0
   path: ^1.9.1
@@ -46,9 +49,11 @@ dependencies:
   permission_handler: ^12.0.3
   riverpod_annotation: ^4.0.0
   rxdart: ^0.28.0
+  screen_retriever: ^0.2.0
   ttf_metadata: ^0.0.6
   url_launcher: ^6.3.2
   uuid: ^4.5.3
+  window_manager: ^0.5.1
 
 dev_dependencies:
   analyzer: ^8.4.0

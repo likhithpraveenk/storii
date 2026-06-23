@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 
 const isolatePortName = 'downloads_action';
@@ -27,14 +30,28 @@ class DownloadsNotificationService {
       'drawable/ic_notification',
     );
     const iosInit = IOSInitializationSettings();
+    const macOsInit = DarwinInitializationSettings();
+    const windowsInit = WindowsInitializationSettings(
+      appName: appName,
+      appUserModelId: 'com.likhithpraveenk.storii',
+      guid: 'download_notification',
+    );
+    const linuxInit = LinuxInitializationSettings(defaultActionName: 'Open');
     const initSettings = InitializationSettings(
       android: androidInit,
       iOS: iosInit,
+      macOS: macOsInit,
+      windows: windowsInit,
+      linux: linuxInit,
     );
     await _plugin.initialize(settings: initSettings);
   }
 
   Future<bool> requestPermission() async {
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      return true;
+    }
+
     final status = await Permission.notification.request();
     return status.isGranted;
   }

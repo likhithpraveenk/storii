@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app_links/app_links.dart';
 import 'package:audio_service/audio_service.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:just_audio_media_kit/just_audio_media_kit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -77,6 +79,10 @@ Future<void> setupDownloadServices() async {
 }
 
 Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
+  if (Platform.isWindows || Platform.isLinux) {
+    JustAudioMediaKit.ensureInitialized();
+  }
+
   return await AudioService.init(
     builder: () => AppAudioHandler(
       player: container.read(justAudioPlayerProvider),

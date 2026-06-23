@@ -101,11 +101,29 @@ class AudioMimeHelper {
     .wav,
     .aiff,
     .hls,
+    .opus,
+  };
+
+  static const _desktopSupported = <AudioMimeType>{
+    .mp3,
+    .aac,
+    .mp4Audio,
+    .m4a,
+    .flac,
+    .wav,
+    .ogg,
+    .opus,
+    .aiff,
+    .hls,
+    .dash,
   };
 
   static bool canPlatformPlay(AudioMimeType type) {
     if (Platform.isAndroid) return _androidSupported.contains(type);
     if (Platform.isIOS) return _iosSupported.contains(type);
+    if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
+      return _desktopSupported.contains(type);
+    }
     return false;
   }
 
@@ -143,6 +161,22 @@ class AudioMimeHelper {
         'audio/x-wav',
         'audio/aiff',
         'application/x-mpegURL',
+      ];
+    }
+    if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
+      return [
+        'audio/mpeg',
+        'audio/aac',
+        'audio/mp4',
+        'audio/x-m4a',
+        'audio/flac',
+        'audio/x-flac',
+        'audio/ogg',
+        'audio/opus',
+        'audio/wav',
+        'audio/x-wav',
+        'audio/aiff',
+        'application/dash+xml',
       ];
     }
     return [];

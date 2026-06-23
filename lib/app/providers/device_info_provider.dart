@@ -24,6 +24,14 @@ Future<String> deviceInfoString(Ref ref) async {
 
     final IosDeviceInfo d => 'iOS ${d.systemVersion} | ${d.modelName}',
 
+    final MacOsDeviceInfo d =>
+      'MacOS ${d.majorVersion}.${d.minorVersion}.${d.patchVersion} | ${d.modelName}',
+
+    final WindowsDeviceInfo d =>
+      'Windows ${d.majorVersion}.${d.minorVersion} (${d.buildNumber}) | ${d.productName}',
+
+    final LinuxDeviceInfo d => '${d.prettyName} | ${d.machineId ?? "unknown"}',
+
     _ => 'Unknown platform',
   };
 
