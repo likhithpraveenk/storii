@@ -99,10 +99,15 @@ class AboutScreen extends ConsumerWidget {
                     mainAxisSize: .min,
                     children: [
                       const Text('Built with '),
-                      Icon(Icons.favorite, size: 16, color: scheme.error),
+                      Icon(
+                        Icons.favorite,
+                        size: 16,
+                        color: scheme.errorContainer,
+                      ),
                       const Text(' in Flutter'),
                     ],
                   ),
+                  SizedBox(height: MediaQuery.paddingOf(context).bottom),
                 ],
               ),
             ),
