@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Content padding to prevent overlap with Android navigation buttons
+- Bottom padding in about screen
+- Image sizing on smaller screens
+
 ## [v0.4.2] - 2026-06-22
 
 ### Added

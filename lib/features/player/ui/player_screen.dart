@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,7 +37,10 @@ class PlayerScreen extends ConsumerWidget {
 
     final maxImgSize = isLandscape
         ? (screenHeight - 64).clamp(0.0, maxImgSizeInFullPlayer)
-        : (screenWidth - 32).clamp(0.0, maxImgSizeInFullPlayer);
+        : (screenWidth - 32).clamp(
+            0.0,
+            math.min(maxImgSizeInFullPlayer, screenHeight * 0.4),
+          );
     final targetImgLeft = isLandscape
         ? (screenWidth * 0.25) - (maxImgSize / 2)
         : (screenWidth - maxImgSize) / 2;

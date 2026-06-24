@@ -15,23 +15,27 @@ class NavBar extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
     final labelBehavior = ref.watch(navLabelBehaviorProvider);
 
-    return NavigationBar(
-      selectedIndex: currentIndex,
-      backgroundColor: scheme.surfaceContainer,
-      elevation: 2,
-      labelBehavior: labelBehavior,
-      onDestinationSelected: (index) {
-        if (index == currentIndex) return;
-        onTap(index);
-      },
-      destinations: [
-        for (final target in targets)
-          NavigationDestination(
-            icon: Icon(target.item.icon),
-            label: target.label,
-            selectedIcon: Icon(target.item.selectedIcon),
-          ),
-      ],
+    return MediaQuery.removePadding(
+      context: context,
+      removeBottom: true,
+      child: NavigationBar(
+        selectedIndex: currentIndex,
+        backgroundColor: scheme.surfaceContainer,
+        elevation: 2,
+        labelBehavior: labelBehavior,
+        onDestinationSelected: (index) {
+          if (index == currentIndex) return;
+          onTap(index);
+        },
+        destinations: [
+          for (final target in targets)
+            NavigationDestination(
+              icon: Icon(target.item.icon),
+              label: target.label,
+              selectedIcon: Icon(target.item.selectedIcon),
+            ),
+        ],
+      ),
     );
   }
 }
