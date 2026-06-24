@@ -26,6 +26,8 @@ class ShellScaffold extends ConsumerWidget {
       (t) => t.item.route.path == path,
     );
 
+    final factor = ref.watch(playerExpandFactorProvider);
+
     return PopScope(
       canPop: path == AppRoute.home.path,
       onPopInvokedWithResult: (didPop, _) async {
@@ -40,12 +42,21 @@ class ShellScaffold extends ConsumerWidget {
       },
       child: Scaffold(
         key: shellScaffoldKey,
-        bottomNavigationBar: Column(
-          mainAxisSize: .min,
-          children: [
-            const PlayerScreen(),
-            _ShellBottomBar(target: target, navTargets: navTargets),
-          ],
+        bottomNavigationBar: Padding(
+          padding: .only(
+            bottom: MediaQuery.paddingOf(context).bottom * (1.0 - factor),
+          ),
+          child: Column(
+            mainAxisSize: .min,
+            children: [
+              const PlayerScreen(),
+              _ShellBottomBar(
+                target: target,
+                navTargets: navTargets,
+                factor: factor,
+              ),
+            ],
+          ),
         ),
         body: child,
       ),
@@ -59,14 +70,19 @@ final lastNavIndexProvider = StateProvider<int>(
 );
 
 class _ShellBottomBar extends ConsumerWidget {
-  const _ShellBottomBar({required this.target, required this.navTargets});
+  const _ShellBottomBar({
+    required this.target,
+    required this.navTargets,
+    required this.factor,
+  });
 
   final NavTarget? target;
   final List<NavTarget> navTargets;
+  final double factor;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final factor = ref.watch(playerExpandFactorProvider);
+    if (factor >= 0.4) return const SizedBox.shrink();
 
     if (target != null) {
       final index = navTargets.indexOf(target!);
@@ -75,8 +91,6 @@ class _ShellBottomBar extends ConsumerWidget {
       );
     }
     final displayIndex = ref.watch(lastNavIndexProvider);
-
-    if (factor >= 0.4) return const SizedBox.shrink();
 
     final isTargetNull = target == null;
     final factorVisibility = (1.0 - (factor / 0.3)).clamp(0.0, 1.0);
