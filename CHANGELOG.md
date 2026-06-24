@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.4.3] - 2026-06-24
+
 ### Fixed
 
 - Content padding to prevent overlap with Android navigation buttons
@@ -294,7 +296,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.4.2...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.4.3...HEAD
+[v0.4.3]: https://github.com/likhithpraveenk/storii/compare/v0.4.2...v0.4.3
 [v0.4.2]: https://github.com/likhithpraveenk/storii/compare/v0.4.1...v0.4.2
 [v0.4.1]: https://github.com/likhithpraveenk/storii/compare/v0.4.0...v0.4.1
 [v0.4.0]: https://github.com/likhithpraveenk/storii/compare/v0.3.0...v0.4.0
