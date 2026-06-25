@@ -71,18 +71,14 @@ class JustAudioPlayer implements AppAudioPlayer {
 
   @override
   Stream<AppPlaybackState> get stateStream => Rx.merge([
-    _player.playbackEventStream.map(
-      (event) => AppPlaybackState(
-        status: _mapState(event.processingState),
-        index: event.currentIndex,
-        position: event.updatePosition,
-        bufferedPosition: event.bufferedPosition,
-        error: null,
-        isPlaying: _player.playing,
-        speed: _player.speed,
-        volume: _player.volume,
-      ),
-    ),
+    _player.playbackEventStream.map((_) => state.copyWith(error: null)),
+    _player.positionStream
+        .throttleTime(
+          const Duration(seconds: 3),
+          leading: false,
+          trailing: true,
+        )
+        .map((_) => state.copyWith(error: null)),
     _errorController.stream.map((msg) => state.copyWith(error: msg)),
   ]);
 
