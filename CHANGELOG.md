@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Sync playback position and index to OS media controls during playback
+
 ## [v0.4.3] - 2026-06-24
 
 ### Fixed

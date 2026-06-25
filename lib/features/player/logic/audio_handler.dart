@@ -113,12 +113,10 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
     mediaItem.add(queue.value.elementAtOrNull(resolved.chapterIndex));
 
-    final resolvedBuffered = resolver.resolveChapterFromTrack(
-      state.index,
-      state.bufferedPosition,
-    );
+    final resolvedBuffered =
+        resolver.resolveChapterFromTrack(state.index, state.bufferedPosition) ??
+        resolved;
 
-    final oldPlaybackState = playbackState.value;
     playbackState.add(
       playbackState.value.copyWith(
         processingState: switch (state.status) {
@@ -131,9 +129,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         },
         playing: state.isPlaying,
         updatePosition: resolved.chapterPosition,
-        bufferedPosition:
-            resolvedBuffered?.chapterPosition ??
-            oldPlaybackState.bufferedPosition,
+        bufferedPosition: resolvedBuffered.chapterPosition,
         speed: state.speed,
         queueIndex: resolved.chapterIndex,
         errorMessage: state.error?.name,
