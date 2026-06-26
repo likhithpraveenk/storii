@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.4.5-beta.1] - 2026-06-26
+
 ### Fixed
 
 - Crash parsing podcast metadata
@@ -306,7 +308,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.4.4...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.4.5-beta.1...HEAD
+[v0.4.5-beta.1]: https://github.com/likhithpraveenk/storii/compare/v0.4.4...v0.4.5-beta.1
 [v0.4.4]: https://github.com/likhithpraveenk/storii/compare/v0.4.3...v0.4.4
 [v0.4.3]: https://github.com/likhithpraveenk/storii/compare/v0.4.2...v0.4.3
 [v0.4.2]: https://github.com/likhithpraveenk/storii/compare/v0.4.1...v0.4.2
