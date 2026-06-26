@@ -1755,6 +1755,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Episode'**
   String get episode;
+
+  /// No description provided for @libraryIsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'{library} Library is empty!'**
+  String libraryIsEmpty(String library);
 }
 
 class _AppLocalizationsDelegate

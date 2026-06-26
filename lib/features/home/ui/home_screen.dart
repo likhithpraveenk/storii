@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/shared/widgets/common_app_bar.dart';
+import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -29,7 +31,10 @@ class HomeScreen extends ConsumerWidget {
         child: shelvesAsync.when(
           data: (shelves) {
             if (shelves.isEmpty) {
-              return Center(child: Text(l10n.empty));
+              final library = ref.watch(currentLibraryProvider)?.name;
+              return EmptyState(
+                subtitle: library == null ? null : l10n.libraryIsEmpty(library),
+              );
             }
             final displayList =
                 shelves.where((s) => s.identity != null).toList()..sort(

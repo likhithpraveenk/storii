@@ -888,4 +888,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get episode => 'Episode';
+
+  @override
+  String libraryIsEmpty(String library) {
+    return '$library Library is empty!';
+  }
 }

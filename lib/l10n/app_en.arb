@@ -372,5 +372,13 @@
   "added": "Added",
   "mimeType": "MIME Type",
   "season": "Season",
-  "episode": "Episode"
+  "episode": "Episode",
+  "libraryIsEmpty": "{library} Library is empty!",
+  "@libraryIsEmpty": {
+    "placeholders": {
+      "library": {
+        "type": "String"
+      }
+    }
+  }
 }
