@@ -130,6 +130,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get collapse => 'Collapse';
 
   @override
+  String get refresh => 'Refresh';
+
+  @override
   String get retry => 'Retry';
 
   @override

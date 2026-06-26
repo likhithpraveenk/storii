@@ -9,6 +9,7 @@ import 'package:storii/features/home/logic/shelves_provider.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/features/series/ui/series_card.dart';
+import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
@@ -34,6 +35,12 @@ class HomeScreen extends ConsumerWidget {
               final library = ref.watch(currentLibraryProvider)?.name;
               return EmptyState(
                 subtitle: library == null ? null : l10n.libraryIsEmpty(library),
+                action: AppFilledButton(
+                  text: l10n.refresh,
+                  onPressed: () {
+                    ref.invalidate(rawShelvesProvider);
+                  },
+                ),
               );
             }
             final displayList =

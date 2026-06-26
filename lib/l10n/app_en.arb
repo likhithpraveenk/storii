@@ -53,6 +53,7 @@
   "libraries": "Libraries",
   "empty": "Empty",
   "collapse": "Collapse",
+  "refresh": "Refresh",
   "retry": "Retry",
   "description": "Description",
   "noDescription": "No description available",
