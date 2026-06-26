@@ -21,7 +21,7 @@ final class MediaProgressMapProvider
         argument: null,
         retry: null,
         name: r'mediaProgressMapProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -34,7 +34,7 @@ final class MediaProgressMapProvider
   MediaProgressMap create() => MediaProgressMap();
 }
 
-String _$mediaProgressMapHash() => r'242d2c3f5f81f685e665aa0f3063b69dfb53a513';
+String _$mediaProgressMapHash() => r'a79778165b7c1e3b021efdc98d1806075a2eec84';
 
 abstract class _$MediaProgressMap
     extends $AsyncNotifier<Map<String, MediaProgress>> {
@@ -130,3 +130,85 @@ final class TotalFinishedEpisodesProvider
 
 String _$totalFinishedEpisodesHash() =>
     r'121b41f5c82d4c6245dfa18fddcb4871ddca494f';
+
+@ProviderFor(mediaProgressFromMap)
+final mediaProgressFromMapProvider = MediaProgressFromMapFamily._();
+
+final class MediaProgressFromMapProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<MediaProgress?>,
+          MediaProgress?,
+          FutureOr<MediaProgress?>
+        >
+    with $FutureModifier<MediaProgress?>, $FutureProvider<MediaProgress?> {
+  MediaProgressFromMapProvider._({
+    required MediaProgressFromMapFamily super.from,
+    required (String, String?) super.argument,
+  }) : super(
+         retry: null,
+         name: r'mediaProgressFromMapProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$mediaProgressFromMapHash();
+
+  @override
+  String toString() {
+    return r'mediaProgressFromMapProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<MediaProgress?> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<MediaProgress?> create(Ref ref) {
+    final argument = this.argument as (String, String?);
+    return mediaProgressFromMap(ref, argument.$1, argument.$2);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is MediaProgressFromMapProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$mediaProgressFromMapHash() =>
+    r'd9750454d9d3153c2e33bf974143d410ae50251a';
+
+final class MediaProgressFromMapFamily extends $Family
+    with
+        $FunctionalFamilyOverride<FutureOr<MediaProgress?>, (String, String?)> {
+  MediaProgressFromMapFamily._()
+    : super(
+        retry: null,
+        name: r'mediaProgressFromMapProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  MediaProgressFromMapProvider call(
+    String libraryItemId, [
+    String? episodeId,
+  ]) => MediaProgressFromMapProvider._(
+    argument: (libraryItemId, episodeId),
+    from: this,
+  );
+
+  @override
+  String toString() => r'mediaProgressFromMapProvider';
+}

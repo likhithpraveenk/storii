@@ -107,16 +107,17 @@ class HistorySheet extends ConsumerWidget {
             ],
           ),
         ),
-        SwitchListTile(
-          contentPadding: const .fromLTRB(24, 0, 16, 0),
-          title: Text(l10n.showChapterPosition),
-          value: ref.watch(showChapterPositionInHistoryProvider),
-          onChanged: (value) {
-            ref
-                .read(userSettingsProvider.notifier)
-                .setShowChapterPositionInHistory(value);
-          },
-        ),
+        if (episodeId == null)
+          SwitchListTile(
+            contentPadding: const .fromLTRB(24, 0, 16, 0),
+            title: Text(l10n.showChapterPosition),
+            value: ref.watch(showChapterPositionInHistoryProvider),
+            onChanged: (value) {
+              ref
+                  .read(userSettingsProvider.notifier)
+                  .setShowChapterPositionInHistory(value);
+            },
+          ),
         history.isEmpty
             ? const Expanded(child: EmptyState())
             : Expanded(
@@ -217,7 +218,9 @@ class _HistoryEventTile extends ConsumerWidget {
     final timeStr = event.timestamp.fString(format: 'HH:mm');
     final item = ref.watch(itemDetailProvider(itemId)).value;
 
-    final showChapter = ref.watch(showChapterPositionInHistoryProvider);
+    final showChapter = item?.isPodcast == true
+        ? false
+        : ref.watch(showChapterPositionInHistoryProvider);
 
     return InkWell(
       onTap: onTap,

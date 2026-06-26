@@ -292,6 +292,18 @@ abstract class AppLocalizations {
   /// **'Switch Account'**
   String get switchAccount;
 
+  /// No description provided for @switchAccountConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to another account?'**
+  String get switchAccountConfirm;
+
+  /// No description provided for @logoutConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out from this account?'**
+  String get logoutConfirm;
+
   /// No description provided for @noLibrary.
   ///
   /// In en, this message translates to:
@@ -315,6 +327,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Collapse'**
   String get collapse;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
 
   /// No description provided for @retry.
   ///
@@ -1755,6 +1773,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Episode'**
   String get episode;
+
+  /// No description provided for @libraryIsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'{library} Library is empty!'**
+  String libraryIsEmpty(String library);
 }
 
 class _AppLocalizationsDelegate

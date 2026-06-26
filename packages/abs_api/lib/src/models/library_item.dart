@@ -21,6 +21,7 @@ sealed class LibraryItem with _$LibraryItem {
     MediaProgress? userMediaProgress,
     List<PodcastEpisodeDownload>? episodesDownloading,
     Series? collapsedSeries,
+    PodcastEpisode? recentEpisode,
   }) = _LibraryItem;
 
   factory LibraryItem.fromJson(Map<String, dynamic> json) =>

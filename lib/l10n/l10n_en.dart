@@ -112,6 +112,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get switchAccount => 'Switch Account';
 
   @override
+  String get switchAccountConfirm => 'Switch to another account?';
+
+  @override
+  String get logoutConfirm => 'Log out from this account?';
+
+  @override
   String get noLibrary => 'No Library';
 
   @override
@@ -122,6 +128,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get collapse => 'Collapse';
+
+  @override
+  String get refresh => 'Refresh';
 
   @override
   String get retry => 'Retry';
@@ -888,4 +897,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get episode => 'Episode';
+
+  @override
+  String libraryIsEmpty(String library) {
+    return '$library Library is empty!';
+  }
 }

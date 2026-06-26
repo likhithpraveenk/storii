@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
-import 'package:storii/features/item/logic/progress_notifier.dart';
+import 'package:storii/app/providers/media_progress_map_provider.dart';
 
 class ProgressBar extends ConsumerWidget {
   const ProgressBar({required this.itemId, super.key});
@@ -9,9 +9,9 @@ class ProgressBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaProgress = ref.watch(mediaProgressProvider(itemId)).value;
+    final mediaProgress = ref.watch(mediaProgressFromMapProvider(itemId)).value;
     final progress = mediaProgress?.progress ?? 0.0;
-    if (progress <= 0) return const SizedBox.shrink();
+    if (progress == 0.0) return const SizedBox.shrink();
 
     final theme = Theme.of(context);
 

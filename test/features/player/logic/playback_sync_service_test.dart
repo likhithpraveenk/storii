@@ -105,7 +105,7 @@ void main() {
     expect(syncCalls.length, 2);
   });
 
-  test('complete calls onMarkComplete and onClose', () async {
+  test('complete calls onMarkComplete', () async {
     final calls = <String>[];
     await service.dispose();
     service = makeService(
@@ -117,7 +117,7 @@ void main() {
     await service.onPlay();
     await Future.delayed(const Duration(milliseconds: 300));
     await service.onComplete();
-    expect(calls, ['complete', 'close']);
+    expect(calls, ['complete']);
   });
 
   test('periodic timer triggers sync when interval elapses', () {

@@ -107,7 +107,9 @@ List<PodcastEpisode> filteredEpisodes(
       .published => a.publishedAt.compareTo(b.publishedAt),
       .title => (a.title ?? '').compareTo(b.title ?? ''),
       .seasonEpisode => _seasonEpisodeCompare(a, b),
-      .duration => a.duration.compareTo(b.duration),
+      .duration => (a.duration ?? Duration.zero).compareTo(
+        b.duration ?? Duration.zero,
+      ),
     };
     return filterState.ascending ? cmp : -cmp;
   });

@@ -71,23 +71,15 @@ PodcastMetadata _$PodcastMetadataFromJson(Map<String, dynamic> json) =>
       titleIgnorePrefix: json['titleIgnorePrefix'] as String?,
       author: json['author'] as String?,
       description: json['description'] as String?,
-      releaseDate: json['releaseDate'] == null
-          ? null
-          : DateTime.parse(json['releaseDate'] as String),
+      releaseDate: json['releaseDate'] as String?,
       genres:
           (json['genres'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           const [],
-      feedUrl: json['feedUrl'] == null
-          ? null
-          : Uri.parse(json['feedUrl'] as String),
-      imageUrl: json['imageUrl'] == null
-          ? null
-          : Uri.parse(json['imageUrl'] as String),
-      itunesPageUrl: json['itunesPageUrl'] == null
-          ? null
-          : Uri.parse(json['itunesPageUrl'] as String),
+      feedUrl: json['feedUrl'] as String?,
+      imageUrl: json['imageUrl'] as String?,
+      itunesPageUrl: json['itunesPageUrl'] as String?,
       itunesId: json['itunesId'] as String?,
       itunesArtistId: json['itunesArtistId'] as String?,
       explicit: json['explicit'] as bool? ?? false,
@@ -101,11 +93,11 @@ Map<String, dynamic> _$PodcastMetadataToJson(PodcastMetadata instance) =>
       'titleIgnorePrefix': ?instance.titleIgnorePrefix,
       'author': ?instance.author,
       'description': ?instance.description,
-      'releaseDate': ?instance.releaseDate?.toIso8601String(),
+      'releaseDate': ?instance.releaseDate,
       'genres': instance.genres,
-      'feedUrl': ?instance.feedUrl?.toString(),
-      'imageUrl': ?instance.imageUrl?.toString(),
-      'itunesPageUrl': ?instance.itunesPageUrl?.toString(),
+      'feedUrl': ?instance.feedUrl,
+      'imageUrl': ?instance.imageUrl,
+      'itunesPageUrl': ?instance.itunesPageUrl,
       'itunesId': ?instance.itunesId,
       'itunesArtistId': ?instance.itunesArtistId,
       'explicit': instance.explicit,

@@ -74,7 +74,6 @@ class PlaybackSyncService {
   Future<void> onComplete() async {
     await _sync(.complete, keepRunning: false);
     await onMarkComplete();
-    await onClose();
   }
 
   Future<void> onError() async {

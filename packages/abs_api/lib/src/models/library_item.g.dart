@@ -32,6 +32,9 @@ _LibraryItem _$LibraryItemFromJson(Map<String, dynamic> json) => _LibraryItem(
   collapsedSeries: json['collapsedSeries'] == null
       ? null
       : Series.fromJson(json['collapsedSeries'] as Map<String, dynamic>),
+  recentEpisode: json['recentEpisode'] == null
+      ? null
+      : PodcastEpisode.fromJson(json['recentEpisode'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$LibraryItemToJson(_LibraryItem instance) =>
@@ -51,6 +54,7 @@ Map<String, dynamic> _$LibraryItemToJson(_LibraryItem instance) =>
           ?.map((e) => e.toJson())
           .toList(),
       'collapsedSeries': ?instance.collapsedSeries?.toJson(),
+      'recentEpisode': ?instance.recentEpisode?.toJson(),
     };
 
 const _$MediaTypeEnumMap = {

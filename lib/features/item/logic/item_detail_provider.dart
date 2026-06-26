@@ -52,7 +52,7 @@ Future<LibraryItem> itemDetail(Ref ref, String id) async {
     }
   }
 
-  final user = await ref.read(authenticatedUserProvider.future);
+  final user = await ref.watch(authenticatedUserProvider.future);
   final api = ref.read(itemApiProvider(user));
   return ref.logApiCall(
     () => api.get(id, includeProgress: true),

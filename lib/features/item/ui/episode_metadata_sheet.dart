@@ -20,7 +20,7 @@ class EpisodeMetadataSheet extends ConsumerWidget {
       _RowData(l10n.episode, episode.episode),
       _RowData(l10n.type, episode.episodeType),
       _RowData(l10n.subtitle, episode.subtitle),
-      _RowData(l10n.duration, episode.duration.toReadableDuration()),
+      _RowData(l10n.duration, episode.duration?.toReadableDuration()),
       _RowData(
         l10n.publishedDate,
         episode.publishedAt.fString(format: ref.watch(dateTimeFormatProvider)),

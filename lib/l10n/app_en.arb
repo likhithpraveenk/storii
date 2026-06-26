@@ -47,10 +47,13 @@
   "logs": "Logs",
   "about": "About",
   "switchAccount": "Switch Account",
+  "switchAccountConfirm": "Switch to another account?",
+  "logoutConfirm": "Log out from this account?",
   "noLibrary": "No Library",
   "libraries": "Libraries",
   "empty": "Empty",
   "collapse": "Collapse",
+  "refresh": "Refresh",
   "retry": "Retry",
   "description": "Description",
   "noDescription": "No description available",
@@ -372,5 +375,13 @@
   "added": "Added",
   "mimeType": "MIME Type",
   "season": "Season",
-  "episode": "Episode"
+  "episode": "Episode",
+  "libraryIsEmpty": "{library} Library is empty!",
+  "@libraryIsEmpty": {
+    "placeholders": {
+      "library": {
+        "type": "String"
+      }
+    }
+  }
 }

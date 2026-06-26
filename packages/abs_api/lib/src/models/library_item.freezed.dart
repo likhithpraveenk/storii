@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LibraryItem {
 
- String get id; String get libraryId; DateTime get addedAt; DateTime get updatedAt; bool get isMissing; MediaType get mediaType; Media get media; int? get size; String? get sequence; String? get seriesSequence; MediaProgress? get userMediaProgress; List<PodcastEpisodeDownload>? get episodesDownloading; Series? get collapsedSeries;
+ String get id; String get libraryId; DateTime get addedAt; DateTime get updatedAt; bool get isMissing; MediaType get mediaType; Media get media; int? get size; String? get sequence; String? get seriesSequence; MediaProgress? get userMediaProgress; List<PodcastEpisodeDownload>? get episodesDownloading; Series? get collapsedSeries; PodcastEpisode? get recentEpisode;
 /// Create a copy of LibraryItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $LibraryItemCopyWith<LibraryItem> get copyWith => _$LibraryItemCopyWithImpl<Libr
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItem&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isMissing, isMissing) || other.isMissing == isMissing)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.media, media) || other.media == media)&&(identical(other.size, size) || other.size == size)&&(identical(other.sequence, sequence) || other.sequence == sequence)&&(identical(other.seriesSequence, seriesSequence) || other.seriesSequence == seriesSequence)&&(identical(other.userMediaProgress, userMediaProgress) || other.userMediaProgress == userMediaProgress)&&const DeepCollectionEquality().equals(other.episodesDownloading, episodesDownloading)&&(identical(other.collapsedSeries, collapsedSeries) || other.collapsedSeries == collapsedSeries));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItem&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isMissing, isMissing) || other.isMissing == isMissing)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.media, media) || other.media == media)&&(identical(other.size, size) || other.size == size)&&(identical(other.sequence, sequence) || other.sequence == sequence)&&(identical(other.seriesSequence, seriesSequence) || other.seriesSequence == seriesSequence)&&(identical(other.userMediaProgress, userMediaProgress) || other.userMediaProgress == userMediaProgress)&&const DeepCollectionEquality().equals(other.episodesDownloading, episodesDownloading)&&(identical(other.collapsedSeries, collapsedSeries) || other.collapsedSeries == collapsedSeries)&&(identical(other.recentEpisode, recentEpisode) || other.recentEpisode == recentEpisode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,libraryId,addedAt,updatedAt,isMissing,mediaType,media,size,sequence,seriesSequence,userMediaProgress,const DeepCollectionEquality().hash(episodesDownloading),collapsedSeries);
+int get hashCode => Object.hash(runtimeType,id,libraryId,addedAt,updatedAt,isMissing,mediaType,media,size,sequence,seriesSequence,userMediaProgress,const DeepCollectionEquality().hash(episodesDownloading),collapsedSeries,recentEpisode);
 
 @override
 String toString() {
-  return 'LibraryItem(id: $id, libraryId: $libraryId, addedAt: $addedAt, updatedAt: $updatedAt, isMissing: $isMissing, mediaType: $mediaType, media: $media, size: $size, sequence: $sequence, seriesSequence: $seriesSequence, userMediaProgress: $userMediaProgress, episodesDownloading: $episodesDownloading, collapsedSeries: $collapsedSeries)';
+  return 'LibraryItem(id: $id, libraryId: $libraryId, addedAt: $addedAt, updatedAt: $updatedAt, isMissing: $isMissing, mediaType: $mediaType, media: $media, size: $size, sequence: $sequence, seriesSequence: $seriesSequence, userMediaProgress: $userMediaProgress, episodesDownloading: $episodesDownloading, collapsedSeries: $collapsedSeries, recentEpisode: $recentEpisode)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $LibraryItemCopyWith<$Res>  {
   factory $LibraryItemCopyWith(LibraryItem value, $Res Function(LibraryItem) _then) = _$LibraryItemCopyWithImpl;
 @useResult
 $Res call({
- String id, String libraryId, DateTime addedAt, DateTime updatedAt, bool isMissing, MediaType mediaType, Media media, int? size, String? sequence, String? seriesSequence, MediaProgress? userMediaProgress, List<PodcastEpisodeDownload>? episodesDownloading, Series? collapsedSeries
+ String id, String libraryId, DateTime addedAt, DateTime updatedAt, bool isMissing, MediaType mediaType, Media media, int? size, String? sequence, String? seriesSequence, MediaProgress? userMediaProgress, List<PodcastEpisodeDownload>? episodesDownloading, Series? collapsedSeries, PodcastEpisode? recentEpisode
 });
 
 
-$MediaCopyWith<$Res> get media;$MediaProgressCopyWith<$Res>? get userMediaProgress;$SeriesCopyWith<$Res>? get collapsedSeries;
+$MediaCopyWith<$Res> get media;$MediaProgressCopyWith<$Res>? get userMediaProgress;$SeriesCopyWith<$Res>? get collapsedSeries;$PodcastEpisodeCopyWith<$Res>? get recentEpisode;
 
 }
 /// @nodoc
@@ -65,7 +65,7 @@ class _$LibraryItemCopyWithImpl<$Res>
 
 /// Create a copy of LibraryItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? libraryId = null,Object? addedAt = null,Object? updatedAt = null,Object? isMissing = null,Object? mediaType = null,Object? media = null,Object? size = freezed,Object? sequence = freezed,Object? seriesSequence = freezed,Object? userMediaProgress = freezed,Object? episodesDownloading = freezed,Object? collapsedSeries = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? libraryId = null,Object? addedAt = null,Object? updatedAt = null,Object? isMissing = null,Object? mediaType = null,Object? media = null,Object? size = freezed,Object? sequence = freezed,Object? seriesSequence = freezed,Object? userMediaProgress = freezed,Object? episodesDownloading = freezed,Object? collapsedSeries = freezed,Object? recentEpisode = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,libraryId: null == libraryId ? _self.libraryId : libraryId // ignore: cast_nullable_to_non_nullable
@@ -80,7 +80,8 @@ as String?,seriesSequence: freezed == seriesSequence ? _self.seriesSequence : se
 as String?,userMediaProgress: freezed == userMediaProgress ? _self.userMediaProgress : userMediaProgress // ignore: cast_nullable_to_non_nullable
 as MediaProgress?,episodesDownloading: freezed == episodesDownloading ? _self.episodesDownloading : episodesDownloading // ignore: cast_nullable_to_non_nullable
 as List<PodcastEpisodeDownload>?,collapsedSeries: freezed == collapsedSeries ? _self.collapsedSeries : collapsedSeries // ignore: cast_nullable_to_non_nullable
-as Series?,
+as Series?,recentEpisode: freezed == recentEpisode ? _self.recentEpisode : recentEpisode // ignore: cast_nullable_to_non_nullable
+as PodcastEpisode?,
   ));
 }
 /// Create a copy of LibraryItem
@@ -115,6 +116,18 @@ $SeriesCopyWith<$Res>? get collapsedSeries {
 
   return $SeriesCopyWith<$Res>(_self.collapsedSeries!, (value) {
     return _then(_self.copyWith(collapsedSeries: value));
+  });
+}/// Create a copy of LibraryItem
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PodcastEpisodeCopyWith<$Res>? get recentEpisode {
+    if (_self.recentEpisode == null) {
+    return null;
+  }
+
+  return $PodcastEpisodeCopyWith<$Res>(_self.recentEpisode!, (value) {
+    return _then(_self.copyWith(recentEpisode: value));
   });
 }
 }
@@ -195,10 +208,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  MediaType mediaType,  Media media,  int? size,  String? sequence,  String? seriesSequence,  MediaProgress? userMediaProgress,  List<PodcastEpisodeDownload>? episodesDownloading,  Series? collapsedSeries)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  MediaType mediaType,  Media media,  int? size,  String? sequence,  String? seriesSequence,  MediaProgress? userMediaProgress,  List<PodcastEpisodeDownload>? episodesDownloading,  Series? collapsedSeries,  PodcastEpisode? recentEpisode)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LibraryItem() when $default != null:
-return $default(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.mediaType,_that.media,_that.size,_that.sequence,_that.seriesSequence,_that.userMediaProgress,_that.episodesDownloading,_that.collapsedSeries);case _:
+return $default(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.mediaType,_that.media,_that.size,_that.sequence,_that.seriesSequence,_that.userMediaProgress,_that.episodesDownloading,_that.collapsedSeries,_that.recentEpisode);case _:
   return orElse();
 
 }
@@ -216,10 +229,10 @@ return $default(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isM
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  MediaType mediaType,  Media media,  int? size,  String? sequence,  String? seriesSequence,  MediaProgress? userMediaProgress,  List<PodcastEpisodeDownload>? episodesDownloading,  Series? collapsedSeries)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  MediaType mediaType,  Media media,  int? size,  String? sequence,  String? seriesSequence,  MediaProgress? userMediaProgress,  List<PodcastEpisodeDownload>? episodesDownloading,  Series? collapsedSeries,  PodcastEpisode? recentEpisode)  $default,) {final _that = this;
 switch (_that) {
 case _LibraryItem():
-return $default(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.mediaType,_that.media,_that.size,_that.sequence,_that.seriesSequence,_that.userMediaProgress,_that.episodesDownloading,_that.collapsedSeries);}
+return $default(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.mediaType,_that.media,_that.size,_that.sequence,_that.seriesSequence,_that.userMediaProgress,_that.episodesDownloading,_that.collapsedSeries,_that.recentEpisode);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -233,10 +246,10 @@ return $default(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isM
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  MediaType mediaType,  Media media,  int? size,  String? sequence,  String? seriesSequence,  MediaProgress? userMediaProgress,  List<PodcastEpisodeDownload>? episodesDownloading,  Series? collapsedSeries)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String libraryId,  DateTime addedAt,  DateTime updatedAt,  bool isMissing,  MediaType mediaType,  Media media,  int? size,  String? sequence,  String? seriesSequence,  MediaProgress? userMediaProgress,  List<PodcastEpisodeDownload>? episodesDownloading,  Series? collapsedSeries,  PodcastEpisode? recentEpisode)?  $default,) {final _that = this;
 switch (_that) {
 case _LibraryItem() when $default != null:
-return $default(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.mediaType,_that.media,_that.size,_that.sequence,_that.seriesSequence,_that.userMediaProgress,_that.episodesDownloading,_that.collapsedSeries);case _:
+return $default(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isMissing,_that.mediaType,_that.media,_that.size,_that.sequence,_that.seriesSequence,_that.userMediaProgress,_that.episodesDownloading,_that.collapsedSeries,_that.recentEpisode);case _:
   return null;
 
 }
@@ -248,7 +261,7 @@ return $default(_that.id,_that.libraryId,_that.addedAt,_that.updatedAt,_that.isM
 @JsonSerializable()
 @DateTimeEpochConverter()
 class _LibraryItem implements LibraryItem {
-  const _LibraryItem({required this.id, required this.libraryId, required this.addedAt, required this.updatedAt, required this.isMissing, required this.mediaType, required this.media, this.size, this.sequence, this.seriesSequence, this.userMediaProgress, final  List<PodcastEpisodeDownload>? episodesDownloading, this.collapsedSeries}): _episodesDownloading = episodesDownloading;
+  const _LibraryItem({required this.id, required this.libraryId, required this.addedAt, required this.updatedAt, required this.isMissing, required this.mediaType, required this.media, this.size, this.sequence, this.seriesSequence, this.userMediaProgress, final  List<PodcastEpisodeDownload>? episodesDownloading, this.collapsedSeries, this.recentEpisode}): _episodesDownloading = episodesDownloading;
   factory _LibraryItem.fromJson(Map<String, dynamic> json) => _$LibraryItemFromJson(json);
 
 @override final  String id;
@@ -272,6 +285,7 @@ class _LibraryItem implements LibraryItem {
 }
 
 @override final  Series? collapsedSeries;
+@override final  PodcastEpisode? recentEpisode;
 
 /// Create a copy of LibraryItem
 /// with the given fields replaced by the non-null parameter values.
@@ -286,16 +300,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryItem&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isMissing, isMissing) || other.isMissing == isMissing)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.media, media) || other.media == media)&&(identical(other.size, size) || other.size == size)&&(identical(other.sequence, sequence) || other.sequence == sequence)&&(identical(other.seriesSequence, seriesSequence) || other.seriesSequence == seriesSequence)&&(identical(other.userMediaProgress, userMediaProgress) || other.userMediaProgress == userMediaProgress)&&const DeepCollectionEquality().equals(other._episodesDownloading, _episodesDownloading)&&(identical(other.collapsedSeries, collapsedSeries) || other.collapsedSeries == collapsedSeries));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryItem&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isMissing, isMissing) || other.isMissing == isMissing)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.media, media) || other.media == media)&&(identical(other.size, size) || other.size == size)&&(identical(other.sequence, sequence) || other.sequence == sequence)&&(identical(other.seriesSequence, seriesSequence) || other.seriesSequence == seriesSequence)&&(identical(other.userMediaProgress, userMediaProgress) || other.userMediaProgress == userMediaProgress)&&const DeepCollectionEquality().equals(other._episodesDownloading, _episodesDownloading)&&(identical(other.collapsedSeries, collapsedSeries) || other.collapsedSeries == collapsedSeries)&&(identical(other.recentEpisode, recentEpisode) || other.recentEpisode == recentEpisode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,libraryId,addedAt,updatedAt,isMissing,mediaType,media,size,sequence,seriesSequence,userMediaProgress,const DeepCollectionEquality().hash(_episodesDownloading),collapsedSeries);
+int get hashCode => Object.hash(runtimeType,id,libraryId,addedAt,updatedAt,isMissing,mediaType,media,size,sequence,seriesSequence,userMediaProgress,const DeepCollectionEquality().hash(_episodesDownloading),collapsedSeries,recentEpisode);
 
 @override
 String toString() {
-  return 'LibraryItem(id: $id, libraryId: $libraryId, addedAt: $addedAt, updatedAt: $updatedAt, isMissing: $isMissing, mediaType: $mediaType, media: $media, size: $size, sequence: $sequence, seriesSequence: $seriesSequence, userMediaProgress: $userMediaProgress, episodesDownloading: $episodesDownloading, collapsedSeries: $collapsedSeries)';
+  return 'LibraryItem(id: $id, libraryId: $libraryId, addedAt: $addedAt, updatedAt: $updatedAt, isMissing: $isMissing, mediaType: $mediaType, media: $media, size: $size, sequence: $sequence, seriesSequence: $seriesSequence, userMediaProgress: $userMediaProgress, episodesDownloading: $episodesDownloading, collapsedSeries: $collapsedSeries, recentEpisode: $recentEpisode)';
 }
 
 
@@ -306,11 +320,11 @@ abstract mixin class _$LibraryItemCopyWith<$Res> implements $LibraryItemCopyWith
   factory _$LibraryItemCopyWith(_LibraryItem value, $Res Function(_LibraryItem) _then) = __$LibraryItemCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String libraryId, DateTime addedAt, DateTime updatedAt, bool isMissing, MediaType mediaType, Media media, int? size, String? sequence, String? seriesSequence, MediaProgress? userMediaProgress, List<PodcastEpisodeDownload>? episodesDownloading, Series? collapsedSeries
+ String id, String libraryId, DateTime addedAt, DateTime updatedAt, bool isMissing, MediaType mediaType, Media media, int? size, String? sequence, String? seriesSequence, MediaProgress? userMediaProgress, List<PodcastEpisodeDownload>? episodesDownloading, Series? collapsedSeries, PodcastEpisode? recentEpisode
 });
 
 
-@override $MediaCopyWith<$Res> get media;@override $MediaProgressCopyWith<$Res>? get userMediaProgress;@override $SeriesCopyWith<$Res>? get collapsedSeries;
+@override $MediaCopyWith<$Res> get media;@override $MediaProgressCopyWith<$Res>? get userMediaProgress;@override $SeriesCopyWith<$Res>? get collapsedSeries;@override $PodcastEpisodeCopyWith<$Res>? get recentEpisode;
 
 }
 /// @nodoc
@@ -323,7 +337,7 @@ class __$LibraryItemCopyWithImpl<$Res>
 
 /// Create a copy of LibraryItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? libraryId = null,Object? addedAt = null,Object? updatedAt = null,Object? isMissing = null,Object? mediaType = null,Object? media = null,Object? size = freezed,Object? sequence = freezed,Object? seriesSequence = freezed,Object? userMediaProgress = freezed,Object? episodesDownloading = freezed,Object? collapsedSeries = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? libraryId = null,Object? addedAt = null,Object? updatedAt = null,Object? isMissing = null,Object? mediaType = null,Object? media = null,Object? size = freezed,Object? sequence = freezed,Object? seriesSequence = freezed,Object? userMediaProgress = freezed,Object? episodesDownloading = freezed,Object? collapsedSeries = freezed,Object? recentEpisode = freezed,}) {
   return _then(_LibraryItem(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,libraryId: null == libraryId ? _self.libraryId : libraryId // ignore: cast_nullable_to_non_nullable
@@ -338,7 +352,8 @@ as String?,seriesSequence: freezed == seriesSequence ? _self.seriesSequence : se
 as String?,userMediaProgress: freezed == userMediaProgress ? _self.userMediaProgress : userMediaProgress // ignore: cast_nullable_to_non_nullable
 as MediaProgress?,episodesDownloading: freezed == episodesDownloading ? _self._episodesDownloading : episodesDownloading // ignore: cast_nullable_to_non_nullable
 as List<PodcastEpisodeDownload>?,collapsedSeries: freezed == collapsedSeries ? _self.collapsedSeries : collapsedSeries // ignore: cast_nullable_to_non_nullable
-as Series?,
+as Series?,recentEpisode: freezed == recentEpisode ? _self.recentEpisode : recentEpisode // ignore: cast_nullable_to_non_nullable
+as PodcastEpisode?,
   ));
 }
 
@@ -374,6 +389,18 @@ $SeriesCopyWith<$Res>? get collapsedSeries {
 
   return $SeriesCopyWith<$Res>(_self.collapsedSeries!, (value) {
     return _then(_self.copyWith(collapsedSeries: value));
+  });
+}/// Create a copy of LibraryItem
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PodcastEpisodeCopyWith<$Res>? get recentEpisode {
+    if (_self.recentEpisode == null) {
+    return null;
+  }
+
+  return $PodcastEpisodeCopyWith<$Res>(_self.recentEpisode!, (value) {
+    return _then(_self.copyWith(recentEpisode: value));
   });
 }
 }

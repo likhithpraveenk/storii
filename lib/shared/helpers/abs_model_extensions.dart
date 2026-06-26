@@ -224,14 +224,17 @@ extension AudiobookX on LibraryItem {
 
   Duration get duration => media.map(
     book: (m) => m.duration ?? Duration.zero,
-    podcast: (m) =>
-        m.episodes.fold(Duration.zero, (total, e) => total + e.duration),
+    podcast: (m) => m.episodes.fold(
+      Duration.zero,
+      (total, e) => total + (e.duration ?? Duration.zero),
+    ),
   );
   List<BookChapter> get chapters =>
       media.map(book: (m) => m.chapters, podcast: (m) => []);
   List<AudioTrack> get tracks => media.map(
     book: (m) => m.tracks,
-    podcast: (m) => m.episodes.map((e) => e.audioTrack).toList(),
+    podcast: (m) =>
+        m.episodes.map((e) => e.audioTrack).whereType<AudioTrack>().toList(),
   );
   List<AudioFile> get audioFiles => media.map(
     book: (m) => m.audioFiles,
@@ -323,4 +326,12 @@ extension PlayMethodX on PlayMethod {
       .local => l10n.local,
     };
   }
+}
+
+extension PodcastEpisodeX on PodcastEpisode {
+  String? get episodeNumber => episode != null && season != null
+      ? 'S$season E$episode'
+      : episode != null
+      ? 'E$episode'
+      : null;
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
@@ -12,6 +14,7 @@ class AppDialog extends StatelessWidget {
     this.isDestructive = false,
     required this.onTap,
     this.cancelLabel,
+    this.unawaitedOnTap = false,
   });
 
   final String title;
@@ -21,6 +24,7 @@ class AppDialog extends StatelessWidget {
   final bool isDestructive;
   final Future<void> Function() onTap;
   final String? cancelLabel;
+  final bool unawaitedOnTap;
 
   static Future<T?> show<T>(
     BuildContext context, {
@@ -32,6 +36,7 @@ class AppDialog extends StatelessWidget {
     required Future<void> Function() onTap,
     bool barrierDismissible = true,
     String? cancelLabel,
+    bool unawaitedOnTap = false,
   }) {
     return showDialog<T>(
       context: context,
@@ -44,6 +49,7 @@ class AppDialog extends StatelessWidget {
         isDestructive: isDestructive,
         onTap: onTap,
         cancelLabel: cancelLabel,
+        unawaitedOnTap: unawaitedOnTap,
       ),
     );
   }
@@ -86,14 +92,18 @@ class AppDialog extends StatelessWidget {
                 mainAxisAlignment: .spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => Navigator.of(context).pop(false),
                     child: Text(cancelLabel ?? l10n.cancel),
                   ),
                   AppFilledButton(
                     isDestructive: isDestructive,
                     onPressed: () async {
-                      await onTap();
-                      if (context.mounted) Navigator.of(context).pop();
+                      if (unawaitedOnTap) {
+                        unawaited(onTap());
+                      } else {
+                        await onTap();
+                      }
+                      if (context.mounted) Navigator.of(context).pop(true);
                     },
                     text: actionLabel,
                     icon: actionIcon != null ? Icon(actionIcon) : null,

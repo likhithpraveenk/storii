@@ -49,6 +49,7 @@ class SessionsCleanup extends _$SessionsCleanup {
           await ref.logApiCall(
             () => sessionsApi.syncLocal(localSession: session),
             source: _source,
+            debug: true,
           );
         } else {
           await ref.logApiCall(
@@ -60,6 +61,7 @@ class SessionsCleanup extends _$SessionsCleanup {
               ),
             ),
             source: _source,
+            debug: true,
           );
         }
 
