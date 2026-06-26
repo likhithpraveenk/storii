@@ -2,6 +2,7 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/ui/history_button.dart';
@@ -15,7 +16,9 @@ class ActionButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final mediaProgress = ref.watch(mediaProgressProvider(item.id)).value;
+    final mediaProgress = ref
+        .watch(mediaProgressFromMapProvider(item.id))
+        .value;
     final progress = mediaProgress?.progress ?? 0.0;
 
     return Row(

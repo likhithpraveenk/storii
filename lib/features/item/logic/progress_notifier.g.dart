@@ -13,14 +13,14 @@ part of 'progress_notifier.dart';
 final mediaProgressProvider = MediaProgressNotifierFamily._();
 
 final class MediaProgressNotifierProvider
-    extends $AsyncNotifierProvider<MediaProgressNotifier, MediaProgress?> {
+    extends $NotifierProvider<MediaProgressNotifier, void> {
   MediaProgressNotifierProvider._({
     required MediaProgressNotifierFamily super.from,
     required (String, String?) super.argument,
   }) : super(
          retry: null,
          name: r'mediaProgressProvider',
-         isAutoDispose: true,
+         isAutoDispose: false,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -39,6 +39,14 @@ final class MediaProgressNotifierProvider
   @override
   MediaProgressNotifier create() => MediaProgressNotifier();
 
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(void value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<void>(value),
+    );
+  }
+
   @override
   bool operator ==(Object other) {
     return other is MediaProgressNotifierProvider && other.argument == argument;
@@ -51,15 +59,15 @@ final class MediaProgressNotifierProvider
 }
 
 String _$mediaProgressNotifierHash() =>
-    r'94c6ed8ce0cae2ce6e214ec8a1f508a5c7264ea9';
+    r'13e596a0c2cfdeb55f942f3e02eb865210bc9625';
 
 final class MediaProgressNotifierFamily extends $Family
     with
         $ClassFamilyOverride<
           MediaProgressNotifier,
-          AsyncValue<MediaProgress?>,
-          MediaProgress?,
-          FutureOr<MediaProgress?>,
+          void,
+          void,
+          void,
           (String, String?)
         > {
   MediaProgressNotifierFamily._()
@@ -68,7 +76,7 @@ final class MediaProgressNotifierFamily extends $Family
         name: r'mediaProgressProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: true,
+        isAutoDispose: false,
       );
 
   MediaProgressNotifierProvider call(String itemId, [String? episodeId]) =>
@@ -81,21 +89,21 @@ final class MediaProgressNotifierFamily extends $Family
   String toString() => r'mediaProgressProvider';
 }
 
-abstract class _$MediaProgressNotifier extends $AsyncNotifier<MediaProgress?> {
+abstract class _$MediaProgressNotifier extends $Notifier<void> {
   late final _$args = ref.$arg as (String, String?);
   String get itemId => _$args.$1;
   String? get episodeId => _$args.$2;
 
-  FutureOr<MediaProgress?> build(String itemId, [String? episodeId]);
+  void build(String itemId, [String? episodeId]);
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<MediaProgress?>, MediaProgress?>;
+    final ref = this.ref as $Ref<void, void>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<MediaProgress?>, MediaProgress?>,
-              AsyncValue<MediaProgress?>,
+              AnyNotifier<void, void>,
+              void,
               Object?,
               Object?
             >;
