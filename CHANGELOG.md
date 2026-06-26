@@ -7,8 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Podcast episode progress with mark complete and remove actions
+- Episode play button with smart resume for podcasts
+
 ### Changed
-- Moved logout and switch account from More to Settings with confirmation dialogs
+
+- Logout and switch account moved to Settings with confirmation dialogs
+- Show episode number badge on library cards
+- Hide chapter position toggle for podcasts in history sheet
+- Updated types of podcast metadata fields
+
+### Fixed
+
+- onClose callback on playback complete
+- Instant dialog dismiss for episode play confirmation
+- Series progress calculation for collapsed series in library
 
 ## [v0.4.5-beta.1] - 2026-06-26
 
