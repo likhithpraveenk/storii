@@ -58,7 +58,7 @@ class MediaProgressNotifier extends _$MediaProgressNotifier {
         ),
         source: 'MediaProgressNotifier',
       );
-      ref.invalidateSelf();
+      if (ref.mounted) ref.invalidateSelf();
       return true;
     } on AppError catch (e) {
       state = AsyncError(e, e.stackTrace);
@@ -75,7 +75,28 @@ class MediaProgressNotifier extends _$MediaProgressNotifier {
         () => api.removeMediaProgress(mediaProgressId: progressId),
         source: 'MediaProgressNotifier',
       );
-      ref.invalidateSelf();
+      if (ref.mounted) ref.invalidateSelf();
+      return true;
+    } on AppError catch (e) {
+      state = AsyncError(e, e.stackTrace);
+      return false;
+    }
+  }
+
+  Future<bool> removeEpisodeProgress() async {
+    state = const AsyncLoading();
+    final user = await ref.read(authenticatedUserProvider.future);
+    final api = ref.read(meApiProvider(user));
+    try {
+      await ref.logApiCall(
+        () => api.upsertMediaProgress(
+          libraryItemId: itemId,
+          episodeId: episodeId,
+          params: const UpsertProgressRequestParams(isFinished: false),
+        ),
+        source: 'MediaProgressNotifier',
+      );
+      if (ref.mounted) ref.invalidateSelf();
       return true;
     } on AppError catch (e) {
       state = AsyncError(e, e.stackTrace);

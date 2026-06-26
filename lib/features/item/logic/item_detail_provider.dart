@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
@@ -52,11 +53,14 @@ Future<LibraryItem> itemDetail(Ref ref, String id) async {
     }
   }
 
-  final user = await ref.read(authenticatedUserProvider.future);
+  final user = await ref.watch(authenticatedUserProvider.future);
   final api = ref.read(itemApiProvider(user));
-  return ref.logApiCall(
-    () => api.get(id, includeProgress: true),
+  final item = await ref.logApiCall(
+    () => api.get(id),
     source: 'itemDetail',
     logMessage: 'Error fetching library item details',
   );
+
+  final progress = await ref.watch(mediaProgressFromMapProvider(id).future);
+  return item.copyWith(userMediaProgress: progress);
 }
