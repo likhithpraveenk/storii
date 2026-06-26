@@ -88,11 +88,8 @@ class _MoreMetadataSheet extends StatelessWidget {
           l10n.itunesPageUrl,
           podcastMetadata.itunesPageUrl.toString(),
         ),
-        _MetadataRow(l10n.itunesId, podcastMetadata.itunesId.toString()),
-        _MetadataRow(
-          l10n.itunesArtistId,
-          podcastMetadata.itunesArtistId.toString(),
-        ),
+        _MetadataRow(l10n.itunesId, podcastMetadata.itunesId),
+        _MetadataRow(l10n.itunesArtistId, podcastMetadata.itunesArtistId),
         _MetadataRow(l10n.language, podcastMetadata.language),
         _MetadataRow(l10n.explicit, podcastMetadata.explicit.toString()),
       ]);
