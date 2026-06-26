@@ -6,6 +6,7 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
@@ -29,8 +30,14 @@ class LibraryItemCard extends ConsumerWidget {
     final showTitle = displayMode != .coverOnly;
 
     final seriesNumBooks = item.collapsedSeries?.numBooks;
+    final episodeNumber = item.recentEpisode?.episodeNumber;
+    final mediaProgress = ref
+        .watch(mediaProgressFromMapProvider(item.id, item.recentEpisode?.id))
+        .value;
 
-    final progress = item.collapsedSeries != null ? 0.0 : item.progress;
+    final progress = item.collapsedSeries != null
+        ? item.collapsedSeries!.finishRatio
+        : mediaProgress?.progress ?? item.progress;
 
     return InkWell(
       onTap: () {
@@ -84,7 +91,11 @@ class LibraryItemCard extends ConsumerWidget {
                             alpha: 0.2,
                           ),
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            item.isFinished ? appGreenColor : appRedColor,
+                            mediaProgress?.isFinished == true ||
+                                    item.isFinished ||
+                                    progress == 1
+                                ? appGreenColor
+                                : appRedColor,
                           ),
                         ),
                       ),
@@ -100,6 +111,12 @@ class LibraryItemCard extends ConsumerWidget {
                       top: 4,
                       right: 4,
                       child: StackBadge('$seriesNumBooks'),
+                    ),
+                  if (episodeNumber != null)
+                    Positioned(
+                      top: 4,
+                      right: 4,
+                      child: StackBadge(episodeNumber),
                     ),
                   if (isDownloaded)
                     const Positioned(

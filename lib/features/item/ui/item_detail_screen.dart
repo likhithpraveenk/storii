@@ -57,7 +57,7 @@ class ItemDetailScreen extends ConsumerWidget {
                           CoverImageTitle(item),
                           const SizedBox(height: 8),
                           PlayButton(item),
-                          ProgressBar(itemId: item.id),
+                          if (item.isBook) ProgressBar(itemId: item.id),
                           if (item.isBook) ActionButtons(item: item),
                         ],
                       ),

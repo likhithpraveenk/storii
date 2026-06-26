@@ -48,7 +48,7 @@ final class LibraryItemsProvider
   }
 }
 
-String _$libraryItemsHash() => r'143f677544361392127c785c51340b5ee0f8325a';
+String _$libraryItemsHash() => r'35de169c2ded80235c24d2518d9e0e2e1cb97613';
 
 @ProviderFor(rawLibraryItems)
 final rawLibraryItemsProvider = RawLibraryItemsProvider._();

@@ -16,9 +16,25 @@ Future<List<LibraryItem>> libraryItems(Ref ref) async {
   final items = await ref.watch(rawLibraryItemsProvider.future);
   final progressMap = await ref.watch(mediaProgressMapProvider.future);
 
-  return items
-      .map((item) => item.copyWith(userMediaProgress: progressMap[item.id]))
-      .toList();
+  return items.map((item) {
+    if (item.collapsedSeries != null) {
+      final series = item.collapsedSeries!;
+      final bookIds = series.libraryItemIds ?? [];
+      final finishedIds = bookIds
+          .where((id) => progressMap[id]?.isFinished == true)
+          .toList();
+      final updatedSeries = series.copyWith(
+        progress: SeriesProgress(
+          libraryItemIds: bookIds,
+          libraryItemIdsFinished: finishedIds,
+          isFinished:
+              finishedIds.length == bookIds.length && bookIds.isNotEmpty,
+        ),
+      );
+      return item.copyWith(collapsedSeries: updatedSeries);
+    }
+    return item.copyWith(userMediaProgress: progressMap[item.id]);
+  }).toList();
 }
 
 @Riverpod(keepAlive: true)

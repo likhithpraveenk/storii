@@ -2,7 +2,7 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/features/item/logic/progress_notifier.dart';
+import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
@@ -24,16 +24,45 @@ class PlayButton extends ConsumerWidget {
     final isCurrentItem = session?.libraryItemId == item.id;
     final isPlaying = isCurrentItem && ref.watch(isPlayingProvider);
 
-    final mediaProgress = ref.watch(mediaProgressProvider(item.id)).value;
+    final mediaProgress = ref
+        .watch(mediaProgressFromMapProvider(item.id))
+        .value;
     final progress = mediaProgress?.progress ?? 0.0;
 
-    final remaining = item.isBook
-        ? (item.duration -
+    final isPodcast = item.isPodcast;
+
+    String? remaining;
+    String label;
+    String? episodeId;
+
+    if (isPodcast) {
+      label = isPlaying ? l10n.pause : l10n.play;
+      if (!isCurrentItem) {
+        final unfinished = item.episodes.where(
+          (e) =>
+              ref
+                  .watch(mediaProgressFromMapProvider(item.id, e.id))
+                  .value
+                  ?.isFinished !=
+              true,
+        );
+        episodeId = unfinished.firstOrNull?.id;
+      }
+    } else {
+      remaining =
+          (item.duration -
                   (mediaProgress?.currentTime ??
                       session?.currentTime ??
                       Duration.zero))
-              .toReadableDuration(isLeft: true)
-        : null;
+              .toReadableDuration(isLeft: true);
+      label = isPlaying
+          ? l10n.pause
+          : progress == 1.0
+          ? l10n.replay
+          : progress > 0
+          ? '${l10n.resume} • $remaining'
+          : l10n.play;
+    }
 
     return AppFilledButton(
       loading: isLoading,
@@ -41,17 +70,13 @@ class PlayButton extends ConsumerWidget {
         if (isCurrentItem) {
           await audioHandler.togglePlay();
         } else {
-          await ref.read(audioPlayerProvider.notifier).play(itemId: item.id);
+          await ref
+              .read(audioPlayerProvider.notifier)
+              .play(itemId: item.id, episodeId: episodeId);
         }
       },
       icon: Icon(isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded),
-      text: isPlaying
-          ? l10n.pause
-          : progress == 1.0
-          ? l10n.replay
-          : progress > 0
-          ? '${l10n.resume}${remaining != null ? ' • $remaining' : ''}'
-          : l10n.play,
+      text: label,
     );
   }
 }

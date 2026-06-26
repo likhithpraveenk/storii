@@ -11,7 +11,7 @@ class ProgressBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaProgress = ref.watch(mediaProgressProvider(itemId)).value;
     final progress = mediaProgress?.progress ?? 0.0;
-    if (progress <= 0) return const SizedBox.shrink();
+    if (progress == 0.0) return const SizedBox.shrink();
 
     final theme = Theme.of(context);
 
