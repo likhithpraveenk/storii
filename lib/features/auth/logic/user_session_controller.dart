@@ -26,18 +26,15 @@ class UserSessionController extends _$UserSessionController {
       log('user logout. audio handler stop');
       await audioHandler.stop();
     }
-    unawaited(
-      ref
-          .logApiCall(
-            ref.read(serverApiProvider(user)).logout,
-            source: 'UserSessionController',
-          )
-          .then(
-            (_) =>
-                LogService.log('"${user.username}" logged out', level: .info),
-          )
-          .catchError((_, _) {}),
-    );
+    await ref
+        .logApiCall(
+          ref.read(serverApiProvider(user)).logout,
+          source: 'UserSessionController',
+        )
+        .then(
+          (_) => LogService.log('"${user.username}" logged out', level: .info),
+        )
+        .catchError((_, _) {});
     await _clearLocalSession(user);
     state = .success;
   }

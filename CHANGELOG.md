@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Moved logout and switch account from More to Settings with confirmation dialogs
+
 ## [v0.4.5-beta.1] - 2026-06-26
 
 ### Fixed

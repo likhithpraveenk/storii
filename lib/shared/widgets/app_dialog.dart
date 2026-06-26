@@ -86,14 +86,14 @@ class AppDialog extends StatelessWidget {
                 mainAxisAlignment: .spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => Navigator.of(context).pop(false),
                     child: Text(cancelLabel ?? l10n.cancel),
                   ),
                   AppFilledButton(
                     isDestructive: isDestructive,
                     onPressed: () async {
                       await onTap();
-                      if (context.mounted) Navigator.of(context).pop();
+                      if (context.mounted) Navigator.of(context).pop(true);
                     },
                     text: actionLabel,
                     icon: actionIcon != null ? Icon(actionIcon) : null,

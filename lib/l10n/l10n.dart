@@ -292,6 +292,18 @@ abstract class AppLocalizations {
   /// **'Switch Account'**
   String get switchAccount;
 
+  /// No description provided for @switchAccountConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to another account?'**
+  String get switchAccountConfirm;
+
+  /// No description provided for @logoutConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out from this account?'**
+  String get logoutConfirm;
+
   /// No description provided for @noLibrary.
   ///
   /// In en, this message translates to:

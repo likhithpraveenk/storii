@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/features/settings/ui/account_section.dart';
 import 'package:storii/features/settings/ui/app_cache_tile.dart';
 import 'package:storii/features/settings/ui/appearance/appearance_screen.dart';
 import 'package:storii/features/settings/ui/datetime_format_tile.dart';
@@ -38,6 +39,7 @@ class SettingsScreen extends StatelessWidget {
           LibrarySettingsTile(),
           HttpLogsTile(),
           AppCacheTile(),
+          AccountSection(),
         ],
       ),
     );

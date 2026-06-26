@@ -112,6 +112,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get switchAccount => 'Switch Account';
 
   @override
+  String get switchAccountConfirm => 'Switch to another account?';
+
+  @override
+  String get logoutConfirm => 'Log out from this account?';
+
+  @override
   String get noLibrary => 'No Library';
 
   @override

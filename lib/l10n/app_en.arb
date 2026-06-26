@@ -47,6 +47,8 @@
   "logs": "Logs",
   "about": "About",
   "switchAccount": "Switch Account",
+  "switchAccountConfirm": "Switch to another account?",
+  "logoutConfirm": "Log out from this account?",
   "noLibrary": "No Library",
   "libraries": "Libraries",
   "empty": "Empty",
