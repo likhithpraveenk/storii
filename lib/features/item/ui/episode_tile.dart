@@ -51,6 +51,7 @@ class EpisodeTile extends ConsumerWidget {
           title: episode.title ?? l10n.noTitle,
           body: Text(l10n.playEpisodeConfirm),
           actionLabel: l10n.play,
+          unawaitedOnTap: true,
           onTap: () async {
             await ref
                 .read(audioPlayerProvider.notifier)
@@ -105,6 +106,7 @@ class EpisodeTile extends ConsumerWidget {
                   ),
                   const SizedBox(height: 4),
                   _EpisodeMetaRow(episode: episode, progressPct: progressPct),
+                  const SizedBox(height: 4),
                   EpisodeActionButtons(episode: episode),
                 ],
               ),

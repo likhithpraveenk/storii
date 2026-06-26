@@ -20,8 +20,7 @@ class EpisodeActionButtons extends ConsumerWidget {
         .value;
 
     return Row(
-      mainAxisSize: .min,
-      mainAxisAlignment: .end,
+      mainAxisAlignment: .spaceEvenly,
       children: [
         // TODO: download podcast episode
         // DownloadButton(libraryItemId: episode.libraryItemId),
@@ -85,7 +84,7 @@ class EpisodeActionButtons extends ConsumerWidget {
                         episode.id,
                       ).notifier,
                     )
-                    .removeEpisodeProgress();
+                    .remove(progress.id);
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
