@@ -88,8 +88,8 @@ PodcastMetadata _$PodcastMetadataFromJson(Map<String, dynamic> json) =>
       itunesPageUrl: json['itunesPageUrl'] == null
           ? null
           : Uri.parse(json['itunesPageUrl'] as String),
-      itunesId: (json['itunesId'] as num?)?.toInt(),
-      itunesArtistId: (json['itunesArtistId'] as num?)?.toInt(),
+      itunesId: json['itunesId'] as String?,
+      itunesArtistId: json['itunesArtistId'] as String?,
       explicit: json['explicit'] as bool? ?? false,
       language: json['language'] as String?,
       $type: json['runtimeType'] as String?,
