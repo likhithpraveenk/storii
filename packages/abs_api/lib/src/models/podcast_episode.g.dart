@@ -34,11 +34,12 @@ _PodcastEpisode _$PodcastEpisodeFromJson(Map<String, dynamic> json) =>
       updatedAt: const DateTimeEpochConverter().fromJson(
         (json['updatedAt'] as num).toInt(),
       ),
-      audioTrack: AudioTrack.fromJson(
-        json['audioTrack'] as Map<String, dynamic>,
-      ),
-      duration: const DurationPreciseSecondsConverter().fromJson(
-        json['duration'] as Object,
+      audioTrack: json['audioTrack'] == null
+          ? null
+          : AudioTrack.fromJson(json['audioTrack'] as Map<String, dynamic>),
+      duration: _$JsonConverterFromJson<Object, Duration>(
+        json['duration'],
+        const DurationPreciseSecondsConverter().fromJson,
       ),
       size: (json['size'] as num?)?.toInt(),
     );
@@ -62,7 +63,20 @@ Map<String, dynamic> _$PodcastEpisodeToJson(
   'publishedAt': const DateTimeEpochConverter().toJson(instance.publishedAt),
   'addedAt': const DateTimeEpochConverter().toJson(instance.addedAt),
   'updatedAt': const DateTimeEpochConverter().toJson(instance.updatedAt),
-  'audioTrack': instance.audioTrack.toJson(),
-  'duration': const DurationPreciseSecondsConverter().toJson(instance.duration),
+  'audioTrack': ?instance.audioTrack?.toJson(),
+  'duration': ?_$JsonConverterToJson<Object, Duration>(
+    instance.duration,
+    const DurationPreciseSecondsConverter().toJson,
+  ),
   'size': ?instance.size,
 };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) => json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) => value == null ? null : toJson(value);

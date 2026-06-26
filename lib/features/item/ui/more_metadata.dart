@@ -82,12 +82,9 @@ class _MoreMetadataSheet extends StatelessWidget {
       bodyChildren.addAll([
         _MetadataRow(l10n.title, podcastMetadata.title),
         _MetadataRow(l10n.author, podcastMetadata.author),
-        _MetadataRow(l10n.releaseDate, podcastMetadata.releaseDate.toString()),
+        _MetadataRow(l10n.releaseDate, podcastMetadata.releaseDate),
         _MetadataRow(l10n.genres, podcastMetadata.genres.join(', ')),
-        _MetadataRow(
-          l10n.itunesPageUrl,
-          podcastMetadata.itunesPageUrl.toString(),
-        ),
+        _MetadataRow(l10n.itunesPageUrl, podcastMetadata.itunesPageUrl),
         _MetadataRow(l10n.itunesId, podcastMetadata.itunesId),
         _MetadataRow(l10n.itunesArtistId, podcastMetadata.itunesArtistId),
         _MetadataRow(l10n.language, podcastMetadata.language),
