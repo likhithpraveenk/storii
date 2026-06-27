@@ -918,6 +918,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get neutralSubtitle => 'Muted tones with just a hint of color';
 
   @override
+  String get appColor => 'App Color';
+
+  @override
+  String get hexColor => 'Hex Color';
+
+  @override
+  String get invalidHex => 'Invalid hex';
+
+  @override
+  String get hexFormatHint => 'Use RGB, RRGGBB, or AARRGGBB';
+
+  @override
+  String get primary => 'Primary';
+
+  @override
+  String get secondary => 'Secondary';
+
+  @override
+  String get tertiary => 'Tertiary';
+
+  @override
+  String get error => 'Error';
+
+  @override
   String get rememberSort => 'Remember sort';
 
   @override

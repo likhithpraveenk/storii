@@ -88,12 +88,41 @@ extension LocalFormatterX on DateTime {
 extension ColorExtensions on Color {
   String toHex() {
     final argb = toARGB32();
-    return '#${argb.toRadixString(16).padLeft(8, '0')}';
+    return '#${argb.toRadixString(16).padLeft(8, '0')}'.toUpperCase();
   }
 
-  String toHexNoAlpha() {
+  String toHexNoAlpha({bool addHash = false}) {
     final argb = toARGB32();
-    return '#${(argb & 0xFFFFFF).toRadixString(16).padLeft(6, '0')}';
+    final result = (argb & 0xFFFFFF)
+        .toRadixString(16)
+        .padLeft(6, '0')
+        .toUpperCase();
+    return addHash ? '#$result' : result;
+  }
+
+  static Color fromHex(String hex) {
+    final string = hex.replaceFirst('#', '');
+    return switch (string.length) {
+      3 => Color.fromARGB(
+        255,
+        int.parse(string[0] + string[0], radix: 16),
+        int.parse(string[1] + string[1], radix: 16),
+        int.parse(string[2] + string[2], radix: 16),
+      ),
+      6 => Color.fromARGB(
+        255,
+        int.parse(string.substring(0, 2), radix: 16),
+        int.parse(string.substring(2, 4), radix: 16),
+        int.parse(string.substring(4, 6), radix: 16),
+      ),
+      8 => Color.fromARGB(
+        int.parse(string.substring(0, 2), radix: 16),
+        int.parse(string.substring(2, 4), radix: 16),
+        int.parse(string.substring(4, 6), radix: 16),
+        int.parse(string.substring(6, 8), radix: 16),
+      ),
+      _ => throw FormatException('Invalid hex color: $hex'),
+    };
   }
 }
 

@@ -1810,6 +1810,54 @@ abstract class AppLocalizations {
   /// **'Muted tones with just a hint of color'**
   String get neutralSubtitle;
 
+  /// No description provided for @appColor.
+  ///
+  /// In en, this message translates to:
+  /// **'App Color'**
+  String get appColor;
+
+  /// No description provided for @hexColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Hex Color'**
+  String get hexColor;
+
+  /// No description provided for @invalidHex.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid hex'**
+  String get invalidHex;
+
+  /// No description provided for @hexFormatHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Use RGB, RRGGBB, or AARRGGBB'**
+  String get hexFormatHint;
+
+  /// No description provided for @primary.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary'**
+  String get primary;
+
+  /// No description provided for @secondary.
+  ///
+  /// In en, this message translates to:
+  /// **'Secondary'**
+  String get secondary;
+
+  /// No description provided for @tertiary.
+  ///
+  /// In en, this message translates to:
+  /// **'Tertiary'**
+  String get tertiary;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
   /// No description provided for @rememberSort.
   ///
   /// In en, this message translates to:

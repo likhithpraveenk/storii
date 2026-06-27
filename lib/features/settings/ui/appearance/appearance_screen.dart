@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/settings/ui/appearance/app_color_tile.dart';
 import 'package:storii/features/settings/ui/appearance/binary_bytes_tile.dart';
 import 'package:storii/features/settings/ui/appearance/font_family.dart';
 import 'package:storii/features/settings/ui/appearance/font_scale.dart';
@@ -91,6 +92,7 @@ class AppearanceScreen extends ConsumerWidget {
             onChanged: notifier.setUsePureBlack,
           ),
           const SystemThemeTile(),
+          const AppColorTile(),
           const SchemeVariantTile(),
           const FontFamilyTile(),
           const FontScaleTile(),

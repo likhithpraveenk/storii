@@ -5,6 +5,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
+import 'package:storii/shared/widgets/app_buttons.dart';
 
 class SchemeVariantTile extends StatelessWidget {
   const SchemeVariantTile({super.key});
@@ -80,14 +81,14 @@ class _SchemeVariantSheetState extends ConsumerState<_SchemeVariantSheet> {
           padding: const .all(16),
           child: SizedBox(
             width: double.infinity,
-            child: FilledButton(
+            child: AppFilledButton(
               onPressed: () {
                 ref
                     .read(appSettingsProvider.notifier)
                     .setSchemeVariant(_selected);
                 Navigator.pop(context);
               },
-              child: Text(l10n.save),
+              text: l10n.save,
             ),
           ),
         ),
