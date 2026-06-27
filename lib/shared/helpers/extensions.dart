@@ -169,3 +169,29 @@ extension DurationX on Duration {
     return this;
   }
 }
+
+extension DynamicSchemeVariantX on DynamicSchemeVariant {
+  String get label {
+    return switch (this) {
+      .tonalSpot => l10n.tonalSpot,
+      .fidelity => l10n.fidelity,
+      .monochrome => l10n.monochrome,
+      .neutral => l10n.neutral,
+      .vibrant => l10n.vibrant,
+      .expressive => l10n.expressive,
+      _ => l10n.empty,
+    };
+  }
+
+  String get subtitle {
+    return switch (this) {
+      .tonalSpot => l10n.tonalSpotSubtitle,
+      .fidelity => l10n.fidelitySubtitle,
+      .monochrome => l10n.monochromeSubtitle,
+      .neutral => l10n.neutralSubtitle,
+      .vibrant => l10n.vibrantSubtitle,
+      .expressive => l10n.expressiveSubtitle,
+      _ => l10n.empty,
+    };
+  }
+}

@@ -12,13 +12,22 @@ ThemeData themeData(Ref ref, Brightness brightness) {
   final fontFamily = ref.watch(fontFamilyProvider);
   final isPureBlack = ref.watch(usePureBlackProvider);
   final useDynamic = ref.watch(useDynamicColorProvider);
+  final systemColor = ref.watch(systemColorProvider);
+  final schemeVariant = ref.watch(schemeVariantProvider);
 
-  final dynamicScheme = useDynamic
-      ? ref.watch(dynamicColorsProvider(brightness)).value
+  final dynamicScheme = useDynamic && systemColor != null
+      ? ColorScheme.fromSeed(
+          seedColor: systemColor,
+          brightness: brightness,
+          dynamicSchemeVariant: schemeVariant,
+        )
       : null;
 
   var colorScheme =
-      dynamicScheme ?? (brightness == .dark ? darkScheme : lightScheme);
+      dynamicScheme ??
+      (brightness == .dark
+          ? darkScheme(schemeVariant)
+          : lightScheme(schemeVariant));
 
   if (brightness == .dark && isPureBlack) {
     colorScheme = colorScheme.copyWith(
@@ -100,4 +109,18 @@ ThemeData themeData(Ref ref, Brightness brightness) {
 TextScaler textScaler(Ref ref) {
   final fontScale = ref.watch(fontScaleProvider);
   return TextScaler.linear(fontScale);
+}
+
+@riverpod
+void appStartThemeUpdate(Ref ref) async {
+  final useDynamic = ref.read(useDynamicColorProvider);
+  if (useDynamic) {
+    final selectedColor = ref.read(systemColorProvider);
+    final colors = await ref.read(dynamicColorsProvider.future);
+    if (!colors.contains(selectedColor)) {
+      await ref
+          .read(appSettingsProvider.notifier)
+          .setSystemColor(colors.firstOrNull);
+    }
+  }
 }

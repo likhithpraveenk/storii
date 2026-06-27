@@ -66,7 +66,7 @@ final class ThemeDataProvider
   }
 }
 
-String _$themeDataHash() => r'7e73e3b2d4dc0bf58615acd3b870dba7cdb231ad';
+String _$themeDataHash() => r'1b9aa9f41847d9ffb303f87987017165f907f38b';
 
 final class ThemeDataFamily extends $Family
     with $FunctionalFamilyOverride<ThemeData, Brightness> {
@@ -126,3 +126,45 @@ final class TextScalerProvider
 }
 
 String _$textScalerHash() => r'5c48e26aae7ff9b70b72507a77710dfac6c3057e';
+
+@ProviderFor(appStartThemeUpdate)
+final appStartThemeUpdateProvider = AppStartThemeUpdateProvider._();
+
+final class AppStartThemeUpdateProvider
+    extends $FunctionalProvider<void, void, void>
+    with $Provider<void> {
+  AppStartThemeUpdateProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'appStartThemeUpdateProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$appStartThemeUpdateHash();
+
+  @$internal
+  @override
+  $ProviderElement<void> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  void create(Ref ref) {
+    return appStartThemeUpdate(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(void value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<void>(value),
+    );
+  }
+}
+
+String _$appStartThemeUpdateHash() =>
+    r'9c08dbff2b708f0e6c7e0076b5178588ef8fa823';

@@ -7,19 +7,21 @@ const appRedColor = Color(0xFFF80F30);
 const appGreenColor = Color(0xFF0FF830);
 const appYellowColor = Color(0xFFFFD60A);
 
-final lightScheme = ColorScheme.fromSeed(
-  brightness: Brightness.light,
-  dynamicSchemeVariant: .fidelity,
-  seedColor: appPrimaryColor,
-  onSurface: appSlateColor,
-);
+ColorScheme lightScheme(DynamicSchemeVariant schemeVariant) =>
+    ColorScheme.fromSeed(
+      brightness: Brightness.light,
+      dynamicSchemeVariant: schemeVariant,
+      seedColor: appPrimaryColor,
+      onSurface: appSlateColor,
+    );
 
-final darkScheme = ColorScheme.fromSeed(
-  brightness: Brightness.dark,
-  dynamicSchemeVariant: .fidelity,
-  seedColor: appPrimaryColor,
-  surface: appSlateColor,
-);
+ColorScheme darkScheme(DynamicSchemeVariant schemeVariant) =>
+    ColorScheme.fromSeed(
+      brightness: Brightness.dark,
+      dynamicSchemeVariant: schemeVariant,
+      seedColor: appPrimaryColor,
+      surface: appSlateColor,
+    );
 
 final highContrastTheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,

@@ -8,6 +8,8 @@ import 'package:storii/features/settings/ui/appearance/binary_bytes_tile.dart';
 import 'package:storii/features/settings/ui/appearance/font_family.dart';
 import 'package:storii/features/settings/ui/appearance/font_scale.dart';
 import 'package:storii/features/settings/ui/appearance/marquee_speed_tile.dart';
+import 'package:storii/features/settings/ui/appearance/scheme_variant_tile.dart';
+import 'package:storii/features/settings/ui/appearance/system_theme_tile.dart';
 
 class AppearanceTile extends ConsumerWidget {
   const AppearanceTile({super.key});
@@ -39,7 +41,6 @@ class AppearanceScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeModeProvider);
-    final isDynamic = ref.watch(useDynamicColorProvider);
     final isPureBlack = ref.watch(usePureBlackProvider);
     final notifier = ref.read(appSettingsProvider.notifier);
     return Scaffold(
@@ -50,7 +51,6 @@ class AppearanceScreen extends ConsumerWidget {
           },
           icon: const Icon(Icons.arrow_back),
         ),
-
         title: Text(
           l10n.appearance,
           style: Theme.of(context).textTheme.titleLarge,
@@ -90,12 +90,8 @@ class AppearanceScreen extends ConsumerWidget {
             value: isPureBlack,
             onChanged: notifier.setUsePureBlack,
           ),
-          SwitchListTile(
-            title: Text(l10n.systemTheme),
-            subtitle: Text(l10n.systemThemeSubtitle),
-            value: isDynamic,
-            onChanged: notifier.setUseDynamicColor,
-          ),
+          const SystemThemeTile(),
+          const SchemeVariantTile(),
           const FontFamilyTile(),
           const FontScaleTile(),
           const MarqueeSpeedTile(),
