@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -28,10 +27,8 @@ class ConnectionStatusIcon extends ConsumerWidget {
             : scheme.primary,
       ),
       onPressed: () {
-        final scaffoldContext = shellScaffoldKey.currentContext;
-        if (scaffoldContext == null) return;
         showModalBottomSheet(
-          context: scaffoldContext,
+          context: context,
           shape: const RoundedRectangleBorder(
             borderRadius: .vertical(top: .circular(24)),
           ),

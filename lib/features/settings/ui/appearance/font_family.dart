@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/settings/logic/user_fonts.dart';
@@ -24,10 +23,8 @@ class FontFamilyTile extends ConsumerWidget {
       subtitle: Text(fontFamily ?? l10n.system),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
-        final scaffoldContext = shellScaffoldKey.currentContext;
-        if (scaffoldContext == null) return;
         AppBottomSheet.show(
-          scaffoldContext,
+          context,
           title: l10n.fontFamily,
           body: const FontFamilySheet(),
         );
