@@ -54,26 +54,19 @@ class _SchemeVariantSheetState extends ConsumerState<_SchemeVariantSheet> {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    final useDynamic = ref.watch(useDynamicColorProvider);
-    final systemColor = ref.watch(systemColorProvider);
+    final appColor = ref.watch(appColorProvider);
 
     return Column(
       mainAxisSize: .min,
       children: [
         ..._values.map((v) {
           final isSelected = _selected == v;
-          final scheme = useDynamic && systemColor != null
-              ? ColorScheme.fromSeed(
-                  seedColor: systemColor,
-                  brightness: brightness,
-                  dynamicSchemeVariant: v,
-                )
-              : ColorScheme.fromSeed(
-                  seedColor: appPrimaryColor,
-                  brightness: brightness,
-                  dynamicSchemeVariant: v,
-                  surface: appSlateColor,
-                );
+          final scheme = ColorScheme.fromSeed(
+            seedColor: appColor,
+            brightness: brightness,
+            dynamicSchemeVariant: v,
+            surface: getSurfaceColor(appColor, brightness),
+          );
 
           return ListTile(
             title: Text(v.label),

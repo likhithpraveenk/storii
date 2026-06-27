@@ -11,23 +11,15 @@ part 'theme_provider.g.dart';
 ThemeData themeData(Ref ref, Brightness brightness) {
   final fontFamily = ref.watch(fontFamilyProvider);
   final isPureBlack = ref.watch(usePureBlackProvider);
-  final useDynamic = ref.watch(useDynamicColorProvider);
-  final systemColor = ref.watch(systemColorProvider);
+  final appColor = ref.watch(appColorProvider);
   final schemeVariant = ref.watch(schemeVariantProvider);
 
-  final dynamicScheme = useDynamic && systemColor != null
-      ? ColorScheme.fromSeed(
-          seedColor: systemColor,
-          brightness: brightness,
-          dynamicSchemeVariant: schemeVariant,
-        )
-      : null;
-
-  var colorScheme =
-      dynamicScheme ??
-      (brightness == .dark
-          ? darkScheme(schemeVariant)
-          : lightScheme(schemeVariant));
+  var colorScheme = ColorScheme.fromSeed(
+    seedColor: appColor,
+    brightness: brightness,
+    dynamicSchemeVariant: schemeVariant,
+    surface: getSurfaceColor(appColor, brightness),
+  );
 
   if (brightness == .dark && isPureBlack) {
     colorScheme = colorScheme.copyWith(
@@ -115,12 +107,10 @@ TextScaler textScaler(Ref ref) {
 void appStartThemeUpdate(Ref ref) async {
   final useDynamic = ref.read(useDynamicColorProvider);
   if (useDynamic) {
-    final selectedColor = ref.read(systemColorProvider);
+    final appColor = ref.read(appColorProvider);
     final colors = await ref.read(dynamicColorsProvider.future);
-    if (!colors.contains(selectedColor)) {
-      await ref
-          .read(appSettingsProvider.notifier)
-          .setSystemColor(colors.firstOrNull);
+    if (colors.isNotEmpty && !colors.contains(appColor)) {
+      await ref.read(appSettingsProvider.notifier).setAppColor(colors.first);
     }
   }
 }

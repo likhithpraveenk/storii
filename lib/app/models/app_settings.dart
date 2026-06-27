@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/shared/helpers/converters.dart';
 
@@ -13,7 +14,7 @@ sealed class AppSettings with _$AppSettings {
 
     @Default(false) bool useDynamicColor,
 
-    @ColorConverter() Color? systemColor,
+    @ColorConverter() @Default(appPrimaryColor) Color appColor,
 
     @Default(DynamicSchemeVariant.fidelity) DynamicSchemeVariant schemeVariant,
 

@@ -11,10 +11,11 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
       $enumDecodeNullable(_$ThemeModeEnumMap, json['themeMode']) ??
       ThemeMode.system,
   useDynamicColor: json['useDynamicColor'] as bool? ?? false,
-  systemColor: _$JsonConverterFromJson<Map<String, dynamic>, Color>(
-    json['systemColor'],
-    const ColorConverter().fromJson,
-  ),
+  appColor: json['appColor'] == null
+      ? appPrimaryColor
+      : const ColorConverter().fromJson(
+          json['appColor'] as Map<String, dynamic>,
+        ),
   schemeVariant:
       $enumDecodeNullable(
         _$DynamicSchemeVariantEnumMap,
@@ -42,10 +43,7 @@ Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
     <String, dynamic>{
       'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,
       'useDynamicColor': instance.useDynamicColor,
-      'systemColor': ?_$JsonConverterToJson<Map<String, dynamic>, Color>(
-        instance.systemColor,
-        const ColorConverter().toJson,
-      ),
+      'appColor': const ColorConverter().toJson(instance.appColor),
       'schemeVariant': _$DynamicSchemeVariantEnumMap[instance.schemeVariant]!,
       'usePureBlack': instance.usePureBlack,
       'currentUser': ?instance.currentUser?.toJson(),
@@ -62,11 +60,6 @@ const _$ThemeModeEnumMap = {
   ThemeMode.dark: 'dark',
 };
 
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) => json == null ? null : fromJson(json as Json);
-
 const _$DynamicSchemeVariantEnumMap = {
   DynamicSchemeVariant.tonalSpot: 'tonalSpot',
   DynamicSchemeVariant.fidelity: 'fidelity',
@@ -78,8 +71,3 @@ const _$DynamicSchemeVariantEnumMap = {
   DynamicSchemeVariant.rainbow: 'rainbow',
   DynamicSchemeVariant.fruitSalad: 'fruitSalad',
 };
-
-Json? _$JsonConverterToJson<Json, Value>(
-  Value? value,
-  Json? Function(Value value) toJson,
-) => value == null ? null : toJson(value);

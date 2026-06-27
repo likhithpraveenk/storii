@@ -126,8 +126,8 @@ extension AppSettingsSetters on AppSettingsNotifier {
   Future<void> setUseDynamicColor(bool value) =>
       _save(state.copyWith(useDynamicColor: value));
 
-  Future<void> setSystemColor(Color? value) =>
-      _save(state.copyWith(systemColor: value));
+  Future<void> setAppColor(Color value) =>
+      _save(state.copyWith(appColor: value));
 
   Future<void> setSchemeVariant(DynamicSchemeVariant value) =>
       _save(state.copyWith(schemeVariant: value));
@@ -163,9 +163,9 @@ final useDynamicColorProvider = Provider<bool>(
   name: 'useDynamicColorProvider',
 );
 
-final systemColorProvider = Provider<Color?>(
-  (ref) => ref.watch(appSettingsProvider.select((s) => s.systemColor)),
-  name: 'systemColorProvider',
+final appColorProvider = Provider<Color>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.appColor)),
+  name: 'appColorProvider',
 );
 
 final schemeVariantProvider = Provider<DynamicSchemeVariant>(

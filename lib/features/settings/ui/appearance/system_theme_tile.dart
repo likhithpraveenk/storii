@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/settings/logic/dynamic_colors.dart';
@@ -11,7 +12,7 @@ class SystemThemeTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDynamic = ref.watch(useDynamicColorProvider);
     final asyncColors = ref.watch(dynamicColorsProvider);
-    final selectedColor = ref.watch(systemColorProvider);
+    final appColor = ref.watch(appColorProvider);
     final notifier = ref.read(appSettingsProvider.notifier);
 
     return Column(
@@ -21,11 +22,17 @@ class SystemThemeTile extends ConsumerWidget {
           title: Text(l10n.systemTheme),
           subtitle: Text(l10n.systemThemeSubtitle),
           value: isDynamic,
-          onChanged: (value) {
-            notifier.setUseDynamicColor(value);
-            asyncColors.whenData((colors) {
-              notifier.setSystemColor(value ? colors.firstOrNull : null);
-            });
+          onChanged: (useDynamic) {
+            notifier.setUseDynamicColor(useDynamic);
+            if (useDynamic) {
+              asyncColors.whenData((colors) {
+                if (colors.isNotEmpty) {
+                  notifier.setAppColor(colors.first);
+                }
+              });
+            } else {
+              notifier.setAppColor(appPrimaryColor);
+            }
           },
         ),
         if (isDynamic)
@@ -37,10 +44,10 @@ class SystemThemeTile extends ConsumerWidget {
                 runSpacing: 8,
                 children: List.generate(colors.length, (i) {
                   final color = colors.elementAt(i);
-                  final isSelected = color == selectedColor;
+                  final isSelected = color == appColor;
                   return GestureDetector(
                     onTap: () {
-                      notifier.setSystemColor(color);
+                      notifier.setAppColor(color);
                     },
                     child: Container(
                       width: 40,
