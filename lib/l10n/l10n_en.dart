@@ -875,6 +875,73 @@ class AppLocalizationsEn extends AppLocalizations {
   String get marqueeSpeed => 'Text Scroll Speed';
 
   @override
+  String get schemeVariant => 'Theme Style';
+
+  @override
+  String get schemeVariantSubtitle =>
+      'Choose how your theme colors are generated';
+
+  @override
+  String get tonalSpot => 'Balanced';
+
+  @override
+  String get tonalSpotSubtitle => 'Soft, natural, and easy on the eyes';
+
+  @override
+  String get fidelity => 'Close Match';
+
+  @override
+  String get fidelitySubtitle => 'Sticks closely to your chosen color';
+
+  @override
+  String get vibrant => 'Vibrant';
+
+  @override
+  String get vibrantSubtitle => 'Bright colors with high contrast';
+
+  @override
+  String get expressive => 'Bold';
+
+  @override
+  String get expressiveSubtitle => 'Playful colors with unique accents';
+
+  @override
+  String get monochrome => 'Monochrome';
+
+  @override
+  String get monochromeSubtitle => 'Pure black, white, and gray';
+
+  @override
+  String get neutral => 'Subtle';
+
+  @override
+  String get neutralSubtitle => 'Muted tones with just a hint of color';
+
+  @override
+  String get appColor => 'App Color';
+
+  @override
+  String get hexColor => 'Hex Color';
+
+  @override
+  String get invalidHex => 'Invalid hex';
+
+  @override
+  String get hexFormatHint => 'Use RGB, RRGGBB, or AARRGGBB';
+
+  @override
+  String get primary => 'Primary';
+
+  @override
+  String get secondary => 'Secondary';
+
+  @override
+  String get tertiary => 'Tertiary';
+
+  @override
+  String get error => 'Error';
+
+  @override
   String get rememberSort => 'Remember sort';
 
   @override

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:storii/app/config/constants.dart';
-import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -21,10 +20,8 @@ class DateTimeFormatTile extends ConsumerWidget {
       subtitle: Text(DateFormat(currentFormat).format(DateTime.now())),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
-        final scaffoldContext = shellScaffoldKey.currentContext;
-        if (scaffoldContext == null) return;
         AppBottomSheet.show(
-          scaffoldContext,
+          context,
           title: l10n.dateFormat,
           body: const DateTimeFormatSheet(),
         );

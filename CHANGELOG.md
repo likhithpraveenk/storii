@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Custom app color with hex input and live preview
+- Device colors selection
+- Theme style selection (balanced, close match, vibrant, etc.)
+
 ## [v0.4.5] - 2026-06-26
 
 ### Added

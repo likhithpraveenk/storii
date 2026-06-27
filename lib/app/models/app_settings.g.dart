@@ -11,6 +11,17 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
       $enumDecodeNullable(_$ThemeModeEnumMap, json['themeMode']) ??
       ThemeMode.system,
   useDynamicColor: json['useDynamicColor'] as bool? ?? false,
+  appColor: json['appColor'] == null
+      ? appPrimaryColor
+      : const ColorConverter().fromJson(
+          json['appColor'] as Map<String, dynamic>,
+        ),
+  schemeVariant:
+      $enumDecodeNullable(
+        _$DynamicSchemeVariantEnumMap,
+        json['schemeVariant'],
+      ) ??
+      DynamicSchemeVariant.fidelity,
   usePureBlack: json['usePureBlack'] as bool? ?? false,
   currentUser: json['currentUser'] == null
       ? null
@@ -32,6 +43,8 @@ Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
     <String, dynamic>{
       'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,
       'useDynamicColor': instance.useDynamicColor,
+      'appColor': const ColorConverter().toJson(instance.appColor),
+      'schemeVariant': _$DynamicSchemeVariantEnumMap[instance.schemeVariant]!,
       'usePureBlack': instance.usePureBlack,
       'currentUser': ?instance.currentUser?.toJson(),
       'serverUrl': ?instance.serverUrl?.toString(),
@@ -45,4 +58,16 @@ const _$ThemeModeEnumMap = {
   ThemeMode.system: 'system',
   ThemeMode.light: 'light',
   ThemeMode.dark: 'dark',
+};
+
+const _$DynamicSchemeVariantEnumMap = {
+  DynamicSchemeVariant.tonalSpot: 'tonalSpot',
+  DynamicSchemeVariant.fidelity: 'fidelity',
+  DynamicSchemeVariant.monochrome: 'monochrome',
+  DynamicSchemeVariant.neutral: 'neutral',
+  DynamicSchemeVariant.vibrant: 'vibrant',
+  DynamicSchemeVariant.expressive: 'expressive',
+  DynamicSchemeVariant.content: 'content',
+  DynamicSchemeVariant.rainbow: 'rainbow',
+  DynamicSchemeVariant.fruitSalad: 'fruitSalad',
 };

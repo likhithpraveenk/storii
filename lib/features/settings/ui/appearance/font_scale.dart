@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -21,10 +20,8 @@ class FontScaleTile extends ConsumerWidget {
       subtitle: Text(percent),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
-        final scaffoldContext = shellScaffoldKey.currentContext;
-        if (scaffoldContext == null) return;
         AppBottomSheet.show(
-          scaffoldContext,
+          context,
           title: l10n.fontScale,
           body: const _FontScaleSheet(),
         );

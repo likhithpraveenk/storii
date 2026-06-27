@@ -34,7 +34,9 @@ class AppFilledButton extends StatelessWidget {
           : Text(
               text,
               style: theme.textTheme.labelLarge?.copyWith(
-                color: isDestructive
+                color: onPressed == null
+                    ? theme.colorScheme.onSurface.withValues(alpha: 0.38)
+                    : isDestructive
                     ? theme.colorScheme.onError
                     : theme.colorScheme.onPrimary,
               ),

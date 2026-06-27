@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -36,10 +35,8 @@ class _SkipForwardTileState extends ConsumerState<SkipForwardTile> {
       subtitle: Text('${skipForward.inSeconds}s'),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
-        final scaffoldContext = shellScaffoldKey.currentContext;
-        if (scaffoldContext == null) return;
         AppBottomSheet.show(
-          scaffoldContext,
+          context,
           title: l10n.skipForward,
           body: Builder(
             builder: (context) {
@@ -106,10 +103,8 @@ class _SkipBackwardTileState extends ConsumerState<SkipBackwardTile> {
       subtitle: Text('${skipBackward.inSeconds}s'),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
-        final scaffoldContext = shellScaffoldKey.currentContext;
-        if (scaffoldContext == null) return;
         AppBottomSheet.show(
-          scaffoldContext,
+          context,
           title: l10n.skipBack,
           body: Builder(
             builder: (context) {

@@ -1726,6 +1726,138 @@ abstract class AppLocalizations {
   /// **'Text Scroll Speed'**
   String get marqueeSpeed;
 
+  /// No description provided for @schemeVariant.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme Style'**
+  String get schemeVariant;
+
+  /// No description provided for @schemeVariantSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how your theme colors are generated'**
+  String get schemeVariantSubtitle;
+
+  /// No description provided for @tonalSpot.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced'**
+  String get tonalSpot;
+
+  /// No description provided for @tonalSpotSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Soft, natural, and easy on the eyes'**
+  String get tonalSpotSubtitle;
+
+  /// No description provided for @fidelity.
+  ///
+  /// In en, this message translates to:
+  /// **'Close Match'**
+  String get fidelity;
+
+  /// No description provided for @fidelitySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sticks closely to your chosen color'**
+  String get fidelitySubtitle;
+
+  /// No description provided for @vibrant.
+  ///
+  /// In en, this message translates to:
+  /// **'Vibrant'**
+  String get vibrant;
+
+  /// No description provided for @vibrantSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bright colors with high contrast'**
+  String get vibrantSubtitle;
+
+  /// No description provided for @expressive.
+  ///
+  /// In en, this message translates to:
+  /// **'Bold'**
+  String get expressive;
+
+  /// No description provided for @expressiveSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playful colors with unique accents'**
+  String get expressiveSubtitle;
+
+  /// No description provided for @monochrome.
+  ///
+  /// In en, this message translates to:
+  /// **'Monochrome'**
+  String get monochrome;
+
+  /// No description provided for @monochromeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pure black, white, and gray'**
+  String get monochromeSubtitle;
+
+  /// No description provided for @neutral.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtle'**
+  String get neutral;
+
+  /// No description provided for @neutralSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Muted tones with just a hint of color'**
+  String get neutralSubtitle;
+
+  /// No description provided for @appColor.
+  ///
+  /// In en, this message translates to:
+  /// **'App Color'**
+  String get appColor;
+
+  /// No description provided for @hexColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Hex Color'**
+  String get hexColor;
+
+  /// No description provided for @invalidHex.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid hex'**
+  String get invalidHex;
+
+  /// No description provided for @hexFormatHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Use RGB, RRGGBB, or AARRGGBB'**
+  String get hexFormatHint;
+
+  /// No description provided for @primary.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary'**
+  String get primary;
+
+  /// No description provided for @secondary.
+  ///
+  /// In en, this message translates to:
+  /// **'Secondary'**
+  String get secondary;
+
+  /// No description provided for @tertiary.
+  ///
+  /// In en, this message translates to:
+  /// **'Tertiary'**
+  String get tertiary;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
   /// No description provided for @rememberSort.
   ///
   /// In en, this message translates to:
