@@ -19,7 +19,7 @@ part 'download_queue.g.dart';
 class DownloadQueue extends _$DownloadQueue {
   DownloadsStore get _store => ref.read(downloadsStoreProvider.notifier);
 
-  bool _processing = false;
+  Completer<void>? _processing;
 
   @override
   List<String> build() => [];
@@ -53,21 +53,17 @@ class DownloadQueue extends _$DownloadQueue {
   }
 
   Future<void> _processQueue() async {
-    if (_processing) return;
-    _processing = true;
+    if (_processing != null) return;
+    _processing = Completer<void>();
 
-    // TODO: _processing is a plain bool field. If pause() or delete() is called
-    // while _processQueue is awaiting _downloadItem, _processing is set to false
-    // but the current await has already captured the old value. The queue can
-    // then re-enter _processQueue from a new enqueue() before the prior stream
-    // fully completes
     while (state.isNotEmpty) {
       final id = state.first;
       await _downloadItem(id);
       state = state.where((i) => i != id).toList();
     }
 
-    _processing = false;
+    _processing?.complete();
+    _processing = null;
   }
 
   Future<void> _downloadItem(String libraryItemId) async {
@@ -129,11 +125,13 @@ class DownloadQueue extends _$DownloadQueue {
 
   Future<void> pause(String id) async {
     ref.read(downloadEngineProvider.notifier).cancel(id);
-    _processing = false;
+    final processing = _processing;
     state = state.where((i) => i != id).toList();
     final downloads = _store.getAll();
     final item = downloads[id];
     if (item != null) await _store.save(item.copyWith(status: .paused));
+
+    await processing?.future;
 
     await DownloadsNotificationService.instance.stopForeground();
     await DownloadsNotificationService.instance.showProgressNotification(
@@ -148,7 +146,7 @@ class DownloadQueue extends _$DownloadQueue {
 
   Future<void> delete(String id) async {
     ref.read(downloadEngineProvider.notifier).cancel(id);
-    _processing = false;
+    final processing = _processing;
     await DownloadsNotificationService.instance.stopForeground();
     await DownloadsNotificationService.instance.dismiss();
     state = state.where((i) => i != id).toList();
@@ -159,6 +157,8 @@ class DownloadQueue extends _$DownloadQueue {
     }
     await ref.read(itemsCacheProvider.notifier).delete(id);
     await _store.remove(id);
+
+    await processing?.future;
   }
 
   Future<void> _setStatus(String id, DownloadStatus status) async {
