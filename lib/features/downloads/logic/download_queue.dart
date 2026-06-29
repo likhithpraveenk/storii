@@ -149,9 +149,8 @@ class DownloadQueue extends _$DownloadQueue {
   Future<void> delete(String id) async {
     ref.read(downloadEngineProvider.notifier).cancel(id);
     _processing = false;
-    // TODO: Notification didn't go away on delete; need to cancel notification
-    // by calling _plugin.cancel(notificationId) or dismiss notification
     await DownloadsNotificationService.instance.stopForeground();
+    await DownloadsNotificationService.instance.dismiss();
     state = state.where((i) => i != id).toList();
     final downloads = _store.getAll();
     final item = downloads[id];
