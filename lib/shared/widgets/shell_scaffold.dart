@@ -12,9 +12,9 @@ import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/nav_bar.dart';
 
 class ShellScaffold extends ConsumerWidget {
-  const ShellScaffold({required this.child, super.key});
+  const ShellScaffold({required this.navigationShell, super.key});
 
-  final Widget child;
+  final StatefulNavigationShell navigationShell;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,11 +54,12 @@ class ShellScaffold extends ConsumerWidget {
                 target: target,
                 navTargets: navTargets,
                 factor: factor,
+                navigationShell: navigationShell,
               ),
             ],
           ),
         ),
-        body: child,
+        body: navigationShell,
       ),
     );
   }
@@ -74,11 +75,13 @@ class _ShellBottomBar extends ConsumerWidget {
     required this.target,
     required this.navTargets,
     required this.factor,
+    required this.navigationShell,
   });
 
   final NavTarget? target;
   final List<NavTarget> navTargets;
   final double factor;
+  final StatefulNavigationShell navigationShell;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -111,8 +114,11 @@ class _ShellBottomBar extends ConsumerWidget {
             currentIndex: displayIndex,
             onTap: (i) {
               final index = i < navTargets.length ? i : 0;
-              final path = navTargets[index].item.route.path;
-              context.go(path);
+              final branchIndex = navTargets[index].shellIndex;
+              navigationShell.goBranch(
+                branchIndex,
+                initialLocation: branchIndex == navigationShell.currentIndex,
+              );
             },
           ),
         ),

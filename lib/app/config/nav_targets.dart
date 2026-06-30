@@ -50,6 +50,16 @@ enum NavTarget {
     ),
   };
 
+  int get shellIndex => switch (this) {
+    .home => 0,
+    .library => 1,
+    .series => 2,
+    .downloads => 3,
+    .authors => 4,
+    .collections => 5,
+    .more => 6,
+  };
+
   String get label {
     return switch (this) {
       .home => l10n.home,

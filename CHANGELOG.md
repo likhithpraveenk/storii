@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Download queue race condition
 - Dismiss download notification on cancel
 - Ensure downloads run and display in order based on queue time
+- Scroll Position in bottom nav tabs is now saved
+- Navigation tab reordering bug when dragging tiles down
 
 ## [v0.4.6] - 2026-06-27
 

@@ -56,7 +56,6 @@ class _ReorderNavTabsState extends ConsumerState<ReorderNavTabs> {
 
   void _onReorder(int oldIndex, int newIndex) {
     setState(() {
-      if (oldIndex < newIndex) newIndex -= 1;
       final item = _masterOrder.removeAt(oldIndex);
       _masterOrder.insert(newIndex, item);
     });
@@ -85,6 +84,7 @@ class _ReorderNavTabsState extends ConsumerState<ReorderNavTabs> {
           padding: const .symmetric(horizontal: 16, vertical: 12),
           itemCount: _masterOrder.length,
           onReorderItem: _onReorder,
+          buildDefaultDragHandles: false,
           proxyDecorator: (child, index, animation) =>
               Material(type: .transparency, child: child),
           itemBuilder: (context, index) {
