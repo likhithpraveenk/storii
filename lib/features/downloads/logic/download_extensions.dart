@@ -70,7 +70,7 @@ extension ToEpisodeDownloadItemX on PodcastEpisode {
     final filesystem = DownloadsFilesystemHelper();
     final path = await filesystem.trackPath(
       itemTitle: itemTitle,
-      filename: audioFile.metadata.filename,
+      filename: audioTrack!.metadata?.filename ?? id,
     );
 
     final prev = existing?.tracks.firstWhereOrNull(
