@@ -25,7 +25,26 @@ class DownloadQueue extends _$DownloadQueue {
   Completer<void>? _processing;
 
   @override
-  List<String> build() => [];
+  List<String> build() {
+    final downloads = _store.getAll();
+    final active =
+        downloads.values
+            .where(
+              (item) => item.status == .queued || item.status == .downloading,
+            )
+            .toList()
+          ..sort(
+            (a, b) => (a.startedAt ?? DateTime.now()).compareTo(
+              b.startedAt ?? DateTime.now(),
+            ),
+          );
+
+    final keys = active.map((item) => item.key).toList();
+    if (keys.isNotEmpty) {
+      Future.microtask(_processQueue);
+    }
+    return keys;
+  }
 
   Future<void> enqueue(String libraryItemId, String? episodeId) async {
     final key = mediaItemIdKey(libraryItemId, episodeId);
@@ -35,6 +54,7 @@ class DownloadQueue extends _$DownloadQueue {
       await ref.read(itemsCacheProvider.notifier).put(item);
 
       final user = await ref.read(authenticatedUserProvider.future);
+      final existing = _store.getAll()[key];
 
       final DownloadItem downloadItem;
 
@@ -44,11 +64,13 @@ class DownloadQueue extends _$DownloadQueue {
           userId: user.id,
           serverUrl: user.serverUrl,
           itemTitle: item.title ?? libraryItemId,
+          existing: existing,
         );
       } else {
         downloadItem = await item.toDownloadItem(
           userId: user.id,
           serverUrl: user.serverUrl,
+          existing: existing,
         );
       }
 

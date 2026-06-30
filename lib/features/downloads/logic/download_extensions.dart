@@ -40,7 +40,11 @@ extension ToDownloadItemX on LibraryItem {
     );
 
     final downloadItem =
-        existing?.copyWith(tracks: downloadTracks, status: .queued) ??
+        existing?.copyWith(
+          tracks: downloadTracks,
+          status: .queued,
+          startedAt: DateTime.now(),
+        ) ??
         DownloadItem(
           libraryItemId: id,
           title: title ?? id,
@@ -85,7 +89,11 @@ extension ToEpisodeDownloadItemX on PodcastEpisode {
       bytesTotal: audioFile.metadata.size,
     );
 
-    return existing?.copyWith(tracks: [track], status: .queued) ??
+    return existing?.copyWith(
+          tracks: [track],
+          status: .queued,
+          startedAt: DateTime.now(),
+        ) ??
         DownloadItem(
           libraryItemId: libraryItemId,
           title: title ?? id,

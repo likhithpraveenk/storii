@@ -10,11 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Support for downloading podcast episodes for offline playback
+- Display queue position for pending downloads in the downloads list
 
 ### Fixed
 
 - Download queue race condition
 - Dismiss download notification on cancel
+- Ensure downloads run and display in order based on queue time
 
 ## [v0.4.6] - 2026-06-27
 

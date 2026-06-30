@@ -179,7 +179,7 @@ final class ActiveDownloadsProvider
   }
 }
 
-String _$activeDownloadsHash() => r'c8d98c227c5fb6b021f66faca42d3eebdfe10485';
+String _$activeDownloadsHash() => r'b21c671d3f9f0343759aff0786e2a78229ee50aa';
 
 @ProviderFor(completedDownloads)
 final completedDownloadsProvider = CompletedDownloadsProvider._();
@@ -222,3 +222,78 @@ final class CompletedDownloadsProvider
 
 String _$completedDownloadsHash() =>
     r'17580ae18ebbffb94e3e65c5bfc405ea6b07a15f';
+
+@ProviderFor(downloadQueuePosition)
+final downloadQueuePositionProvider = DownloadQueuePositionFamily._();
+
+final class DownloadQueuePositionProvider
+    extends $FunctionalProvider<AsyncValue<int?>, int?, FutureOr<int?>>
+    with $FutureModifier<int?>, $FutureProvider<int?> {
+  DownloadQueuePositionProvider._({
+    required DownloadQueuePositionFamily super.from,
+    required (String, String?) super.argument,
+  }) : super(
+         retry: null,
+         name: r'downloadQueuePositionProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$downloadQueuePositionHash();
+
+  @override
+  String toString() {
+    return r'downloadQueuePositionProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<int?> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<int?> create(Ref ref) {
+    final argument = this.argument as (String, String?);
+    return downloadQueuePosition(ref, argument.$1, argument.$2);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is DownloadQueuePositionProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$downloadQueuePositionHash() =>
+    r'839c2b9d6667063ecf4e4ec664a3f078068cf90d';
+
+final class DownloadQueuePositionFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<int?>, (String, String?)> {
+  DownloadQueuePositionFamily._()
+    : super(
+        retry: null,
+        name: r'downloadQueuePositionProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  DownloadQueuePositionProvider call(
+    String libraryItemId, [
+    String? episodeId,
+  ]) => DownloadQueuePositionProvider._(
+    argument: (libraryItemId, episodeId),
+    from: this,
+  );
+
+  @override
+  String toString() => r'downloadQueuePositionProvider';
+}
