@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Support for downloading podcast episodes for offline playback
+
+### Fixed
+
+- Download queue race condition
+- Dismiss download notification on cancel
+
 ## [v0.4.6] - 2026-06-27
 
 ### Added
