@@ -52,7 +52,7 @@ class _MarqueeTextState extends ConsumerState<MarqueeText> {
       if (!_scrollController.hasClients) break;
       _scrollController.jumpTo(0);
 
-      await Future.delayed(const Duration(milliseconds: 2000));
+      await Future.delayed(const Duration(milliseconds: 1500));
       if (id != _animationId || !mounted) return;
 
       final duration = Duration(

@@ -47,7 +47,7 @@ class DownloadEngine extends _$DownloadEngine {
     final coverToken = CancelToken();
     _coverTokens[item.libraryItemId] = coverToken;
     await _downloadCover(
-      itemTitle: item.title,
+      itemTitle: item.episodeId != null ? item.libraryItemId : item.title,
       itemId: item.libraryItemId,
       user: user,
       cancelToken: coverToken,

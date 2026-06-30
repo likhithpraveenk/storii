@@ -108,7 +108,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       loadingEpisodeId: episodeId,
     );
     try {
-      final download = ref.read(downloadItemProvider(itemId));
+      final download = ref.read(downloadItemProvider(itemId, episodeId));
       final isFullyDownloaded =
           download != null &&
           download.isComplete &&

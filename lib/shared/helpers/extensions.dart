@@ -224,3 +224,16 @@ extension DynamicSchemeVariantX on DynamicSchemeVariant {
     };
   }
 }
+
+extension PrettyJsonX on Map<String, dynamic> {
+  String toPrettyJson([List<String>? keysToHide]) {
+    final Map<String, dynamic> copy = Map.from(this);
+
+    if (keysToHide != null) {
+      copy.removeWhere((key, _) => keysToHide.contains(key));
+    }
+
+    const encoder = JsonEncoder.withIndent('  ');
+    return encoder.convert(copy);
+  }
+}
