@@ -14,6 +14,7 @@ import 'package:storii/features/player/ui/speed_button.dart';
 import 'package:storii/features/player/ui/volume_button.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/widgets/marquee_text.dart';
 
 class FullPlayer extends ConsumerWidget {
   const FullPlayer({super.key});
@@ -39,15 +40,16 @@ class FullPlayer extends ConsumerWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Text(
+            MarqueeText(
               currentChapter?.title ?? session.displayTitle ?? l10n.noTitle,
               style: theme.textTheme.titleLarge?.copyWith(fontSize: 22),
-              textAlign: .center,
-              maxLines: 1,
-              overflow: .ellipsis,
             ),
             Text(
-              currentChapter != null
+              session.episodeId != null
+                  ? session.mediaMetadata.title ??
+                        session.displayAuthor ??
+                        l10n.noTitle
+                  : currentChapter != null
                   ? session.displayTitle ?? l10n.noTitle
                   : session.displayAuthor ?? l10n.noAuthor,
               style: theme.textTheme.titleSmall?.copyWith(

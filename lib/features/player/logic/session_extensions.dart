@@ -70,24 +70,14 @@ extension PlaybackSessionX on PlaybackSession {
       //! either we get local path or server url
 
       final isEpisode = mediaType == .podcast && episodeId != null;
-      final episodeTitle = isEpisode
-          ? libraryItem?.episodes
-                .firstWhereOrNull((e) => e.id == episodeId)
-                ?.title
-          : null;
-      final episodeSubtitle = isEpisode
-          ? libraryItem?.episodes
-                .firstWhereOrNull((e) => e.id == episodeId)
-                ?.subtitle
-          : null;
 
       final tag = MediaItem(
         id: track.contentUrl,
-        title: episodeTitle ?? displayTitle ?? l10n.noTitle,
-        artist: episodeSubtitle ?? displayAuthor,
+        title: displayTitle ?? l10n.noTitle,
+        artist: displayAuthor,
         duration: track.duration,
         album: isEpisode
-            ? displayTitle
+            ? mediaMetadata.title
             : mediaMetadata.mapOrNull(book: (b) => b.seriesName),
         artUri: coverUri,
         extras: {
@@ -131,7 +121,7 @@ extension PlaybackSessionX on PlaybackSession {
     if (tracks == null || tracks.isEmpty) return (trackPaths, null);
 
     final coverPath = await DownloadsFilesystemHelper().coverPathIfExists(
-      mediaMetadata.title ?? libraryItemId,
+      episodeId != null ? libraryItemId : displayTitle ?? libraryItemId,
     );
     if (episodeId != null) {
       final local = await DownloadsFilesystemHelper().trackPathIfExists(
@@ -193,6 +183,15 @@ extension ToPlaybackSession on LibraryItem {
   }) {
     final now = DateTime.now();
     final today = DayOfTheWeek.byValue[now.weekday % 7]!.name;
+    final Duration thisDuration;
+    if (isPodcast) {
+      thisDuration =
+          episodes.firstWhere((e) => e.id == episodeId).duration ??
+          Duration.zero;
+    } else {
+      thisDuration = duration;
+    }
+
     return PlaybackSession(
       id: const Uuid().v4(),
       userId: userId,
@@ -203,7 +202,7 @@ extension ToPlaybackSession on LibraryItem {
       chapters: chapters,
       displayTitle: title ?? 'No Title',
       displayAuthor: authorName ?? 'No Author',
-      duration: duration,
+      duration: thisDuration,
       playMethod: .local,
       mediaPlayer: kMediaPlayer,
       date: now.fString(format: 'yyyy-MM-dd'), //! use server format
