@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
+import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
@@ -90,16 +91,23 @@ class DownloadStatusRow extends ConsumerWidget {
     final useBinary = ref.watch(useBinaryBytesProvider);
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final queueIndex = ref
+        .watch(
+          downloadQueuePositionProvider(item.libraryItemId, item.episodeId),
+        )
+        .value;
 
     final received = formatBytes(item.receivedBytes, useBinary: useBinary);
     final total = formatBytes(item.totalBytes, useBinary: useBinary);
+
+    final queuePos = queueIndex != null ? ' #$queueIndex' : '';
 
     return switch (item.status) {
       .queued => Row(
         children: [
           Icon(Icons.schedule, color: scheme.outline, size: 12),
           const SizedBox(width: 6),
-          Text(l10n.queued, style: textTheme.labelSmall),
+          Text('${l10n.queued}$queuePos', style: textTheme.labelSmall),
         ],
       ),
       .downloading => Row(
@@ -145,12 +153,12 @@ class DownloadTileTrailingActions extends ConsumerWidget {
       .downloading || .queued => IconButton(
         icon: const Icon(Icons.pause_circle_outline),
         tooltip: l10n.pause,
-        onPressed: () => queue.pause(item.libraryItemId),
+        onPressed: () => queue.pause(item.key),
       ),
       .paused || .failed => IconButton(
         icon: const Icon(Icons.play_circle_outline),
         tooltip: l10n.resume,
-        onPressed: () => queue.enqueue(item.libraryItemId),
+        onPressed: () => queue.enqueue(item.libraryItemId, item.episodeId),
       ),
       .completed => IconButton(
         icon: Icon(
@@ -189,7 +197,10 @@ void showDownloadsDeleteDialog(
     actionLabel: l10n.remove,
     isDestructive: true,
     onTap: () async {
-      await ref.read(downloadQueueProvider.notifier).delete(item.libraryItemId);
+      await ref
+          .read(downloadQueueProvider.notifier)
+          .delete(item.libraryItemId, item.episodeId);
     },
+    unawaitedOnTap: true,
   );
 }

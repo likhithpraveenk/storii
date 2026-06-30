@@ -54,6 +54,7 @@ _DownloadItem _$DownloadItemFromJson(Map<String, dynamic> json) =>
       startedAt: json['startedAt'] == null
           ? null
           : DateTime.parse(json['startedAt'] as String),
+      episodeId: json['episodeId'] as String?,
     );
 
 Map<String, dynamic> _$DownloadItemToJson(_DownloadItem instance) =>
@@ -66,4 +67,5 @@ Map<String, dynamic> _$DownloadItemToJson(_DownloadItem instance) =>
       'tracks': instance.tracks.map((e) => e.toJson()).toList(),
       'status': _$DownloadStatusEnumMap[instance.status]!,
       'startedAt': ?instance.startedAt?.toIso8601String(),
+      'episodeId': ?instance.episodeId,
     };

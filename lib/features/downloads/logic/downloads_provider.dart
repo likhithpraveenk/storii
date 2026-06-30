@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/storage/local/downloads_store.dart';
 
 part 'downloads_provider.g.dart';
@@ -22,18 +23,41 @@ class DownloadsNotifier extends _$DownloadsNotifier {
 }
 
 @riverpod
-DownloadItem? downloadItem(Ref ref, String libraryItemId) {
-  return ref.watch(downloadsProvider).value?[libraryItemId];
+DownloadItem? downloadItem(Ref ref, String libraryItemId, [String? episodeId]) {
+  final key = mediaItemIdKey(libraryItemId, episodeId);
+  return ref.watch(downloadsProvider).value?[key];
 }
 
 @riverpod
 Stream<List<DownloadItem>> activeDownloads(Ref ref) async* {
   final downloads = await ref.watch(downloadsProvider.future);
-  yield downloads.values.where((item) => !item.isComplete).toList();
+  final list = downloads.values.where((item) => !item.isComplete).toList()
+    ..sort(
+      (a, b) => (a.startedAt ?? DateTime.now()).compareTo(
+        b.startedAt ?? DateTime.now(),
+      ),
+    );
+  yield list;
 }
 
 @riverpod
 Stream<List<DownloadItem>> completedDownloads(Ref ref) async* {
   final downloads = await ref.watch(downloadsProvider.future);
   yield downloads.values.where((item) => item.isComplete).toList();
+}
+
+@riverpod
+Future<int?> downloadQueuePosition(
+  Ref ref,
+  String libraryItemId, [
+  String? episodeId,
+]) async {
+  final key = mediaItemIdKey(libraryItemId, episodeId);
+  final queuedItems = (await ref.watch(
+    activeDownloadsProvider.selectAsync(
+      (s) => s.where((i) => i.status == .queued),
+    ),
+  )).toList();
+  final index = queuedItems.indexWhere((item) => item.key == key);
+  return index != -1 ? index + 1 : null;
 }
