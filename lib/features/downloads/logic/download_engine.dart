@@ -39,7 +39,7 @@ class DownloadEngine extends _$DownloadEngine {
     }
 
     final trackTokens = <int, CancelToken>{};
-    _tokens[item.libraryItemId] = trackTokens;
+    _tokens[item.key] = trackTokens;
 
     var current = item.copyWith(status: .downloading);
     yield current;
@@ -108,7 +108,7 @@ class DownloadEngine extends _$DownloadEngine {
           current = current.copyWith(tracks: updatedTracks);
           yield current;
 
-          if (!_tokens.containsKey(item.libraryItemId)) {
+          if (!_tokens.containsKey(item.key)) {
             await sink.close();
             yield current.copyWith(status: .paused);
             return;
@@ -132,12 +132,12 @@ class DownloadEngine extends _$DownloadEngine {
         );
         await sink.close();
         if (CancelToken.isCancel(e)) {
-          _tokens.remove(item.libraryItemId);
+          _tokens.remove(item.key);
           yield current.copyWith(status: .paused);
           return;
         }
 
-        _tokens.remove(item.libraryItemId);
+        _tokens.remove(item.key);
         yield current.copyWith(status: .failed);
         return;
       } catch (e, st) {
@@ -150,13 +150,13 @@ class DownloadEngine extends _$DownloadEngine {
           stackTrace: error.stackTrace,
         );
         await sink.close();
-        _tokens.remove(item.libraryItemId);
+        _tokens.remove(item.key);
         yield current.copyWith(status: .failed);
         return;
       }
     }
 
-    _tokens.remove(item.libraryItemId);
+    _tokens.remove(item.key);
     yield current.copyWith(status: .completed);
   }
 
@@ -180,10 +180,10 @@ class DownloadEngine extends _$DownloadEngine {
     } on AppError catch (_) {}
   }
 
-  void cancel(String itemId) {
-    _coverTokens[itemId]?.cancel('cancelled');
-    _coverTokens.remove(itemId);
-    final map = _tokens.remove(itemId);
+  void cancel(String key) {
+    _coverTokens[key]?.cancel('cancelled');
+    _coverTokens.remove(key);
+    final map = _tokens.remove(key);
     if (map == null) return;
     for (final t in map.values) {
       t.cancel('cancelled');

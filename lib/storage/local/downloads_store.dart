@@ -18,7 +18,7 @@ class DownloadsStore extends _$DownloadsStore {
       values.map((v) {
         try {
           final item = DownloadItem.fromJson(jsonDecode(v));
-          return MapEntry(item.libraryItemId, item);
+          return MapEntry(item.key, item);
         } catch (e) {
           log('Failed to decode download item: $e');
           return null;
@@ -37,7 +37,7 @@ class DownloadsStore extends _$DownloadsStore {
 
   Future<void> save(DownloadItem item) async {
     try {
-      await _box.put(item.libraryItemId, jsonEncode(item));
+      await _box.put(item.key, jsonEncode(item));
     } catch (e) {
       log('Failed to save download item [${item.title}]: $e');
     }

@@ -145,12 +145,12 @@ class DownloadTileTrailingActions extends ConsumerWidget {
       .downloading || .queued => IconButton(
         icon: const Icon(Icons.pause_circle_outline),
         tooltip: l10n.pause,
-        onPressed: () => queue.pause(item.libraryItemId),
+        onPressed: () => queue.pause(item.key),
       ),
       .paused || .failed => IconButton(
         icon: const Icon(Icons.play_circle_outline),
         tooltip: l10n.resume,
-        onPressed: () => queue.enqueue(item.libraryItemId),
+        onPressed: () => queue.enqueue(item.libraryItemId, item.episodeId),
       ),
       .completed => IconButton(
         icon: Icon(
@@ -189,7 +189,9 @@ void showDownloadsDeleteDialog(
     actionLabel: l10n.remove,
     isDestructive: true,
     onTap: () async {
-      await ref.read(downloadQueueProvider.notifier).delete(item.libraryItemId);
+      await ref
+          .read(downloadQueueProvider.notifier)
+          .delete(item.libraryItemId, item.episodeId);
     },
   );
 }

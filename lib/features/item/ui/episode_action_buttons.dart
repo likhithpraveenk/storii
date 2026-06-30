@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/ui/history_button.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -22,8 +23,10 @@ class EpisodeActionButtons extends ConsumerWidget {
     return Row(
       mainAxisAlignment: .spaceEvenly,
       children: [
-        // TODO: download podcast episode
-        // DownloadButton(libraryItemId: episode.libraryItemId),
+        DownloadButton(
+          libraryItemId: episode.libraryItemId,
+          episodeId: episode.id,
+        ),
         HistoryButton(itemId: episode.libraryItemId, episodeId: episode.id),
         if (progress?.isFinished != true)
           IconButton(

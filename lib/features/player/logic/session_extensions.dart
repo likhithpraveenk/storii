@@ -131,13 +131,21 @@ extension PlaybackSessionX on PlaybackSession {
     if (tracks == null || tracks.isEmpty) return (trackPaths, null);
 
     final coverPath = await DownloadsFilesystemHelper().coverPathIfExists(
-      displayTitle ?? l10n.noTitle,
+      mediaMetadata.title ?? libraryItemId,
     );
     for (final track in tracks) {
-      final local = await DownloadsFilesystemHelper().trackPathIfExists(
-        filename: track.metadata?.filename ?? track.index.toString(),
-        itemTitle: libraryItem?.title ?? libraryItemId,
-      );
+      final String? local;
+      if (episodeId != null) {
+        local = await DownloadsFilesystemHelper().trackPathIfExists(
+          filename: displayTitle ?? episodeId!,
+          itemTitle: libraryItem?.title ?? mediaMetadata.title ?? libraryItemId,
+        );
+      } else {
+        local = await DownloadsFilesystemHelper().trackPathIfExists(
+          filename: track.metadata?.filename ?? track.index.toString(),
+          itemTitle: libraryItem?.title ?? libraryItemId,
+        );
+      }
       if (local != null) trackPaths[track.index] = local;
     }
 

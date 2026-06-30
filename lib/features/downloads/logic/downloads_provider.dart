@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/storage/local/downloads_store.dart';
 
 part 'downloads_provider.g.dart';
@@ -22,8 +23,9 @@ class DownloadsNotifier extends _$DownloadsNotifier {
 }
 
 @riverpod
-DownloadItem? downloadItem(Ref ref, String libraryItemId) {
-  return ref.watch(downloadsProvider).value?[libraryItemId];
+DownloadItem? downloadItem(Ref ref, String libraryItemId, [String? episodeId]) {
+  final key = mediaItemIdKey(libraryItemId, episodeId);
+  return ref.watch(downloadsProvider).value?[key];
 }
 
 @riverpod

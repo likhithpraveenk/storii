@@ -61,9 +61,14 @@ class ActiveDownloadsButton extends ConsumerWidget {
 }
 
 class DownloadButton extends ConsumerWidget {
-  const DownloadButton({super.key, required this.libraryItemId});
+  const DownloadButton({
+    super.key,
+    required this.libraryItemId,
+    this.episodeId,
+  });
 
   final String libraryItemId;
+  final String? episodeId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -71,7 +76,7 @@ class DownloadButton extends ConsumerWidget {
         ref.watch(userPermissionsProvider).value?.download ?? false;
     if (!canDownload) return const SizedBox.shrink();
 
-    final item = ref.watch(downloadItemProvider(libraryItemId));
+    final item = ref.watch(downloadItemProvider(libraryItemId, episodeId));
     final queue = ref.read(downloadQueueProvider.notifier);
     final scheme = Theme.of(context).colorScheme;
 
@@ -79,16 +84,16 @@ class DownloadButton extends ConsumerWidget {
       null => IconButton(
         tooltip: l10n.download,
         icon: const Icon(Icons.download_outlined),
-        onPressed: () => queue.enqueue(libraryItemId),
+        onPressed: () => queue.enqueue(libraryItemId, episodeId),
       ),
       .queued => IconButton(
         tooltip: l10n.queued,
         icon: Icon(Icons.schedule, color: scheme.outline),
-        onPressed: () => queue.delete(libraryItemId),
+        onPressed: () => queue.delete(libraryItemId, episodeId),
       ),
       .downloading => _ProgressButton(
         progress: item!.progress,
-        onCancel: () => queue.delete(libraryItemId),
+        onCancel: () => queue.delete(libraryItemId, episodeId),
       ),
       .completed => IconButton(
         tooltip: l10n.downloaded,
@@ -102,12 +107,12 @@ class DownloadButton extends ConsumerWidget {
       .failed => IconButton(
         tooltip: l10n.downloadFailed,
         icon: Icon(Icons.refresh, color: scheme.error),
-        onPressed: () => queue.enqueue(libraryItemId),
+        onPressed: () => queue.enqueue(libraryItemId, episodeId),
       ),
       .paused => IconButton(
         tooltip: l10n.resumeDownload,
         icon: Icon(Icons.play_circle_outline, color: scheme.tertiary),
-        onPressed: () => queue.enqueue(libraryItemId),
+        onPressed: () => queue.enqueue(libraryItemId, episodeId),
       ),
     };
   }

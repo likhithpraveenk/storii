@@ -1,6 +1,7 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
 
 part 'download_item.freezed.dart';
 part 'download_item.g.dart';
@@ -37,10 +38,13 @@ sealed class DownloadItem with _$DownloadItem {
     required List<DownloadTrack> tracks,
     @Default(DownloadStatus.queued) DownloadStatus status,
     DateTime? startedAt,
+    String? episodeId,
   }) = _DownloadItem;
 
   factory DownloadItem.fromJson(Map<String, dynamic> json) =>
       _$DownloadItemFromJson(json);
+
+  String get key => mediaItemIdKey(libraryItemId, episodeId);
 
   double get progress {
     if (totalBytes == 0) return 0;

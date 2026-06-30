@@ -71,7 +71,7 @@ final class DownloadItemProvider
     with $Provider<DownloadItem?> {
   DownloadItemProvider._({
     required DownloadItemFamily super.from,
-    required String super.argument,
+    required (String, String?) super.argument,
   }) : super(
          retry: null,
          name: r'downloadItemProvider',
@@ -87,7 +87,7 @@ final class DownloadItemProvider
   String toString() {
     return r'downloadItemProvider'
         ''
-        '($argument)';
+        '$argument';
   }
 
   @$internal
@@ -97,8 +97,8 @@ final class DownloadItemProvider
 
   @override
   DownloadItem? create(Ref ref) {
-    final argument = this.argument as String;
-    return downloadItem(ref, argument);
+    final argument = this.argument as (String, String?);
+    return downloadItem(ref, argument.$1, argument.$2);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -120,10 +120,10 @@ final class DownloadItemProvider
   }
 }
 
-String _$downloadItemHash() => r'499beb39a7cbd2cf65e9518a2dac476c16938e06';
+String _$downloadItemHash() => r'c5e510e3296111b95c91030dd93e4b3c30f6ee44';
 
 final class DownloadItemFamily extends $Family
-    with $FunctionalFamilyOverride<DownloadItem?, String> {
+    with $FunctionalFamilyOverride<DownloadItem?, (String, String?)> {
   DownloadItemFamily._()
     : super(
         retry: null,
@@ -133,8 +133,8 @@ final class DownloadItemFamily extends $Family
         isAutoDispose: true,
       );
 
-  DownloadItemProvider call(String libraryItemId) =>
-      DownloadItemProvider._(argument: libraryItemId, from: this);
+  DownloadItemProvider call(String libraryItemId, [String? episodeId]) =>
+      DownloadItemProvider._(argument: (libraryItemId, episodeId), from: this);
 
   @override
   String toString() => r'downloadItemProvider';
