@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Disable downloads for episodes
 - Changed "not started" filter to "incomplete" for episodes
 - Podcast episode published date now nullable
+- Session sync and cleanup skipped when offline
 
 ## [v0.4.7] - 2026-06-30
 
