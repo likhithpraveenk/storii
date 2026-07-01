@@ -25,7 +25,7 @@ sealed class PodcastEpisode with _$PodcastEpisode {
     PodcastEpisodeEnclosure? enclosure,
     String? pubDate,
     required AudioFile audioFile,
-    required DateTime publishedAt,
+    DateTime? publishedAt,
     required DateTime addedAt,
     required DateTime updatedAt,
     AudioTrack? audioTrack,

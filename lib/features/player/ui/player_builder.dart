@@ -19,7 +19,7 @@ class PlayerBuilder extends ConsumerStatefulWidget {
   final double minHeight;
   final double maxHeight;
   final PlayerWidgetBuilder builder;
-  final Future<void> Function() onDismiss;
+  final void Function() onDismiss;
 
   @override
   ConsumerState<PlayerBuilder> createState() => _PlayerBuilderState();

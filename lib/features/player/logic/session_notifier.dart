@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/play_request_params.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
@@ -98,6 +99,12 @@ class SessionNotifier extends _$SessionNotifier {
 
     await ref.read(sessionStoreProvider.notifier).save(updated);
     state = updated;
+
+    final isConnected = await ref.read(socketStatusProvider.future);
+    if (!isConnected) {
+      LogService.log('No Server Connection', source: 'SessionNotifier');
+      throw 'No Server Connection';
+    }
 
     final user = await ref.read(authenticatedUserProvider.future);
     if (isLocal) {

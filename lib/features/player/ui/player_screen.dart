@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:math' as math;
 
@@ -57,9 +58,9 @@ class PlayerScreen extends ConsumerWidget {
 
     return PlayerBuilder(
       maxHeight: screenHeight,
-      onDismiss: () async {
+      onDismiss: () {
         log('player dismissed. audio handler stop');
-        return await audioHandler.stop();
+        unawaited(audioHandler.stop());
       },
       builder: (context, f) {
         final miniOpacity = 1 - miniInterval.transform(f);

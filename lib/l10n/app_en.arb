@@ -146,6 +146,7 @@
   "ebooks": "Ebooks",
   "finished": "Finished",
   "notStarted": "Not Started",
+  "inComplete": "Incomplete",
   "inProgress": "In Progress",
   "notFinished": "Not Finished",
   "asin": "ASIN",
