@@ -410,6 +410,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notStarted => 'Not Started';
 
   @override
+  String get inComplete => 'Incomplete';
+
+  @override
   String get inProgress => 'In Progress';
 
   @override

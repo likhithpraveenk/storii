@@ -8,13 +8,13 @@ part 'episode_filter_provider.g.dart';
 
 enum EpisodeFilter {
   all,
-  notStarted,
+  incomplete,
   inProgress,
   completed;
 
   String get label => switch (this) {
     .all => l10n.all,
-    .notStarted => l10n.notStarted,
+    .incomplete => l10n.inComplete,
     .inProgress => l10n.inProgress,
     .completed => l10n.completed,
   };
@@ -92,7 +92,7 @@ List<PodcastEpisode> filteredEpisodes(
     final progress = progressMap[key];
     return switch (filterState.filter) {
       .all => true,
-      .notStarted => progress == null,
+      .incomplete => progress == null || progress.isFinished == false,
       .inProgress =>
         progress != null &&
             progress.progress != null &&

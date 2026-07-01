@@ -886,6 +886,12 @@ abstract class AppLocalizations {
   /// **'Not Started'**
   String get notStarted;
 
+  /// No description provided for @inComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Incomplete'**
+  String get inComplete;
+
   /// No description provided for @inProgress.
   ///
   /// In en, this message translates to:
