@@ -25,8 +25,9 @@ _PodcastEpisode _$PodcastEpisodeFromJson(Map<String, dynamic> json) =>
             ),
       pubDate: json['pubDate'] as String?,
       audioFile: AudioFile.fromJson(json['audioFile'] as Map<String, dynamic>),
-      publishedAt: const DateTimeEpochConverter().fromJson(
-        (json['publishedAt'] as num).toInt(),
+      publishedAt: _$JsonConverterFromJson<int, DateTime>(
+        json['publishedAt'],
+        const DateTimeEpochConverter().fromJson,
       ),
       addedAt: const DateTimeEpochConverter().fromJson(
         (json['addedAt'] as num).toInt(),
@@ -44,32 +45,34 @@ _PodcastEpisode _$PodcastEpisodeFromJson(Map<String, dynamic> json) =>
       size: (json['size'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$PodcastEpisodeToJson(
-  _PodcastEpisode instance,
-) => <String, dynamic>{
-  'libraryItemId': instance.libraryItemId,
-  'podcastId': instance.podcastId,
-  'id': instance.id,
-  'index': ?instance.index,
-  'season': ?instance.season,
-  'episode': ?instance.episode,
-  'episodeType': ?instance.episodeType,
-  'title': ?instance.title,
-  'subtitle': ?instance.subtitle,
-  'description': ?instance.description,
-  'enclosure': ?instance.enclosure?.toJson(),
-  'pubDate': ?instance.pubDate,
-  'audioFile': instance.audioFile.toJson(),
-  'publishedAt': const DateTimeEpochConverter().toJson(instance.publishedAt),
-  'addedAt': const DateTimeEpochConverter().toJson(instance.addedAt),
-  'updatedAt': const DateTimeEpochConverter().toJson(instance.updatedAt),
-  'audioTrack': ?instance.audioTrack?.toJson(),
-  'duration': ?_$JsonConverterToJson<Object, Duration>(
-    instance.duration,
-    const DurationPreciseSecondsConverter().toJson,
-  ),
-  'size': ?instance.size,
-};
+Map<String, dynamic> _$PodcastEpisodeToJson(_PodcastEpisode instance) =>
+    <String, dynamic>{
+      'libraryItemId': instance.libraryItemId,
+      'podcastId': instance.podcastId,
+      'id': instance.id,
+      'index': ?instance.index,
+      'season': ?instance.season,
+      'episode': ?instance.episode,
+      'episodeType': ?instance.episodeType,
+      'title': ?instance.title,
+      'subtitle': ?instance.subtitle,
+      'description': ?instance.description,
+      'enclosure': ?instance.enclosure?.toJson(),
+      'pubDate': ?instance.pubDate,
+      'audioFile': instance.audioFile.toJson(),
+      'publishedAt': ?_$JsonConverterToJson<int, DateTime>(
+        instance.publishedAt,
+        const DateTimeEpochConverter().toJson,
+      ),
+      'addedAt': const DateTimeEpochConverter().toJson(instance.addedAt),
+      'updatedAt': const DateTimeEpochConverter().toJson(instance.updatedAt),
+      'audioTrack': ?instance.audioTrack?.toJson(),
+      'duration': ?_$JsonConverterToJson<Object, Duration>(
+        instance.duration,
+        const DurationPreciseSecondsConverter().toJson,
+      ),
+      'size': ?instance.size,
+    };
 
 Value? _$JsonConverterFromJson<Json, Value>(
   Object? json,

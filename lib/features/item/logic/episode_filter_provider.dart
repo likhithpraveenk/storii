@@ -104,7 +104,9 @@ List<PodcastEpisode> filteredEpisodes(
 
   list.sort((a, b) {
     final cmp = switch (filterState.sort) {
-      .published => a.publishedAt.compareTo(b.publishedAt),
+      .published => (a.publishedAt ?? DateTime.now()).compareTo(
+        b.publishedAt ?? DateTime.now(),
+      ),
       .title => (a.title ?? '').compareTo(b.title ?? ''),
       .seasonEpisode => _seasonEpisodeCompare(a, b),
       .duration => (a.duration ?? Duration.zero).compareTo(

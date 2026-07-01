@@ -148,7 +148,8 @@ class _EpisodeMetaRow extends ConsumerWidget {
 
     final parts = <String>[
       if (episode.duration != null) episode.duration!.toReadableDuration(),
-      episode.publishedAt.fString(format: ref.watch(dateTimeFormatProvider)),
+      if (episode.publishedAt != null)
+        episode.publishedAt!.fString(format: ref.watch(dateTimeFormatProvider)),
       if (episode.size != null)
         formatBytes(
           episode.size!,
