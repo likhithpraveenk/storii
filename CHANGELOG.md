@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.4.8] - 2026-07-01
+
 ### Fixed
 
 - Disable downloads for episodes
@@ -358,7 +360,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.4.7...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.4.8...HEAD
+[v0.4.8]: https://github.com/likhithpraveenk/storii/compare/v0.4.7...v0.4.8
 [v0.4.7]: https://github.com/likhithpraveenk/storii/compare/v0.4.6...v0.4.7
 [v0.4.6]: https://github.com/likhithpraveenk/storii/compare/v0.4.5...v0.4.6
 [v0.4.5]: https://github.com/likhithpraveenk/storii/compare/v0.4.5-beta.1...v0.4.5
