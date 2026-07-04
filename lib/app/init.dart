@@ -63,10 +63,10 @@ Future<ProviderContainer> setupProviders() async {
   LogService.init(container);
   audioHandler = await setupAudioService(container);
 
-  //! session cleanup
+  //! session cleanup (fire-and-forget, doesn't block startup)
   final settings = container.read(appSettingsProvider);
   if (settings.currentUser != null) {
-    await container.read(sessionsCleanupProvider.notifier).cleanup();
+    unawaited(container.read(sessionsCleanupProvider.notifier).cleanup());
   }
 
   return container;

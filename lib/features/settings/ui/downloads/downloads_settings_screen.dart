@@ -42,6 +42,9 @@ class DownloadsSettingsScreen extends StatelessWidget {
           children: [
             // UnmeteredOnlyTile(), // TODO: add unmetered only tile
             // StorageTile(), // TODO: external download location
+            // for SAF check the following packages
+            // https://pub.dev/packages/saf_util
+            // https://pub.dev/packages/saf_stream
           ],
         ),
       ),
