@@ -64,7 +64,7 @@ final class ItemDetailProvider
   }
 }
 
-String _$itemDetailHash() => r'c0d06936b76cc32c6e1136010d95fc012be478ba';
+String _$itemDetailHash() => r'd107d34415091c8a4a700f2005af11b6c88c0613';
 
 final class ItemDetailFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<LibraryItem>, String> {
