@@ -1969,7 +1969,7 @@ abstract class AppLocalizations {
   /// No description provided for @localSessionDeleteBody.
   ///
   /// In en, this message translates to:
-  /// **'This session progress is not synced with server yet'**
+  /// **'This progress may not be fully synced yet. Check playback history for confirmation.'**
   String get localSessionDeleteBody;
 }
 

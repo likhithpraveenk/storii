@@ -422,5 +422,5 @@
     }
   },
   "localSessionDeleteQ": "Delete local session?",
-  "localSessionDeleteBody": "This session progress is not synced with server yet"
+  "localSessionDeleteBody": "This progress may not be fully synced yet. Check playback history for confirmation."
 }

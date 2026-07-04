@@ -8,15 +8,16 @@ import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/storage/local/session_store.dart';
 
 class CurrentSessionTile extends ConsumerWidget {
-  const CurrentSessionTile({super.key, required this.itemId});
+  const CurrentSessionTile({super.key, required this.itemId, this.episodeId});
 
   final String itemId;
+  final String? episodeId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
 
-    final sessionAsync = ref.watch(localSessionProvider(itemId));
+    final sessionAsync = ref.watch(localSessionProvider(itemId, episodeId));
     return sessionAsync.when(
       loading: () => const SizedBox.shrink(),
       error: (error, stack) => const SizedBox.shrink(),

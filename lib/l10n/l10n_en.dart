@@ -1002,5 +1002,5 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get localSessionDeleteBody =>
-      'This session progress is not synced with server yet';
+      'This progress may not be fully synced yet. Check playback history for confirmation.';
 }

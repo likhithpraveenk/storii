@@ -6,6 +6,7 @@ import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/item/ui/current_session_tile.dart';
 import 'package:storii/features/item/ui/episode_action_buttons.dart';
 import 'package:storii/features/item/ui/episode_metadata_sheet.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
@@ -106,7 +107,10 @@ class EpisodeTile extends ConsumerWidget {
                   ),
                   const SizedBox(height: 4),
                   _EpisodeMetaRow(episode: episode, progressPct: progressPct),
-                  const SizedBox(height: 4),
+                  CurrentSessionTile(
+                    itemId: episode.libraryItemId,
+                    episodeId: episode.id,
+                  ),
                   EpisodeActionButtons(episode: episode),
                 ],
               ),
