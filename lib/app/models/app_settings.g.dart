@@ -37,6 +37,7 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
   syncIntervalMetered: json['syncIntervalMetered'] == null
       ? const Duration(minutes: 1)
       : Duration(microseconds: (json['syncIntervalMetered'] as num).toInt()),
+  downloadPathsV2Migrated: json['downloadPathsV2Migrated'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
@@ -52,6 +53,7 @@ Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
       'enableHttpLogs': instance.enableHttpLogs,
       'syncInterval': instance.syncInterval.inMicroseconds,
       'syncIntervalMetered': instance.syncIntervalMetered.inMicroseconds,
+      'downloadPathsV2Migrated': instance.downloadPathsV2Migrated,
     };
 
 const _$ThemeModeEnumMap = {

@@ -305,7 +305,7 @@ $AudioTrackCopyWith<$Res> get audioTrack {
 /// @nodoc
 mixin _$DownloadItem {
 
- Uri get serverUrl; String get libraryItemId; String get userId; String get title; String get author; List<DownloadTrack> get tracks; DownloadStatus get status; DateTime? get startedAt; String? get episodeId;
+ Uri get serverUrl; String get libraryItemId; String get userId; String get title; String get author; List<DownloadTrack> get tracks; DownloadMediaType get mediaType; DownloadStatus get status; DateTime? get startedAt; String? get episodeId;
 /// Create a copy of DownloadItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -318,16 +318,16 @@ $DownloadItemCopyWith<DownloadItem> get copyWith => _$DownloadItemCopyWithImpl<D
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DownloadItem&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&const DeepCollectionEquality().equals(other.tracks, tracks)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DownloadItem&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&const DeepCollectionEquality().equals(other.tracks, tracks)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,serverUrl,libraryItemId,userId,title,author,const DeepCollectionEquality().hash(tracks),status,startedAt,episodeId);
+int get hashCode => Object.hash(runtimeType,serverUrl,libraryItemId,userId,title,author,const DeepCollectionEquality().hash(tracks),mediaType,status,startedAt,episodeId);
 
 @override
 String toString() {
-  return 'DownloadItem(serverUrl: $serverUrl, libraryItemId: $libraryItemId, userId: $userId, title: $title, author: $author, tracks: $tracks, status: $status, startedAt: $startedAt, episodeId: $episodeId)';
+  return 'DownloadItem(serverUrl: $serverUrl, libraryItemId: $libraryItemId, userId: $userId, title: $title, author: $author, tracks: $tracks, mediaType: $mediaType, status: $status, startedAt: $startedAt, episodeId: $episodeId)';
 }
 
 
@@ -338,7 +338,7 @@ abstract mixin class $DownloadItemCopyWith<$Res>  {
   factory $DownloadItemCopyWith(DownloadItem value, $Res Function(DownloadItem) _then) = _$DownloadItemCopyWithImpl;
 @useResult
 $Res call({
- Uri serverUrl, String libraryItemId, String userId, String title, String author, List<DownloadTrack> tracks, DownloadStatus status, DateTime? startedAt, String? episodeId
+ Uri serverUrl, String libraryItemId, String userId, String title, String author, List<DownloadTrack> tracks, DownloadMediaType mediaType, DownloadStatus status, DateTime? startedAt, String? episodeId
 });
 
 
@@ -355,7 +355,7 @@ class _$DownloadItemCopyWithImpl<$Res>
 
 /// Create a copy of DownloadItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? serverUrl = null,Object? libraryItemId = null,Object? userId = null,Object? title = null,Object? author = null,Object? tracks = null,Object? status = null,Object? startedAt = freezed,Object? episodeId = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? serverUrl = null,Object? libraryItemId = null,Object? userId = null,Object? title = null,Object? author = null,Object? tracks = null,Object? mediaType = null,Object? status = null,Object? startedAt = freezed,Object? episodeId = freezed,}) {
   return _then(_self.copyWith(
 serverUrl: null == serverUrl ? _self.serverUrl : serverUrl // ignore: cast_nullable_to_non_nullable
 as Uri,libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
@@ -363,7 +363,8 @@ as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullabl
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,author: null == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
 as String,tracks: null == tracks ? _self.tracks : tracks // ignore: cast_nullable_to_non_nullable
-as List<DownloadTrack>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as List<DownloadTrack>,mediaType: null == mediaType ? _self.mediaType : mediaType // ignore: cast_nullable_to_non_nullable
+as DownloadMediaType,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as DownloadStatus,startedAt: freezed == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,episodeId: freezed == episodeId ? _self.episodeId : episodeId // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -448,10 +449,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Uri serverUrl,  String libraryItemId,  String userId,  String title,  String author,  List<DownloadTrack> tracks,  DownloadStatus status,  DateTime? startedAt,  String? episodeId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Uri serverUrl,  String libraryItemId,  String userId,  String title,  String author,  List<DownloadTrack> tracks,  DownloadMediaType mediaType,  DownloadStatus status,  DateTime? startedAt,  String? episodeId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DownloadItem() when $default != null:
-return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.title,_that.author,_that.tracks,_that.status,_that.startedAt,_that.episodeId);case _:
+return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.title,_that.author,_that.tracks,_that.mediaType,_that.status,_that.startedAt,_that.episodeId);case _:
   return orElse();
 
 }
@@ -469,10 +470,10 @@ return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.title,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Uri serverUrl,  String libraryItemId,  String userId,  String title,  String author,  List<DownloadTrack> tracks,  DownloadStatus status,  DateTime? startedAt,  String? episodeId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Uri serverUrl,  String libraryItemId,  String userId,  String title,  String author,  List<DownloadTrack> tracks,  DownloadMediaType mediaType,  DownloadStatus status,  DateTime? startedAt,  String? episodeId)  $default,) {final _that = this;
 switch (_that) {
 case _DownloadItem():
-return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.title,_that.author,_that.tracks,_that.status,_that.startedAt,_that.episodeId);}
+return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.title,_that.author,_that.tracks,_that.mediaType,_that.status,_that.startedAt,_that.episodeId);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -486,10 +487,10 @@ return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.title,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Uri serverUrl,  String libraryItemId,  String userId,  String title,  String author,  List<DownloadTrack> tracks,  DownloadStatus status,  DateTime? startedAt,  String? episodeId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Uri serverUrl,  String libraryItemId,  String userId,  String title,  String author,  List<DownloadTrack> tracks,  DownloadMediaType mediaType,  DownloadStatus status,  DateTime? startedAt,  String? episodeId)?  $default,) {final _that = this;
 switch (_that) {
 case _DownloadItem() when $default != null:
-return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.title,_that.author,_that.tracks,_that.status,_that.startedAt,_that.episodeId);case _:
+return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.title,_that.author,_that.tracks,_that.mediaType,_that.status,_that.startedAt,_that.episodeId);case _:
   return null;
 
 }
@@ -501,7 +502,7 @@ return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.title,_th
 @JsonSerializable()
 
 class _DownloadItem extends DownloadItem {
-  const _DownloadItem({required this.serverUrl, required this.libraryItemId, required this.userId, required this.title, required this.author, required final  List<DownloadTrack> tracks, this.status = DownloadStatus.queued, this.startedAt, this.episodeId}): _tracks = tracks,super._();
+  const _DownloadItem({required this.serverUrl, required this.libraryItemId, required this.userId, required this.title, required this.author, required final  List<DownloadTrack> tracks, this.mediaType = DownloadMediaType.audiobook, this.status = DownloadStatus.queued, this.startedAt, this.episodeId}): _tracks = tracks,super._();
   factory _DownloadItem.fromJson(Map<String, dynamic> json) => _$DownloadItemFromJson(json);
 
 @override final  Uri serverUrl;
@@ -516,6 +517,7 @@ class _DownloadItem extends DownloadItem {
   return EqualUnmodifiableListView(_tracks);
 }
 
+@override@JsonKey() final  DownloadMediaType mediaType;
 @override@JsonKey() final  DownloadStatus status;
 @override final  DateTime? startedAt;
 @override final  String? episodeId;
@@ -533,16 +535,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DownloadItem&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&const DeepCollectionEquality().equals(other._tracks, _tracks)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DownloadItem&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&const DeepCollectionEquality().equals(other._tracks, _tracks)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,serverUrl,libraryItemId,userId,title,author,const DeepCollectionEquality().hash(_tracks),status,startedAt,episodeId);
+int get hashCode => Object.hash(runtimeType,serverUrl,libraryItemId,userId,title,author,const DeepCollectionEquality().hash(_tracks),mediaType,status,startedAt,episodeId);
 
 @override
 String toString() {
-  return 'DownloadItem(serverUrl: $serverUrl, libraryItemId: $libraryItemId, userId: $userId, title: $title, author: $author, tracks: $tracks, status: $status, startedAt: $startedAt, episodeId: $episodeId)';
+  return 'DownloadItem(serverUrl: $serverUrl, libraryItemId: $libraryItemId, userId: $userId, title: $title, author: $author, tracks: $tracks, mediaType: $mediaType, status: $status, startedAt: $startedAt, episodeId: $episodeId)';
 }
 
 
@@ -553,7 +555,7 @@ abstract mixin class _$DownloadItemCopyWith<$Res> implements $DownloadItemCopyWi
   factory _$DownloadItemCopyWith(_DownloadItem value, $Res Function(_DownloadItem) _then) = __$DownloadItemCopyWithImpl;
 @override @useResult
 $Res call({
- Uri serverUrl, String libraryItemId, String userId, String title, String author, List<DownloadTrack> tracks, DownloadStatus status, DateTime? startedAt, String? episodeId
+ Uri serverUrl, String libraryItemId, String userId, String title, String author, List<DownloadTrack> tracks, DownloadMediaType mediaType, DownloadStatus status, DateTime? startedAt, String? episodeId
 });
 
 
@@ -570,7 +572,7 @@ class __$DownloadItemCopyWithImpl<$Res>
 
 /// Create a copy of DownloadItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? serverUrl = null,Object? libraryItemId = null,Object? userId = null,Object? title = null,Object? author = null,Object? tracks = null,Object? status = null,Object? startedAt = freezed,Object? episodeId = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? serverUrl = null,Object? libraryItemId = null,Object? userId = null,Object? title = null,Object? author = null,Object? tracks = null,Object? mediaType = null,Object? status = null,Object? startedAt = freezed,Object? episodeId = freezed,}) {
   return _then(_DownloadItem(
 serverUrl: null == serverUrl ? _self.serverUrl : serverUrl // ignore: cast_nullable_to_non_nullable
 as Uri,libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
@@ -578,7 +580,8 @@ as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullabl
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,author: null == author ? _self.author : author // ignore: cast_nullable_to_non_nullable
 as String,tracks: null == tracks ? _self._tracks : tracks // ignore: cast_nullable_to_non_nullable
-as List<DownloadTrack>,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as List<DownloadTrack>,mediaType: null == mediaType ? _self.mediaType : mediaType // ignore: cast_nullable_to_non_nullable
+as DownloadMediaType,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as DownloadStatus,startedAt: freezed == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,episodeId: freezed == episodeId ? _self.episodeId : episodeId // ignore: cast_nullable_to_non_nullable
 as String?,

@@ -31,6 +31,8 @@ sealed class AppSettings with _$AppSettings {
     @Default(Duration(seconds: 20)) Duration syncInterval,
 
     @Default(Duration(minutes: 1)) Duration syncIntervalMetered,
+
+    @Default(false) bool downloadPathsV2Migrated,
   }) = _AppSettings;
 
   factory AppSettings.fromJson(Map<String, dynamic> json) =>

@@ -30,9 +30,13 @@ class ImageWidget extends ConsumerWidget {
     final download = ref.watch(downloadItemProvider(id));
     if (download != null) {
       return FutureBuilder<String?>(
-        future: ref
-            .read(downloadsFsHelperProvider)
-            .coverPathIfExists(download.title),
+        future: download.mediaType == .podcast
+            ? ref
+                  .read(downloadsFsHelperProvider)
+                  .podcastCoverPathIfExists(download.libraryItemId)
+            : ref
+                  .read(downloadsFsHelperProvider)
+                  .audiobookCoverPathIfExists(download.libraryItemId),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             return Image.file(

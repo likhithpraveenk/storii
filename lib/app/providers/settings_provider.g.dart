@@ -151,6 +151,9 @@ extension AppSettingsSetters on AppSettingsNotifier {
 
   Future<void> setSyncIntervalMetered(Duration value) =>
       _save(state.copyWith(syncIntervalMetered: value));
+
+  Future<void> setDownloadPathsV2Migrated(bool value) =>
+      _save(state.copyWith(downloadPathsV2Migrated: value));
 }
 
 final themeModeProvider = Provider<ThemeMode>(
@@ -206,6 +209,12 @@ final syncIntervalProvider = Provider<Duration>(
 final syncIntervalMeteredProvider = Provider<Duration>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.syncIntervalMetered)),
   name: 'syncIntervalMeteredProvider',
+);
+
+final downloadPathsV2MigratedProvider = Provider<bool>(
+  (ref) =>
+      ref.watch(appSettingsProvider.select((s) => s.downloadPathsV2Migrated)),
+  name: 'downloadPathsV2MigratedProvider',
 );
 
 // **************************************************************************

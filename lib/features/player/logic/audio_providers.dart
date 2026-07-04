@@ -109,10 +109,11 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
     );
     try {
       final download = ref.read(downloadItemProvider(itemId, episodeId));
+      final fs = ref.read(downloadsFsHelperProvider);
       final isFullyDownloaded =
           download != null &&
           download.isComplete &&
-          await DownloadsFilesystemHelper().isFullyDownloaded(download);
+          await fs.isFullyDownloaded(download);
 
       final PlaybackSession session;
       String? token;
@@ -142,7 +143,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
           ? session.chapterToTrackOffset(chapter)
           : session.getIndexAndOffset(initialPosition);
 
-      final (localPaths, coverPath) = await session.resolveLocalPaths();
+      final (localPaths, coverPath) = await fs.resolveLocalPaths(session);
       final localCount = localPaths.length;
       final totalTracks = session.audioTracks?.length ?? 0;
       if (localCount > 0) {

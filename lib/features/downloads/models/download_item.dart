@@ -8,6 +8,8 @@ part 'download_item.g.dart';
 
 enum DownloadStatus { queued, downloading, completed, failed, paused }
 
+enum DownloadMediaType { audiobook, podcast }
+
 @freezed
 sealed class DownloadTrack with _$DownloadTrack {
   const DownloadTrack._();
@@ -36,6 +38,7 @@ sealed class DownloadItem with _$DownloadItem {
     required String title,
     required String author,
     required List<DownloadTrack> tracks,
+    @Default(DownloadMediaType.audiobook) DownloadMediaType mediaType,
     @Default(DownloadStatus.queued) DownloadStatus status,
     DateTime? startedAt,
     String? episodeId,
