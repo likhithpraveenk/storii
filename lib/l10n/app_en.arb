@@ -406,5 +406,11 @@
         "type": "String"
       }
     }
-  }
+  },
+  "storage": "Storage",
+  "internalStorage": "Internal Storage",
+  "changeLocation": "Change Location",
+  "resetToInternal": "Reset to Internal",
+  "downloadLocation": "Download Location",
+  "storageSubDirsNote": "Audiobooks and podcasts will be stored in separate subdirectories: \n- audiobooks/<itemId>/\n- podcasts/<podcastId>/\nThis ensures stable paths even if server metadata changes"
 }

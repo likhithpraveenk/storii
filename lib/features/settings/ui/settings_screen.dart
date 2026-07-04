@@ -35,6 +35,7 @@ class SettingsScreen extends StatelessWidget {
           AppearanceTile(),
           DateTimeFormatTile(),
           ConfigNavTile(),
+          // DownloadsSettingsTile(),
           PlayerSettingsTile(),
           LibrarySettingsTile(),
           HttpLogsTile(),
