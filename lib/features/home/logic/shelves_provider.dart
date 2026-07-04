@@ -1,10 +1,14 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
+import 'package:storii/storage/local/items_cache.dart';
 
 part 'shelves_provider.g.dart';
 
@@ -46,6 +50,47 @@ Future<List<Shelf>> shelves(Ref ref) async {
 
 @Riverpod(keepAlive: true)
 Future<List<Shelf>> rawShelves(Ref ref) async {
+  final isConnected = await ref.watch(socketStatusProvider.future);
+  if (!isConnected) {
+    final downloads = await ref.read(downloadsProvider.future);
+    final cache = ref.read(itemsCacheProvider.notifier);
+    final audiobooks = <LibraryItem>[];
+    final podcasts = <LibraryItem>[];
+
+    for (final d in downloads.values.where((d) => d.isComplete)) {
+      final item = cache.get(d.libraryItemId);
+      if (item != null) {
+        switch (item.mediaType) {
+          case .book:
+            audiobooks.add(item);
+          case .podcast:
+            podcasts.add(item);
+        }
+      }
+    }
+
+    return [
+      if (audiobooks.isNotEmpty)
+        Shelf.libraryItems(
+          id: 'offline_downloads',
+          label: l10n.audiobooks,
+          labelStringKey: 'downloads',
+          type: .book,
+          entities: audiobooks,
+          total: audiobooks.length,
+        ),
+      if (podcasts.isNotEmpty)
+        Shelf.libraryItems(
+          id: 'offline_downloads',
+          label: l10n.podcasts,
+          labelStringKey: 'downloads',
+          type: .podcast,
+          entities: podcasts,
+          total: podcasts.length,
+        ),
+    ];
+  }
+
   final libraryId = (await ref.watch(
     activeLibraryDetailsProvider.future,
   )).library.id;
