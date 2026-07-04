@@ -80,17 +80,17 @@ class SessionSyncWatcher extends _$SessionSyncWatcher {
       final wasConnected = prev?.value ?? false;
       final isConnected = next.value ?? false;
       if (!wasConnected && isConnected) {
-        await ref
-            .read(authenticatedUserProvider.future)
-            .then((_) => ref.read(sessionsCleanupProvider.notifier).cleanup())
-            .catchError(
-              (e) => LogService.log(
-                'reconnect sync skipped',
-                originalError: e,
-                level: .warning,
-                source: 'SessionSyncWatcher',
-              ),
-            );
+        try {
+          await ref.read(authenticatedUserProvider.future);
+          await ref.read(sessionsCleanupProvider.notifier).cleanup();
+        } catch (e) {
+          LogService.log(
+            'reconnect sync skipped',
+            originalError: e,
+            level: .warning,
+            source: 'SessionSyncWatcher',
+          );
+        }
       }
     });
   }

@@ -13,7 +13,6 @@ import 'package:storii/features/downloads/logic/downloads_notification_service.d
 import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/just_audio_player.dart';
-import 'package:storii/features/player/logic/sessions_cleanup.dart';
 import 'package:storii/l10n/l10n.dart';
 
 late final AppLinks appLinks;
@@ -62,12 +61,6 @@ Future<ProviderContainer> setupProviders() async {
 
   LogService.init(container);
   audioHandler = await setupAudioService(container);
-
-  //! session cleanup (fire-and-forget, doesn't block startup)
-  final settings = container.read(appSettingsProvider);
-  if (settings.currentUser != null) {
-    unawaited(container.read(sessionsCleanupProvider.notifier).cleanup());
-  }
 
   return container;
 }
