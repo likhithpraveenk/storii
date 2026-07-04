@@ -1953,6 +1953,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Audiobooks and podcasts will be stored in separate subdirectories: \n- audiobooks/<itemId>/\n- podcasts/<podcastId>/\nThis ensures stable paths even if server metadata changes'**
   String get storageSubDirsNote;
+
+  /// No description provided for @localSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Local Session: {time}'**
+  String localSession(String time);
+
+  /// No description provided for @localSessionDeleteQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete local session?'**
+  String get localSessionDeleteQ;
+
+  /// No description provided for @localSessionDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This session progress is not synced with server yet'**
+  String get localSessionDeleteBody;
 }
 
 class _AppLocalizationsDelegate

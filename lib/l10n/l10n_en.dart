@@ -991,4 +991,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get storageSubDirsNote =>
       'Audiobooks and podcasts will be stored in separate subdirectories: \n- audiobooks/<itemId>/\n- podcasts/<podcastId>/\nThis ensures stable paths even if server metadata changes';
+
+  @override
+  String localSession(String time) {
+    return 'Local Session: $time';
+  }
+
+  @override
+  String get localSessionDeleteQ => 'Delete local session?';
+
+  @override
+  String get localSessionDeleteBody =>
+      'This session progress is not synced with server yet';
 }

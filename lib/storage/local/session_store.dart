@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:abs_api/abs_api.dart';
 import 'package:hive_ce/hive_ce.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/storage/hive/boxes.dart';
 
 part 'session_store.g.dart';
@@ -24,8 +26,30 @@ class SessionStore extends _$SessionStore {
   }
 
   List<PlaybackSession> getAll() {
-    return _box.values
-        .map((json) => PlaybackSession.fromJson(jsonDecode(json)))
-        .toList();
+    return _box.values.map(_parseSession).toList();
   }
+
+  PlaybackSession? getSession(String itemId, [String? episodeId]) {
+    return _box.values
+        .map(_parseSession)
+        .firstWhereOrNull(
+          (s) => s.libraryItemId == itemId && s.episodeId == episodeId,
+        );
+  }
+
+  Stream<PlaybackSession?> watchSession(String itemId, [String? episodeId]) {
+    return _box
+        .watch()
+        .map((_) {
+          return _box.values
+              .map(_parseSession)
+              .firstWhereOrNull(
+                (s) => s.libraryItemId == itemId && s.episodeId == episodeId,
+              );
+        })
+        .startWith(getSession(itemId, episodeId));
+  }
+
+  PlaybackSession _parseSession(String json) =>
+      PlaybackSession.fromJson(jsonDecode(json));
 }

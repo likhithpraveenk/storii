@@ -41,7 +41,7 @@ final class SessionNotifierProvider
   }
 }
 
-String _$sessionNotifierHash() => r'1a5f4ed4727e1f5793060673f187b4147c357ca6';
+String _$sessionNotifierHash() => r'75729e68a6c30f157d2f74ae5c59c8c730e468fb';
 
 abstract class _$SessionNotifier extends $Notifier<PlaybackSession?> {
   PlaybackSession? build();
@@ -59,4 +59,80 @@ abstract class _$SessionNotifier extends $Notifier<PlaybackSession?> {
             >;
     element.handleCreate(ref, build);
   }
+}
+
+@ProviderFor(localSession)
+final localSessionProvider = LocalSessionFamily._();
+
+final class LocalSessionProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<PlaybackSession?>,
+          PlaybackSession?,
+          Stream<PlaybackSession?>
+        >
+    with $FutureModifier<PlaybackSession?>, $StreamProvider<PlaybackSession?> {
+  LocalSessionProvider._({
+    required LocalSessionFamily super.from,
+    required (String, String?) super.argument,
+  }) : super(
+         retry: null,
+         name: r'localSessionProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$localSessionHash();
+
+  @override
+  String toString() {
+    return r'localSessionProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $StreamProviderElement<PlaybackSession?> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<PlaybackSession?> create(Ref ref) {
+    final argument = this.argument as (String, String?);
+    return localSession(ref, argument.$1, argument.$2);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is LocalSessionProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$localSessionHash() => r'0e7829392162f18a2251cc924ea490bd9d9837fe';
+
+final class LocalSessionFamily extends $Family
+    with
+        $FunctionalFamilyOverride<Stream<PlaybackSession?>, (String, String?)> {
+  LocalSessionFamily._()
+    : super(
+        retry: null,
+        name: r'localSessionProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  LocalSessionProvider call(String itemId, [String? episodeId]) =>
+      LocalSessionProvider._(argument: (itemId, episodeId), from: this);
+
+  @override
+  String toString() => r'localSessionProvider';
 }

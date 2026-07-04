@@ -59,6 +59,19 @@ class SessionNotifier extends _$SessionNotifier {
     String? episodeId,
     required bool isSameUser,
   }) async {
+    final existing = ref
+        .read(sessionStoreProvider.notifier)
+        .getSession(item.id, episodeId);
+    if (existing != null && existing.playMethod == .local) {
+      state = existing;
+      LogService.log(
+        'local session resumed for ${existing.displayTitle}',
+        source: 'SessionNotifier',
+        level: .info,
+      );
+      return existing;
+    }
+
     final params = await ref.read(playRequestParamsProvider.future);
     final user = ref.read(currentUserProvider);
     var session = item.toPlaybackSession(
@@ -151,8 +164,8 @@ class SessionNotifier extends _$SessionNotifier {
           source: 'SessionNotifier',
           logMessage: 'session close failed for ${session.displayTitle}',
         );
+        await ref.read(sessionStoreProvider.notifier).delete(session.id);
       }
-      await ref.read(sessionStoreProvider.notifier).delete(session.id);
       LogService.log(
         'session closed for ${session.displayTitle}',
         source: 'SessionNotifier',
@@ -163,4 +176,14 @@ class SessionNotifier extends _$SessionNotifier {
       state = null;
     }
   }
+}
+
+@riverpod
+Stream<PlaybackSession?> localSession(
+  Ref ref,
+  String itemId, [
+  String? episodeId,
+]) async* {
+  final store = ref.watch(sessionStoreProvider.notifier);
+  yield* store.watchSession(itemId, episodeId);
 }
