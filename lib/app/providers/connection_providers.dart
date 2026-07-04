@@ -14,6 +14,12 @@ Stream<bool> socketStatus(Ref ref) async* {
     return;
   }
 
+  final connectionType = ref.watch(connectionTypeProvider);
+  if (connectionType == .none) {
+    yield false;
+    return;
+  }
+
   final socketApi = await ref.watch(socketApiProvider(user).future);
   yield* socketApi.isConnected;
 }

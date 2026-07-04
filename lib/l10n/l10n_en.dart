@@ -972,4 +972,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String libraryIsEmpty(String library) {
     return '$library Library is empty!';
   }
+
+  @override
+  String get storage => 'Storage';
+
+  @override
+  String get internalStorage => 'Internal Storage';
+
+  @override
+  String get changeLocation => 'Change Location';
+
+  @override
+  String get resetToInternal => 'Reset to Internal';
+
+  @override
+  String get downloadLocation => 'Download Location';
+
+  @override
+  String get storageSubDirsNote =>
+      'Audiobooks and podcasts will be stored in separate subdirectories: \n- audiobooks/<itemId>/\n- podcasts/<podcastId>/\nThis ensures stable paths even if server metadata changes';
+
+  @override
+  String localSession(String time) {
+    return 'Local Session: $time';
+  }
+
+  @override
+  String get localSessionDeleteQ => 'Delete local session?';
+
+  @override
+  String get localSessionDeleteBody =>
+      'This progress may not be fully synced yet. Check playback history for confirmation.';
 }

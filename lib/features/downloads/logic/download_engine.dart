@@ -47,8 +47,8 @@ class DownloadEngine extends _$DownloadEngine {
     final coverToken = CancelToken();
     _coverTokens[item.libraryItemId] = coverToken;
     await _downloadCover(
-      itemTitle: item.episodeId != null ? item.libraryItemId : item.title,
-      itemId: item.libraryItemId,
+      libraryItemId: item.libraryItemId,
+      isPodcast: item.episodeId != null,
       user: user,
       cancelToken: coverToken,
     );
@@ -58,98 +58,125 @@ class DownloadEngine extends _$DownloadEngine {
       final initialTrack = current.tracks[i];
       if (initialTrack.status == .completed) continue;
 
-      final cancelToken = CancelToken();
-      trackTokens[i] = cancelToken;
+      bool success = false;
+      for (int attempt = 0; attempt <= 3; attempt++) {
+        final cancelToken = CancelToken();
+        trackTokens[i] = cancelToken;
 
-      final existingBytes = await _filesystem.existingBytes(
-        initialTrack.localPath,
-      );
-
-      final sink = await _filesystem.openAppendSink(initialTrack.localPath);
-
-      try {
-        final url = user.serverUrl
-            .resolve(
-              ApiRoutes.itemAudioFileDownload(
-                item.libraryItemId,
-                initialTrack.ino,
-              ),
-            )
-            .toString();
-
-        final res = await _dio.get<ResponseBody>(
-          url,
-          options: Options(
-            headers: {
-              'Authorization': 'Bearer $token',
-              if (existingBytes > 0) 'Range': 'bytes=$existingBytes-',
-            },
-            responseType: .stream,
-          ),
-          cancelToken: cancelToken,
+        final existingBytes = await _filesystem.existingBytes(
+          initialTrack.localPath,
         );
 
-        if (res.data == null) {
-          throw StateError(
-            'No response body for track ${initialTrack.audioTrack.index} of item ${item.title}',
-          );
-        }
+        final sink = await _filesystem.openAppendSink(initialTrack.localPath);
 
-        var received = existingBytes;
-        await for (final chunk in res.data!.stream) {
-          received += chunk.length;
-          sink.add(chunk);
+        try {
+          final url = user.serverUrl
+              .resolve(
+                ApiRoutes.itemAudioFileDownload(
+                  item.libraryItemId,
+                  initialTrack.ino,
+                ),
+              )
+              .toString();
+
+          final res = await _dio.get<ResponseBody>(
+            url,
+            options: Options(
+              headers: {
+                'Authorization': 'Bearer $token',
+                if (existingBytes > 0) 'Range': 'bytes=$existingBytes-',
+              },
+              responseType: .stream,
+            ),
+            cancelToken: cancelToken,
+          );
+
+          if (res.data == null) {
+            throw StateError(
+              'No response body for track ${initialTrack.audioTrack.index} of item ${item.title}',
+            );
+          }
+
+          var received = existingBytes;
+          int lastYieldedBytes = existingBytes;
+          const int throttleThreshold = 500 * 1024;
+          await for (final chunk in res.data!.stream) {
+            received += chunk.length;
+            sink.add(chunk);
+
+            if (!_tokens.containsKey(item.key)) {
+              await sink.close();
+              yield current.copyWith(status: .paused);
+              return;
+            }
+
+            if (received - lastYieldedBytes >= throttleThreshold) {
+              lastYieldedBytes = received;
+
+              final updatedTracks = [...current.tracks];
+              updatedTracks[i] = current.tracks[i].copyWith(
+                status: .downloading,
+                bytesReceived: received,
+              );
+              current = current.copyWith(tracks: updatedTracks);
+              yield current;
+            }
+          }
+
+          await sink.close();
 
           final updatedTracks = [...current.tracks];
           updatedTracks[i] = current.tracks[i].copyWith(
-            status: .downloading,
+            status: .completed,
             bytesReceived: received,
           );
           current = current.copyWith(tracks: updatedTracks);
           yield current;
-
-          if (!_tokens.containsKey(item.key)) {
-            await sink.close();
-            yield current.copyWith(status: .paused);
+          success = true;
+          break;
+        } on DioException catch (e, st) {
+          await sink.close();
+          if (CancelToken.isCancel(e) || attempt == 3) {
+            final error = AppError.from(e, st);
+            LogService.log(
+              error.message,
+              source: 'DownloadEngine',
+              level: .error,
+              originalError: error.originalError,
+              stackTrace: error.stackTrace,
+            );
+            if (CancelToken.isCancel(e)) {
+              _tokens.remove(item.key);
+              yield current.copyWith(status: .paused);
+              return;
+            }
+            _tokens.remove(item.key);
+            yield current.copyWith(status: .failed);
             return;
           }
-        }
-
-        await sink.close();
-
-        final updatedTracks = [...current.tracks];
-        updatedTracks[i] = current.tracks[i].copyWith(status: .completed);
-        current = current.copyWith(tracks: updatedTracks);
-        yield current;
-      } on DioException catch (e, st) {
-        final error = AppError.from(e, st);
-        LogService.log(
-          error.message,
-          source: 'DownloadEngine',
-          level: .error,
-          originalError: error.originalError,
-          stackTrace: error.stackTrace,
-        );
-        await sink.close();
-        if (CancelToken.isCancel(e)) {
+          LogService.log(
+            'Track retry $attempt for ${initialTrack.ino}',
+            source: 'DownloadEngine',
+          );
+          await Future.delayed(
+            Duration(milliseconds: [500, 1000, 2000][attempt]),
+          );
+        } catch (e, st) {
+          await sink.close();
+          final error = AppError.from(e, st);
+          LogService.log(
+            error.message,
+            source: 'DownloadEngine',
+            level: .error,
+            originalError: error.originalError,
+            stackTrace: error.stackTrace,
+          );
           _tokens.remove(item.key);
-          yield current.copyWith(status: .paused);
+          yield current.copyWith(status: .failed);
           return;
         }
-
-        _tokens.remove(item.key);
-        yield current.copyWith(status: .failed);
-        return;
-      } catch (e, st) {
-        final error = AppError.from(e, st);
-        LogService.log(
-          error.message,
-          source: 'DownloadEngine',
-          level: .error,
-          originalError: error.originalError,
-          stackTrace: error.stackTrace,
-        );
-        await sink.close();
+      }
+      if (!success) {
         _tokens.remove(item.key);
         yield current.copyWith(status: .failed);
         return;
@@ -162,20 +189,24 @@ class DownloadEngine extends _$DownloadEngine {
 
   Future<void> _downloadCover({
     required UserDomain user,
-    required String itemTitle,
-    required String itemId,
+    required String libraryItemId,
+    required bool isPodcast,
     required CancelToken cancelToken,
   }) async {
     try {
       final imageBytes = await ref.logApiCall(
         () => ref
             .read(itemApiProvider(user))
-            .getCover(libraryItemId: itemId, cancelToken: cancelToken),
+            .getCover(libraryItemId: libraryItemId, cancelToken: cancelToken),
         source: 'DownloadEngine',
-        logMessage: 'Failed to download cover for $itemTitle',
+        logMessage: 'Failed to download cover for $libraryItemId',
       );
       if (imageBytes != null) {
-        await _filesystem.saveCover(itemTitle, imageBytes);
+        if (isPodcast) {
+          await _filesystem.savePodcastCover(libraryItemId, imageBytes);
+        } else {
+          await _filesystem.saveAudiobookCover(libraryItemId, imageBytes);
+        }
       }
     } on AppError catch (_) {}
   }

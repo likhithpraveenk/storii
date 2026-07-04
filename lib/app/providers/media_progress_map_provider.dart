@@ -21,35 +21,38 @@ class MediaProgressMap extends _$MediaProgressMap {
     });
     await _progressSub?.cancel();
     await _userSub?.cancel();
+    try {
+      final user = await ref.watch(authenticatedUserProvider.future);
 
-    final user = await ref.watch(authenticatedUserProvider.future);
-
-    final updatedUser = await ref.read(meApiProvider(user)).getUser();
-    final map = {
-      for (var p in updatedUser.mediaProgress)
-        mediaItemIdKey(p.libraryItemId, p.episodeId): p,
-    };
-
-    final socket = await ref.watch(socketApiProvider(user).future);
-
-    _progressSub = socket.user.onProgressUpdate.listen((event) {
-      final current = state.value ?? {};
-      state = AsyncData({
-        ...current,
-        mediaItemIdKey(event.data.libraryItemId, event.data.episodeId):
-            event.data,
-      });
-    });
-
-    _userSub = socket.user.onUserUpdated.listen((updatedUser) {
-      final newMap = {
+      final updatedUser = await ref.read(meApiProvider(user)).getUser();
+      final map = {
         for (var p in updatedUser.mediaProgress)
           mediaItemIdKey(p.libraryItemId, p.episodeId): p,
       };
-      state = AsyncData(newMap);
-    });
 
-    return map;
+      final socket = await ref.watch(socketApiProvider(user).future);
+
+      _progressSub = socket.user.onProgressUpdate.listen((event) {
+        final current = state.value ?? {};
+        state = AsyncData({
+          ...current,
+          mediaItemIdKey(event.data.libraryItemId, event.data.episodeId):
+              event.data,
+        });
+      });
+
+      _userSub = socket.user.onUserUpdated.listen((updatedUser) {
+        final newMap = {
+          for (var p in updatedUser.mediaProgress)
+            mediaItemIdKey(p.libraryItemId, p.episodeId): p,
+        };
+        state = AsyncData(newMap);
+      });
+
+      return map;
+    } catch (_) {
+      return {};
+    }
   }
 }
 

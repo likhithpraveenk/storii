@@ -54,4 +54,4 @@ final class DownloadsFsHelperProvider
   }
 }
 
-String _$downloadsFsHelperHash() => r'f1087d43dfccea21f1f0ff337b03186842d73ba7';
+String _$downloadsFsHelperHash() => r'be3163f315f866a680010f26ce385ac3a692a79c';

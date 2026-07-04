@@ -3,7 +3,6 @@ import 'package:audio_service/audio_service.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/chapter.dart';
-import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/features/player/models/app_audio_source.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/audio_mime_helper.dart';
@@ -113,34 +112,6 @@ extension PlaybackSessionX on PlaybackSession {
       sources.add(source);
     }
     return sources;
-  }
-
-  Future<(Map<int, String>, String?)> resolveLocalPaths() async {
-    final tracks = audioTracks;
-    final trackPaths = <int, String>{};
-    if (tracks == null || tracks.isEmpty) return (trackPaths, null);
-
-    final coverPath = await DownloadsFilesystemHelper().coverPathIfExists(
-      episodeId != null ? libraryItemId : displayTitle ?? libraryItemId,
-    );
-    if (episodeId != null) {
-      final local = await DownloadsFilesystemHelper().trackPathIfExists(
-        filename: tracks.first.metadata?.filename ?? episodeId!,
-        itemTitle: libraryItem?.title ?? mediaMetadata.title ?? libraryItemId,
-      );
-      if (local != null) trackPaths[1] = local;
-    } else {
-      for (final track in tracks) {
-        final local = await DownloadsFilesystemHelper().trackPathIfExists(
-          filename: track.metadata?.filename ?? track.index.toString(),
-          itemTitle: libraryItem?.title ?? libraryItemId,
-        );
-
-        if (local != null) trackPaths[track.index] = local;
-      }
-    }
-
-    return (trackPaths, coverPath);
   }
 
   (int, Duration) getIndexAndOffset([Duration? position]) {

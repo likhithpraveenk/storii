@@ -117,6 +117,7 @@ class FullPlayer extends ConsumerWidget {
                 const SleepButton(),
                 const SpeedButton(),
                 const VolumeButton(),
+                // TODO: add bookmarks
               ],
             ),
             Text(

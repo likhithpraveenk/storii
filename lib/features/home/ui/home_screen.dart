@@ -44,9 +44,16 @@ class HomeScreen extends ConsumerWidget {
               );
             }
             final displayList =
-                shelves.where((s) => s.identity != null).toList()..sort(
-                  (a, b) => a.identity!.index.compareTo(b.identity!.index),
-                );
+                shelves
+                    .where(
+                      (s) => s.identity != null || s.id == 'offline_downloads',
+                    )
+                    .toList()
+                  ..sort(
+                    (a, b) => (a.identity?.index ?? -1).compareTo(
+                      b.identity?.index ?? -1,
+                    ),
+                  );
 
             return ListView.builder(
               padding: const .symmetric(vertical: 16),

@@ -1917,6 +1917,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{library} Library is empty!'**
   String libraryIsEmpty(String library);
+
+  /// No description provided for @storage.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage'**
+  String get storage;
+
+  /// No description provided for @internalStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal Storage'**
+  String get internalStorage;
+
+  /// No description provided for @changeLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Location'**
+  String get changeLocation;
+
+  /// No description provided for @resetToInternal.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to Internal'**
+  String get resetToInternal;
+
+  /// No description provided for @downloadLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Location'**
+  String get downloadLocation;
+
+  /// No description provided for @storageSubDirsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Audiobooks and podcasts will be stored in separate subdirectories: \n- audiobooks/<itemId>/\n- podcasts/<podcastId>/\nThis ensures stable paths even if server metadata changes'**
+  String get storageSubDirsNote;
+
+  /// No description provided for @localSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Local Session: {time}'**
+  String localSession(String time);
+
+  /// No description provided for @localSessionDeleteQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete local session?'**
+  String get localSessionDeleteQ;
+
+  /// No description provided for @localSessionDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This progress may not be fully synced yet. Check playback history for confirmation.'**
+  String get localSessionDeleteBody;
 }
 
 class _AppLocalizationsDelegate

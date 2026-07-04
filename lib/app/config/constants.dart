@@ -17,3 +17,6 @@ const githubFeatureLink = '$githubLink/issues/new?template=feature_request.md';
 const appIcon = 'assets/icons/icon.png';
 
 const downloadsDir = 'downloads';
+const audiobooksSubDir = 'audiobooks';
+const podcastsSubDir = 'podcasts';
+const coverName = 'cover.jpg';

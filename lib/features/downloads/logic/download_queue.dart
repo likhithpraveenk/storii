@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
@@ -7,6 +6,7 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/download_engine.dart';
 import 'package:storii/features/downloads/logic/download_extensions.dart';
+import 'package:storii/features/downloads/logic/download_migration.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
@@ -26,6 +26,10 @@ class DownloadQueue extends _$DownloadQueue {
 
   @override
   List<String> build() {
+    Future.microtask(
+      () => ref.read(downloadMigrationV2Provider.notifier).runIfNeeded(),
+    );
+
     final downloads = _store.getAll();
     final active =
         downloads.values
@@ -55,6 +59,7 @@ class DownloadQueue extends _$DownloadQueue {
 
       final user = await ref.read(authenticatedUserProvider.future);
       final existing = _store.getAll()[key];
+      final fs = ref.read(downloadsFsHelperProvider);
 
       final DownloadItem downloadItem;
 
@@ -63,6 +68,7 @@ class DownloadQueue extends _$DownloadQueue {
         downloadItem = await episode.toDownloadItem(
           userId: user.id,
           serverUrl: user.serverUrl,
+          fs: fs,
           itemTitle: item.title ?? libraryItemId,
           existing: existing,
         );
@@ -70,6 +76,7 @@ class DownloadQueue extends _$DownloadQueue {
         downloadItem = await item.toDownloadItem(
           userId: user.id,
           serverUrl: user.serverUrl,
+          fs: fs,
           existing: existing,
         );
       }
@@ -194,16 +201,30 @@ class DownloadQueue extends _$DownloadQueue {
     final item = downloads[key];
     if (item != null) {
       if (item.episodeId != null) {
-        for (final track in item.tracks) {
-          final file = File(track.localPath);
-          if (await file.exists()) await file.delete();
+        await ref
+            .read(downloadsFsHelperProvider)
+            .deletePodcastEpisode(item.libraryItemId, item.episodeId!);
+
+        final otherEpisodes = _store.getAll().values.where(
+          (d) =>
+              d.libraryItemId == item.libraryItemId &&
+              d.episodeId != item.episodeId &&
+              d.isComplete,
+        );
+        if (otherEpisodes.isEmpty) {
+          await ref
+              .read(downloadsFsHelperProvider)
+              .deletePodcastIfEmpty(item.libraryItemId);
+          await ref
+              .read(itemsCacheProvider.notifier)
+              .delete(item.libraryItemId);
         }
       } else {
-        await ref.read(downloadsFsHelperProvider).deleteItem(item.title);
+        await ref
+            .read(downloadsFsHelperProvider)
+            .deleteAudiobook(item.libraryItemId);
+        await ref.read(itemsCacheProvider.notifier).delete(id);
       }
-    }
-    if (episodeId == null) {
-      await ref.read(itemsCacheProvider.notifier).delete(id);
     }
     await _store.remove(key);
 

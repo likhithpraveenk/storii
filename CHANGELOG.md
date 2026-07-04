@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Refactored download storage to use safe ID-based paths with automatic migration from old paths
+
+### Fixed
+
+- Enable podcast episode downloads
+- Local session offline progress restoration
+- Show downloads in home screen when offline
+- Item detail provider cache fallback
+
 ## [v0.4.8] - 2026-07-01
 
 ### Fixed
@@ -361,6 +372,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dynamic theme support
 
 [Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.4.8...HEAD
+[refactor/downloads]: https://github.com/likhithpraveenk/storii/compare/v0.4.8...refactor/downloads
 [v0.4.8]: https://github.com/likhithpraveenk/storii/compare/v0.4.7...v0.4.8
 [v0.4.7]: https://github.com/likhithpraveenk/storii/compare/v0.4.6...v0.4.7
 [v0.4.6]: https://github.com/likhithpraveenk/storii/compare/v0.4.5...v0.4.6

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'session_sync_watcher.dart';
+part of 'download_migration.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,28 +9,28 @@ part of 'session_sync_watcher.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(SessionSyncWatcher)
-final sessionSyncWatcherProvider = SessionSyncWatcherProvider._();
+@ProviderFor(DownloadMigrationV2)
+final downloadMigrationV2Provider = DownloadMigrationV2Provider._();
 
-final class SessionSyncWatcherProvider
-    extends $NotifierProvider<SessionSyncWatcher, void> {
-  SessionSyncWatcherProvider._()
+final class DownloadMigrationV2Provider
+    extends $NotifierProvider<DownloadMigrationV2, void> {
+  DownloadMigrationV2Provider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'sessionSyncWatcherProvider',
+        name: r'downloadMigrationV2Provider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$sessionSyncWatcherHash();
+  String debugGetCreateSourceHash() => _$downloadMigrationV2Hash();
 
   @$internal
   @override
-  SessionSyncWatcher create() => SessionSyncWatcher();
+  DownloadMigrationV2 create() => DownloadMigrationV2();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(void value) {
@@ -41,10 +41,10 @@ final class SessionSyncWatcherProvider
   }
 }
 
-String _$sessionSyncWatcherHash() =>
-    r'c6566c5cc7908dd8ebeee9a9bc85e812b02fa150';
+String _$downloadMigrationV2Hash() =>
+    r'450db6d64ab8c4f4bcacf2203ce09a47d1b91fd9';
 
-abstract class _$SessionSyncWatcher extends $Notifier<void> {
+abstract class _$DownloadMigrationV2 extends $Notifier<void> {
   void build();
   @$mustCallSuper
   @override

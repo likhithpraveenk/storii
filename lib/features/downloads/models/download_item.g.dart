@@ -48,6 +48,9 @@ _DownloadItem _$DownloadItemFromJson(Map<String, dynamic> json) =>
       tracks: (json['tracks'] as List<dynamic>)
           .map((e) => DownloadTrack.fromJson(e as Map<String, dynamic>))
           .toList(),
+      mediaType:
+          $enumDecodeNullable(_$DownloadMediaTypeEnumMap, json['mediaType']) ??
+          DownloadMediaType.audiobook,
       status:
           $enumDecodeNullable(_$DownloadStatusEnumMap, json['status']) ??
           DownloadStatus.queued,
@@ -65,7 +68,13 @@ Map<String, dynamic> _$DownloadItemToJson(_DownloadItem instance) =>
       'title': instance.title,
       'author': instance.author,
       'tracks': instance.tracks.map((e) => e.toJson()).toList(),
+      'mediaType': _$DownloadMediaTypeEnumMap[instance.mediaType]!,
       'status': _$DownloadStatusEnumMap[instance.status]!,
       'startedAt': ?instance.startedAt?.toIso8601String(),
       'episodeId': ?instance.episodeId,
     };
+
+const _$DownloadMediaTypeEnumMap = {
+  DownloadMediaType.audiobook: 'audiobook',
+  DownloadMediaType.podcast: 'podcast',
+};
