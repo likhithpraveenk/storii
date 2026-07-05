@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.5.2] - 2026-07-05
+
 ### Fixed
 
 - Improve scrollbar and drag handling
@@ -392,7 +394,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.5.1...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.5.2...HEAD
+[v0.5.2]: https://github.com/likhithpraveenk/storii/compare/v0.5.1...v0.5.2
 [v0.5.1]: https://github.com/likhithpraveenk/storii/compare/v0.5.0...v0.5.1
 [v0.5.0]: https://github.com/likhithpraveenk/storii/compare/v0.4.8...v0.5.0
 [v0.4.8]: https://github.com/likhithpraveenk/storii/compare/v0.4.7...v0.4.8
