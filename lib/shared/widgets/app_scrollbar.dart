@@ -25,6 +25,10 @@ class _AppScrollbarState extends State<AppScrollbar>
     duration: const Duration(milliseconds: 300),
   );
 
+  late final Listenable _scrollAndAnim = Listenable.merge([
+    _anim,
+    widget.controller,
+  ]);
   Timer? _hideTimer;
 
   @override
@@ -41,15 +45,20 @@ class _AppScrollbarState extends State<AppScrollbar>
     super.dispose();
   }
 
-  void _handleScroll() {
-    if (!mounted) return;
-
-    _anim.forward();
+  void _startHideTimer() {
     _hideTimer?.cancel();
     _hideTimer = Timer(const Duration(seconds: 3), () => _anim.reverse());
   }
 
+  void _handleScroll() {
+    if (!mounted) return;
+    _anim.forward();
+    _startHideTimer();
+  }
+
   void _handleDrag(DragUpdateDetails details, double availableHeight) {
+    _hideTimer?.cancel();
+
     if (!widget.controller.hasClients ||
         !widget.controller.position.hasContentDimensions) {
       return;
@@ -77,8 +86,18 @@ class _AppScrollbarState extends State<AppScrollbar>
           children: [
             widget.child,
             AnimatedBuilder(
-              animation: Listenable.merge([_anim, widget.controller]),
-              builder: (context, _) {
+              animation: _scrollAndAnim,
+              child: GestureDetector(
+                onVerticalDragStart: (_) {
+                  HapticFeedback.mediumImpact();
+                  _hideTimer?.cancel();
+                },
+                onVerticalDragUpdate: (d) => _handleDrag(d, availableHeight),
+                onVerticalDragEnd: (_) => _startHideTimer(),
+                onVerticalDragCancel: _startHideTimer,
+                child: const _Thumb(width: thumbWidth, height: thumbHeight),
+              ),
+              builder: (context, child) {
                 final isReady =
                     widget.controller.hasClients &&
                     widget.controller.positions.length == 1 &&
@@ -94,17 +113,15 @@ class _AppScrollbarState extends State<AppScrollbar>
                 final scrollPercent = (pos.pixels / maxScroll).clamp(0.0, 1.0);
                 final topOffset = scrollPercent * availableHeight;
 
+                final slideDx =
+                    lerpDouble(thumbWidth, 0, _anim.value) ?? thumbWidth;
+
                 return Positioned(
                   top: topOffset,
-                  right: lerpDouble(-thumbWidth, 0, _anim.value),
-                  child: GestureDetector(
-                    onVerticalDragStart: (_) {
-                      HapticFeedback.mediumImpact();
-                      _handleScroll();
-                    },
-                    onVerticalDragUpdate: (d) =>
-                        _handleDrag(d, availableHeight),
-                    child: const _Thumb(width: thumbWidth, height: thumbHeight),
+                  right: 0,
+                  child: Transform.translate(
+                    offset: Offset(slideDx, 0),
+                    child: child,
                   ),
                 );
               },
