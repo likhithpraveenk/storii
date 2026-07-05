@@ -7,6 +7,7 @@ import 'package:abs_api/src/models/library.dart';
 import 'package:abs_api/src/models/library_items_request_params.dart';
 import 'package:abs_api/src/models/library_items_response.dart';
 import 'package:abs_api/src/models/library_response.dart';
+import 'package:abs_api/src/models/recent_episodes_response.dart';
 import 'package:abs_api/src/models/search_response.dart';
 import 'package:abs_api/src/models/series.dart';
 import 'package:abs_api/src/models/series_request_params.dart';
@@ -53,6 +54,19 @@ class LibraryApi {
       query: params?.toJson(),
     );
     return response.data;
+  }
+
+  Future<RecentEpisodesResponse> getRecentEpisodes(
+    String libraryId, {
+    int limit = 50,
+    int page = 0,
+  }) async {
+    final response = await api.request(
+      ApiRoutes.recentEpisodes(libraryId),
+      method: .get,
+      query: {'limit': limit, 'page': page},
+    );
+    return fromJson(response.data, RecentEpisodesResponse.fromJson);
   }
 
   Future<List<Shelf>> getPersonalized(String libraryId) async {

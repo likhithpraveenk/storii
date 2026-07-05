@@ -1,7 +1,4 @@
-import 'package:abs_api/src/models/audio_file.dart';
-import 'package:abs_api/src/models/audio_track.dart';
-import 'package:abs_api/src/models/json_converters.dart';
-import 'package:abs_api/src/models/podcast_episode_enclosure.dart';
+import 'package:abs_api/abs_api.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'podcast_episode.freezed.dart';
@@ -31,6 +28,7 @@ sealed class PodcastEpisode with _$PodcastEpisode {
     AudioTrack? audioTrack,
     Duration? duration,
     int? size,
+    PodcastMedia? podcast,
   }) = _PodcastEpisode;
 
   factory PodcastEpisode.fromJson(Map<String, dynamic> json) =>
