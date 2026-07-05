@@ -26,9 +26,6 @@ _LibraryItem _$LibraryItemFromJson(Map<String, dynamic> json) => _LibraryItem(
       : MediaProgress.fromJson(
           json['userMediaProgress'] as Map<String, dynamic>,
         ),
-  episodesDownloading: (json['episodesDownloading'] as List<dynamic>?)
-      ?.map((e) => PodcastEpisodeDownload.fromJson(e as Map<String, dynamic>))
-      .toList(),
   collapsedSeries: json['collapsedSeries'] == null
       ? null
       : Series.fromJson(json['collapsedSeries'] as Map<String, dynamic>),
@@ -50,9 +47,6 @@ Map<String, dynamic> _$LibraryItemToJson(_LibraryItem instance) =>
       'sequence': ?instance.sequence,
       'seriesSequence': ?instance.seriesSequence,
       'userMediaProgress': ?instance.userMediaProgress?.toJson(),
-      'episodesDownloading': ?instance.episodesDownloading
-          ?.map((e) => e.toJson())
-          .toList(),
       'collapsedSeries': ?instance.collapsedSeries?.toJson(),
       'recentEpisode': ?instance.recentEpisode?.toJson(),
     };

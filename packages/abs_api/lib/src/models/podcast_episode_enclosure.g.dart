@@ -9,15 +9,15 @@ part of 'podcast_episode_enclosure.dart';
 _PodcastEpisodeEnclosure _$PodcastEpisodeEnclosureFromJson(
   Map<String, dynamic> json,
 ) => _PodcastEpisodeEnclosure(
-  url: Uri.parse(json['url'] as String),
-  type: json['type'] as String,
-  length: json['length'] as String,
+  url: json['url'] as String?,
+  type: json['type'] as String?,
+  length: json['length'] as String?,
 );
 
 Map<String, dynamic> _$PodcastEpisodeEnclosureToJson(
   _PodcastEpisodeEnclosure instance,
 ) => <String, dynamic>{
-  'url': instance.url.toString(),
-  'type': instance.type,
-  'length': instance.length,
+  'url': ?instance.url,
+  'type': ?instance.type,
+  'length': ?instance.length,
 };

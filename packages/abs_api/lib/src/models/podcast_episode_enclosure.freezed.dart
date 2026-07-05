@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PodcastEpisodeEnclosure {
 
- Uri get url; String get type; String get length;
+ String? get url; String? get type; String? get length;
 /// Create a copy of PodcastEpisodeEnclosure
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $PodcastEpisodeEnclosureCopyWith<$Res>  {
   factory $PodcastEpisodeEnclosureCopyWith(PodcastEpisodeEnclosure value, $Res Function(PodcastEpisodeEnclosure) _then) = _$PodcastEpisodeEnclosureCopyWithImpl;
 @useResult
 $Res call({
- Uri url, String type, String length
+ String? url, String? type, String? length
 });
 
 
@@ -65,12 +65,12 @@ class _$PodcastEpisodeEnclosureCopyWithImpl<$Res>
 
 /// Create a copy of PodcastEpisodeEnclosure
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? url = null,Object? type = null,Object? length = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? url = freezed,Object? type = freezed,Object? length = freezed,}) {
   return _then(_self.copyWith(
-url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
-as Uri,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as String,length: null == length ? _self.length : length // ignore: cast_nullable_to_non_nullable
-as String,
+url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String?,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String?,length: freezed == length ? _self.length : length // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -152,7 +152,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Uri url,  String type,  String length)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? url,  String? type,  String? length)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PodcastEpisodeEnclosure() when $default != null:
 return $default(_that.url,_that.type,_that.length);case _:
@@ -173,7 +173,7 @@ return $default(_that.url,_that.type,_that.length);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Uri url,  String type,  String length)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? url,  String? type,  String? length)  $default,) {final _that = this;
 switch (_that) {
 case _PodcastEpisodeEnclosure():
 return $default(_that.url,_that.type,_that.length);}
@@ -190,7 +190,7 @@ return $default(_that.url,_that.type,_that.length);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Uri url,  String type,  String length)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? url,  String? type,  String? length)?  $default,) {final _that = this;
 switch (_that) {
 case _PodcastEpisodeEnclosure() when $default != null:
 return $default(_that.url,_that.type,_that.length);case _:
@@ -205,12 +205,12 @@ return $default(_that.url,_that.type,_that.length);case _:
 @JsonSerializable()
 
 class _PodcastEpisodeEnclosure implements PodcastEpisodeEnclosure {
-  const _PodcastEpisodeEnclosure({required this.url, required this.type, required this.length});
+  const _PodcastEpisodeEnclosure({this.url, this.type, this.length});
   factory _PodcastEpisodeEnclosure.fromJson(Map<String, dynamic> json) => _$PodcastEpisodeEnclosureFromJson(json);
 
-@override final  Uri url;
-@override final  String type;
-@override final  String length;
+@override final  String? url;
+@override final  String? type;
+@override final  String? length;
 
 /// Create a copy of PodcastEpisodeEnclosure
 /// with the given fields replaced by the non-null parameter values.
@@ -245,7 +245,7 @@ abstract mixin class _$PodcastEpisodeEnclosureCopyWith<$Res> implements $Podcast
   factory _$PodcastEpisodeEnclosureCopyWith(_PodcastEpisodeEnclosure value, $Res Function(_PodcastEpisodeEnclosure) _then) = __$PodcastEpisodeEnclosureCopyWithImpl;
 @override @useResult
 $Res call({
- Uri url, String type, String length
+ String? url, String? type, String? length
 });
 
 
@@ -262,12 +262,12 @@ class __$PodcastEpisodeEnclosureCopyWithImpl<$Res>
 
 /// Create a copy of PodcastEpisodeEnclosure
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? url = null,Object? type = null,Object? length = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? url = freezed,Object? type = freezed,Object? length = freezed,}) {
   return _then(_PodcastEpisodeEnclosure(
-url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
-as Uri,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as String,length: null == length ? _self.length : length // ignore: cast_nullable_to_non_nullable
-as String,
+url: freezed == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
+as String?,type: freezed == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String?,length: freezed == length ? _self.length : length // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
