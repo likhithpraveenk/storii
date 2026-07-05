@@ -93,6 +93,8 @@
   "library": "Library",
   "librarySettings": "Library Settings",
   "collections": "Collections",
+  "latest": "Latest",
+  "latestEpisodes": "Latest episodes",
   "all": "All",
   "id": "ID",
   "series": "Series",

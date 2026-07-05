@@ -43,6 +43,9 @@ _PodcastEpisode _$PodcastEpisodeFromJson(Map<String, dynamic> json) =>
         const DurationPreciseSecondsConverter().fromJson,
       ),
       size: (json['size'] as num?)?.toInt(),
+      podcast: json['podcast'] == null
+          ? null
+          : PodcastMedia.fromJson(json['podcast'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PodcastEpisodeToJson(_PodcastEpisode instance) =>
@@ -72,6 +75,7 @@ Map<String, dynamic> _$PodcastEpisodeToJson(_PodcastEpisode instance) =>
         const DurationPreciseSecondsConverter().toJson,
       ),
       'size': ?instance.size,
+      'podcast': ?instance.podcast?.toJson(),
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(

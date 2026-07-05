@@ -568,6 +568,18 @@ abstract class AppLocalizations {
   /// **'Collections'**
   String get collections;
 
+  /// No description provided for @latest.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest'**
+  String get latest;
+
+  /// No description provided for @latestEpisodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest episodes'**
+  String get latestEpisodes;
+
   /// No description provided for @all.
   ///
   /// In en, this message translates to:

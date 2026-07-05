@@ -46,7 +46,7 @@ class _AppScrollbarState extends State<AppScrollbar>
 
     _anim.forward();
     _hideTimer?.cancel();
-    _hideTimer = Timer(const Duration(seconds: 1), () => _anim.reverse());
+    _hideTimer = Timer(const Duration(seconds: 3), () => _anim.reverse());
   }
 
   void _handleDrag(DragUpdateDetails details, double availableHeight) {

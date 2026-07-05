@@ -129,6 +129,7 @@ Map<String, dynamic> _$UserSettingsToJson(
 
 const _$NavTargetEnumMap = {
   NavTarget.home: 'home',
+  NavTarget.latest: 'latest',
   NavTarget.library: 'library',
   NavTarget.series: 'series',
   NavTarget.downloads: 'downloads',

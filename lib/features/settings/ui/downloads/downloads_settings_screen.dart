@@ -9,7 +9,7 @@ class DownloadsSettingsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: const Icon(Icons.download_outlined),
+      leading: const Icon(Icons.file_download_outlined),
       trailing: const Icon(Icons.chevron_right),
       title: Text(l10n.downloads),
       onTap: () {

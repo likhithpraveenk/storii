@@ -25,13 +25,7 @@ class EpisodeList extends ConsumerWidget {
         const Divider(height: 0),
         ...List.generate(
           filtered.length,
-          (index) => Column(
-            mainAxisSize: .min,
-            children: [
-              EpisodeTile(episode: filtered[index]),
-              const Divider(height: 0),
-            ],
-          ),
+          (index) => EpisodeTile(episode: filtered[index]),
         ),
       ],
     );

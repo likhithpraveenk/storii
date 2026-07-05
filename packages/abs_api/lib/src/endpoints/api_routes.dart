@@ -28,6 +28,7 @@ class ApiRoutes {
   static const libraries = '/api/libraries';
   static const _libraryById = '/api/libraries/:id';
   static const _libraryItems = '/api/libraries/:id/items';
+  static const _recentEpisodes = '/api/libraries/:id/recent-episodes';
   static const _libraryPersonalized = '/api/libraries/:id/personalized';
   static const _series = '/api/libraries/:id/series';
   static const _librarySeriesById = '/api/libraries/:id/series/:seriesId';
@@ -36,6 +37,8 @@ class ApiRoutes {
 
   static String libraryById(String id) => _build(_libraryById, {'id': id});
   static String libraryItems(String id) => _build(_libraryItems, {'id': id});
+  static String recentEpisodes(String id) =>
+      _build(_recentEpisodes, {'id': id});
   static String libraryPersonalized(String id) =>
       _build(_libraryPersonalized, {'id': id});
   static String series(String id) => _build(_series, {'id': id});

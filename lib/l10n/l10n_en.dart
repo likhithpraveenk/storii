@@ -251,6 +251,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get collections => 'Collections';
 
   @override
+  String get latest => 'Latest';
+
+  @override
+  String get latestEpisodes => 'Latest episodes';
+
+  @override
   String get all => 'All';
 
   @override
