@@ -6,7 +6,7 @@ version: 0.5.2+63
 
 environment:
   sdk: ^3.12.1
-  flutter: ^3.44.1
+  flutter: 3.44.1
 
 dependencies:
   abs_api:
