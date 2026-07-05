@@ -11,24 +11,21 @@ List<NavTarget> effectiveNavTargets(Ref ref) {
 
   if (library?.mediaType == .podcast) {
     return userTargets.where((t) => t != .series && t != .authors).toList();
+  } else {
+    return userTargets.where((t) => t != .latest).toList();
   }
-
-  return userTargets;
 }
 
 @riverpod
 List<NavTarget> remainingNavTargets(Ref ref) {
   final effective = ref.watch(effectiveNavTargetsProvider);
   final library = ref.watch(currentLibraryProvider);
-  List<NavTarget> remaining;
-  if (library?.mediaType == .podcast) {
-    remaining = NavTarget.values
-        .where((t) => !effective.contains(t))
-        .where((t) => t != .series && t != .authors)
-        .toList();
-  } else {
-    remaining = NavTarget.values.where((t) => !effective.contains(t)).toList();
-  }
 
-  return remaining;
+  final remaining = NavTarget.values.where((t) => !effective.contains(t));
+
+  if (library?.mediaType == .podcast) {
+    return remaining.where((t) => t != .series && t != .authors).toList();
+  } else {
+    return remaining.where((t) => t != .latest).toList();
+  }
 }

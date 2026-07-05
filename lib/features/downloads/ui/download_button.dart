@@ -33,7 +33,7 @@ class ActiveDownloadsButton extends ConsumerWidget {
               extra: DownloadsScreenTab.active,
             );
           },
-          icon: const Icon(Icons.download_outlined),
+          icon: const Icon(Icons.file_download_outlined),
         ),
         if (activeCount > 0)
           Positioned(
@@ -83,7 +83,7 @@ class DownloadButton extends ConsumerWidget {
     return switch (item?.status) {
       null => IconButton(
         tooltip: l10n.download,
-        icon: const Icon(Icons.download_outlined),
+        icon: const Icon(Icons.file_download_outlined),
         onPressed: () => queue.enqueue(libraryItemId, episodeId),
       ),
       .queued => IconButton(

@@ -33,7 +33,7 @@ class ActionButtons extends ConsumerWidget {
               context,
               title: l10n.markAsComplete,
               actionLabel: l10n.confirm,
-              actionIcon: Icons.check,
+              actionIcon: Icons.beenhere_outlined,
               onTap: () async {
                 final success = await ref
                     .read(mediaProgressProvider(item.id).notifier)
@@ -51,7 +51,7 @@ class ActionButtons extends ConsumerWidget {
                 }
               },
             ),
-            icon: const Icon(Icons.check_rounded),
+            icon: const Icon(Icons.beenhere_outlined),
           ),
         if (mediaProgress != null)
           IconButton(

@@ -5,6 +5,7 @@ import 'package:storii/app/models/nav_item.dart';
 
 enum NavTarget {
   home,
+  latest,
   library,
   series,
   downloads,
@@ -18,6 +19,11 @@ enum NavTarget {
       icon: Icons.home_outlined,
       selectedIcon: Icons.home,
     ),
+    .latest => const NavItem(
+      route: AppRoute.latest,
+      icon: Icons.format_list_bulleted_outlined,
+      selectedIcon: Icons.format_list_bulleted,
+    ),
     .library => const NavItem(
       route: AppRoute.library,
       icon: Icons.library_books_outlined,
@@ -30,8 +36,8 @@ enum NavTarget {
     ),
     .downloads => const NavItem(
       route: AppRoute.downloads,
-      icon: Icons.download_outlined,
-      selectedIcon: Icons.download,
+      icon: Icons.file_download_outlined,
+      selectedIcon: Icons.file_download,
     ),
     .authors => const NavItem(
       route: AppRoute.authors,
@@ -52,6 +58,7 @@ enum NavTarget {
 
   int get shellIndex => switch (this) {
     .home => 0,
+    .latest => 7,
     .library => 1,
     .series => 2,
     .downloads => 3,
@@ -63,6 +70,7 @@ enum NavTarget {
   String get label {
     return switch (this) {
       .home => l10n.home,
+      .latest => l10n.latest,
       .library => l10n.library,
       .series => l10n.series,
       .downloads => l10n.downloads,
@@ -75,6 +83,7 @@ enum NavTarget {
 
 const defaultNavTargets = <NavTarget>[
   .home,
+  .latest,
   .library,
   .series,
   .authors,

@@ -50,7 +50,7 @@ final class EffectiveNavTargetsProvider
 }
 
 String _$effectiveNavTargetsHash() =>
-    r'd2c4c245a7a7b6fff799b7b1b0dc52dc0cd9adca';
+    r'5e35b54e3d123abb9a8d0ba3f9c16b94d4c9d5b4';
 
 @ProviderFor(remainingNavTargets)
 final remainingNavTargetsProvider = RemainingNavTargetsProvider._();
@@ -93,4 +93,4 @@ final class RemainingNavTargetsProvider
 }
 
 String _$remainingNavTargetsHash() =>
-    r'9cde4ab8bcbe5b2478ec516c7a1a192bb87323e4';
+    r'e1bb083b65f546156db217ec7518ef959281286d';

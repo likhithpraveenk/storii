@@ -13,6 +13,7 @@ import 'package:storii/features/collections/ui/collections_screen.dart';
 import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/features/home/ui/home_screen.dart';
 import 'package:storii/features/item/ui/item_detail_screen.dart';
+import 'package:storii/features/latest_episodes/ui/latest_episodes_screen.dart';
 import 'package:storii/features/library/ui/library_screen.dart';
 import 'package:storii/features/logs/ui/logs_screen.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
@@ -47,6 +48,7 @@ enum AppRoute {
   authorBooks('/authors/detail/books'),
   collections('/collections'),
   downloads('/downloads'),
+  latest('/latest'),
   more('/more'),
   settings('/more/settings'),
   appearanceSettings('/more/settings/appearance'),
@@ -248,6 +250,15 @@ final routerProvider = Provider<GoRouter>((ref) {
                     builder: (context, state) => const StatsScreen(),
                   ),
                 ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoute.latest.path,
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: LatestEpisodesScreen()),
               ),
             ],
           ),
