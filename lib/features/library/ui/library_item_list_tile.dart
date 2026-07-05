@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
@@ -21,7 +22,6 @@ class LibraryItemListTile extends StatelessWidget {
         : item.title ?? l10n.noTitle;
 
     final seriesNumBooks = item.collapsedSeries?.numBooks;
-    final progress = item.collapsedSeries != null ? 0 : item.progress;
 
     return ListTile(
       onTap: () {
@@ -72,11 +72,29 @@ class LibraryItemListTile extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 2),
-                if (progress > 0)
-                  Text(
-                    '${(progress * 100).toStringAsFixed(1)}%',
-                    style: theme.textTheme.labelSmall,
-                  ),
+                Consumer(
+                  builder: (context, ref, _) {
+                    final mediaProgress = ref
+                        .watch(
+                          mediaProgressFromMapProvider(
+                            item.id,
+                            item.recentEpisode?.id,
+                          ),
+                        )
+                        .value;
+
+                    final progress = item.collapsedSeries != null
+                        ? item.collapsedSeries!.finishRatio
+                        : mediaProgress?.progress ?? item.progress;
+
+                    return progress > 0
+                        ? Text(
+                            '${(progress * 100).toStringAsFixed(1)}%',
+                            style: theme.textTheme.labelSmall,
+                          )
+                        : const SizedBox.shrink();
+                  },
+                ),
               ],
             ),
           ),
