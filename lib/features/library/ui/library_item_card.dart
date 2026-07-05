@@ -22,22 +22,11 @@ class LibraryItemCard extends ConsumerWidget {
     final sequence = item.seriesSequence;
     final scheme = Theme.of(context).colorScheme;
     final displayMode = ref.watch(libraryDisplayModeProvider);
-
-    final isDownloaded =
-        ref.watch(downloadItemProvider(item.id))?.status == .completed;
-
     final stackTitle = displayMode == .compact;
     final showTitle = displayMode != .coverOnly;
 
     final seriesNumBooks = item.collapsedSeries?.numBooks;
     final episodeNumber = item.recentEpisode?.episodeNumber;
-    final mediaProgress = ref
-        .watch(mediaProgressFromMapProvider(item.id, item.recentEpisode?.id))
-        .value;
-
-    final progress = item.collapsedSeries != null
-        ? item.collapsedSeries!.finishRatio
-        : mediaProgress?.progress ?? item.progress;
 
     return InkWell(
       onTap: () {
@@ -47,10 +36,7 @@ class LibraryItemCard extends ConsumerWidget {
             extra: item.collapsedSeries!.id,
           );
         } else {
-          context.push(
-            AppRoute.itemDetail.path,
-            extra: {'id': item.id, 'isDownloaded': isDownloaded},
-          );
+          context.push(AppRoute.itemDetail.path, extra: {'id': item.id});
         }
       },
       splashFactory: NoSplash.splashFactory,
@@ -64,7 +50,7 @@ class LibraryItemCard extends ConsumerWidget {
             child: ClipRRect(
               borderRadius: .circular(kRadius),
               child: Stack(
-                fit: StackFit.expand,
+                fit: .expand,
                 children: [
                   ImageWidget(
                     id: item.id,
@@ -79,27 +65,43 @@ class LibraryItemCard extends ConsumerWidget {
                         ? TitleWidget(item: item, inStack: true)
                         : const SizedBox.shrink(),
                   ),
-                  if (progress > 0)
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: SizedBox(
-                        height: 3,
-                        child: LinearProgressIndicator(
-                          value: progress,
-                          borderRadius: .circular(kRadius),
-                          backgroundColor: scheme.surface.withValues(
-                            alpha: 0.2,
-                          ),
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            mediaProgress?.isFinished == true ||
-                                    item.isFinished ||
-                                    progress == 1
-                                ? appGreenColor
-                                : appRedColor,
-                          ),
-                        ),
+                  Align(
+                    alignment: .bottomCenter,
+                    child: SizedBox(
+                      height: 3,
+                      child: Consumer(
+                        builder: (context, ref, _) {
+                          final mediaProgress = ref
+                              .watch(
+                                mediaProgressFromMapProvider(
+                                  item.id,
+                                  item.recentEpisode?.id,
+                                ),
+                              )
+                              .value;
+
+                          final progress = item.collapsedSeries != null
+                              ? item.collapsedSeries!.finishRatio
+                              : mediaProgress?.progress ?? item.progress;
+
+                          return LinearProgressIndicator(
+                            value: progress,
+                            borderRadius: .circular(kRadius),
+                            backgroundColor: scheme.surface.withValues(
+                              alpha: 0.2,
+                            ),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              mediaProgress?.isFinished == true ||
+                                      item.isFinished ||
+                                      progress == 1
+                                  ? appGreenColor
+                                  : appRedColor,
+                            ),
+                          );
+                        },
                       ),
                     ),
+                  ),
                   if (sequence != null)
                     Positioned(
                       top: 4,
@@ -118,12 +120,21 @@ class LibraryItemCard extends ConsumerWidget {
                       right: 4,
                       child: StackBadge(episodeNumber),
                     ),
-                  if (isDownloaded)
-                    const Positioned(
-                      bottom: 6,
-                      left: 6,
-                      child: DownloadBadge(),
-                    ),
+                  Consumer(
+                    builder: (context, ref, _) {
+                      final isDownloaded =
+                          ref.watch(downloadItemProvider(item.id))?.status ==
+                          .completed;
+                      if (isDownloaded) {
+                        return const Positioned(
+                          bottom: 6,
+                          left: 6,
+                          child: DownloadBadge(),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
                 ],
               ),
             ),
