@@ -19,7 +19,7 @@ sealed class LibraryItem with _$LibraryItem {
     String? sequence,
     String? seriesSequence,
     MediaProgress? userMediaProgress,
-    List<PodcastEpisodeDownload>? episodesDownloading,
+    // List<PodcastEpisodeDownload>? episodesDownloading,
     Series? collapsedSeries,
     PodcastEpisode? recentEpisode,
   }) = _LibraryItem;
