@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Improve scrollbar and drag handling
+- Podcast enclosure model updated
+
 ## [v0.5.1] - 2026-07-05
 
 ### Added
