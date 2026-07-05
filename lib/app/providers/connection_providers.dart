@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/api_providers.dart';
@@ -14,8 +15,10 @@ Stream<bool> socketStatus(Ref ref) async* {
     return;
   }
 
-  final connectionType = ref.watch(connectionTypeProvider);
-  if (connectionType == .none) {
+  final connectionNone = ref.watch(
+    connectionTypeProvider.select((c) => c == .none),
+  );
+  if (connectionNone) {
     yield false;
     return;
   }
