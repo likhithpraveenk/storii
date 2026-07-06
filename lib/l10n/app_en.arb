@@ -261,6 +261,7 @@
   "onlyShowSelected": "Only show when selected",
   "alwaysHide": "Always hide",
   "syncInterval": "Sync Interval",
+  "syncIntervalSubtitle": "Controls server sync frequency, overriding the 1-minute mobile data restriction if set higher",
   "emptyMsg": "So empty...",
   "history": "History",
   "today": "Today",

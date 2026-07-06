@@ -625,6 +625,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get syncInterval => 'Sync Interval';
 
   @override
+  String get syncIntervalSubtitle =>
+      'Controls server sync frequency, overriding the 1-minute mobile data restriction if set higher';
+
+  @override
   String get emptyMsg => 'So empty...';
 
   @override

@@ -1252,6 +1252,12 @@ abstract class AppLocalizations {
   /// **'Sync Interval'**
   String get syncInterval;
 
+  /// No description provided for @syncIntervalSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Controls server sync frequency, overriding the 1-minute mobile data restriction if set higher'**
+  String get syncIntervalSubtitle;
+
   /// No description provided for @emptyMsg.
   ///
   /// In en, this message translates to:
