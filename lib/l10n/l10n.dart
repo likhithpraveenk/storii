@@ -1522,6 +1522,42 @@ abstract class AppLocalizations {
   /// **'How much audio to keep ahead of playback. Higher values reduce interruptions on slow connections'**
   String get audioBufferDurationDescription;
 
+  /// No description provided for @fadeOnSleep.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio fade-out'**
+  String get fadeOnSleep;
+
+  /// No description provided for @fadeOnSleepSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gradually lowers the volume before the sleep timer ends'**
+  String get fadeOnSleepSubtitle;
+
+  /// No description provided for @fadeOnSleepDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Fade window'**
+  String get fadeOnSleepDuration;
+
+  /// No description provided for @fadeOnSleepDurationDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Sets how long the fade-out effect lasts before the timer ends'**
+  String get fadeOnSleepDurationDescription;
+
+  /// No description provided for @fadeOnSleepMinVolume.
+  ///
+  /// In en, this message translates to:
+  /// **'Volume floor'**
+  String get fadeOnSleepMinVolume;
+
+  /// No description provided for @fadeOnSleepMinVolumeDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Defines the lowest audio level reached during the fade'**
+  String get fadeOnSleepMinVolumeDescription;
+
   /// No description provided for @avoidMobileData.
   ///
   /// In en, this message translates to:

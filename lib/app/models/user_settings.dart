@@ -28,7 +28,7 @@ class DefaultUserSettings {
   static const downloadOnUnmeteredOnly = false;
   static const showChapterPositionInHistory = false;
   static const useBinaryBytes = true;
-  static const minBufferDuration = Duration(seconds: 15);
+  static const minBufferDuration = Duration(seconds: 30);
   static const marqueeSpeed = 40.0;
   static const rememberSort = true;
   static const librarySortAscending = true;
@@ -38,6 +38,9 @@ class DefaultUserSettings {
   static const PodcastSort podcastSortValue = .title;
   static const AuthorSort authorSortValue = .name;
   static const SeriesSort seriesSortValue = .name;
+  static const fadeOnSleep = true;
+  static const fadeOnSleepDuration = Duration(minutes: 1);
+  static const fadeOnSleepMinVolume = 0.2;
 }
 
 @freezed
@@ -108,6 +111,14 @@ sealed class UserSettings with _$UserSettings {
     @Default(DefaultUserSettings.authorSortValue) AuthorSort authorSortValue,
 
     @Default(DefaultUserSettings.seriesSortValue) SeriesSort seriesSortValue,
+
+    @Default(DefaultUserSettings.fadeOnSleep) bool fadeOnSleep,
+
+    @Default(DefaultUserSettings.fadeOnSleepDuration)
+    Duration fadeOnSleepDuration,
+
+    @Default(DefaultUserSettings.fadeOnSleepMinVolume)
+    double fadeOnSleepMinVolume,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

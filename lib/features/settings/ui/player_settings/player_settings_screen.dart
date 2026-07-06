@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/player_settings/audio_buffer_tile.dart';
+import 'package:storii/features/settings/ui/player_settings/fade_on_sleep_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/skip_tiles.dart';
 import 'package:storii/features/settings/ui/player_settings/speed_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/sync_interval_tile.dart';
@@ -46,6 +47,7 @@ class PlayerSettingsScreen extends ConsumerWidget {
           SyncIntervalTile(),
           SpeedTile(),
           AudioBufferTile(),
+          FadeOnSleepTile(),
         ],
       ),
     );

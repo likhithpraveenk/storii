@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Scrollbar for episode list
+- Sleep timer audio fade-out and customization options
 
 ### Fixed
 

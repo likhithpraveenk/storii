@@ -770,6 +770,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'How much audio to keep ahead of playback. Higher values reduce interruptions on slow connections';
 
   @override
+  String get fadeOnSleep => 'Audio fade-out';
+
+  @override
+  String get fadeOnSleepSubtitle =>
+      'Gradually lowers the volume before the sleep timer ends';
+
+  @override
+  String get fadeOnSleepDuration => 'Fade window';
+
+  @override
+  String get fadeOnSleepDurationDescription =>
+      'Sets how long the fade-out effect lasts before the timer ends';
+
+  @override
+  String get fadeOnSleepMinVolume => 'Volume floor';
+
+  @override
+  String get fadeOnSleepMinVolumeDescription =>
+      'Defines the lowest audio level reached during the fade';
+
+  @override
   String get avoidMobileData => 'Avoid mobile data';
 
   @override

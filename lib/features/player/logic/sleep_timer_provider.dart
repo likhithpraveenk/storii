@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 
@@ -12,6 +14,12 @@ class SleepTimer extends _$SleepTimer {
   Timer? _ticker;
   static const _tick = Duration(seconds: 1);
   static const _max = Duration(hours: 12);
+
+  Duration get fadeDuration => ref.read(fadeOnSleepDurationProvider);
+  double get minVolume => ref.read(fadeOnSleepMinVolumeProvider);
+  bool get canFade => ref.read(fadeOnSleepProvider);
+
+  double? _initialVolume;
 
   @override
   Duration? build() {
@@ -31,6 +39,7 @@ class SleepTimer extends _$SleepTimer {
       cancel();
       return;
     }
+    _initialVolume = null;
     state = clamped;
     _ticker ??= Timer.periodic(_tick, (_) => _onTick());
   }
@@ -41,6 +50,7 @@ class SleepTimer extends _$SleepTimer {
   }
 
   void cancel() {
+    _restoreVolume();
     _cancelTicker();
     state = null;
   }
@@ -56,20 +66,46 @@ class SleepTimer extends _$SleepTimer {
 
     final next = current - _tick;
     if (next <= Duration.zero) {
-      cancel();
       _stopAudio();
     } else {
       state = next;
+      if (canFade) _handleFade(next);
     }
+  }
+
+  void _handleFade(Duration remaining) {
+    if (remaining > fadeDuration) {
+      _initialVolume = null;
+      return;
+    }
+
+    _initialVolume ??= ref.read(volumeProvider).value ?? 1.0;
+
+    final startVol = _initialVolume!;
+    if (startVol <= minVolume) return;
+
+    final ratio = remaining.inSeconds / fadeDuration.inSeconds;
+    final curveFactor = math.pow(ratio, 4).toDouble(); // quartic curve
+    final targetVolume = minVolume + (startVol - minVolume) * curveFactor;
+
+    audioHandler.setVolume(targetVolume.clamp(minVolume, startVol));
   }
 
   Future<void> _stopAudio() async {
     try {
       log('timer end. calling audio handler stop');
-      // TODO: add audio fade-out 30sec
       await audioHandler.stop();
     } catch (e, st) {
       log('audioHandler.stop() failed: $e\n$st', name: 'SleepTimer');
+    } finally {
+      cancel();
+    }
+  }
+
+  void _restoreVolume() {
+    if (_initialVolume != null) {
+      audioHandler.setVolume(_initialVolume!);
+      _initialVolume = null;
     }
   }
 

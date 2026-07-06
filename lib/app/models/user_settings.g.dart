@@ -90,6 +90,13 @@ _UserSettings _$UserSettingsFromJson(
   seriesSortValue:
       $enumDecodeNullable(_$SeriesSortEnumMap, json['seriesSortValue']) ??
       DefaultUserSettings.seriesSortValue,
+  fadeOnSleep: json['fadeOnSleep'] as bool? ?? DefaultUserSettings.fadeOnSleep,
+  fadeOnSleepDuration: json['fadeOnSleepDuration'] == null
+      ? DefaultUserSettings.fadeOnSleepDuration
+      : Duration(microseconds: (json['fadeOnSleepDuration'] as num).toInt()),
+  fadeOnSleepMinVolume:
+      (json['fadeOnSleepMinVolume'] as num?)?.toDouble() ??
+      DefaultUserSettings.fadeOnSleepMinVolume,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -125,6 +132,9 @@ Map<String, dynamic> _$UserSettingsToJson(
   'podcastSortValue': _$PodcastSortEnumMap[instance.podcastSortValue]!,
   'authorSortValue': _$AuthorSortEnumMap[instance.authorSortValue]!,
   'seriesSortValue': _$SeriesSortEnumMap[instance.seriesSortValue]!,
+  'fadeOnSleep': instance.fadeOnSleep,
+  'fadeOnSleepDuration': instance.fadeOnSleepDuration.inMicroseconds,
+  'fadeOnSleepMinVolume': instance.fadeOnSleepMinVolume,
 };
 
 const _$NavTargetEnumMap = {
