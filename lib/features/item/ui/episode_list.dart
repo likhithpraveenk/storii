@@ -5,7 +5,6 @@ import 'package:storii/features/item/logic/episode_filter_provider.dart';
 import 'package:storii/features/item/ui/episode_list_header.dart';
 import 'package:storii/features/item/ui/episode_tile.dart';
 import 'package:storii/shared/helpers/dummy_models.dart';
-import 'package:storii/shared/widgets/app_scrollbar.dart';
 
 class EpisodeList extends ConsumerStatefulWidget {
   const EpisodeList({super.key, required this.episodes, required this.itemId});
@@ -34,24 +33,22 @@ class _EpisodeListState extends ConsumerState<EpisodeList> {
       ),
     );
 
-    return Column(
-      children: [
-        EpisodeListHeader(
-          episodeCount: filtered.length,
-          totalCount: widget.episodes.length,
+    return SliverMainAxisGroup(
+      slivers: [
+        SliverToBoxAdapter(
+          child: EpisodeListHeader(
+            episodeCount: filtered.length,
+            totalCount: widget.episodes.length,
+          ),
         ),
-        const Divider(height: 0),
-        SizedBox(
-          height: MediaQuery.sizeOf(context).height * 0.8,
-          child: AppScrollbar(
-            controller: _scrollController,
-            child: ListView.builder(
-              controller: _scrollController,
-              padding: const .only(bottom: 100),
-              itemCount: filtered.length,
-              itemBuilder: (context, index) =>
-                  EpisodeTile(episode: filtered[index]),
-              prototypeItem: EpisodeTile(episode: dummyEpisode),
+        const SliverToBoxAdapter(child: Divider(height: 0)),
+        SliverPadding(
+          padding: const .only(bottom: 200),
+          sliver: SliverPrototypeExtentList(
+            prototypeItem: EpisodeTile(episode: dummyEpisode),
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => EpisodeTile(episode: filtered[index]),
+              childCount: filtered.length,
             ),
           ),
         ),
