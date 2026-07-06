@@ -5,8 +5,8 @@ import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/item/ui/current_session_tile.dart';
 import 'package:storii/features/item/ui/episode_action_buttons.dart';
+import 'package:storii/features/item/ui/local_session_icon.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -20,10 +20,13 @@ class EpisodeTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final session = ref.watch(sessionProvider);
-    final isActive =
-        session?.libraryItemId == episode.libraryItemId &&
-        session?.episodeId == episode.id;
+    final isActive = ref.watch(
+      sessionProvider.select(
+        (s) =>
+            s?.libraryItemId == episode.libraryItemId &&
+            s?.episodeId == episode.id,
+      ),
+    );
     final progress = ref
         .watch(mediaProgressFromMapProvider(episode.libraryItemId, episode.id))
         .value;
@@ -52,9 +55,10 @@ class EpisodeTile extends ConsumerWidget {
             : isCompleted
             ? completedColor
             : null,
-        border: isActive
-            ? Border.all(color: scheme.primary.withValues(alpha: 0.3), width: 1)
-            : null,
+        border: Border.all(
+          color: scheme.primary.withValues(alpha: isActive ? 0.3 : 0),
+          width: 1,
+        ),
       ),
       child: Column(
         crossAxisAlignment: .stretch,
@@ -112,14 +116,15 @@ class EpisodeTile extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: 4),
-          CurrentSessionTile(
-            itemId: episode.libraryItemId,
-            episodeId: episode.id,
-          ),
           Row(
             children: [
-              const SizedBox(width: 48),
+              SizedBox(
+                width: 48,
+                child: LocalSessionIcon(
+                  itemId: episode.libraryItemId,
+                  episodeId: episode.id,
+                ),
+              ),
               Expanded(
                 child: EpisodeActionButtons(
                   episode: episode,

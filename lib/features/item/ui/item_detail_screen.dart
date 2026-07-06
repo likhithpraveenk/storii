@@ -9,7 +9,6 @@ import 'package:storii/features/item/ui/action_buttons.dart';
 import 'package:storii/features/item/ui/audio_tracks_sheet.dart';
 import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/item/ui/cover_image_title.dart';
-import 'package:storii/features/item/ui/current_session_tile.dart';
 import 'package:storii/features/item/ui/description_with_chips.dart';
 import 'package:storii/features/item/ui/episode_list.dart';
 import 'package:storii/features/item/ui/metadata_wrap.dart';
@@ -17,19 +16,33 @@ import 'package:storii/features/item/ui/play_button.dart';
 import 'package:storii/features/item/ui/progress_bar.dart';
 import 'package:storii/features/item/ui/series_chips_list.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
-class ItemDetailScreen extends ConsumerWidget {
+class ItemDetailScreen extends ConsumerStatefulWidget {
   final String id;
 
   const ItemDetailScreen({super.key, required this.id});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ItemDetailScreen> createState() => _ItemDetailScreenState();
+}
+
+class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
+  late final _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    final itemAsync = ref.watch(itemDetailProvider(id));
+    final itemAsync = ref.watch(itemDetailProvider(widget.id));
 
     return Scaffold(
       body: Stack(
@@ -38,85 +51,95 @@ class ItemDetailScreen extends ConsumerWidget {
             loading: () => const Center(child: RandomWaveform()),
             error: (e, s) => ErrorRetryWidget(
               e.toString(),
-              onRetry: () => ref.invalidate(itemDetailProvider(id)),
+              onRetry: () => ref.invalidate(itemDetailProvider(widget.id)),
             ),
             data: (item) => RefreshIndicator(
               onRefresh: () async {
-                ref.invalidate(mediaProgressProvider(id));
-                return await ref.refresh(itemDetailProvider(id).future);
+                ref.invalidate(mediaProgressProvider(widget.id));
+                return await ref.refresh(itemDetailProvider(widget.id).future);
               },
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: .stretch,
-                  children: [
-                    Padding(
-                      padding: const .fromLTRB(16, 16, 16, 0),
+              child: AppScrollbar(
+                controller: _scrollController,
+                child: CustomScrollView(
+                  controller: _scrollController,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  slivers: [
+                    SliverToBoxAdapter(
                       child: Column(
                         crossAxisAlignment: .stretch,
                         children: [
-                          CoverImageTitle(item),
+                          Padding(
+                            padding: const .fromLTRB(16, 16, 16, 0),
+                            child: Column(
+                              crossAxisAlignment: .stretch,
+                              children: [
+                                CoverImageTitle(item),
+                                const SizedBox(height: 8),
+                                PlayButton(item),
+                                if (item.isBook) ProgressBar(itemId: item.id),
+                                if (item.isBook) ActionButtons(item: item),
+                              ],
+                            ),
+                          ),
+                          if (item.isBook) SeriesChipsList(item.series),
                           const SizedBox(height: 8),
-                          PlayButton(item),
-                          if (item.isBook) ProgressBar(itemId: item.id),
-                          if (item.isBook) CurrentSessionTile(itemId: item.id),
-                          if (item.isBook) ActionButtons(item: item),
+                          ExpandableDescriptionWithChips(
+                            data: item.description ?? l10n.noDescription,
+                            collapsedHeight: 60,
+                            genres: item.genres,
+                            tags: item.tags,
+                          ),
+                          const SizedBox(height: 8),
+                          MetadataWrap(item),
+                          const SizedBox(height: 16),
+                          const Divider(height: 0),
+                          if (item.isBook)
+                            ListTile(
+                              leading: const Icon(Icons.list_rounded),
+                              title: Text(l10n.chapters),
+                              trailing: Text(
+                                '${item.chapters.length}',
+                                style: textTheme.titleSmall?.copyWith(
+                                  fontStyle: .italic,
+                                ),
+                              ),
+                              onTap: () {
+                                showChapterListSheet(
+                                  context,
+                                  chapters: item.chapters,
+                                  itemId: item.id,
+                                  itemTitle: item.title ?? l10n.noTitle,
+                                );
+                              },
+                            ),
+                          if (item.isBook)
+                            ListTile(
+                              leading: const Icon(Icons.audio_file_rounded),
+                              title: Text(l10n.tracks),
+                              trailing: Text(
+                                '${item.tracks.length}',
+                                style: textTheme.titleSmall?.copyWith(
+                                  fontStyle: .italic,
+                                ),
+                              ),
+                              onTap: () {
+                                showAudioTracksSheet(
+                                  context,
+                                  tracks: item.tracks,
+                                  audioFiles: item.audioFiles,
+                                  useBinaryBytes: ref.read(
+                                    useBinaryBytesProvider,
+                                  ),
+                                );
+                              },
+                            ),
                         ],
                       ),
                     ),
-                    if (item.isBook) SeriesChipsList(item.series),
-                    const SizedBox(height: 8),
-                    ExpandableDescriptionWithChips(
-                      data: item.description ?? l10n.noDescription,
-                      collapsedHeight: 60,
-                      genres: item.genres,
-                      tags: item.tags,
-                    ),
-                    const SizedBox(height: 8),
-                    MetadataWrap(item),
-                    const SizedBox(height: 16),
-                    const Divider(height: 0),
-                    if (item.isBook)
-                      ListTile(
-                        leading: const Icon(Icons.list_rounded),
-                        title: Text(l10n.chapters),
-                        trailing: Text(
-                          '${item.chapters.length}',
-                          style: textTheme.titleSmall?.copyWith(
-                            fontStyle: .italic,
-                          ),
-                        ),
-                        onTap: () {
-                          showChapterListSheet(
-                            context,
-                            chapters: item.chapters,
-                            itemId: item.id,
-                            itemTitle: item.title ?? l10n.noTitle,
-                          );
-                        },
-                      ),
-                    if (item.isBook)
-                      ListTile(
-                        leading: const Icon(Icons.audio_file_rounded),
-                        title: Text(l10n.tracks),
-                        trailing: Text(
-                          '${item.tracks.length}',
-                          style: textTheme.titleSmall?.copyWith(
-                            fontStyle: .italic,
-                          ),
-                        ),
-                        onTap: () {
-                          showAudioTracksSheet(
-                            context,
-                            tracks: item.tracks,
-                            audioFiles: item.audioFiles,
-                            useBinaryBytes: ref.read(useBinaryBytesProvider),
-                          );
-                        },
-                      ),
                     if (item.isPodcast)
                       EpisodeList(itemId: item.id, episodes: item.episodes),
-                    const SizedBox(height: 200),
+                    if (item.isBook)
+                      const SliverToBoxAdapter(child: SizedBox(height: 200)),
                   ],
                 ),
               ),

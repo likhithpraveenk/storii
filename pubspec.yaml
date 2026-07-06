@@ -13,7 +13,7 @@ dependencies:
     path: packages/abs_api
   app_links: ^7.1.2
   audio_service: ^0.18.18
-  audio_session: ^0.2.3
+  audio_session: ^0.2.4
   cached_network_image: ^3.4.1
   connectivity_plus: ^7.1.1
   crypto: ^3.0.7

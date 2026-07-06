@@ -136,15 +136,18 @@ class _EpisodePlayButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final session = ref.watch(sessionProvider);
-    final isCurrentEpisode =
-        session?.libraryItemId == episode.libraryItemId &&
-        session?.episodeId == episode.id;
-    final isPlaying = isCurrentEpisode && ref.watch(isPlayingProvider);
+    final isActive = ref.watch(
+      sessionProvider.select(
+        (s) =>
+            s?.libraryItemId == episode.libraryItemId &&
+            s?.episodeId == episode.id,
+      ),
+    );
+    final isPlaying = isActive && ref.watch(isPlayingProvider);
 
     return IconButton(
       onPressed: () {
-        if (isCurrentEpisode) {
+        if (isActive) {
           audioHandler.togglePlay();
           return;
         }

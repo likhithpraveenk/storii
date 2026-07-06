@@ -79,56 +79,69 @@ class _AppScrollbarState extends State<AppScrollbar>
     const thumbHeight = 48.0;
     const thumbWidth = 30.0;
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final availableHeight = constraints.maxHeight - thumbHeight;
-        return Stack(
-          children: [
-            widget.child,
-            AnimatedBuilder(
-              animation: _scrollAndAnim,
-              child: GestureDetector(
-                onVerticalDragStart: (_) {
-                  HapticFeedback.mediumImpact();
-                  _hideTimer?.cancel();
-                },
-                onVerticalDragUpdate: (d) => _handleDrag(d, availableHeight),
-                onVerticalDragEnd: (_) => _startHideTimer(),
-                onVerticalDragCancel: _startHideTimer,
-                child: const _Thumb(width: thumbWidth, height: thumbHeight),
-              ),
-              builder: (context, child) {
-                final isReady =
-                    widget.controller.hasClients &&
-                    widget.controller.positions.length == 1 &&
-                    widget.controller.position.hasContentDimensions;
+    return Stack(
+      children: [
+        widget.child,
+        SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final availableHeight = constraints.maxHeight - thumbHeight;
+              return Stack(
+                children: [
+                  AnimatedBuilder(
+                    animation: _scrollAndAnim,
+                    child: GestureDetector(
+                      onVerticalDragStart: (_) {
+                        HapticFeedback.mediumImpact();
+                        _hideTimer?.cancel();
+                      },
+                      onVerticalDragUpdate: (d) =>
+                          _handleDrag(d, availableHeight),
+                      onVerticalDragEnd: (_) => _startHideTimer(),
+                      onVerticalDragCancel: _startHideTimer,
+                      child: const _Thumb(
+                        width: thumbWidth,
+                        height: thumbHeight,
+                      ),
+                    ),
+                    builder: (context, child) {
+                      final isReady =
+                          widget.controller.hasClients &&
+                          widget.controller.positions.length == 1 &&
+                          widget.controller.position.hasContentDimensions;
 
-                if (!isReady) return const SizedBox.shrink();
+                      if (!isReady) return const SizedBox.shrink();
 
-                final pos = widget.controller.position;
-                final maxScroll = pos.maxScrollExtent;
+                      final pos = widget.controller.position;
+                      final maxScroll = pos.maxScrollExtent;
 
-                if (maxScroll <= 0) return const SizedBox.shrink();
+                      if (maxScroll <= 0) return const SizedBox.shrink();
 
-                final scrollPercent = (pos.pixels / maxScroll).clamp(0.0, 1.0);
-                final topOffset = scrollPercent * availableHeight;
+                      final scrollPercent = (pos.pixels / maxScroll).clamp(
+                        0.0,
+                        1.0,
+                      );
+                      final topOffset = scrollPercent * availableHeight;
 
-                final slideDx =
-                    lerpDouble(thumbWidth, 0, _anim.value) ?? thumbWidth;
+                      final slideDx =
+                          lerpDouble(thumbWidth, 0, _anim.value) ?? thumbWidth;
 
-                return Positioned(
-                  top: topOffset,
-                  right: 0,
-                  child: Transform.translate(
-                    offset: Offset(slideDx, 0),
-                    child: child,
+                      return Positioned(
+                        top: topOffset,
+                        right: 0,
+                        child: Transform.translate(
+                          offset: Offset(slideDx, 0),
+                          child: child,
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
-          ],
-        );
-      },
+                ],
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

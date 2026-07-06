@@ -32,7 +32,7 @@ extension PlaybackSessionX on PlaybackSession {
       jsonChapters = chapters
           .map(
             (c) => Chapter(
-              displayIndex: c.id + 1,
+              displayIndex: c.id,
               start: c.start,
               end: c.end,
               title: c.title,
@@ -45,7 +45,7 @@ extension PlaybackSessionX on PlaybackSession {
           audioTracks
               ?.map(
                 (t) => Chapter(
-                  displayIndex: t.index + 1,
+                  displayIndex: t.index,
                   start: t.startOffset,
                   end: t.startOffset + t.duration,
                   title: displayTitle ?? l10n.noTitle,
@@ -155,12 +155,15 @@ extension ToPlaybackSession on LibraryItem {
     final now = DateTime.now();
     final today = DayOfTheWeek.byValue[now.weekday % 7]!.name;
     final Duration thisDuration;
+    final String? thisTitle;
+    final PodcastEpisode? episode;
     if (isPodcast) {
-      thisDuration =
-          episodes.firstWhere((e) => e.id == episodeId).duration ??
-          Duration.zero;
+      episode = episodes.firstWhereOrNull((e) => e.id == episodeId);
+      thisDuration = episode?.duration ?? Duration.zero;
+      thisTitle = episode?.title;
     } else {
       thisDuration = duration;
+      thisTitle = title;
     }
 
     return PlaybackSession(
@@ -171,8 +174,8 @@ extension ToPlaybackSession on LibraryItem {
       mediaType: mediaType,
       mediaMetadata: media.metadata,
       chapters: chapters,
-      displayTitle: title ?? 'No Title',
-      displayAuthor: authorName ?? 'No Author',
+      displayTitle: thisTitle,
+      displayAuthor: authorName,
       duration: thisDuration,
       playMethod: .local,
       mediaPlayer: kMediaPlayer,
