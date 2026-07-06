@@ -35,23 +35,26 @@ class FullPlayer extends ConsumerWidget {
     final currentPosition = globalPosition.toTime();
     final totalDuration = session.duration.toTime();
 
+    final title = session.isPodcastEpisode
+        ? session.displayTitle ?? l10n.noTitle
+        : currentChapter?.title ?? session.displayTitle ?? l10n.noTitle;
+    final subtitle = session.isPodcastEpisode
+        ? session.mediaMetadata.title ?? session.displayAuthor ?? l10n.noTitle
+        : currentChapter != null
+        ? session.displayTitle ?? l10n.noTitle
+        : session.displayAuthor ?? l10n.noAuthor;
+
     return Padding(
       padding: const .symmetric(horizontal: 16),
       child: SingleChildScrollView(
         child: Column(
           children: [
             MarqueeText(
-              currentChapter?.title ?? session.displayTitle ?? l10n.noTitle,
+              title,
               style: theme.textTheme.titleLarge?.copyWith(fontSize: 22),
             ),
             Text(
-              session.episodeId != null
-                  ? session.mediaMetadata.title ??
-                        session.displayAuthor ??
-                        l10n.noTitle
-                  : currentChapter != null
-                  ? session.displayTitle ?? l10n.noTitle
-                  : session.displayAuthor ?? l10n.noAuthor,
+              subtitle,
               style: theme.textTheme.titleSmall?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),

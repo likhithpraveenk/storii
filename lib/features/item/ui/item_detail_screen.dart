@@ -9,7 +9,6 @@ import 'package:storii/features/item/ui/action_buttons.dart';
 import 'package:storii/features/item/ui/audio_tracks_sheet.dart';
 import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/item/ui/cover_image_title.dart';
-import 'package:storii/features/item/ui/current_session_tile.dart';
 import 'package:storii/features/item/ui/description_with_chips.dart';
 import 'package:storii/features/item/ui/episode_list.dart';
 import 'package:storii/features/item/ui/metadata_wrap.dart';
@@ -59,7 +58,6 @@ class ItemDetailScreen extends ConsumerWidget {
                           const SizedBox(height: 8),
                           PlayButton(item),
                           if (item.isBook) ProgressBar(itemId: item.id),
-                          if (item.isBook) CurrentSessionTile(itemId: item.id),
                           if (item.isBook) ActionButtons(item: item),
                         ],
                       ),
@@ -116,6 +114,7 @@ class ItemDetailScreen extends ConsumerWidget {
                       ),
                     if (item.isPodcast)
                       EpisodeList(itemId: item.id, episodes: item.episodes),
+                    if (item.isBook) const SizedBox(height: 200),
                   ],
                 ),
               ),

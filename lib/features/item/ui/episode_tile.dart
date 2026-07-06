@@ -6,6 +6,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/ui/episode_action_buttons.dart';
+import 'package:storii/features/item/ui/local_session_icon.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -117,7 +118,13 @@ class EpisodeTile extends ConsumerWidget {
           ),
           Row(
             children: [
-              const SizedBox(width: 48),
+              SizedBox(
+                width: 48,
+                child: LocalSessionIcon(
+                  itemId: episode.libraryItemId,
+                  episodeId: episode.id,
+                ),
+              ),
               Expanded(
                 child: EpisodeActionButtons(
                   episode: episode,

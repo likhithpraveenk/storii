@@ -5,6 +5,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
+import 'package:storii/features/item/ui/local_session_icon.dart';
 import 'package:storii/features/player/ui/history_button.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
@@ -24,6 +25,7 @@ class ActionButtons extends ConsumerWidget {
     return Row(
       mainAxisAlignment: .spaceEvenly,
       children: [
+        LocalSessionIcon(itemId: item.id),
         DownloadButton(libraryItemId: item.id),
         HistoryButton(itemId: item.id),
         if (progress != 1.0)

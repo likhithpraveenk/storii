@@ -1969,20 +1969,20 @@ abstract class AppLocalizations {
   /// No description provided for @localSession.
   ///
   /// In en, this message translates to:
-  /// **'Local Session: {time}'**
-  String localSession(String time);
+  /// **'Local Session'**
+  String get localSession;
 
-  /// No description provided for @localSessionDeleteQ.
+  /// No description provided for @currentPosition.
   ///
   /// In en, this message translates to:
-  /// **'Delete local session?'**
-  String get localSessionDeleteQ;
+  /// **'Current Position'**
+  String get currentPosition;
 
-  /// No description provided for @localSessionDeleteBody.
+  /// No description provided for @localSessionSheetBody.
   ///
   /// In en, this message translates to:
-  /// **'This progress may not be fully synced yet. Check playback history for confirmation.'**
-  String get localSessionDeleteBody;
+  /// **'Progress saved locally. Sync pending.'**
+  String get localSessionSheetBody;
 }
 
 class _AppLocalizationsDelegate

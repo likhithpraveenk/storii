@@ -127,6 +127,7 @@ class SessionNotifier extends _$SessionNotifier {
             .syncLocal(localSession: updated),
         source: 'SessionNotifier',
       );
+      await ref.read(sessionStoreProvider.notifier).delete(updated.id);
     } else {
       await ref.logApiCall(
         () => ref
@@ -140,6 +141,7 @@ class SessionNotifier extends _$SessionNotifier {
             ),
         source: 'SessionNotifier',
       );
+      await ref.read(sessionStoreProvider.notifier).delete(updated.id);
     }
     log(
       '${position.toTime()}: sync success '

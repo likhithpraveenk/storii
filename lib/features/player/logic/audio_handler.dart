@@ -111,7 +111,10 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       return;
     }
 
-    mediaItem.add(queue.value.elementAtOrNull(resolved.chapterIndex));
+    final resolvedMediaItem = queue.value.elementAtOrNull(
+      resolved.chapterIndex,
+    );
+    mediaItem.add(resolvedMediaItem);
 
     final resolvedBuffered =
         resolver.resolveChapterFromTrack(state.index, state.bufferedPosition) ??

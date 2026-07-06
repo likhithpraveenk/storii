@@ -140,7 +140,7 @@ extension ChapterX on Chapter {
       id: '${item.id}$title',
       title: fromTracks ? item.title : title,
       duration: duration,
-      artist: fromTracks ? item.artist : item.title,
+      artist: item.artist,
     );
   }
 }
