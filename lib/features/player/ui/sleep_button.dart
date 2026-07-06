@@ -12,7 +12,9 @@ class SleepButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sleep = ref.watch(sleepTimerProvider);
+    final sleepMinutes = ref.watch(
+      sleepTimerProvider.select((t) => t?.inMinutes),
+    );
 
     return IconButton(
       onPressed: () {
@@ -23,10 +25,10 @@ class SleepButton extends ConsumerWidget {
         );
       },
       tooltip: l10n.sleepTimer,
-      icon: sleep == null
+      icon: sleepMinutes == null
           ? const Icon(Icons.bedtime_outlined)
           : Text(
-              sleep.toReadableDuration(),
+              Duration(minutes: sleepMinutes).toReadableDuration(),
               style: Theme.of(context).textTheme.labelLarge,
             ),
     );
@@ -65,7 +67,11 @@ class _SleepTimerSheetState extends ConsumerState<SleepTimerSheet> {
             Row(
               mainAxisAlignment: .center,
               children: [
-                for (final delta in [5, 15, 30])
+                TextButton(
+                  onPressed: () => notifier.add(const Duration(minutes: -5)),
+                  child: Text('-${l10n.timeMinutes(5)}'),
+                ),
+                for (final delta in [5, 15])
                   TextButton(
                     onPressed: () => notifier.add(Duration(minutes: delta)),
                     child: Text('+${l10n.timeMinutes(delta)}'),
@@ -75,27 +81,24 @@ class _SleepTimerSheetState extends ConsumerState<SleepTimerSheet> {
             const SizedBox(height: 16),
             AppOutlinedButton(
               isDestructive: true,
-              onPressed: () {
-                notifier.cancel();
-                Navigator.of(context).pop();
-              },
+              onPressed: notifier.cancel,
               text: l10n.cancelTimer,
             ),
           ] else ...[
             WheelPicker.fromIntRange(
               initialValue: _selectedMinutes,
-              min: 0,
+              min: 5,
               max: 150,
-              step: 15,
+              step: 5,
               labelBuilder: l10n.timeMinutes,
               onChangedEnd: (min) => _selectedMinutes = min,
-              presets: [30, 60, 90, 120],
+              presets: [15, 30, 45, 60, 90],
             ),
+            // TODO: add end of chapter
             const SizedBox(height: 24),
             AppFilledButton(
               onPressed: () {
                 notifier.set(Duration(minutes: _selectedMinutes));
-                Navigator.of(context).pop();
               },
               text: l10n.confirm,
             ),

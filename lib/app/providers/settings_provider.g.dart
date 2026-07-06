@@ -304,6 +304,15 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setSeriesSortValue(SeriesSort value) =>
       _save(state?.copyWith(seriesSortValue: value));
+
+  Future<void> setFadeOnSleep(bool value) =>
+      _save(state?.copyWith(fadeOnSleep: value));
+
+  Future<void> setFadeOnSleepDuration(Duration value) =>
+      _save(state?.copyWith(fadeOnSleepDuration: value));
+
+  Future<void> setFadeOnSleepMinVolume(double value) =>
+      _save(state?.copyWith(fadeOnSleepMinVolume: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -559,4 +568,32 @@ final seriesSortValueProvider = Provider<SeriesSort>(
     ),
   ),
   name: 'seriesSortValueProvider',
+);
+
+final fadeOnSleepProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.fadeOnSleep ?? DefaultUserSettings.fadeOnSleep,
+    ),
+  ),
+  name: 'fadeOnSleepProvider',
+);
+
+final fadeOnSleepDurationProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.fadeOnSleepDuration ?? DefaultUserSettings.fadeOnSleepDuration,
+    ),
+  ),
+  name: 'fadeOnSleepDurationProvider',
+);
+
+final fadeOnSleepMinVolumeProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.fadeOnSleepMinVolume ?? DefaultUserSettings.fadeOnSleepMinVolume,
+    ),
+  ),
+  name: 'fadeOnSleepMinVolumeProvider',
 );

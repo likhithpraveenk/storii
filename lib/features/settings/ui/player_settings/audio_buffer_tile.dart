@@ -38,6 +38,7 @@ class _AudioBufferTileState extends ConsumerState<AudioBufferTile> {
         AppBottomSheet.show(
           context,
           title: l10n.audioBufferDuration,
+          subtitle: l10n.audioBufferDurationDescription,
           body: Builder(
             builder: (context) {
               final theme = Theme.of(context);
@@ -47,14 +48,6 @@ class _AudioBufferTileState extends ConsumerState<AudioBufferTile> {
                   mainAxisSize: .min,
                   crossAxisAlignment: .stretch,
                   children: [
-                    Text(
-                      l10n.audioBufferDurationDescription,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                      textAlign: .center,
-                    ),
-                    const SizedBox(height: 24),
                     WheelPicker.fromIntRange(
                       initialValue: _bufferSec,
                       min: 5,
@@ -68,11 +61,12 @@ class _AudioBufferTileState extends ConsumerState<AudioBufferTile> {
                     Text(
                       l10n.changeRestartRequired,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
+                        color: theme.colorScheme.error,
+                        fontWeight: .w500,
                       ),
                       textAlign: .center,
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 8),
                     AppFilledButton(
                       onPressed: () {
                         notifier.setMinBufferDuration(

@@ -89,11 +89,10 @@ class AppBottomSheet extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               subtitle!,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant.withValues(
-                  alpha: 0.8,
-                ),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
               ),
+              textAlign: .center,
             ),
           ],
         ],

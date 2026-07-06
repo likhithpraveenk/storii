@@ -38,6 +38,7 @@ class _SyncIntervalTileState extends ConsumerState<SyncIntervalTile> {
         AppBottomSheet.show(
           context,
           title: l10n.syncInterval,
+          subtitle: l10n.syncIntervalSubtitle,
           body: Builder(
             builder: (context) {
               return Padding(
