@@ -5,7 +5,6 @@ import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/item/ui/current_session_tile.dart';
 import 'package:storii/features/item/ui/episode_action_buttons.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
@@ -55,9 +54,10 @@ class EpisodeTile extends ConsumerWidget {
             : isCompleted
             ? completedColor
             : null,
-        border: isActive
-            ? Border.all(color: scheme.primary.withValues(alpha: 0.3), width: 1)
-            : null,
+        border: Border.all(
+          color: scheme.primary.withValues(alpha: isActive ? 0.3 : 0),
+          width: 1,
+        ),
       ),
       child: Column(
         crossAxisAlignment: .stretch,
@@ -114,11 +114,6 @@ class EpisodeTile extends ConsumerWidget {
                 ),
               ),
             ],
-          ),
-          const SizedBox(height: 4),
-          CurrentSessionTile(
-            itemId: episode.libraryItemId,
-            episodeId: episode.id,
           ),
           Row(
             children: [

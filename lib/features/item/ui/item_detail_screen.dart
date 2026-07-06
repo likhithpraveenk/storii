@@ -116,7 +116,6 @@ class ItemDetailScreen extends ConsumerWidget {
                       ),
                     if (item.isPodcast)
                       EpisodeList(itemId: item.id, episodes: item.episodes),
-                    const SizedBox(height: 200),
                   ],
                 ),
               ),

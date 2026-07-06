@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Scrollbar for episode list
+
+### Fixed
+
+- Episode list scroll lag
+
 ## [v0.5.2] - 2026-07-05
 
 ### Fixed
