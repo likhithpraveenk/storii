@@ -20,8 +20,9 @@ class PlayButton extends ConsumerWidget {
       audioPlayerProvider.select((s) => s.loadingItemId == item.id),
     );
 
-    final session = ref.watch(sessionProvider);
-    final isCurrentItem = session?.libraryItemId == item.id;
+    final isCurrentItem = ref.watch(
+      sessionProvider.select((s) => s?.libraryItemId == item.id),
+    );
     final isPlaying = isCurrentItem && ref.watch(isPlayingProvider);
 
     final mediaProgress = ref
@@ -50,10 +51,7 @@ class PlayButton extends ConsumerWidget {
       }
     } else {
       remaining =
-          (item.duration -
-                  (mediaProgress?.currentTime ??
-                      session?.currentTime ??
-                      Duration.zero))
+          (item.duration - (mediaProgress?.currentTime ?? Duration.zero))
               .toReadableDuration(isLeft: true);
       label = isPlaying
           ? l10n.pause

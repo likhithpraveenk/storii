@@ -140,9 +140,9 @@ class _ChapterTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final session = ref.watch(sessionProvider);
-    final isCurrentItemPlaying =
-        session != null && session.libraryItemId == itemId;
+    final isCurrentItemPlaying = ref.watch(
+      sessionProvider.select((s) => s?.libraryItemId == itemId),
+    );
     final currentChapter = ref.watch(currentChapterProvider).value;
 
     final isActive =

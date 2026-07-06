@@ -14,14 +14,16 @@ class HeroCover extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final session = ref.watch(sessionProvider);
+    final libraryItemId = ref.watch(
+      sessionProvider.select((s) => s?.libraryItemId),
+    );
     final imageRadius = lerpDouble(4, kRadius, expandFactor)!;
 
     return Material(
       borderRadius: .circular(imageRadius),
       clipBehavior: .hardEdge,
-      child: session != null
-          ? ImageWidget(id: session.libraryItemId, type: .item, isRaw: true)
+      child: libraryItemId != null
+          ? ImageWidget(id: libraryItemId, type: .item, isRaw: true)
           : const PlaceholderImage(),
     );
   }

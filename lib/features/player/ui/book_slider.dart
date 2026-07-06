@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
-import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
@@ -18,9 +17,9 @@ class _BookSliderState extends ConsumerState<BookSlider> {
 
   @override
   Widget build(BuildContext context) {
-    final session = ref.watch(sessionProvider);
-    final isEpisode = session?.isPodcastEpisode ?? false;
-
+    final isEpisode = ref.watch(
+      sessionProvider.select((s) => s?.episodeId != null),
+    );
     final chapter = ref.watch(currentChapterProvider).value;
     final chapterPosition = ref.watch(chapterPositionProvider).value;
     final globalPosition = ref.watch(globalPositionProvider).value;

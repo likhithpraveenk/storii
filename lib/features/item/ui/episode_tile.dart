@@ -20,10 +20,13 @@ class EpisodeTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final session = ref.watch(sessionProvider);
-    final isActive =
-        session?.libraryItemId == episode.libraryItemId &&
-        session?.episodeId == episode.id;
+    final isActive = ref.watch(
+      sessionProvider.select(
+        (s) =>
+            s?.libraryItemId == episode.libraryItemId &&
+            s?.episodeId == episode.id,
+      ),
+    );
     final progress = ref
         .watch(mediaProgressFromMapProvider(episode.libraryItemId, episode.id))
         .value;
