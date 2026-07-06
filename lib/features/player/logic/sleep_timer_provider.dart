@@ -3,10 +3,11 @@ import 'dart:developer';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/session_notifier.dart';
 
 part 'sleep_timer_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SleepTimer extends _$SleepTimer {
   Timer? _ticker;
   static const _tick = Duration(seconds: 1);
@@ -14,6 +15,10 @@ class SleepTimer extends _$SleepTimer {
 
   @override
   Duration? build() {
+    ref.listen(sessionProvider, (_, next) {
+      if (next == null) cancel();
+    });
+
     ref.onDispose(_cancelTicker);
     return null;
   }
@@ -41,7 +46,15 @@ class SleepTimer extends _$SleepTimer {
   }
 
   void _onTick() {
-    final next = state! - _tick;
+    if (_ticker == null) return;
+
+    final current = state;
+    if (current == null) {
+      cancel();
+      return;
+    }
+
+    final next = current - _tick;
     if (next <= Duration.zero) {
       cancel();
       _stopAudio();
@@ -53,6 +66,7 @@ class SleepTimer extends _$SleepTimer {
   Future<void> _stopAudio() async {
     try {
       log('timer end. calling audio handler stop');
+      // TODO: add audio fade-out 30sec
       await audioHandler.stop();
     } catch (e, st) {
       log('audioHandler.stop() failed: $e\n$st', name: 'SleepTimer');
