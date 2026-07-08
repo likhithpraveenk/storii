@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app_links/app_links.dart';
 import 'package:audio_service/audio_service.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/app/security/custom_http_overrides.dart';
 import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
@@ -57,6 +59,10 @@ Future<ProviderContainer> setupProviders() async {
     },
     observers: observers,
     overrides: overrides,
+  );
+
+  HttpOverrides.global = CustomHttpOverrides(
+    shouldTrust: () => container.read(trustAllCertificatesProvider),
   );
 
   LogService.init(container);

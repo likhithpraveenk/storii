@@ -24,6 +24,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get validateServer => 'Validate Server';
 
   @override
+  String get advanced => 'Advanced';
+
+  @override
   String get username => 'Username';
 
   @override
@@ -500,6 +503,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get networkLogsDescription => 'Log HTTP requests and responses';
+
+  @override
+  String get trustAllCertificates => 'Trust all certificates';
+
+  @override
+  String get trustAllCertificatesDescription =>
+      'Disables certificate validation';
 
   @override
   String readableDuration(int hours, int minutes) {

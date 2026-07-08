@@ -10,6 +10,7 @@ import 'package:storii/features/settings/ui/library/library_settings_screen.dart
 import 'package:storii/features/settings/ui/navigation/config_nav_screen.dart';
 import 'package:storii/features/settings/ui/player_settings/player_settings_screen.dart';
 import 'package:storii/features/settings/ui/reset_settings_action.dart';
+import 'package:storii/features/settings/ui/trust_all_certificates_tile.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -40,6 +41,7 @@ class SettingsScreen extends StatelessWidget {
           LibrarySettingsTile(),
           HttpLogsTile(),
           AppCacheTile(),
+          TrustAllCertificatesTile(),
           AccountSection(),
         ],
       ),

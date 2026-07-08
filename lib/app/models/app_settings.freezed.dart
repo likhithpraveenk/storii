@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppSettings {
 
- ThemeMode get themeMode; bool get useDynamicColor;@ColorConverter() Color get appColor; DynamicSchemeVariant get schemeVariant; bool get usePureBlack; UserDomain? get currentUser; Uri? get serverUrl; int get maxLogs; bool get enableHttpLogs; Duration get syncInterval; Duration get syncIntervalMetered; bool get downloadPathsV2Migrated;
+ ThemeMode get themeMode; bool get useDynamicColor;@ColorConverter() Color get appColor; DynamicSchemeVariant get schemeVariant; bool get usePureBlack; UserDomain? get currentUser; Uri? get serverUrl; int get maxLogs; bool get enableHttpLogs; Duration get syncInterval; Duration get syncIntervalMetered; bool get downloadPathsV2Migrated; bool get trustAllCertificates;
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AppSettingsCopyWith<AppSettings> get copyWith => _$AppSettingsCopyWithImpl<AppS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.appColor, appColor) || other.appColor == appColor)&&(identical(other.schemeVariant, schemeVariant) || other.schemeVariant == schemeVariant)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval)&&(identical(other.syncIntervalMetered, syncIntervalMetered) || other.syncIntervalMetered == syncIntervalMetered)&&(identical(other.downloadPathsV2Migrated, downloadPathsV2Migrated) || other.downloadPathsV2Migrated == downloadPathsV2Migrated));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.appColor, appColor) || other.appColor == appColor)&&(identical(other.schemeVariant, schemeVariant) || other.schemeVariant == schemeVariant)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval)&&(identical(other.syncIntervalMetered, syncIntervalMetered) || other.syncIntervalMetered == syncIntervalMetered)&&(identical(other.downloadPathsV2Migrated, downloadPathsV2Migrated) || other.downloadPathsV2Migrated == downloadPathsV2Migrated)&&(identical(other.trustAllCertificates, trustAllCertificates) || other.trustAllCertificates == trustAllCertificates));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,appColor,schemeVariant,usePureBlack,currentUser,serverUrl,maxLogs,enableHttpLogs,syncInterval,syncIntervalMetered,downloadPathsV2Migrated);
+int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,appColor,schemeVariant,usePureBlack,currentUser,serverUrl,maxLogs,enableHttpLogs,syncInterval,syncIntervalMetered,downloadPathsV2Migrated,trustAllCertificates);
 
 @override
 String toString() {
-  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, appColor: $appColor, schemeVariant: $schemeVariant, usePureBlack: $usePureBlack, currentUser: $currentUser, serverUrl: $serverUrl, maxLogs: $maxLogs, enableHttpLogs: $enableHttpLogs, syncInterval: $syncInterval, syncIntervalMetered: $syncIntervalMetered, downloadPathsV2Migrated: $downloadPathsV2Migrated)';
+  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, appColor: $appColor, schemeVariant: $schemeVariant, usePureBlack: $usePureBlack, currentUser: $currentUser, serverUrl: $serverUrl, maxLogs: $maxLogs, enableHttpLogs: $enableHttpLogs, syncInterval: $syncInterval, syncIntervalMetered: $syncIntervalMetered, downloadPathsV2Migrated: $downloadPathsV2Migrated, trustAllCertificates: $trustAllCertificates)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AppSettingsCopyWith<$Res>  {
   factory $AppSettingsCopyWith(AppSettings value, $Res Function(AppSettings) _then) = _$AppSettingsCopyWithImpl;
 @useResult
 $Res call({
- ThemeMode themeMode, bool useDynamicColor,@ColorConverter() Color appColor, DynamicSchemeVariant schemeVariant, bool usePureBlack, UserDomain? currentUser, Uri? serverUrl, int maxLogs, bool enableHttpLogs, Duration syncInterval, Duration syncIntervalMetered, bool downloadPathsV2Migrated
+ ThemeMode themeMode, bool useDynamicColor,@ColorConverter() Color appColor, DynamicSchemeVariant schemeVariant, bool usePureBlack, UserDomain? currentUser, Uri? serverUrl, int maxLogs, bool enableHttpLogs, Duration syncInterval, Duration syncIntervalMetered, bool downloadPathsV2Migrated, bool trustAllCertificates
 });
 
 
@@ -65,7 +65,7 @@ class _$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? appColor = null,Object? schemeVariant = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? serverUrl = freezed,Object? maxLogs = null,Object? enableHttpLogs = null,Object? syncInterval = null,Object? syncIntervalMetered = null,Object? downloadPathsV2Migrated = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? appColor = null,Object? schemeVariant = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? serverUrl = freezed,Object? maxLogs = null,Object? enableHttpLogs = null,Object? syncInterval = null,Object? syncIntervalMetered = null,Object? downloadPathsV2Migrated = null,Object? trustAllCertificates = null,}) {
   return _then(_self.copyWith(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,useDynamicColor: null == useDynamicColor ? _self.useDynamicColor : useDynamicColor // ignore: cast_nullable_to_non_nullable
@@ -79,6 +79,7 @@ as int,enableHttpLogs: null == enableHttpLogs ? _self.enableHttpLogs : enableHtt
 as bool,syncInterval: null == syncInterval ? _self.syncInterval : syncInterval // ignore: cast_nullable_to_non_nullable
 as Duration,syncIntervalMetered: null == syncIntervalMetered ? _self.syncIntervalMetered : syncIntervalMetered // ignore: cast_nullable_to_non_nullable
 as Duration,downloadPathsV2Migrated: null == downloadPathsV2Migrated ? _self.downloadPathsV2Migrated : downloadPathsV2Migrated // ignore: cast_nullable_to_non_nullable
+as bool,trustAllCertificates: null == trustAllCertificates ? _self.trustAllCertificates : trustAllCertificates // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -173,10 +174,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor, @ColorConverter()  Color appColor,  DynamicSchemeVariant schemeVariant,  bool usePureBlack,  UserDomain? currentUser,  Uri? serverUrl,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval,  Duration syncIntervalMetered,  bool downloadPathsV2Migrated)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor, @ColorConverter()  Color appColor,  DynamicSchemeVariant schemeVariant,  bool usePureBlack,  UserDomain? currentUser,  Uri? serverUrl,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval,  Duration syncIntervalMetered,  bool downloadPathsV2Migrated,  bool trustAllCertificates)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schemeVariant,_that.usePureBlack,_that.currentUser,_that.serverUrl,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval,_that.syncIntervalMetered,_that.downloadPathsV2Migrated);case _:
+return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schemeVariant,_that.usePureBlack,_that.currentUser,_that.serverUrl,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval,_that.syncIntervalMetered,_that.downloadPathsV2Migrated,_that.trustAllCertificates);case _:
   return orElse();
 
 }
@@ -194,10 +195,10 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schem
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor, @ColorConverter()  Color appColor,  DynamicSchemeVariant schemeVariant,  bool usePureBlack,  UserDomain? currentUser,  Uri? serverUrl,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval,  Duration syncIntervalMetered,  bool downloadPathsV2Migrated)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor, @ColorConverter()  Color appColor,  DynamicSchemeVariant schemeVariant,  bool usePureBlack,  UserDomain? currentUser,  Uri? serverUrl,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval,  Duration syncIntervalMetered,  bool downloadPathsV2Migrated,  bool trustAllCertificates)  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings():
-return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schemeVariant,_that.usePureBlack,_that.currentUser,_that.serverUrl,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval,_that.syncIntervalMetered,_that.downloadPathsV2Migrated);}
+return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schemeVariant,_that.usePureBlack,_that.currentUser,_that.serverUrl,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval,_that.syncIntervalMetered,_that.downloadPathsV2Migrated,_that.trustAllCertificates);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -211,10 +212,10 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schem
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode,  bool useDynamicColor, @ColorConverter()  Color appColor,  DynamicSchemeVariant schemeVariant,  bool usePureBlack,  UserDomain? currentUser,  Uri? serverUrl,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval,  Duration syncIntervalMetered,  bool downloadPathsV2Migrated)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode,  bool useDynamicColor, @ColorConverter()  Color appColor,  DynamicSchemeVariant schemeVariant,  bool usePureBlack,  UserDomain? currentUser,  Uri? serverUrl,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval,  Duration syncIntervalMetered,  bool downloadPathsV2Migrated,  bool trustAllCertificates)?  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schemeVariant,_that.usePureBlack,_that.currentUser,_that.serverUrl,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval,_that.syncIntervalMetered,_that.downloadPathsV2Migrated);case _:
+return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schemeVariant,_that.usePureBlack,_that.currentUser,_that.serverUrl,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval,_that.syncIntervalMetered,_that.downloadPathsV2Migrated,_that.trustAllCertificates);case _:
   return null;
 
 }
@@ -226,7 +227,7 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schem
 @JsonSerializable()
 
 class _AppSettings implements AppSettings {
-  const _AppSettings({this.themeMode = ThemeMode.system, this.useDynamicColor = false, @ColorConverter() this.appColor = appPrimaryColor, this.schemeVariant = DynamicSchemeVariant.fidelity, this.usePureBlack = false, this.currentUser, this.serverUrl, this.maxLogs = 100, this.enableHttpLogs = false, this.syncInterval = const Duration(seconds: 20), this.syncIntervalMetered = const Duration(minutes: 1), this.downloadPathsV2Migrated = false});
+  const _AppSettings({this.themeMode = ThemeMode.system, this.useDynamicColor = false, @ColorConverter() this.appColor = appPrimaryColor, this.schemeVariant = DynamicSchemeVariant.fidelity, this.usePureBlack = false, this.currentUser, this.serverUrl, this.maxLogs = 100, this.enableHttpLogs = false, this.syncInterval = const Duration(seconds: 20), this.syncIntervalMetered = const Duration(minutes: 1), this.downloadPathsV2Migrated = false, this.trustAllCertificates = false});
   factory _AppSettings.fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);
 
 @override@JsonKey() final  ThemeMode themeMode;
@@ -241,6 +242,7 @@ class _AppSettings implements AppSettings {
 @override@JsonKey() final  Duration syncInterval;
 @override@JsonKey() final  Duration syncIntervalMetered;
 @override@JsonKey() final  bool downloadPathsV2Migrated;
+@override@JsonKey() final  bool trustAllCertificates;
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
@@ -255,16 +257,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.appColor, appColor) || other.appColor == appColor)&&(identical(other.schemeVariant, schemeVariant) || other.schemeVariant == schemeVariant)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval)&&(identical(other.syncIntervalMetered, syncIntervalMetered) || other.syncIntervalMetered == syncIntervalMetered)&&(identical(other.downloadPathsV2Migrated, downloadPathsV2Migrated) || other.downloadPathsV2Migrated == downloadPathsV2Migrated));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.appColor, appColor) || other.appColor == appColor)&&(identical(other.schemeVariant, schemeVariant) || other.schemeVariant == schemeVariant)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval)&&(identical(other.syncIntervalMetered, syncIntervalMetered) || other.syncIntervalMetered == syncIntervalMetered)&&(identical(other.downloadPathsV2Migrated, downloadPathsV2Migrated) || other.downloadPathsV2Migrated == downloadPathsV2Migrated)&&(identical(other.trustAllCertificates, trustAllCertificates) || other.trustAllCertificates == trustAllCertificates));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,appColor,schemeVariant,usePureBlack,currentUser,serverUrl,maxLogs,enableHttpLogs,syncInterval,syncIntervalMetered,downloadPathsV2Migrated);
+int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,appColor,schemeVariant,usePureBlack,currentUser,serverUrl,maxLogs,enableHttpLogs,syncInterval,syncIntervalMetered,downloadPathsV2Migrated,trustAllCertificates);
 
 @override
 String toString() {
-  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, appColor: $appColor, schemeVariant: $schemeVariant, usePureBlack: $usePureBlack, currentUser: $currentUser, serverUrl: $serverUrl, maxLogs: $maxLogs, enableHttpLogs: $enableHttpLogs, syncInterval: $syncInterval, syncIntervalMetered: $syncIntervalMetered, downloadPathsV2Migrated: $downloadPathsV2Migrated)';
+  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, appColor: $appColor, schemeVariant: $schemeVariant, usePureBlack: $usePureBlack, currentUser: $currentUser, serverUrl: $serverUrl, maxLogs: $maxLogs, enableHttpLogs: $enableHttpLogs, syncInterval: $syncInterval, syncIntervalMetered: $syncIntervalMetered, downloadPathsV2Migrated: $downloadPathsV2Migrated, trustAllCertificates: $trustAllCertificates)';
 }
 
 
@@ -275,7 +277,7 @@ abstract mixin class _$AppSettingsCopyWith<$Res> implements $AppSettingsCopyWith
   factory _$AppSettingsCopyWith(_AppSettings value, $Res Function(_AppSettings) _then) = __$AppSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- ThemeMode themeMode, bool useDynamicColor,@ColorConverter() Color appColor, DynamicSchemeVariant schemeVariant, bool usePureBlack, UserDomain? currentUser, Uri? serverUrl, int maxLogs, bool enableHttpLogs, Duration syncInterval, Duration syncIntervalMetered, bool downloadPathsV2Migrated
+ ThemeMode themeMode, bool useDynamicColor,@ColorConverter() Color appColor, DynamicSchemeVariant schemeVariant, bool usePureBlack, UserDomain? currentUser, Uri? serverUrl, int maxLogs, bool enableHttpLogs, Duration syncInterval, Duration syncIntervalMetered, bool downloadPathsV2Migrated, bool trustAllCertificates
 });
 
 
@@ -292,7 +294,7 @@ class __$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? appColor = null,Object? schemeVariant = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? serverUrl = freezed,Object? maxLogs = null,Object? enableHttpLogs = null,Object? syncInterval = null,Object? syncIntervalMetered = null,Object? downloadPathsV2Migrated = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? appColor = null,Object? schemeVariant = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? serverUrl = freezed,Object? maxLogs = null,Object? enableHttpLogs = null,Object? syncInterval = null,Object? syncIntervalMetered = null,Object? downloadPathsV2Migrated = null,Object? trustAllCertificates = null,}) {
   return _then(_AppSettings(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,useDynamicColor: null == useDynamicColor ? _self.useDynamicColor : useDynamicColor // ignore: cast_nullable_to_non_nullable
@@ -306,6 +308,7 @@ as int,enableHttpLogs: null == enableHttpLogs ? _self.enableHttpLogs : enableHtt
 as bool,syncInterval: null == syncInterval ? _self.syncInterval : syncInterval // ignore: cast_nullable_to_non_nullable
 as Duration,syncIntervalMetered: null == syncIntervalMetered ? _self.syncIntervalMetered : syncIntervalMetered // ignore: cast_nullable_to_non_nullable
 as Duration,downloadPathsV2Migrated: null == downloadPathsV2Migrated ? _self.downloadPathsV2Migrated : downloadPathsV2Migrated // ignore: cast_nullable_to_non_nullable
+as bool,trustAllCertificates: null == trustAllCertificates ? _self.trustAllCertificates : trustAllCertificates // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
