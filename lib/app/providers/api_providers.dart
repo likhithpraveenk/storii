@@ -6,6 +6,7 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/logs/logs_interceptor.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/token_provider.dart';
+import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/features/auth/logic/user_session_controller.dart';
 import 'package:storii/storage/hive/boxes.dart';
 
@@ -23,9 +24,14 @@ ApiClient apiClient(Ref ref, UserDomain user) {
     maxStale: const Duration(days: 7),
   );
 
+  final headers = ref
+      .read(serversProvider.notifier)
+      .getServerHeaders(user.serverUrl);
+
   final apiClient = ApiClient(
     baseUrl: user.serverUrl,
     cancelToken: cancelToken,
+    headers: headers,
     interceptors: [
       LogsInterceptor(),
       DioCacheInterceptor(options: cacheOptions),
@@ -71,8 +77,13 @@ ApiClient apiClient(Ref ref, UserDomain user) {
 
 @riverpod
 AuthApi authApi(Ref ref, Uri baseUrl) {
+  final headers = ref.read(tempServerProvider)?.headers;
   return AuthApi(
-    BaseApiClient(baseUrl: baseUrl, interceptors: [LogsInterceptor()]),
+    BaseApiClient(
+      baseUrl: baseUrl,
+      headers: headers,
+      interceptors: [LogsInterceptor()],
+    ),
   );
 }
 

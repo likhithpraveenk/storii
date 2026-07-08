@@ -27,6 +27,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get advanced => 'Advanced';
 
   @override
+  String get customHeaders => 'Custom Headers';
+
+  @override
+  String get key => 'Key';
+
+  @override
+  String get value => 'Value';
+
+  @override
+  String get required => 'Required';
+
+  @override
+  String get duplicateHeader => 'Duplicate header';
+
+  @override
   String get username => 'Username';
 
   @override

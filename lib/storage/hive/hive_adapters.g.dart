@@ -16,17 +16,25 @@ class ServerAdapter extends TypeAdapter<Server> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Server(id: fields[0] as String, url: fields[1] as Uri);
+    return Server(
+      id: fields[0] as String,
+      url: fields[1] as Uri,
+      headers: fields[2] == null
+          ? {}
+          : (fields[2] as Map).cast<String, String>(),
+    );
   }
 
   @override
   void write(BinaryWriter writer, Server obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.url);
+      ..write(obj.url)
+      ..writeByte(2)
+      ..write(obj.headers);
   }
 
   @override

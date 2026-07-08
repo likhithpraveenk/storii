@@ -16,6 +16,7 @@ class ApiClient {
   final Future<void> Function()? onTokensFailure;
   final CancelToken? cancelToken;
   final List<Interceptor>? interceptors;
+  final Map<String, String>? headers;
 
   Future<bool>? _refreshFuture;
 
@@ -27,6 +28,7 @@ class ApiClient {
     this.onTokensFailure,
     this.cancelToken,
     this.interceptors,
+    this.headers,
   }) : _dio = Dio(
          BaseOptions(
            baseUrl: baseUrl.toString(),
@@ -35,7 +37,7 @@ class ApiClient {
            sendTimeout: const Duration(seconds: 30),
          ),
        ) {
-    _dio.options.headers = {'Content-Type': 'application/json'};
+    _dio.options.headers = {'Content-Type': 'application/json', ...?headers};
     _dio.interceptors.addAll([AuthInterceptor(this), ...?interceptors]);
   }
 

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/features/auth/logic/add_server_notifier.dart';
+import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/features/auth/ui/advanced_options.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
@@ -43,6 +44,9 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
     _urlController = TextEditingController(
       text: widget.server?.url.toString() ?? 'https://',
     );
+    ref
+        .read(tempServerProvider.notifier)
+        .init(server: widget.server, url: Uri.parse(_urlController.text));
   }
 
   @override
@@ -52,9 +56,14 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
   }
 
   Future<void> submit() async {
+    final headers = ref.read(tempServerProvider)?.headers ?? {};
     await ref
         .read(addServerProvider.notifier)
-        .addServer(_urlController.text, widget.server);
+        .addServer(
+          _urlController.text,
+          server: widget.server,
+          headers: headers,
+        );
   }
 
   @override

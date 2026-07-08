@@ -130,6 +130,36 @@ abstract class AppLocalizations {
   /// **'Advanced'**
   String get advanced;
 
+  /// No description provided for @customHeaders.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Headers'**
+  String get customHeaders;
+
+  /// No description provided for @key.
+  ///
+  /// In en, this message translates to:
+  /// **'Key'**
+  String get key;
+
+  /// No description provided for @value.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get value;
+
+  /// No description provided for @required.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get required;
+
+  /// No description provided for @duplicateHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate header'**
+  String get duplicateHeader;
+
   /// No description provided for @username.
   ///
   /// In en, this message translates to:
