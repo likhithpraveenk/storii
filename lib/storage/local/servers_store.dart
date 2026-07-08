@@ -2,6 +2,7 @@ import 'package:hive_ce/hive_ce.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/models/server.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/storage/hive/boxes.dart';
 
 part 'servers_store.g.dart';
@@ -25,4 +26,8 @@ class ServersStore extends _$ServersStore {
   Future<void> remove(String id) => _box.delete(id);
 
   List<Server> getAll() => _box.values.toList();
+
+  Server? get(Uri url) {
+    return _box.values.firstWhereOrNull((s) => s.url == url);
+  }
 }

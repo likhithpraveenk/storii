@@ -15,9 +15,7 @@ class ServersNotifier extends _$ServersNotifier {
     yield servers;
   }
 
-  Future<void> add(Uri url) async {
-    final id = DateTime.now().microsecondsSinceEpoch.toString();
-    final server = Server(id: id, url: url);
+  Future<void> add(Server server) async {
     await ref.read(serversStoreProvider.notifier).add(server);
   }
 
@@ -34,5 +32,26 @@ class ServersNotifier extends _$ServersNotifier {
         .deleteUsersByServer(server.url);
     await ref.read(appSettingsProvider.notifier).deleteSettings(users);
     await ref.read(serversStoreProvider.notifier).remove(server.id);
+  }
+
+  Map<String, String>? getServerHeaders(Uri url) {
+    final server = ref.read(serversStoreProvider.notifier).get(url);
+    return server?.headers;
+  }
+}
+
+@Riverpod(keepAlive: true)
+class TempServer extends _$TempServer {
+  @override
+  Server? build() => null;
+
+  void init({Server? server, Uri? url}) {
+    state = server ?? Server(id: '', url: url ?? Uri.parse('https://'));
+  }
+
+  void setHeaders(Map<String, String> headers) {
+    final current = state;
+    if (current == null) return;
+    state = current.copyWith(headers: headers);
   }
 }

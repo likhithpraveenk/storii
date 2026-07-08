@@ -23,7 +23,11 @@ class AddServerNotifier extends _$AddServerNotifier {
   @override
   ServerState build() => const ServerState();
 
-  Future<void> addServer(String url, [Server? server]) async {
+  Future<void> addServer(
+    String url, {
+    Server? server,
+    Map<String, String> headers = const {},
+  }) async {
     state = const ServerState(status: .checking);
 
     try {
@@ -34,9 +38,18 @@ class AddServerNotifier extends _$AddServerNotifier {
         if (server != null) {
           await ref
               .read(serversProvider.notifier)
-              .edit(server.url, server.copyWith(url: url.normalizedUri));
+              .edit(
+                server.url,
+                server.copyWith(url: url.normalizedUri, headers: headers),
+              );
         } else {
-          await ref.read(serversProvider.notifier).add(url.normalizedUri);
+          final id = DateTime.now().microsecondsSinceEpoch.toString();
+          final server = Server(
+            id: id,
+            url: url.normalizedUri,
+            headers: headers,
+          );
+          await ref.read(serversProvider.notifier).add(server);
         }
         state = const ServerState(status: .available);
       }, source: 'AddServerNotifier');

@@ -33,6 +33,8 @@ sealed class AppSettings with _$AppSettings {
     @Default(Duration(minutes: 1)) Duration syncIntervalMetered,
 
     @Default(false) bool downloadPathsV2Migrated,
+
+    @Default(false) bool trustAllCertificates,
   }) = _AppSettings;
 
   factory AppSettings.fromJson(Map<String, dynamic> json) =>

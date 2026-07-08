@@ -5,12 +5,14 @@ nextTypeId: 3
 types:
   Server:
     typeId: 1
-    nextIndex: 2
+    nextIndex: 3
     fields:
       id:
         index: 0
       url:
         index: 1
+      headers:
+        index: 2
   UserDomain:
     typeId: 2
     nextIndex: 4

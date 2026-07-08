@@ -5,6 +5,12 @@
   "addServer": "Add Server",
   "serverUrl": "Server URL",
   "validateServer": "Validate Server",
+  "advanced": "Advanced",
+  "customHeaders": "Custom Headers",
+  "key": "Key",
+  "value": "Value",
+  "required": "Required",
+  "duplicateHeader": "Duplicate header",
   "username": "Username",
   "password": "Password",
   "delete": "Delete",
@@ -189,6 +195,8 @@
   },
   "networkLogs": "Network Logs",
   "networkLogsDescription": "Log HTTP requests and responses",
+  "trustAllCertificates": "Trust all certificates",
+  "trustAllCertificatesDescription": "Disables certificate validation",
   "readableDuration": "{hours, plural, =0{} other{{hours}h }}{minutes}m",
   "@readableDuration": {
     "placeholders": {

@@ -124,6 +124,42 @@ abstract class AppLocalizations {
   /// **'Validate Server'**
   String get validateServer;
 
+  /// No description provided for @advanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get advanced;
+
+  /// No description provided for @customHeaders.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Headers'**
+  String get customHeaders;
+
+  /// No description provided for @key.
+  ///
+  /// In en, this message translates to:
+  /// **'Key'**
+  String get key;
+
+  /// No description provided for @value.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get value;
+
+  /// No description provided for @required.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get required;
+
+  /// No description provided for @duplicateHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate header'**
+  String get duplicateHeader;
+
   /// No description provided for @username.
   ///
   /// In en, this message translates to:
@@ -1059,6 +1095,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log HTTP requests and responses'**
   String get networkLogsDescription;
+
+  /// No description provided for @trustAllCertificates.
+  ///
+  /// In en, this message translates to:
+  /// **'Trust all certificates'**
+  String get trustAllCertificates;
+
+  /// No description provided for @trustAllCertificatesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Disables certificate validation'**
+  String get trustAllCertificatesDescription;
 
   /// No description provided for @readableDuration.
   ///

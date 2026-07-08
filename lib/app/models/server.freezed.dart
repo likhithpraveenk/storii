@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Server {
 
- String get id; Uri get url;
+ String get id; Uri get url; Map<String, String> get headers;
 /// Create a copy of Server
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ServerCopyWith<Server> get copyWith => _$ServerCopyWithImpl<Server>(this as Ser
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Server&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Server&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url)&&const DeepCollectionEquality().equals(other.headers, headers));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,url);
+int get hashCode => Object.hash(runtimeType,id,url,const DeepCollectionEquality().hash(headers));
 
 @override
 String toString() {
-  return 'Server(id: $id, url: $url)';
+  return 'Server(id: $id, url: $url, headers: $headers)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ServerCopyWith<$Res>  {
   factory $ServerCopyWith(Server value, $Res Function(Server) _then) = _$ServerCopyWithImpl;
 @useResult
 $Res call({
- String id, Uri url
+ String id, Uri url, Map<String, String> headers
 });
 
 
@@ -65,11 +65,12 @@ class _$ServerCopyWithImpl<$Res>
 
 /// Create a copy of Server
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? url = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? url = null,Object? headers = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
-as Uri,
+as Uri,headers: null == headers ? _self.headers : headers // ignore: cast_nullable_to_non_nullable
+as Map<String, String>,
   ));
 }
 
@@ -151,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  Uri url)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  Uri url,  Map<String, String> headers)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Server() when $default != null:
-return $default(_that.id,_that.url);case _:
+return $default(_that.id,_that.url,_that.headers);case _:
   return orElse();
 
 }
@@ -172,10 +173,10 @@ return $default(_that.id,_that.url);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  Uri url)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  Uri url,  Map<String, String> headers)  $default,) {final _that = this;
 switch (_that) {
 case _Server():
-return $default(_that.id,_that.url);}
+return $default(_that.id,_that.url,_that.headers);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -189,10 +190,10 @@ return $default(_that.id,_that.url);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  Uri url)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  Uri url,  Map<String, String> headers)?  $default,) {final _that = this;
 switch (_that) {
 case _Server() when $default != null:
-return $default(_that.id,_that.url);case _:
+return $default(_that.id,_that.url,_that.headers);case _:
   return null;
 
 }
@@ -204,11 +205,18 @@ return $default(_that.id,_that.url);case _:
 @JsonSerializable()
 
 class _Server implements Server {
-  const _Server({required this.id, required this.url});
+  const _Server({required this.id, required this.url, final  Map<String, String> headers = const {}}): _headers = headers;
   factory _Server.fromJson(Map<String, dynamic> json) => _$ServerFromJson(json);
 
 @override final  String id;
 @override final  Uri url;
+ final  Map<String, String> _headers;
+@override@JsonKey() Map<String, String> get headers {
+  if (_headers is EqualUnmodifiableMapView) return _headers;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_headers);
+}
+
 
 /// Create a copy of Server
 /// with the given fields replaced by the non-null parameter values.
@@ -223,16 +231,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Server&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Server&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url)&&const DeepCollectionEquality().equals(other._headers, _headers));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,url);
+int get hashCode => Object.hash(runtimeType,id,url,const DeepCollectionEquality().hash(_headers));
 
 @override
 String toString() {
-  return 'Server(id: $id, url: $url)';
+  return 'Server(id: $id, url: $url, headers: $headers)';
 }
 
 
@@ -243,7 +251,7 @@ abstract mixin class _$ServerCopyWith<$Res> implements $ServerCopyWith<$Res> {
   factory _$ServerCopyWith(_Server value, $Res Function(_Server) _then) = __$ServerCopyWithImpl;
 @override @useResult
 $Res call({
- String id, Uri url
+ String id, Uri url, Map<String, String> headers
 });
 
 
@@ -260,11 +268,12 @@ class __$ServerCopyWithImpl<$Res>
 
 /// Create a copy of Server
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? url = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? url = null,Object? headers = null,}) {
   return _then(_Server(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
-as Uri,
+as Uri,headers: null == headers ? _self._headers : headers // ignore: cast_nullable_to_non_nullable
+as Map<String, String>,
   ));
 }
 
