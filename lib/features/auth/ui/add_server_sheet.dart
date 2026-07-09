@@ -44,9 +44,11 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
     _urlController = TextEditingController(
       text: widget.server?.url.toString() ?? 'https://',
     );
-    ref
-        .read(tempServerProvider.notifier)
-        .init(server: widget.server, url: Uri.parse(_urlController.text));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(tempServerProvider.notifier)
+          .init(server: widget.server, url: Uri.parse(_urlController.text));
+    });
   }
 
   @override

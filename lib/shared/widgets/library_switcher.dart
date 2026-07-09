@@ -6,6 +6,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/user_libraries_provider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
+import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class LibrarySwitcher extends ConsumerWidget {
@@ -87,7 +88,10 @@ class LibrarySwitcher extends ConsumerWidget {
               height: 120,
               child: Center(child: RandomWaveform()),
             ),
-            error: (err, _) => Center(child: Text(err.toString())),
+            error: (e, _) => ErrorRetryWidget(
+              '$e',
+              onRetry: () => ref.invalidate(userLibrariesProvider),
+            ),
           );
         },
       ),
