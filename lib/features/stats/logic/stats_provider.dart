@@ -8,6 +8,7 @@ part 'stats_provider.g.dart';
 
 @riverpod
 Future<UserStatsResponse> stats(Ref ref) async {
+  ref.watchConnection();
   final user = await ref.watch(authenticatedUserProvider.future);
   final api = ref.read(meApiProvider(user));
   return ref.logApiCall(

@@ -11,6 +11,7 @@ part 'authors_list_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 Future<List<Author>> authorsList(Ref ref) async {
+  ref.watchConnection();
   final libraryId = (await ref.watch(
     activeLibraryDetailsProvider.future,
   )).library.id;

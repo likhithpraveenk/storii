@@ -24,6 +24,7 @@ class SearchFilterNotifier extends _$SearchFilterNotifier {
 class SearchNotifier extends _$SearchNotifier {
   @override
   FutureOr<SearchResponse?> build(String query) async {
+    ref.watchConnection();
     if (query.isEmpty) return null;
 
     return _fetchSearch(query);

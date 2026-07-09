@@ -15,14 +15,6 @@ Stream<bool> socketStatus(Ref ref) async* {
     return;
   }
 
-  final connectionNone = ref.watch(
-    connectionTypeProvider.select((c) => c == .none),
-  );
-  if (connectionNone) {
-    yield false;
-    return;
-  }
-
   final socketApi = await ref.watch(socketApiProvider(user).future);
   yield* socketApi.isConnected;
 }
@@ -56,4 +48,15 @@ ConnectionType connectionType(Ref ref) {
   if (results.contains(ConnectivityResult.ethernet)) return .ethernet;
   if (results.contains(ConnectivityResult.mobile)) return .mobile;
   return .none;
+}
+
+@Riverpod(keepAlive: true)
+bool serverConnection(Ref ref) {
+  final connectionNone = ref.watch(
+    connectionTypeProvider.select((c) => c == .none),
+  );
+  if (connectionNone) return false;
+
+  final socketStatus = ref.watch(socketStatusProvider);
+  return socketStatus.value ?? true;
 }

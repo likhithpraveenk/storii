@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
 extension RefExtensions on Ref {
@@ -25,5 +26,10 @@ extension RefExtensions on Ref {
       );
       throw error;
     }
+  }
+
+  /// for providers to re-run on server connection
+  bool watchConnection() {
+    return watch(serverConnectionProvider);
   }
 }
