@@ -5,6 +5,7 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/filter_data_provider.dart';
 import 'package:storii/features/library/logic/user_libraries_provider.dart';
+import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'active_library_provider.g.dart';
 
@@ -15,7 +16,11 @@ Future<LibraryResponse> activeLibraryDetails(Ref ref) async {
   Future<LibraryResponse> fetchFullLibrary(Library lib) async {
     final user = await ref.read(authenticatedUserProvider.future);
     final api = ref.read(libraryApiProvider(user));
-    return await api.get(lib.id);
+    return ref.logApiCall(
+      () => api.get(lib.id),
+      logMessage: 'Error fetching active library details',
+      source: 'activeLibraryDetails',
+    );
   }
 
   if (currentLibrary == null) {

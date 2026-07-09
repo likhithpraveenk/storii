@@ -40,7 +40,7 @@ final class SocketStatusProvider
   }
 }
 
-String _$socketStatusHash() => r'8f4d8b1537f66fad93eec10a701b5d4b0b1f2c11';
+String _$socketStatusHash() => r'c5cd6a92e3767afdf9ed2d07918125accdafcb57';
 
 @ProviderFor(connectivityStream)
 final connectivityStreamProvider = ConnectivityStreamProvider._();
@@ -124,3 +124,44 @@ final class ConnectionTypeProvider
 }
 
 String _$connectionTypeHash() => r'9ac7a3dcd4a644f0942d8b4ebecc849b48994d8a';
+
+@ProviderFor(serverConnection)
+final serverConnectionProvider = ServerConnectionProvider._();
+
+final class ServerConnectionProvider
+    extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  ServerConnectionProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'serverConnectionProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$serverConnectionHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    return serverConnection(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$serverConnectionHash() => r'b5dee88f030891395b574d7625a19a7d897e4b60';

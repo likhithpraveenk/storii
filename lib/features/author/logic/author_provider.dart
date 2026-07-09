@@ -10,6 +10,7 @@ part 'author_provider.g.dart';
 
 @riverpod
 Future<Author> author(Ref ref, String authorId) async {
+  ref.watchConnection();
   final user = await ref.watch(authenticatedUserProvider.future);
   final libraryId = (await ref.watch(
     activeLibraryDetailsProvider.future,

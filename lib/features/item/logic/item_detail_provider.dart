@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/connection_providers.dart';
@@ -15,11 +16,11 @@ part 'item_detail_provider.g.dart';
 Future<LibraryItem> itemDetail(Ref ref, String id) async {
   final cache = ref.read(itemsCacheProvider.notifier);
 
-  final isConnected = await ref.watch(socketStatusProvider.future);
+  final isConnected = ref.watch(serverConnectionProvider);
   if (!isConnected) {
     final localItem = cache.get(id);
     if (localItem != null) return localItem;
-    throw StateError('No internet and item not in cache');
+    throw l10n.connectionServerDisconnected;
   }
 
   final user = await ref.watch(authenticatedUserProvider.future);

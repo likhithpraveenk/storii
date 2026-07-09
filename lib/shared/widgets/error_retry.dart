@@ -10,29 +10,9 @@ class ErrorRetryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
     return Scaffold(
       appBar: AppBar(automaticallyImplyLeading: true, titleSpacing: 0),
-      body: Padding(
-        padding: const .all(16),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: .center,
-            children: [
-              Text(
-                message,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyLarge?.copyWith(color: scheme.error),
-                textAlign: .center,
-              ),
-              const SizedBox(height: 4),
-              AppFilledButton(text: l10n.retry, onPressed: onRetry),
-            ],
-          ),
-        ),
-      ),
+      body: ErrorRetryWidget(message, onRetry: onRetry),
     );
   }
 }
@@ -65,40 +45,6 @@ class ErrorRetryWidget extends StatelessWidget {
               AppFilledButton(text: l10n.retry, onPressed: onRetry),
             ],
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class SliverErrorRetryWidget extends StatelessWidget {
-  const SliverErrorRetryWidget(this.message, {super.key, this.onRetry});
-
-  final String message;
-  final void Function()? onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return SliverFillRemaining(
-      child: Padding(
-        padding: const .all(16),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: .center,
-            children: [
-              Text(
-                message,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyLarge?.copyWith(color: scheme.error),
-                textAlign: .center,
-              ),
-              const SizedBox(height: 4),
-              AppFilledButton(text: l10n.retry, onPressed: onRetry),
-            ],
-          ),
         ),
       ),
     );

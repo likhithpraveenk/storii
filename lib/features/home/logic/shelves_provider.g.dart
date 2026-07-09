@@ -85,4 +85,4 @@ final class RawShelvesProvider
   }
 }
 
-String _$rawShelvesHash() => r'f56e4f9bda5d79185377ebd65b8d37ba4c672b3d';
+String _$rawShelvesHash() => r'47970721242afd0e59ffc61b0e25f9329b0ebbc8';

@@ -29,6 +29,7 @@ Future<List<Series>> seriesList(Ref ref) async {
 
 @Riverpod(keepAlive: true)
 Future<List<Series>> rawSeriesList(Ref ref) async {
+  ref.watchConnection();
   final libraryId = (await ref.watch(
     activeLibraryDetailsProvider.future,
   )).library.id;

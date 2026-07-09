@@ -5,6 +5,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/logs/logs_interceptor.dart';
 import 'package:storii/app/models/user.dart';
+import 'package:storii/app/network/offline_cache_interceptor.dart';
+import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/features/auth/logic/user_session_controller.dart';
@@ -34,6 +36,10 @@ ApiClient apiClient(Ref ref, UserDomain user) {
     headers: headers,
     interceptors: [
       LogsInterceptor(),
+      OfflineCacheInterceptor(
+        isConnected: () => ref.read(serverConnectionProvider),
+        cacheOptions: cacheOptions,
+      ),
       DioCacheInterceptor(options: cacheOptions),
     ],
     getAccessToken: () async {
@@ -125,11 +131,11 @@ SessionsApi sessionsApi(Ref ref, UserDomain user) {
 
 @Riverpod(keepAlive: true)
 Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
-  final apiClient = ref.watch(apiClientProvider(user));
-  final token = await apiClient.getAccessToken?.call();
+  final tokenService = ref.watch(tokenProvider);
+  final token = await tokenService.getAccessToken(user.id);
 
   if (token != null) {
-    final api = SocketApi(apiClient.baseUrl.toString(), token);
+    final api = SocketApi(user.serverUrl.toString(), token);
     ref.onDispose(api.dispose);
     return api;
   } else {

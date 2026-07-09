@@ -77,7 +77,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
           loading: () => const Center(child: RandomWaveform()),
           error: (e, _) => ErrorRetryWidget(
             e.toString(),
-            onRetry: () => ref.invalidate(libraryItemsProvider),
+            onRetry: () => ref.invalidate(rawLibraryItemsProvider),
           ),
         ),
       ),

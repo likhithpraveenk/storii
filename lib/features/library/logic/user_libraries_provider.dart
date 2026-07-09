@@ -8,6 +8,7 @@ part 'user_libraries_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 Future<List<Library>> userLibraries(Ref ref) async {
+  ref.watchConnection();
   final user = await ref.watch(authenticatedUserProvider.future);
   final api = ref.read(libraryApiProvider(user));
 

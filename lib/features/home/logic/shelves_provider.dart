@@ -3,7 +3,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
-import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
@@ -50,7 +49,7 @@ Future<List<Shelf>> shelves(Ref ref) async {
 
 @Riverpod(keepAlive: true)
 Future<List<Shelf>> rawShelves(Ref ref) async {
-  final isConnected = await ref.watch(socketStatusProvider.future);
+  final isConnected = ref.watchConnection();
   if (!isConnected) {
     final downloads = await ref.read(downloadsProvider.future);
     final cache = ref.read(itemsCacheProvider.notifier);
@@ -69,7 +68,7 @@ Future<List<Shelf>> rawShelves(Ref ref) async {
       }
     }
 
-    return [
+    final downloadShelves = [
       if (audiobooks.isNotEmpty)
         Shelf.libraryItems(
           id: 'offline_downloads',
@@ -89,6 +88,7 @@ Future<List<Shelf>> rawShelves(Ref ref) async {
           total: podcasts.length,
         ),
     ];
+    if (downloadShelves.isNotEmpty) return downloadShelves;
   }
 
   final libraryId = (await ref.watch(

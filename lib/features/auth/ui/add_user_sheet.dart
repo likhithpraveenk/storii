@@ -55,46 +55,48 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
 
     final serverStatusAsync = ref.watch(serverStatusProvider(widget.serverUrl));
 
-    return Padding(
-      padding: MediaQuery.viewInsetsOf(
-        context,
-      ).add(const .fromLTRB(24, 0, 24, 24)),
-      child: Column(
-        children: [
-          serverStatusAsync.when(
-            loading: () => const Center(child: RandomWaveform()),
-            error: (e, _) => ErrorRetryWidget(
-              e.toString(),
-              onRetry: () =>
-                  ref.invalidate(serverStatusProvider(widget.serverUrl)),
+    return SafeArea(
+      child: Padding(
+        padding: MediaQuery.viewInsetsOf(
+          context,
+        ).add(const .symmetric(horizontal: 24)),
+        child: Column(
+          children: [
+            serverStatusAsync.when(
+              loading: () => const Center(child: RandomWaveform()),
+              error: (e, _) => ErrorRetryWidget(
+                e.toString(),
+                onRetry: () =>
+                    ref.invalidate(serverStatusProvider(widget.serverUrl)),
+              ),
+              data: (status) => UserLoginForm(
+                serverUrl: widget.serverUrl,
+                serverStatus: status,
+                username: widget.username,
+                isLoading: isLoading,
+              ),
             ),
-            data: (status) => UserLoginForm(
-              serverUrl: widget.serverUrl,
-              serverStatus: status,
-              username: widget.username,
-              isLoading: isLoading,
+            const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: AppTextButton(
+                text: l10n.cancel,
+                onPressed: () {
+                  ref.invalidate(addUserProvider);
+                  Navigator.of(context).pop();
+                },
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          SizedBox(
-            width: double.infinity,
-            child: AppTextButton(
-              text: l10n.cancel,
-              onPressed: () {
-                ref.invalidate(addUserProvider);
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
-          if (state.message != null) ...[
-            const SizedBox(height: 16),
-            Text(
-              state.message!,
-              style: textTheme.labelSmall?.copyWith(color: scheme.error),
-              textAlign: .center,
-            ),
+            if (state.message != null) ...[
+              const SizedBox(height: 16),
+              Text(
+                state.message!,
+                style: textTheme.labelSmall?.copyWith(color: scheme.error),
+                textAlign: .center,
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
