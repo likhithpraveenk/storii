@@ -1,22 +1,27 @@
 # Storii
 
-A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf) focused on simple UX, and maintainable architecture.
+A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobookshelf</a> focused on simple UX and maintainable architecture
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge&logo=gnu&logoColor=white)](https://www.gnu.org/licenses/gpl-3.0)
-[![GitHub Version](https://img.shields.io/github/v/release/likhithpraveenk/storii.svg?logo=github&label=GitHub&style=for-the-badge)](https://github.com/likhithpraveenk/storii/releases)
-[![IzzyOnDroid Version](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.likhithpraveenk.storii&label=IzzyOnDroid&style=for-the-badge)](https://apt.izzysoft.de/fdroid/index/apk/com.likhithpraveenk.storii)
-
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroidButtonGreyBorder_nofont.png" height="50" alt="Get it on IzzyOnDroid">](https://apt.izzysoft.de/packages/com.likhithpraveenk.storii)
-[<img src="assets/get_it_on_github_badge.png" alt="Get it on GitHub" height="50">](https://github.com/likhithpraveenk/storii/releases/latest)
-[<img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="Get it on Obtainium" height="50">](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/likhithpraveenk/storii)
-
+![CI](https://github.com/likhithpraveenk/storii/actions/workflows/ci.yml/badge.svg?branch=main)
+![Release Status](https://github.com/likhithpraveenk/storii/actions/workflows/release.yml/badge.svg)
+[![RB Status](https://shields.rbtlog.dev/simple/com.likhithpraveenk.storii)](https://shields.rbtlog.dev/com.likhithpraveenk.storii)
 ![GitHub all releases](https://img.shields.io/github/downloads/likhithpraveenk/storii/total?logo=github&label=Github%20Downloads)
 [![IzzyOnDroid Yearly Downloads](https://img.shields.io/badge/dynamic/json?url=https://dlstats.izzyondroid.org/iod-stats-collector/stats/basic/yearly/rolling.json&query=$.['com.likhithpraveenk.storii']&label=IzzyOnDroid%20Downloads)](https://apt.izzysoft.de/packages/com.likhithpraveenk.storii)
 
+### Download & Release Info
+
+[![GitHub Version](https://img.shields.io/github/v/release/likhithpraveenk/storii.svg?logo=github&label=GitHub&style=for-the-badge)](https://github.com/likhithpraveenk/storii/releases)
+[![IzzyOnDroid Version](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.likhithpraveenk.storii&label=IzzyOnDroid&style=for-the-badge)](https://apt.izzysoft.de/fdroid/index/apk/com.likhithpraveenk.storii)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge&logo=gnu&logoColor=white)](https://www.gnu.org/licenses/gpl-3.0)
+
+[<img src="assets/IzzyOnDroidButtonGreyBorder_nofont.png" alt="Get it on IzzyOnDroid" height="50">](https://apt.izzysoft.de/packages/com.likhithpraveenk.storii)
+[<img src="assets/get_it_on_github_badge.png" alt="Get it on GitHub" height="50">](https://github.com/likhithpraveenk/storii/releases/latest)
+[<img src="assets/badge_obtainium.png" alt="Get it on Obtainium" height="50">](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/likhithpraveenk/storii)
+
 ## Features
 
-- Audiobook streaming with background playback and progress sync
-- **Offline downloads** - fully functional download manager with pause/resume and local playback
+- Audiobooks & Podcasts streaming with background playback and progress sync
+- Offline downloads - fully functional download manager with pause/resume and local playback
 - Multi-user, multi-server and OIDC support with persistent sessions
 - Personalized home shelves: continue listening, recent series, newest authors, etc.
 - Advanced library browsing with filters, sorting, and series grouping
@@ -25,50 +30,47 @@ A flutter client for [audiobookshelf](https://github.com/advplyr/audiobookshelf)
 - Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling
 - Navigation customization: reorder tabs, choose startup screen, label behavior
 
-> **Note:** Podcast support is under development.
-
 ## Demo
 
 [Watch demo](https://youtube.com/shorts/ngYgcCmK-cE)
 
 ## Screenshots
 
-| Library | Downloads |
-|:--------|:-------|
+| Library                                                                                                            | Downloads                                                                                                  |
+| :----------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------- |
 | <img src="metadata/android/en-US/images/phoneScreenshots/1.jpg" width="300" alt="library view showing audiobooks"> | <img src="metadata/android/en-US/images/phoneScreenshots/9.jpg" width="300" alt="active downloads screen"> |
 
-| Home with Player | Now Playing |
-|:-----------------|:------------|
+| Home with Player                                                                                                | Now Playing                                                                                                                  |
+| :-------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------- |
 | <img src="metadata/android/en-US/images/phoneScreenshots/3.jpg" width="300" alt="home screen with mini player"> | <img src="metadata/android/en-US/images/phoneScreenshots/4.jpg" width="300" alt="now playing screen with playback controls"> |
 
-| Book Details | Series |
-|:-------------|:-------|
+| Book Details                                                                                                             | Series                                                                                                               |
+| :----------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------- |
 | <img src="metadata/android/en-US/images/phoneScreenshots/5.jpg" width="300" alt="audiobook detail screen with chapters"> | <img src="metadata/android/en-US/images/phoneScreenshots/6.jpg" width="300" alt="series view listing related books"> |
 
-| Settings | Appearance |
-|:---------|:-----------|
+| Settings                                                                                           | Appearance                                                                                                       |
+| :------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
 | <img src="metadata/android/en-US/images/phoneScreenshots/7.jpg" width="300" alt="settings screen"> | <img src="metadata/android/en-US/images/phoneScreenshots/8.jpg" width="300" alt="appearance and theme settings"> |
 
 ## Roadmap
 
 - Additional player enhancements (bookmarks, equalizer)
 - Collections / playlists support
-- Complete podcast playback and episode management
 
 ## Tech Stack
 
-| Layer           | Technologies |
-|-----------------|--------------|
-| **State**       | Riverpod |
-| **Networking**  | Dio (REST), Socket.IO (real‑time) |
-| **Audio**       | just_audio, audio_service, audio_session |
-| **Local Data**  | Hive CE, Flutter Secure Storage |
-| **Routing**     | GoRouter |
-| **Code Gen**    | Freezed, json_serializable, riverpod_generator, build_runner |
+| Layer          | Technologies                                                 |
+| -------------- | ------------------------------------------------------------ |
+| **State**      | Riverpod                                                     |
+| **Networking** | Dio (REST), Socket.IO (real‑time)                            |
+| **Audio**      | just_audio, audio_service, audio_session                     |
+| **Local Data** | Hive CE, Flutter Secure Storage                              |
+| **Routing**    | GoRouter                                                     |
+| **Code Gen**   | Freezed, json_serializable, riverpod_generator, build_runner |
 
 ## Acknowledgments
 
-- **[Audiobookshelf](https://github.com/advplyr/audiobookshelf)**: The open-source, self-hosted audiobook and podcast server this app is built for 
+- **[Audiobookshelf](https://github.com/advplyr/audiobookshelf)**: The open-source, self-hosted audiobook and podcast server this app is built for
 - **[Finamp](https://github.com/unicornsonlsd/finamp)**: Inspiration for settings architecture
 - **[yaabsa](https://github.com/Vito0912/yaabsa)**: Bootstrapped the initial app structure
 

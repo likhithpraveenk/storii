@@ -10,5 +10,3 @@ Storii is a modern, feature-rich client for [Audiobookshelf](https://github.com/
 - Customizable player: sleep timer, playback speed, chapter navigation, and listening history
 - Appearance settings: light/dark/system themes, dynamic colors, pure black mode, custom fonts
 - Flexible navigation: reorder bottom tabs, choose startup screen
-
-    Note: Podcast support is under development.
