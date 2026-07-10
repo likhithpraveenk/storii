@@ -1,0 +1,45 @@
+name: Static checks
+
+description: Run formatting, codegen, dart fix, and analyzer checks
+
+runs:
+  using: composite
+  steps:
+    - name: set up flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+        flutter-version-file: ./pubspec.yaml
+        cache: true
+
+    - name: get dependencies
+      shell: bash
+      run: flutter pub get
+
+    - name: formatting
+      shell: bash
+      run: dart format --set-exit-if-changed .
+
+    - name: code generation check
+      shell: bash
+      run: |
+        dart run build_runner build
+        if [[ -n $(git status --porcelain) ]]; then
+          echo "::error::Please run 'dart run build_runner build' and commit the changes"
+          git status --porcelain
+          exit 1
+        fi
+
+    - name: dart fix check
+      shell: bash
+      run: |
+        dart fix --apply
+        if [[ -n $(git status --porcelain) ]]; then
+          echo "::error::Please run 'dart fix --apply' and commit the changes"
+          git status --porcelain
+          exit 1
+        fi
+
+    - name: flutter analyze check
+      shell: bash
+      run: flutter analyze --no-pub
