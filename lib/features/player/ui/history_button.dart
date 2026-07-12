@@ -15,38 +15,57 @@ import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 
 class HistoryButton extends StatelessWidget {
-  const HistoryButton({super.key, required this.itemId, this.episodeId});
+  const HistoryButton({
+    super.key,
+    required this.itemId,
+    this.episodeId,
+    this.inOverflow = false,
+  });
   final String itemId;
   final String? episodeId;
+  final bool inOverflow;
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      tooltip: l10n.history,
-      icon: const Icon(Icons.history),
-      onPressed: () => showModalBottomSheet(
-        context: context,
-        useSafeArea: true,
-        isScrollControlled: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: .vertical(top: .circular(24)),
-        ),
-        builder: (_) => DraggableScrollableSheet(
-          maxChildSize: 0.95,
-          minChildSize: 0.4,
-          shouldCloseOnMinExtent: false,
-          snap: true,
-          expand: false,
-          builder: (context, controller) => DecoratedBox(
-            decoration: bottomSheetDecoration(context),
-            child: HistorySheet(
-              itemId: itemId,
-              episodeId: episodeId,
-              controller: controller,
-            ),
+    Future<void> openSheet() => showModalBottomSheet(
+      context: context,
+      useSafeArea: true,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: .vertical(top: .circular(24)),
+      ),
+      builder: (_) => DraggableScrollableSheet(
+        maxChildSize: 0.95,
+        minChildSize: 0.4,
+        shouldCloseOnMinExtent: false,
+        snap: true,
+        expand: false,
+        builder: (context, controller) => DecoratedBox(
+          decoration: bottomSheetDecoration(context),
+          child: HistorySheet(
+            itemId: itemId,
+            episodeId: episodeId,
+            controller: controller,
           ),
         ),
       ),
+    );
+
+    if (inOverflow) {
+      return ListTile(
+        title: Text(l10n.history),
+        leading: const Icon(Icons.history),
+        onTap: () {
+          Navigator.of(context).pop();
+          openSheet();
+        },
+      );
+    }
+
+    return IconButton(
+      tooltip: l10n.history,
+      icon: const Icon(Icons.history),
+      onPressed: openSheet,
     );
   }
 }
@@ -67,7 +86,6 @@ class HistorySheet extends ConsumerWidget {
     final key = mediaItemIdKey(itemId, episodeId);
     final history = ref.watch(playbackHistoryProvider(key));
 
-    final theme = Theme.of(context);
     final session = ref.watch(sessionProvider);
     final isCurrentItem =
         (session?.libraryItemId, session?.episodeId) == (itemId, episodeId);

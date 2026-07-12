@@ -97,6 +97,11 @@ _UserSettings _$UserSettingsFromJson(
   fadeOnSleepMinVolume:
       (json['fadeOnSleepMinVolume'] as num?)?.toDouble() ??
       DefaultUserSettings.fadeOnSleepMinVolume,
+  pinnedPlayerActions:
+      (json['pinnedPlayerActions'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$FullPlayerActionsEnumMap, e))
+          .toList() ??
+      DefaultUserSettings.pinnedPlayerActions,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -135,6 +140,9 @@ Map<String, dynamic> _$UserSettingsToJson(
   'fadeOnSleep': instance.fadeOnSleep,
   'fadeOnSleepDuration': instance.fadeOnSleepDuration.inMicroseconds,
   'fadeOnSleepMinVolume': instance.fadeOnSleepMinVolume,
+  'pinnedPlayerActions': instance.pinnedPlayerActions
+      .map((e) => _$FullPlayerActionsEnumMap[e]!)
+      .toList(),
 };
 
 const _$NavTargetEnumMap = {
@@ -204,4 +212,12 @@ const _$SeriesSortEnumMap = {
   SeriesSort.totalDuration: 'totalDuration',
   SeriesSort.numBooks: 'numBooks',
   SeriesSort.random: 'random',
+};
+
+const _$FullPlayerActionsEnumMap = {
+  FullPlayerActions.history: 'history',
+  FullPlayerActions.chapters: 'chapters',
+  FullPlayerActions.sleep: 'sleep',
+  FullPlayerActions.speed: 'speed',
+  FullPlayerActions.volume: 'volume',
 };

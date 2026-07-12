@@ -25,14 +25,12 @@ class ChaptersActionButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void Function()? openSheet() => session.isPodcastEpisode
-        ? null
-        : () => showChapterListSheet(
-            context,
-            chapters: session.chapters,
-            itemId: session.libraryItemId,
-            itemTitle: session.displayTitle ?? l10n.noTitle,
-          );
+    void openSheet() => showChapterListSheet(
+      context,
+      chapters: session.chapters,
+      itemId: session.libraryItemId,
+      itemTitle: session.displayTitle ?? l10n.noTitle,
+    );
 
     if (inOverflow) {
       return ListTile(
@@ -51,7 +49,7 @@ class ChaptersActionButton extends ConsumerWidget {
     return IconButton(
       icon: const Icon(Icons.list_rounded),
       tooltip: l10n.chapters,
-      onPressed: openSheet,
+      onPressed: session.isPodcastEpisode ? null : openSheet,
     );
   }
 }

@@ -41,6 +41,7 @@ class DefaultUserSettings {
   static const fadeOnSleep = true;
   static const fadeOnSleepDuration = Duration(minutes: 1);
   static const fadeOnSleepMinVolume = 0.2;
+  static const pinnedPlayerActions = defaultPlayerActions;
 }
 
 @freezed
@@ -119,6 +120,9 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.fadeOnSleepMinVolume)
     double fadeOnSleepMinVolume,
+
+    @Default(DefaultUserSettings.pinnedPlayerActions)
+    List<FullPlayerActions> pinnedPlayerActions,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

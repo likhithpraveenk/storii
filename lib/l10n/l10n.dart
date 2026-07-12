@@ -226,6 +226,12 @@ abstract class AppLocalizations {
   /// **'Add User'**
   String get addUser;
 
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
   /// No description provided for @editServer.
   ///
   /// In en, this message translates to:

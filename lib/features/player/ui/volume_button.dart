@@ -5,20 +5,32 @@ import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class VolumeButton extends ConsumerWidget {
-  const VolumeButton({super.key});
+  const VolumeButton({super.key, required this.inOverflow});
+
+  final bool inOverflow;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final volume = ref.watch(volumeProvider).value ?? 1;
+    Future<void> openSheet() => AppBottomSheet.show(
+      context,
+      title: l10n.volume,
+      body: _VolumeSliderSheet(volume),
+    );
+    if (inOverflow) {
+      return ListTile(
+        title: Text(l10n.volume),
+        leading: const Icon(Icons.volume_up),
+        trailing: Text('${(volume * 100).round()}%'),
+        onTap: () {
+          Navigator.of(context).pop();
+          openSheet();
+        },
+      );
+    }
 
     return IconButton(
-      onPressed: () {
-        AppBottomSheet.show(
-          context,
-          title: l10n.volume,
-          body: _VolumeSliderSheet(volume),
-        );
-      },
+      onPressed: openSheet,
       tooltip: l10n.volume,
       icon: Icon(
         volume == 0.0
