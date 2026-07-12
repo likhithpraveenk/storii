@@ -85,11 +85,7 @@ class HistorySheet extends ConsumerWidget {
                 alignment: .center,
                 child: Text(
                   l10n.history,
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontSize: 20,
-                    fontWeight: .w600,
-                    letterSpacing: -0.3,
-                  ),
+                  style: bottomSheetTitleTextStyle(context),
                 ),
               ),
               // if (history.isNotEmpty)

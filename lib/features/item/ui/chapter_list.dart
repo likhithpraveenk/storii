@@ -35,11 +35,7 @@ void showChapterListSheet(
               padding: const .fromLTRB(24, 24, 24, 16),
               child: Text(
                 l10n.chapters,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontSize: 20,
-                  fontWeight: .w600,
-                  letterSpacing: -0.3,
-                ),
+                style: bottomSheetTitleTextStyle(context),
                 textAlign: .center,
               ),
             ),
