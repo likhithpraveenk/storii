@@ -40,7 +40,7 @@ final class SessionStoreProvider extends $NotifierProvider<SessionStore, void> {
   }
 }
 
-String _$sessionStoreHash() => r'54fbfd4aadafd3289ea55734ff1c4582059f3a54';
+String _$sessionStoreHash() => r'ed45e6d569465a42b2dadcdea793df8259d2ed74';
 
 abstract class _$SessionStore extends $Notifier<void> {
   void build();

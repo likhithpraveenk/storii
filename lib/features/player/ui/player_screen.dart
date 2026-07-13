@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/features/player/ui/full_player.dart';
@@ -59,7 +59,7 @@ class PlayerScreen extends ConsumerWidget {
     return PlayerBuilder(
       maxHeight: screenHeight,
       onDismiss: () {
-        log('player dismissed. audio handler stop');
+        LogService.log('miniplayer dismissed => player stop', level: .info);
         unawaited(audioHandler.stop());
       },
       builder: (context, f) {

@@ -40,13 +40,7 @@ class SessionStore extends _$SessionStore {
   Stream<PlaybackSession?> watchSession(String itemId, [String? episodeId]) {
     return _box
         .watch()
-        .map((_) {
-          return _box.values
-              .map(_parseSession)
-              .firstWhereOrNull(
-                (s) => s.libraryItemId == itemId && s.episodeId == episodeId,
-              );
-        })
+        .map((_) => getSession(itemId, episodeId))
         .startWith(getSession(itemId, episodeId));
   }
 

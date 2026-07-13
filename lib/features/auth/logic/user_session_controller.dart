@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
@@ -23,7 +22,7 @@ class UserSessionController extends _$UserSessionController {
   Future<void> logout(UserDomain user) async {
     state = .loading;
     if (ref.read(sessionProvider) != null) {
-      log('user logout. audio handler stop');
+      LogService.log('user logout. audio handler stop', level: .info);
       await audioHandler.stop();
     }
     await ref
@@ -44,7 +43,7 @@ class UserSessionController extends _$UserSessionController {
     if (currentUser != null && currentUser.id != user.id) return;
     state = .loading;
     if (ref.read(sessionProvider) != null) {
-      log('user force logout. audio handler stop');
+      LogService.log('user force logout. audio handler stop', level: .info);
       await audioHandler.stop();
     }
 
@@ -59,7 +58,7 @@ class UserSessionController extends _$UserSessionController {
   Future<void> switchUser() async {
     final user = ref.read(currentUserProvider);
     if (ref.read(sessionProvider) != null) {
-      log('user switch. audio handler stop');
+      LogService.log('user switch. audio handler stop', level: .info);
       await audioHandler.stop();
     }
     if (user != null) {

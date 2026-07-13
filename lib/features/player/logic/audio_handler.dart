@@ -318,10 +318,24 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   @override
-  Future<void> onNotificationDeleted() => stop();
+  Future<void> onNotificationDeleted() {
+    LogService.log(
+      'onNotificationDeleted - player stop',
+      source: 'AppAudioHandler',
+      level: .info,
+    );
+    return stop();
+  }
 
   @override
-  Future<void> onTaskRemoved() => stop();
+  Future<void> onTaskRemoved() {
+    LogService.log(
+      'onTaskRemoved - player stop',
+      source: 'AppAudioHandler',
+      level: .info,
+    );
+    return stop();
+  }
 
   Future<void> dispose() async {
     await _eventController.close();
