@@ -8,22 +8,36 @@ import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
 
 class SleepButton extends ConsumerWidget {
-  const SleepButton({super.key});
+  const SleepButton({super.key, required this.inOverflow});
+
+  final bool inOverflow;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sleepMinutes = ref.watch(
       sleepTimerProvider.select((t) => t?.inMinutes),
     );
+    Future<void> openSheet() => AppBottomSheet.show(
+      context,
+      title: l10n.sleepTimer,
+      body: const SleepTimerSheet(),
+    );
+    if (inOverflow) {
+      return ListTile(
+        title: Text(l10n.sleepTimer),
+        leading: const Icon(Icons.bedtime_outlined),
+        trailing: sleepMinutes != null
+            ? Text(Duration(minutes: sleepMinutes).toReadableDuration())
+            : null,
+        onTap: () {
+          Navigator.of(context).pop();
+          openSheet();
+        },
+      );
+    }
 
     return IconButton(
-      onPressed: () {
-        AppBottomSheet.show(
-          context,
-          title: l10n.sleepTimer,
-          body: const SleepTimerSheet(),
-        );
-      },
+      onPressed: openSheet,
       tooltip: l10n.sleepTimer,
       icon: sleepMinutes == null
           ? const Icon(Icons.bedtime_outlined)

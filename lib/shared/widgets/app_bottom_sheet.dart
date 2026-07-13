@@ -14,6 +14,21 @@ BoxDecoration bottomSheetDecoration(BuildContext context) {
   );
 }
 
+TextStyle? bottomSheetTitleTextStyle(BuildContext context) {
+  return Theme.of(context).textTheme.titleLarge?.copyWith(
+    fontSize: 20,
+    fontWeight: .w600,
+    letterSpacing: -0.3,
+  );
+}
+
+TextStyle? bottomSheetSubtitleTextStyle(BuildContext context) {
+  final theme = Theme.of(context);
+  return theme.textTheme.bodySmall?.copyWith(
+    color: theme.colorScheme.onSurfaceVariant,
+  );
+}
+
 class AppBottomSheet extends StatelessWidget {
   const AppBottomSheet({
     super.key,
@@ -53,14 +68,16 @@ class AppBottomSheet extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: .vertical(top: .circular(24)),
       ),
-      builder: (_) => AppBottomSheet(
-        title: title,
-        subtitle: subtitle,
-        body: body,
-        actionLabel: actionLabel,
-        actionIcon: actionIcon,
-        isDestructive: isDestructive,
-        onTap: onTap,
+      builder: (_) => SafeArea(
+        child: AppBottomSheet(
+          title: title,
+          subtitle: subtitle,
+          body: body,
+          actionLabel: actionLabel,
+          actionIcon: actionIcon,
+          isDestructive: isDestructive,
+          onTap: onTap,
+        ),
       ),
     );
   }
@@ -68,7 +85,6 @@ class AppBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasButton = onTap != null;
-    final theme = Theme.of(context);
 
     final decoration = bottomSheetDecoration(context);
 
@@ -78,20 +94,14 @@ class AppBottomSheet extends StatelessWidget {
         children: [
           Text(
             title,
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontSize: 20,
-              fontWeight: .w600,
-              letterSpacing: -0.3,
-            ),
+            style: bottomSheetTitleTextStyle(context),
             textAlign: .center,
           ),
           if (subtitle != null) ...[
             const SizedBox(height: 8),
             Text(
               subtitle!,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
+              style: bottomSheetSubtitleTextStyle(context),
               textAlign: .center,
             ),
           ],

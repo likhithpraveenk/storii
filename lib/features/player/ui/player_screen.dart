@@ -120,7 +120,6 @@ class PlayerScreen extends ConsumerWidget {
                   child: const MiniProgressIndicator(),
                 ),
               ),
-            // TODO: add down arrow and more settings buttons
           ],
         );
       },

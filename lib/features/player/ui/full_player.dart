@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
-import 'package:storii/features/player/ui/history_button.dart';
+import 'package:storii/features/player/ui/full_player_actions.dart';
 import 'package:storii/features/player/ui/play_button.dart';
 import 'package:storii/features/player/ui/seek_button.dart';
-import 'package:storii/features/player/ui/sleep_button.dart';
-import 'package:storii/features/player/ui/speed_button.dart';
-import 'package:storii/features/player/ui/volume_button.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
@@ -98,31 +94,7 @@ class FullPlayer extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: .spaceEvenly,
-              crossAxisAlignment: .start,
-              children: [
-                HistoryButton(
-                  itemId: session.libraryItemId,
-                  episodeId: session.episodeId,
-                ),
-                if (session.isBook)
-                  IconButton(
-                    icon: const Icon(Icons.list_rounded),
-                    tooltip: l10n.chapters,
-                    onPressed: () => showChapterListSheet(
-                      context,
-                      chapters: session.chapters,
-                      itemId: session.libraryItemId,
-                      itemTitle: session.displayTitle ?? l10n.noTitle,
-                    ),
-                  ),
-                const SleepButton(),
-                const SpeedButton(),
-                const VolumeButton(),
-                // TODO: add bookmarks
-              ],
-            ),
+            FullPlayerActionsWidget(session),
             Text(
               session.playMethod.label,
               textAlign: .center,

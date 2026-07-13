@@ -29,11 +29,7 @@ void showAudioTracksSheet(
               padding: const .fromLTRB(24, 24, 24, 16),
               child: Text(
                 l10n.tracks,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontSize: 20,
-                  fontWeight: .w600,
-                  letterSpacing: -0.3,
-                ),
+                style: bottomSheetTitleTextStyle(context),
                 textAlign: .center,
               ),
             ),

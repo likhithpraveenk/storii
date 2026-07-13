@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 class AppDialog extends StatelessWidget {
@@ -79,11 +80,7 @@ class AppDialog extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontSize: 20,
-                  fontWeight: .w600,
-                  letterSpacing: -0.3,
-                ),
+                style: bottomSheetTitleTextStyle(context),
                 textAlign: .center,
               ),
               if (body != null) ...[const SizedBox(height: 16), body!],

@@ -29,6 +29,7 @@
   "followingUsers": "You are about to delete the following users",
   "urlCopied": "URL Copied",
   "addUser": "Add User",
+  "edit": "Edit",
   "editServer": "Edit Server",
   "errorLoadingUsers": "Error loading users",
   "switchingToUser": "Switching to {user}",

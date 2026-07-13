@@ -90,11 +90,7 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
             children: [
               Text(
                 l10n.addServer,
-                style: theme.textTheme.titleLarge?.copyWith(
-                  fontSize: 20,
-                  fontWeight: .w600,
-                  letterSpacing: -0.3,
-                ),
+                style: bottomSheetTitleTextStyle(context),
                 textAlign: .center,
               ),
               const SizedBox(height: 24),

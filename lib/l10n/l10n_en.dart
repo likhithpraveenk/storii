@@ -77,6 +77,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addUser => 'Add User';
 
   @override
+  String get edit => 'Edit';
+
+  @override
   String get editServer => 'Edit Server';
 
   @override

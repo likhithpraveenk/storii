@@ -321,6 +321,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setFadeOnSleepMinVolume(double value) =>
       _save(state?.copyWith(fadeOnSleepMinVolume: value));
+
+  Future<void> setPinnedPlayerActions(List<FullPlayerActions> value) =>
+      _save(state?.copyWith(pinnedPlayerActions: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -604,4 +607,13 @@ final fadeOnSleepMinVolumeProvider = Provider<double>(
     ),
   ),
   name: 'fadeOnSleepMinVolumeProvider',
+);
+
+final pinnedPlayerActionsProvider = Provider<List<FullPlayerActions>>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.pinnedPlayerActions ?? DefaultUserSettings.pinnedPlayerActions,
+    ),
+  ),
+  name: 'pinnedPlayerActionsProvider',
 );
