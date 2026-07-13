@@ -220,4 +220,5 @@ const _$FullPlayerActionsEnumMap = {
   FullPlayerActions.sleep: 'sleep',
   FullPlayerActions.speed: 'speed',
   FullPlayerActions.volume: 'volume',
+  FullPlayerActions.cast: 'cast',
 };

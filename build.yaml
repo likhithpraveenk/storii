@@ -8,6 +8,7 @@ targets:
           include_if_null: false
         generate_for:
           - lib/**/models/**
+          - lib/features/**/logic/**
           - lib/**/settings_provider.dart
       freezed:
         generate_for:

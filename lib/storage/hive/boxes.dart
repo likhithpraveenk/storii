@@ -18,6 +18,7 @@ const localSessionsBox = 'local_sessions_box';
 const playbackHistoryBox = 'playback_history_box';
 const downloadsBox = 'downloads_box';
 const speedsBox = 'speeds_box';
+const castSessionsBox = 'cast_sessions_box';
 
 const networkCacheDir = 'dio_cache';
 late final HiveCacheStore networkCacheStore;
@@ -36,6 +37,7 @@ Future<void> setupHive() async {
     Hive.openBox<List<dynamic>>(playbackHistoryBox),
     Hive.openBox<String>(downloadsBox),
     Hive.openBox<double>(speedsBox),
+    Hive.openBox<String>(castSessionsBox),
   ]);
 
   // dio cache

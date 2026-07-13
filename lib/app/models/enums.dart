@@ -235,21 +235,21 @@ enum SearchFilter {
   }
 }
 
-enum FullPlayerActions { history, chapters, sleep, speed, volume }
+enum FullPlayerActions { history, chapters, sleep, speed, volume, cast }
 
 extension FullPlayerActionsLabel on FullPlayerActions {
   String get label {
     return switch (this) {
-      FullPlayerActions.history => l10n.history,
-      FullPlayerActions.chapters => l10n.chapters,
-      FullPlayerActions.sleep => l10n.sleepTimer,
-      FullPlayerActions.speed => l10n.playbackSpeed,
-      FullPlayerActions.volume => l10n.volume,
+      .history => l10n.history,
+      .chapters => l10n.chapters,
+      .sleep => l10n.sleepTimer,
+      .speed => l10n.playbackSpeed,
+      .volume => l10n.volume,
+      .cast => l10n.castToDevice,
     };
   }
 }
 
-// TODO: add cast
 // TODO: add bookmarks
 
 const defaultPlayerActions = <FullPlayerActions>[

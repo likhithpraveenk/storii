@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/cast/ui/cast_button.dart';
 import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/player/ui/history_button.dart';
 import 'package:storii/features/player/ui/more_actions_sheet.dart';
@@ -26,6 +27,7 @@ extension WidgetX on FullPlayerActions {
     .sleep => SleepButton(inOverflow: inOverflow),
     .speed => SpeedButton(inOverflow: inOverflow),
     .volume => VolumeButton(inOverflow: inOverflow),
+    .cast => CastButton(inOverflow: inOverflow),
   };
 }
 

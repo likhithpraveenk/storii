@@ -8,6 +8,7 @@ import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/cast/logic/cast_controller.dart';
 import 'package:storii/features/player/logic/play_request_params.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/shared/helpers/app_error.dart';
@@ -103,6 +104,10 @@ class SessionNotifier extends _$SessionNotifier {
       // log('no session to sync');
       return;
     }
+    final castSession = ref.read(castControllerProvider);
+    if (castSession.target?.sessionId == session.id) {
+      return;
+    }
 
     final updated = session.copyWith(
       currentTime: position,
@@ -155,6 +160,11 @@ class SessionNotifier extends _$SessionNotifier {
       // log('no session to close');
       return;
     }
+    final castSession = ref.read(castControllerProvider);
+    if (castSession.target?.sessionId == session.id) {
+      state = null;
+      return;
+    }
 
     try {
       final user = await ref.read(authenticatedUserProvider.future);
@@ -177,6 +187,13 @@ class SessionNotifier extends _$SessionNotifier {
     } finally {
       state = null;
     }
+  }
+
+  Future<void> switchToCast() async {
+    final session = state;
+    if (session == null) return;
+
+    await ref.read(sessionStoreProvider.notifier).delete(session.id);
   }
 }
 

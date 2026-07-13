@@ -2079,6 +2079,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Progress saved locally. Sync pending.'**
   String get localSessionSheetBody;
+
+  /// No description provided for @castSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Cast Session'**
+  String get castSession;
+
+  /// No description provided for @castToDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Cast to device'**
+  String get castToDevice;
+
+  /// No description provided for @searchingForDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching for devices…'**
+  String get searchingForDevices;
+
+  /// No description provided for @deviceName.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Name'**
+  String get deviceName;
+
+  /// No description provided for @startedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Started At'**
+  String get startedAt;
 }
 
 class _AppLocalizationsDelegate

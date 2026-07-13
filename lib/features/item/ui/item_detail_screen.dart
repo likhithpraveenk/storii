@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/cast/ui/cast_session_icon.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/item/ui/action_buttons.dart';
@@ -78,6 +79,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                 PlayButton(item),
                                 if (item.isBook) ProgressBar(itemId: item.id),
                                 if (item.isBook) ActionButtons(item: item),
+                                CastSessionIcon(itemId: item.id),
                               ],
                             ),
                           ),

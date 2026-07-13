@@ -433,5 +433,10 @@
   "storageSubDirsNote": "Audiobooks and podcasts will be stored in separate subdirectories: \n- audiobooks/<itemId>/\n- podcasts/<podcastId>/\nThis ensures stable paths even if server metadata changes",
   "localSession": "Local Session",
   "currentPosition": "Current Position",
-  "localSessionSheetBody": "Progress saved locally. Sync pending."
+  "localSessionSheetBody": "Progress saved locally. Sync pending.",
+  "castSession": "Cast Session",
+  "castToDevice": "Cast to device",
+  "searchingForDevices": "Searching for devices…",
+  "deviceName": "Device Name",
+  "startedAt": "Started At"
 }

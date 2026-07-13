@@ -5,6 +5,7 @@ import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/cast/ui/cast_session_icon.dart';
 import 'package:storii/features/item/ui/episode_action_buttons.dart';
 import 'package:storii/features/item/ui/local_session_icon.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
@@ -120,9 +121,19 @@ class EpisodeTile extends ConsumerWidget {
             children: [
               SizedBox(
                 width: 48,
-                child: LocalSessionIcon(
-                  itemId: episode.libraryItemId,
-                  episodeId: episode.id,
+                child: Row(
+                  mainAxisSize: .min,
+                  children: [
+                    LocalSessionIcon(
+                      itemId: episode.libraryItemId,
+                      episodeId: episode.id,
+                    ),
+                    // only one is possible since local cast is not possible
+                    CastSessionIcon(
+                      itemId: episode.libraryItemId,
+                      episodeId: episode.id,
+                    ),
+                  ],
                 ),
               ),
               Expanded(

@@ -1059,4 +1059,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get localSessionSheetBody => 'Progress saved locally. Sync pending.';
+
+  @override
+  String get castSession => 'Cast Session';
+
+  @override
+  String get castToDevice => 'Cast to device';
+
+  @override
+  String get searchingForDevices => 'Searching for devices…';
+
+  @override
+  String get deviceName => 'Device Name';
+
+  @override
+  String get startedAt => 'Started At';
 }
