@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:abs_api/abs_api.dart';
-import 'package:audio_service/audio_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
@@ -19,6 +18,7 @@ import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/models/app_playback_error.dart';
+import 'package:storii/features/player/models/app_playback_state.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/storage/local/speed_store.dart';
 
@@ -38,21 +38,19 @@ Stream<AudioHandlerEvent> audioHandlerEvents(Ref ref) {
 Stream<AppPlaybackError> playbackErrors(Ref ref) => audioHandler.errors;
 
 @riverpod
-Stream<PlaybackState> playbackState(Ref ref) {
-  return audioHandler.playbackState;
+Stream<AppPlaybackState> playbackState(Ref ref) {
+  return audioHandler.stateStream;
 }
 
 @riverpod
-AudioProcessingState? processingState(Ref ref) {
-  return ref.watch(
-    playbackStateProvider.select((s) => s.value?.processingState),
-  );
+Stream<AppPlaybackStatus> playbackStatus(Ref ref) {
+  return audioHandler.stateStream.map((s) => s.status);
 }
 
 @riverpod
 bool isPlaying(Ref ref) {
   return ref.watch(
-    playbackStateProvider.select((s) => s.value?.playing == true),
+    playbackStateProvider.select((s) => s.value?.isPlaying == true),
   );
 }
 
@@ -183,41 +181,27 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
 
 @riverpod
 void playerStateWatcher(Ref ref) {
-  ref.listen(playbackStateProvider, (previous, next) {
-    final prev = previous?.value;
-    final curr = next.value;
-    if (curr == null) return;
-
-    // if initial loading then expand
-    if (curr.processingState == .loading) {
-      ref.read(playerModeProvider.notifier).toFull();
-      return;
-    }
-
-    final stopped = !curr.playing && curr.processingState == .idle;
-    final wasStopped =
-        prev == null || (!prev.playing && prev.processingState == .idle);
-
-    // if just stopped then hide
-    if (stopped && !wasStopped) {
-      ref.read(playerHeightProvider.notifier).snapTo(.hidden);
-      return;
-    }
-
+  ref.listen(sessionProvider, (previous, next) {
     final playerVisible = ref.read(playerViewStateProvider) != .hidden;
-    // if play started off-screen then mini
-    if (curr.playing && !playerVisible) {
-      ref.read(playerModeProvider.notifier).toMini();
+    final playerMode = ref.read(playerModeProvider.notifier);
+
+    // if playback started then show player
+    if (previous == null && next != null && !playerVisible) {
+      // show full during initial loading, mini otherwise
+      final isLoading = ref.read(
+        audioPlayerProvider.select((s) => s.loadingItemId != null),
+      );
+      if (isLoading) {
+        playerMode.toFull();
+      } else {
+        playerMode.toMini();
+      }
       return;
     }
-  });
-
-  ref.listen(sessionProvider, (_, next) {
-    final playerVisible = ref.read(playerViewStateProvider) != .hidden;
 
     // if session ended then hide
     if (next == null && playerVisible) {
-      ref.read(playerModeProvider.notifier).toHidden();
+      playerMode.toHidden();
       return;
     }
   });

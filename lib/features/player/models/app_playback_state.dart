@@ -1,7 +1,7 @@
 import 'package:storii/features/player/models/app_playback_error.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
-enum AppPlaybackStatus { idle, buffering, ready, completed }
+enum AppPlaybackStatus { idle, buffering, ready, completed, error }
 
 const _fakeNull = Object();
 

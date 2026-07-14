@@ -123,7 +123,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     playbackState.add(
       playbackState.value.copyWith(
         processingState: switch (state.status) {
-          // error takes priority over any other status
+          .error => .error,
           _ when state.error != null => .error,
           .idle => .idle,
           .buffering => .buffering,
@@ -158,6 +158,8 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   Stream<AppPlaybackStatus> get statusStream =>
       _player.stateStream.map((s) => s.status).distinct();
+
+  Stream<AppPlaybackState> get stateStream => _player.stateStream.distinct();
 
   Stream<AudioHandlerEvent> get events => _eventController.stream;
 

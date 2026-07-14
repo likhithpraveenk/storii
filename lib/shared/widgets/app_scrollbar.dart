@@ -18,6 +18,7 @@ class AppScrollbar extends StatefulWidget {
   State<AppScrollbar> createState() => _AppScrollbarState();
 }
 
+// TODO: add app scrollbar settings - hide/show & duration of show
 class _AppScrollbarState extends State<AppScrollbar>
     with SingleTickerProviderStateMixin {
   late final AnimationController _anim = AnimationController(

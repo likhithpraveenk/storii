@@ -9,18 +9,18 @@ class PlayButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isPlaying = ref.watch(isPlayingProvider);
-    final processingState = ref.watch(processingStateProvider);
+    final playbackStatus = ref.watch(playbackStatusProvider).value;
 
     final scheme = Theme.of(context).colorScheme;
     final iconColor = scheme.onInverseSurface;
 
-    final isWide = isPlaying || processingState == .buffering;
+    final isWide = isPlaying || playbackStatus == .buffering;
 
     return InkWell(
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
-      onTap: switch (processingState) {
-        .loading => null,
+      onTap: switch (playbackStatus) {
+        .buffering => null,
         .completed => audioHandler.seekToStart,
         _ => audioHandler.togglePlay,
       },
@@ -39,21 +39,21 @@ class PlayButton extends ConsumerWidget {
             transitionBuilder: (child, animation) {
               return ScaleTransition(scale: animation, child: child);
             },
-            child: switch (processingState) {
-              .loading || .buffering => RandomWaveform(
-                key: ValueKey(processingState),
+            child: switch (playbackStatus) {
+              .buffering => RandomWaveform(
+                key: ValueKey(playbackStatus),
                 color: iconColor,
                 barCount: 6,
               ),
               .completed => Icon(
                 Icons.replay_rounded,
-                key: ValueKey(processingState),
+                key: ValueKey(playbackStatus),
                 size: 36,
                 color: iconColor,
               ),
               .error => Icon(
                 Icons.error_outline_rounded,
-                key: ValueKey(processingState),
+                key: ValueKey(playbackStatus),
                 size: 36,
                 color: scheme.error,
               ),
