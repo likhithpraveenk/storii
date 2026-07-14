@@ -43,6 +43,7 @@ class SettingsScreen extends StatelessWidget {
           AppCacheTile(),
           TrustAllCertificatesTile(),
           AccountSection(),
+          // TODO: export/import settings
         ],
       ),
     );

@@ -43,6 +43,9 @@ class FullPlayer extends ConsumerWidget {
     return Padding(
       padding: const .symmetric(horizontal: 16),
       child: SingleChildScrollView(
+        // TODO: on small screens with android nav buttons this is not scrolling
+        // not overflowing but the full actions are only half reachable
+        // covered by nav buttons
         child: Column(
           children: [
             MarqueeText(
