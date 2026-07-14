@@ -42,6 +42,10 @@ class DefaultUserSettings {
   static const fadeOnSleepDuration = Duration(minutes: 1);
   static const fadeOnSleepMinVolume = 0.2;
   static const pinnedPlayerActions = defaultPlayerActions;
+  static const scrollThumbVisibility = true;
+  static const scrollThumbDuration = Duration(seconds: 2);
+  static const scrollThumbHeight = 48.0;
+  static const scrollThumbWidth = 26.0;
 }
 
 @freezed
@@ -123,6 +127,16 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.pinnedPlayerActions)
     List<FullPlayerActions> pinnedPlayerActions,
+
+    @Default(DefaultUserSettings.scrollThumbVisibility)
+    bool scrollThumbVisibility,
+
+    @Default(DefaultUserSettings.scrollThumbDuration)
+    Duration scrollThumbDuration,
+
+    @Default(DefaultUserSettings.scrollThumbHeight) double scrollThumbHeight,
+
+    @Default(DefaultUserSettings.scrollThumbWidth) double scrollThumbWidth,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

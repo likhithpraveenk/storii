@@ -922,6 +922,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get path => 'Path';
 
   @override
+  String get scrollThumbVisibility => 'Show scroll thumb';
+
+  @override
+  String get scrollThumbVisibilitySubtitle =>
+      'Displays a draggable thumb on long lists';
+
+  @override
+  String get scrollThumbSettings => 'Scroll Thumb';
+
+  @override
+  String get scrollThumbDuration => 'Hide after';
+
+  @override
+  String get scrollThumbDurationDescription =>
+      'How long the thumb stays visible after you stop scrolling';
+
+  @override
+  String get scrollThumbHeight => 'Height';
+
+  @override
+  String get scrollThumbHeightDescription => 'Thumb height in pixels';
+
+  @override
+  String get scrollThumbWidth => 'Width';
+
+  @override
+  String get scrollThumbWidthDescription => 'Thumb width in pixels';
+
+  @override
+  String get off => 'Off';
+
+  @override
   String get binaryUnits => 'Binary units';
 
   @override

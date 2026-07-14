@@ -1810,6 +1810,66 @@ abstract class AppLocalizations {
   /// **'Path'**
   String get path;
 
+  /// No description provided for @scrollThumbVisibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Show scroll thumb'**
+  String get scrollThumbVisibility;
+
+  /// No description provided for @scrollThumbVisibilitySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Displays a draggable thumb on long lists'**
+  String get scrollThumbVisibilitySubtitle;
+
+  /// No description provided for @scrollThumbSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll Thumb'**
+  String get scrollThumbSettings;
+
+  /// No description provided for @scrollThumbDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide after'**
+  String get scrollThumbDuration;
+
+  /// No description provided for @scrollThumbDurationDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'How long the thumb stays visible after you stop scrolling'**
+  String get scrollThumbDurationDescription;
+
+  /// No description provided for @scrollThumbHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get scrollThumbHeight;
+
+  /// No description provided for @scrollThumbHeightDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Thumb height in pixels'**
+  String get scrollThumbHeightDescription;
+
+  /// No description provided for @scrollThumbWidth.
+  ///
+  /// In en, this message translates to:
+  /// **'Width'**
+  String get scrollThumbWidth;
+
+  /// No description provided for @scrollThumbWidthDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Thumb width in pixels'**
+  String get scrollThumbWidthDescription;
+
+  /// No description provided for @off.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get off;
+
   /// No description provided for @binaryUnits.
   ///
   /// In en, this message translates to:

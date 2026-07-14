@@ -102,6 +102,18 @@ _UserSettings _$UserSettingsFromJson(
           ?.map((e) => $enumDecode(_$FullPlayerActionsEnumMap, e))
           .toList() ??
       DefaultUserSettings.pinnedPlayerActions,
+  scrollThumbVisibility:
+      json['scrollThumbVisibility'] as bool? ??
+      DefaultUserSettings.scrollThumbVisibility,
+  scrollThumbDuration: json['scrollThumbDuration'] == null
+      ? DefaultUserSettings.scrollThumbDuration
+      : Duration(microseconds: (json['scrollThumbDuration'] as num).toInt()),
+  scrollThumbHeight:
+      (json['scrollThumbHeight'] as num?)?.toDouble() ??
+      DefaultUserSettings.scrollThumbHeight,
+  scrollThumbWidth:
+      (json['scrollThumbWidth'] as num?)?.toDouble() ??
+      DefaultUserSettings.scrollThumbWidth,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -143,6 +155,10 @@ Map<String, dynamic> _$UserSettingsToJson(
   'pinnedPlayerActions': instance.pinnedPlayerActions
       .map((e) => _$FullPlayerActionsEnumMap[e]!)
       .toList(),
+  'scrollThumbVisibility': instance.scrollThumbVisibility,
+  'scrollThumbDuration': instance.scrollThumbDuration.inMicroseconds,
+  'scrollThumbHeight': instance.scrollThumbHeight,
+  'scrollThumbWidth': instance.scrollThumbWidth,
 };
 
 const _$NavTargetEnumMap = {
