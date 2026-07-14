@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:abs_api/abs_api.dart';
-import 'package:audio_service/audio_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
@@ -19,6 +18,7 @@ import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/models/app_playback_error.dart';
+import 'package:storii/features/player/models/app_playback_state.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/storage/local/speed_store.dart';
 
@@ -38,21 +38,19 @@ Stream<AudioHandlerEvent> audioHandlerEvents(Ref ref) {
 Stream<AppPlaybackError> playbackErrors(Ref ref) => audioHandler.errors;
 
 @riverpod
-Stream<PlaybackState> playbackState(Ref ref) {
-  return audioHandler.playbackState;
+Stream<AppPlaybackState> playbackState(Ref ref) {
+  return audioHandler.stateStream;
 }
 
 @riverpod
-AudioProcessingState? processingState(Ref ref) {
-  return ref.watch(
-    playbackStateProvider.select((s) => s.value?.processingState),
-  );
+Stream<AppPlaybackStatus> playbackStatus(Ref ref) {
+  return audioHandler.stateStream.map((s) => s.status);
 }
 
 @riverpod
 bool isPlaying(Ref ref) {
   return ref.watch(
-    playbackStateProvider.select((s) => s.value?.playing == true),
+    playbackStateProvider.select((s) => s.value?.isPlaying == true),
   );
 }
 

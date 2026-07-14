@@ -96,11 +96,11 @@ final playbackStateProvider = PlaybackStateProvider._();
 final class PlaybackStateProvider
     extends
         $FunctionalProvider<
-          AsyncValue<PlaybackState>,
-          PlaybackState,
-          Stream<PlaybackState>
+          AsyncValue<AppPlaybackState>,
+          AppPlaybackState,
+          Stream<AppPlaybackState>
         >
-    with $FutureModifier<PlaybackState>, $StreamProvider<PlaybackState> {
+    with $FutureModifier<AppPlaybackState>, $StreamProvider<AppPlaybackState> {
   PlaybackStateProvider._()
     : super(
         from: null,
@@ -117,64 +117,58 @@ final class PlaybackStateProvider
 
   @$internal
   @override
-  $StreamProviderElement<PlaybackState> $createElement(
+  $StreamProviderElement<AppPlaybackState> $createElement(
     $ProviderPointer pointer,
   ) => $StreamProviderElement(pointer);
 
   @override
-  Stream<PlaybackState> create(Ref ref) {
+  Stream<AppPlaybackState> create(Ref ref) {
     return playbackState(ref);
   }
 }
 
-String _$playbackStateHash() => r'bd2f07e833076e09c869c569319f35513f62dadc';
+String _$playbackStateHash() => r'a4f4f988a1cb8b163803865993906a74f5249cba';
 
-@ProviderFor(processingState)
-final processingStateProvider = ProcessingStateProvider._();
+@ProviderFor(playbackStatus)
+final playbackStatusProvider = PlaybackStatusProvider._();
 
-final class ProcessingStateProvider
+final class PlaybackStatusProvider
     extends
         $FunctionalProvider<
-          AudioProcessingState?,
-          AudioProcessingState?,
-          AudioProcessingState?
+          AsyncValue<AppPlaybackStatus>,
+          AppPlaybackStatus,
+          Stream<AppPlaybackStatus>
         >
-    with $Provider<AudioProcessingState?> {
-  ProcessingStateProvider._()
+    with
+        $FutureModifier<AppPlaybackStatus>,
+        $StreamProvider<AppPlaybackStatus> {
+  PlaybackStatusProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'processingStateProvider',
+        name: r'playbackStatusProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$processingStateHash();
+  String debugGetCreateSourceHash() => _$playbackStatusHash();
 
   @$internal
   @override
-  $ProviderElement<AudioProcessingState?> $createElement(
+  $StreamProviderElement<AppPlaybackStatus> $createElement(
     $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
+  ) => $StreamProviderElement(pointer);
 
   @override
-  AudioProcessingState? create(Ref ref) {
-    return processingState(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(AudioProcessingState? value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<AudioProcessingState?>(value),
-    );
+  Stream<AppPlaybackStatus> create(Ref ref) {
+    return playbackStatus(ref);
   }
 }
 
-String _$processingStateHash() => r'577ac059992ef75e191e5498b2bedce98eb1a911';
+String _$playbackStatusHash() => r'dbf50514a7b2a192e3aa0e9c83a8d443aa6337e3';
 
 @ProviderFor(isPlaying)
 final isPlayingProvider = IsPlayingProvider._();
@@ -214,7 +208,7 @@ final class IsPlayingProvider extends $FunctionalProvider<bool, bool, bool>
   }
 }
 
-String _$isPlayingHash() => r'27909a8b37b348f87c3b6eed7f9aa66454c6fb36';
+String _$isPlayingHash() => r'221a4767ca36d19d18b2b51ce71a9cc216ae4d64';
 
 @ProviderFor(globalPosition)
 final globalPositionProvider = GlobalPositionProvider._();
@@ -452,7 +446,7 @@ final class PlayerStateWatcherProvider
 }
 
 String _$playerStateWatcherHash() =>
-    r'd5330119981f458050209e322dbde7566da17261';
+    r'beb8b19d5f5c3a1b23c7c5d2329897232b8dd537';
 
 @ProviderFor(volume)
 final volumeProvider = VolumeProvider._();

@@ -9,7 +9,7 @@ final class ProviderLogger extends ProviderObserver {
     'globalPositionProvider',
     'chapterPositionProvider',
     'playbackStateProvider',
-    'processingStateProvider',
+    'playbackStatusProvider',
     'coverUrlProvider',
     'downloadItemProvider',
   };

@@ -1,6 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
-import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
@@ -81,7 +80,6 @@ class SessionSyncWatcher extends _$SessionSyncWatcher {
       final isConnected = next.value ?? false;
       if (!wasConnected && isConnected) {
         try {
-          await ref.read(authenticatedUserProvider.future);
           await ref.read(sessionsCleanupProvider.notifier).cleanup();
         } catch (e) {
           LogService.log(

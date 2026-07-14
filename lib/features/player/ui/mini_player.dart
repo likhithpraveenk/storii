@@ -20,9 +20,8 @@ class MiniPlayer extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     final isPlaying = ref.watch(isPlayingProvider);
-    final processingState = ref.watch(processingStateProvider);
-    final isLoading =
-        processingState == .loading || processingState == .buffering;
+    final playbackStatus = ref.watch(playbackStatusProvider).value;
+    final isLoading = playbackStatus == .buffering;
 
     final totalDuration = ref.watch(totalDurationProvider);
     final globalPosition =

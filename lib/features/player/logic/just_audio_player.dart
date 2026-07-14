@@ -71,15 +71,20 @@ class JustAudioPlayer implements AppAudioPlayer {
 
   @override
   Stream<AppPlaybackState> get stateStream => Rx.merge([
-    _player.playbackEventStream.map((_) => state.copyWith(error: null)),
+    _errorController.stream.map(
+      (e) => state.copyWith(status: .error, error: e),
+    ),
+    _player.playbackEventStream.map(
+      (e) => state.copyWith(error: _classifyMessage(e.errorMessage)),
+    ),
     _player.positionStream
         .throttleTime(
           const Duration(seconds: 3),
           leading: false,
           trailing: true,
         )
-        .map((_) => state.copyWith(error: null)),
-    _errorController.stream.map((msg) => state.copyWith(error: msg)),
+        .distinct()
+        .map((_) => state),
   ]);
 
   @override
@@ -151,7 +156,10 @@ class JustAudioPlayer implements AppAudioPlayer {
         level: .error,
         source: _source,
       );
-      _errorController.add(_classifyMessage(e.message));
+      final error = _classifyMessage(e.toString());
+      if (error != null) {
+        _errorController.add(error);
+      }
     } on PlayerInterruptedException catch (e) {
       LogService.log(
         'Connection interrupted: ${e.message}',
@@ -166,12 +174,17 @@ class JustAudioPlayer implements AppAudioPlayer {
         level: .error,
         source: _source,
       );
-      _errorController.add(_classifyMessage(e.toString()));
+      final error = _classifyMessage(e.toString());
+      if (error != null) {
+        _errorController.add(error);
+      }
     }
   }
 
-  AppPlaybackError _classifyMessage(String? message) {
-    final lower = message?.toLowerCase() ?? '';
+  AppPlaybackError? _classifyMessage(String? message) {
+    if (message == null) return null;
+
+    final lower = message.toLowerCase();
     if (lower.contains('network') ||
         lower.contains('socket') ||
         lower.contains('host lookup') ||
