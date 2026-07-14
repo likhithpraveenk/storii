@@ -183,41 +183,27 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
 
 @riverpod
 void playerStateWatcher(Ref ref) {
-  ref.listen(playbackStateProvider, (previous, next) {
-    final prev = previous?.value;
-    final curr = next.value;
-    if (curr == null) return;
-
-    // if initial loading then expand
-    if (curr.processingState == .loading) {
-      ref.read(playerModeProvider.notifier).toFull();
-      return;
-    }
-
-    final stopped = !curr.playing && curr.processingState == .idle;
-    final wasStopped =
-        prev == null || (!prev.playing && prev.processingState == .idle);
-
-    // if just stopped then hide
-    if (stopped && !wasStopped) {
-      ref.read(playerHeightProvider.notifier).snapTo(.hidden);
-      return;
-    }
-
+  ref.listen(sessionProvider, (previous, next) {
     final playerVisible = ref.read(playerViewStateProvider) != .hidden;
-    // if play started off-screen then mini
-    if (curr.playing && !playerVisible) {
-      ref.read(playerModeProvider.notifier).toMini();
+    final playerMode = ref.read(playerModeProvider.notifier);
+
+    // if playback started then show player
+    if (previous == null && next != null && !playerVisible) {
+      // show full during initial loading, mini otherwise
+      final isLoading = ref.read(
+        audioPlayerProvider.select((s) => s.loadingItemId != null),
+      );
+      if (isLoading) {
+        playerMode.toFull();
+      } else {
+        playerMode.toMini();
+      }
       return;
     }
-  });
-
-  ref.listen(sessionProvider, (_, next) {
-    final playerVisible = ref.read(playerViewStateProvider) != .hidden;
 
     // if session ended then hide
     if (next == null && playerVisible) {
-      ref.read(playerModeProvider.notifier).toHidden();
+      playerMode.toHidden();
       return;
     }
   });
