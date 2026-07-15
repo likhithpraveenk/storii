@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Fixed
 
 - Skip-back now restarts the chapter after 3 seconds instead of jumping to the start
+- Close session on fatal playback error
 
 ## [v0.5.6] - 2026-07-15
 

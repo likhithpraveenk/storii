@@ -78,6 +78,7 @@ class PlaybackSyncService {
 
   Future<void> onError() async {
     await _sync(.stop, keepRunning: false, playbackError: true);
+    await onClose();
   }
 
   Future<void> _sync(

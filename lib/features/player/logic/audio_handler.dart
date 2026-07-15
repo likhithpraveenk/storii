@@ -142,7 +142,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   void _handleError(AppPlaybackError type) {
     LogService.log(
-      'Player error: $type',
+      'Player error: ${type.label}',
       level: .error,
       source: 'AppAudioHandler',
     );
