@@ -142,7 +142,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   void _handleError(AppPlaybackError type) {
     LogService.log(
-      'Player error: $type',
+      'Player error: ${type.label}',
       level: .error,
       source: 'AppAudioHandler',
     );
@@ -286,15 +286,22 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   @override
   Future<void> skipToNext() async {
-    final next = (playbackState.value.queueIndex ?? 0) + 1;
-    if (next < queue.value.length) await skipToQueueItem(next);
+    final result = resolver.chapterPositionFromGlobal(currentPosition);
+    final next = result.chapterIndex + 1;
+
+    if (next < queue.value.length) {
+      await skipToQueueItem(next);
+    }
   }
+
+  static const skipToPreviousBuffer = Duration(seconds: 3);
 
   @override
   Future<void> skipToPrevious() async {
     final result = resolver.chapterPositionFromGlobal(currentPosition);
-    if (result.chapterPosition.inSeconds > 5 || result.chapterIndex == 0) {
-      await skipToQueueItem(0);
+    if (result.chapterPosition > skipToPreviousBuffer ||
+        result.chapterIndex == 0) {
+      await skipToQueueItem(result.chapterIndex);
     } else {
       await skipToQueueItem(result.chapterIndex - 1);
     }

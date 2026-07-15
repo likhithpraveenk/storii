@@ -41,3 +41,8 @@ final filteredLogsProvider = Provider<List<LogEntry>>((ref) {
 
   return allLogs.where((entry) => activeFilters.contains(entry.level)).toList();
 }, name: 'filteredLogsProvider');
+
+final errorLogsProvider = Provider<List<LogEntry>>((ref) {
+  final allLogs = ref.watch(logsProvider);
+  return allLogs.where((entry) => entry.level == .error).toList();
+}, name: 'errorLogsProvider');

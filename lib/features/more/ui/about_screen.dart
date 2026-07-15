@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/device_info_provider.dart';
+import 'package:storii/features/more/logic/bug_report_provider.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/logo_header.dart';
 
@@ -74,7 +77,16 @@ class AboutScreen extends ConsumerWidget {
                   title: Text(l10n.foundBugQ),
                   subtitle: Text(l10n.foundBugQSubtitle),
                   leading: const Icon(Icons.feedback_outlined),
-                  onTap: () => launchUrlHelper(context, githubIssueLink),
+                  onTap: () async {
+                    final body = await ref.read(bugReportBodyProvider.future);
+                    if (!context.mounted) return;
+                    await Clipboard.setData(ClipboardData(text: body));
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showAppSnackBar('Bug report copied to clipboard');
+                    await launchUrlHelper(context, githubIssueLink);
+                  },
                 ),
               ],
             ),
