@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:abs_api/abs_api.dart';
-import 'package:hive_ce/hive_ce.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/storage/hive/boxes.dart';
 
@@ -10,20 +9,18 @@ part 'items_cache.g.dart';
 
 @Riverpod(keepAlive: true)
 class ItemsCache extends _$ItemsCache {
-  Box<String> get _box => Hive.box<String>(itemsBox);
-
   @override
   void build() {}
 
   Future<void> put(LibraryItem item) async {
-    await _box.put(item.id, jsonEncode(item));
+    await itemsBox.put(item.id, jsonEncode(item));
   }
 
   LibraryItem? get(String id) {
-    final json = _box.get(id);
+    final json = itemsBox.get(id);
     if (json == null) return null;
     return LibraryItem.fromJson(jsonDecode(json) as Map<String, dynamic>);
   }
 
-  Future<void> delete(String id) => _box.delete(id);
+  Future<void> delete(String id) => itemsBox.delete(id);
 }
