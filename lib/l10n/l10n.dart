@@ -1894,6 +1894,60 @@ abstract class AppLocalizations {
   /// **'1 KB = 1000 B'**
   String get decimalUnitsSubtitle;
 
+  /// No description provided for @backup.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup & restore'**
+  String get backup;
+
+  /// No description provided for @createBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Create backup'**
+  String get createBackup;
+
+  /// No description provided for @restoreBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore backup'**
+  String get restoreBackup;
+
+  /// No description provided for @backupDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Export or import your accounts, settings and history'**
+  String get backupDescription;
+
+  /// No description provided for @backupCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup saved'**
+  String get backupCreated;
+
+  /// No description provided for @backupFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not create backup'**
+  String get backupFailed;
+
+  /// No description provided for @restoreSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup restored'**
+  String get restoreSuccess;
+
+  /// No description provided for @restoreRestart.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup restored. Restart the app to apply changes'**
+  String get restoreRestart;
+
+  /// No description provided for @restoreFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not restore backup'**
+  String get restoreFailed;
+
   /// No description provided for @marqueeSpeed.
   ///
   /// In en, this message translates to:

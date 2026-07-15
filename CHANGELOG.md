@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Customizable full player action buttons via "more"
 - Scroll thumb customization
+- Backup and restore of all accounts, settings and playback history
 
 ### Fixed
 

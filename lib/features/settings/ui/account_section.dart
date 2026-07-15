@@ -4,6 +4,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/user_session_controller.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
+import 'package:storii/shared/widgets/waveform.dart';
 
 class AccountSection extends ConsumerWidget {
   const AccountSection({super.key});
@@ -46,7 +47,7 @@ class AccountSection extends ConsumerWidget {
         ),
         ListTile(
           leading: const Icon(Icons.logout),
-          title: isLoggingOut ? const SizedBox.shrink() : Text(l10n.logout),
+          title: isLoggingOut ? const RandomWaveform() : Text(l10n.logout),
           onTap: user == null || isLoggingOut
               ? null
               : () async {

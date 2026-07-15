@@ -966,6 +966,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get decimalUnitsSubtitle => '1 KB = 1000 B';
 
   @override
+  String get backup => 'Backup & restore';
+
+  @override
+  String get createBackup => 'Create backup';
+
+  @override
+  String get restoreBackup => 'Restore backup';
+
+  @override
+  String get backupDescription =>
+      'Export or import your accounts, settings and history';
+
+  @override
+  String get backupCreated => 'Backup saved';
+
+  @override
+  String get backupFailed => 'Could not create backup';
+
+  @override
+  String get restoreSuccess => 'Backup restored';
+
+  @override
+  String get restoreRestart =>
+      'Backup restored. Restart the app to apply changes';
+
+  @override
+  String get restoreFailed => 'Could not restore backup';
+
+  @override
   String get marqueeSpeed => 'Text Scroll Speed';
 
   @override

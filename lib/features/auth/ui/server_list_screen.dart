@@ -9,10 +9,9 @@ import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/features/auth/ui/add_server_sheet.dart';
 import 'package:storii/features/auth/ui/add_user_sheet.dart';
 import 'package:storii/features/auth/ui/server_tile.dart';
+import 'package:storii/features/settings/ui/backup_settings_tile.dart';
 import 'package:storii/shared/helpers/extensions.dart';
-import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
-import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
@@ -40,24 +39,7 @@ class ServerListScreen extends ConsumerWidget {
             },
             icon: const Icon(Icons.bug_report),
           ),
-          IconButton(
-            tooltip: l10n.foundBugQ,
-            onPressed: () {
-              AppDialog.show(
-                context,
-                title: l10n.foundBugQ,
-                body: Text(l10n.foundBugQSubtitle),
-                actionLabel: 'Github',
-                actionIcon: Icons.open_in_new,
-                onTap: () async {
-                  if (context.mounted) {
-                    await launchUrlHelper(context, githubIssueLink);
-                  }
-                },
-              );
-            },
-            icon: const Icon(Icons.feedback_outlined),
-          ),
+          const RestoreButton(),
           IconButton(
             tooltip: l10n.about,
             onPressed: () {
