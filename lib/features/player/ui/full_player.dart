@@ -80,19 +80,14 @@ class FullPlayer extends ConsumerWidget {
               children: [
                 IconButton(
                   icon: const Icon(Icons.skip_previous, size: 36),
-                  onPressed: currentChapter?.displayIndex == 1
-                      ? null
-                      : audioHandler.skipToPrevious,
+                  onPressed: audioHandler.skipToPrevious,
                 ),
                 const AppSeekButton(isForward: false),
                 const PlayButton(),
                 const AppSeekButton(isForward: true),
                 IconButton(
                   icon: const Icon(Icons.skip_next, size: 36),
-                  onPressed:
-                      currentChapter?.displayIndex == session.chapters.length
-                      ? null
-                      : audioHandler.skipToNext,
+                  onPressed: audioHandler.skipToNext,
                 ),
               ],
             ),

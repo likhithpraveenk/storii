@@ -8,12 +8,10 @@ void main() {
       PositionResolver.from(items);
 
   Map<String, dynamic> chapterJson({
-    required int displayIndex,
     required Duration start,
     required Duration end,
     required String title,
   }) => Chapter(
-    displayIndex: displayIndex,
     start: start,
     end: end,
     title: title,
@@ -38,13 +36,11 @@ void main() {
     setUp(() {
       final chapters = [
         chapterJson(
-          displayIndex: 1,
           start: Duration.zero,
           end: const Duration(seconds: 30),
           title: 'Ch 1',
         ),
         chapterJson(
-          displayIndex: 2,
           start: const Duration(seconds: 30),
           end: const Duration(seconds: 60),
           title: 'Ch 2',
@@ -88,19 +84,16 @@ void main() {
       // chapter 0: 0-40s, chapter 1: 40-80s, chapter 2: 80-120s
       final chapters = [
         chapterJson(
-          displayIndex: 1,
           start: Duration.zero,
           end: const Duration(seconds: 40),
           title: 'Ch 1',
         ),
         chapterJson(
-          displayIndex: 2,
           start: const Duration(seconds: 40),
           end: const Duration(seconds: 80),
           title: 'Ch 2',
         ),
         chapterJson(
-          displayIndex: 3,
           start: const Duration(seconds: 80),
           end: const Duration(seconds: 120),
           title: 'Ch 3',
@@ -147,19 +140,16 @@ void main() {
   test('chapterPositionFromGlobal returns correct index and position', () {
     final chapters = [
       chapterJson(
-        displayIndex: 1,
         start: Duration.zero,
         end: const Duration(seconds: 40),
         title: 'Ch 1',
       ),
       chapterJson(
-        displayIndex: 2,
         start: const Duration(seconds: 40),
         end: const Duration(seconds: 80),
         title: 'Ch 2',
       ),
       chapterJson(
-        displayIndex: 3,
         start: const Duration(seconds: 80),
         end: const Duration(seconds: 120),
         title: 'Ch 3',
@@ -186,13 +176,11 @@ void main() {
       // each track is its own chapter, start = accumulated offset
       final track0Chapters = [
         chapterJson(
-          displayIndex: 1,
           start: Duration.zero,
           end: const Duration(seconds: 45),
           title: 'Part 1',
         ),
         chapterJson(
-          displayIndex: 2,
           start: const Duration(seconds: 45),
           end: const Duration(seconds: 90),
           title: 'Part 2',
