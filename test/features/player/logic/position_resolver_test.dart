@@ -11,12 +11,7 @@ void main() {
     required Duration start,
     required Duration end,
     required String title,
-  }) => Chapter(
-    start: start,
-    end: end,
-    title: title,
-    subtitle: '',
-  ).toJson();
+  }) => Chapter(start: start, end: end, title: title, subtitle: '').toJson();
 
   MediaItem makeTrack({
     required Duration startOffset,
