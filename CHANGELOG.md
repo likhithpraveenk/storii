@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Added
+
+- bug report copied to clipboard
+
 ## Fixed
 
 - Skip-back now restarts the chapter after 3 seconds instead of jumping to the start
