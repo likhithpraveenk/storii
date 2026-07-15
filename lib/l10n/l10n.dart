@@ -1810,6 +1810,66 @@ abstract class AppLocalizations {
   /// **'Path'**
   String get path;
 
+  /// No description provided for @scrollThumbVisibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Show scroll thumb'**
+  String get scrollThumbVisibility;
+
+  /// No description provided for @scrollThumbVisibilitySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Displays a draggable thumb on long lists'**
+  String get scrollThumbVisibilitySubtitle;
+
+  /// No description provided for @scrollThumbSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll Thumb'**
+  String get scrollThumbSettings;
+
+  /// No description provided for @scrollThumbDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide after'**
+  String get scrollThumbDuration;
+
+  /// No description provided for @scrollThumbDurationDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'How long the thumb stays visible after you stop scrolling'**
+  String get scrollThumbDurationDescription;
+
+  /// No description provided for @scrollThumbHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get scrollThumbHeight;
+
+  /// No description provided for @scrollThumbHeightDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Thumb height in pixels'**
+  String get scrollThumbHeightDescription;
+
+  /// No description provided for @scrollThumbWidth.
+  ///
+  /// In en, this message translates to:
+  /// **'Width'**
+  String get scrollThumbWidth;
+
+  /// No description provided for @scrollThumbWidthDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Thumb width in pixels'**
+  String get scrollThumbWidthDescription;
+
+  /// No description provided for @off.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get off;
+
   /// No description provided for @binaryUnits.
   ///
   /// In en, this message translates to:
@@ -1833,6 +1893,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'1 KB = 1000 B'**
   String get decimalUnitsSubtitle;
+
+  /// No description provided for @backup.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup & restore'**
+  String get backup;
+
+  /// No description provided for @createBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Create backup'**
+  String get createBackup;
+
+  /// No description provided for @restoreBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore backup'**
+  String get restoreBackup;
+
+  /// No description provided for @backupDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Export or import your accounts, settings and history'**
+  String get backupDescription;
+
+  /// No description provided for @backupCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup saved'**
+  String get backupCreated;
+
+  /// No description provided for @backupFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not create backup'**
+  String get backupFailed;
+
+  /// No description provided for @restoreSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup restored'**
+  String get restoreSuccess;
+
+  /// No description provided for @restoreRestart.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup restored. Restart the app to apply changes'**
+  String get restoreRestart;
+
+  /// No description provided for @restoreFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not restore backup'**
+  String get restoreFailed;
 
   /// No description provided for @marqueeSpeed.
   ///

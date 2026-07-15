@@ -922,6 +922,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get path => 'Path';
 
   @override
+  String get scrollThumbVisibility => 'Show scroll thumb';
+
+  @override
+  String get scrollThumbVisibilitySubtitle =>
+      'Displays a draggable thumb on long lists';
+
+  @override
+  String get scrollThumbSettings => 'Scroll Thumb';
+
+  @override
+  String get scrollThumbDuration => 'Hide after';
+
+  @override
+  String get scrollThumbDurationDescription =>
+      'How long the thumb stays visible after you stop scrolling';
+
+  @override
+  String get scrollThumbHeight => 'Height';
+
+  @override
+  String get scrollThumbHeightDescription => 'Thumb height in pixels';
+
+  @override
+  String get scrollThumbWidth => 'Width';
+
+  @override
+  String get scrollThumbWidthDescription => 'Thumb width in pixels';
+
+  @override
+  String get off => 'Off';
+
+  @override
   String get binaryUnits => 'Binary units';
 
   @override
@@ -932,6 +964,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get decimalUnitsSubtitle => '1 KB = 1000 B';
+
+  @override
+  String get backup => 'Backup & restore';
+
+  @override
+  String get createBackup => 'Create backup';
+
+  @override
+  String get restoreBackup => 'Restore backup';
+
+  @override
+  String get backupDescription =>
+      'Export or import your accounts, settings and history';
+
+  @override
+  String get backupCreated => 'Backup saved';
+
+  @override
+  String get backupFailed => 'Could not create backup';
+
+  @override
+  String get restoreSuccess => 'Backup restored';
+
+  @override
+  String get restoreRestart =>
+      'Backup restored. Restart the app to apply changes';
+
+  @override
+  String get restoreFailed => 'Could not restore backup';
 
   @override
   String get marqueeSpeed => 'Text Scroll Speed';

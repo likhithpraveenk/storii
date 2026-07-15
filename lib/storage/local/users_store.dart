@@ -1,4 +1,3 @@
-import 'package:hive_ce/hive_ce.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/models/user.dart';
@@ -8,41 +7,39 @@ part 'users_store.g.dart';
 
 @Riverpod(keepAlive: true)
 class UsersStore extends _$UsersStore {
-  Box<UserDomain> get _box => Hive.box<UserDomain>(usersBox);
-
   Stream<List<UserDomain>> _watch() {
-    return _box
+    return usersBox
         .watch()
-        .map((_) => _box.values.toList())
-        .startWith(_box.values.toList());
+        .map((_) => usersBox.values.toList())
+        .startWith(usersBox.values.toList());
   }
 
   @override
   Stream<List<UserDomain>> build() => _watch();
 
-  Future<void> upsert(UserDomain user) => _box.put(user.id, user);
+  Future<void> upsert(UserDomain user) => usersBox.put(user.id, user);
 
-  Future<void> delete(String id) => _box.delete(id);
+  Future<void> delete(String id) => usersBox.delete(id);
 
   Future<void> removeAll(Iterable<String> ids) async {
     if (ids.isNotEmpty) {
-      await _box.deleteAll(ids);
+      await usersBox.deleteAll(ids);
     }
   }
 
   Future<void> updateServerUrl(Uri oldUrl, Uri newUrl) async {
-    final usersToUpdate = _box.values
+    final usersToUpdate = usersBox.values
         .where((u) => u.serverUrl == oldUrl)
         .toList();
     for (final user in usersToUpdate) {
-      await _box.put(user.id, user.copyWith(serverUrl: newUrl));
+      await usersBox.put(user.id, user.copyWith(serverUrl: newUrl));
     }
   }
 
-  List<UserDomain> getAll() => _box.values.toList();
+  List<UserDomain> getAll() => usersBox.values.toList();
 
   Future<List<String>> removeUsersByServer(Uri url) async {
-    final keysToDelete = _box.values
+    final keysToDelete = usersBox.values
         .where((u) => u.serverUrl == url)
         .map((u) => u.id)
         .toList();

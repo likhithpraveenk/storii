@@ -33,7 +33,7 @@ final class ServersStoreProvider
   ServersStore create() => ServersStore();
 }
 
-String _$serversStoreHash() => r'89a2fa6bc3c58f4d829a6a4a22a0afa9dd36255f';
+String _$serversStoreHash() => r'd47dcdf98186f81e0b685dfe60b6e6375d955a46';
 
 abstract class _$ServersStore extends $StreamNotifier<List<Server>> {
   Stream<List<Server>> build();

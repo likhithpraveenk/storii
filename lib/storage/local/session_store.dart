@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:abs_api/abs_api.dart';
-import 'package:hive_ce/hive_ce.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -12,25 +11,23 @@ part 'session_store.g.dart';
 
 @Riverpod(keepAlive: true)
 class SessionStore extends _$SessionStore {
-  Box<String> get _box => Hive.box<String>(localSessionsBox);
-
   @override
   void build() {}
 
   Future<void> save(PlaybackSession session) async {
-    await _box.put(session.id, jsonEncode(session));
+    await localSessionsBox.put(session.id, jsonEncode(session));
   }
 
   Future<void> delete(String sessionId) async {
-    await _box.delete(sessionId);
+    await localSessionsBox.delete(sessionId);
   }
 
   List<PlaybackSession> getAll() {
-    return _box.values.map(_parseSession).toList();
+    return localSessionsBox.values.map(_parseSession).toList();
   }
 
   PlaybackSession? getSession(String itemId, [String? episodeId]) {
-    return _box.values
+    return localSessionsBox.values
         .map(_parseSession)
         .firstWhereOrNull(
           (s) => s.libraryItemId == itemId && s.episodeId == episodeId,
@@ -38,10 +35,10 @@ class SessionStore extends _$SessionStore {
   }
 
   Stream<PlaybackSession?> watchSession(String itemId, [String? episodeId]) {
-    return _box
+    return localSessionsBox
         .watch()
         .map((_) {
-          return _box.values
+          return localSessionsBox.values
               .map(_parseSession)
               .firstWhereOrNull(
                 (s) => s.libraryItemId == itemId && s.episodeId == episodeId,

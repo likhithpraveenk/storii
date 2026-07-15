@@ -41,7 +41,7 @@ final class SettingsStoreProvider
   }
 }
 
-String _$settingsStoreHash() => r'51d1d9a76e2fea50ec4354e6ca41d61d6a1b11cf';
+String _$settingsStoreHash() => r'114b6b20582e33f731e7497210b90dcaf206965c';
 
 abstract class _$SettingsStore extends $Notifier<void> {
   void build();

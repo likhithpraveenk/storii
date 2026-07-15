@@ -3,8 +3,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 
-class AppScrollbar extends StatefulWidget {
+class AppScrollbar extends ConsumerStatefulWidget {
   final Widget child;
   final ScrollController controller;
 
@@ -15,11 +17,10 @@ class AppScrollbar extends StatefulWidget {
   });
 
   @override
-  State<AppScrollbar> createState() => _AppScrollbarState();
+  ConsumerState<AppScrollbar> createState() => _AppScrollbarState();
 }
 
-// TODO: add app scrollbar settings - hide/show & duration of show
-class _AppScrollbarState extends State<AppScrollbar>
+class _AppScrollbarState extends ConsumerState<AppScrollbar>
     with SingleTickerProviderStateMixin {
   late final AnimationController _anim = AnimationController(
     vsync: this,
@@ -48,7 +49,8 @@ class _AppScrollbarState extends State<AppScrollbar>
 
   void _startHideTimer() {
     _hideTimer?.cancel();
-    _hideTimer = Timer(const Duration(seconds: 3), () => _anim.reverse());
+    final hideDuration = ref.read(scrollThumbDurationProvider);
+    _hideTimer = Timer(hideDuration, () => _anim.reverse());
   }
 
   void _handleScroll() {
@@ -77,8 +79,8 @@ class _AppScrollbarState extends State<AppScrollbar>
 
   @override
   Widget build(BuildContext context) {
-    const thumbHeight = 48.0;
-    const thumbWidth = 30.0;
+    final thumbHeight = ref.watch(scrollThumbHeightProvider);
+    final thumbWidth = ref.watch(scrollThumbWidthProvider);
 
     return Stack(
       children: [
@@ -86,6 +88,9 @@ class _AppScrollbarState extends State<AppScrollbar>
         SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) {
+              final showThumb = ref.watch(scrollThumbVisibilityProvider);
+              if (!showThumb) return const SizedBox.shrink();
+
               final availableHeight = constraints.maxHeight - thumbHeight;
               return Stack(
                 children: [
@@ -100,10 +105,7 @@ class _AppScrollbarState extends State<AppScrollbar>
                           _handleDrag(d, availableHeight),
                       onVerticalDragEnd: (_) => _startHideTimer(),
                       onVerticalDragCancel: _startHideTimer,
-                      child: const _Thumb(
-                        width: thumbWidth,
-                        height: thumbHeight,
-                      ),
+                      child: Thumb(width: thumbWidth, height: thumbHeight),
                     ),
                     builder: (context, child) {
                       final isReady =
@@ -147,9 +149,9 @@ class _AppScrollbarState extends State<AppScrollbar>
   }
 }
 
-class _Thumb extends StatelessWidget {
+class Thumb extends StatelessWidget {
   final double width, height;
-  const _Thumb({required this.width, required this.height});
+  const Thumb({required this.width, required this.height, super.key});
 
   @override
   Widget build(BuildContext context) {

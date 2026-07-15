@@ -324,6 +324,18 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setPinnedPlayerActions(List<FullPlayerActions> value) =>
       _save(state?.copyWith(pinnedPlayerActions: value));
+
+  Future<void> setScrollThumbVisibility(bool value) =>
+      _save(state?.copyWith(scrollThumbVisibility: value));
+
+  Future<void> setScrollThumbDuration(Duration value) =>
+      _save(state?.copyWith(scrollThumbDuration: value));
+
+  Future<void> setScrollThumbHeight(double value) =>
+      _save(state?.copyWith(scrollThumbHeight: value));
+
+  Future<void> setScrollThumbWidth(double value) =>
+      _save(state?.copyWith(scrollThumbWidth: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -616,4 +628,41 @@ final pinnedPlayerActionsProvider = Provider<List<FullPlayerActions>>(
     ),
   ),
   name: 'pinnedPlayerActionsProvider',
+);
+
+final scrollThumbVisibilityProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.scrollThumbVisibility ?? DefaultUserSettings.scrollThumbVisibility,
+    ),
+  ),
+  name: 'scrollThumbVisibilityProvider',
+);
+
+final scrollThumbDurationProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.scrollThumbDuration ?? DefaultUserSettings.scrollThumbDuration,
+    ),
+  ),
+  name: 'scrollThumbDurationProvider',
+);
+
+final scrollThumbHeightProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.scrollThumbHeight ?? DefaultUserSettings.scrollThumbHeight,
+    ),
+  ),
+  name: 'scrollThumbHeightProvider',
+);
+
+final scrollThumbWidthProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.scrollThumbWidth ?? DefaultUserSettings.scrollThumbWidth,
+    ),
+  ),
+  name: 'scrollThumbWidthProvider',
 );

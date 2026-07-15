@@ -10,6 +10,7 @@ import 'package:storii/features/settings/ui/appearance/font_family.dart';
 import 'package:storii/features/settings/ui/appearance/font_scale.dart';
 import 'package:storii/features/settings/ui/appearance/marquee_speed_tile.dart';
 import 'package:storii/features/settings/ui/appearance/scheme_variant_tile.dart';
+import 'package:storii/features/settings/ui/appearance/scroll_thumb_tile.dart';
 import 'package:storii/features/settings/ui/appearance/system_theme_tile.dart';
 
 class AppearanceTile extends ConsumerWidget {
@@ -97,6 +98,8 @@ class AppearanceScreen extends ConsumerWidget {
           const FontFamilyTile(),
           const FontScaleTile(),
           const MarqueeSpeedTile(),
+          const Divider(),
+          const ScrollThumbTile(),
           const Divider(),
           const BinaryBytesTile(),
         ],

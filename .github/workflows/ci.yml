@@ -17,4 +17,4 @@ jobs:
       - uses: ./.github/actions/static-checks
 
       - name: Run tests
-        run: flutter test
+        run: flutter test --no-pub
