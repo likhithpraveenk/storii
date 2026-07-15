@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.5.7] - 2026-07-15
+
 ## Added
 
 - bug report copied to clipboard
@@ -441,7 +443,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.5.6...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.5.7...HEAD
+[v0.5.7]: https://github.com/likhithpraveenk/storii/compare/v0.5.6...v0.5.7
 [v0.5.6]: https://github.com/likhithpraveenk/storii/compare/v0.5.5...v0.5.6
 [v0.5.5]: https://github.com/likhithpraveenk/storii/compare/v0.5.4...v0.5.5
 [v0.5.4]: https://github.com/likhithpraveenk/storii/compare/v0.5.3...v0.5.4
