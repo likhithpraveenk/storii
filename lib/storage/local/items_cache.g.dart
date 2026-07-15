@@ -40,7 +40,7 @@ final class ItemsCacheProvider extends $NotifierProvider<ItemsCache, void> {
   }
 }
 
-String _$itemsCacheHash() => r'ccbf39b6445041f0762068de59a7f753a21ea306';
+String _$itemsCacheHash() => r'2dbbf23d7eea0d5a359eb55c6d90b77af2ba1b84';
 
 abstract class _$ItemsCache extends $Notifier<void> {
   void build();

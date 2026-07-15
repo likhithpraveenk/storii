@@ -40,7 +40,7 @@ final class SpeedStoreProvider extends $NotifierProvider<SpeedStore, void> {
   }
 }
 
-String _$speedStoreHash() => r'a8ddd1f72af1cf4cb92a397a1692d78cb915591e';
+String _$speedStoreHash() => r'6c0d736675adb35f611f9cf248d0f437327930e3';
 
 abstract class _$SpeedStore extends $Notifier<void> {
   void build();
