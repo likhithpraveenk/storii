@@ -63,6 +63,10 @@ class HomeScreen extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final shelf = displayList[index];
                 final height = ref.watch(shelfHeightProvider(shelf.type));
+                final showPlay =
+                    shelf.identity == .continueListening ||
+                    shelf.identity == .listenAgain ||
+                    shelf.identity == .continueSeries;
 
                 return Column(
                   mainAxisSize: .min,
@@ -88,7 +92,10 @@ class HomeScreen extends ConsumerWidget {
                           final (double width, Widget card) = switch (shelf) {
                             LibraryItemsShelf() => (
                               maxCardWidthInGrid,
-                              LibraryItemCard(shelf.entities[i]),
+                              LibraryItemCard(
+                                shelf.entities[i],
+                                showPlay: showPlay,
+                              ),
                             ),
                             AuthorShelf() => (
                               maxCardWidthInGrid,

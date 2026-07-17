@@ -9,12 +9,15 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/library/ui/item_card_progress_widget.dart';
+import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class LibraryItemCard extends ConsumerWidget {
-  const LibraryItemCard(this.item, {super.key});
+  const LibraryItemCard(this.item, {super.key, this.showPlay = false});
   final LibraryItem item;
+  final bool showPlay;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -67,24 +70,22 @@ class LibraryItemCard extends ConsumerWidget {
                     alignment: .bottomCenter,
                     child: ItemCardProgressWidget(item: item),
                   ),
-                  // TODO: play button for continue listening
-                  // TODO: advanced options to hide from continue listening
                   if (sequence != null)
                     Positioned(
-                      top: 4,
-                      right: 4,
+                      top: 6,
+                      right: 6,
                       child: StackBadge('#$sequence'),
                     ),
                   if (seriesNumBooks != null)
                     Positioned(
-                      top: 4,
-                      right: 4,
+                      top: 6,
+                      right: 6,
                       child: StackBadge('$seriesNumBooks'),
                     ),
                   if (episodeNumber != null)
                     Positioned(
-                      top: 4,
-                      right: 4,
+                      top: 6,
+                      right: 6,
                       child: StackBadge(episodeNumber),
                     ),
                   Consumer(
@@ -102,6 +103,15 @@ class LibraryItemCard extends ConsumerWidget {
                       return const SizedBox.shrink();
                     },
                   ),
+                  if (showPlay)
+                    Positioned(
+                      bottom: 6,
+                      right: 6,
+                      child: PlayButtonBadge(
+                        itemId: item.id,
+                        episodeId: item.recentEpisode?.id,
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -167,6 +177,57 @@ class TitleWidget extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class PlayButtonBadge extends ConsumerWidget {
+  const PlayButtonBadge({super.key, required this.itemId, this.episodeId});
+
+  final String itemId;
+  final String? episodeId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scheme = Theme.of(context).colorScheme;
+    final isCurrentItem = ref.watch(
+      sessionProvider.select(
+        (s) => s?.libraryItemId == itemId && s?.episodeId == episodeId,
+      ),
+    );
+
+    final isPlaying = isCurrentItem && ref.watch(isPlayingProvider);
+
+    return InkWell(
+      onTap: () async {
+        if (isCurrentItem) {
+          await audioHandler.togglePlay();
+        } else {
+          await ref
+              .read(audioPlayerProvider.notifier)
+              .play(itemId: itemId, episodeId: episodeId);
+        }
+      },
+      child: Container(
+        alignment: .center,
+        padding: const .all(4),
+        decoration: BoxDecoration(
+          color: scheme.primaryFixedDim,
+          borderRadius: .circular(6),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.5),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Icon(
+          isPlaying ? Icons.pause : Icons.play_arrow,
+          size: 12,
+          color: scheme.onPrimaryFixed,
+        ),
       ),
     );
   }
