@@ -95,10 +95,11 @@ Future<List<Shelf>> rawShelves(Ref ref) async {
     activeLibraryDetailsProvider.future,
   )).library.id;
 
-  final user = await ref.read(authenticatedUserProvider.future);
+  final user = await ref.watch(authenticatedUserProvider.future);
+  final api = ref.watch(libraryApiProvider(user));
 
   return ref.logApiCall(
-    () => ref.read(libraryApiProvider(user)).getPersonalized(libraryId),
+    () => api.getPersonalized(libraryId),
     source: 'rawShelves',
     logMessage: 'Error getting personalized home',
   );

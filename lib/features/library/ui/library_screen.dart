@@ -36,8 +36,10 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(rawLibraryItemsProvider);
+          await ref.read(libraryItemsProvider.future);
         },
         child: itemsAsync.when(
+          skipLoadingOnReload: true,
           data: (items) {
             if (items.isEmpty) {
               return SingleChildScrollView(

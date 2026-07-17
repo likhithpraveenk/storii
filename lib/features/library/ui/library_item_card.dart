@@ -68,6 +68,7 @@ class LibraryItemCard extends ConsumerWidget {
                     child: ItemCardProgressWidget(item: item),
                   ),
                   // TODO: play button for continue listening
+                  // TODO: advanced options to hide from continue listening
                   if (sequence != null)
                     Positioned(
                       top: 4,

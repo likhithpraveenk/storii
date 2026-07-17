@@ -28,8 +28,10 @@ class HomeScreen extends ConsumerWidget {
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(rawShelvesProvider);
+          await ref.read(shelvesProvider.future);
         },
         child: shelvesAsync.when(
+          skipLoadingOnReload: true,
           data: (shelves) {
             if (shelves.isEmpty) {
               final library = ref.watch(currentLibraryProvider)?.name;
@@ -116,7 +118,7 @@ class HomeScreen extends ConsumerWidget {
           loading: () => const Center(child: RandomWaveform()),
           error: (e, _) => ErrorRetryWidget(
             e.toString(),
-            onRetry: () => ref.invalidate(shelvesProvider),
+            onRetry: () => ref.invalidate(rawShelvesProvider),
           ),
         ),
       ),
