@@ -40,70 +40,72 @@ class FullPlayer extends ConsumerWidget {
         ? session.displayTitle ?? l10n.noTitle
         : session.displayAuthor ?? l10n.noAuthor;
 
-    return Padding(
-      padding: const .symmetric(horizontal: 16),
-      child: SingleChildScrollView(
-        // TODO: on small screens with android nav buttons this is not scrolling
-        // not overflowing but the full actions are only half reachable
-        // covered by nav buttons
-        child: Column(
-          children: [
-            MarqueeText(
-              title,
-              style: theme.textTheme.titleLarge?.copyWith(fontSize: 22),
-            ),
-            Text(
-              subtitle,
-              style: theme.textTheme.titleSmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-              textAlign: .center,
-              maxLines: 1,
-              overflow: .ellipsis,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              '$currentPosition / $totalDuration',
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant.withValues(
-                  alpha: 0.7,
-                ),
-                fontWeight: .bold,
-                letterSpacing: 0.8,
-              ),
-              textAlign: .center,
-            ),
-            const BookSlider(),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: .spaceBetween,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          padding: const .symmetric(horizontal: 16),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight - 32),
+            child: Column(
+              mainAxisAlignment: .center,
               children: [
-                IconButton(
-                  icon: const Icon(Icons.skip_previous, size: 36),
-                  onPressed: audioHandler.skipToPrevious,
+                MarqueeText(
+                  title,
+                  style: theme.textTheme.titleLarge?.copyWith(fontSize: 22),
                 ),
-                const AppSeekButton(isForward: false),
-                const PlayButton(),
-                const AppSeekButton(isForward: true),
-                IconButton(
-                  icon: const Icon(Icons.skip_next, size: 36),
-                  onPressed: audioHandler.skipToNext,
+                Text(
+                  subtitle,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: .center,
+                  maxLines: 1,
+                  overflow: .ellipsis,
                 ),
+                const SizedBox(height: 4),
+                Text(
+                  '$currentPosition / $totalDuration',
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant.withValues(
+                      alpha: 0.7,
+                    ),
+                    fontWeight: .bold,
+                    letterSpacing: 0.8,
+                  ),
+                  textAlign: .center,
+                ),
+                const BookSlider(),
+                Row(
+                  mainAxisAlignment: .spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.skip_previous, size: 36),
+                      onPressed: audioHandler.skipToPrevious,
+                    ),
+                    const AppSeekButton(isForward: false),
+                    const PlayButton(),
+                    const AppSeekButton(isForward: true),
+                    IconButton(
+                      icon: const Icon(Icons.skip_next, size: 36),
+                      onPressed: audioHandler.skipToNext,
+                    ),
+                  ],
+                ),
+                FullPlayerActionsWidget(session),
+                Text(
+                  session.playMethod.label,
+                  textAlign: .center,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.outlineVariant,
+                    fontStyle: .italic,
+                  ),
+                ),
+                SizedBox(height: MediaQuery.paddingOf(context).bottom),
               ],
             ),
-            const SizedBox(height: 16),
-            FullPlayerActionsWidget(session),
-            Text(
-              session.playMethod.label,
-              textAlign: .center,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.outlineVariant,
-                fontStyle: .italic,
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -44,7 +44,7 @@ double seriesGridHeight(Ref ref) {
   final authorSlot = scaler.scale(20.0);
   final metadataHeight = titleSlot + authorSlot;
 
-  return (maxSeriesCardWidthInGrid * 0.5) + metadataHeight;
+  return (maxSeriesCardWidthInGrid * 0.48) + metadataHeight;
 }
 
 @riverpod
@@ -57,7 +57,7 @@ double shelfHeight(Ref ref, ShelfType type) {
   };
 
   final imageBaseHeight = switch (type) {
-    .series => cardWidth * 0.5,
+    .series => cardWidth * 0.48,
     _ => cardWidth,
   };
 

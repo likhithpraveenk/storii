@@ -374,7 +374,7 @@
   "errorType": "Type error",
   "changeRestartRequired": "Changes take effect after restart",
   "playbackErrorNetwork": "Connection issue. Audio may be interrupted",
-  "playbackErrorSource": "audio file could not be loaded",
+  "playbackErrorSource": "Audio file could not be loaded",
   "playbackErrorDecoder": "File format unsupported",
   "playbackErrorUnknown": "Something went wrong with playback",
   "codec": "Codec",

@@ -6,7 +6,7 @@ const maxSeriesCardWidthInGrid = 400.0;
 
 const imgSizeInMiniPlayer = 64.0;
 const imgLeftPaddingInMiniPlayer = 8.0;
-const maxImgSizeInFullPlayer = 360.0;
+const maxImgSizeInFullPlayer = 480.0;
 
 const appName = 'Storii';
 const kMediaPlayer = '$appName just_audio';

@@ -7,7 +7,6 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/logic/authors_list_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
-import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
@@ -46,10 +45,11 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          ref.invalidate(libraryFiltersProvider(.authors));
           ref.invalidate(authorsListProvider);
+          await ref.read(authorsListProvider.future);
         },
         child: authorsAsync.when(
+          skipLoadingOnReload: true,
           data: (authors) {
             if (authors.isEmpty) {
               return const EmptyState();

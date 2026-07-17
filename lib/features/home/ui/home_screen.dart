@@ -28,8 +28,10 @@ class HomeScreen extends ConsumerWidget {
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(rawShelvesProvider);
+          await ref.read(shelvesProvider.future);
         },
         child: shelvesAsync.when(
+          skipLoadingOnReload: true,
           data: (shelves) {
             if (shelves.isEmpty) {
               final library = ref.watch(currentLibraryProvider)?.name;
@@ -61,6 +63,10 @@ class HomeScreen extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final shelf = displayList[index];
                 final height = ref.watch(shelfHeightProvider(shelf.type));
+                final showPlay =
+                    shelf.identity == .continueListening ||
+                    shelf.identity == .listenAgain ||
+                    shelf.identity == .continueSeries;
 
                 return Column(
                   mainAxisSize: .min,
@@ -86,7 +92,10 @@ class HomeScreen extends ConsumerWidget {
                           final (double width, Widget card) = switch (shelf) {
                             LibraryItemsShelf() => (
                               maxCardWidthInGrid,
-                              LibraryItemCard(shelf.entities[i]),
+                              LibraryItemCard(
+                                shelf.entities[i],
+                                showPlay: showPlay,
+                              ),
                             ),
                             AuthorShelf() => (
                               maxCardWidthInGrid,
@@ -116,7 +125,7 @@ class HomeScreen extends ConsumerWidget {
           loading: () => const Center(child: RandomWaveform()),
           error: (e, _) => ErrorRetryWidget(
             e.toString(),
-            onRetry: () => ref.invalidate(shelvesProvider),
+            onRetry: () => ref.invalidate(rawShelvesProvider),
           ),
         ),
       ),

@@ -40,8 +40,8 @@ class PlayerSettingsScreen extends ConsumerWidget {
         ),
         title: Text(l10n.playerSettings, style: textTheme.titleLarge),
       ),
-      body: const Column(
-        children: [
+      body: ListView(
+        children: const [
           SkipForwardTile(),
           SkipBackwardTile(),
           SyncIntervalTile(),

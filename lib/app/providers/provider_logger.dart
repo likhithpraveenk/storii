@@ -17,11 +17,18 @@ final class ProviderLogger extends ProviderObserver {
   String _name(ProviderObserverContext ctx) =>
       ctx.provider.name ?? ctx.provider.runtimeType.toString();
 
+  String _format(Object? value) {
+    final s = value.toString();
+    const maxLen = 200;
+    if (s.length <= maxLen) return s;
+    return '${s.substring(0, maxLen)}....(${s.length} chars)';
+  }
+
   @override
   void didAddProvider(ProviderObserverContext context, Object? value) {
     final name = _name(context);
     if (_noisy.contains(name)) return;
-    log('[+] $name $value', name: 'Riverpod');
+    log('[+] $name ${_format(value)}', name: 'Riverpod');
   }
 
   @override
@@ -32,7 +39,7 @@ final class ProviderLogger extends ProviderObserver {
   ) {
     final name = _name(context);
     if (_noisy.contains(name)) return;
-    log('[~] $name $newValue', name: 'Riverpod');
+    log('[~] $name ${_format(newValue)}', name: 'Riverpod');
   }
 
   @override

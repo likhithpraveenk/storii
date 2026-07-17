@@ -35,12 +35,12 @@ enum ConnectionType {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 Stream<List<ConnectivityResult>> connectivityStream(Ref ref) {
   return Connectivity().onConnectivityChanged;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 ConnectionType connectionType(Ref ref) {
   final results = ref.watch(connectivityStreamProvider).value ?? [];
   // log('available connections: $results');

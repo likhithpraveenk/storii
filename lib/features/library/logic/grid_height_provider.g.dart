@@ -130,7 +130,7 @@ final class SeriesGridHeightProvider
   }
 }
 
-String _$seriesGridHeightHash() => r'025a8263f8f9a59ade7f690fe11be723465fc6a6';
+String _$seriesGridHeightHash() => r'161a4ed70bd07d69b8f1f60f90d5e5b16f375530';
 
 @ProviderFor(shelfHeight)
 final shelfHeightProvider = ShelfHeightFamily._();
@@ -189,7 +189,7 @@ final class ShelfHeightProvider
   }
 }
 
-String _$shelfHeightHash() => r'1c52790b5952202078f61baa3d491a9ce3cc3f1f';
+String _$shelfHeightHash() => r'b1eb44465d8f5dee4b96171cb7d73ae75e179025';
 
 final class ShelfHeightFamily extends $Family
     with $FunctionalFamilyOverride<double, ShelfType> {

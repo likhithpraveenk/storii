@@ -61,7 +61,7 @@ final class ConnectivityStreamProvider
         argument: null,
         retry: null,
         name: r'connectivityStreamProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -82,7 +82,7 @@ final class ConnectivityStreamProvider
 }
 
 String _$connectivityStreamHash() =>
-    r'dbd2c4ce5970f1f97dad2730821bb5ca0b99c327';
+    r'9f60aae6c128e0af3ad3f37236c4f05ce64c4a99';
 
 @ProviderFor(connectionType)
 final connectionTypeProvider = ConnectionTypeProvider._();
@@ -96,7 +96,7 @@ final class ConnectionTypeProvider
         argument: null,
         retry: null,
         name: r'connectionTypeProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -123,7 +123,7 @@ final class ConnectionTypeProvider
   }
 }
 
-String _$connectionTypeHash() => r'9ac7a3dcd4a644f0942d8b4ebecc849b48994d8a';
+String _$connectionTypeHash() => r'ac4f22daf36ed3faf6afdf9ab5031fabf818733a';
 
 @ProviderFor(serverConnection)
 final serverConnectionProvider = ServerConnectionProvider._();

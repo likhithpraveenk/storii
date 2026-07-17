@@ -26,7 +26,7 @@ class CoverImageTitle extends StatelessWidget {
       children: [
         Material(
           child: AspectRatio(
-            aspectRatio: orientation == .landscape ? 2 : 1,
+            aspectRatio: orientation == .landscape ? 3 : 1,
             child: ImageFiltered(
               imageFilter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
               child: ImageWidget(

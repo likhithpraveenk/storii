@@ -1765,7 +1765,7 @@ abstract class AppLocalizations {
   /// No description provided for @playbackErrorSource.
   ///
   /// In en, this message translates to:
-  /// **'audio file could not be loaded'**
+  /// **'Audio file could not be loaded'**
   String get playbackErrorSource;
 
   /// No description provided for @playbackErrorDecoder.
