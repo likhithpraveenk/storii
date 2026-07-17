@@ -21,10 +21,10 @@ import 'package:storii/features/more/ui/more_screen.dart';
 import 'package:storii/features/search/ui/search_screen.dart';
 import 'package:storii/features/series/ui/series_detail_screen.dart';
 import 'package:storii/features/series/ui/series_list_screen.dart';
+import 'package:storii/features/settings/ui/advanced/advanced_settings_screen.dart';
 import 'package:storii/features/settings/ui/appearance/appearance_screen.dart';
 import 'package:storii/features/settings/ui/downloads/downloads_settings_screen.dart';
 import 'package:storii/features/settings/ui/library/library_settings_screen.dart';
-import 'package:storii/features/settings/ui/navigation/config_nav_screen.dart';
 import 'package:storii/features/settings/ui/player_settings/player_settings_screen.dart';
 import 'package:storii/features/settings/ui/settings_screen.dart';
 import 'package:storii/features/stats/ui/stats_screen.dart';
@@ -53,9 +53,9 @@ enum AppRoute {
   settings('/more/settings'),
   appearanceSettings('/more/settings/appearance'),
   playerSettings('/more/settings/player'),
-  navigationSettings('/more/settings/navigation'),
   downloadsSettings('/more/settings/downloads'),
   librarySettings('/more/settings/library'),
+  advancedSettings('/more/settings/advanced'),
   stats('/more/stats');
 
   final String path;
@@ -230,10 +230,6 @@ final routerProvider = Provider<GoRouter>((ref) {
                             const PlayerSettingsScreen(),
                       ),
                       GoRoute(
-                        path: 'navigation',
-                        builder: (context, state) => const ConfigNavScreen(),
-                      ),
-                      GoRoute(
                         path: 'downloads',
                         builder: (context, state) =>
                             const DownloadsSettingsScreen(),
@@ -242,6 +238,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                         path: 'library',
                         builder: (context, state) =>
                             const LibrarySettingsScreen(),
+                      ),
+                      GoRoute(
+                        path: 'advanced',
+                        builder: (context, state) =>
+                            const AdvancedSettingsScreen(),
                       ),
                     ],
                   ),

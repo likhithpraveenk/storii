@@ -6,12 +6,17 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/settings/ui/appearance/app_color_tile.dart';
 import 'package:storii/features/settings/ui/appearance/binary_bytes_tile.dart';
+import 'package:storii/features/settings/ui/appearance/datetime_format_tile.dart';
 import 'package:storii/features/settings/ui/appearance/font_family.dart';
 import 'package:storii/features/settings/ui/appearance/font_scale.dart';
 import 'package:storii/features/settings/ui/appearance/marquee_speed_tile.dart';
+import 'package:storii/features/settings/ui/appearance/nav_label_tile.dart';
+import 'package:storii/features/settings/ui/appearance/reorder_nav_tabs.dart';
 import 'package:storii/features/settings/ui/appearance/scheme_variant_tile.dart';
 import 'package:storii/features/settings/ui/appearance/scroll_thumb_tile.dart';
+import 'package:storii/features/settings/ui/appearance/startup_nav.dart';
 import 'package:storii/features/settings/ui/appearance/system_theme_tile.dart';
+import 'package:storii/features/settings/ui/settings_header.dart';
 
 class AppearanceTile extends ConsumerWidget {
   const AppearanceTile({super.key});
@@ -60,6 +65,7 @@ class AppearanceScreen extends ConsumerWidget {
       ),
       body: ListView(
         children: [
+          SettingsHeader(title: l10n.theme),
           Padding(
             padding: const .symmetric(horizontal: 16),
             child: SegmentedButton<ThemeMode>(
@@ -95,13 +101,18 @@ class AppearanceScreen extends ConsumerWidget {
           const SystemThemeTile(),
           const AppColorTile(),
           const SchemeVariantTile(),
+          SettingsHeader(title: l10n.display),
           const FontFamilyTile(),
           const FontScaleTile(),
+          const DateTimeFormatTile(),
           const MarqueeSpeedTile(),
-          const Divider(),
           const ScrollThumbTile(),
-          const Divider(),
           const BinaryBytesTile(),
+          SettingsHeader(title: l10n.navBar),
+          const StartupNavTile(),
+          const ReorderNavTabsTile(),
+          const NavLabelTile(),
+          const SizedBox(height: 100),
         ],
       ),
     );

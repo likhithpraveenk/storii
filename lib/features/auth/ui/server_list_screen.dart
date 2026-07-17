@@ -9,7 +9,7 @@ import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/features/auth/ui/add_server_sheet.dart';
 import 'package:storii/features/auth/ui/add_user_sheet.dart';
 import 'package:storii/features/auth/ui/server_tile.dart';
-import 'package:storii/features/settings/ui/backup_settings_tile.dart';
+import 'package:storii/features/settings/ui/advanced/backup_settings_tile.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/empty_state.dart';

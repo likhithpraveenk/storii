@@ -544,11 +544,11 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get language;
 
-  /// No description provided for @configNav.
+  /// No description provided for @navBar.
   ///
   /// In en, this message translates to:
-  /// **'Configure Navigation'**
-  String get configNav;
+  /// **'Navbar'**
+  String get navBar;
 
   /// No description provided for @appearance.
   ///

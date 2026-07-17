@@ -2,16 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/account_section.dart';
-import 'package:storii/features/settings/ui/app_cache_tile.dart';
 import 'package:storii/features/settings/ui/appearance/appearance_screen.dart';
-import 'package:storii/features/settings/ui/backup_settings_tile.dart';
-import 'package:storii/features/settings/ui/datetime_format_tile.dart';
-import 'package:storii/features/settings/ui/http_logs.dart';
 import 'package:storii/features/settings/ui/library/library_settings_screen.dart';
-import 'package:storii/features/settings/ui/navigation/config_nav_screen.dart';
 import 'package:storii/features/settings/ui/player_settings/player_settings_screen.dart';
 import 'package:storii/features/settings/ui/reset_settings_action.dart';
-import 'package:storii/features/settings/ui/trust_all_certificates_tile.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -35,15 +29,9 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         children: const [
           AppearanceTile(),
-          DateTimeFormatTile(),
-          ConfigNavTile(),
-          // DownloadsSettingsTile(),
           PlayerSettingsTile(),
           LibrarySettingsTile(),
-          HttpLogsTile(),
-          AppCacheTile(),
-          TrustAllCertificatesTile(),
-          BackupSettingsTile(),
+          // DownloadsSettingsTile(),
           AccountSection(),
         ],
       ),

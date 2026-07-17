@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/user_session_controller.dart';
+import 'package:storii/features/settings/ui/settings_header.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -18,15 +19,7 @@ class AccountSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: .start,
       children: [
-        Padding(
-          padding: const .fromLTRB(16, 16, 16, 8),
-          child: Text(
-            user?.username ?? l10n.username,
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-        ),
+        SettingsHeader(title: user?.username ?? l10n.username),
         ListTile(
           leading: const Icon(Icons.switch_account),
           title: Text(l10n.switchAccount),

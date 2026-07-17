@@ -16,7 +16,7 @@ class MarqueeSpeedTile extends ConsumerWidget {
 
     return ListTile(
       title: Text(l10n.marqueeSpeed),
-      subtitle: Text('$speed px/s'),
+      subtitle: Text('${speed.round()} px/s'),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
         AppBottomSheet.show(
@@ -46,6 +46,8 @@ class _MarqueeSpeedSheetState extends ConsumerState<_MarqueeSpeedSheet> {
     _selected = ref.read(marqueeSpeedProvider);
   }
 
+  String _display(double v) => '${v.round()} px/s';
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -71,16 +73,19 @@ class _MarqueeSpeedSheetState extends ConsumerState<_MarqueeSpeedSheet> {
             max: 80,
             step: 5,
             onChangedEnd: (v) => setState(() => _selected = v),
-            labelBuilder: (v) => '$v px/s',
+            labelBuilder: _display,
             presets: _presets,
           ),
           const SizedBox(height: 24),
-          AppFilledButton(
-            onPressed: () {
-              notifier.setMarqueeSpeed(_selected);
-              Navigator.of(context).pop();
-            },
-            text: l10n.save,
+          SizedBox(
+            width: double.infinity,
+            child: AppFilledButton(
+              onPressed: () {
+                notifier.setMarqueeSpeed(_selected);
+                Navigator.of(context).pop();
+              },
+              text: l10n.save,
+            ),
           ),
         ],
       ),
