@@ -898,7 +898,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Connection issue. Audio may be interrupted';
 
   @override
-  String get playbackErrorSource => 'audio file could not be loaded';
+  String get playbackErrorSource => 'Audio file could not be loaded';
 
   @override
   String get playbackErrorDecoder => 'File format unsupported';
