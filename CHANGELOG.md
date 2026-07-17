@@ -7,13 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Reorganized settings into grouped categories
+- Moved navigation settings into Appearance
+- Moved backup, HTTP logs, cert trust, app cache into Advanced settings
+
 ## [v0.5.7] - 2026-07-15
 
-## Added
+### Added
 
 - bug report copied to clipboard
 
-## Fixed
+### Fixed
 
 - Skip-back now restarts the chapter after 3 seconds instead of jumping to the start
 - Close session on fatal playback error

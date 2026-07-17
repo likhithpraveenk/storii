@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
-import 'package:storii/features/settings/ui/trust_all_certificates_tile.dart';
+import 'package:storii/features/settings/ui/advanced/trust_all_certificates_tile.dart';
 
 typedef Header = (String key, String value);
 

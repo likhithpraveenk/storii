@@ -14,7 +14,6 @@ class ReorderNavTabsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: const Icon(Icons.swap_vert),
       trailing: const Icon(Icons.chevron_right),
       title: Text(l10n.settingsReorderNavTitle),
       subtitle: Text(l10n.settingsReorderNavSubtitle),
@@ -93,7 +92,7 @@ class _ReorderNavTabsState extends ConsumerState<ReorderNavTabs> {
 
             return Container(
               key: ValueKey(target),
-              margin: const .only(bottom: 12),
+              margin: const .only(bottom: 8),
               decoration: BoxDecoration(
                 color: isEnabled
                     ? scheme.surfaceContainerHighest.withValues(alpha: 0.5)
@@ -106,7 +105,8 @@ class _ReorderNavTabsState extends ConsumerState<ReorderNavTabs> {
                 ),
               ),
               child: ListTile(
-                contentPadding: const .symmetric(horizontal: 16, vertical: 4),
+                contentPadding: const .symmetric(horizontal: 16),
+                visualDensity: .compact,
                 title: Text(
                   target.label,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -138,7 +138,6 @@ class _ReorderNavTabsState extends ConsumerState<ReorderNavTabs> {
             );
           },
         ),
-        const SizedBox(height: 16),
         Padding(
           padding: const .symmetric(horizontal: 16),
           child: SizedBox(

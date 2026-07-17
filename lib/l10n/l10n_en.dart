@@ -238,7 +238,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get language => 'Language';
 
   @override
-  String get configNav => 'Configure Navigation';
+  String get navBar => 'Navbar';
 
   @override
   String get appearance => 'Appearance';

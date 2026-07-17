@@ -15,7 +15,6 @@ class DateTimeFormatTile extends ConsumerWidget {
     final currentFormat = ref.watch(dateTimeFormatProvider);
 
     return ListTile(
-      leading: const Icon(Icons.calendar_month_outlined),
       title: Text(l10n.dateFormat),
       subtitle: Text(DateFormat(currentFormat).format(DateTime.now())),
       trailing: const Icon(Icons.chevron_right),
