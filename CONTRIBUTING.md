@@ -2,6 +2,10 @@
 
 Thanks for your interest.
 
+## Reporting Issues
+
+You do **not** need to write code to contribute. If you spot any text errors (typos, grammar, or unclear wording) or any bugs, please [open an issue](https://github.com/likhithpraveenk/storii/issues/new?template=bug_report.md).
+
 ## Requirements
 
 - Flutter SDK (stable)
@@ -42,7 +46,6 @@ dart run build_runner watch
 ```bash
 dart format .
 dart fix --apply
+flutter analyze
+flutter test
 ```
-
-- All lint errors and warnings must be fixed
-- Lint infos are allowed only for TODOs

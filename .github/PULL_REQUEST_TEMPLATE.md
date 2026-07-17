@@ -13,10 +13,10 @@ Closes #
 
 ## Checklist
 
-- [ ] `dart format .` and `dart fix --apply` have been run
-- [ ] No lint errors or warnings (infos for TODOs are okay)
-- [ ] Code generation has been run if models or providers were changed (`dart run build_runner build`)
-- [ ] No `print` statements introduced
+- [ ] `dart format .` - 0 changed
+- [ ] `dart fix --apply` - Nothing to fix
+- [ ] `flutter analyze` - No issues found
+- [ ] `dart run build_runner build` - No outputs
 - [ ] Tested against an Audiobookshelf server
 
 ## Screenshots
