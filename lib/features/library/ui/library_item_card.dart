@@ -4,12 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
+import 'package:storii/features/library/ui/item_card_progress_widget.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
@@ -20,7 +19,6 @@ class LibraryItemCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sequence = item.seriesSequence;
-    final scheme = Theme.of(context).colorScheme;
     final displayMode = ref.watch(libraryDisplayModeProvider);
     final stackTitle = displayMode == .compact;
     final showTitle = displayMode != .coverOnly;
@@ -67,41 +65,9 @@ class LibraryItemCard extends ConsumerWidget {
                   ),
                   Align(
                     alignment: .bottomCenter,
-                    child: SizedBox(
-                      height: 3,
-                      child: Consumer(
-                        builder: (context, ref, _) {
-                          final mediaProgress = ref
-                              .watch(
-                                mediaProgressFromMapProvider(
-                                  item.id,
-                                  item.recentEpisode?.id,
-                                ),
-                              )
-                              .value;
-
-                          final progress = item.collapsedSeries != null
-                              ? item.collapsedSeries!.finishRatio
-                              : mediaProgress?.progress ?? item.progress;
-
-                          return LinearProgressIndicator(
-                            value: progress,
-                            borderRadius: .circular(kRadius),
-                            backgroundColor: scheme.surface.withValues(
-                              alpha: 0.2,
-                            ),
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              mediaProgress?.isFinished == true ||
-                                      item.isFinished ||
-                                      progress == 1
-                                  ? appGreenColor
-                                  : appRedColor,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                    child: ItemCardProgressWidget(item: item),
                   ),
+                  // TODO: play button for continue listening
                   if (sequence != null)
                     Positioned(
                       top: 4,
