@@ -14,8 +14,7 @@ extension PlaybackSessionX on PlaybackSession {
       episodeId != null ? '$libraryItemId$episodeId' : libraryItemId;
 
   List<AppAudioSource> toAudioSources(
-    Uri? serverUrl,
-    String? token, {
+    Uri? serverUrl, {
     String? coverPath,
     Map<int, String> localPaths = const {},
   }) {
@@ -63,7 +62,9 @@ extension PlaybackSessionX on PlaybackSession {
 
       final uri = isLocal
           ? Uri.file(localPath)
-          : serverUrl!.resolve(track.contentUrl);
+          : serverUrl!.resolve(
+              ApiRoutes.sessionOpenTrack(id, '${track.index}'),
+            );
       //! either we get local path or server url
 
       final isEpisode = mediaType == .podcast && episodeId != null;
@@ -96,12 +97,9 @@ extension PlaybackSessionX on PlaybackSession {
         throw FormatException('Unsupported audio format ${mimeType.name}');
       }
 
-      final headers = isLocal
-          ? <String, String>{}
-          : {'Authorization': 'Bearer $token'};
       final source = AppAudioSource(
         uri: uri,
-        headers: headers,
+        headers: const {},
         tag: tag,
         duration: duration,
         type: mimeType,

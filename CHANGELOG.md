@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Advanced settings tile to the settings screen
+- Use playback session's public track URLs 
 
 ## [v0.5.8] - 2026-07-17
 
