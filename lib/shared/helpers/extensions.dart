@@ -173,6 +173,27 @@ extension DurationPreciseX on Duration {
   }
 }
 
+Duration? parseTime(String input) {
+  final parts = input.trim().split(':').reversed.toList();
+  if (parts.isEmpty || parts.length > 3) return null;
+
+  var seconds = 0;
+  for (var i = 0; i < parts.length; i++) {
+    final value = int.tryParse(parts[i]);
+    if (value == null || value < 0) return null;
+    seconds += value * _pow60(i);
+  }
+  return Duration(seconds: seconds);
+}
+
+int _pow60(int exponent) {
+  var result = 1;
+  for (var i = 0; i < exponent; i++) {
+    result *= 60;
+  }
+  return result;
+}
+
 extension DoubleToDurationX on double {
   Duration get toDuration =>
       Duration(microseconds: (this * Duration.microsecondsPerSecond).round());

@@ -5,6 +5,19 @@ import 'package:storii/app/init.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
+BoxDecoration dialogDecoration(BuildContext context) {
+  final theme = Theme.of(context);
+  return BoxDecoration(
+    color: theme.colorScheme.surface,
+    borderRadius: .circular(24),
+    border: .all(
+      width: 0.5,
+      strokeAlign: BorderSide.strokeAlignInside,
+      color: theme.colorScheme.primary,
+    ),
+  );
+}
+
 class AppDialog extends StatelessWidget {
   const AppDialog({
     super.key,
@@ -57,21 +70,11 @@ class AppDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Dialog(
       backgroundColor: Colors.transparent,
       insetPadding: const .symmetric(horizontal: 24, vertical: 40),
-      child: Material(
-        color: theme.colorScheme.surface,
-        shape: RoundedRectangleBorder(
-          borderRadius: .circular(24),
-          side: BorderSide(
-            width: 0.5,
-            strokeAlign: BorderSide.strokeAlignInside,
-            color: theme.colorScheme.primary,
-          ),
-        ),
+      child: DecoratedBox(
+        decoration: dialogDecoration(context),
         child: Padding(
           padding: const .all(24),
           child: Column(

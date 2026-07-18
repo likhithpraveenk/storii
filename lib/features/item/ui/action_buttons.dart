@@ -8,6 +8,7 @@ import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/item/ui/local_session_icon.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
+import 'package:storii/features/player/ui/bookmarks_sheet.dart';
 import 'package:storii/features/player/ui/history_button.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -38,6 +39,7 @@ class ActionButtons extends ConsumerWidget {
           LocalSessionIcon(itemId: item.id),
         if (canDownload) DownloadButton(libraryItemId: item.id),
         HistoryButton(itemId: item.id),
+        BookmarkButton(itemId: item.id, isPodcast: item.isPodcast),
         if (!isFinished)
           IconButton(
             tooltip: l10n.markAsComplete,
