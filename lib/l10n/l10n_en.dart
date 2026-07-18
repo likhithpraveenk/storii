@@ -1120,4 +1120,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get localSessionSheetBody => 'Progress saved locally. Sync pending.';
+
+  @override
+  String get bookmarks => 'Bookmarks';
+
+  @override
+  String get bookmarkFailed => 'Failed to save bookmark';
+
+  @override
+  String get addBookmark => 'Add Bookmark';
+
+  @override
+  String get editBookmark => 'Edit Bookmark';
 }

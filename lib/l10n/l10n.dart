@@ -2193,6 +2193,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Progress saved locally. Sync pending.'**
   String get localSessionSheetBody;
+
+  /// No description provided for @bookmarks.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmarks'**
+  String get bookmarks;
+
+  /// No description provided for @bookmarkFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save bookmark'**
+  String get bookmarkFailed;
+
+  /// No description provided for @addBookmark.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Bookmark'**
+  String get addBookmark;
+
+  /// No description provided for @editBookmark.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Bookmark'**
+  String get editBookmark;
 }
 
 class _AppLocalizationsDelegate

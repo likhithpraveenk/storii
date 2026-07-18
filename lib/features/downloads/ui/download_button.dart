@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/app/providers/user_permissions_provider.dart';
+import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';

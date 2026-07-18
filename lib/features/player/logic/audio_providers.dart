@@ -9,7 +9,6 @@ import 'package:storii/app/models/chapter.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/is_background_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
@@ -114,7 +113,6 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
           await fs.isFullyDownloaded(download);
 
       final PlaybackSession session;
-      String? token;
       Uri? serverUrl;
 
       if (isFullyDownloaded) {
@@ -130,7 +128,6 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
             );
       } else {
         final user = await ref.read(authenticatedUserProvider.future);
-        token = await ref.read(tokenProvider).getAccessToken(user.id);
         serverUrl = user.serverUrl;
         session = await ref
             .read(sessionProvider.notifier)
@@ -150,7 +147,6 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
 
       final sources = session.toAudioSources(
         serverUrl,
-        token,
         localPaths: localPaths,
         coverPath: coverPath,
       );

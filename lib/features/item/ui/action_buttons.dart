@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/item/ui/local_session_icon.dart';
+import 'package:storii/features/player/logic/session_notifier.dart';
+import 'package:storii/features/player/ui/bookmarks_sheet.dart';
 import 'package:storii/features/player/ui/history_button.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class ActionButtons extends ConsumerWidget {
@@ -20,15 +24,23 @@ class ActionButtons extends ConsumerWidget {
     final mediaProgress = ref
         .watch(mediaProgressFromMapProvider(item.id))
         .value;
-    final progress = mediaProgress?.progress ?? 0.0;
+    final isFinished =
+        mediaProgress?.isFinished == true ||
+        item.isFinished ||
+        mediaProgress?.progress == 1.0;
+    final localSession = ref.watch(localSessionProvider(item.id)).value;
+    final canDownload =
+        ref.watch(userPermissionsProvider).value?.download ?? false;
 
     return Row(
       mainAxisAlignment: .spaceEvenly,
       children: [
-        LocalSessionIcon(itemId: item.id),
-        DownloadButton(libraryItemId: item.id),
+        if (localSession?.playMethod == .local)
+          LocalSessionIcon(itemId: item.id),
+        if (canDownload) DownloadButton(libraryItemId: item.id),
         HistoryButton(itemId: item.id),
-        if (progress != 1.0)
+        BookmarkButton(itemId: item.id, isPodcast: item.isPodcast),
+        if (!isFinished)
           IconButton(
             tooltip: l10n.markAsComplete,
             onPressed: () => AppBottomSheet.show(
@@ -94,7 +106,7 @@ class ActionButtons extends ConsumerWidget {
                 }
               },
             ),
-            icon: const Icon(Icons.delete_outline),
+            icon: const Icon(Icons.cancel_outlined),
           ),
       ],
     );

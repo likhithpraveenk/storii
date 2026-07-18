@@ -196,6 +196,11 @@ class PlayButtonBadge extends ConsumerWidget {
         (s) => s?.libraryItemId == itemId && s?.episodeId == episodeId,
       ),
     );
+    final isLoading = ref.watch(
+      audioPlayerProvider.select(
+        (s) => s.loadingItemId == itemId && s.loadingEpisodeId == episodeId,
+      ),
+    );
 
     final isPlaying = isCurrentItem && ref.watch(isPlayingProvider);
 
@@ -223,11 +228,21 @@ class PlayButtonBadge extends ConsumerWidget {
             ),
           ],
         ),
-        child: Icon(
-          isPlaying ? Icons.pause : Icons.play_arrow,
-          size: 12,
-          color: scheme.onPrimaryFixed,
-        ),
+        child: isLoading
+            ? Container(
+                width: 12,
+                height: 12,
+                margin: const .all(2),
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: scheme.onPrimaryFixed,
+                ),
+              )
+            : Icon(
+                isPlaying ? Icons.pause : Icons.play_arrow,
+                size: 16,
+                color: scheme.onPrimaryFixed,
+              ),
       ),
     );
   }
