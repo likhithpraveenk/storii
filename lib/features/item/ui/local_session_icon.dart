@@ -16,82 +16,76 @@ class LocalSessionIcon extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final color = Theme.of(context).colorScheme.tertiary;
-    final sessionAsync = ref.watch(localSessionProvider(itemId, episodeId));
-    return sessionAsync.when(
-      loading: () => const SizedBox.shrink(),
-      error: (error, stack) => const SizedBox.shrink(),
-      data: (session) {
-        final isLocal = session != null && session.playMethod == .local;
-        if (!isLocal) return const SizedBox.shrink();
+    final session = ref.watch(localSessionProvider(itemId, episodeId)).value;
 
-        return IconButton(
-          tooltip: l10n.localSession,
-          onPressed: () {
-            AppBottomSheet.show(
-              context,
-              title: l10n.localSession,
-              subtitle: l10n.localSessionSheetBody,
-              body: Consumer(
-                builder: (context, ref, _) {
-                  final session = ref
-                      .watch(localSessionProvider(itemId, episodeId))
-                      .value;
-                  return Padding(
-                    padding: const .symmetric(horizontal: 24),
-                    child: Column(
-                      mainAxisSize: .min,
+    if (session?.playMethod != .local) return const SizedBox.shrink();
+
+    return IconButton(
+      tooltip: l10n.localSession,
+      onPressed: () {
+        AppBottomSheet.show(
+          context,
+          title: l10n.localSession,
+          subtitle: l10n.localSessionSheetBody,
+          body: Consumer(
+            builder: (context, ref, _) {
+              final session = ref
+                  .watch(localSessionProvider(itemId, episodeId))
+                  .value;
+              return Padding(
+                padding: const .symmetric(horizontal: 24),
+                child: Column(
+                  mainAxisSize: .min,
+                  children: [
+                    _SessionInfoRow(
+                      label: l10n.title,
+                      value: session?.displayTitle,
+                    ),
+                    const SizedBox(height: 8),
+                    _SessionInfoRow(
+                      label: l10n.currentPosition,
+                      value: session?.currentTime.toTime(padHours: true),
+                    ),
+                    const SizedBox(height: 8),
+                    _SessionInfoRow(
+                      label: l10n.totalListeningTime,
+                      value: session?.timeListening.toReadableDuration(
+                        showSeconds: true,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: .spaceAround,
                       children: [
-                        _SessionInfoRow(
-                          label: l10n.title,
-                          value: session?.displayTitle,
+                        AppFilledButton(
+                          text: l10n.cancel,
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                         ),
-                        const SizedBox(height: 8),
-                        _SessionInfoRow(
-                          label: l10n.currentPosition,
-                          value: session?.currentTime.toTime(padHours: true),
+                        AppFilledButton(
+                          text: l10n.delete,
+                          isDestructive: true,
+                          onPressed: () {
+                            if (session != null) {
+                              ref
+                                  .read(sessionStoreProvider.notifier)
+                                  .delete(session.id);
+                            }
+                            Navigator.of(context).pop();
+                          },
                         ),
-                        const SizedBox(height: 8),
-                        _SessionInfoRow(
-                          label: l10n.totalListeningTime,
-                          value: session?.timeListening.toReadableDuration(
-                            showSeconds: true,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: .spaceAround,
-                          children: [
-                            AppFilledButton(
-                              text: l10n.cancel,
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            AppFilledButton(
-                              text: l10n.delete,
-                              isDestructive: true,
-                              onPressed: () {
-                                if (session != null) {
-                                  ref
-                                      .read(sessionStoreProvider.notifier)
-                                      .delete(session.id);
-                                }
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
                       ],
                     ),
-                  );
-                },
-              ),
-            );
-          },
-          icon: Icon(Icons.local_activity_outlined, color: color, size: 20),
+                    const SizedBox(height: 16),
+                  ],
+                ),
+              );
+            },
+          ),
         );
       },
+      icon: Icon(Icons.local_activity_outlined, color: color, size: 20),
     );
   }
 }
