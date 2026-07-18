@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/account_section.dart';
+import 'package:storii/features/settings/ui/advanced/advanced_settings_screen.dart';
 import 'package:storii/features/settings/ui/appearance/appearance_screen.dart';
 import 'package:storii/features/settings/ui/library/library_settings_screen.dart';
 import 'package:storii/features/settings/ui/player_settings/player_settings_screen.dart';
@@ -32,6 +33,7 @@ class SettingsScreen extends StatelessWidget {
           PlayerSettingsTile(),
           LibrarySettingsTile(),
           // DownloadsSettingsTile(),
+          AdvancedSettingsTile(),
           AccountSection(),
         ],
       ),
