@@ -1,6 +1,5 @@
-import com.android.build.gradle.internal.api.ApkVariantOutputImpl
-import java.util.Properties
 import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -53,8 +52,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
             signingConfig = when {
                 System.getenv("KEY_ALIAS") != null -> signingConfigs.getByName("release")
@@ -75,6 +73,19 @@ android {
     dependenciesInfo {
         includeInApk = false
         includeInBundle = false
+    }
+
+    val abiCodes = mapOf("armeabi-v7a" to 1, "arm64-v8a" to 2, "x86_64" to 3)
+    applicationVariants.configureEach {
+        val variant = this
+        variant.outputs.forEach { output ->
+            val abiVersionCode =
+                abiCodes[output.filters.find { it.filterType == "ABI" }?.identifier]
+            if (abiVersionCode != null) {
+                (output as com.android.build.gradle.internal.api.ApkVariantOutputImpl).versionCodeOverride =
+                    variant.versionCode * 10 + abiVersionCode
+            }
+        }
     }
 }
 
