@@ -20,7 +20,7 @@ class MediaProgressMap extends _$MediaProgressMap {
     });
     await _progressSub?.cancel();
     try {
-      final serverUser = await ref.read(serverUserProvider.future);
+      final serverUser = await ref.watch(serverUserProvider.future);
       final map = {
         for (var p in serverUser.mediaProgress)
           mediaItemIdKey(p.libraryItemId, p.episodeId): p,
