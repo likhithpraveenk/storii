@@ -620,6 +620,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get endOfChapter => 'End of Chapter';
+
+  @override
+  String endOfNChapters(int count) {
+    return 'End of $count Chapters';
+  }
+
+  @override
   String get settingsStartupRouteTitle => 'Start on app open';
 
   @override

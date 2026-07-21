@@ -1240,6 +1240,18 @@ abstract class AppLocalizations {
   /// **'{time} min'**
   String timeMinutes(int time);
 
+  /// No description provided for @endOfChapter.
+  ///
+  /// In en, this message translates to:
+  /// **'End of Chapter'**
+  String get endOfChapter;
+
+  /// No description provided for @endOfNChapters.
+  ///
+  /// In en, this message translates to:
+  /// **'End of {count} Chapters'**
+  String endOfNChapters(int count);
+
   /// No description provided for @settingsStartupRouteTitle.
   ///
   /// In en, this message translates to:
