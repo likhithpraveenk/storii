@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - end of chapter(s) in sleep timer
 
+### Fixed
+
+- media progress update
+
 ## [v0.5.9] - 2026-07-18
 
 ### Added
