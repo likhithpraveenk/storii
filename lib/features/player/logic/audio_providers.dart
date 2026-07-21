@@ -75,6 +75,9 @@ Stream<Chapter?> currentChapter(Ref ref) {
 }
 
 @riverpod
+List<Chapter> chapterList(Ref ref) => audioHandler.resolver.chapters;
+
+@riverpod
 Duration totalDuration(Ref ref) {
   final session = ref.watch(sessionProvider);
   if (session == null) return Duration.zero;

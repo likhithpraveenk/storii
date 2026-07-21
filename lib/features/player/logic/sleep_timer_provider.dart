@@ -31,6 +31,35 @@ class SleepTimer extends _$SleepTimer {
     return null;
   }
 
+  Future<void> setEndAtChapter(int numberOfChapters) async {
+    final state = ref.read(playbackStateProvider).value;
+
+    if (state == null) return;
+
+    final trackIndex = state.index;
+    if (trackIndex == null) return;
+
+    final resolver = audioHandler.resolver;
+    if (resolver.isEmpty) return;
+
+    final globalPosition = audioHandler.currentPosition;
+    final currentIndex = resolver.chapterIndexFromTrack(
+      trackIndex,
+      globalPosition,
+    );
+    final endIndex = (currentIndex + numberOfChapters - 1).clamp(
+      currentIndex,
+      resolver.chapters.length - 1,
+    );
+
+    final endTime = resolver.chapters[endIndex].end;
+    final duration = endTime - globalPosition;
+
+    if (duration <= Duration.zero) return;
+
+    set(duration);
+  }
+
   void set(Duration duration) {
     final clamped = Duration(
       microseconds: duration.inMicroseconds.clamp(0, _max.inMicroseconds),

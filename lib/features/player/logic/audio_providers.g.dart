@@ -312,6 +312,47 @@ final class CurrentChapterProvider
 
 String _$currentChapterHash() => r'd5d37a74c6e89753ee6d43f692d414f070887c04';
 
+@ProviderFor(chapterList)
+final chapterListProvider = ChapterListProvider._();
+
+final class ChapterListProvider
+    extends $FunctionalProvider<List<Chapter>, List<Chapter>, List<Chapter>>
+    with $Provider<List<Chapter>> {
+  ChapterListProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'chapterListProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$chapterListHash();
+
+  @$internal
+  @override
+  $ProviderElement<List<Chapter>> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  List<Chapter> create(Ref ref) {
+    return chapterList(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<Chapter> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<Chapter>>(value),
+    );
+  }
+}
+
+String _$chapterListHash() => r'160ba27ff279c6581067789d420b638ae60566a4';
+
 @ProviderFor(totalDuration)
 final totalDurationProvider = TotalDurationProvider._();
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/sleep_timer_provider.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -108,17 +109,73 @@ class _SleepTimerSheetState extends ConsumerState<SleepTimerSheet> {
               onChangedEnd: (min) => _selectedMinutes = min,
               presets: [15, 30, 45, 60, 90],
             ),
-            // TODO: add end of chapter
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             AppFilledButton(
               onPressed: () {
                 notifier.set(Duration(minutes: _selectedMinutes));
               },
               text: l10n.confirm,
             ),
+            const SizedBox(height: 16),
+            const _ChapterOptions(),
           ],
         ],
       ),
+    );
+  }
+}
+
+class _ChapterOptions extends ConsumerStatefulWidget {
+  const _ChapterOptions();
+
+  @override
+  ConsumerState<_ChapterOptions> createState() => _ChapterOptionsState();
+}
+
+class _ChapterOptionsState extends ConsumerState<_ChapterOptions> {
+  int _selectedCount = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    final chapters = ref.watch(chapterListProvider);
+    if (chapters.isEmpty) return const SizedBox.shrink();
+
+    final maxChapters = chapters.length.clamp(0, 3);
+    final label = _selectedCount == 1
+        ? l10n.endOfChapter
+        : l10n.endOfNChapters(_selectedCount);
+
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: .center,
+          children: [
+            IconButton(
+              onPressed: _selectedCount > 1
+                  ? () => setState(() => _selectedCount--)
+                  : null,
+              icon: const Icon(Icons.remove_circle_outline),
+            ),
+            SizedBox(
+              width: 240,
+              child: AppOutlinedButton(
+                text: label,
+                onPressed: () {
+                  ref
+                      .read(sleepTimerProvider.notifier)
+                      .setEndAtChapter(_selectedCount);
+                },
+              ),
+            ),
+            IconButton(
+              onPressed: _selectedCount < maxChapters
+                  ? () => setState(() => _selectedCount++)
+                  : null,
+              icon: const Icon(Icons.add_circle_outline),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
