@@ -42,7 +42,7 @@
     },
     "loading": "Chargement",
     "active": "Active",
-    "noSession": "No session",
+    "noSession": "",
     "recentSessions": "Sessions récentes",
     "noAuthor": "No Author",
     "noArtist": "No Artist",
