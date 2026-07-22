@@ -434,7 +434,7 @@
     "hexFormatHint": "Utilisez RGB, RRGGBB ou AARRGGBB",
     "primary": "Primaire",
     "secondary": "Secondaire",
-    "tertiary": "Tertiary",
+    "tertiary": "",
     "error": "Erreur",
     "rememberSort": "Souviens-toi",
     "rememberSortSubtitle": "Ordre de tri persiste quand app redémarre",
