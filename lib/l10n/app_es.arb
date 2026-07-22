@@ -67,7 +67,7 @@
     "resume": "Resumen",
     "play": "Jugar",
     "pause": "Pausa",
-    "replay": "Replay",
+    "replay": "",
     "deleteLogsQ": "Eliminar todos los registros?",
     "audiobooks": "Audiolibros",
     "podcasts": "Podcasts",
