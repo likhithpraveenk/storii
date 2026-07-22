@@ -357,7 +357,7 @@
     "thisMonth": "Este mês",
     "thisYear": "Este ano",
     "days": "dias",
-    "daysAgo": "Há dias",
+    "daysAgo": "",
     "@daysAgo": {
         "placeholders": {
             "days": {
