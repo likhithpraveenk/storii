@@ -27,7 +27,7 @@
     },
     "noUsersServer": "Nenhum usuário está vinculado a este servidor.",
     "followingUsers": "Você está prestes a excluir os seguintes usuários",
-    "urlCopied": "URL Copied",
+    "urlCopied": "",
     "addUser": "Adicionar ao Usuário",
     "edit": "Editar",
     "editServer": "Editar servidor",
@@ -51,7 +51,7 @@
     "errorImage": "Imagem de carregamento de erro",
     "downloads": "Downloads",
     "settings": "Configurações",
-    "logs": "Logs",
+    "logs": "",
     "about": "Sobre a",
     "switchAccount": "Conta de Switch",
     "switchAccountConfirm": "Mudar para outra conta?",
@@ -64,9 +64,9 @@
     "retry": "Repito",
     "description": "Descrição",
     "noDescription": "Nenhuma descrição disponível",
-    "resume": "Resume",
+    "resume": "",
     "play": "Jogar",
-    "pause": "Pausa",
+    "pause": "",
     "replay": "Reprodução",
     "deleteLogsQ": "Excluir todos os registos?",
     "audiobooks": "Livros de áudio",
@@ -89,7 +89,7 @@
     "pureBlackSubtitle": "Tema de alto contraste",
     "fontScale": "Escala de fonte",
     "language": "Língua",
-    "navBar": "Navbar",
+    "navBar": "",
     "appearance": "Aparência",
     "theme": "Tema",
     "reset": "Redefinição",
@@ -116,7 +116,7 @@
     "authorLastFirst": "Autor (último, primeiro)",
     "dateAdded": "Data adicionada",
     "publishedYear": "Ano publicado",
-    "publishedDate": "Data de publicação",
+    "publishedDate": "",
     "releaseDate": "Data de lançamento",
     "size": "Tamanho",
     "duration": "Duração",
@@ -125,7 +125,7 @@
     "lastPlayed": "Última reprodução",
     "dateStarted": "Data de início",
     "dateFinished": "Data finalizada",
-    "random": "Random",
+    "random": "",
     "numOfBooks": "Número de livros",
     "name": "Nome",
     "lastBookAdded": "Último livro Adicionado",
@@ -138,11 +138,11 @@
     "hasSupplementary": "Tem ebook complementar",
     "hasNoSupplementary": "Não tem ebook complementar",
     "itunesId": "iD do iTunes",
-    "itunesArtistId": "iTunes Artist ID",
+    "itunesArtistId": "",
     "itunesPageUrl": "página do iTunes",
     "collapseSeries": "Série de Colapso",
     "filter": "Filtro",
-    "sort": "Tipo",
+    "sort": "",
     "display": "Exposição",
     "genres": "Gêneros",
     "tags": "Tags",
@@ -152,7 +152,7 @@
     "narrators": "Narratores",
     "tracks": "Trilhas",
     "missingMetadata": "Metadados perdidos",
-    "ebooks": "Ebooks",
+    "ebooks": "",
     "finished": "Terminado",
     "notStarted": "Não Iniciado",
     "inComplete": "Incompleto",
@@ -160,7 +160,7 @@
     "notFinished": "Não terminado",
     "asin": "ASIN",
     "isbn": "ISBN",
-    "subtitle": "Subtitle",
+    "subtitle": "",
     "singleTrack": "Faixa única",
     "multipleTracks": "Várias faixas",
     "noTracks": "Sem faixas",
@@ -168,7 +168,7 @@
     "rssFeedOpen": "RSS Feed Aberto",
     "moreInfo": "Mais informações",
     "explicit": "Explícito",
-    "abridged": "Abridged",
+    "abridged": "",
     "displayMode": "Modo de exibição",
     "comfortable": "Confortável confortável",
     "compact": "Compacto",
@@ -198,7 +198,7 @@
     "networkLogsDescription": "Registar solicitações e respostas HTTP",
     "trustAllCertificates": "Confiar em todos os certificados",
     "trustAllCertificatesDescription": "Desativa a validação do certificado",
-    "readableDuration": "{horas, plural, =0{} outros{{hours}h }}{minutes}m",
+    "readableDuration": "",
     "@readableDuration": {
         "placeholders": {
             "hours": {
@@ -209,7 +209,7 @@
             }
         }
     },
-    "readableDurationFull": "{horas, plural, =0{} outros{{hours}h }}{minutes}m {seconds}s",
+    "readableDurationFull": "",
     "@readableDurationFull": {
         "placeholders": {
             "hours": {
@@ -223,7 +223,7 @@
             }
         }
     },
-    "durationLeft": "{horas, plural, =0{} other{{hours}h }}{minutes}m left",
+    "durationLeft": "",
     "@durationLeft": {
         "placeholders": {
             "hours": {
@@ -250,7 +250,7 @@
     "startPlayback": "Iniciar reprodução",
     "playbackSpeed": "Velocidade de reprodução",
     "sleepTimer": "Temporizador de sono",
-    "cancelTimer": "Cancel timer",
+    "cancelTimer": "",
     "timeMinutes": "{time} min",
     "@timeMinutes": {
         "placeholders": {
@@ -292,11 +292,11 @@
     "or": "Ou",
     "oidcRedirectUriHintPrefix": "Requerimentos",
     "oidcRedirectUriHintSuffix": "em ABS → Configurações → Autenticação → URIs redirecionados móveis permitidos",
-    "queued": "Queued",
+    "queued": "",
     "downloading": "Descarregar",
-    "paused": "Pausa",
+    "paused": "",
     "failed": "Falhado",
-    "download": "Baixar",
+    "download": "",
     "completed": "Completada",
     "cancelled": "Cancelamento",
     "resumeDownload": "Baixar Resume Download",
@@ -314,7 +314,7 @@
     "directStream": "Transmissão direta",
     "transcode": "Código de transmissão",
     "local": "Local",
-    "downloaded": "Baixar",
+    "downloaded": "",
     "connectionStatus": "Estado de conexão",
     "connectionPleaseWait": "Por favor, espere",
     "connectionServerConnected": "Conectado ao servidor",
@@ -357,7 +357,7 @@
     "thisMonth": "Este mês",
     "thisYear": "Este ano",
     "days": "dias",
-    "daysAgo": "Há dias",
+    "daysAgo": "",
     "@daysAgo": {
         "placeholders": {
             "days": {
@@ -391,7 +391,7 @@
     "path": "Caminho",
     "scrollThumbVisibility": "Mostrar polegar de rolagem",
     "scrollThumbVisibilitySubtitle": "Exibe um polegar arrastável em longas listas",
-    "scrollThumbSettings": "Scroll Thumb",
+    "scrollThumbSettings": "",
     "scrollThumbDuration": "Esconder depois",
     "scrollThumbDurationDescription": "Quanto tempo o polegar fica visível depois de parar de rolar",
     "scrollThumbHeight": "Altura",
@@ -437,13 +437,13 @@
     "error": "Erro",
     "rememberSort": "Lembre-se de que",
     "rememberSortSubtitle": "Ordem de classificação persista quando o aplicativo reinicia",
-    "type": "Tipo",
-    "pubDate": "Data de publicação",
+    "type": "",
+    "pubDate": "",
     "added": "Adicionado",
     "mimeType": "MIME Tipo",
     "season": "Temporada",
     "episode": "Episódio",
-    "libraryIsEmpty": "A Biblioteca está vazia!",
+    "libraryIsEmpty": "",
     "@libraryIsEmpty": {
         "placeholders": {
             "library": {
