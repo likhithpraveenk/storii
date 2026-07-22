@@ -296,7 +296,7 @@
     "queued": "",
     "downloading": "Descarga",
     "paused": "Pausa",
-    "failed": "Failed",
+    "failed": "",
     "download": "Descargar",
     "completed": "Completado",
     "cancelled": "Cancelada",
