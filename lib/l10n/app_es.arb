@@ -345,7 +345,7 @@
     "foundBugQSubtitle": "Abrir un problema GitHub para cualquier error que haya encontrado",
     "audioBufferDuration": "Duración del amor de audio",
     "audioBufferDurationDescription": "Cuánto audio para mantenerse por delante de la reproducción. Los valores más altos reducen las interrupciones en las conexiones lentas",
-    "fadeOnSleep": "Audio fade-out",
+    "fadeOnSleep": "",
     "fadeOnSleepSubtitle": "Poco a poco baja el volumen antes de que el temporizador del sueño termine",
     "fadeOnSleepDuration": "Fade ventana",
     "fadeOnSleepDurationDescription": "Establece cuánto dura el efecto de desvanecimiento antes de que termine el tiempo",
