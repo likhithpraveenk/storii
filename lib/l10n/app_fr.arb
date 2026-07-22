@@ -58,7 +58,7 @@
     "logoutConfirm": "Se déconnecter de ce compte ?",
     "noLibrary": "Pas de bibliothèque",
     "libraries": "Bibliothèques",
-    "empty": "Empty",
+    "empty": "",
     "collapse": "Collapse",
     "refresh": "Refresh",
     "retry": "Retry",
