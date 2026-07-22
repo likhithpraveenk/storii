@@ -458,7 +458,7 @@
     "changeLocation": "Standort ändern",
     "resetToInternal": "Zurück zu Intern",
     "downloadLocation": "Location herunterladen",
-    "storageSubDirsNote": "Audiobücher und Podcasts werden in separaten Unterverzeichnissen gespeichert:\n- Hörbücher/<itemId>/\n- Podcasts/<podcast IRL\nDies gewährleistet auch bei Änderungen von Server-Metadaten stabile Pfade",
+    "storageSubDirsNote": "",
     "localSession": "Lokale Sitzung",
     "currentPosition": "Aktuelle Position",
     "localSessionSheetBody": "Fortschritt vor Ort gespeichert. Sync anhängig.",
