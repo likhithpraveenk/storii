@@ -311,7 +311,7 @@
         }
     },
     "downloadFailed": "Télécharger échoué - touchez à la rentrée",
-    "directPlay": "Direct Play",
+    "directPlay": "",
     "directStream": "Direct Stream",
     "transcode": "Transcode",
     "local": "Local",
