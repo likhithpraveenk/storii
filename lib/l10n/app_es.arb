@@ -198,7 +198,7 @@
     "networkLogsDescription": "Log HTTP peticiones y respuestas",
     "trustAllCertificates": "Confianza todos los certificados",
     "trustAllCertificatesDescription": "Validación de certificado deshabilitación",
-    "readableDuration": "{horas, plural, =0{} other{{hours}h}{minutes}m",
+    "readableDuration": "",
     "@readableDuration": {
         "placeholders": {
             "hours": {
