@@ -367,7 +367,7 @@
         }
     },
     "booksFinished": "Livres finis",
-    "episodesFinished": "Episodes finished",
+    "episodesFinished": "",
     "volume": "Volume",
     "increaseVolume": "Augmentation du volume",
     "decreaseVolume": "Volume de réduction",
