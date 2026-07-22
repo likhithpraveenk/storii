@@ -391,7 +391,7 @@
     "path": "Caminho",
     "scrollThumbVisibility": "Mostrar polegar de rolagem",
     "scrollThumbVisibilitySubtitle": "Exibe um polegar arrastável em longas listas",
-    "scrollThumbSettings": "Scroll Thumb",
+    "scrollThumbSettings": "",
     "scrollThumbDuration": "Esconder depois",
     "scrollThumbDurationDescription": "Quanto tempo o polegar fica visível depois de parar de rolar",
     "scrollThumbHeight": "Altura",
