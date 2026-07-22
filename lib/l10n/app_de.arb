@@ -321,7 +321,7 @@
     "connectionChecking": "Kontrollverbindung…",
     "connectionServerConnected": "An den Server angeschlossen",
     "connectionServerDisconnected": "Nicht mit dem Server verbunden",
-    "connectionTypeWifi": "WLAN",
+    "connectionTypeWifi": "",
     "connectionTypeMobile": "Mobile Daten",
     "connectionTypeEthernet": "Ethernet",
     "connectionTypeNone": "Kein Netzwerk",
