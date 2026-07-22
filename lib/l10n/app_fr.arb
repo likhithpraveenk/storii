@@ -59,7 +59,7 @@
     "noLibrary": "Pas de bibliothèque",
     "libraries": "Bibliothèques",
     "empty": "",
-    "collapse": "Collapse",
+    "collapse": "",
     "refresh": "Refresh",
     "retry": "Retry",
     "description": "Description",
