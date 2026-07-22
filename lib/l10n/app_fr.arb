@@ -1,7 +1,7 @@
 {
     "@@locale": "fr",
     "login": "Login",
-    "logout": "Logout",
+    "logout": "",
     "addServer": "Ajouter Server",
     "serverUrl": "URL du serveur",
     "validateServer": "Valider Server",
@@ -280,7 +280,7 @@
     "alwaysHide": "Toujours se cacher",
     "syncInterval": "Sync Interval",
     "syncIntervalSubtitle": "Contrôle la fréquence de synchronisation du serveur, en supprimant la restriction de données mobiles de 1 minute si elle est plus élevée",
-    "emptyMsg": "Tellement vide..",
+    "emptyMsg": "Tellement vide…",
     "history": "Histoire",
     "today": "Aujourd'hui",
     "yesterday": "Hier",
@@ -465,5 +465,5 @@
     "bookmarkFailed": "Failed to save bookmark",
     "addBookmark": "Ajouter Signet",
     "editBookmark": "Edit Bookmark",
-    "connectionChecking": "Vérification de la connexion.."
+    "connectionChecking": "Vérification de la connexion…"
 }
