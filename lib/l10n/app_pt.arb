@@ -223,7 +223,7 @@
             }
         }
     },
-    "durationLeft": "{horas, plural, =0{} other{{hours}h }}{minutes}m left",
+    "durationLeft": "",
     "@durationLeft": {
         "placeholders": {
             "hours": {
