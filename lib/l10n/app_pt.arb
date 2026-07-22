@@ -27,7 +27,7 @@
     },
     "noUsersServer": "Nenhum usuário está vinculado a este servidor.",
     "followingUsers": "Você está prestes a excluir os seguintes usuários",
-    "urlCopied": "URL Copied",
+    "urlCopied": "",
     "addUser": "Adicionar ao Usuário",
     "edit": "Editar",
     "editServer": "Editar servidor",
@@ -464,6 +464,6 @@
     "bookmarkFailed": "Falhado para salvar bookmark",
     "addBookmark": "Adicionar favoritos",
     "editBookmark": "Editar favoritos",
-    "connectionChecking": "Verificando conexão..",
-    "emptyMsg": "Tão vazio.."
+    "connectionChecking": "Verificando conexão…",
+    "emptyMsg": "Tão vazio…"
 }
