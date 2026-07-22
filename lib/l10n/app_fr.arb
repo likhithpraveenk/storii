@@ -29,7 +29,7 @@
     "followingUsers": "Vous allez supprimer les utilisateurs suivants",
     "urlCopied": "URL Copier",
     "addUser": "Ajouter l'utilisateur",
-    "edit": "Edit",
+    "edit": "",
     "editServer": "Modifier Server",
     "errorLoadingUsers": "Erreur de chargement des utilisateurs",
     "switchingToUser": "Passage à {user}",
