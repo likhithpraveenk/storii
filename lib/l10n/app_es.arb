@@ -120,7 +120,7 @@
     "releaseDate": "Fecha de lanzamiento",
     "size": "Tamaño",
     "duration": "Duración",
-    "fileCreatedDate": "File Created Date",
+    "fileCreatedDate": "",
     "fileModifiedDate": "Fecha modificada",
     "lastPlayed": "Última jugada",
     "dateStarted": "Fecha de inicio",
