@@ -21,7 +21,7 @@
     "followingUsers": "请删除以下用户:",
     "urlCopied": "",
     "addUser": "增加用户",
-    "edit": "Edit",
+    "edit": "",
     "editServer": "Edit服务器",
     "errorLoadingUsers": "负载用户",
     "switchingToUser": "转至{user}",
