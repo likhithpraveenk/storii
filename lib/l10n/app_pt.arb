@@ -443,7 +443,7 @@
     "mimeType": "MIME Tipo",
     "season": "Temporada",
     "episode": "Episódio",
-    "libraryIsEmpty": "A Biblioteca está vazia!",
+    "libraryIsEmpty": "",
     "@libraryIsEmpty": {
         "placeholders": {
             "library": {
