@@ -393,7 +393,7 @@
     "path": "Pfad",
     "scrollThumbVisibility": "Zeig Scroll-Daumen",
     "scrollThumbVisibilitySubtitle": "Zeigt einen schleifbaren Daumen auf langen Listen an",
-    "scrollThumbSettings": "Scroll Thumb",
+    "scrollThumbSettings": "",
     "scrollThumbDuration": "Verstecken nach",
     "scrollThumbDurationDescription": "Wie lange der Daumen nach dem Scrollen sichtbar bleibt",
     "scrollThumbHeight": "Höhe",
