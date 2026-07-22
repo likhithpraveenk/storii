@@ -292,7 +292,7 @@
     "or": "Ou",
     "oidcRedirectUriHintPrefix": "Requerimentos",
     "oidcRedirectUriHintSuffix": "em ABS → Configurações → Autenticação → URIs redirecionados móveis permitidos",
-    "queued": "Queued",
+    "queued": "",
     "downloading": "Descarregar",
     "paused": "Pausa",
     "failed": "Falhado",
