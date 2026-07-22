@@ -444,7 +444,7 @@
     "added": "Zusätzlich",
     "mimeType": "MITTEL Typ",
     "season": "Saison",
-    "episode": "Episode",
+    "episode": "",
     "libraryIsEmpty": "{library} Bibliothek ist leer!",
     "@libraryIsEmpty": {
         "placeholders": {
