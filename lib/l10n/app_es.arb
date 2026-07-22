@@ -445,7 +445,7 @@
     "mimeType": "MIME Tipo",
     "season": "Estación",
     "episode": "Episodio",
-    "libraryIsEmpty": "¡La biblioteca está vacía!",
+    "libraryIsEmpty": "",
     "@libraryIsEmpty": {
         "placeholders": {
             "library": {
