@@ -295,7 +295,7 @@
     "oidcRedirectUriHintSuffix": "dans ABS → Paramètres → Authentification → URIs mobiles réorientés",
     "queued": "",
     "downloading": "Téléchargement",
-    "paused": "Paused",
+    "paused": "",
     "failed": "Failed",
     "download": "Télécharger",
     "completed": "Complété",
