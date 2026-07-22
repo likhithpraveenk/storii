@@ -444,7 +444,7 @@
     "mimeType": "",
     "season": "Saison",
     "episode": "",
-    "libraryIsEmpty": "La bibliothèque est vide !",
+    "libraryIsEmpty": "",
     "@libraryIsEmpty": {
         "placeholders": {
             "library": {
