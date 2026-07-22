@@ -287,7 +287,7 @@
     "seek": "",
     "stop": "Para",
     "complete": "Completa",
-    "sync": "Sync",
+    "sync": "",
     "playbackError": "error de reproducción",
     "loginOidc": "Iniciar sesión con OpenID",
     "or": "O",
