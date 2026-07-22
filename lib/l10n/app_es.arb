@@ -60,7 +60,7 @@
     "libraries": "Bibliotecas",
     "empty": "Vacío",
     "collapse": "",
-    "refresh": "Refresh",
+    "refresh": "",
     "retry": "Retry",
     "description": "Descripción",
     "noDescription": "No hay descripción disponible",
