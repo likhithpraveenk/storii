@@ -313,7 +313,7 @@
     "downloadFailed": "Descarga fallido - toque de reingreso",
     "directPlay": "",
     "directStream": "",
-    "transcode": "Transcode",
+    "transcode": "",
     "local": "Local",
     "downloaded": "Descargado",
     "connectionStatus": "Estado de conexión",
