@@ -64,7 +64,7 @@
     "retry": "Repito",
     "description": "Descrição",
     "noDescription": "Nenhuma descrição disponível",
-    "resume": "Resume",
+    "resume": "",
     "play": "Jogar",
     "pause": "Pausa",
     "replay": "Reprodução",
