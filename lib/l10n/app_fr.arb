@@ -186,7 +186,7 @@
     },
     "licensedUnder": "Licence sous licence GNU General Public License v3.0",
     "version": "Version",
-    "buildNumber": "Numéro de construction: {text}",
+    "buildNumber": "",
     "@buildNumber": {
         "placeholders": {
             "text": {
