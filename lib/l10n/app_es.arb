@@ -398,7 +398,7 @@
     "scrollThumbDurationDescription": "Cuánto tiempo el pulgar permanece visible después de dejar de desplazarse",
     "scrollThumbHeight": "Altura",
     "scrollThumbHeightDescription": "Altura del vientre en píxeles",
-    "scrollThumbWidth": "Width",
+    "scrollThumbWidth": "",
     "scrollThumbWidthDescription": "Ancho del vientre en píxeles",
     "off": "Fuera",
     "binaryUnits": "Unidades binarias",
