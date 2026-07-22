@@ -440,7 +440,7 @@
     "rememberSort": "Recuerdas algo",
     "rememberSortSubtitle": "Orden persista cuando se reinicia la aplicación",
     "type": "Tipo",
-    "pubDate": "Pub Date",
+    "pubDate": "",
     "added": "Añadido",
     "mimeType": "MIME Tipo",
     "season": "Estación",
