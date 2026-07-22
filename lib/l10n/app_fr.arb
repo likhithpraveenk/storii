@@ -11,7 +11,7 @@
     "value": "Valeur",
     "required": "Obligatoire",
     "duplicateHeader": "Double header",
-    "username": "Username",
+    "username": "",
     "password": "Mot de passe",
     "delete": "Supprimer",
     "cancel": "Annuler",
