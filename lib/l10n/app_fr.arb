@@ -296,7 +296,7 @@
     "queued": "",
     "downloading": "Téléchargement",
     "paused": "",
-    "failed": "Failed",
+    "failed": "",
     "download": "Télécharger",
     "completed": "Complété",
     "cancelled": "Annulé",
