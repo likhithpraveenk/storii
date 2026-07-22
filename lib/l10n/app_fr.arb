@@ -462,7 +462,7 @@
     "currentPosition": "Poste actuel",
     "localSessionSheetBody": "Progrès enregistrés localement. Sync en attente.",
     "bookmarks": "Signets",
-    "bookmarkFailed": "Failed to save bookmark",
+    "bookmarkFailed": "",
     "addBookmark": "Ajouter Signet",
     "editBookmark": "Edit Bookmark",
     "connectionChecking": "Vérification de la connexion…"
