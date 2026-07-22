@@ -138,7 +138,7 @@
     "hasSupplementary": "Tem ebook complementar",
     "hasNoSupplementary": "Não tem ebook complementar",
     "itunesId": "iD do iTunes",
-    "itunesArtistId": "iTunes Artist ID",
+    "itunesArtistId": "",
     "itunesPageUrl": "página do iTunes",
     "collapseSeries": "Série de Colapso",
     "filter": "Filtro",
