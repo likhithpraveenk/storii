@@ -302,7 +302,7 @@
     "cancelled": "Cancelada",
     "resumeDownload": "Descargar Resume",
     "removeDownloadQ": "Quitar Descargar?",
-    "willBeFreed": "Será liberado",
+    "willBeFreed": "",
     "@willBeFreed": {
         "placeholders": {
             "bytes": {
