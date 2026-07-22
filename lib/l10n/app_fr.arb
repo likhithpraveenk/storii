@@ -439,7 +439,7 @@
     "rememberSort": "Souviens-toi",
     "rememberSortSubtitle": "Ordre de tri persiste quand app redémarre",
     "type": "Type",
-    "pubDate": "Pub Date",
+    "pubDate": "",
     "added": "Ajouté",
     "mimeType": "MIME Type",
     "season": "Saison",
