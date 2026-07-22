@@ -17,7 +17,7 @@
     "cancel": "Annuler",
     "deleteServer": "Supprimer Server",
     "deleteServerQ": "Supprimer Server ?",
-    "deleteUserQ": "Supprimer {user}?",
+    "deleteUserQ": "",
     "@deleteUserQ": {
         "placeholders": {
             "user": {
