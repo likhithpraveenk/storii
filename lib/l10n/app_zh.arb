@@ -19,7 +19,7 @@
     },
     "noUsersServer": "没有用户与这一服务器连接.",
     "followingUsers": "请删除以下用户:",
-    "urlCopied": "URL Copied",
+    "urlCopied": "",
     "addUser": "增加用户",
     "edit": "Edit",
     "editServer": "Edit服务器",
