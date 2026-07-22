@@ -46,7 +46,7 @@
     "recentSessions": "Sessions récentes",
     "noAuthor": "No Author",
     "noArtist": "No Artist",
-    "noTitle": "No Title",
+    "noTitle": "",
     "noImage": "No Image",
     "errorImage": "Erreur de chargement",
     "downloads": "Téléchargements",
