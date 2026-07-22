@@ -198,7 +198,7 @@
     "networkLogsDescription": "Registar solicitações e respostas HTTP",
     "trustAllCertificates": "Confiar em todos os certificados",
     "trustAllCertificatesDescription": "Desativa a validação do certificado",
-    "readableDuration": "{horas, plural, =0{} outros{{hours}h }}{minutes}m",
+    "readableDuration": "",
     "@readableDuration": {
         "placeholders": {
             "hours": {
