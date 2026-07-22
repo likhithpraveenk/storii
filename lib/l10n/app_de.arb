@@ -315,7 +315,7 @@
     "directStream": "Direkter Stream",
     "transcode": "",
     "local": "Ort",
-    "downloaded": "Downloaded",
+    "downloaded": "",
     "connectionStatus": "Verbindungsstatus",
     "connectionPleaseWait": "Bitte warten Sie",
     "connectionChecking": "Kontrollverbindung…",
