@@ -250,7 +250,7 @@
     "startPlayback": "Comience la reproducción",
     "playbackSpeed": "Velocidad de reproducción",
     "sleepTimer": "Hora del sueño",
-    "cancelTimer": "Cancel timer",
+    "cancelTimer": "",
     "timeMinutes": "{time} min",
     "@timeMinutes": {
         "placeholders": {
