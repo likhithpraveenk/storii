@@ -7,7 +7,7 @@
     "validateServer": "Valider Server",
     "advanced": "Avancé",
     "customHeaders": "Headers personnalisés",
-    "key": "Key",
+    "key": "",
     "value": "Valeur",
     "required": "Obligatoire",
     "duplicateHeader": "Double header",
