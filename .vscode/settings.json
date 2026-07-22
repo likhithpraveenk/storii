@@ -15,7 +15,8 @@
     "*.dart": "$(capture).g.dart, $(capture).freezed.dart"
   },
   "arb-editor.suppressedWarnings": [
-    "missing_metadata_for_key"
+    "missing_metadata_for_key",
+    "missing_messages_from_template"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
