@@ -145,7 +145,7 @@
     "tracks": "跟踪",
     "missingMetadata": "缺失的元数据",
     "ebooks": "书籍",
-    "finished": "Finished",
+    "finished": "",
     "notStarted": "未启动",
     "inComplete": "不完整",
     "inProgress": "A. 进展",
