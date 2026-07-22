@@ -209,7 +209,7 @@
             }
         }
     },
-    "readableDurationFull": "{horas, plural, =0{} outros{{hours}h }}{minutes}m {seconds}s",
+    "readableDurationFull": "",
     "@readableDurationFull": {
         "placeholders": {
             "hours": {
