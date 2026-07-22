@@ -137,7 +137,7 @@
     "hasNoEbook": "Sans ebook",
     "hasSupplementary": "A l'ebook supplémentaire",
     "hasNoSupplementary": "Sans ebook supplémentaire",
-    "itunesId": "iTunes ID",
+    "itunesId": "",
     "itunesArtistId": "iTunes Artist ID",
     "itunesPageUrl": "iTunes Page Url",
     "collapseSeries": "Collapse Series",
