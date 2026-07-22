@@ -421,7 +421,7 @@
     "neutralSubtitle": "只带有色体的厕所",
     "appColor": "学历",
     "hexColor": "Hex Color",
-    "invalidHex": "Invalid hex",
+    "invalidHex": "",
     "primary": "小学",
     "secondary": "中学",
     "tertiary": "Tertiary",
