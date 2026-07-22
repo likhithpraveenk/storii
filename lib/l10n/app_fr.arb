@@ -278,7 +278,7 @@
     "alwaysShow": "Toujours",
     "onlyShowSelected": "Seulement afficher quand sélectionné",
     "alwaysHide": "Toujours se cacher",
-    "syncInterval": "Sync Interval",
+    "syncInterval": "",
     "syncIntervalSubtitle": "Contrôle la fréquence de synchronisation du serveur, en supprimant la restriction de données mobiles de 1 minute si elle est plus élevée",
     "emptyMsg": "Tellement vide…",
     "history": "Histoire",
