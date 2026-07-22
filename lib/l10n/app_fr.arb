@@ -464,6 +464,6 @@
     "bookmarks": "Signets",
     "bookmarkFailed": "",
     "addBookmark": "Ajouter Signet",
-    "editBookmark": "Edit Bookmark",
+    "editBookmark": "",
     "connectionChecking": "Vérification de la connexion…"
 }
