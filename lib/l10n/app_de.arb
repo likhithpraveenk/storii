@@ -313,7 +313,7 @@
     "downloadFailed": "Download gescheitert - Tippen Sie auf Wiedereintritt",
     "directPlay": "Direkt spielen",
     "directStream": "Direkter Stream",
-    "transcode": "Transcode",
+    "transcode": "",
     "local": "Ort",
     "downloaded": "Downloaded",
     "connectionStatus": "Verbindungsstatus",
