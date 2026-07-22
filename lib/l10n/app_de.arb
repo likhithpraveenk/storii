@@ -198,7 +198,7 @@
     "networkLogsDescription": "Protokollieren Sie HTTP-Anfragen und Antworten",
     "trustAllCertificates": "Vertrauen Sie alle Zertifikate",
     "trustAllCertificatesDescription": "Zertifikatsvalidierung deaktivieren",
-    "readableDuration": "{hours, plural, =0{} other{{hours}h }{minutes}m",
+    "readableDuration": "",
     "@readableDuration": {
         "placeholders": {
             "hours": {
