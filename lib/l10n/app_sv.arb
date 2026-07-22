@@ -1,0 +1,468 @@
+{
+    "login": "Logga in",
+    "logout": "Logga ut",
+    "addServer": "Lägg till server",
+    "serverUrl": "Server URL",
+    "validateServer": "",
+    "advanced": "Avancerad",
+    "customHeaders": "Anpassade chefer",
+    "key": "Nyckeln",
+    "value": "Värde",
+    "required": "Krav",
+    "duplicateHeader": "",
+    "username": "Användarnamn",
+    "password": "Lösenord",
+    "delete": "Radera",
+    "cancel": "Avbryt",
+    "deleteServer": "Radera server",
+    "deleteServerQ": "Radera server?",
+    "deleteUserQ": "Ta bort {user}?",
+    "@deleteUserQ": {
+        "placeholders": {
+            "user": {
+                "type": "String"
+            }
+        }
+    },
+    "noUsersServer": "Inga användare är kopplade till den här servern.",
+    "followingUsers": "Du är på väg att radera följande användare",
+    "urlCopied": "URL kopierad",
+    "addUser": "Lägg till användare",
+    "edit": "Redigera",
+    "editServer": "Redigera server",
+    "errorLoadingUsers": "Fel lastning användare",
+    "switchingToUser": "Växla till {user}",
+    "@switchingToUser": {
+        "placeholders": {
+            "user": {
+                "type": "String"
+            }
+        }
+    },
+    "loading": "",
+    "active": "Aktiv",
+    "noSession": "Ingen session",
+    "recentSessions": "Nya sessioner",
+    "noAuthor": "Ingen författare",
+    "noArtist": "Ingen konstnär",
+    "noTitle": "Ingen titel",
+    "noImage": "Ingen bild",
+    "errorImage": "Fel loading bild",
+    "downloads": "Ladda ner",
+    "settings": "Inställningar",
+    "logs": "Loggar",
+    "about": "Om",
+    "switchAccount": "Byt konto",
+    "switchAccountConfirm": "Byt till ett annat konto?",
+    "logoutConfirm": "Logga ut från det här kontot?",
+    "noLibrary": "Inget bibliotek",
+    "libraries": "Bibliotek",
+    "empty": "Tomma",
+    "collapse": "Kollaps",
+    "refresh": "",
+    "retry": "",
+    "description": "Beskrivning",
+    "noDescription": "Ingen beskrivning tillgänglig",
+    "resume": "",
+    "play": "Spela",
+    "pause": "Pausa",
+    "replay": "",
+    "deleteLogsQ": "Ta bort alla loggar?",
+    "audiobooks": "Ljudböcker",
+    "podcasts": "Podcasts",
+    "episodes": "Avsnitt",
+    "playEpisodeConfirm": "Spela detta avsnitt?",
+    "search": "Sök",
+    "dateFormat": "Datumformat",
+    "custom": "Anpassad",
+    "invalidFormat": "",
+    "customPattern": "Anpassad mönster",
+    "save": "Spara",
+    "fontFamily": "Ändra Font",
+    "system": "System",
+    "light": "Ljus",
+    "dark": "Mörk",
+    "systemTheme": "Systemtema",
+    "systemThemeSubtitle": "Match enhet palett",
+    "pureBlack": "Ren svart",
+    "pureBlackSubtitle": "Hög kontrast tema",
+    "fontScale": "",
+    "language": "Språkspråk",
+    "navBar": "",
+    "appearance": "Utseende",
+    "theme": "Tema",
+    "reset": "Återställ",
+    "resetSettingsQ": "Återställ inställningar?",
+    "resetSettingsTxt": "Detta kommer att återställa alla preferenser till deras standardvärden.",
+    "settingsReset": "Inställningar återställs",
+    "home": "Hemsidan",
+    "library": "Bibliotek",
+    "librarySettings": "Biblioteksinställningar",
+    "collections": "Samlingar",
+    "latest": "Senaste",
+    "latestEpisodes": "Senaste episoder",
+    "all": "Allt allt",
+    "id": "ID",
+    "series": "Serie",
+    "authors": "Författare",
+    "more": "Mer",
+    "books": "Böcker",
+    "stats": "Statistik",
+    "viewAll": "Visa alla",
+    "metadata": "Metadata",
+    "title": "Titel",
+    "author": "Författare",
+    "authorLastFirst": "Författare (förra, först)",
+    "dateAdded": "Datum tillagt",
+    "publishedYear": "Publicerat år",
+    "publishedDate": "Publicerad datum",
+    "releaseDate": "Släppdatum",
+    "size": "Storlek",
+    "duration": "Varaktighet",
+    "fileCreatedDate": "Fil skapade datum",
+    "fileModifiedDate": "Fil ändrad datum",
+    "lastPlayed": "Sista spelade",
+    "dateStarted": "Datum startat",
+    "dateFinished": "Datum avslutat",
+    "random": "",
+    "numOfBooks": "Antal böcker",
+    "name": "Namnnamn",
+    "lastBookAdded": "Senaste boken tillagd",
+    "lastBookUpdated": "Senaste boken uppdaterad",
+    "lastFirst": "Förnamn, förnamn",
+    "lastUpdated": "Senast uppdaterad",
+    "numOfEpisodes": "Antal episoder",
+    "hasEbook": "Har ebook",
+    "hasNoEbook": "Har ingen ebook",
+    "hasSupplementary": "Har kompletterande ebook",
+    "hasNoSupplementary": "Har ingen kompletterande e-bok",
+    "itunesId": "",
+    "itunesArtistId": "",
+    "itunesPageUrl": "",
+    "collapseSeries": "",
+    "filter": "Filter",
+    "sort": "",
+    "display": "",
+    "genres": "Genrer",
+    "tags": "Taggar",
+    "publisher": "Förlag",
+    "publishedDecade": "Förlag: Decade",
+    "progress": "Framsteg",
+    "narrators": "Narratorer",
+    "tracks": "Spår",
+    "missingMetadata": "",
+    "ebooks": "",
+    "finished": "Avslutad",
+    "notStarted": "Inte startat",
+    "inComplete": "Ofullständig",
+    "inProgress": "I Progress",
+    "notFinished": "Inte avslutad",
+    "asin": "ASIN",
+    "isbn": "ISBN",
+    "subtitle": "",
+    "singleTrack": "",
+    "multipleTracks": "Flera spår",
+    "noTracks": "Inga spår",
+    "itemsWithIssues": "Föremål med frågor",
+    "rssFeedOpen": "",
+    "moreInfo": "Mer info",
+    "explicit": "",
+    "abridged": "",
+    "displayMode": "",
+    "comfortable": "Bekväm",
+    "compact": "Kompakt",
+    "coverOnly": "Omslag Endast",
+    "listView": "List View",
+    "licenses": "Licens",
+    "sourceCode": "Källkod",
+    "couldNotUrl": "Kan inte starta {url}",
+    "@couldNotUrl": {
+        "placeholders": {
+            "url": {
+                "type": "String"
+            }
+        }
+    },
+    "licensedUnder": "Licensierad under GNU General Public License v3.0",
+    "version": "Version",
+    "buildNumber": "Byggnummer: {text}",
+    "@buildNumber": {
+        "placeholders": {
+            "text": {
+                "type": "String"
+            }
+        }
+    },
+    "networkLogs": "",
+    "networkLogsDescription": "Logga HTTP-förfrågningar och svar",
+    "trustAllCertificates": "Lita på alla certifikat",
+    "trustAllCertificatesDescription": "Inaktivera certifikat validering",
+    "readableDuration": "",
+    "@readableDuration": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "readableDurationFull": "",
+    "@readableDurationFull": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            },
+            "seconds": {
+                "type": "int"
+            }
+        }
+    },
+    "durationLeft": "",
+    "@durationLeft": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "chapters": "Kapitel",
+    "removeProgressTitle": "Ta bort framsteg?",
+    "removeProgressMessage": "Detta kommer att återställa dina lyssningsframsteg och kan inte ångras.",
+    "remove": "Ta bort",
+    "markAsComplete": "Mark som komplett?",
+    "confirm": "Bekräfta",
+    "progressMarkedComplete": "Markerad som komplett",
+    "progressMarkCompleteFailed": "Underlåten att markera som komplett",
+    "progressRemoved": "Progress bort",
+    "progressRemoveFailed": "Underlåten att ta bort framsteg",
+    "playerSettings": "Spelarinställningar",
+    "skipForward": "Skip framåt",
+    "skipBack": "",
+    "startPlayback": "Börja uppspelning",
+    "playbackSpeed": "Uppspelningshastighet",
+    "sleepTimer": "Sova timer",
+    "cancelTimer": "Avbryt timer",
+    "timeMinutes": "{time} min",
+    "@timeMinutes": {
+        "placeholders": {
+            "time": {
+                "type": "int"
+            }
+        }
+    },
+    "endOfChapter": "Slutet av kapitel",
+    "endOfNChapters": "Slut på {count} Kapitlen",
+    "@endOfNChapters": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "settingsStartupRouteTitle": "Börja på app öppen",
+    "settingsReorderNavTitle": "Navigationsflikar",
+    "settingsReorderNavSubtitle": "Reorder och aktivera eller inaktivera flikar",
+    "sampleText": "Sfinx av svart kvarts, döma mitt löfte - 0123456789",
+    "addFonts": "Lägg till teckensnitt",
+    "appCache": "App Cache",
+    "settingsNavLabelBehavior": "Navigationsmärkning",
+    "alwaysShow": "Visa alltid",
+    "onlyShowSelected": "Visa endast när den väljs",
+    "alwaysHide": "Alltid gömd",
+    "syncInterval": "",
+    "syncIntervalSubtitle": "Kontroller server synkronisera frekvensen, överskridande 1-minuters mobil datarestriktion om det sätts högre",
+    "emptyMsg": "Så tom…",
+    "history": "Historia historia",
+    "today": "Idag",
+    "yesterday": "Igår",
+    "seek": "Sök",
+    "stop": "Stoppa",
+    "complete": "Komplett",
+    "sync": "",
+    "playbackError": "uppspelningsfel",
+    "loginOidc": "Logga in med OpenID",
+    "or": "Eller",
+    "oidcRedirectUriHintPrefix": "Krav",
+    "oidcRedirectUriHintSuffix": "i ABS → Inställningar → Authentication → Tillåtna mobila omdirigeringar",
+    "queued": "",
+    "downloading": "Ladda ner",
+    "paused": "",
+    "failed": "Misslyckades",
+    "download": "Ladda ner",
+    "completed": "Slutförd",
+    "cancelled": "Avbokad",
+    "resumeDownload": "",
+    "removeDownloadQ": "Ta bort nedladdning?",
+    "willBeFreed": "{bytes} befrias",
+    "@willBeFreed": {
+        "placeholders": {
+            "bytes": {
+                "type": "String"
+            }
+        }
+    },
+    "downloadFailed": "Ladda ner misslyckad - kran för att retry",
+    "directPlay": "Direktspel",
+    "directStream": "",
+    "transcode": "Transkod",
+    "local": "Lokal",
+    "downloaded": "Ladda ner",
+    "connectionStatus": "Anslutningsstatus",
+    "connectionChecking": "Kontrollera anslutning…",
+    "connectionPleaseWait": "Vänligen vänta",
+    "connectionServerConnected": "Ansluten till server",
+    "connectionServerDisconnected": "Inte ansluten till servern",
+    "connectionTypeWifi": "Wi-Fi",
+    "connectionTypeMobile": "Mobil data",
+    "connectionTypeEthernet": "Ethernet",
+    "connectionTypeNone": "Inget nätverk",
+    "connectionCantReachServer": "Kan inte nå server ({networkType})",
+    "@connectionCantReachServer": {
+        "placeholders": {
+            "networkType": {
+                "type": "String"
+            }
+        }
+    },
+    "connectionViaNetwork": "Ansluten via {networkType}",
+    "@connectionViaNetwork": {
+        "placeholders": {
+            "networkType": {
+                "type": "String"
+            }
+        }
+    },
+    "foundBugQ": "Hittade en bug?",
+    "foundBugQSubtitle": "Öppna ett GitHub-problem för alla buggar du stött på",
+    "audioBufferDuration": "",
+    "audioBufferDurationDescription": "Hur mycket ljud att hålla före uppspelningen. Högre värden minskar avbrott i långsamma anslutningar",
+    "fadeOnSleep": "Audio Fade-out",
+    "fadeOnSleepSubtitle": "Gradvis sänker volymen innan sömntimmen slutar",
+    "fadeOnSleepDuration": "Fade fönster",
+    "fadeOnSleepDurationDescription": "Anger hur länge fade-out effekten varar innan timern slutar",
+    "fadeOnSleepMinVolume": "Volymgolv",
+    "fadeOnSleepMinVolumeDescription": "Definierar den lägsta ljudnivån som nåtts under blekningen",
+    "avoidMobileData": "Undvik mobila data",
+    "avoidMobileDataSubtitle": "Nedladdningar pausar på mobila nätverk",
+    "totalListeningTime": "Totalt lyssnande tid",
+    "currentStreak": "Nuvarande streak",
+    "longestStreak": "Längsta streak",
+    "thisMonth": "Denna månad",
+    "thisYear": "I år",
+    "days": "dagar",
+    "daysAgo": "{days} dagar sedan",
+    "@daysAgo": {
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
+    "booksFinished": "Böcker färdiga",
+    "episodesFinished": "Episoder färdiga",
+    "volume": "Volymen",
+    "increaseVolume": "Öka volymen",
+    "decreaseVolume": "Minska volymen",
+    "showChapterPosition": "Visa kapitelposition",
+    "errorNetwork": "Ingen internetanslutning",
+    "errorTimeout": "Anslutning timed out",
+    "errorAuth": "",
+    "errorForbidden": "Tillgång nekad",
+    "errorNotFound": "Innehåll som inte hittats",
+    "errorServer": "Server fel, försök igen",
+    "errorUnknown": "Något gick fel",
+    "errorType": "Typ fel",
+    "changeRestartRequired": "Förändringar träder i kraft efter omstart",
+    "playbackErrorNetwork": "Anslutningsproblem. Audio kan avbrytas",
+    "playbackErrorSource": "Ljudfil kunde inte laddas",
+    "playbackErrorDecoder": "Filformat som inte stöds",
+    "playbackErrorUnknown": "Något gick fel med uppspelning",
+    "codec": "Codec",
+    "bitrate": "Bitrate",
+    "channels": "Kanaler",
+    "format": "Format",
+    "path": "Vägen",
+    "scrollThumbVisibility": "Show Scroll Thumb",
+    "scrollThumbVisibilitySubtitle": "Visar en draggable tumme på långa listor",
+    "scrollThumbSettings": "",
+    "scrollThumbDuration": "Dölja efter",
+    "scrollThumbDurationDescription": "Hur länge tummen är synlig när du slutar bläddra",
+    "scrollThumbHeight": "Höjd",
+    "scrollThumbHeightDescription": "Tumhöjd i pixlar",
+    "scrollThumbWidth": "Bredd",
+    "scrollThumbWidthDescription": "Tumbredd i pixlar",
+    "off": "",
+    "binaryUnits": "Binära enheter",
+    "binaryUnitsSubtitle": "1 KB = 1024 B",
+    "decimalUnits": "Decimal enheter",
+    "decimalUnitsSubtitle": "1 KB = 1000 B",
+    "backup": "Backup & återställa",
+    "createBackup": "Skapa backup",
+    "restoreBackup": "Återställ backup",
+    "backupDescription": "Exportera eller importera dina konton, inställningar och historia",
+    "backupCreated": "Backup sparad",
+    "backupFailed": "Kunde inte skapa backup",
+    "restoreSuccess": "Backup återställd",
+    "restoreRestart": "Backup återställd. Starta om appen för att tillämpa ändringar",
+    "restoreFailed": "Kunde inte återställa backup",
+    "marqueeSpeed": "Text Scroll hastighet",
+    "schemeVariant": "Tema Style",
+    "schemeVariantSubtitle": "Välj hur dina temafärger genereras",
+    "tonalSpot": "Balanserad",
+    "tonalSpotSubtitle": "Mjuk, naturlig och lätt på ögonen",
+    "fidelity": "Nära match",
+    "fidelitySubtitle": "Sticks nära din valda färg",
+    "vibrant": "Vibrerande",
+    "vibrantSubtitle": "Ljusa färger med hög kontrast",
+    "expressive": "",
+    "expressiveSubtitle": "Spelbara färger med unika accenter",
+    "monochrome": "",
+    "monochromeSubtitle": "Ren svart, vit och grått",
+    "neutral": "Subtil",
+    "neutralSubtitle": "Muted toner med bara en antydan av färg",
+    "appColor": "App Color",
+    "hexColor": "Hex färg",
+    "invalidHex": "Invalid Hex",
+    "hexFormatHint": "Använd RGB, RRGBB eller AARRGGBB",
+    "primary": "Primär",
+    "secondary": "Sekundär",
+    "tertiary": "Tertiär",
+    "error": "Fel",
+    "rememberSort": "Kom ihåg sort",
+    "rememberSortSubtitle": "Persist sort order när appen startar om",
+    "type": "Typ",
+    "pubDate": "Pub datum",
+    "added": "Tillagd",
+    "mimeType": "MIME Typ",
+    "season": "Säsong",
+    "episode": "Avsnitt",
+    "libraryIsEmpty": "",
+    "@libraryIsEmpty": {
+        "placeholders": {
+            "library": {
+                "type": "String"
+            }
+        }
+    },
+    "storage": "Lagring",
+    "internalStorage": "Intern lagring",
+    "changeLocation": "Ändra plats",
+    "resetToInternal": "Återställ till interna",
+    "downloadLocation": "Ladda ner plats",
+    "storageSubDirsNote": "Ljudböcker och podcaster lagras i separata underkataloger:\nljudböcker/<itemId>/\npodcasts/<podcast Id>/\nDetta säkerställer stabila vägar även om servermetadata ändras",
+    "localSession": "Lokal session",
+    "currentPosition": "Nuvarande position",
+    "localSessionSheetBody": "Framsteg sparade lokalt. Synkronisera pågående.",
+    "bookmarks": "Bokmärken",
+    "bookmarkFailed": "Misslyckades med att spara bokmärke",
+    "addBookmark": "Lägg till Bookmark",
+    "editBookmark": ""
+}
