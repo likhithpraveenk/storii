@@ -1,469 +1,469 @@
 {
-  "@@locale": "en",
-  "login": "Login",
-  "logout": "Logout",
-  "addServer": "Add Server",
-  "serverUrl": "Server URL",
-  "validateServer": "Validate Server",
-  "advanced": "Advanced",
-  "customHeaders": "Custom Headers",
-  "key": "Key",
-  "value": "Value",
-  "required": "Required",
-  "duplicateHeader": "Duplicate header",
-  "username": "Username",
-  "password": "Password",
-  "delete": "Delete",
-  "cancel": "Cancel",
-  "deleteServer": "Delete Server",
-  "deleteServerQ": "Delete Server?",
-  "deleteUserQ": "Delete {user}?",
-  "@deleteUserQ": {
-    "placeholders": {
-      "user": {
-        "type": "String"
-      }
-    }
-  },
-  "noUsersServer": "No users are linked to this server.",
-  "followingUsers": "You are about to delete the following users",
-  "urlCopied": "URL Copied",
-  "addUser": "Add User",
-  "edit": "Edit",
-  "editServer": "Edit Server",
-  "errorLoadingUsers": "Error loading users",
-  "switchingToUser": "Switching to {user}",
-  "@switchingToUser": {
-    "placeholders": {
-      "user": {
-        "type": "String"
-      }
-    }
-  },
-  "loading": "Loading",
-  "active": "Active",
-  "noSession": "No session",
-  "recentSessions": "Recent Sessions",
-  "noAuthor": "No Author",
-  "noArtist": "No Artist",
-  "noTitle": "No Title",
-  "noImage": "No Image",
-  "errorImage": "Error loading image",
-  "downloads": "Downloads",
-  "settings": "Settings",
-  "logs": "Logs",
-  "about": "About",
-  "switchAccount": "Switch Account",
-  "switchAccountConfirm": "Switch to another account?",
-  "logoutConfirm": "Log out from this account?",
-  "noLibrary": "No Library",
-  "libraries": "Libraries",
-  "empty": "Empty",
-  "collapse": "Collapse",
-  "refresh": "Refresh",
-  "retry": "Retry",
-  "description": "Description",
-  "noDescription": "No description available",
-  "resume": "Resume",
-  "play": "Play",
-  "pause": "Pause",
-  "replay": "Replay",
-  "deleteLogsQ": "Delete all logs?",
-  "audiobooks": "Audiobooks",
-  "podcasts": "Podcasts",
-  "episodes": "Episodes",
-  "playEpisodeConfirm": "Play this episode?",
-  "search": "Search",
-  "dateFormat": "Date Format",
-  "custom": "Custom",
-  "invalidFormat": "Invalid Format",
-  "customPattern": "Custom Pattern",
-  "save": "Save",
-  "fontFamily": "Change Font",
-  "system": "System",
-  "light": "Light",
-  "dark": "Dark",
-  "systemTheme": "System Theme",
-  "systemThemeSubtitle": "Match device palette",
-  "pureBlack": "Pure Black",
-  "pureBlackSubtitle": "High contrast theme",
-  "fontScale": "Font Scale",
-  "language": "Language",
-  "navBar": "Navbar",
-  "appearance": "Appearance",
-  "theme": "Theme",
-  "reset": "Reset",
-  "resetSettingsQ": "Reset Settings?",
-  "resetSettingsTxt": "This will revert all preferences to their default values.",
-  "settingsReset": "Settings are reset",
-  "home": "Home",
-  "library": "Library",
-  "librarySettings": "Library Settings",
-  "collections": "Collections",
-  "latest": "Latest",
-  "latestEpisodes": "Latest episodes",
-  "all": "All",
-  "id": "ID",
-  "series": "Series",
-  "authors": "Authors",
-  "more": "More",
-  "books": "Books",
-  "stats": "Stats",
-  "viewAll": "View All",
-  "metadata": "Metadata",
-  "title": "Title",
-  "author": "Author",
-  "authorLastFirst": "Author (Last, First)",
-  "dateAdded": "Date Added",
-  "publishedYear": "Published Year",
-  "publishedDate": "Published Date",
-  "releaseDate": "Release Date",
-  "size": "Size",
-  "duration": "Duration",
-  "fileCreatedDate": "File Created Date",
-  "fileModifiedDate": "File Modified Date",
-  "lastPlayed": "Last Played",
-  "dateStarted": "Date Started",
-  "dateFinished": "Date Finished",
-  "random": "Random",
-  "numOfBooks": "Number of Books",
-  "name": "Name",
-  "lastBookAdded": "Last Book Added",
-  "lastBookUpdated": "Last Book Updated",
-  "lastFirst": "Last Name, First Name",
-  "lastUpdated": "Last Updated",
-  "numOfEpisodes": "Number of Episodes",
-  "hasEbook": "Has ebook",
-  "hasNoEbook": "Has no ebook",
-  "hasSupplementary": "Has supplementary ebook",
-  "hasNoSupplementary": "Has no supplementary ebook",
-  "itunesId": "iTunes ID",
-  "itunesArtistId": "iTunes Artist ID",
-  "itunesPageUrl": "iTunes Page Url",
-  "collapseSeries": "Collapse Series",
-  "filter": "Filter",
-  "sort": "Sort",
-  "display": "Display",
-  "genres": "Genres",
-  "tags": "Tags",
-  "publisher": "Publisher",
-  "publishedDecade": "Published Decade",
-  "progress": "Progress",
-  "narrators": "Narrators",
-  "tracks": "Tracks",
-  "missingMetadata": "Missing Metadata",
-  "ebooks": "Ebooks",
-  "finished": "Finished",
-  "notStarted": "Not Started",
-  "inComplete": "Incomplete",
-  "inProgress": "In Progress",
-  "notFinished": "Not Finished",
-  "asin": "ASIN",
-  "isbn": "ISBN",
-  "subtitle": "Subtitle",
-  "singleTrack": "Single Track",
-  "multipleTracks": "Multiple Tracks",
-  "noTracks": "No Tracks",
-  "itemsWithIssues": "Items with Issues",
-  "rssFeedOpen": "RSS Feed Open",
-  "moreInfo": "More Info",
-  "explicit": "Explicit",
-  "abridged": "Abridged",
-  "displayMode": "Display Mode",
-  "comfortable": "Comfortable",
-  "compact": "Compact",
-  "coverOnly": "Cover Only",
-  "listView": "List View",
-  "licenses": "Licenses",
-  "sourceCode": "Source Code",
-  "couldNotUrl": "Could not launch {url}",
-  "@couldNotUrl": {
-    "placeholders": {
-      "url": {
-        "type": "String"
-      }
-    }
-  },
-  "licensedUnder": "Licensed under the GNU General Public License v3.0",
-  "version": "Version",
-  "buildNumber": "Build Number: {text}",
-  "@buildNumber": {
-    "placeholders": {
-      "text": {
-        "type": "String"
-      }
-    }
-  },
-  "networkLogs": "Network Logs",
-  "networkLogsDescription": "Log HTTP requests and responses",
-  "trustAllCertificates": "Trust all certificates",
-  "trustAllCertificatesDescription": "Disables certificate validation",
-  "readableDuration": "{hours, plural, =0{} other{{hours}h }}{minutes}m",
-  "@readableDuration": {
-    "placeholders": {
-      "hours": {
-        "type": "int"
-      },
-      "minutes": {
-        "type": "int"
-      }
-    }
-  },
-  "readableDurationFull": "{hours, plural, =0{} other{{hours}h }}{minutes}m {seconds}s",
-  "@readableDurationFull": {
-    "placeholders": {
-      "hours": {
-        "type": "int"
-      },
-      "minutes": {
-        "type": "int"
-      },
-      "seconds": {
-        "type": "int"
-      }
-    }
-  },
-  "durationLeft": "{hours, plural, =0{} other{{hours}h }}{minutes}m left",
-  "@durationLeft": {
-    "placeholders": {
-      "hours": {
-        "type": "int"
-      },
-      "minutes": {
-        "type": "int"
-      }
-    }
-  },
-  "chapters": "Chapters",
-  "removeProgressTitle": "Remove progress?",
-  "removeProgressMessage": "This will reset your listening progress and cannot be undone.",
-  "remove": "Remove",
-  "markAsComplete": "Mark as complete?",
-  "confirm": "Confirm",
-  "progressMarkedComplete": "Marked as complete",
-  "progressMarkCompleteFailed": "Failed to mark as complete",
-  "progressRemoved": "Progress removed",
-  "progressRemoveFailed": "Failed to remove progress",
-  "playerSettings": "Player Settings",
-  "skipForward": "Skip forward",
-  "skipBack": "Skip back",
-  "startPlayback": "Start playback",
-  "playbackSpeed": "Playback speed",
-  "sleepTimer": "Sleep timer",
-  "cancelTimer": "Cancel timer",
-  "timeMinutes": "{time} min",
-  "@timeMinutes": {
-    "placeholders": {
-      "time": {
-        "type": "int"
-      }
-    }
-  },
-  "endOfChapter": "End of Chapter",
-  "endOfNChapters": "End of {count} Chapters",
-  "@endOfNChapters": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "settingsStartupRouteTitle": "Start on app open",
-  "settingsReorderNavTitle": "Navigation tabs",
-  "settingsReorderNavSubtitle": "Reorder and enable or disable tabs",
-  "sampleText": "Sphinx of black quartz, judge my vow - 0123456789",
-  "addFonts": "Add fonts",
-  "appCache": "App Cache",
-  "settingsNavLabelBehavior": "Navigation label",
-  "alwaysShow": "Always show",
-  "onlyShowSelected": "Only show when selected",
-  "alwaysHide": "Always hide",
-  "syncInterval": "Sync Interval",
-  "syncIntervalSubtitle": "Controls server sync frequency, overriding the 1-minute mobile data restriction if set higher",
-  "emptyMsg": "So empty...",
-  "history": "History",
-  "today": "Today",
-  "yesterday": "Yesterday",
-  "seek": "Seek",
-  "stop": "Stop",
-  "complete": "Complete",
-  "sync": "Sync",
-  "playbackError": "playback error",
-  "loginOidc": "Login with OpenID",
-  "or": "Or",
-  "oidcRedirectUriHintPrefix": "Requires",
-  "oidcRedirectUriHintSuffix": "in ABS → Settings → Authentication → Allowed Mobile Redirect URIs",
-  "queued": "Queued",
-  "downloading": "Downloading",
-  "paused": "Paused",
-  "failed": "Failed",
-  "download": "Download",
-  "completed": "Completed",
-  "cancelled": "Cancelled",
-  "resumeDownload": "Resume Download",
-  "removeDownloadQ": "Remove Download?",
-  "willBeFreed": "{bytes} will be freed",
-  "@willBeFreed": {
-    "placeholders": {
-      "bytes": {
-        "type": "String"
-      }
-    }
-  },
-  "downloadFailed": "Download failed - tap to retry",
-  "directPlay": "Direct Play",
-  "directStream": "Direct Stream",
-  "transcode": "Transcode",
-  "local": "Local",
-  "downloaded": "Downloaded",
-  "connectionStatus": "Connection Status",
-  "connectionChecking": "Checking connection...",
-  "connectionPleaseWait": "Please wait",
-  "connectionServerConnected": "Connected to server",
-  "connectionServerDisconnected": "Not connected to server",
-  "connectionTypeWifi": "Wi-Fi",
-  "connectionTypeMobile": "Mobile data",
-  "connectionTypeEthernet": "Ethernet",
-  "connectionTypeNone": "No network",
-  "connectionCantReachServer": "Can't reach server ({networkType})",
-  "@connectionCantReachServer": {
-    "placeholders": {
-      "networkType": {
-        "type": "String"
-      }
-    }
-  },
-  "connectionViaNetwork": "Connected via {networkType}",
-  "@connectionViaNetwork": {
-    "placeholders": {
-      "networkType": {
-        "type": "String"
-      }
-    }
-  },
-  "foundBugQ": "Found a bug?",
-  "foundBugQSubtitle": "Open a GitHub issue for any bug you encountered",
-  "audioBufferDuration": "Audio Buffer Duration",
-  "audioBufferDurationDescription": "How much audio to keep ahead of playback. Higher values reduce interruptions on slow connections",
-  "fadeOnSleep": "Audio fade-out",
-  "fadeOnSleepSubtitle": "Gradually lowers the volume before the sleep timer ends",
-  "fadeOnSleepDuration": "Fade window",
-  "fadeOnSleepDurationDescription": "Sets how long the fade-out effect lasts before the timer ends",
-  "fadeOnSleepMinVolume": "Volume floor",
-  "fadeOnSleepMinVolumeDescription": "Defines the lowest audio level reached during the fade",
-  "avoidMobileData": "Avoid mobile data",
-  "avoidMobileDataSubtitle": "Downloads will pause on mobile networks",
-  "totalListeningTime": "Total Listening Time",
-  "currentStreak": "Current streak",
-  "longestStreak": "Longest streak",
-  "thisMonth": "This month",
-  "thisYear": "This year",
-  "days": "days",
-  "daysAgo": "{days} days ago",
-  "@daysAgo": {
-    "placeholders": {
-      "days": {
-        "type": "int"
-      }
-    }
-  },
-  "booksFinished": "Books finished",
-  "episodesFinished": "Episodes finished",
-  "volume": "Volume",
-  "increaseVolume": "Increase Volume",
-  "decreaseVolume": "Decrease Volume",
-  "showChapterPosition": "Show chapter position",
-  "errorNetwork": "No internet connection",
-  "errorTimeout": "Connection timed out",
-  "errorAuth": "Unauthorized",
-  "errorForbidden": "Access denied",
-  "errorNotFound": "Content not found",
-  "errorServer": "Server error, please try again",
-  "errorUnknown": "Something went wrong",
-  "errorType": "Type error",
-  "changeRestartRequired": "Changes take effect after restart",
-  "playbackErrorNetwork": "Connection issue. Audio may be interrupted",
-  "playbackErrorSource": "Audio file could not be loaded",
-  "playbackErrorDecoder": "File format unsupported",
-  "playbackErrorUnknown": "Something went wrong with playback",
-  "codec": "Codec",
-  "bitrate": "Bitrate",
-  "channels": "Channels",
-  "format": "Format",
-  "path": "Path",
-  "scrollThumbVisibility": "Show scroll thumb",
-  "scrollThumbVisibilitySubtitle": "Displays a draggable thumb on long lists",
-  "scrollThumbSettings": "Scroll Thumb",
-  "scrollThumbDuration": "Hide after",
-  "scrollThumbDurationDescription": "How long the thumb stays visible after you stop scrolling",
-  "scrollThumbHeight": "Height",
-  "scrollThumbHeightDescription": "Thumb height in pixels",
-  "scrollThumbWidth": "Width",
-  "scrollThumbWidthDescription": "Thumb width in pixels",
-  "off": "Off",
-  "binaryUnits": "Binary units",
-  "binaryUnitsSubtitle": "1 KB = 1024 B",
-  "decimalUnits": "Decimal units",
-  "decimalUnitsSubtitle": "1 KB = 1000 B",
-  "backup": "Backup & restore",
-  "createBackup": "Create backup",
-  "restoreBackup": "Restore backup",
-  "backupDescription": "Export or import your accounts, settings and history",
-  "backupCreated": "Backup saved",
-  "backupFailed": "Could not create backup",
-  "restoreSuccess": "Backup restored",
-  "restoreRestart": "Backup restored. Restart the app to apply changes",
-  "restoreFailed": "Could not restore backup",
-  "marqueeSpeed": "Text Scroll Speed",
-  "schemeVariant": "Theme Style",
-  "schemeVariantSubtitle": "Choose how your theme colors are generated",
-  "tonalSpot": "Balanced",
-  "tonalSpotSubtitle": "Soft, natural, and easy on the eyes",
-  "fidelity": "Close Match",
-  "fidelitySubtitle": "Sticks closely to your chosen color",
-  "vibrant": "Vibrant",
-  "vibrantSubtitle": "Bright colors with high contrast",
-  "expressive": "Bold",
-  "expressiveSubtitle": "Playful colors with unique accents",
-  "monochrome": "Monochrome",
-  "monochromeSubtitle": "Pure black, white, and gray",
-  "neutral": "Subtle",
-  "neutralSubtitle": "Muted tones with just a hint of color",
-  "appColor": "App Color",
-  "hexColor": "Hex Color",
-  "invalidHex": "Invalid hex",
-  "hexFormatHint": "Use RGB, RRGGBB, or AARRGGBB",
-  "primary": "Primary",
-  "secondary": "Secondary",
-  "tertiary": "Tertiary",
-  "error": "Error",
-  "rememberSort": "Remember sort",
-  "rememberSortSubtitle": "Persist sort order when app restarts",
-  "type": "Type",
-  "pubDate": "Pub Date",
-  "added": "Added",
-  "mimeType": "MIME Type",
-  "season": "Season",
-  "episode": "Episode",
-  "libraryIsEmpty": "{library} Library is empty!",
-  "@libraryIsEmpty": {
-    "placeholders": {
-      "library": {
-        "type": "String"
-      }
-    }
-  },
-  "storage": "Storage",
-  "internalStorage": "Internal Storage",
-  "changeLocation": "Change Location",
-  "resetToInternal": "Reset to Internal",
-  "downloadLocation": "Download Location",
-  "storageSubDirsNote": "Audiobooks and podcasts will be stored in separate subdirectories: \n- audiobooks/<itemId>/\n- podcasts/<podcastId>/\nThis ensures stable paths even if server metadata changes",
-  "localSession": "Local Session",
-  "currentPosition": "Current Position",
-  "localSessionSheetBody": "Progress saved locally. Sync pending.",
-  "bookmarks": "Bookmarks",
-  "bookmarkFailed": "Failed to save bookmark",
-  "addBookmark": "Add Bookmark",
-  "editBookmark": "Edit Bookmark"
+    "@@locale": "en",
+    "login": "Login",
+    "logout": "Logout",
+    "addServer": "Add Server",
+    "serverUrl": "Server URL",
+    "validateServer": "Validate Server",
+    "advanced": "Advanced",
+    "customHeaders": "Custom Headers",
+    "key": "Key",
+    "value": "Value",
+    "required": "Required",
+    "duplicateHeader": "Duplicate header",
+    "username": "Username",
+    "password": "Password",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "deleteServer": "Delete Server",
+    "deleteServerQ": "Delete Server?",
+    "deleteUserQ": "Delete {user}?",
+    "@deleteUserQ": {
+        "placeholders": {
+            "user": {
+                "type": "String"
+            }
+        }
+    },
+    "noUsersServer": "No users are linked to this server.",
+    "followingUsers": "You are about to delete the following users",
+    "urlCopied": "URL Copied",
+    "addUser": "Add User",
+    "edit": "Edit",
+    "editServer": "Edit Server",
+    "errorLoadingUsers": "Error loading users",
+    "switchingToUser": "Switching to {user}",
+    "@switchingToUser": {
+        "placeholders": {
+            "user": {
+                "type": "String"
+            }
+        }
+    },
+    "loading": "Loading",
+    "active": "Active",
+    "noSession": "No session",
+    "recentSessions": "Recent Sessions",
+    "noAuthor": "No Author",
+    "noArtist": "No Artist",
+    "noTitle": "No Title",
+    "noImage": "No Image",
+    "errorImage": "Error loading image",
+    "downloads": "Downloads",
+    "settings": "Settings",
+    "logs": "Logs",
+    "about": "About",
+    "switchAccount": "Switch Account",
+    "switchAccountConfirm": "Switch to another account?",
+    "logoutConfirm": "Log out from this account?",
+    "noLibrary": "No Library",
+    "libraries": "Libraries",
+    "empty": "Empty",
+    "collapse": "Collapse",
+    "refresh": "Refresh",
+    "retry": "Retry",
+    "description": "Description",
+    "noDescription": "No description available",
+    "resume": "Resume",
+    "play": "Play",
+    "pause": "Pause",
+    "replay": "Replay",
+    "deleteLogsQ": "Delete all logs?",
+    "audiobooks": "Audiobooks",
+    "podcasts": "Podcasts",
+    "episodes": "Episodes",
+    "playEpisodeConfirm": "Play this episode?",
+    "search": "Search",
+    "dateFormat": "Date Format",
+    "custom": "Custom",
+    "invalidFormat": "Invalid Format",
+    "customPattern": "Custom Pattern",
+    "save": "Save",
+    "fontFamily": "Change Font",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "systemTheme": "System Theme",
+    "systemThemeSubtitle": "Match device palette",
+    "pureBlack": "Pure Black",
+    "pureBlackSubtitle": "High contrast theme",
+    "fontScale": "Font Scale",
+    "language": "Language",
+    "navBar": "Navbar",
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "reset": "Reset",
+    "resetSettingsQ": "Reset Settings?",
+    "resetSettingsTxt": "This will revert all preferences to their default values.",
+    "settingsReset": "Settings are reset",
+    "home": "Home",
+    "library": "Library",
+    "librarySettings": "Library Settings",
+    "collections": "Collections",
+    "latest": "Latest",
+    "latestEpisodes": "Latest episodes",
+    "all": "All",
+    "id": "ID",
+    "series": "Series",
+    "authors": "Authors",
+    "more": "More",
+    "books": "Books",
+    "stats": "Stats",
+    "viewAll": "View All",
+    "metadata": "Metadata",
+    "title": "Title",
+    "author": "Author",
+    "authorLastFirst": "Author (Last, First)",
+    "dateAdded": "Date Added",
+    "publishedYear": "Published Year",
+    "publishedDate": "Published Date",
+    "releaseDate": "Release Date",
+    "size": "Size",
+    "duration": "Duration",
+    "fileCreatedDate": "File Created Date",
+    "fileModifiedDate": "File Modified Date",
+    "lastPlayed": "Last Played",
+    "dateStarted": "Date Started",
+    "dateFinished": "Date Finished",
+    "random": "Random",
+    "numOfBooks": "Number of Books",
+    "name": "Name",
+    "lastBookAdded": "Last Book Added",
+    "lastBookUpdated": "Last Book Updated",
+    "lastFirst": "Last Name, First Name",
+    "lastUpdated": "Last Updated",
+    "numOfEpisodes": "Number of Episodes",
+    "hasEbook": "Has ebook",
+    "hasNoEbook": "Has no ebook",
+    "hasSupplementary": "Has supplementary ebook",
+    "hasNoSupplementary": "Has no supplementary ebook",
+    "itunesId": "iTunes ID",
+    "itunesArtistId": "iTunes Artist ID",
+    "itunesPageUrl": "iTunes Page Url",
+    "collapseSeries": "Collapse Series",
+    "filter": "Filter",
+    "sort": "Sort",
+    "display": "Display",
+    "genres": "Genres",
+    "tags": "Tags",
+    "publisher": "Publisher",
+    "publishedDecade": "Published Decade",
+    "progress": "Progress",
+    "narrators": "Narrators",
+    "tracks": "Tracks",
+    "missingMetadata": "Missing Metadata",
+    "ebooks": "Ebooks",
+    "finished": "Finished",
+    "notStarted": "Not Started",
+    "inComplete": "Incomplete",
+    "inProgress": "In Progress",
+    "notFinished": "Not Finished",
+    "asin": "ASIN",
+    "isbn": "ISBN",
+    "subtitle": "Subtitle",
+    "singleTrack": "Single Track",
+    "multipleTracks": "Multiple Tracks",
+    "noTracks": "No Tracks",
+    "itemsWithIssues": "Items with Issues",
+    "rssFeedOpen": "RSS Feed Open",
+    "moreInfo": "More Info",
+    "explicit": "Explicit",
+    "abridged": "Abridged",
+    "displayMode": "Display Mode",
+    "comfortable": "Comfortable",
+    "compact": "Compact",
+    "coverOnly": "Cover Only",
+    "listView": "List View",
+    "licenses": "Licenses",
+    "sourceCode": "Source Code",
+    "couldNotUrl": "Could not launch {url}",
+    "@couldNotUrl": {
+        "placeholders": {
+            "url": {
+                "type": "String"
+            }
+        }
+    },
+    "licensedUnder": "Licensed under the GNU General Public License v3.0",
+    "version": "Version",
+    "buildNumber": "Build Number: {text}",
+    "@buildNumber": {
+        "placeholders": {
+            "text": {
+                "type": "String"
+            }
+        }
+    },
+    "networkLogs": "Network Logs",
+    "networkLogsDescription": "Log HTTP requests and responses",
+    "trustAllCertificates": "Trust all certificates",
+    "trustAllCertificatesDescription": "Disables certificate validation",
+    "readableDuration": "{hours, plural, =0{} other{{hours}h }}{minutes}m",
+    "@readableDuration": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "readableDurationFull": "{hours, plural, =0{} other{{hours}h }}{minutes}m {seconds}s",
+    "@readableDurationFull": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            },
+            "seconds": {
+                "type": "int"
+            }
+        }
+    },
+    "durationLeft": "{hours, plural, =0{} other{{hours}h }}{minutes}m left",
+    "@durationLeft": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "chapters": "Chapters",
+    "removeProgressTitle": "Remove progress?",
+    "removeProgressMessage": "This will reset your listening progress and cannot be undone.",
+    "remove": "Remove",
+    "markAsComplete": "Mark as complete?",
+    "confirm": "Confirm",
+    "progressMarkedComplete": "Marked as complete",
+    "progressMarkCompleteFailed": "Failed to mark as complete",
+    "progressRemoved": "Progress removed",
+    "progressRemoveFailed": "Failed to remove progress",
+    "playerSettings": "Player Settings",
+    "skipForward": "Skip forward",
+    "skipBack": "Skip back",
+    "startPlayback": "Start playback",
+    "playbackSpeed": "Playback speed",
+    "sleepTimer": "Sleep timer",
+    "cancelTimer": "Cancel timer",
+    "timeMinutes": "{time} min",
+    "@timeMinutes": {
+        "placeholders": {
+            "time": {
+                "type": "int"
+            }
+        }
+    },
+    "endOfChapter": "End of Chapter",
+    "endOfNChapters": "End of {count} Chapters",
+    "@endOfNChapters": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "settingsStartupRouteTitle": "Start on app open",
+    "settingsReorderNavTitle": "Navigation tabs",
+    "settingsReorderNavSubtitle": "Reorder and enable or disable tabs",
+    "sampleText": "Sphinx of black quartz, judge my vow - 0123456789",
+    "addFonts": "Add fonts",
+    "appCache": "App Cache",
+    "settingsNavLabelBehavior": "Navigation label",
+    "alwaysShow": "Always show",
+    "onlyShowSelected": "Only show when selected",
+    "alwaysHide": "Always hide",
+    "syncInterval": "Sync Interval",
+    "syncIntervalSubtitle": "Controls server sync frequency, overriding the 1-minute mobile data restriction if set higher",
+    "emptyMsg": "So empty…",
+    "history": "History",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "seek": "Seek",
+    "stop": "Stop",
+    "complete": "Complete",
+    "sync": "Sync",
+    "playbackError": "playback error",
+    "loginOidc": "Login with OpenID",
+    "or": "Or",
+    "oidcRedirectUriHintPrefix": "Requires",
+    "oidcRedirectUriHintSuffix": "in ABS → Settings → Authentication → Allowed Mobile Redirect URIs",
+    "queued": "Queued",
+    "downloading": "Downloading",
+    "paused": "Paused",
+    "failed": "Failed",
+    "download": "Download",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "resumeDownload": "Resume Download",
+    "removeDownloadQ": "Remove Download?",
+    "willBeFreed": "{bytes} will be freed",
+    "@willBeFreed": {
+        "placeholders": {
+            "bytes": {
+                "type": "String"
+            }
+        }
+    },
+    "downloadFailed": "Download failed - tap to retry",
+    "directPlay": "Direct Play",
+    "directStream": "Direct Stream",
+    "transcode": "Transcode",
+    "local": "Local",
+    "downloaded": "Downloaded",
+    "connectionStatus": "Connection Status",
+    "connectionChecking": "Checking connection…",
+    "connectionPleaseWait": "Please wait",
+    "connectionServerConnected": "Connected to server",
+    "connectionServerDisconnected": "Not connected to server",
+    "connectionTypeWifi": "Wi-Fi",
+    "connectionTypeMobile": "Mobile data",
+    "connectionTypeEthernet": "Ethernet",
+    "connectionTypeNone": "No network",
+    "connectionCantReachServer": "Can't reach server ({networkType})",
+    "@connectionCantReachServer": {
+        "placeholders": {
+            "networkType": {
+                "type": "String"
+            }
+        }
+    },
+    "connectionViaNetwork": "Connected via {networkType}",
+    "@connectionViaNetwork": {
+        "placeholders": {
+            "networkType": {
+                "type": "String"
+            }
+        }
+    },
+    "foundBugQ": "Found a bug?",
+    "foundBugQSubtitle": "Open a GitHub issue for any bug you encountered",
+    "audioBufferDuration": "Audio Buffer Duration",
+    "audioBufferDurationDescription": "How much audio to keep ahead of playback. Higher values reduce interruptions on slow connections",
+    "fadeOnSleep": "Audio fade-out",
+    "fadeOnSleepSubtitle": "Gradually lowers the volume before the sleep timer ends",
+    "fadeOnSleepDuration": "Fade window",
+    "fadeOnSleepDurationDescription": "Sets how long the fade-out effect lasts before the timer ends",
+    "fadeOnSleepMinVolume": "Volume floor",
+    "fadeOnSleepMinVolumeDescription": "Defines the lowest audio level reached during the fade",
+    "avoidMobileData": "Avoid mobile data",
+    "avoidMobileDataSubtitle": "Downloads will pause on mobile networks",
+    "totalListeningTime": "Total Listening Time",
+    "currentStreak": "Current streak",
+    "longestStreak": "Longest streak",
+    "thisMonth": "This month",
+    "thisYear": "This year",
+    "days": "days",
+    "daysAgo": "{days} days ago",
+    "@daysAgo": {
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
+    "booksFinished": "Books finished",
+    "episodesFinished": "Episodes finished",
+    "volume": "Volume",
+    "increaseVolume": "Increase Volume",
+    "decreaseVolume": "Decrease Volume",
+    "showChapterPosition": "Show chapter position",
+    "errorNetwork": "No internet connection",
+    "errorTimeout": "Connection timed out",
+    "errorAuth": "Unauthorized",
+    "errorForbidden": "Access denied",
+    "errorNotFound": "Content not found",
+    "errorServer": "Server error, please try again",
+    "errorUnknown": "Something went wrong",
+    "errorType": "Type error",
+    "changeRestartRequired": "Changes take effect after restart",
+    "playbackErrorNetwork": "Connection issue. Audio may be interrupted",
+    "playbackErrorSource": "Audio file could not be loaded",
+    "playbackErrorDecoder": "File format unsupported",
+    "playbackErrorUnknown": "Something went wrong with playback",
+    "codec": "Codec",
+    "bitrate": "Bitrate",
+    "channels": "Channels",
+    "format": "Format",
+    "path": "Path",
+    "scrollThumbVisibility": "Show scroll thumb",
+    "scrollThumbVisibilitySubtitle": "Displays a draggable thumb on long lists",
+    "scrollThumbSettings": "Scroll Thumb",
+    "scrollThumbDuration": "Hide after",
+    "scrollThumbDurationDescription": "How long the thumb stays visible after you stop scrolling",
+    "scrollThumbHeight": "Height",
+    "scrollThumbHeightDescription": "Thumb height in pixels",
+    "scrollThumbWidth": "Width",
+    "scrollThumbWidthDescription": "Thumb width in pixels",
+    "off": "Off",
+    "binaryUnits": "Binary units",
+    "binaryUnitsSubtitle": "1 KB = 1024 B",
+    "decimalUnits": "Decimal units",
+    "decimalUnitsSubtitle": "1 KB = 1000 B",
+    "backup": "Backup & restore",
+    "createBackup": "Create backup",
+    "restoreBackup": "Restore backup",
+    "backupDescription": "Export or import your accounts, settings and history",
+    "backupCreated": "Backup saved",
+    "backupFailed": "Could not create backup",
+    "restoreSuccess": "Backup restored",
+    "restoreRestart": "Backup restored. Restart the app to apply changes",
+    "restoreFailed": "Could not restore backup",
+    "marqueeSpeed": "Text Scroll Speed",
+    "schemeVariant": "Theme Style",
+    "schemeVariantSubtitle": "Choose how your theme colors are generated",
+    "tonalSpot": "Balanced",
+    "tonalSpotSubtitle": "Soft, natural, and easy on the eyes",
+    "fidelity": "Close Match",
+    "fidelitySubtitle": "Sticks closely to your chosen color",
+    "vibrant": "Vibrant",
+    "vibrantSubtitle": "Bright colors with high contrast",
+    "expressive": "Bold",
+    "expressiveSubtitle": "Playful colors with unique accents",
+    "monochrome": "Monochrome",
+    "monochromeSubtitle": "Pure black, white, and gray",
+    "neutral": "Subtle",
+    "neutralSubtitle": "Muted tones with just a hint of color",
+    "appColor": "App Color",
+    "hexColor": "Hex Color",
+    "invalidHex": "Invalid hex",
+    "hexFormatHint": "Use RGB, RRGGBB, or AARRGGBB",
+    "primary": "Primary",
+    "secondary": "Secondary",
+    "tertiary": "Tertiary",
+    "error": "Error",
+    "rememberSort": "Remember sort",
+    "rememberSortSubtitle": "Persist sort order when app restarts",
+    "type": "Type",
+    "pubDate": "Pub Date",
+    "added": "Added",
+    "mimeType": "MIME Type",
+    "season": "Season",
+    "episode": "Episode",
+    "libraryIsEmpty": "{library} Library is empty!",
+    "@libraryIsEmpty": {
+        "placeholders": {
+            "library": {
+                "type": "String"
+            }
+        }
+    },
+    "storage": "Storage",
+    "internalStorage": "Internal Storage",
+    "changeLocation": "Change Location",
+    "resetToInternal": "Reset to Internal",
+    "downloadLocation": "Download Location",
+    "storageSubDirsNote": "Audiobooks and podcasts will be stored in separate subdirectories: \n- audiobooks/<itemId>/\n- podcasts/<podcastId>/\nThis ensures stable paths even if server metadata changes",
+    "localSession": "Local Session",
+    "currentPosition": "Current Position",
+    "localSessionSheetBody": "Progress saved locally. Sync pending.",
+    "bookmarks": "Bookmarks",
+    "bookmarkFailed": "Failed to save bookmark",
+    "addBookmark": "Add Bookmark",
+    "editBookmark": "Edit Bookmark"
 }
