@@ -133,7 +133,7 @@
     "lastFirst": "Apellido, Nombre",
     "lastUpdated": "Última actualización",
     "numOfEpisodes": "Número de episodios",
-    "hasEbook": "Has ebook",
+    "hasEbook": "",
     "hasNoEbook": "No tiene ebook",
     "hasSupplementary": "Tiene ebook complementario",
     "hasNoSupplementary": "No tiene ebook complementario",
