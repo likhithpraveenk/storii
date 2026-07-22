@@ -77,7 +77,7 @@
     "dateFormat": "Date Format",
     "custom": "Personnalisé",
     "invalidFormat": "Format invalide",
-    "customPattern": "Custom Pattern",
+    "customPattern": "",
     "save": "Save",
     "fontFamily": "Changer de police",
     "system": "Système",
