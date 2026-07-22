@@ -393,7 +393,7 @@
     "path": "Camino",
     "scrollThumbVisibility": "Mostrar el pulgar de desplazamiento",
     "scrollThumbVisibilitySubtitle": "Muestra un pulgar arrastrable en listas largas",
-    "scrollThumbSettings": "Scroll Thumb",
+    "scrollThumbSettings": "",
     "scrollThumbDuration": "Escóndete después",
     "scrollThumbDurationDescription": "Cuánto tiempo el pulgar permanece visible después de dejar de desplazarse",
     "scrollThumbHeight": "Altura",
