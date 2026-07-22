@@ -65,7 +65,7 @@
     "description": "Description",
     "noDescription": "Pas de description disponible",
     "resume": "Consommation",
-    "play": "Play",
+    "play": "",
     "pause": "Pause",
     "replay": "Replay",
     "deleteLogsQ": "Tout effacer ?",
