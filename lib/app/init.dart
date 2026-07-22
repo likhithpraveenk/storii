@@ -15,7 +15,7 @@ import 'package:storii/features/downloads/logic/downloads_notification_service.d
 import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/just_audio_player.dart';
-import 'package:storii/l10n/l10n.dart';
+import 'package:storii/l10n/gen/l10n.dart';
 
 late final AppLinks appLinks;
 late AppLocalizations l10n;
