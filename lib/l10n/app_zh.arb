@@ -457,5 +457,13 @@
     "editBookmark": "Edit Bookmark",
     "connectionChecking": "检查联系..…",
     "emptyMsg": "空洞..…",
-    "hexFormatHint": ""
+    "hexFormatHint": "",
+    "login": "登录",
+    "logout": "登出",
+    "addServer": "添加服务器",
+    "serverUrl": "服务器URL",
+    "advanced": "高级选项",
+    "customHeaders": "自定义Headers",
+    "key": "键",
+    "value": "值"
 }
