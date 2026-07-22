@@ -293,7 +293,7 @@
     "or": "Oder",
     "oidcRedirectUriHintPrefix": "Anforderungen",
     "oidcRedirectUriHintSuffix": "in ABS → Einstellungen → Authentication → Erlaubt Mobile Redirect URIs",
-    "queued": "Queued",
+    "queued": "",
     "downloading": "Herunterladen",
     "paused": "Ausgewählt",
     "failed": "Versäumt",
