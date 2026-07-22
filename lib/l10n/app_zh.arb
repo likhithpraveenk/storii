@@ -290,7 +290,7 @@
     "failed": "",
     "download": "下载",
     "completed": "完成",
-    "cancelled": "Cancelled",
+    "cancelled": "",
     "resumeDownload": "续会",
     "removeDownloadQ": "移解下载吗?",
     "willBeFreed": "{bytes}",
