@@ -241,7 +241,7 @@
     "markAsComplete": "Mark comme complet ?",
     "confirm": "Confirmation",
     "progressMarkedComplete": "Marques comme complètes",
-    "progressMarkCompleteFailed": "Failed to mark as complete",
+    "progressMarkCompleteFailed": "",
     "progressRemoved": "Progrès supprimés",
     "progressRemoveFailed": "Failed to remove progress",
     "playerSettings": "Paramètres du joueur",
