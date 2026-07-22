@@ -463,7 +463,7 @@
     "currentPosition": "Posición actual",
     "localSessionSheetBody": "El progreso se salvó localmente. Sincronización pendiente.",
     "bookmarks": "Marcas",
-    "bookmarkFailed": "Failed to save bookmark",
+    "bookmarkFailed": "",
     "addBookmark": "Añadir Bookmark",
     "editBookmark": "Editar Bookmark"
 }
