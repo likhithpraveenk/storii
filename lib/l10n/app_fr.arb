@@ -443,7 +443,7 @@
     "added": "Ajouté",
     "mimeType": "",
     "season": "Saison",
-    "episode": "Episode",
+    "episode": "",
     "libraryIsEmpty": "La bibliothèque est vide !",
     "@libraryIsEmpty": {
         "placeholders": {
