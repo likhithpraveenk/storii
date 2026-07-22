@@ -7,6 +7,7 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 [![RB Status](https://shields.rbtlog.dev/simple/com.likhithpraveenk.storii)](https://shields.rbtlog.dev/com.likhithpraveenk.storii)
 ![GitHub all releases](https://img.shields.io/github/downloads/likhithpraveenk/storii/total?logo=github&label=Github%20Downloads)
 [![IzzyOnDroid Yearly Downloads](https://img.shields.io/badge/dynamic/json?url=https://dlstats.izzyondroid.org/iod-stats-collector/stats/basic/yearly/rolling.json&query=$.['com.likhithpraveenk.storii']&label=IzzyOnDroid%20Downloads)](https://apt.izzysoft.de/packages/com.likhithpraveenk.storii)
+[![Translation status](https://hosted.weblate.org/widget/storii/app/svg-badge.svg)](https://hosted.weblate.org/engage/storii/)
 
 ### Download & Release Info
 
@@ -36,21 +37,23 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 
 ## Screenshots
 
-| Library                                                                                                            | Downloads                                                                                                  |
-| :----------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------- |
-| <img src="metadata/android/en-US/images/phoneScreenshots/1.jpg" width="300" alt="library view showing audiobooks"> | <img src="metadata/android/en-US/images/phoneScreenshots/9.jpg" width="300" alt="active downloads screen"> |
-
-| Home with Player                                                                                                | Now Playing                                                                                                                  |
-| :-------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------- |
-| <img src="metadata/android/en-US/images/phoneScreenshots/3.jpg" width="300" alt="home screen with mini player"> | <img src="metadata/android/en-US/images/phoneScreenshots/4.jpg" width="300" alt="now playing screen with playback controls"> |
-
-| Book Details                                                                                                             | Series                                                                                                               |
-| :----------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------- |
-| <img src="metadata/android/en-US/images/phoneScreenshots/5.jpg" width="300" alt="audiobook detail screen with chapters"> | <img src="metadata/android/en-US/images/phoneScreenshots/6.jpg" width="300" alt="series view listing related books"> |
-
-| Settings                                                                                           | Appearance                                                                                                       |
-| :------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
-| <img src="metadata/android/en-US/images/phoneScreenshots/7.jpg" width="300" alt="settings screen"> | <img src="metadata/android/en-US/images/phoneScreenshots/8.jpg" width="300" alt="appearance and theme settings"> |
+<p>
+  <img src="metadata/android/en-US/images/phoneScreenshots/1.jpg" width="200" alt="library view showing audiobooks">
+  &nbsp;&nbsp;
+  <img src="metadata/android/en-US/images/phoneScreenshots/9.jpg" width="200" alt="active downloads screen">
+  &nbsp;&nbsp;
+  <img src="metadata/android/en-US/images/phoneScreenshots/3.jpg" width="200" alt="home screen with mini player">
+  &nbsp;&nbsp;
+  <img src="metadata/android/en-US/images/phoneScreenshots/4.jpg" width="200" alt="now playing screen with playback controls">
+  &nbsp;&nbsp;
+  <img src="metadata/android/en-US/images/phoneScreenshots/5.jpg" width="200" alt="audiobook detail screen with chapters">
+  &nbsp;&nbsp;
+  <img src="metadata/android/en-US/images/phoneScreenshots/6.jpg" width="200" alt="series view listing related books">
+  &nbsp;&nbsp;
+  <img src="metadata/android/en-US/images/phoneScreenshots/7.jpg" width="200" alt="settings screen">
+  &nbsp;&nbsp;
+  <img src="metadata/android/en-US/images/phoneScreenshots/8.jpg" width="200" alt="appearance and theme settings">
+</p>
 
 ## Roadmap
 
@@ -77,6 +80,12 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 ## Contributing
 
 Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting a PR.
+
+### Localization
+
+Do you wish to use the app in your language? Help translate on [Weblate](https://hosted.weblate.org/engage/storii/).
+
+[![Translation status](https://hosted.weblate.org/widget/storii/app/multi-auto.svg)](https://hosted.weblate.org/engage/storii/)
 
 ## License
 
