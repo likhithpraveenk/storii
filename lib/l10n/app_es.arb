@@ -241,7 +241,7 @@
     "markAsComplete": "¿Mark está completo?",
     "confirm": "Confirmación",
     "progressMarkedComplete": "Marcado como completo",
-    "progressMarkCompleteFailed": "Failed to mark as complete",
+    "progressMarkCompleteFailed": "",
     "progressRemoved": "Progresos eliminados",
     "progressRemoveFailed": "Failed to remove progress",
     "playerSettings": "Ajustes del reproductor",
