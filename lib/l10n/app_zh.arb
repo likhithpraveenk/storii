@@ -6,7 +6,7 @@
     "username": "用户名",
     "password": "密码",
     "delete": "删除",
-    "cancel": "Cancel",
+    "cancel": "",
     "deleteServer": "删除服务器",
     "deleteServerQ": "删除服务器?",
     "deleteUserQ": "删除{user}?",
