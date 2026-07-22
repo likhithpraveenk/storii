@@ -454,7 +454,7 @@
     "bookmarks": "书目",
     "bookmarkFailed": "未能节省账簿标识",
     "addBookmark": "增 编",
-    "editBookmark": "Edit Bookmark",
+    "editBookmark": "",
     "connectionChecking": "检查联系..…",
     "emptyMsg": "空洞..…",
     "hexFormatHint": ""
