@@ -201,7 +201,7 @@
             }
         }
     },
-    "readableDurationFull": "{小时,复数=0{}其他{{hours}h >{minutes}m {seconds}s",
+    "readableDurationFull": "",
     "@readableDurationFull": {
         "placeholders": {
             "hours": {
