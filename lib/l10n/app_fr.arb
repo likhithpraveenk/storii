@@ -198,7 +198,7 @@
     "networkLogsDescription": "Log requêtes et réponses HTTP",
     "trustAllCertificates": "Faites confiance à tous les certificats",
     "trustAllCertificatesDescription": "Validation du certificat de défaut",
-    "readableDuration": "{heures, pluriel, =0{} autres {{hours}h }}{minutes}m",
+    "readableDuration": "",
     "@readableDuration": {
         "placeholders": {
             "hours": {
