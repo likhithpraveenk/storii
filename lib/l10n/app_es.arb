@@ -278,7 +278,7 @@
     "alwaysShow": "Mostrar siempre",
     "onlyShowSelected": "Sólo mostrar cuando se selecciona",
     "alwaysHide": "Siempre escondido",
-    "syncInterval": "Sync Interval",
+    "syncInterval": "",
     "syncIntervalSubtitle": "Controla la frecuencia de sincronización del servidor, superando la restricción de datos móviles de 1 minuto si se establece mayor",
     "history": "Historia",
     "today": "Hoy",
