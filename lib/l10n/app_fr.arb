@@ -301,7 +301,7 @@
     "completed": "Complété",
     "cancelled": "Annulé",
     "resumeDownload": "Résumé Télécharger",
-    "removeDownloadQ": "Supprimer Télécharger?",
+    "removeDownloadQ": "",
     "willBeFreed": "{bytes} sera libéré",
     "@willBeFreed": {
         "placeholders": {
