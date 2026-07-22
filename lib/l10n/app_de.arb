@@ -31,7 +31,7 @@
     "addUser": "Benutzer hinzufügen",
     "edit": "Bearbeiten",
     "editServer": "Server bearbeiten",
-    "errorLoadingUsers": "Fehler beim Laden",
+    "errorLoadingUsers": "",
     "switchingToUser": "Wechsel auf {user}",
     "@switchingToUser": {
         "placeholders": {
