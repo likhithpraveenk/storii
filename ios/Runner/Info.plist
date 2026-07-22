@@ -91,5 +91,15 @@
 	</dict>
 	<key>FlutterDeepLinkingEnabled</key>
 	<false />
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>es</string>
+		<string>de</string>
+		<string>fr</string>
+		<string>zh-Hans</string>
+		<string>pt-BR</string>
+		<string>pt</string>
+	</array>
 </dict>
 </plist>
