@@ -215,7 +215,7 @@
             }
         }
     },
-    "durationLeft": "{小时、复数、=0{}其他{{hours}h ×{minutes}m]",
+    "durationLeft": "",
     "@durationLeft": {
         "placeholders": {
             "hours": {
