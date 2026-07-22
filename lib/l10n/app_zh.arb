@@ -1,3 +1,460 @@
 {
-  "@@locale": "zh"
+    "@@locale": "zh",
+    "validateServer": "Validate服务器",
+    "required": "所需",
+    "duplicateHeader": "复制头盔",
+    "username": "用户名",
+    "password": "密码",
+    "delete": "删除",
+    "cancel": "Cancel",
+    "deleteServer": "删除服务器",
+    "deleteServerQ": "删除服务器?",
+    "deleteUserQ": "删除{user}?",
+    "@deleteUserQ": {
+        "placeholders": {
+            "user": {
+                "type": "String"
+            }
+        }
+    },
+    "noUsersServer": "没有用户与这一服务器连接.",
+    "followingUsers": "请删除以下用户:",
+    "urlCopied": "URL Copied",
+    "addUser": "增加用户",
+    "edit": "Edit",
+    "editServer": "Edit服务器",
+    "errorLoadingUsers": "负载用户",
+    "switchingToUser": "转至{user}",
+    "@switchingToUser": {
+        "placeholders": {
+            "user": {
+                "type": "String"
+            }
+        }
+    },
+    "loading": "抢劫",
+    "active": "积极",
+    "noSession": "第一届会议",
+    "recentSessions": "最近的届会",
+    "noAuthor": "无",
+    "noArtist": "无艺术家",
+    "noTitle": "无",
+    "noImage": "无图象",
+    "errorImage": "图像超负荷",
+    "downloads": "下载",
+    "settings": "背景",
+    "logs": "记录",
+    "about": "约 旦",
+    "switchAccount": "会计",
+    "switchAccountConfirm": "转到另一个账户?",
+    "logoutConfirm": "从这个账户中提取款项?",
+    "noLibrary": "图书馆",
+    "libraries": "图书馆",
+    "empty": "就业",
+    "collapse": "座谈会",
+    "refresh": "Refresh",
+    "retry": "学历",
+    "description": "说明",
+    "noDescription": "无说明",
+    "resume": "续会",
+    "play": "游乐",
+    "pause": "分娩",
+    "replay": "续会",
+    "deleteLogsQ": "删除所有标识?",
+    "audiobooks": "录音",
+    "podcasts": "波德广播公司",
+    "episodes": "流行病",
+    "playEpisodeConfirm": "举办这一活动?",
+    "search": "搜索",
+    "dateFormat": "日期 格式",
+    "custom": "习俗",
+    "invalidFormat": "无效格式",
+    "customPattern": "习俗模式",
+    "save": "Save",
+    "fontFamily": "缩略语",
+    "system": "系统",
+    "light": "灯光",
+    "dark": "页: 1",
+    "systemTheme": "系统主题",
+    "systemThemeSubtitle": "彩色装置棕榈",
+    "pureBlack": "黑人",
+    "pureBlackSubtitle": "对比高的主题",
+    "fontScale": "Font 比额表",
+    "language": "语言",
+    "navBar": "Navbar",
+    "appearance": "耳朵",
+    "theme": "主题",
+    "reset": "收 复",
+    "resetSettingsQ": "重新定位?",
+    "resetSettingsTxt": "这将恢复对其违约价值的所有偏好.",
+    "settingsReset": "B. 重新定位",
+    "home": "家庭",
+    "library": "图书馆",
+    "librarySettings": "图书馆设置",
+    "collections": "收款情况",
+    "latest": "抗议",
+    "latestEpisodes": "最新事件",
+    "all": "所有人",
+    "id": "ID",
+    "series": "丛书",
+    "authors": "作者",
+    "more": "更 正",
+    "books": "书籍",
+    "stats": "统计",
+    "viewAll": "观点",
+    "metadata": "元数据",
+    "title": "标题",
+    "author": "作者",
+    "authorLastFirst": "提交人(Last, First)",
+    "dateAdded": "增 编日期",
+    "publishedYear": "发表年份",
+    "publishedDate": "发表日期",
+    "releaseDate": "释放日期",
+    "size": "规模",
+    "duration": "期限",
+    "fileCreatedDate": "文件创建日期",
+    "fileModifiedDate": "文件更正日期",
+    "lastPlayed": "最后一次游乐",
+    "dateStarted": "日期",
+    "dateFinished": "日期",
+    "random": "Random",
+    "numOfBooks": "书籍数量",
+    "name": "姓名",
+    "lastBookAdded": "最后一卷",
+    "lastBookUpdated": "最新版",
+    "lastFirst": "姓 名",
+    "lastUpdated": "上一次更新",
+    "numOfEpisodes": "传染病的数量",
+    "hasEbook": "书籍",
+    "hasNoEbook": "无",
+    "hasSupplementary": "1. 补充教材",
+    "hasNoSupplementary": "没有补充手册",
+    "itunesId": "页: 1",
+    "itunesArtistId": "摄影师协会",
+    "itunesPageUrl": "页: 1",
+    "collapseSeries": "座谈会系列",
+    "filter": "Filter",
+    "sort": "S",
+    "display": "显示",
+    "genres": "基因",
+    "tags": "租户",
+    "publisher": "采购处",
+    "publishedDecade": "出版十年",
+    "progress": "进展",
+    "narrators": "监狱",
+    "tracks": "跟踪",
+    "missingMetadata": "缺失的元数据",
+    "ebooks": "书籍",
+    "finished": "Finished",
+    "notStarted": "未启动",
+    "inComplete": "不完整",
+    "inProgress": "A. 进展",
+    "notFinished": "不获赔",
+    "asin": "ASIN",
+    "isbn": "ISBN",
+    "subtitle": "标题",
+    "singleTrack": "单一轨道",
+    "multipleTracks": "多轨",
+    "noTracks": "无轨迹",
+    "itemsWithIssues": "议题",
+    "rssFeedOpen": "RSS Feed Open",
+    "moreInfo": "更多信息",
+    "explicit": "明示",
+    "abridged": "Abridged",
+    "displayMode": "显示",
+    "comfortable": "舒适",
+    "compact": "契约",
+    "coverOnly": "仅限",
+    "listView": "清单",
+    "licenses": "执照",
+    "sourceCode": "资料来源:《刑法》",
+    "couldNotUrl": "不能发射{url}",
+    "@couldNotUrl": {
+        "placeholders": {
+            "url": {
+                "type": "String"
+            }
+        }
+    },
+    "licensedUnder": "GNU General Public License v3.0",
+    "version": "版本",
+    "buildNumber": "编号:{text}",
+    "@buildNumber": {
+        "placeholders": {
+            "text": {
+                "type": "String"
+            }
+        }
+    },
+    "networkLogs": "网络记录",
+    "networkLogsDescription": "D. 吉大港山区的申请和答复",
+    "trustAllCertificates": "信托所有证书",
+    "trustAllCertificatesDescription": "残疾证书的确认",
+    "readableDuration": "{小时、复数=0{}其他{{hours}h {minutes}m",
+    "@readableDuration": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "readableDurationFull": "{小时,复数=0{}其他{{hours}h >{minutes}m {seconds}s",
+    "@readableDurationFull": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            },
+            "seconds": {
+                "type": "int"
+            }
+        }
+    },
+    "durationLeft": "{小时、复数、=0{}其他{{hours}h ×{minutes}m]",
+    "@durationLeft": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "chapters": "章 次 页 次",
+    "removeProgressTitle": "消除进展?",
+    "removeProgressMessage": "这将重启你们的聆听进展,不能放弃.",
+    "remove": "驱逐",
+    "markAsComplete": "标识不完整?",
+    "confirm": "执 行",
+    "progressMarkedComplete": "标记为完整",
+    "progressMarkCompleteFailed": "未能标示为完整",
+    "progressRemoved": "取得的进展",
+    "progressRemoveFailed": "未能排除进展",
+    "playerSettings": "缔造者",
+    "skipForward": "飞跃",
+    "skipBack": "天空",
+    "startPlayback": "起始反馈",
+    "playbackSpeed": "击退速度",
+    "sleepTimer": "睡觉",
+    "cancelTimer": "履历",
+    "timeMinutes": "{time} min",
+    "@timeMinutes": {
+        "placeholders": {
+            "time": {
+                "type": "int"
+            }
+        }
+    },
+    "endOfChapter": "章末",
+    "endOfNChapters": "{count}章末",
+    "@endOfNChapters": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "settingsStartupRouteTitle": "开放",
+    "settingsReorderNavTitle": "航标",
+    "settingsReorderNavSubtitle": "2. 重排顺序,使或消除制表",
+    "sampleText": "Sphinx oflack quartz, Judge my vow - 0123456789",
+    "addFonts": "添加字体",
+    "appCache": "A. 藏匿处",
+    "settingsNavLabelBehavior": "导航标签",
+    "alwaysShow": "航道",
+    "onlyShowSelected": "只有选定显示",
+    "alwaysHide": "暗藏",
+    "syncInterval": "Syn",
+    "syncIntervalSubtitle": "如果控制服务器的机组频率较高,则超过1分钟的移动数据限制",
+    "history": "A. 历史",
+    "today": "今天",
+    "yesterday": "昨天",
+    "seek": "寻求",
+    "stop": "停止",
+    "complete": "完成",
+    "sync": "结 论",
+    "playbackError": "缺陷",
+    "loginOidc": "记录与开放登记",
+    "or": "或",
+    "oidcRedirectUriHintPrefix": "所需经费",
+    "oidcRedirectUriHintSuffix": "aBS ——环境——认证——允许流动汇款",
+    "queued": "Queued",
+    "downloading": "下载",
+    "paused": "保险费",
+    "failed": "Failed",
+    "download": "下载",
+    "completed": "完成",
+    "cancelled": "Cancelled",
+    "resumeDownload": "续会",
+    "removeDownloadQ": "移解下载吗?",
+    "willBeFreed": "{bytes}",
+    "@willBeFreed": {
+        "placeholders": {
+            "bytes": {
+                "type": "String"
+            }
+        }
+    },
+    "downloadFailed": "下载失败——主线重",
+    "directPlay": "直接比赛",
+    "directStream": "直接精炼",
+    "transcode": "密码",
+    "local": "当地",
+    "downloaded": "下载",
+    "connectionStatus": "关系",
+    "connectionPleaseWait": "等候",
+    "connectionServerConnected": "连接服务器",
+    "connectionServerDisconnected": "未与服务器连接",
+    "connectionTypeWifi": "Wi-Fi",
+    "connectionTypeMobile": "移动数据",
+    "connectionTypeEthernet": "异构体",
+    "connectionTypeNone": "无网络",
+    "connectionCantReachServer": "Can'taccessters ({networkType})",
+    "@connectionCantReachServer": {
+        "placeholders": {
+            "networkType": {
+                "type": "String"
+            }
+        }
+    },
+    "connectionViaNetwork": "经由{networkType}连接",
+    "@connectionViaNetwork": {
+        "placeholders": {
+            "networkType": {
+                "type": "String"
+            }
+        }
+    },
+    "foundBugQ": "Found子吗?",
+    "foundBugQSubtitle": "开放吉特·霍特女士",
+    "audioBufferDuration": "1. 音频辩论会",
+    "audioBufferDurationDescription": "有多少声望要紧跟着 play。 较高价值减少了连接缓慢的中断",
+    "fadeOnSleep": "视听",
+    "fadeOnSleepSubtitle": "在睡眠时间结束前逐步降低体积",
+    "fadeOnSleepDuration": "Fade 窗口",
+    "fadeOnSleepDurationDescription": "2. 规定在时间结束之前失效的效果持续多久",
+    "fadeOnSleepMinVolume": "体积",
+    "fadeOnSleepMinVolumeDescription": "2. 界定在缺陷期间达到的最低音响水平",
+    "avoidMobileData": "避免移动数据",
+    "avoidMobileDataSubtitle": "移动网络将暂停下载",
+    "totalListeningTime": "总名单",
+    "currentStreak": "B. 当前的挑战",
+    "longestStreak": "最长的战 s",
+    "thisMonth": "本月",
+    "thisYear": "今年",
+    "days": "日 本",
+    "daysAgo": "{days}天前",
+    "@daysAgo": {
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
+    "booksFinished": "已完成的书籍",
+    "episodesFinished": "已完成的流行病",
+    "volume": "数量",
+    "increaseVolume": "增 编",
+    "decreaseVolume": "减少量",
+    "showChapterPosition": "显示章节立场",
+    "errorNetwork": "无互联网连接",
+    "errorTimeout": "B. 预定完成的联系",
+    "errorAuth": "未经许可",
+    "errorForbidden": "被拒绝入境",
+    "errorNotFound": "未发现的内容",
+    "errorServer": "页: 1",
+    "errorUnknown": "某些错误",
+    "errorType": "类型错误",
+    "changeRestartRequired": "变动在重新启动后生效",
+    "playbackErrorNetwork": "联系问题。 视听可能中断",
+    "playbackErrorSource": "音频文件不能装上",
+    "playbackErrorDecoder": "文件格式",
+    "playbackErrorUnknown": "Some倒了",
+    "codec": "法典",
+    "bitrate": "Rate",
+    "channels": "渠道",
+    "format": "格式",
+    "path": "道路",
+    "scrollThumbVisibility": "插图",
+    "scrollThumbVisibilitySubtitle": "长期名单上的 Display",
+    "scrollThumbSettings": "Sc",
+    "scrollThumbDuration": "之后",
+    "scrollThumbDurationDescription": "在你停止滚动之后,th子的停留时间多",
+    "scrollThumbHeight": "Ight",
+    "scrollThumbHeightDescription": "图六",
+    "scrollThumbWidth": "Width",
+    "scrollThumbWidthDescription": "p",
+    "off": "不适用",
+    "binaryUnits": "单币单位",
+    "binaryUnitsSubtitle": "1 KB = 1024 B",
+    "decimalUnits": "Dec",
+    "decimalUnitsSubtitle": "1 KB=1000 B",
+    "backup": "恢复和恢复",
+    "createBackup": "建立备份",
+    "restoreBackup": "恢复后援",
+    "backupDescription": "出口或进口你的账户、环境和历史",
+    "backupCreated": "节余",
+    "backupFailed": "不能造成支持",
+    "restoreSuccess": "恢复",
+    "restoreRestart": "恢复。 2. 重新启动适用改动的假设",
+    "restoreFailed": "不能恢复支持",
+    "marqueeSpeed": "文本索引",
+    "schemeVariant": "A. 专题风格",
+    "schemeVariantSubtitle": "选择如何产生你的主题颜色",
+    "tonalSpot": "结余",
+    "tonalSpotSubtitle": "软体、自然和轻视",
+    "fidelity": "近距离",
+    "fidelitySubtitle": "与你选定的彩色相距",
+    "vibrant": "入境",
+    "vibrantSubtitle": "彩色与高度对比",
+    "expressive": "Bold",
+    "expressiveSubtitle": "具有独特素养的有色彩色",
+    "monochrome": "Monochrome",
+    "monochromeSubtitle": "Ure黑、白和灰色",
+    "neutral": "附 件",
+    "neutralSubtitle": "只带有色体的厕所",
+    "appColor": "学历",
+    "hexColor": "Hex Color",
+    "invalidHex": "Invalid hex",
+    "primary": "小学",
+    "secondary": "中学",
+    "tertiary": "Tertiary",
+    "error": "Error",
+    "rememberSort": "成员制",
+    "rememberSortSubtitle": "恢复正常秩序",
+    "type": "类型",
+    "pubDate": "Pub 日期",
+    "added": "添加",
+    "mimeType": "M. 监 测 类型",
+    "season": "季节",
+    "episode": "流行病",
+    "libraryIsEmpty": "{library} 图书馆空洞!",
+    "@libraryIsEmpty": {
+        "placeholders": {
+            "library": {
+                "type": "String"
+            }
+        }
+    },
+    "storage": "储存",
+    "internalStorage": "内部储存",
+    "changeLocation": "变化地点",
+    "resetToInternal": "内部",
+    "downloadLocation": "下载地点",
+    "storageSubDirsNote": "视听材料和播音器将存放在单独的分局:\n- 录音带/<id>\n- 播种/播种 页: 1\n即便服务器元数据发生变化,这也确保了稳定的道路",
+    "localSession": "地方会议",
+    "currentPosition": "现任职务",
+    "localSessionSheetBody": "进展在当地得到挽救。 先见.",
+    "bookmarks": "书目",
+    "bookmarkFailed": "未能节省账簿标识",
+    "addBookmark": "增 编",
+    "editBookmark": "Edit Bookmark",
+    "connectionChecking": "检查联系..…",
+    "emptyMsg": "空洞..…"
 }
