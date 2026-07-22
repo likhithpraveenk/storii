@@ -1,3 +1,469 @@
 {
-  "@@locale": "pt_BR"
+    "@@locale": "pt_BR",
+    "login": "Login",
+    "logout": "Logotipo",
+    "addServer": "Adicionar Servidor",
+    "serverUrl": "URL do servidor",
+    "validateServer": "Validar servidor",
+    "advanced": "Avançado",
+    "customHeaders": "Cabeçalhos personalizados",
+    "key": "Chaveiro",
+    "value": "Valor",
+    "required": "Requisitos",
+    "duplicateHeader": "Cabeçalho duplicado",
+    "username": "Nome de utilizador",
+    "password": "Senha",
+    "delete": "Excluir",
+    "cancel": "Cancelar",
+    "deleteServer": "Excluir servidor",
+    "deleteServerQ": "Excluir Servidor?",
+    "deleteUserQ": "Excluir {user}?",
+    "@deleteUserQ": {
+        "placeholders": {
+            "user": {
+                "type": "String"
+            }
+        }
+    },
+    "noUsersServer": "Nenhum usuário está vinculado a este servidor.",
+    "followingUsers": "Você está prestes a excluir os seguintes usuários",
+    "urlCopied": "URL Copied",
+    "addUser": "Adicionar ao Usuário",
+    "edit": "Editar",
+    "editServer": "Editar servidor",
+    "errorLoadingUsers": "Usuários de carregamento de erros",
+    "switchingToUser": "Mudar para {user}",
+    "@switchingToUser": {
+        "placeholders": {
+            "user": {
+                "type": "String"
+            }
+        }
+    },
+    "loading": "A carregar",
+    "active": "Activo",
+    "noSession": "Sem sessão",
+    "recentSessions": "Sessões recentes",
+    "noAuthor": "Nenhum autor",
+    "noArtist": "Sem artista",
+    "noTitle": "Sem título",
+    "noImage": "Nenhuma imagem",
+    "errorImage": "Imagem de carregamento de erro",
+    "downloads": "Downloads",
+    "settings": "Configurações",
+    "logs": "Logs",
+    "about": "Sobre a",
+    "switchAccount": "Conta de Switch",
+    "switchAccountConfirm": "Mudar para outra conta?",
+    "logoutConfirm": "Fazer login nesta conta?",
+    "noLibrary": "Nenhuma biblioteca",
+    "libraries": "Bibliotecas",
+    "empty": "Vazio",
+    "collapse": "Colapso",
+    "refresh": "Atualizar",
+    "retry": "Repito",
+    "description": "Descrição",
+    "noDescription": "Nenhuma descrição disponível",
+    "resume": "Resume",
+    "play": "Jogar",
+    "pause": "Pausa",
+    "replay": "Reprodução",
+    "deleteLogsQ": "Excluir todos os registos?",
+    "audiobooks": "Livros de áudio",
+    "podcasts": "Podcasts",
+    "episodes": "Os episódios",
+    "playEpisodeConfirm": "Tocar este episódio?",
+    "search": "Pesquisar",
+    "dateFormat": "Formato de data",
+    "custom": "Personalizado",
+    "invalidFormat": "Formato inválido",
+    "customPattern": "Padrão personalizado",
+    "save": "Salvar",
+    "fontFamily": "Mudar fonte",
+    "system": "Sistema",
+    "light": "Luz",
+    "dark": "Escuto",
+    "systemTheme": "Tema do sistema",
+    "systemThemeSubtitle": "Parâmetro do dispositivo",
+    "pureBlack": "Preto puro",
+    "pureBlackSubtitle": "Tema de alto contraste",
+    "fontScale": "Escala de fonte",
+    "language": "Língua",
+    "navBar": "Navbar",
+    "appearance": "Aparência",
+    "theme": "Tema",
+    "reset": "Redefinição",
+    "resetSettingsQ": "Redefinir configurações?",
+    "resetSettingsTxt": "Isso reverterá todas as preferências para seus valores padrão.",
+    "settingsReset": "As configurações são redefinidas",
+    "home": "Home",
+    "library": "Biblioteca",
+    "librarySettings": "Configurações da biblioteca",
+    "collections": "Colecções",
+    "latest": "Mais recentes",
+    "latestEpisodes": "Últimos episódios",
+    "all": "Todos",
+    "id": "ID",
+    "series": "Série",
+    "authors": "Autores",
+    "more": "Mais",
+    "books": "Livros",
+    "stats": "Estatísticas",
+    "viewAll": "Ver tudo",
+    "metadata": "Metadados",
+    "title": "Título",
+    "author": "Autor",
+    "authorLastFirst": "Autor (último, primeiro)",
+    "dateAdded": "Data adicionada",
+    "publishedYear": "Ano publicado",
+    "publishedDate": "Data de publicação",
+    "releaseDate": "Data de lançamento",
+    "size": "Tamanho",
+    "duration": "Duração",
+    "fileCreatedDate": "Data de criação do arquivo",
+    "fileModifiedDate": "Data Modificada de Arquivo",
+    "lastPlayed": "Última reprodução",
+    "dateStarted": "Data de início",
+    "dateFinished": "Data finalizada",
+    "random": "Random",
+    "numOfBooks": "Número de livros",
+    "name": "Nome",
+    "lastBookAdded": "Último livro Adicionado",
+    "lastBookUpdated": "Última atualização do livro",
+    "lastFirst": "Nome último, primeiro nome",
+    "lastUpdated": "Última atualização",
+    "numOfEpisodes": "Número de episódios",
+    "hasEbook": "Tem ebook",
+    "hasNoEbook": "Não tem ebook",
+    "hasSupplementary": "Tem ebook complementar",
+    "hasNoSupplementary": "Não tem ebook complementar",
+    "itunesId": "iD do iTunes",
+    "itunesArtistId": "iTunes Artist ID",
+    "itunesPageUrl": "página do iTunes",
+    "collapseSeries": "Série de Colapso",
+    "filter": "Filtro",
+    "sort": "Tipo",
+    "display": "Exposição",
+    "genres": "Gêneros",
+    "tags": "Tags",
+    "publisher": "Editora",
+    "publishedDecade": "Publicação",
+    "progress": "Progressos",
+    "narrators": "Narratores",
+    "tracks": "Trilhas",
+    "missingMetadata": "Metadados perdidos",
+    "ebooks": "Ebooks",
+    "finished": "Terminado",
+    "notStarted": "Não Iniciado",
+    "inComplete": "Incompleto",
+    "inProgress": "Em progresso",
+    "notFinished": "Não terminado",
+    "asin": "ASIN",
+    "isbn": "ISBN",
+    "subtitle": "Subtitle",
+    "singleTrack": "Faixa única",
+    "multipleTracks": "Várias faixas",
+    "noTracks": "Sem faixas",
+    "itemsWithIssues": "Itens com problemas",
+    "rssFeedOpen": "RSS Feed Aberto",
+    "moreInfo": "Mais informações",
+    "explicit": "Explícito",
+    "abridged": "Abridged",
+    "displayMode": "Modo de exibição",
+    "comfortable": "Confortável confortável",
+    "compact": "Compacto",
+    "coverOnly": "Apenas capa",
+    "listView": "Visualização da lista",
+    "licenses": "Licenças",
+    "sourceCode": "Código de origem",
+    "couldNotUrl": "Não foi possível lançar {url}",
+    "@couldNotUrl": {
+        "placeholders": {
+            "url": {
+                "type": "String"
+            }
+        }
+    },
+    "licensedUnder": "Licenciado sob a Licença Pública Geral GNU v3.0",
+    "version": "Versão",
+    "buildNumber": "Número de compilação: {text}",
+    "@buildNumber": {
+        "placeholders": {
+            "text": {
+                "type": "String"
+            }
+        }
+    },
+    "networkLogs": "Logs de rede",
+    "networkLogsDescription": "Registar solicitações e respostas HTTP",
+    "trustAllCertificates": "Confiar em todos os certificados",
+    "trustAllCertificatesDescription": "Desativa a validação do certificado",
+    "readableDuration": "{horas, plural, =0{} outros{{hours}h }}{minutes}m",
+    "@readableDuration": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "readableDurationFull": "{horas, plural, =0{} outros{{hours}h }}{minutes}m {seconds}s",
+    "@readableDurationFull": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            },
+            "seconds": {
+                "type": "int"
+            }
+        }
+    },
+    "durationLeft": "{horas, plural, =0{} other{{hours}h }}{minutes}m left",
+    "@durationLeft": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "chapters": "Capítulos",
+    "removeProgressTitle": "Remover o progresso?",
+    "removeProgressMessage": "Isso irá redefinir seu progresso de audição e não pode ser desfeito.",
+    "remove": "Remover",
+    "markAsComplete": "Mark como completo?",
+    "confirm": "Confirmação",
+    "progressMarkedComplete": "Marcado como completo",
+    "progressMarkCompleteFailed": "Falhado para marcar como completo",
+    "progressRemoved": "Remoção do progresso",
+    "progressRemoveFailed": "Falhado para remover o progresso",
+    "playerSettings": "Configurações do jogador",
+    "skipForward": "Ir para a frente",
+    "skipBack": "Saltar para trás",
+    "startPlayback": "Iniciar reprodução",
+    "playbackSpeed": "Velocidade de reprodução",
+    "sleepTimer": "Temporizador de sono",
+    "cancelTimer": "Cancel timer",
+    "timeMinutes": "{time} min",
+    "@timeMinutes": {
+        "placeholders": {
+            "time": {
+                "type": "int"
+            }
+        }
+    },
+    "endOfChapter": "Fim do capítulo",
+    "endOfNChapters": "Fim dos capítulos {count}",
+    "@endOfNChapters": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "settingsStartupRouteTitle": "Comece no aplicativo aberto",
+    "settingsReorderNavTitle": "Guias de navegação",
+    "settingsReorderNavSubtitle": "Reordenar e ativar ou desativar as guias",
+    "sampleText": "Esfinge de quartzo preto, julgue meu voto - 0123456789",
+    "addFonts": "Adicionar fontes",
+    "appCache": "Cache de App",
+    "settingsNavLabelBehavior": "Etiquetas de navegação",
+    "alwaysShow": "Sempre mostrar",
+    "onlyShowSelected": "Apenas mostrar quando selecionado",
+    "alwaysHide": "Sempre a esconder",
+    "syncInterval": "Intervalo de Sincronização",
+    "syncIntervalSubtitle": "Controla a frequência de sincronização do servidor, substituindo a restrição de dados móveis de 1 minuto se definido maior",
+    "history": "História",
+    "today": "Hoje",
+    "yesterday": "Ontem",
+    "seek": "Buscar",
+    "stop": "Pára",
+    "complete": "Completamente",
+    "sync": "Sincronização",
+    "playbackError": "erro de reprodução",
+    "loginOidc": "Login com OpenID",
+    "or": "Ou",
+    "oidcRedirectUriHintPrefix": "Requerimentos",
+    "oidcRedirectUriHintSuffix": "em ABS → Configurações → Autenticação → URIs redirecionados móveis permitidos",
+    "queued": "Queued",
+    "downloading": "Descarregar",
+    "paused": "Pausa",
+    "failed": "Falhado",
+    "download": "Baixar",
+    "completed": "Completada",
+    "cancelled": "Cancelamento",
+    "resumeDownload": "Baixar Resume Download",
+    "removeDownloadQ": "Remover Download?",
+    "willBeFreed": "{bytes} será libertado",
+    "@willBeFreed": {
+        "placeholders": {
+            "bytes": {
+                "type": "String"
+            }
+        }
+    },
+    "downloadFailed": "Descarregar falhou - toque para retestar",
+    "directPlay": "Jogo direto",
+    "directStream": "Transmissão direta",
+    "transcode": "Código de transmissão",
+    "local": "Local",
+    "downloaded": "Baixar",
+    "connectionStatus": "Estado de conexão",
+    "connectionPleaseWait": "Por favor, espere",
+    "connectionServerConnected": "Conectado ao servidor",
+    "connectionServerDisconnected": "Não conectado ao servidor",
+    "connectionTypeWifi": "Wi-Fi",
+    "connectionTypeMobile": "Dados móveis",
+    "connectionTypeEthernet": "Ethernet",
+    "connectionTypeNone": "Nenhuma rede",
+    "connectionCantReachServer": "Não é possível alcançar o servidor ({networkType})",
+    "@connectionCantReachServer": {
+        "placeholders": {
+            "networkType": {
+                "type": "String"
+            }
+        }
+    },
+    "connectionViaNetwork": "Conectado via {networkType}",
+    "@connectionViaNetwork": {
+        "placeholders": {
+            "networkType": {
+                "type": "String"
+            }
+        }
+    },
+    "foundBugQ": "Encontrei um insecto?",
+    "foundBugQSubtitle": "Abra um problema GitHub para qualquer bug que você encontrou",
+    "audioBufferDuration": "Duração do amortecedor de áudio",
+    "audioBufferDurationDescription": "Quanto áudio para manter-se à frente da reprodução. Valores mais elevados reduzem interrupções em conexões lentas",
+    "fadeOnSleep": "Desvantagem de áudio",
+    "fadeOnSleepSubtitle": "Gradualmente reduz o volume antes que o temporizador do sono termina",
+    "fadeOnSleepDuration": "Janela de destino",
+    "fadeOnSleepDurationDescription": "Define quanto tempo o efeito fade-out dura antes que o temporizador termina",
+    "fadeOnSleepMinVolume": "Piso de volume",
+    "fadeOnSleepMinVolumeDescription": "Define o nível de áudio mais baixo alcançado durante o desbotamento",
+    "avoidMobileData": "Evite dados móveis",
+    "avoidMobileDataSubtitle": "Os downloads irão pausar em redes móveis",
+    "totalListeningTime": "Tempo de audição total",
+    "currentStreak": "Estreak atual",
+    "longestStreak": "A mais longa série",
+    "thisMonth": "Este mês",
+    "thisYear": "Este ano",
+    "days": "dias",
+    "daysAgo": "Há dias",
+    "@daysAgo": {
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
+    "booksFinished": "Livros terminados",
+    "episodesFinished": "Episódios terminados",
+    "volume": "Volume",
+    "increaseVolume": "Aumento do volume",
+    "decreaseVolume": "Diminuir volume",
+    "showChapterPosition": "Mostrar posição do capítulo",
+    "errorNetwork": "Sem conexão à internet",
+    "errorTimeout": "Conexão oportuna",
+    "errorAuth": "Não autorizado",
+    "errorForbidden": "Acesso negado",
+    "errorNotFound": "Conteúdo não encontrado",
+    "errorServer": "Erro de servidor, tente novamente",
+    "errorUnknown": "Algo correu mal",
+    "errorType": "Tipo erro",
+    "changeRestartRequired": "As alterações têm efeito após o reinício",
+    "playbackErrorNetwork": "Problema de conexão. O áudio pode ser interrompido",
+    "playbackErrorSource": "O arquivo de áudio não pode ser carregado",
+    "playbackErrorDecoder": "Formato de arquivo não suportado",
+    "playbackErrorUnknown": "Algo correu mal com a reprodução",
+    "codec": "Codec",
+    "bitrate": "Bitrate",
+    "channels": "Canais",
+    "format": "Formato",
+    "path": "Caminho",
+    "scrollThumbVisibility": "Mostrar polegar de rolagem",
+    "scrollThumbVisibilitySubtitle": "Exibe um polegar arrastável em longas listas",
+    "scrollThumbSettings": "Scroll Thumb",
+    "scrollThumbDuration": "Esconder depois",
+    "scrollThumbDurationDescription": "Quanto tempo o polegar fica visível depois de parar de rolar",
+    "scrollThumbHeight": "Altura",
+    "scrollThumbHeightDescription": "Altura do polegar em pixels",
+    "scrollThumbWidth": "Largura",
+    "scrollThumbWidthDescription": "Largura do polegar em pixels",
+    "off": "Fora",
+    "binaryUnits": "Unidades binárias",
+    "binaryUnitsSubtitle": "1 KB = 1024 B",
+    "decimalUnits": "Unidades decimais",
+    "decimalUnitsSubtitle": "1 KB = 1000 B",
+    "backup": "Backup & restaurar",
+    "createBackup": "Criar backup",
+    "restoreBackup": "Restaurar backup",
+    "backupDescription": "Exportar ou importar suas contas, configurações e histórico",
+    "backupCreated": "Backup salvo",
+    "backupFailed": "Não poderia criar backup",
+    "restoreSuccess": "Backup restaurado",
+    "restoreRestart": "Backup restaurado. Reinicie o aplicativo para aplicar alterações",
+    "restoreFailed": "Não poderia restaurar o backup",
+    "marqueeSpeed": "Velocidade de rolagem de texto",
+    "schemeVariant": "Estilo do tema",
+    "schemeVariantSubtitle": "Escolha como suas cores temáticas são geradas",
+    "tonalSpot": "Balança",
+    "tonalSpotSubtitle": "Macio, natural e fácil nos olhos",
+    "fidelity": "Fechar Jogo",
+    "fidelitySubtitle": "Fica de perto à sua cor escolhida",
+    "vibrant": "Vibrante",
+    "vibrantSubtitle": "Cores brilhantes com alto contraste",
+    "expressive": "Bolo",
+    "expressiveSubtitle": "Cores divertidas com sotaques únicos",
+    "monochrome": "Monocromática",
+    "monochromeSubtitle": "Preto puro, branco e cinza",
+    "neutral": "Subtil",
+    "neutralSubtitle": "Tons mutados com apenas uma dica de cor",
+    "appColor": "Cor da App",
+    "hexColor": "Cor do Hex",
+    "invalidHex": "Hex inválido",
+    "hexFormatHint": "Use RGB, RRGGBB ou AARRGGBB",
+    "primary": "Primário",
+    "secondary": "Segundo",
+    "tertiary": "Terciário",
+    "error": "Erro",
+    "rememberSort": "Lembre-se de que",
+    "rememberSortSubtitle": "Ordem de classificação persista quando o aplicativo reinicia",
+    "type": "Tipo",
+    "pubDate": "Data de publicação",
+    "added": "Adicionado",
+    "mimeType": "MIME Tipo",
+    "season": "Temporada",
+    "episode": "Episódio",
+    "libraryIsEmpty": "A Biblioteca está vazia!",
+    "@libraryIsEmpty": {
+        "placeholders": {
+            "library": {
+                "type": "String"
+            }
+        }
+    },
+    "storage": "Armazenamento",
+    "internalStorage": "Armazenamento interno",
+    "changeLocation": "Alterar localização",
+    "resetToInternal": "Redefinir para Interno",
+    "downloadLocation": "Baixar Localização",
+    "storageSubDirsNote": "Audiolivros e podcasts serão armazenados em subdiretórios separados:\n- audiolivros/<itemId>/\n- podcasts/<podcast Id>/\nIsso garante caminhos estáveis, mesmo que os metadados do servidor mudem",
+    "localSession": "Sessão local",
+    "currentPosition": "Posição atual",
+    "localSessionSheetBody": "Progresso salvo localmente. Sincronizar pendente.",
+    "bookmarks": "Marcadores",
+    "bookmarkFailed": "Falhado para salvar bookmark",
+    "addBookmark": "Adicionar favoritos",
+    "editBookmark": "Editar favoritos",
+    "connectionChecking": "Verificando conexão..",
+    "emptyMsg": "Tão vazio.."
 }
