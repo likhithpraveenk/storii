@@ -190,7 +190,7 @@
     "networkLogsDescription": "D. 吉大港山区的申请和答复",
     "trustAllCertificates": "信托所有证书",
     "trustAllCertificatesDescription": "残疾证书的确认",
-    "readableDuration": "{小时、复数=0{}其他{{hours}h {minutes}m",
+    "readableDuration": "",
     "@readableDuration": {
         "placeholders": {
             "hours": {
