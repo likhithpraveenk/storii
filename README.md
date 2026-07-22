@@ -37,23 +37,10 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 
 ## Screenshots
 
-<p>
-  <img src="metadata/android/en-US/images/phoneScreenshots/1.jpg" width="200" alt="library view showing audiobooks">
-  &nbsp;&nbsp;
-  <img src="metadata/android/en-US/images/phoneScreenshots/9.jpg" width="200" alt="active downloads screen">
-  &nbsp;&nbsp;
-  <img src="metadata/android/en-US/images/phoneScreenshots/3.jpg" width="200" alt="home screen with mini player">
-  &nbsp;&nbsp;
-  <img src="metadata/android/en-US/images/phoneScreenshots/4.jpg" width="200" alt="now playing screen with playback controls">
-  &nbsp;&nbsp;
-  <img src="metadata/android/en-US/images/phoneScreenshots/5.jpg" width="200" alt="audiobook detail screen with chapters">
-  &nbsp;&nbsp;
-  <img src="metadata/android/en-US/images/phoneScreenshots/6.jpg" width="200" alt="series view listing related books">
-  &nbsp;&nbsp;
-  <img src="metadata/android/en-US/images/phoneScreenshots/7.jpg" width="200" alt="settings screen">
-  &nbsp;&nbsp;
-  <img src="metadata/android/en-US/images/phoneScreenshots/8.jpg" width="200" alt="appearance and theme settings">
-</p>
+|                                                                                                                    |                                                                                                                          |                                                                                                                      |                                                                                                                              |
+| :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: |
+| <img src="metadata/android/en-US/images/phoneScreenshots/1.jpg" width="200" alt="library view showing audiobooks"> | <img src="metadata/android/en-US/images/phoneScreenshots/5.jpg" width="200" alt="audiobook detail screen with chapters"> | <img src="metadata/android/en-US/images/phoneScreenshots/6.jpg" width="200" alt="series view listing related books"> | <img src="metadata/android/en-US/images/phoneScreenshots/4.jpg" width="200" alt="now playing screen with playback controls"> |
+|     <img src="metadata/android/en-US/images/phoneScreenshots/9.jpg" width="200" alt="active downloads screen">     |     <img src="metadata/android/en-US/images/phoneScreenshots/3.jpg" width="200" alt="home screen with mini player">      |          <img src="metadata/android/en-US/images/phoneScreenshots/7.jpg" width="200" alt="settings screen">          |       <img src="metadata/android/en-US/images/phoneScreenshots/8.jpg" width="200" alt="appearance and theme settings">       |
 
 ## Roadmap
 
