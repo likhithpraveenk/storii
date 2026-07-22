@@ -456,7 +456,7 @@
     "storage": "Almacenamiento",
     "internalStorage": "Almacenamiento interno",
     "changeLocation": "Cambiar ubicación",
-    "resetToInternal": "Reset to Internal",
+    "resetToInternal": "",
     "downloadLocation": "Descargar Ubicación",
     "storageSubDirsNote": "Los audiolibros y podcasts se almacenarán en subdirectorios separados:\n- audiolibros/\n- podcasts/ Id título/\nEsto asegura caminos estables incluso si los metadatos del servidor cambian",
     "localSession": "Período de sesiones local",
