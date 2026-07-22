@@ -27,7 +27,7 @@
     },
     "noUsersServer": "Nenhum usuário está vinculado a este servidor.",
     "followingUsers": "Você está prestes a excluir os seguintes usuários",
-    "urlCopied": "",
+    "urlCopied": "URL Copied",
     "addUser": "Adicionar ao Usuário",
     "edit": "Editar",
     "editServer": "Editar servidor",
@@ -51,7 +51,7 @@
     "errorImage": "Imagem de carregamento de erro",
     "downloads": "Downloads",
     "settings": "Configurações",
-    "logs": "",
+    "logs": "Logs",
     "about": "Sobre a",
     "switchAccount": "Conta de Switch",
     "switchAccountConfirm": "Mudar para outra conta?",
@@ -64,7 +64,7 @@
     "retry": "Repito",
     "description": "Descrição",
     "noDescription": "Nenhuma descrição disponível",
-    "resume": "",
+    "resume": "Resume",
     "play": "Jogar",
     "pause": "Pausa",
     "replay": "Reprodução",
@@ -89,7 +89,7 @@
     "pureBlackSubtitle": "Tema de alto contraste",
     "fontScale": "Escala de fonte",
     "language": "Língua",
-    "navBar": "",
+    "navBar": "Navbar",
     "appearance": "Aparência",
     "theme": "Tema",
     "reset": "Redefinição",
@@ -125,7 +125,7 @@
     "lastPlayed": "Última reprodução",
     "dateStarted": "Data de início",
     "dateFinished": "Data finalizada",
-    "random": "",
+    "random": "Random",
     "numOfBooks": "Número de livros",
     "name": "Nome",
     "lastBookAdded": "Último livro Adicionado",
@@ -138,7 +138,7 @@
     "hasSupplementary": "Tem ebook complementar",
     "hasNoSupplementary": "Não tem ebook complementar",
     "itunesId": "iD do iTunes",
-    "itunesArtistId": "",
+    "itunesArtistId": "iTunes Artist ID",
     "itunesPageUrl": "página do iTunes",
     "collapseSeries": "Série de Colapso",
     "filter": "Filtro",
@@ -152,7 +152,7 @@
     "narrators": "Narratores",
     "tracks": "Trilhas",
     "missingMetadata": "Metadados perdidos",
-    "ebooks": "",
+    "ebooks": "Ebooks",
     "finished": "Terminado",
     "notStarted": "Não Iniciado",
     "inComplete": "Incompleto",
@@ -160,7 +160,7 @@
     "notFinished": "Não terminado",
     "asin": "ASIN",
     "isbn": "ISBN",
-    "subtitle": "",
+    "subtitle": "Subtitle",
     "singleTrack": "Faixa única",
     "multipleTracks": "Várias faixas",
     "noTracks": "Sem faixas",
@@ -168,7 +168,7 @@
     "rssFeedOpen": "RSS Feed Aberto",
     "moreInfo": "Mais informações",
     "explicit": "Explícito",
-    "abridged": "",
+    "abridged": "Abridged",
     "displayMode": "Modo de exibição",
     "comfortable": "Confortável confortável",
     "compact": "Compacto",
@@ -198,7 +198,7 @@
     "networkLogsDescription": "Registar solicitações e respostas HTTP",
     "trustAllCertificates": "Confiar em todos os certificados",
     "trustAllCertificatesDescription": "Desativa a validação do certificado",
-    "readableDuration": "",
+    "readableDuration": "{horas, plural, =0{} outros{{hours}h }}{minutes}m",
     "@readableDuration": {
         "placeholders": {
             "hours": {
@@ -209,7 +209,7 @@
             }
         }
     },
-    "readableDurationFull": "",
+    "readableDurationFull": "{horas, plural, =0{} outros{{hours}h }}{minutes}m {seconds}s",
     "@readableDurationFull": {
         "placeholders": {
             "hours": {
@@ -223,7 +223,7 @@
             }
         }
     },
-    "durationLeft": "",
+    "durationLeft": "{horas, plural, =0{} other{{hours}h }}{minutes}m left",
     "@durationLeft": {
         "placeholders": {
             "hours": {
@@ -250,7 +250,7 @@
     "startPlayback": "Iniciar reprodução",
     "playbackSpeed": "Velocidade de reprodução",
     "sleepTimer": "Temporizador de sono",
-    "cancelTimer": "",
+    "cancelTimer": "Cancel timer",
     "timeMinutes": "{time} min",
     "@timeMinutes": {
         "placeholders": {
@@ -292,7 +292,7 @@
     "or": "Ou",
     "oidcRedirectUriHintPrefix": "Requerimentos",
     "oidcRedirectUriHintSuffix": "em ABS → Configurações → Autenticação → URIs redirecionados móveis permitidos",
-    "queued": "",
+    "queued": "Queued",
     "downloading": "Descarregar",
     "paused": "Pausa",
     "failed": "Falhado",
@@ -357,7 +357,7 @@
     "thisMonth": "Este mês",
     "thisYear": "Este ano",
     "days": "dias",
-    "daysAgo": "",
+    "daysAgo": "Há dias",
     "@daysAgo": {
         "placeholders": {
             "days": {
@@ -391,7 +391,7 @@
     "path": "Caminho",
     "scrollThumbVisibility": "Mostrar polegar de rolagem",
     "scrollThumbVisibilitySubtitle": "Exibe um polegar arrastável em longas listas",
-    "scrollThumbSettings": "",
+    "scrollThumbSettings": "Scroll Thumb",
     "scrollThumbDuration": "Esconder depois",
     "scrollThumbDurationDescription": "Quanto tempo o polegar fica visível depois de parar de rolar",
     "scrollThumbHeight": "Altura",
@@ -443,7 +443,7 @@
     "mimeType": "MIME Tipo",
     "season": "Temporada",
     "episode": "Episódio",
-    "libraryIsEmpty": "",
+    "libraryIsEmpty": "A Biblioteca está vazia!",
     "@libraryIsEmpty": {
         "placeholders": {
             "library": {
