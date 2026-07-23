@@ -77,7 +77,7 @@ class _VolumeSliderSheetState extends ConsumerState<_VolumeSliderSheet> {
           Row(
             children: [
               IconButton(
-                tooltip: l10n.decreaseVolume,
+                tooltip: l10n.decrease,
                 onPressed: () {
                   setState(() {
                     _volume = (_volume - 0.05).clamp(0, _max);
@@ -102,7 +102,7 @@ class _VolumeSliderSheetState extends ConsumerState<_VolumeSliderSheet> {
                 ),
               ),
               IconButton(
-                tooltip: l10n.increaseVolume,
+                tooltip: l10n.increase,
                 onPressed: () {
                   setState(() {
                     _volume = (_volume + 0.05).clamp(0, _max);

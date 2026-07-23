@@ -87,6 +87,7 @@ class _AudioTrackTileState extends State<_AudioTrackTile> {
 
     return InkWell(
       onTap: () => setState(() => _expanded = !_expanded),
+      splashFactory: NoSplash.splashFactory,
       child: Padding(
         padding: const .symmetric(horizontal: 16, vertical: 8),
         child: Column(
@@ -97,7 +98,7 @@ class _AudioTrackTileState extends State<_AudioTrackTile> {
                 SizedBox(
                   width: 32,
                   child: Text(
-                    '${widget.index + 1}',
+                    (widget.index + 1).toString().padLeft(2, '0'),
                     style: textTheme.labelMedium?.copyWith(
                       color: scheme.onSurfaceVariant.withValues(alpha: 0.5),
                     ),
@@ -164,15 +165,14 @@ class _ExpandedDetails extends StatelessWidget {
 
     final rows = <(String, String?)>[
       (l10n.codec, file.codec ?? track.codec),
-      (l10n.bitrate, formatBitrate(file.bitRate ?? track.bitRate)),
       (l10n.channels, file.channels?.toString() ?? track.channels?.toString()),
       (l10n.format, file.format ?? track.format),
       (l10n.language, file.language ?? track.language),
       (l10n.path, file.metadata.path),
+      (l10n.mimeType, file.mimeType),
     ];
 
     return Container(
-      margin: const .only(left: 32),
       padding: const .all(12),
       decoration: BoxDecoration(
         color: scheme.surfaceContainerHighest.withValues(alpha: 0.4),

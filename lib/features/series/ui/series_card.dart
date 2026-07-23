@@ -26,7 +26,7 @@ class SeriesCard extends StatelessWidget {
         mainAxisSize: .min,
         children: [
           _SeriesBookStack(series),
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
           Column(
             mainAxisSize: .min,
             children: [
@@ -38,7 +38,7 @@ class SeriesCard extends StatelessWidget {
                   context,
                 ).textTheme.titleSmall?.copyWith(fontWeight: .bold),
               ),
-              if (authorName != null)
+              if (authorName != null && authorName.isNotEmpty)
                 Text(
                   authorName,
                   maxLines: 1,
@@ -65,6 +65,7 @@ class _SeriesBookStack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progress = series.finishRatio;
+    final scheme = Theme.of(context).colorScheme;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -90,58 +91,54 @@ class _SeriesBookStack extends StatelessWidget {
               );
         final start = -(count - 1) * spacing / 2;
 
-        return SizedBox(
+        return Container(
           height: bookSize,
           width: double.infinity,
+          decoration: BoxDecoration(
+            color: scheme.primaryFixedDim.withValues(alpha: 0.2),
+            borderRadius: .circular(kRadius),
+          ),
+          clipBehavior: .hardEdge,
           child: Stack(
-            fit: .expand,
+            alignment: .center,
             children: [
-              Center(
-                child: Stack(
-                  clipBehavior: .none,
-                  alignment: .center,
-                  // draw back-to-front so first book renders on top
-                  children: List.generate(count, (index) {
-                    final reverseIndex = count - 1 - index;
-                    final book = visibleBooks[reverseIndex];
-                    final xOffset = start + reverseIndex * spacing;
+              ...List.generate(count, (index) {
+                final reverseIndex = count - 1 - index;
+                final book = visibleBooks[reverseIndex];
+                final xOffset = start + reverseIndex * spacing;
 
-                    return Transform.translate(
-                      offset: Offset(xOffset, 0),
-                      child: Container(
-                        width: bookSize,
-                        height: bookSize,
-                        decoration: BoxDecoration(
-                          borderRadius: .circular(kRadius),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(
-                                alpha: reverseIndex == 0 ? 0.3 : 0.1,
-                              ),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
+                return Transform.translate(
+                  offset: Offset(xOffset, 0),
+                  child: Container(
+                    width: bookSize,
+                    height: bookSize,
+                    decoration: BoxDecoration(
+                      borderRadius: .circular(kRadius),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(
+                            alpha: reverseIndex == 0 ? 0.3 : 0.1,
+                          ),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
                         ),
-                        child: ClipRRect(
-                          borderRadius: .circular(kRadius),
-                          child: ImageWidget(id: book.id, type: .item),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: .circular(kRadius),
+                      child: ImageWidget(id: book.id, type: .item),
+                    ),
+                  ),
+                );
+              }),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(
-                  height: 3,
+                  height: 2.4,
                   child: LinearProgressIndicator(
                     value: progress,
                     borderRadius: .circular(kRadius),
-                    backgroundColor: Theme.of(
-                      context,
-                    ).colorScheme.surface.withValues(alpha: 0.2),
+                    backgroundColor: Colors.transparent,
                     valueColor: AlwaysStoppedAnimation<Color>(
                       progress == 1.0 ? appGreenColor : appRedColor,
                     ),
@@ -149,8 +146,8 @@ class _SeriesBookStack extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 4,
-                right: 4,
+                top: 6,
+                right: 6,
                 child: StackBadge(series.books.length),
               ),
             ],
