@@ -468,5 +468,10 @@
   "editBookmark": "Edit Bookmark",
   "extraControls": "Extra Controls",
   "extraControlsSubtitle": "Add skip forward and rewind buttons in miniplayer",
-  "customization": "Customization"
+  "customization": "Customization",
+  "none": "None",
+  "colored": "Colored",
+  "gradient": "Gradient",
+  "blurredImage": "Blurred Image",
+  "playerBackgroundTheme": "Player background theme"
 }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/customization/nav_label_tile.dart';
+import 'package:storii/features/settings/ui/customization/player_background_theme_tile.dart';
 import 'package:storii/features/settings/ui/customization/reorder_nav_tabs.dart';
 import 'package:storii/features/settings/ui/customization/show_seek_buttons_tile.dart';
 import 'package:storii/features/settings/ui/customization/startup_nav.dart';
@@ -47,6 +48,7 @@ class CustomizationSettingsScreen extends StatelessWidget {
           ReorderNavTabsTile(),
           NavLabelTile(),
           ShowSeekButtonsTile(),
+          PlayerBackgroundThemeTile(),
         ],
       ),
     );

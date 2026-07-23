@@ -11,6 +11,7 @@ import 'package:storii/features/player/ui/full_player.dart';
 import 'package:storii/features/player/ui/hero_cover.dart';
 import 'package:storii/features/player/ui/mini_player.dart';
 import 'package:storii/features/player/ui/player_builder.dart';
+import 'package:storii/features/player/ui/themed_background.dart';
 
 class PlayerScreen extends ConsumerWidget {
   const PlayerScreen({super.key});
@@ -72,9 +73,7 @@ class PlayerScreen extends ConsumerWidget {
 
         return Stack(
           children: [
-            Positioned.fill(
-              child: ColoredBox(color: Theme.of(context).colorScheme.surface),
-            ),
+            const Positioned.fill(child: ThemedBackground()),
             if (f > 0.5)
               Positioned(
                 top: isLandscape ? 48 : targetImgTop + maxImgSize + 16,

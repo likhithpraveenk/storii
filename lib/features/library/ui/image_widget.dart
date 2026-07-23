@@ -88,7 +88,7 @@ class _ImageWidgetState extends ConsumerState<ImageWidget> {
           if (snapshot.hasData && snapshot.data != null) {
             return Image.file(
               File(snapshot.data!),
-              fit: BoxFit.cover,
+              fit: .cover,
               errorBuilder: (context, _, _) => _buildNetworkImage(coverUrl),
             );
           }
@@ -106,7 +106,7 @@ class _ImageWidgetState extends ConsumerState<ImageWidget> {
     return CachedNetworkImage(
       cacheManager: AppImageCacheManager.instance,
       imageUrl: coverUrl,
-      fit: BoxFit.cover,
+      fit: .cover,
       placeholder: (_, _) => const PlaceholderImage(),
       errorWidget: (context, url, error) {
         final error404 = error.toString().contains('404');

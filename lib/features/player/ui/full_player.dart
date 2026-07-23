@@ -92,7 +92,9 @@ class FullPlayer extends ConsumerWidget {
                     ),
                   ],
                 ),
+                const SizedBox(height: 12),
                 FullPlayerActionsWidget(session),
+                const SizedBox(height: 12),
                 Text(
                   session.playMethod.label,
                   textAlign: .center,

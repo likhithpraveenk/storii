@@ -235,9 +235,14 @@ enum SearchFilter {
   }
 }
 
-enum FullPlayerActions { history, chapters, sleep, speed, volume, bookmarks }
+enum FullPlayerActions {
+  history,
+  chapters,
+  sleep,
+  speed,
+  volume,
+  bookmarks;
 
-extension FullPlayerActionsLabel on FullPlayerActions {
   String get label {
     return switch (this) {
       .history => l10n.history,
@@ -257,3 +262,19 @@ const defaultPlayerActions = <FullPlayerActions>[
   .sleep,
   .speed,
 ];
+
+enum PlayerBackgroundTheme {
+  none,
+  colored,
+  gradient,
+  blur;
+
+  String get label {
+    return switch (this) {
+      .none => l10n.none,
+      .colored => l10n.colored,
+      .gradient => l10n.gradient,
+      .blur => l10n.blurredImage,
+    };
+  }
+}

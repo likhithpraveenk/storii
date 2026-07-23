@@ -339,6 +339,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setShowMiniPlayerSeekButtons(bool value) =>
       _save(state?.copyWith(showMiniPlayerSeekButtons: value));
+
+  Future<void> setPlayerBackgroundTheme(PlayerBackgroundTheme value) =>
+      _save(state?.copyWith(playerBackgroundTheme: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -679,4 +682,14 @@ final showMiniPlayerSeekButtonsProvider = Provider<bool>(
     ),
   ),
   name: 'showMiniPlayerSeekButtonsProvider',
+);
+
+final playerBackgroundThemeProvider = Provider<PlayerBackgroundTheme>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.playerBackgroundTheme ?? DefaultUserSettings.playerBackgroundTheme,
+    ),
+  ),
+  name: 'playerBackgroundThemeProvider',
 );
