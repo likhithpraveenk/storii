@@ -6,7 +6,7 @@ import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'user_libraries_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<List<Library>> userLibraries(Ref ref) async {
   ref.watchConnection();
   final user = await ref.watch(authenticatedUserProvider.future);

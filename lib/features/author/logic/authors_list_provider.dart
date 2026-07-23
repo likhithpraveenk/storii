@@ -9,7 +9,7 @@ import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'authors_list_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<List<Author>> authorsList(Ref ref) async {
   ref.watchConnection();
   final libraryId = (await ref.watch(

@@ -1,4 +1,3 @@
-import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -14,7 +13,7 @@ double gridHeight(Ref ref) {
     .comfortable => () {
       final scaler = ref.watch(textScalerProvider);
       final titleSlot = scaler.scale(32.0);
-      final authorSlot = scaler.scale(20.0);
+      final authorSlot = scaler.scale(16.0);
       const padding = 16.0;
       final metadataHeight = titleSlot + padding + authorSlot;
 
@@ -31,7 +30,7 @@ double gridHeight(Ref ref) {
 double authorsGridHeight(Ref ref) {
   final scaler = ref.watch(textScalerProvider);
   final scaledTitleHeight = scaler.scale(32.0);
-  const padding = 12.0;
+  const padding = 16.0;
 
   return maxCardWidthInGrid + scaledTitleHeight + padding;
 }
@@ -41,35 +40,8 @@ double seriesGridHeight(Ref ref) {
   final scaler = ref.watch(textScalerProvider);
 
   final titleSlot = scaler.scale(32.0);
-  final authorSlot = scaler.scale(20.0);
+  final authorSlot = scaler.scale(16.0);
   final metadataHeight = titleSlot + authorSlot;
 
-  return (maxSeriesCardWidthInGrid * 0.48) + metadataHeight;
-}
-
-@riverpod
-double shelfHeight(Ref ref, ShelfType type) {
-  final mode = ref.watch(libraryDisplayModeProvider);
-
-  final cardWidth = switch (type) {
-    .series => maxSeriesCardWidthInGrid,
-    _ => maxCardWidthInGrid,
-  };
-
-  final imageBaseHeight = switch (type) {
-    .series => cardWidth * 0.48,
-    _ => cardWidth,
-  };
-
-  final isBook = type == .book || type == .podcast || type == .episode;
-  if (isBook && (mode == .compact || mode == .coverOnly)) {
-    return imageBaseHeight;
-  }
-  final scaler = ref.watch(textScalerProvider);
-
-  final titleH = scaler.scale(32.0);
-  final showSub = type != .authors && type != .series;
-  final subH = showSub ? scaler.scale(20) : 0.0;
-
-  return imageBaseHeight + titleH + subH + 12;
+  return (maxSeriesCardWidthInGrid * 0.46) + metadataHeight;
 }

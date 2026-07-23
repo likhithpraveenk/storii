@@ -28,7 +28,7 @@ final class LibraryItemsProvider
         argument: null,
         retry: null,
         name: r'libraryItemsProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -48,7 +48,7 @@ final class LibraryItemsProvider
   }
 }
 
-String _$libraryItemsHash() => r'35de169c2ded80235c24d2518d9e0e2e1cb97613';
+String _$libraryItemsHash() => r'8d33c4486270c9bcd7ea9a73c1ec67d69347785f';
 
 @ProviderFor(rawLibraryItems)
 final rawLibraryItemsProvider = RawLibraryItemsProvider._();
@@ -69,7 +69,7 @@ final class RawLibraryItemsProvider
         argument: null,
         retry: null,
         name: r'rawLibraryItemsProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -89,4 +89,4 @@ final class RawLibraryItemsProvider
   }
 }
 
-String _$rawLibraryItemsHash() => r'b1d4f30910f9358d34bdc8e4b4f9dcff00b49f54';
+String _$rawLibraryItemsHash() => r'9737a530d00065d0e25bbd465a8997de5cbcfd6f';

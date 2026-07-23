@@ -21,7 +21,7 @@ final class MediaProgressMapProvider
         argument: null,
         retry: null,
         name: r'mediaProgressMapProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -34,7 +34,7 @@ final class MediaProgressMapProvider
   MediaProgressMap create() => MediaProgressMap();
 }
 
-String _$mediaProgressMapHash() => r'1ecc35a3f5fcde05c8fe5b4b97e9b60f7cd56e33';
+String _$mediaProgressMapHash() => r'10c517b99276d3a1181dabdf2d5151c655434026';
 
 abstract class _$MediaProgressMap
     extends $AsyncNotifier<Map<String, MediaProgress>> {

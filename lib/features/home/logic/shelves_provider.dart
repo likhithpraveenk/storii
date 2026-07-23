@@ -11,7 +11,7 @@ import 'package:storii/storage/local/items_cache.dart';
 
 part 'shelves_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<List<Shelf>> shelves(Ref ref) async {
   final rawShelves = await ref.watch(rawShelvesProvider.future);
   final progressMap = await ref.watch(mediaProgressMapProvider.future);
@@ -47,7 +47,7 @@ Future<List<Shelf>> shelves(Ref ref) async {
       .toList();
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<List<Shelf>> rawShelves(Ref ref) async {
   final isConnected = ref.watchConnection();
   if (!isConnected) {

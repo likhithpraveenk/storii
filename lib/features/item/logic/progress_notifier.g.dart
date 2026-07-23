@@ -20,7 +20,7 @@ final class MediaProgressNotifierProvider
   }) : super(
          retry: null,
          name: r'mediaProgressProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -59,7 +59,7 @@ final class MediaProgressNotifierProvider
 }
 
 String _$mediaProgressNotifierHash() =>
-    r'13e596a0c2cfdeb55f942f3e02eb865210bc9625';
+    r'13a3024d5c361281c7ecd339ec4e264575ea8b2f';
 
 final class MediaProgressNotifierFamily extends $Family
     with
@@ -76,7 +76,7 @@ final class MediaProgressNotifierFamily extends $Family
         name: r'mediaProgressProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
   MediaProgressNotifierProvider call(String itemId, [String? episodeId]) =>

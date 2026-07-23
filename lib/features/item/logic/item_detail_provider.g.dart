@@ -26,7 +26,7 @@ final class ItemDetailProvider
   }) : super(
          retry: null,
          name: r'itemDetailProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -64,7 +64,7 @@ final class ItemDetailProvider
   }
 }
 
-String _$itemDetailHash() => r'b095cb72122a218b3a4de1d435f4d4da36effe2b';
+String _$itemDetailHash() => r'24c5182b94147e332cd87babec32acfa322a9f8f';
 
 final class ItemDetailFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<LibraryItem>, String> {
@@ -74,7 +74,7 @@ final class ItemDetailFamily extends $Family
         name: r'itemDetailProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
   ItemDetailProvider call(String id) =>

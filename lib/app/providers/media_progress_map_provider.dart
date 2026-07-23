@@ -9,7 +9,7 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 
 part 'media_progress_map_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class MediaProgressMap extends _$MediaProgressMap {
   StreamSubscription? _progressSub;
 

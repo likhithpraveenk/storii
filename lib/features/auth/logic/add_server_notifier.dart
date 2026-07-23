@@ -59,7 +59,7 @@ class AddServerNotifier extends _$AddServerNotifier {
   }
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<ServerStatusResponse> serverStatus(Ref ref, Uri url) async {
   final api = ref.read(authApiProvider(url));
   return ref.logApiCall(api.status, source: 'serverStatus');

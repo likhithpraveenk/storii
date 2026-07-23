@@ -28,7 +28,7 @@ final class RecentEpisodesProvider
         argument: null,
         retry: null,
         name: r'recentEpisodesProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -48,4 +48,4 @@ final class RecentEpisodesProvider
   }
 }
 
-String _$recentEpisodesHash() => r'ac90052da07de6ba057d4d9f92090d7830f6741b';
+String _$recentEpisodesHash() => r'6e031483b312aa632b87abb6d3d73729ef2cd555';

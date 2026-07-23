@@ -11,7 +11,7 @@ import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'library_items_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<List<LibraryItem>> libraryItems(Ref ref) async {
   final items = await ref.watch(rawLibraryItemsProvider.future);
   final progressMap = await ref.watch(mediaProgressMapProvider.future);
@@ -37,7 +37,7 @@ Future<List<LibraryItem>> libraryItems(Ref ref) async {
   }).toList();
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<List<LibraryItem>> rawLibraryItems(Ref ref) async {
   ref.watchConnection();
   final libraryId = (await ref.watch(

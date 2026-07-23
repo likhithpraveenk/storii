@@ -10,14 +10,14 @@ import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'bookmarks_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<List<Bookmark>> bookmarks(Ref ref, String itemId) async {
   final user = await ref.watch(serverUserProvider.future);
   return user.bookmarks.where((b) => b.libraryItemId == itemId).toList()
     ..sort((a, b) => a.time.compareTo(b.time));
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 class BookmarksController extends _$BookmarksController {
   @override
   void build(String itemId) {}

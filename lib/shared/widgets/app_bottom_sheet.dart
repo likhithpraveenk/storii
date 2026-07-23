@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 BoxDecoration bottomSheetDecoration(BuildContext context) {
-  final side = BorderSide(
-    width: 0.5,
-    strokeAlign: BorderSide.strokeAlignInside,
-    color: Theme.of(context).colorScheme.primary,
-  );
   return BoxDecoration(
     borderRadius: const .vertical(top: .circular(24)),
-    border: Border(top: side, right: side, left: side),
+    border: Border.all(
+      width: 0.5,
+      strokeAlign: BorderSide.strokeAlignInside,
+      color: Theme.of(context).colorScheme.primary,
+    ),
   );
 }
 

@@ -48,7 +48,7 @@ final class GridHeightProvider
   }
 }
 
-String _$gridHeightHash() => r'42a934f400f872939be304b26ed02840589e52d3';
+String _$gridHeightHash() => r'13e0aae56639e2794b3375847a4c2b38d9694887';
 
 @ProviderFor(authorsGridHeight)
 final authorsGridHeightProvider = AuthorsGridHeightProvider._();
@@ -89,7 +89,7 @@ final class AuthorsGridHeightProvider
   }
 }
 
-String _$authorsGridHeightHash() => r'aa4bf2b3f940ef664b85fa1c2b3ca99d7e6fad41';
+String _$authorsGridHeightHash() => r'763bc025ba7a0c5e1e50236cfe5f49221490da93';
 
 @ProviderFor(seriesGridHeight)
 final seriesGridHeightProvider = SeriesGridHeightProvider._();
@@ -130,81 +130,4 @@ final class SeriesGridHeightProvider
   }
 }
 
-String _$seriesGridHeightHash() => r'161a4ed70bd07d69b8f1f60f90d5e5b16f375530';
-
-@ProviderFor(shelfHeight)
-final shelfHeightProvider = ShelfHeightFamily._();
-
-final class ShelfHeightProvider
-    extends $FunctionalProvider<double, double, double>
-    with $Provider<double> {
-  ShelfHeightProvider._({
-    required ShelfHeightFamily super.from,
-    required ShelfType super.argument,
-  }) : super(
-         retry: null,
-         name: r'shelfHeightProvider',
-         isAutoDispose: true,
-         dependencies: null,
-         $allTransitiveDependencies: null,
-       );
-
-  @override
-  String debugGetCreateSourceHash() => _$shelfHeightHash();
-
-  @override
-  String toString() {
-    return r'shelfHeightProvider'
-        ''
-        '($argument)';
-  }
-
-  @$internal
-  @override
-  $ProviderElement<double> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  double create(Ref ref) {
-    final argument = this.argument as ShelfType;
-    return shelfHeight(ref, argument);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(double value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<double>(value),
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is ShelfHeightProvider && other.argument == argument;
-  }
-
-  @override
-  int get hashCode {
-    return argument.hashCode;
-  }
-}
-
-String _$shelfHeightHash() => r'b1eb44465d8f5dee4b96171cb7d73ae75e179025';
-
-final class ShelfHeightFamily extends $Family
-    with $FunctionalFamilyOverride<double, ShelfType> {
-  ShelfHeightFamily._()
-    : super(
-        retry: null,
-        name: r'shelfHeightProvider',
-        dependencies: null,
-        $allTransitiveDependencies: null,
-        isAutoDispose: true,
-      );
-
-  ShelfHeightProvider call(ShelfType type) =>
-      ShelfHeightProvider._(argument: type, from: this);
-
-  @override
-  String toString() => r'shelfHeightProvider';
-}
+String _$seriesGridHeightHash() => r'a8d03ac7310ef06b2587c3f649895e02f8b07e38';

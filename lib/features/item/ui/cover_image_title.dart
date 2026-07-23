@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -28,7 +26,7 @@ class CoverImageTitle extends StatelessWidget {
           child: AspectRatio(
             aspectRatio: orientation == .landscape ? 3 : 1,
             child: ImageFiltered(
-              imageFilter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+              imageFilter: .blur(sigmaX: 30, sigmaY: 30),
               child: ImageWidget(
                 id: item.id,
                 type: .item,

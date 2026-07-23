@@ -2,6 +2,7 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
@@ -24,7 +25,7 @@ class AuthorCard extends ConsumerWidget {
               AspectRatio(
                 aspectRatio: 1,
                 child: ClipRRect(
-                  borderRadius: .circular(200),
+                  borderRadius: .circular(kRadius),
                   child: ImageWidget(
                     id: author.id,
                     type: .author,
@@ -34,12 +35,13 @@ class AuthorCard extends ConsumerWidget {
               ),
               if (author.numBooks != null)
                 Positioned(
-                  top: 4,
-                  right: 4,
+                  top: 6,
+                  right: 6,
                   child: StackBadge(author.numBooks!),
                 ),
             ],
           ),
+          const SizedBox(height: 8),
           Text(
             author.name,
             maxLines: 2,

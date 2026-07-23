@@ -114,6 +114,15 @@ _UserSettings _$UserSettingsFromJson(
   scrollThumbWidth:
       (json['scrollThumbWidth'] as num?)?.toDouble() ??
       DefaultUserSettings.scrollThumbWidth,
+  showMiniPlayerSeekButtons:
+      json['showMiniPlayerSeekButtons'] as bool? ??
+      DefaultUserSettings.showMiniPlayerSeekButtons,
+  playerBackgroundTheme:
+      $enumDecodeNullable(
+        _$PlayerBackgroundThemeEnumMap,
+        json['playerBackgroundTheme'],
+      ) ??
+      DefaultUserSettings.playerBackgroundTheme,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -159,6 +168,9 @@ Map<String, dynamic> _$UserSettingsToJson(
   'scrollThumbDuration': instance.scrollThumbDuration.inMicroseconds,
   'scrollThumbHeight': instance.scrollThumbHeight,
   'scrollThumbWidth': instance.scrollThumbWidth,
+  'showMiniPlayerSeekButtons': instance.showMiniPlayerSeekButtons,
+  'playerBackgroundTheme':
+      _$PlayerBackgroundThemeEnumMap[instance.playerBackgroundTheme]!,
 };
 
 const _$NavTargetEnumMap = {
@@ -237,4 +249,11 @@ const _$FullPlayerActionsEnumMap = {
   FullPlayerActions.speed: 'speed',
   FullPlayerActions.volume: 'volume',
   FullPlayerActions.bookmarks: 'bookmarks',
+};
+
+const _$PlayerBackgroundThemeEnumMap = {
+  PlayerBackgroundTheme.none: 'none',
+  PlayerBackgroundTheme.colored: 'colored',
+  PlayerBackgroundTheme.gradient: 'gradient',
+  PlayerBackgroundTheme.blur: 'blur',
 };

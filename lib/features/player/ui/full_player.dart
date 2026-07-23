@@ -40,6 +40,7 @@ class FullPlayer extends ConsumerWidget {
         ? session.displayTitle ?? l10n.noTitle
         : session.displayAuthor ?? l10n.noAuthor;
 
+    // TODO: multiple layouts support
     return LayoutBuilder(
       builder: (context, constraints) {
         return SingleChildScrollView(
@@ -91,7 +92,9 @@ class FullPlayer extends ConsumerWidget {
                     ),
                   ],
                 ),
+                const SizedBox(height: 12),
                 FullPlayerActionsWidget(session),
+                const SizedBox(height: 12),
                 Text(
                   session.playMethod.label,
                   textAlign: .center,

@@ -46,6 +46,8 @@ class DefaultUserSettings {
   static const scrollThumbDuration = Duration(seconds: 2);
   static const scrollThumbHeight = 48.0;
   static const scrollThumbWidth = 26.0;
+  static const showMiniPlayerSeekButtons = false;
+  static const PlayerBackgroundTheme playerBackgroundTheme = .none;
 }
 
 @freezed
@@ -137,6 +139,12 @@ sealed class UserSettings with _$UserSettings {
     @Default(DefaultUserSettings.scrollThumbHeight) double scrollThumbHeight,
 
     @Default(DefaultUserSettings.scrollThumbWidth) double scrollThumbWidth,
+
+    @Default(DefaultUserSettings.showMiniPlayerSeekButtons)
+    bool showMiniPlayerSeekButtons,
+
+    @Default(DefaultUserSettings.playerBackgroundTheme)
+    PlayerBackgroundTheme playerBackgroundTheme,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

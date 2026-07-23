@@ -26,7 +26,7 @@ final class BookmarksProvider
   }) : super(
          retry: null,
          name: r'bookmarksProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -64,7 +64,7 @@ final class BookmarksProvider
   }
 }
 
-String _$bookmarksHash() => r'71b8b5c9c3ee698c0b5ae046d3571b035b3a1577';
+String _$bookmarksHash() => r'db56fc310c6f94e3929694692936269f63ec917a';
 
 final class BookmarksFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<Bookmark>>, String> {
@@ -74,7 +74,7 @@ final class BookmarksFamily extends $Family
         name: r'bookmarksProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
   BookmarksProvider call(String itemId) =>
@@ -95,7 +95,7 @@ final class BookmarksControllerProvider
   }) : super(
          retry: null,
          name: r'bookmarksControllerProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -134,7 +134,7 @@ final class BookmarksControllerProvider
 }
 
 String _$bookmarksControllerHash() =>
-    r'a77a59ebbcda07e14bf6bf5b07d4c67c27eabc8c';
+    r'b4384744b5de11734d4ea7f2fc54d5b890e1738d';
 
 final class BookmarksControllerFamily extends $Family
     with $ClassFamilyOverride<BookmarksController, void, void, void, String> {
@@ -144,7 +144,7 @@ final class BookmarksControllerFamily extends $Family
         name: r'bookmarksControllerProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
   BookmarksControllerProvider call(String itemId) =>

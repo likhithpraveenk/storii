@@ -26,7 +26,7 @@ final class ShelvesProvider
         argument: null,
         retry: null,
         name: r'shelvesProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -46,7 +46,7 @@ final class ShelvesProvider
   }
 }
 
-String _$shelvesHash() => r'e27dd6a2d9ac11290594923f2d5386bcc0b922fb';
+String _$shelvesHash() => r'345fdd366f9cefc848d6b0ff19a4198de267b466';
 
 @ProviderFor(rawShelves)
 final rawShelvesProvider = RawShelvesProvider._();
@@ -65,7 +65,7 @@ final class RawShelvesProvider
         argument: null,
         retry: null,
         name: r'rawShelvesProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -85,4 +85,4 @@ final class RawShelvesProvider
   }
 }
 
-String _$rawShelvesHash() => r'170564ae4d4852fbb79965ff5a4ff410480e0c96';
+String _$rawShelvesHash() => r'1466cd44d457ff45f8dc84c511f50cd34765027a';

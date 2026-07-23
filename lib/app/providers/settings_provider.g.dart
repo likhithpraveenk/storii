@@ -336,6 +336,12 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setScrollThumbWidth(double value) =>
       _save(state?.copyWith(scrollThumbWidth: value));
+
+  Future<void> setShowMiniPlayerSeekButtons(bool value) =>
+      _save(state?.copyWith(showMiniPlayerSeekButtons: value));
+
+  Future<void> setPlayerBackgroundTheme(PlayerBackgroundTheme value) =>
+      _save(state?.copyWith(playerBackgroundTheme: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -665,4 +671,25 @@ final scrollThumbWidthProvider = Provider<double>(
     ),
   ),
   name: 'scrollThumbWidthProvider',
+);
+
+final showMiniPlayerSeekButtonsProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.showMiniPlayerSeekButtons ??
+          DefaultUserSettings.showMiniPlayerSeekButtons,
+    ),
+  ),
+  name: 'showMiniPlayerSeekButtonsProvider',
+);
+
+final playerBackgroundThemeProvider = Provider<PlayerBackgroundTheme>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.playerBackgroundTheme ?? DefaultUserSettings.playerBackgroundTheme,
+    ),
+  ),
+  name: 'playerBackgroundThemeProvider',
 );

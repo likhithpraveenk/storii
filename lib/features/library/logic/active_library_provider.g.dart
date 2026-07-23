@@ -26,7 +26,7 @@ final class ActiveLibraryDetailsProvider
         argument: null,
         retry: null,
         name: r'activeLibraryDetailsProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -47,7 +47,7 @@ final class ActiveLibraryDetailsProvider
 }
 
 String _$activeLibraryDetailsHash() =>
-    r'6f6dce72cc3ea415bb6f8bbcc6b3091669ed881c';
+    r'dffbbef1c21988b0205e0628c43c2a7860729ef1';
 
 @ProviderFor(librarySyncController)
 final librarySyncControllerProvider = LibrarySyncControllerProvider._();

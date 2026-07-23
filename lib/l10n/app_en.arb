@@ -370,8 +370,8 @@
   "booksFinished": "Books finished",
   "episodesFinished": "Episodes finished",
   "volume": "Volume",
-  "increaseVolume": "Increase Volume",
-  "decreaseVolume": "Decrease Volume",
+  "increase": "Increase",
+  "decrease": "Decrease",
   "showChapterPosition": "Show chapter position",
   "errorNetwork": "No internet connection",
   "errorTimeout": "Connection timed out",
@@ -465,5 +465,13 @@
   "bookmarks": "Bookmarks",
   "bookmarkFailed": "Failed to save bookmark",
   "addBookmark": "Add Bookmark",
-  "editBookmark": "Edit Bookmark"
+  "editBookmark": "Edit Bookmark",
+  "extraControls": "Extra Controls",
+  "extraControlsSubtitle": "Add skip forward and rewind buttons in miniplayer",
+  "customization": "Customization",
+  "none": "None",
+  "colored": "Colored",
+  "gradient": "Gradient",
+  "blurredImage": "Blurred Image",
+  "playerBackgroundTheme": "Player background theme"
 }
