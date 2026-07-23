@@ -65,7 +65,7 @@ jobs:
         with:
           body: ${{ steps.changelog.outputs.changes }}
           generate_release_notes: true
-          draft: true
+          draft: false
           prerelease: ${{ contains(github.ref_name, 'beta') }}
           files: |
             build/app/outputs/flutter-apk/*.apk
