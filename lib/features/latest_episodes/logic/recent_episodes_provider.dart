@@ -7,7 +7,7 @@ import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'recent_episodes_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<List<PodcastEpisode>> recentEpisodes(Ref ref) async {
   ref.watchConnection();
   final libraryId = (await ref.watch(

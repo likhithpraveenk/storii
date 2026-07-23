@@ -20,7 +20,7 @@ final class PlaybackHistoryNotifierProvider
   }) : super(
          retry: null,
          name: r'playbackHistoryProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -60,7 +60,7 @@ final class PlaybackHistoryNotifierProvider
 }
 
 String _$playbackHistoryNotifierHash() =>
-    r'208e86ac958d0f3db4f13a3b6391c624135b7197';
+    r'a935cbfc28d1753549733c624ebecb8ebc0da194';
 
 final class PlaybackHistoryNotifierFamily extends $Family
     with
@@ -77,7 +77,7 @@ final class PlaybackHistoryNotifierFamily extends $Family
         name: r'playbackHistoryProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
   PlaybackHistoryNotifierProvider call(String mediaItemId) =>

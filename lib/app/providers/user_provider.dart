@@ -7,7 +7,7 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 
 part 'user_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class ServerUser extends _$ServerUser {
   StreamSubscription? _userSub;
 
@@ -29,7 +29,7 @@ class ServerUser extends _$ServerUser {
   }
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<UserPermissions?> userPermissions(Ref ref) async {
   final user = await ref.watch(serverUserProvider.future);
   return user.permissions;

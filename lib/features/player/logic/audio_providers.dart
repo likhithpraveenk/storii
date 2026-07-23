@@ -209,7 +209,7 @@ void playerStateWatcher(Ref ref) {
 @riverpod
 Stream<double> volume(Ref ref) => audioHandler.volumeStream;
 
-@Riverpod(keepAlive: true)
+@riverpod
 class VolumeControl extends _$VolumeControl {
   @override
   double build() => audioHandler.volume;

@@ -533,7 +533,7 @@ final class VolumeControlProvider
         argument: null,
         retry: null,
         name: r'volumeControlProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -554,7 +554,7 @@ final class VolumeControlProvider
   }
 }
 
-String _$volumeControlHash() => r'bcc679bf1703ec184631f7c99860d35e04f33b74';
+String _$volumeControlHash() => r'015aa2fb329c196a1ab1f3e29d4396a87aab71e7';
 
 abstract class _$VolumeControl extends $Notifier<double> {
   double build();

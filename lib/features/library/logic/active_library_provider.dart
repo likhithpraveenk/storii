@@ -9,7 +9,7 @@ import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'active_library_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<LibraryResponse> activeLibraryDetails(Ref ref) async {
   final currentLibrary = ref.watch(currentLibraryProvider);
 

@@ -9,7 +9,7 @@ class SocketApi {
   bool _initialized = false;
   late final Stream<bool> isConnected;
 
-  SocketApi(String baseUrl, String token)
+  SocketApi(String baseUrl, String? token)
     : socket = io(
         baseUrl,
         OptionBuilder()
@@ -28,7 +28,7 @@ class SocketApi {
     _init(token);
   }
 
-  void _init(String token) {
+  void _init(String? token) {
     if (_initialized) return;
     socket.onConnect((_) => socket.emit('auth', token));
     socket.connect();

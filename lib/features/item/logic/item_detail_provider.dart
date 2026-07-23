@@ -12,7 +12,7 @@ import 'package:storii/storage/local/items_cache.dart';
 
 part 'item_detail_provider.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<LibraryItem> itemDetail(Ref ref, String id) async {
   final cache = ref.read(itemsCacheProvider.notifier);
 

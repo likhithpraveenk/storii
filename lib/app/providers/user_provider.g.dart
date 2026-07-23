@@ -20,7 +20,7 @@ final class ServerUserProvider
         argument: null,
         retry: null,
         name: r'serverUserProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -33,7 +33,7 @@ final class ServerUserProvider
   ServerUser create() => ServerUser();
 }
 
-String _$serverUserHash() => r'efc446571bfdce3ce11cae4d0a9c9587a23687be';
+String _$serverUserHash() => r'd0473f9bdaf0b4ea2696c912417a1fbe7bf052ba';
 
 abstract class _$ServerUser extends $AsyncNotifier<User> {
   FutureOr<User> build();
@@ -70,7 +70,7 @@ final class UserPermissionsProvider
         argument: null,
         retry: null,
         name: r'userPermissionsProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -90,4 +90,4 @@ final class UserPermissionsProvider
   }
 }
 
-String _$userPermissionsHash() => r'76096e2742fbe51c4ae9cffbe92e0c3f8f476440';
+String _$userPermissionsHash() => r'753fe88499d06fead54880b3b1504222ceaaa3de';

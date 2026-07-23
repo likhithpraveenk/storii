@@ -9,7 +9,7 @@ import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'progress_notifier.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 class MediaProgressNotifier extends _$MediaProgressNotifier {
   @override
   void build(String itemId, [String? episodeId]) {}

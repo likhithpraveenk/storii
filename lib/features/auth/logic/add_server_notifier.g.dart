@@ -80,7 +80,7 @@ final class ServerStatusProvider
   }) : super(
          retry: null,
          name: r'serverStatusProvider',
-         isAutoDispose: false,
+         isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -118,7 +118,7 @@ final class ServerStatusProvider
   }
 }
 
-String _$serverStatusHash() => r'd1bbe080423c276b23aa57b5a81dc075b2476818';
+String _$serverStatusHash() => r'367af476ed90486a5e49c2735a5b78ddae5ff1b5';
 
 final class ServerStatusFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ServerStatusResponse>, Uri> {
@@ -128,7 +128,7 @@ final class ServerStatusFamily extends $Family
         name: r'serverStatusProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: false,
+        isAutoDispose: true,
       );
 
   ServerStatusProvider call(Uri url) =>

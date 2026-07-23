@@ -129,16 +129,10 @@ SessionsApi sessionsApi(Ref ref, UserDomain user) {
   return SessionsApi(apiClient);
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
-  final tokenService = ref.watch(tokenProvider);
-  final token = await tokenService.getAccessToken(user.id);
-
-  if (token != null) {
-    final api = SocketApi(user.serverUrl.toString(), token);
-    ref.onDispose(api.dispose);
-    return api;
-  } else {
-    throw StateError('No access token for sockets');
-  }
+  final token = await ref.read(tokenProvider).getAccessToken(user.id);
+  final api = SocketApi(user.serverUrl.toString(), token);
+  ref.onDispose(api.dispose);
+  return api;
 }

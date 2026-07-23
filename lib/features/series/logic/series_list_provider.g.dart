@@ -26,7 +26,7 @@ final class SeriesListProvider
         argument: null,
         retry: null,
         name: r'seriesListProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -46,7 +46,7 @@ final class SeriesListProvider
   }
 }
 
-String _$seriesListHash() => r'49c8c3f0771cbb6cdb9c0b452584845e61dd0bff';
+String _$seriesListHash() => r'dea658dbeed9e36bb1de55f7ee067d46951c6f0a';
 
 @ProviderFor(rawSeriesList)
 final rawSeriesListProvider = RawSeriesListProvider._();
@@ -65,7 +65,7 @@ final class RawSeriesListProvider
         argument: null,
         retry: null,
         name: r'rawSeriesListProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -85,4 +85,4 @@ final class RawSeriesListProvider
   }
 }
 
-String _$rawSeriesListHash() => r'1bcd52930a7b8d7772323cc81591b6496eea15b1';
+String _$rawSeriesListHash() => r'591e5b0163868992abde38b8cb97a50a10c1aa36';

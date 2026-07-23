@@ -26,7 +26,7 @@ final class AuthorsListProvider
         argument: null,
         retry: null,
         name: r'authorsListProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -46,4 +46,4 @@ final class AuthorsListProvider
   }
 }
 
-String _$authorsListHash() => r'c1a9539a89b7b2387a04298830c10ef953d3289b';
+String _$authorsListHash() => r'bfb2cd6966ef9c47c1021b80d21db2476970e3d1';
