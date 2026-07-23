@@ -4,6 +4,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/account_section.dart';
 import 'package:storii/features/settings/ui/advanced/advanced_settings_screen.dart';
 import 'package:storii/features/settings/ui/appearance/appearance_screen.dart';
+import 'package:storii/features/settings/ui/customization/customization_settings_screen.dart';
 import 'package:storii/features/settings/ui/library/library_settings_screen.dart';
 import 'package:storii/features/settings/ui/player_settings/player_settings_screen.dart';
 import 'package:storii/features/settings/ui/reset_settings_action.dart';
@@ -30,6 +31,7 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         children: const [
           AppearanceTile(),
+          CustomizationSettingsTile(),
           PlayerSettingsTile(),
           LibrarySettingsTile(),
           // DownloadsSettingsTile(),

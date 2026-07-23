@@ -12,12 +12,8 @@ class ShowSeekButtonsTile extends ConsumerWidget {
 
     return SwitchListTile(
       value: showSeekButtons,
-      secondary: Icon(
-        showSeekButtons
-            ? Icons.visibility_outlined
-            : Icons.visibility_off_outlined,
-      ),
-      title: Text(l10n.showButtonsMiniplayer),
+      title: Text(l10n.extraControls),
+      subtitle: Text(l10n.extraControlsSubtitle),
       onChanged: (value) {
         ref
             .read(userSettingsProvider.notifier)

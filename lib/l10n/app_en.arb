@@ -466,5 +466,7 @@
   "bookmarkFailed": "Failed to save bookmark",
   "addBookmark": "Add Bookmark",
   "editBookmark": "Edit Bookmark",
-  "showButtonsMiniplayer": "Show seek buttons in miniplayer"
+  "extraControls": "Extra Controls",
+  "extraControlsSubtitle": "Add skip forward and rewind buttons in miniplayer",
+  "customization": "Customization"
 }
