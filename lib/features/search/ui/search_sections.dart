@@ -5,7 +5,6 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/author/ui/author_list_screen.dart';
-import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/features/series/ui/series_card.dart';
@@ -69,24 +68,25 @@ class ItemsSection extends ConsumerWidget {
     if (isSeparate) {
       return ItemsGridView(items);
     }
-    final height = ref.watch(shelfHeightProvider(.book));
 
     return _Section(
       title: title,
       onViewAll: onViewAll,
-      child: SizedBox(
-        height: height,
-        child: ListView.builder(
-          scrollDirection: .horizontal,
-          padding: const .symmetric(horizontal: 16),
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            return Container(
-              width: maxCardWidthInGrid,
-              margin: const .only(right: 12),
-              child: LibraryItemCard(items[index]),
-            );
-          },
+      child: SingleChildScrollView(
+        scrollDirection: .horizontal,
+        padding: const .symmetric(horizontal: 8),
+        child: Row(
+          children: [
+            ...items
+                .take(10)
+                .map(
+                  (book) => Container(
+                    width: maxCardWidthInGrid,
+                    margin: const .symmetric(horizontal: 8),
+                    child: LibraryItemCard(book),
+                  ),
+                ),
+          ],
         ),
       ),
     );
@@ -155,23 +155,24 @@ class AuthorsSection extends ConsumerWidget {
     if (isSeparate) {
       return AuthorsGridView(authors: authors);
     }
-    final height = ref.watch(shelfHeightProvider(.authors));
     return _Section(
       title: l10n.authors,
       onViewAll: onViewAll,
-      child: SizedBox(
-        height: height,
-        child: ListView.separated(
-          scrollDirection: .horizontal,
-          padding: const .symmetric(horizontal: 16),
-          itemCount: authors.length,
-          separatorBuilder: (_, _) => const SizedBox(width: 16),
-          itemBuilder: (_, i) {
-            return SizedBox(
-              width: maxCardWidthInGrid,
-              child: AuthorCard(authors[i]),
-            );
-          },
+      child: SingleChildScrollView(
+        scrollDirection: .horizontal,
+        padding: const .symmetric(horizontal: 8),
+        child: Row(
+          children: [
+            ...authors
+                .take(10)
+                .map(
+                  (author) => Container(
+                    width: maxCardWidthInGrid,
+                    margin: const .symmetric(horizontal: 8),
+                    child: AuthorCard(author),
+                  ),
+                ),
+          ],
         ),
       ),
     );
@@ -195,23 +196,27 @@ class SeriesSection extends ConsumerWidget {
     if (isSeparate) {
       return SeriesGridView(series: series);
     }
-    final height = ref.watch(shelfHeightProvider(.series));
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final cardWidth = maxSeriesCardWidthInGrid.clamp(0.0, screenWidth - 32.0);
+
     return _Section(
       title: l10n.series,
       onViewAll: onViewAll,
-      child: SizedBox(
-        height: height,
-        child: ListView.separated(
-          scrollDirection: .horizontal,
-          padding: const .symmetric(horizontal: 16),
-          itemCount: series.length,
-          separatorBuilder: (_, _) => const SizedBox(width: 16),
-          itemBuilder: (_, i) {
-            return SizedBox(
-              width: maxSeriesCardWidthInGrid,
-              child: SeriesCard(series[i]),
-            );
-          },
+      child: SingleChildScrollView(
+        scrollDirection: .horizontal,
+        padding: const .symmetric(horizontal: 8),
+        child: Row(
+          children: [
+            ...series
+                .take(10)
+                .map(
+                  (series) => Container(
+                    width: cardWidth,
+                    margin: const .symmetric(horizontal: 8),
+                    child: SeriesCard(series),
+                  ),
+                ),
+          ],
         ),
       ),
     );

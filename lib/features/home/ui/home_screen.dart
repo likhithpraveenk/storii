@@ -6,7 +6,6 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
-import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
@@ -56,17 +55,37 @@ class HomeScreen extends ConsumerWidget {
                       b.identity?.index ?? -1,
                     ),
                   );
+            final screenWidth = MediaQuery.sizeOf(context).width;
 
-            return ListView.builder(
+            return ListView.separated(
               padding: const .symmetric(vertical: 16),
               itemCount: displayList.length,
+              separatorBuilder: (_, _) => const SizedBox(height: 16),
               itemBuilder: (context, index) {
                 final shelf = displayList[index];
-                final height = ref.watch(shelfHeightProvider(shelf.type));
                 final showPlay =
                     shelf.identity == .continueListening ||
                     shelf.identity == .listenAgain ||
                     shelf.identity == .continueSeries;
+
+                final (
+                  double maxWidth,
+                  Widget Function(dynamic) buildCard,
+                ) = switch (shelf) {
+                  LibraryItemsShelf() => (
+                    maxCardWidthInGrid,
+                    (entity) => LibraryItemCard(entity, showPlay: showPlay),
+                  ),
+                  AuthorShelf() => (
+                    maxCardWidthInGrid,
+                    (entity) => AuthorCard(entity),
+                  ),
+                  SeriesShelf() => (
+                    maxSeriesCardWidthInGrid,
+                    (entity) => SeriesCard(entity),
+                  ),
+                };
+                final cardWidth = maxWidth.clamp(0.0, screenWidth - 32.0);
 
                 return Column(
                   mainAxisSize: .min,
@@ -82,39 +101,20 @@ class HomeScreen extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    SizedBox(
-                      height: height,
-                      child: ListView.builder(
-                        scrollDirection: .horizontal,
-                        padding: const .symmetric(horizontal: 16),
-                        itemCount: shelf.entities.length,
-                        itemBuilder: (context, i) {
-                          final (double width, Widget card) = switch (shelf) {
-                            LibraryItemsShelf() => (
-                              maxCardWidthInGrid,
-                              LibraryItemCard(
-                                shelf.entities[i],
-                                showPlay: showPlay,
-                              ),
+                    SingleChildScrollView(
+                      scrollDirection: .horizontal,
+                      padding: const .symmetric(horizontal: 8),
+                      child: Row(
+                        crossAxisAlignment: .start,
+                        children: [
+                          ...shelf.entities.map(
+                            (entity) => Container(
+                              width: cardWidth,
+                              margin: const .symmetric(horizontal: 8),
+                              child: buildCard(entity),
                             ),
-                            AuthorShelf() => (
-                              maxCardWidthInGrid,
-                              AuthorCard(shelf.entities[i]),
-                            ),
-                            SeriesShelf() => (
-                              maxSeriesCardWidthInGrid,
-                              SeriesCard(shelf.entities[i]),
-                            ),
-                          };
-
-                          return SizedBox(
-                            width: width,
-                            child: Padding(
-                              padding: const .only(right: 12),
-                              child: card,
-                            ),
-                          );
-                        },
+                          ),
+                        ],
                       ),
                     ),
                   ],

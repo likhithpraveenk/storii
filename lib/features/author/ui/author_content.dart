@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 
 class AuthorContent extends StatelessWidget {
@@ -144,21 +143,22 @@ class HorizontalBooksCarousel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final height = ref.watch(shelfHeightProvider(.book));
-
-    return SizedBox(
-      height: height,
-      child: ListView.builder(
-        scrollDirection: .horizontal,
-        padding: const .symmetric(horizontal: 16),
-        itemCount: books.length,
-        itemBuilder: (context, index) {
-          return Container(
-            width: maxCardWidthInGrid,
-            margin: const .only(right: 12),
-            child: LibraryItemCard(books[index]),
-          );
-        },
+    return SingleChildScrollView(
+      scrollDirection: .horizontal,
+      padding: const .symmetric(horizontal: 8),
+      child: Row(
+        crossAxisAlignment: .start,
+        children: [
+          ...books
+              .take(10)
+              .map(
+                (book) => Container(
+                  width: maxCardWidthInGrid,
+                  margin: const .symmetric(horizontal: 8),
+                  child: LibraryItemCard(book),
+                ),
+              ),
+        ],
       ),
     );
   }
