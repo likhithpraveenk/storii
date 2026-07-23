@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -28,6 +29,7 @@ class MiniPlayer extends ConsumerWidget {
         ref.watch(globalPositionProvider).value ?? Duration.zero;
     final remaining = totalDuration - globalPosition;
     final remainingStr = remaining.toReadableDuration(isLeft: true);
+    final showSeekButtons = ref.watch(showMiniPlayerSeekButtonsProvider);
 
     return Container(
       padding: const .all(8),
@@ -36,7 +38,7 @@ class MiniPlayer extends ConsumerWidget {
           topLeft: .circular(4),
           topRight: .circular(4),
         ),
-        color: colorScheme.surface,
+        color: colorScheme.surfaceContainerLowest,
       ),
       child: Row(
         children: [
@@ -61,21 +63,23 @@ class MiniPlayer extends ConsumerWidget {
               ],
             ),
           ),
+          if (showSeekButtons)
+            IconButton(
+              icon: const Icon(Icons.replay, size: 20),
+              onPressed: audioHandler.rewind,
+            ),
           IconButton(
-            icon: const Icon(Icons.replay, size: 24),
-            onPressed: audioHandler.rewind,
-          ),
-          IconButton(
-            icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow, size: 36),
+            icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow, size: 30),
             onPressed: isLoading ? null : audioHandler.togglePlay,
           ),
-          IconButton(
-            onPressed: audioHandler.fastForward,
-            icon: Transform.flip(
-              flipX: true,
-              child: const Icon(Icons.replay, size: 24),
+          if (showSeekButtons)
+            IconButton(
+              onPressed: audioHandler.fastForward,
+              icon: Transform.flip(
+                flipX: true,
+                child: const Icon(Icons.replay, size: 20),
+              ),
             ),
-          ),
         ],
       ),
     );

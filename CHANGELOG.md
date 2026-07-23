@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- setting to show/hide seek buttons in miniplayer
+
 ### Fixed
 
 - various minor ui changes

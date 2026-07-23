@@ -114,6 +114,9 @@ _UserSettings _$UserSettingsFromJson(
   scrollThumbWidth:
       (json['scrollThumbWidth'] as num?)?.toDouble() ??
       DefaultUserSettings.scrollThumbWidth,
+  showMiniPlayerSeekButtons:
+      json['showMiniPlayerSeekButtons'] as bool? ??
+      DefaultUserSettings.showMiniPlayerSeekButtons,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -159,6 +162,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'scrollThumbDuration': instance.scrollThumbDuration.inMicroseconds,
   'scrollThumbHeight': instance.scrollThumbHeight,
   'scrollThumbWidth': instance.scrollThumbWidth,
+  'showMiniPlayerSeekButtons': instance.showMiniPlayerSeekButtons,
 };
 
 const _$NavTargetEnumMap = {

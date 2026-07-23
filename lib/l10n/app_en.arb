@@ -465,5 +465,6 @@
   "bookmarks": "Bookmarks",
   "bookmarkFailed": "Failed to save bookmark",
   "addBookmark": "Add Bookmark",
-  "editBookmark": "Edit Bookmark"
+  "editBookmark": "Edit Bookmark",
+  "showButtonsMiniplayer": "Show seek buttons in miniplayer"
 }

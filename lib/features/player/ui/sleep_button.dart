@@ -145,35 +145,34 @@ class _ChapterOptionsState extends ConsumerState<_ChapterOptions> {
         ? l10n.endOfChapter
         : l10n.endOfNChapters(_selectedCount);
 
-    return Column(
+    return Row(
+      mainAxisAlignment: .center,
       children: [
-        Row(
-          mainAxisAlignment: .center,
-          children: [
-            IconButton(
-              onPressed: _selectedCount > 1
-                  ? () => setState(() => _selectedCount--)
-                  : null,
-              icon: const Icon(Icons.remove_circle_outline),
-            ),
-            SizedBox(
-              width: 240,
-              child: AppOutlinedButton(
-                text: label,
-                onPressed: () {
-                  ref
-                      .read(sleepTimerProvider.notifier)
-                      .setEndAtChapter(_selectedCount);
-                },
-              ),
-            ),
-            IconButton(
-              onPressed: _selectedCount < maxChapters
-                  ? () => setState(() => _selectedCount++)
-                  : null,
-              icon: const Icon(Icons.add_circle_outline),
-            ),
-          ],
+        IconButton(
+          onPressed: _selectedCount > 1
+              ? () => setState(() => _selectedCount--)
+              : null,
+          icon: const Icon(Icons.remove_circle_outline),
+          visualDensity: .compact,
+          tooltip: l10n.decrease,
+        ),
+        Expanded(
+          child: AppOutlinedButton(
+            text: label,
+            onPressed: () {
+              ref
+                  .read(sleepTimerProvider.notifier)
+                  .setEndAtChapter(_selectedCount);
+            },
+          ),
+        ),
+        IconButton(
+          onPressed: _selectedCount < maxChapters
+              ? () => setState(() => _selectedCount++)
+              : null,
+          icon: const Icon(Icons.add_circle_outline),
+          visualDensity: .compact,
+          tooltip: l10n.increase,
         ),
       ],
     );
