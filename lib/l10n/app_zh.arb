@@ -1,11 +1,477 @@
 {
-  "@@locale": "zh",
-  "login": "登录",
-  "logout": "登出",
-  "addServer": "添加服务器",
-  "serverUrl": "服务器URL",
-  "advanced": "高级选项",
-  "customHeaders": "自定义Headers",
-  "key": "键",
-  "value": "值"
+    "@@locale": "zh",
+    "login": "登录",
+    "logout": "退出登录",
+    "addServer": "添加服务器",
+    "serverUrl": "服务器地址",
+    "validateServer": "验证服务器",
+    "advanced": "高级",
+    "customHeaders": "自定义请求头",
+    "key": "键",
+    "value": "值",
+    "required": "必填",
+    "duplicateHeader": "重复的请求头",
+    "username": "用户名",
+    "password": "密码",
+    "delete": "删除",
+    "cancel": "取消",
+    "deleteServer": "删除服务器",
+    "deleteServerQ": "删除服务器？",
+    "deleteUserQ": "删除 {user}？",
+    "@deleteUserQ": {
+        "placeholders": {
+            "user": {
+                "type": "String"
+            }
+        }
+    },
+    "noUsersServer": "此服务器未关联任何用户。",
+    "followingUsers": "您即将删除以下用户",
+    "urlCopied": "链接已复制",
+    "addUser": "添加用户",
+    "edit": "编辑",
+    "editServer": "编辑服务器",
+    "errorLoadingUsers": "加载用户失败",
+    "switchingToUser": "正在切换至 {user}",
+    "@switchingToUser": {
+        "placeholders": {
+            "user": {
+                "type": "String"
+            }
+        }
+    },
+    "loading": "加载中",
+    "active": "活跃",
+    "noSession": "无会话",
+    "recentSessions": "最近会话",
+    "noAuthor": "无作者",
+    "noArtist": "无艺术家",
+    "noTitle": "无标题",
+    "noImage": "无图片",
+    "errorImage": "加载图片失败",
+    "downloads": "下载",
+    "settings": "设置",
+    "logs": "日志",
+    "about": "关于",
+    "switchAccount": "切换账号",
+    "switchAccountConfirm": "切换到其他账号？",
+    "logoutConfirm": "退出当前账号？",
+    "noLibrary": "无媒体库",
+    "libraries": "媒体库",
+    "empty": "空",
+    "collapse": "折叠",
+    "refresh": "刷新",
+    "retry": "重试",
+    "description": "简介",
+    "noDescription": "暂无简介",
+    "resume": "继续",
+    "play": "播放",
+    "pause": "暂停",
+    "replay": "重播",
+    "deleteLogsQ": "删除所有日志？",
+    "audiobooks": "有声书",
+    "podcasts": "播客",
+    "episodes": "剧集",
+    "playEpisodeConfirm": "播放此剧集？",
+    "search": "搜索",
+    "dateFormat": "日期格式",
+    "custom": "自定义",
+    "invalidFormat": "格式无效",
+    "customPattern": "自定义模式",
+    "save": "保存",
+    "fontFamily": "更换字体",
+    "system": "跟随系统",
+    "light": "浅色",
+    "dark": "深色",
+    "systemTheme": "跟随系统主题",
+    "systemThemeSubtitle": "与设备配色保持一致",
+    "pureBlack": "纯黑",
+    "pureBlackSubtitle": "高对比度主题",
+    "fontScale": "字体缩放",
+    "language": "语言",
+    "navBar": "导航栏",
+    "appearance": "外观",
+    "theme": "主题",
+    "reset": "重置",
+    "resetSettingsQ": "重置设置？",
+    "resetSettingsTxt": "这会将所有偏好恢复为默认值。",
+    "settingsReset": "设置已重置",
+    "home": "首页",
+    "library": "媒体库",
+    "librarySettings": "媒体库设置",
+    "collections": "收藏集",
+    "latest": "最新",
+    "latestEpisodes": "最新剧集",
+    "all": "全部",
+    "id": "ID",
+    "series": "系列",
+    "authors": "作者",
+    "more": "更多",
+    "books": "书籍",
+    "stats": "统计",
+    "viewAll": "查看全部",
+    "metadata": "元数据",
+    "title": "标题",
+    "author": "作者",
+    "authorLastFirst": "作者（姓，名）",
+    "dateAdded": "添加日期",
+    "publishedYear": "出版年份",
+    "publishedDate": "出版日期",
+    "releaseDate": "发行日期",
+    "size": "大小",
+    "duration": "时长",
+    "fileCreatedDate": "文件创建日期",
+    "fileModifiedDate": "文件修改日期",
+    "lastPlayed": "上次播放",
+    "dateStarted": "开始日期",
+    "dateFinished": "完成日期",
+    "random": "随机",
+    "numOfBooks": "书籍数量",
+    "name": "名称",
+    "lastBookAdded": "最后添加的书籍",
+    "lastBookUpdated": "最后更新的书籍",
+    "lastFirst": "姓，名",
+    "lastUpdated": "最后更新",
+    "numOfEpisodes": "剧集数量",
+    "hasEbook": "有电子书",
+    "hasNoEbook": "无电子书",
+    "hasSupplementary": "有补充电子书",
+    "hasNoSupplementary": "无补充电子书",
+    "itunesId": "iTunes ID",
+    "itunesArtistId": "iTunes 艺术家 ID",
+    "itunesPageUrl": "iTunes 页面链接",
+    "collapseSeries": "折叠系列",
+    "filter": "筛选",
+    "sort": "排序",
+    "display": "显示",
+    "genres": "类型",
+    "tags": "标签",
+    "publisher": "出版社",
+    "publishedDecade": "出版年代",
+    "progress": "进度",
+    "narrators": "朗读者",
+    "tracks": "音轨",
+    "missingMetadata": "缺失元数据",
+    "ebooks": "电子书",
+    "finished": "已完成",
+    "notStarted": "未开始",
+    "inComplete": "未完成",
+    "inProgress": "进行中",
+    "notFinished": "未听完",
+    "asin": "ASIN",
+    "isbn": "ISBN",
+    "subtitle": "副标题",
+    "singleTrack": "单音轨",
+    "multipleTracks": "多音轨",
+    "noTracks": "无音轨",
+    "itemsWithIssues": "存在问题的项目",
+    "rssFeedOpen": "已开启 RSS 订阅",
+    "moreInfo": "更多信息",
+    "explicit": "成人内容",
+    "abridged": "删节版",
+    "displayMode": "显示模式",
+    "comfortable": "宽松",
+    "compact": "紧凑",
+    "coverOnly": "仅封面",
+    "listView": "列表视图",
+    "licenses": "许可证",
+    "sourceCode": "源代码",
+    "couldNotUrl": "无法打开 {url}",
+    "@couldNotUrl": {
+        "placeholders": {
+            "url": {
+                "type": "String"
+            }
+        }
+    },
+    "licensedUnder": "基于 GNU 通用公共许可证 v3.0 授权",
+    "version": "版本",
+    "buildNumber": "构建号：{text}",
+    "@buildNumber": {
+        "placeholders": {
+            "text": {
+                "type": "String"
+            }
+        }
+    },
+    "networkLogs": "网络日志",
+    "networkLogsDescription": "记录 HTTP 请求与响应",
+    "trustAllCertificates": "信任所有证书",
+    "trustAllCertificatesDescription": "禁用证书验证",
+    "readableDuration": "{hours, plural, =0{} other{{hours}小时}}{minutes}分",
+    "@readableDuration": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "readableDurationFull": "{hours, plural, =0{} other{{hours}小时}}{minutes}分{seconds}秒",
+    "@readableDurationFull": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            },
+            "seconds": {
+                "type": "int"
+            }
+        }
+    },
+    "durationLeft": "还剩 {hours, plural, =0{} other{{hours}小时}}{minutes}分",
+    "@durationLeft": {
+        "placeholders": {
+            "hours": {
+                "type": "int"
+            },
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "chapters": "章节",
+    "removeProgressTitle": "移除进度？",
+    "removeProgressMessage": "这将重置您的收听进度，且无法撤销。",
+    "remove": "移除",
+    "markAsComplete": "标记为已完成？",
+    "confirm": "确认",
+    "progressMarkedComplete": "已标记为完成",
+    "progressMarkCompleteFailed": "标记为完成失败",
+    "progressRemoved": "进度已移除",
+    "progressRemoveFailed": "移除进度失败",
+    "playerSettings": "播放器设置",
+    "skipForward": "快进",
+    "skipBack": "后退",
+    "startPlayback": "开始播放",
+    "playbackSpeed": "播放速度",
+    "sleepTimer": "睡眠定时器",
+    "cancelTimer": "取消定时器",
+    "timeMinutes": "{time} 分钟",
+    "@timeMinutes": {
+        "placeholders": {
+            "time": {
+                "type": "int"
+            }
+        }
+    },
+    "endOfChapter": "播完本章",
+    "endOfNChapters": "播完 {count} 章",
+    "@endOfNChapters": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "settingsStartupRouteTitle": "启动时进入",
+    "settingsReorderNavTitle": "导航标签",
+    "settingsReorderNavSubtitle": "重新排序、启用或禁用标签",
+    "sampleText": "天地玄黄，宇宙洪荒 - 0123456789",
+    "addFonts": "添加字体",
+    "appCache": "应用缓存",
+    "settingsNavLabelBehavior": "导航标签文字",
+    "alwaysShow": "始终显示",
+    "onlyShowSelected": "仅选中时显示",
+    "alwaysHide": "始终隐藏",
+    "syncInterval": "同步间隔",
+    "syncIntervalSubtitle": "控制服务器同步频率，设置更高将覆盖移动网络下的 1 分钟限制",
+    "emptyMsg": "空空如也…",
+    "history": "历史",
+    "today": "今天",
+    "yesterday": "昨天",
+    "seek": "跳转",
+    "stop": "停止",
+    "complete": "完成",
+    "sync": "同步",
+    "playbackError": "播放错误",
+    "loginOidc": "使用 OpenID 登录",
+    "or": "或",
+    "oidcRedirectUriHintPrefix": "需将",
+    "oidcRedirectUriHintSuffix": "添加到 ABS → 设置 → 身份验证 → 允许的移动端重定向 URI",
+    "queued": "已加入队列",
+    "downloading": "下载中",
+    "paused": "已暂停",
+    "failed": "失败",
+    "download": "下载",
+    "completed": "已完成",
+    "cancelled": "已取消",
+    "resumeDownload": "恢复下载",
+    "removeDownloadQ": "移除下载？",
+    "willBeFreed": "将释放 {bytes}",
+    "@willBeFreed": {
+        "placeholders": {
+            "bytes": {
+                "type": "String"
+            }
+        }
+    },
+    "downloadFailed": "下载失败 - 点击重试",
+    "directPlay": "直接播放",
+    "directStream": "直接串流",
+    "transcode": "转码",
+    "local": "本地",
+    "downloaded": "已下载",
+    "connectionStatus": "连接状态",
+    "connectionChecking": "正在检查连接…",
+    "connectionPleaseWait": "请稍候",
+    "connectionServerConnected": "已连接到服务器",
+    "connectionServerDisconnected": "未连接到服务器",
+    "connectionTypeWifi": "Wi-Fi",
+    "connectionTypeMobile": "移动数据",
+    "connectionTypeEthernet": "以太网",
+    "connectionTypeNone": "无网络",
+    "connectionCantReachServer": "无法访问服务器（{networkType}）",
+    "@connectionCantReachServer": {
+        "placeholders": {
+            "networkType": {
+                "type": "String"
+            }
+        }
+    },
+    "connectionViaNetwork": "通过 {networkType} 已连接",
+    "@connectionViaNetwork": {
+        "placeholders": {
+            "networkType": {
+                "type": "String"
+            }
+        }
+    },
+    "foundBugQ": "发现问题？",
+    "foundBugQSubtitle": "为遇到的任何 Bug 在 GitHub 上提交 issue",
+    "audioBufferDuration": "音频缓冲时长",
+    "audioBufferDurationDescription": "播放时预加载的音频量，值越高在慢速网络下中断越少",
+    "fadeOnSleep": "音频淡出",
+    "fadeOnSleepSubtitle": "在睡眠定时器结束前逐步降低音量",
+    "fadeOnSleepDuration": "淡出窗口",
+    "fadeOnSleepDurationDescription": "设置定时器结束前淡出效果的时长",
+    "fadeOnSleepMinVolume": "最低音量",
+    "fadeOnSleepMinVolumeDescription": "定义淡出期间达到的最低音量",
+    "avoidMobileData": "避免使用移动数据",
+    "avoidMobileDataSubtitle": "在移动网络下暂停下载",
+    "totalListeningTime": "总收听时长",
+    "currentStreak": "当前连续",
+    "longestStreak": "最长连续",
+    "thisMonth": "本月",
+    "thisYear": "本年",
+    "days": "天",
+    "daysAgo": "{days} 天前",
+    "@daysAgo": {
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
+    "booksFinished": "已听完书籍",
+    "episodesFinished": "已听完剧集",
+    "volume": "音量",
+    "increase": "增加",
+    "decrease": "减少",
+    "showChapterPosition": "显示章节位置",
+    "errorNetwork": "无网络连接",
+    "errorTimeout": "连接超时",
+    "errorAuth": "未授权",
+    "errorForbidden": "拒绝访问",
+    "errorNotFound": "内容未找到",
+    "errorServer": "服务器错误，请重试",
+    "errorUnknown": "出了点问题",
+    "errorType": "类型错误",
+    "changeRestartRequired": "更改将在重启后生效",
+    "playbackErrorNetwork": "连接问题，音频可能中断",
+    "playbackErrorSource": "音频文件无法加载",
+    "playbackErrorDecoder": "文件格式不支持",
+    "playbackErrorUnknown": "播放出现问题",
+    "codec": "编码",
+    "bitrate": "比特率",
+    "channels": "声道",
+    "format": "格式",
+    "path": "路径",
+    "scrollThumbVisibility": "显示滚动条滑块",
+    "scrollThumbVisibilitySubtitle": "在长列表中显示可拖动滑块",
+    "scrollThumbSettings": "滚动滑块",
+    "scrollThumbDuration": "隐藏延迟",
+    "scrollThumbDurationDescription": "停止滚动后滑块保持可见的时长",
+    "scrollThumbHeight": "高度",
+    "scrollThumbHeightDescription": "滑块高度（像素）",
+    "scrollThumbWidth": "宽度",
+    "scrollThumbWidthDescription": "滑块宽度（像素）",
+    "off": "关闭",
+    "binaryUnits": "二进制单位",
+    "binaryUnitsSubtitle": "1 KB = 1024 B",
+    "decimalUnits": "十进制单位",
+    "decimalUnitsSubtitle": "1 KB = 1000 B",
+    "backup": "备份与恢复",
+    "createBackup": "创建备份",
+    "restoreBackup": "恢复备份",
+    "backupDescription": "导出或导入账号、设置和历史",
+    "backupCreated": "备份已保存",
+    "backupFailed": "无法创建备份",
+    "restoreSuccess": "备份已恢复",
+    "restoreRestart": "备份已恢复，重启应用以应用更改",
+    "restoreFailed": "无法恢复备份",
+    "marqueeSpeed": "文字滚动速度",
+    "schemeVariant": "主题风格",
+    "schemeVariantSubtitle": "选择主题色彩的生成方式",
+    "tonalSpot": "均衡",
+    "tonalSpotSubtitle": "柔和、自然、护眼",
+    "fidelity": "精准",
+    "fidelitySubtitle": "紧贴您选择的颜色",
+    "vibrant": "鲜艳",
+    "vibrantSubtitle": "高对比度的明亮色彩",
+    "expressive": "大胆",
+    "expressiveSubtitle": "充满趣味的独特色彩",
+    "monochrome": "单色",
+    "monochromeSubtitle": "纯黑白灰",
+    "neutral": "柔和",
+    "neutralSubtitle": "低调色调，略带色彩",
+    "appColor": "应用颜色",
+    "hexColor": "十六进制颜色",
+    "invalidHex": "无效十六进制",
+    "hexFormatHint": "使用 RGB、RRGGBB 或 AARRGGBB",
+    "primary": "主色",
+    "secondary": "次色",
+    "tertiary": "第三色",
+    "error": "错误色",
+    "rememberSort": "记住排序",
+    "rememberSortSubtitle": "应用重启后保留排序顺序",
+    "type": "类型",
+    "pubDate": "发布日期",
+    "added": "添加日期",
+    "mimeType": "MIME 类型",
+    "season": "季",
+    "episode": "集",
+    "libraryIsEmpty": "{library} 媒体库为空！",
+    "@libraryIsEmpty": {
+        "placeholders": {
+            "library": {
+                "type": "String"
+            }
+        }
+    },
+    "storage": "存储",
+    "internalStorage": "内部存储",
+    "changeLocation": "更改位置",
+    "resetToInternal": "重置为内部",
+    "downloadLocation": "下载位置",
+    "storageSubDirsNote": "有声书与播客将分别存储在独立子目录中：\n- audiobooks/<itemId>/\n- podcasts/<podcastId>/\n即使服务器元数据变更也能保持路径稳定",
+    "localSession": "本地会话",
+    "currentPosition": "当前位置",
+    "localSessionSheetBody": "进度已本地保存，等待同步。",
+    "bookmarks": "书签",
+    "bookmarkFailed": "保存书签失败",
+    "addBookmark": "添加书签",
+    "editBookmark": "编辑书签",
+    "extraControls": "额外控制",
+    "extraControlsSubtitle": "在迷你播放器中添加快进和快退按钮",
+    "customization": "个性化",
+    "none": "无",
+    "colored": "纯色",
+    "gradient": "渐变",
+    "blurredImage": "模糊封面",
+    "playerBackgroundTheme": "播放器背景主题"
 }
