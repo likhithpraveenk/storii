@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.5.12] - 2026-07-25
+
 ### Added
 
 - show minutes synced in playback history
@@ -497,7 +499,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.5.11...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.5.12...HEAD
+[v0.5.12]: https://github.com/likhithpraveenk/storii/compare/v0.5.11...v0.5.12
 [v0.5.11]: https://github.com/likhithpraveenk/storii/compare/v0.5.10...v0.5.11
 [v0.5.10]: https://github.com/likhithpraveenk/storii/compare/v0.5.9...v0.5.10
 [v0.5.9]: https://github.com/likhithpraveenk/storii/compare/v0.5.8...v0.5.9
