@@ -11,6 +11,9 @@ _PlaybackEvent _$PlaybackEventFromJson(Map<String, dynamic> json) =>
       timestamp: DateTime.parse(json['timestamp'] as String),
       position: Duration(microseconds: (json['position'] as num).toInt()),
       kind: $enumDecode(_$PlaybackEventKindEnumMap, json['kind']),
+      listened: json['listened'] == null
+          ? Duration.zero
+          : Duration(microseconds: (json['listened'] as num).toInt()),
       syncAttempt: json['syncAttempt'] as bool? ?? false,
       syncSuccess: json['syncSuccess'] as bool? ?? false,
       playbackError: json['playbackError'] as bool? ?? false,
@@ -21,6 +24,7 @@ Map<String, dynamic> _$PlaybackEventToJson(_PlaybackEvent instance) =>
       'timestamp': instance.timestamp.toIso8601String(),
       'position': instance.position.inMicroseconds,
       'kind': _$PlaybackEventKindEnumMap[instance.kind]!,
+      'listened': instance.listened.inMicroseconds,
       'syncAttempt': instance.syncAttempt,
       'syncSuccess': instance.syncSuccess,
       'playbackError': instance.playbackError,

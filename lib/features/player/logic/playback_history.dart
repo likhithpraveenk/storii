@@ -17,34 +17,16 @@ class PlaybackHistoryNotifier extends _$PlaybackHistoryNotifier {
     return _store.get(user.id, mediaItemId) ?? [];
   }
 
-  Future<void> addEvent(
-    String sessionId,
-    PlaybackEvent event, {
-    required Duration position,
-  }) async {
+  Future<void> addEvent(PlaybackEvent event) async {
     final user = ref.read(currentUserProvider);
     if (user == null) return;
 
-    final current = [...state];
-    final last = current.lastOrNull;
-
-    final isConsecutiveSync =
-        last?.kind == .sync &&
-        event.kind == .sync &&
-        last?.syncSuccess == event.syncSuccess;
-
-    if (isConsecutiveSync) {
-      current[current.length - 1] = event;
-    } else {
-      current.add(event);
-    }
+    final current = [...state, event];
 
     final historyLimit = ref.read(historyLimitProvider);
-    if (current.length > historyLimit) {
-      state = current.sublist(1);
-    } else {
-      state = current;
-    }
+    state = current.length > historyLimit
+        ? current.sublist(current.length - historyLimit)
+        : current;
 
     await _store.put(user.id, mediaItemId, state);
   }
@@ -58,8 +40,34 @@ class PlaybackHistoryNotifier extends _$PlaybackHistoryNotifier {
     if (index == -1) return;
 
     current[index] = event;
-    state = current;
+    state = _collapseLikeEvents(current);
     await _store.put(user.id, mediaItemId, state);
+  }
+
+  List<PlaybackEvent> _collapseLikeEvents(List<PlaybackEvent> events) {
+    if (events.isEmpty) return events;
+
+    final collapsed = <PlaybackEvent>[events.first];
+    for (final event in events.skip(1)) {
+      final last = collapsed.last;
+      if (_isLikeEvent(last, event)) {
+        collapsed[collapsed.length - 1] = event.copyWith(
+          listened: last.listened + event.listened,
+        );
+      } else {
+        collapsed.add(event);
+      }
+    }
+    return collapsed;
+  }
+
+  bool _isLikeEvent(PlaybackEvent a, PlaybackEvent b) {
+    if (a.kind != b.kind) return false;
+
+    return switch (a.kind) {
+      .sync => a.syncSuccess == b.syncSuccess,
+      _ => false,
+    };
   }
 
   Future<void> clearHistory() async {

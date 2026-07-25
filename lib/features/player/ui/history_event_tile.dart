@@ -50,6 +50,9 @@ class HistoryEventTile extends ConsumerWidget {
         ? false
         : ref.watch(showChapterPositionInHistoryProvider);
 
+    final listenedMinutes = event.listened.inMinutes;
+    final listened = event.listened.toReadableDuration();
+
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -78,6 +81,16 @@ class HistoryEventTile extends ConsumerWidget {
                   color: theme.colorScheme.error,
                   fontStyle: .italic,
                   overflow: .ellipsis,
+                ),
+              ),
+              const SizedBox(width: 6),
+            ],
+            if (listenedMinutes > 0) ...[
+              Text(
+                '+$listened',
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  fontStyle: .italic,
                 ),
               ),
               const SizedBox(width: 6),

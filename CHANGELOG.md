@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- show minutes synced in playback history
+
 ### Fixed
 
 - miniplayer blur theme bleed

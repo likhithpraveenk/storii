@@ -11,6 +11,7 @@ sealed class PlaybackEvent with _$PlaybackEvent {
     required DateTime timestamp,
     required Duration position,
     required PlaybackEventKind kind,
+    @Default(Duration.zero) Duration listened,
     @Default(false) bool syncAttempt,
     @Default(false) bool syncSuccess,
     @Default(false) bool playbackError,

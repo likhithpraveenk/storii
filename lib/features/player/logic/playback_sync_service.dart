@@ -98,8 +98,9 @@ class PlaybackSyncService {
       position: position,
       kind: kind,
       playbackError: playbackError,
+      listened: listened,
     );
-    await history.addEvent(session.id, event, position: position);
+    await history.addEvent(event);
 
     try {
       await onSync(listened, position);
