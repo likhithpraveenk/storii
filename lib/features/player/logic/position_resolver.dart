@@ -116,21 +116,23 @@ class PositionResolver {
     );
   }
 
+  Duration get totalDuration =>
+      (_chapters.lastOrNull?.start ?? Duration.zero) +
+      (_chapters.lastOrNull?.duration ?? Duration.zero);
+
   ({int trackIndex, Duration trackPosition})? resolveSeek(
     int chapterIndex,
     Duration chapterPosition,
   ) {
     if (chapterIndex < 0 || chapterIndex >= _chapters.length) return null;
 
-    if (chapterPosition < Duration.zero) return null;
-
     final global = _chapters[chapterIndex].start + chapterPosition;
-    final trackIndex = _trackIndexFor(global);
+    if (global < Duration.zero || global > totalDuration) return null;
 
-    return (
-      trackIndex: trackIndex,
-      trackPosition: global - _trackOffsets[trackIndex],
-    );
+    final trackIndex = _trackIndexFor(global);
+    final trackPosition = global - _trackOffsets[trackIndex];
+
+    return (trackIndex: trackIndex, trackPosition: trackPosition);
   }
 }
 

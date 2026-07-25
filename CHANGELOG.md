@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - miniplayer blur theme bleed
+- rewinding to previous chapter
 
 ## [v0.5.11] - 2026-07-23
 
