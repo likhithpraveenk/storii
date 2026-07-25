@@ -5,6 +5,7 @@ import 'package:audio_session/audio_session.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/chapter.dart';
+import 'package:storii/features/player/logic/custom_media_icons.dart';
 import 'package:storii/features/player/logic/position_resolver.dart';
 import 'package:storii/features/player/models/app_audio_player.dart';
 import 'package:storii/features/player/models/app_audio_source.dart';
@@ -44,12 +45,12 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     playbackState.add(
       PlaybackState(
         controls: [
-          .rewind,
+          rewindMediaControl,
           .pause,
           .play,
-          .fastForward,
-          .skipToNext,
-          .skipToPrevious,
+          fastForwardMediaControl,
+          skipToNextMediaControl,
+          skipToPreviousMediaControl,
         ],
         systemActions: const {
           .seek,
