@@ -5,12 +5,12 @@ import 'package:audio_session/audio_session.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/chapter.dart';
+import 'package:storii/features/player/logic/custom_media_icons.dart';
 import 'package:storii/features/player/logic/position_resolver.dart';
 import 'package:storii/features/player/models/app_audio_player.dart';
 import 'package:storii/features/player/models/app_audio_source.dart';
 import 'package:storii/features/player/models/app_playback_error.dart';
 import 'package:storii/features/player/models/app_playback_state.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 
 enum AudioHandlerEvent {
   play,
@@ -45,12 +45,12 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     playbackState.add(
       PlaybackState(
         controls: [
-          .rewind,
+          rewindMediaControl,
           .pause,
           .play,
-          .fastForward,
-          .skipToNext,
-          .skipToPrevious,
+          fastForwardMediaControl,
+          skipToNextMediaControl,
+          skipToPreviousMediaControl,
         ],
         systemActions: const {
           .seek,
@@ -265,13 +265,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     if (queue.value.isEmpty) return;
 
     final chapterIndex = playbackState.value.queueIndex ?? 0;
-    final chapter = resolver.chapterAt(chapterIndex);
-
-    final clampedPosition = chapter != null
-        ? position.clamp(Duration.zero, chapter.duration)
-        : position;
-
-    final target = resolver.resolveSeek(chapterIndex, clampedPosition);
+    final target = resolver.resolveSeek(chapterIndex, position);
 
     if (target != null) {
       await _player.seek(target.trackPosition, index: target.trackIndex);

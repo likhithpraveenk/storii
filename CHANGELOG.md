@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- show minutes synced in playback history
+
+### Fixed
+
+- miniplayer blur theme bleed
+- rewinding to previous chapter
+- os notification icons for player are now the same as in-app icons
+
 ## [v0.5.11] - 2026-07-23
 
 ### Added

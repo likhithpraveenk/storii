@@ -85,6 +85,8 @@ class HistorySheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final key = mediaItemIdKey(itemId, episodeId);
     final history = ref.watch(playbackHistoryProvider(key));
+    final historyNotifier = ref.read(playbackHistoryProvider(key).notifier);
+    final theme = Theme.of(context);
 
     final session = ref.watch(sessionProvider);
     final isCurrentItem =
@@ -106,18 +108,18 @@ class HistorySheet extends ConsumerWidget {
                   style: bottomSheetTitleTextStyle(context),
                 ),
               ),
-              // if (history.isNotEmpty)
-              //   Align(
-              //     alignment: .centerRight,
-              //     child: IconButton(
-              //       visualDensity: .compact,
-              //       padding: .zero,
-              //       onPressed: () async {
-              //         await historyNotifier.clearHistory();
-              //       },
-              //       icon: Icon(Icons.delete, color: theme.colorScheme.error),
-              //     ),
-              //   ),
+              if (history.isNotEmpty)
+                Align(
+                  alignment: .centerRight,
+                  child: IconButton(
+                    visualDensity: .compact,
+                    padding: .zero,
+                    onPressed: () async {
+                      await historyNotifier.clearHistory();
+                    },
+                    icon: Icon(Icons.delete, color: theme.colorScheme.error),
+                  ),
+                ),
             ],
           ),
         ),

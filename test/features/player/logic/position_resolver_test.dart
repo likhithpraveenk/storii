@@ -216,5 +216,42 @@ void main() {
       expect(resolver.resolveChapterFromTrack(99, Duration.zero), isNull);
       expect(resolver.resolveChapterFromTrack(null, Duration.zero), isNull);
     });
+
+    test(
+      'resolveSeek with negative chapter position rolls into previous track',
+      () {
+        final result = resolver.resolveSeek(1, const Duration(seconds: -5));
+        expect(result?.trackIndex, 0);
+        expect(result?.trackPosition, const Duration(seconds: 40));
+      },
+    );
+
+    test(
+      'resolveSeek at exact track/chapter boundary resolves to next track',
+      () {
+        final result = resolver.resolveSeek(1, Duration.zero);
+        expect(result?.trackIndex, 1);
+        expect(result?.trackPosition, Duration.zero);
+      },
+    );
+
+    test(
+      'resolveSeek overshooting chapter 0 into the boundary resolves to next track',
+      () {
+        final result = resolver.resolveSeek(0, const Duration(seconds: 45));
+        expect(result?.trackIndex, 1);
+        expect(result?.trackPosition, Duration.zero);
+      },
+    );
+
+    test('resolveSeek past total duration returns null', () {
+      final result = resolver.resolveSeek(1, const Duration(seconds: 50));
+      expect(result, isNull);
+    });
+
+    test('resolveSeek before the start of the first chapter returns null', () {
+      final result = resolver.resolveSeek(0, const Duration(seconds: -100));
+      expect(result, isNull);
+    });
   });
 }

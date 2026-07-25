@@ -5,11 +5,7 @@ class FakePlaybackHistoryNotifier extends PlaybackHistoryNotifier {
   final List<PlaybackEvent> events = [];
 
   @override
-  Future<void> addEvent(
-    String sessionId,
-    PlaybackEvent event, {
-    required Duration position,
-  }) async {
+  Future<void> addEvent(PlaybackEvent event) async {
     events.add(event);
   }
 
