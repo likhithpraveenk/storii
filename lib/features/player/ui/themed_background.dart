@@ -82,7 +82,7 @@ class ThemedBackground extends ConsumerWidget {
 
     if (backgroundTheme == .blur && coverUrl != null) {
       background = Stack(
-        fit: StackFit.expand,
+        fit: .expand,
         children: [
           ImageFiltered(
             imageFilter: .blur(sigmaX: 40, sigmaY: 40),
@@ -104,12 +104,14 @@ class ThemedBackground extends ConsumerWidget {
       );
     }
 
-    return Stack(
-      fit: .passthrough,
-      children: [
-        Positioned.fill(child: background),
-        ?child,
-      ],
+    return ClipRRect(
+      child: Stack(
+        fit: .passthrough,
+        children: [
+          Positioned.fill(child: background),
+          ?child,
+        ],
+      ),
     );
   }
 }
