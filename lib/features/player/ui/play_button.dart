@@ -74,14 +74,14 @@ class PlayButton extends ConsumerWidget {
 }
 
 class PlayButtonBig extends ConsumerWidget {
-  const PlayButtonBig({super.key, required this.scheme});
-  final ColorScheme scheme;
+  const PlayButtonBig({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isPlaying = ref.watch(isPlayingProvider);
     final playbackStatus = ref.watch(playbackStatusProvider).value;
     final isNone = ref.watch(playerBackgroundThemeProvider) == .none;
+    final scheme = Theme.of(context).colorScheme;
     final iconColor = isNone
         ? scheme.onInverseSurface
         : scheme.primaryContainer;

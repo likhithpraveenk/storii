@@ -63,13 +63,7 @@ String _getDurationLabel(Duration duration) {
 class AppSeekButtonBig extends ConsumerWidget {
   final bool isForward;
 
-  final ColorScheme scheme;
-
-  const AppSeekButtonBig({
-    super.key,
-    required this.isForward,
-    required this.scheme,
-  });
+  const AppSeekButtonBig({super.key, required this.isForward});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -77,6 +71,7 @@ class AppSeekButtonBig extends ConsumerWidget {
     final skipBackward = ref.watch(skipBackwardProvider);
     final skipDuration = isForward ? skipForward : skipBackward;
     final isNone = ref.watch(playerBackgroundThemeProvider) == .none;
+    final scheme = Theme.of(context).colorScheme;
 
     return Material(
       color: scheme.surfaceContainerHighest.withValues(alpha: 0.4),

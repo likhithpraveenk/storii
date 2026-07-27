@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
-import 'package:storii/features/player/logic/player_theme.dart';
 import 'package:storii/features/player/ui/full_player_actions.dart';
 import 'package:storii/features/player/ui/play_button.dart';
 import 'package:storii/features/player/ui/seek_button.dart';
@@ -13,11 +12,6 @@ class ButtonLayoutBig extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final defaultTheme = Theme.of(context);
-    final scheme =
-        ref.watch(playerThemeProvider(defaultTheme.brightness))?.colorScheme ??
-        defaultTheme.colorScheme;
-
     return Padding(
       padding: const .symmetric(horizontal: 12),
       child: Column(
@@ -38,17 +32,17 @@ class ButtonLayoutBig extends ConsumerWidget {
                   SizedBox(
                     width: seekSize,
                     height: seekSize,
-                    child: AppSeekButtonBig(isForward: false, scheme: scheme),
+                    child: const AppSeekButtonBig(isForward: false),
                   ),
                   SizedBox(
                     width: playWidth,
                     height: seekSize,
-                    child: PlayButtonBig(scheme: scheme),
+                    child: const PlayButtonBig(),
                   ),
                   SizedBox(
                     width: seekSize,
                     height: seekSize,
-                    child: AppSeekButtonBig(isForward: true, scheme: scheme),
+                    child: const AppSeekButtonBig(isForward: true),
                   ),
                 ],
               );
@@ -70,17 +64,17 @@ class ButtonLayoutBig extends ConsumerWidget {
                   SizedBox(
                     width: skipWidth,
                     height: height,
-                    child: _SkipButtonBig(isForward: false, scheme: scheme),
+                    child: const _SkipButtonBig(isForward: false),
                   ),
                   SizedBox(
                     width: playWidth,
                     height: height,
-                    child: FullPlayerActionsBig(scheme: scheme),
+                    child: const FullPlayerActionsBig(),
                   ),
                   SizedBox(
                     width: skipWidth,
                     height: height,
-                    child: _SkipButtonBig(isForward: true, scheme: scheme),
+                    child: const _SkipButtonBig(isForward: true),
                   ),
                 ],
               );
@@ -95,13 +89,13 @@ class ButtonLayoutBig extends ConsumerWidget {
 class _SkipButtonBig extends ConsumerWidget {
   final bool isForward;
 
-  final ColorScheme scheme;
-
-  const _SkipButtonBig({required this.isForward, required this.scheme});
+  const _SkipButtonBig({required this.isForward});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isNone = ref.watch(playerBackgroundThemeProvider) == .none;
+    final scheme = Theme.of(context).colorScheme;
+
     return Material(
       color: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: .circular(kRadius)),

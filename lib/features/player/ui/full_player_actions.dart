@@ -77,12 +77,11 @@ class FullPlayerActionsWidget extends ConsumerWidget {
 }
 
 class FullPlayerActionsBig extends ConsumerWidget {
-  const FullPlayerActionsBig({required this.scheme, super.key});
-
-  final ColorScheme scheme;
+  const FullPlayerActionsBig({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final scheme = Theme.of(context).colorScheme;
     final session = ref.watch(sessionProvider);
     if (session == null) return const SizedBox.shrink();
 

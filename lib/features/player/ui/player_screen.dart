@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/player_theme.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/features/player/ui/full_player.dart';
 import 'package:storii/features/player/ui/hero_cover.dart';
@@ -18,7 +19,10 @@ class PlayerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scheme = Theme.of(context).colorScheme;
+    final defaultTheme = Theme.of(context);
+    final scheme = defaultTheme.colorScheme;
+    final themeData =
+        ref.watch(playerThemeProvider(defaultTheme.brightness)) ?? defaultTheme;
     ref.listen(playbackErrorsProvider, (_, next) {
       next.whenData((type) {
         final messenger = ScaffoldMessenger.of(context);
@@ -71,55 +75,58 @@ class PlayerScreen extends ConsumerWidget {
         final imgLeft = imgLeftPaddingInMiniPlayer + (imgLeftDelta * f);
         final imgTop = imgLeftPaddingInMiniPlayer + (imgTopDelta * f);
 
-        return Stack(
-          children: [
-            const Positioned.fill(child: ThemedBackground()),
-            if (f > 0.5)
-              Positioned(
-                top: isLandscape ? 48 : targetImgTop + maxImgSize + 16,
-                left: isLandscape ? screenWidth * 0.5 : 0,
-                bottom: 0,
-                right: 0,
-                child: Opacity(
-                  opacity: fullOpacity,
-                  child: IgnorePointer(
-                    ignoring: f < 0.9,
-                    child: const FullPlayer(),
+        return Theme(
+          data: themeData,
+          child: Stack(
+            children: [
+              const Positioned.fill(child: ThemedBackground()),
+              if (f > 0.5)
+                Positioned(
+                  top: isLandscape ? 48 : targetImgTop + maxImgSize + 16,
+                  left: isLandscape ? screenWidth * 0.5 : 0,
+                  bottom: 0,
+                  right: 0,
+                  child: Opacity(
+                    opacity: fullOpacity,
+                    child: IgnorePointer(
+                      ignoring: f < 0.9,
+                      child: const FullPlayer(),
+                    ),
                   ),
                 ),
-              ),
-            if (f < 0.3)
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                height: 80,
-                child: Opacity(
-                  opacity: miniOpacity,
-                  child: IgnorePointer(
-                    ignoring: f > 0.05,
-                    child: const MiniPlayer(),
+              if (f < 0.3)
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: 80,
+                  child: Opacity(
+                    opacity: miniOpacity,
+                    child: IgnorePointer(
+                      ignoring: f > 0.05,
+                      child: const MiniPlayer(),
+                    ),
                   ),
                 ),
-              ),
-            Positioned(
-              top: imgTop,
-              left: imgLeft,
-              width: imgSize,
-              height: imgSize,
-              child: HeroCover(expandFactor: f),
-            ),
-            if (f < 0.2)
               Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Opacity(
-                  opacity: miniOpacity,
-                  child: const MiniProgressIndicator(),
-                ),
+                top: imgTop,
+                left: imgLeft,
+                width: imgSize,
+                height: imgSize,
+                child: HeroCover(expandFactor: f),
               ),
-          ],
+              if (f < 0.2)
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Opacity(
+                    opacity: miniOpacity,
+                    child: const MiniProgressIndicator(),
+                  ),
+                ),
+            ],
+          ),
         );
       },
     );

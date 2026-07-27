@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/cover_url_provider.dart';
-import 'package:storii/features/player/logic/dominant_color.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/settings/logic/app_cache.dart';
-import 'package:storii/shared/helpers/color_shading.dart';
 
 class ThemedBackground extends ConsumerWidget {
   const ThemedBackground({super.key, this.miniplayer = false, this.child});
@@ -17,51 +15,32 @@ class ThemedBackground extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final backgroundTheme = ref.watch(playerBackgroundThemeProvider);
+    final scheme = Theme.of(context).colorScheme;
+
     final itemId = ref.watch(sessionProvider.select((s) => s?.libraryItemId));
-
-    final surface = Theme.of(context).colorScheme.surface;
-    final brightness = Theme.of(context).brightness;
-
     String? coverUrl;
     if (itemId != null && backgroundTheme != .none) {
       coverUrl = ref.watch(coverUrlProvider(itemId, type: .item, width: 600));
     }
 
-    final dominant = coverUrl != null
-        ? ref.watch(dominantColorProvider(coverUrl)).value
-        : null;
-
     final decoration = switch (backgroundTheme) {
-      .none => BoxDecoration(color: surface),
-      .colored => BoxDecoration(
-        color: dominant != null
-            ? shadeForBrightness(dominant, brightness)
-            : surface,
-      ),
+      .none => BoxDecoration(color: scheme.surface),
+      .colored => BoxDecoration(color: scheme.surface),
       .gradient => BoxDecoration(
         gradient: miniplayer
             ? LinearGradient(
                 begin: .centerLeft,
                 end: .centerRight,
-                colors: [
-                  dominant != null
-                      ? shadeForBrightness(dominant, brightness)
-                      : surface,
-                  surface,
-                ],
+                colors: [scheme.onPrimary, scheme.surface],
               )
             : LinearGradient(
                 begin: .topCenter,
                 end: .bottomCenter,
-                colors: [
-                  dominant ?? surface,
-                  dominant != null ? darken(dominant, 0.2) : surface,
-                  surface,
-                ],
+                colors: [scheme.onPrimary, scheme.surface],
               ),
       ),
       .blur => BoxDecoration(
-        color: surface,
+        color: scheme.surface,
         image: coverUrl != null
             ? DecorationImage(
                 image: CachedNetworkImageProvider(
@@ -94,8 +73,8 @@ class ThemedBackground extends ConsumerWidget {
                 begin: .topCenter,
                 end: .bottomCenter,
                 colors: [
-                  surface.withValues(alpha: 0.4),
-                  surface.withValues(alpha: 0.85),
+                  scheme.surface.withValues(alpha: 0.4),
+                  scheme.surface.withValues(alpha: 0.85),
                 ],
               ),
             ),
