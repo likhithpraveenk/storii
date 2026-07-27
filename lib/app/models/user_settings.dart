@@ -48,6 +48,7 @@ class DefaultUserSettings {
   static const scrollThumbWidth = 26.0;
   static const showMiniPlayerSeekButtons = false;
   static const PlayerBackgroundTheme playerBackgroundTheme = .none;
+  static const PlaybackControlsLayout playbackControlsLayout = .defaultLayout;
 }
 
 @freezed
@@ -145,6 +146,9 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.playerBackgroundTheme)
     PlayerBackgroundTheme playerBackgroundTheme,
+
+    @Default(DefaultUserSettings.playbackControlsLayout)
+    PlaybackControlsLayout playbackControlsLayout,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

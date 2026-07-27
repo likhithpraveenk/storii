@@ -278,3 +278,15 @@ enum PlayerBackgroundTheme {
     };
   }
 }
+
+enum PlaybackControlsLayout {
+  defaultLayout,
+  compact,
+  big;
+
+  String get label => switch (this) {
+    .defaultLayout => l10n.defaultWord,
+    .compact => l10n.compact,
+    .big => l10n.big,
+  };
+}

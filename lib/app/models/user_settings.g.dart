@@ -123,6 +123,12 @@ _UserSettings _$UserSettingsFromJson(
         json['playerBackgroundTheme'],
       ) ??
       DefaultUserSettings.playerBackgroundTheme,
+  playbackControlsLayout:
+      $enumDecodeNullable(
+        _$PlaybackControlsLayoutEnumMap,
+        json['playbackControlsLayout'],
+      ) ??
+      DefaultUserSettings.playbackControlsLayout,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -171,6 +177,8 @@ Map<String, dynamic> _$UserSettingsToJson(
   'showMiniPlayerSeekButtons': instance.showMiniPlayerSeekButtons,
   'playerBackgroundTheme':
       _$PlayerBackgroundThemeEnumMap[instance.playerBackgroundTheme]!,
+  'playbackControlsLayout':
+      _$PlaybackControlsLayoutEnumMap[instance.playbackControlsLayout]!,
 };
 
 const _$NavTargetEnumMap = {
@@ -256,4 +264,10 @@ const _$PlayerBackgroundThemeEnumMap = {
   PlayerBackgroundTheme.colored: 'colored',
   PlayerBackgroundTheme.gradient: 'gradient',
   PlayerBackgroundTheme.blur: 'blur',
+};
+
+const _$PlaybackControlsLayoutEnumMap = {
+  PlaybackControlsLayout.defaultLayout: 'defaultLayout',
+  PlaybackControlsLayout.compact: 'compact',
+  PlaybackControlsLayout.big: 'big',
 };

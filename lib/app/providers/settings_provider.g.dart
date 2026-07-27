@@ -342,6 +342,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setPlayerBackgroundTheme(PlayerBackgroundTheme value) =>
       _save(state?.copyWith(playerBackgroundTheme: value));
+
+  Future<void> setPlaybackControlsLayout(PlaybackControlsLayout value) =>
+      _save(state?.copyWith(playbackControlsLayout: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -692,4 +695,15 @@ final playerBackgroundThemeProvider = Provider<PlayerBackgroundTheme>(
     ),
   ),
   name: 'playerBackgroundThemeProvider',
+);
+
+final playbackControlsLayoutProvider = Provider<PlaybackControlsLayout>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.playbackControlsLayout ??
+          DefaultUserSettings.playbackControlsLayout,
+    ),
+  ),
+  name: 'playbackControlsLayoutProvider',
 );
