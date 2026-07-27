@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.5.13] - 2026-07-27
+
 ### Added
 
 - new playback control layouts - default, compact and big
@@ -507,7 +509,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.5.12...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.5.13...HEAD
+[v0.5.13]: https://github.com/likhithpraveenk/storii/compare/v0.5.12...v0.5.13
 [v0.5.12]: https://github.com/likhithpraveenk/storii/compare/v0.5.11...v0.5.12
 [v0.5.11]: https://github.com/likhithpraveenk/storii/compare/v0.5.10...v0.5.11
 [v0.5.10]: https://github.com/likhithpraveenk/storii/compare/v0.5.9...v0.5.10
