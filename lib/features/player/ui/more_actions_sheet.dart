@@ -12,13 +12,15 @@ import 'package:storii/shared/widgets/empty_state.dart';
 
 class MoreActionsSheet extends ConsumerStatefulWidget {
   const MoreActionsSheet({
+    super.key,
     required this.remaining,
     required this.session,
-    super.key,
+    this.inBigLayout = false,
   });
 
   final List<FullPlayerActions> remaining;
   final PlaybackSession session;
+  final bool inBigLayout;
 
   @override
   ConsumerState<MoreActionsSheet> createState() => _MoreActionsSheetState();
@@ -80,16 +82,17 @@ class _MoreActionsSheetState extends ConsumerState<MoreActionsSheet> {
                     style: bottomSheetTitleTextStyle(context),
                   ),
                 ),
-                Align(
-                  alignment: .centerRight,
-                  child: IconButton(
-                    tooltip: _editMode ? l10n.cancel : l10n.edit,
-                    onPressed: () {
-                      setState(() => _editMode = !_editMode);
-                    },
-                    icon: Icon(_editMode ? Icons.cancel : Icons.edit),
+                if (!widget.inBigLayout)
+                  Align(
+                    alignment: .centerRight,
+                    child: IconButton(
+                      tooltip: _editMode ? l10n.cancel : l10n.edit,
+                      onPressed: () {
+                        setState(() => _editMode = !_editMode);
+                      },
+                      icon: Icon(_editMode ? Icons.cancel : Icons.edit),
+                    ),
                   ),
-                ),
               ],
             ),
           ),

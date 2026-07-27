@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- new playback control layouts - default, compact and big
+
 ## [v0.5.12] - 2026-07-25
 
 ### Added

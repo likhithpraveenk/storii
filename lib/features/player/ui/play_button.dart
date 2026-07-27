@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -65,6 +67,57 @@ class PlayButton extends ConsumerWidget {
               ),
             },
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class PlayButtonBig extends ConsumerWidget {
+  const PlayButtonBig({super.key, required this.scheme});
+  final ColorScheme scheme;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isPlaying = ref.watch(isPlayingProvider);
+    final playbackStatus = ref.watch(playbackStatusProvider).value;
+    final isNone = ref.watch(playerBackgroundThemeProvider) == .none;
+    final iconColor = isNone
+        ? scheme.onInverseSurface
+        : scheme.primaryContainer;
+
+    return Material(
+      color: isNone ? scheme.inverseSurface : scheme.onPrimaryContainer,
+      shape: RoundedRectangleBorder(borderRadius: .circular(kRadius)),
+      child: InkWell(
+        onTap: switch (playbackStatus) {
+          .buffering => null,
+          .completed => audioHandler.seekToStart,
+          _ => audioHandler.togglePlay,
+        },
+        child: Align(
+          alignment: .center,
+          child: switch (playbackStatus) {
+            .buffering => RandomWaveform(color: iconColor),
+            .completed => Icon(
+              Icons.replay_rounded,
+              key: ValueKey(playbackStatus),
+              size: 44,
+              color: iconColor,
+            ),
+            .error => Icon(
+              Icons.error_outline_rounded,
+              key: ValueKey(playbackStatus),
+              size: 44,
+              color: scheme.error,
+            ),
+            _ => Icon(
+              isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+              key: ValueKey(isPlaying),
+              size: 44,
+              color: iconColor,
+            ),
+          },
         ),
       ),
     );
