@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - new playback control layouts - default, compact and big
 
+### Fixed
+
+- get updated progress on refresh in home screen & item detail screen
+
 ## [v0.5.12] - 2026-07-25
 
 ### Added

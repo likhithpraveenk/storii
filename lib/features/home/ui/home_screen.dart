@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
@@ -27,6 +28,7 @@ class HomeScreen extends ConsumerWidget {
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(rawShelvesProvider);
+          ref.invalidate(serverUserProvider);
           await ref.read(shelvesProvider.future);
         },
         child: shelvesAsync.when(
