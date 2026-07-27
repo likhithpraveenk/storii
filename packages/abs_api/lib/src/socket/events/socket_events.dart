@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
@@ -19,7 +20,7 @@ abstract class SocketEvents {
 
   Stream<T> onJson<T>(String event, T Function(dynamic json) fromJson) {
     return on(event).map((data) {
-      // log('$data', name: event);
+      log('$data', name: 'SocketEvent: $event');
       return fromJson(data);
     });
   }

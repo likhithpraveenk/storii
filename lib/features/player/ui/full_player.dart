@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
+import 'package:storii/features/player/ui/button_layout_big.dart';
+import 'package:storii/features/player/ui/button_layout_compact.dart';
+import 'package:storii/features/player/ui/button_layout_default.dart';
 import 'package:storii/features/player/ui/full_player_actions.dart';
-import 'package:storii/features/player/ui/play_button.dart';
-import 'package:storii/features/player/ui/seek_button.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
@@ -40,28 +42,34 @@ class FullPlayer extends ConsumerWidget {
         ? session.displayTitle ?? l10n.noTitle
         : session.displayAuthor ?? l10n.noAuthor;
 
-    // TODO: multiple layouts support
+    final layout = ref.watch(playbackControlsLayoutProvider);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return SingleChildScrollView(
-          padding: const .symmetric(horizontal: 16),
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: constraints.maxHeight - 32),
             child: Column(
               mainAxisAlignment: .center,
               children: [
-                MarqueeText(
-                  title,
-                  style: theme.textTheme.titleLarge?.copyWith(fontSize: 22),
-                ),
-                Text(
-                  subtitle,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
+                Padding(
+                  padding: const .symmetric(horizontal: 24),
+                  child: MarqueeText(
+                    title,
+                    style: theme.textTheme.titleLarge?.copyWith(fontSize: 22),
                   ),
-                  textAlign: .center,
-                  maxLines: 1,
-                  overflow: .ellipsis,
+                ),
+                Padding(
+                  padding: const .symmetric(horizontal: 24),
+                  child: Text(
+                    subtitle,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                    textAlign: .center,
+                    maxLines: 1,
+                    overflow: .ellipsis,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -75,26 +83,20 @@ class FullPlayer extends ConsumerWidget {
                   ),
                   textAlign: .center,
                 ),
-                const BookSlider(),
-                Row(
-                  mainAxisAlignment: .spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.skip_previous, size: 36),
-                      onPressed: audioHandler.skipToPrevious,
-                    ),
-                    const AppSeekButton(isForward: false),
-                    const PlayButton(),
-                    const AppSeekButton(isForward: true),
-                    IconButton(
-                      icon: const Icon(Icons.skip_next, size: 36),
-                      onPressed: audioHandler.skipToNext,
-                    ),
-                  ],
+                const Padding(
+                  padding: .symmetric(horizontal: 24),
+                  child: BookSlider(),
                 ),
+                switch (layout) {
+                  .defaultLayout => const ButtonLayoutDefault(),
+                  .compact => const ButtonLayoutCompact(),
+                  .big => const ButtonLayoutBig(),
+                },
                 const SizedBox(height: 12),
-                FullPlayerActionsWidget(session),
-                const SizedBox(height: 12),
+                if (layout != .big) ...[
+                  FullPlayerActionsWidget(session),
+                  const SizedBox(height: 12),
+                ],
                 Text(
                   session.playMethod.label,
                   textAlign: .center,

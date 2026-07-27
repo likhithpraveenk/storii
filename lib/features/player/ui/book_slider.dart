@@ -53,7 +53,7 @@ class _BookSliderState extends ConsumerState<BookSlider> {
     String format(double ms) => Duration(milliseconds: ms.toInt()).toTime();
 
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: .min,
       children: [
         SliderTheme(
           data: SliderTheme.of(
@@ -76,17 +76,15 @@ class _BookSliderState extends ConsumerState<BookSlider> {
                 await audioHandler.seek(Duration(milliseconds: value.toInt()));
               }
             },
+            padding: const .fromLTRB(0, 16, 0, 8),
           ),
         ),
-        Padding(
-          padding: const .symmetric(horizontal: 12),
-          child: Row(
-            mainAxisAlignment: .spaceBetween,
-            children: [
-              Text(format(_dragValue ?? positionMs)),
-              Text(duration.toTime()),
-            ],
-          ),
+        Row(
+          mainAxisAlignment: .spaceBetween,
+          children: [
+            Text(format(_dragValue ?? positionMs)),
+            Text(duration.toTime()),
+          ],
         ),
       ],
     );

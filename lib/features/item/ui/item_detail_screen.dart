@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
-import 'package:storii/features/item/logic/progress_notifier.dart';
 import 'package:storii/features/item/ui/action_buttons.dart';
 import 'package:storii/features/item/ui/audio_tracks_sheet.dart';
 import 'package:storii/features/item/ui/chapter_list.dart';
@@ -55,8 +55,9 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
             ),
             data: (item) => RefreshIndicator(
               onRefresh: () async {
-                ref.invalidate(mediaProgressProvider(widget.id));
-                return await ref.refresh(itemDetailProvider(widget.id).future);
+                ref.invalidate(serverUserProvider);
+                ref.invalidate(itemDetailProvider(widget.id));
+                await ref.read(itemDetailProvider(widget.id).future);
               },
               child: AppScrollbar(
                 controller: _scrollController,

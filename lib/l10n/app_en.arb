@@ -473,5 +473,8 @@
   "colored": "Colored",
   "gradient": "Gradient",
   "blurredImage": "Blurred Image",
-  "playerBackgroundTheme": "Player background theme"
+  "playerBackgroundTheme": "Player background theme",
+  "playbackControlsLayout": "Playback Controls Layout",
+  "defaultWord": "Default",
+  "big": "Big"
 }
