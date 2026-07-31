@@ -1,3 +1,286 @@
 {
-  "@@locale": "sv"
+  "@@locale":"sv",
+  "username":"Användarnamn",
+  "password":"Lösenord",
+  "delete":"Radera",
+  "cancel":"Avbryt",
+  "deleteServer":"Radera Server",
+  "deleteServerQ":"Radera servern?",
+  "deleteUserQ":"Ta bort {user}?",
+  "@deleteUserQ":{
+    "placeholders":{
+      "user":{
+        "type":"String"
+      }
+    }
+  },
+  "noUsersServer":"Inga användare är kopplade till den här servern.",
+  "followingUsers":"Du är på väg att radera följande användare",
+  "urlCopied":"URL kopierad",
+  "addUser":"Lägg till användare",
+  "edit":"Redigera",
+  "editServer":"Redigera servern",
+  "switchingToUser":"Byter till {user}",
+  "@switchingToUser":{
+    "placeholders":{
+      "user":{
+        "type":"String"
+      }
+    }
+  },
+  "active":"Aktiv",
+  "noAuthor":"Ingen författare",
+  "noTitle":"Ingen titel",
+  "noImage":"Ingen bild",
+  "settings":"Inställningar",
+  "logs":"Loggar",
+  "about":"Om",
+  "switchAccount":"Byt konto",
+  "switchAccountConfirm":"Byt till ett annat konto?",
+  "logoutConfirm":"Logga ut från det här kontot?",
+  "noLibrary":"Inget bibliotek",
+  "libraries":"Bibliotek",
+  "empty":"Tom",
+  "refresh":"Förnya",
+  "retry":"Försök igen",
+  "description":"Beskrivning",
+  "noDescription":"Ingen beskrivning tillgänglig",
+  "play":"Spela",
+  "pause":"Pausa",
+  "replay":"Spela om",
+  "deleteLogsQ":"Radera alla loggar?",
+  "audiobooks":"Ljudböcker",
+  "episodes":"Avsnitt",
+  "playEpisodeConfirm":"Spela det här avsnittet?",
+  "search":"Sök",
+  "dateFormat":"Datumformat",
+  "save":"Spara",
+  "system":"System",
+  "light":"Ljus",
+  "dark":"Mörk",
+  "language":"Språk",
+  "appearance":"Utseende",
+  "reset":"Återställ",
+  "resetSettingsQ":"Återställ inställningar?",
+  "settingsReset":"Inställningar har återställts",
+  "home":"Hem",
+  "library":"Bibliotek",
+  "librarySettings":"Biblioteksinställningar",
+  "latest":"Senaste",
+  "latestEpisodes":"Senaste avsnitten",
+  "series":"Serie",
+  "authors":"Författare",
+  "books":"Böcker",
+  "stats":"Statistik",
+  "viewAll":"Visa alla",
+  "title":"Titel",
+  "author":"Författare",
+  "authorLastFirst":"Författare (efter, för)",
+  "dateAdded":"Datum tillagd",
+  "size":"Storlek",
+  "duration":"Längd",
+  "lastPlayed":"Senast spelad",
+  "dateStarted":"Datum startad",
+  "dateFinished":"Datum avslutad",
+  "numOfBooks":"Antal böcker",
+  "name":"Namn",
+  "lastBookAdded":"Senaste boken tillagd",
+  "lastBookUpdated":"Senaste boken uppdaterad",
+  "lastFirst":"Förnamn, Efternamn",
+  "lastUpdated":"Senast uppdaterad",
+  "numOfEpisodes":"Antal avsnitt",
+  "hasEbook":"Har e-bok",
+  "hasNoEbook":"Har ingen e-bok",
+  "hasSupplementary":"Har kompletterande e-bok",
+  "hasNoSupplementary":"Har ingen kompletterande e-bok",
+  "filter":"Filter",
+  "sort":"Sortera",
+  "display":"Visa",
+  "genres":"Genrer",
+  "tags":"Taggar",
+  "publisher":"Förlag",
+  "ebooks":"E-böcker",
+  "finished":"Avslutad",
+  "notStarted":"Inte påbörjad",
+  "inComplete":"Ofullständig",
+  "notFinished":"Inte avslutad",
+  "asin":"ASIN",
+  "isbn":"ISBN",
+  "subtitle":"Undertext",
+  "multipleTracks":"Flera spår",
+  "noTracks":"Inga spår",
+  "moreInfo":"Mer info",
+  "explicit":"Explicit",
+  "comfortable":"Bekväm",
+  "compact":"Kompakt",
+  "licenses":"Licenser",
+  "sourceCode":"Källkod",
+  "couldNotUrl":"Kan inte starta {url}",
+  "@couldNotUrl":{
+    "placeholders":{
+      "url":{
+        "type":"String"
+      }
+    }
+  },
+  "licensedUnder":"Licensierad under GNU General Public License v3.0",
+  "version":"Version",
+  "networkLogs":"Nätverksloggar",
+  "networkLogsDescription":"Logga HTTP-förfrågningar och svar",
+  "trustAllCertificates":"Lita på alla certifikat",
+  "trustAllCertificatesDescription":"Inaktivera certifikat validering",
+  "chapters":"Kapitel",
+  "remove":"Ta bort",
+  "markAsComplete":"Markera som färdig?",
+  "confirm":"Bekräfta",
+  "progressMarkedComplete":"Markerad som klar",
+  "progressMarkCompleteFailed":"Misslyckades med att markera som klar",
+  "playerSettings":"Spelarinställningar",
+  "startPlayback":"Börja uppspelning",
+  "playbackSpeed":"Uppspelningshastighet",
+  "timeMinutes":"{time} min",
+  "@timeMinutes":{
+    "placeholders":{
+      "time":{
+        "type":"int"
+      }
+    }
+  },
+  "endOfChapter":"Slutet av kapitlet",
+  "endOfNChapters":"Slutet av {count} kapitel",
+  "@endOfNChapters":{
+    "placeholders":{
+      "count":{
+        "type":"int"
+      }
+    }
+  },
+  "settingsStartupRouteTitle":"Börja när appen öppnas",
+  "settingsReorderNavTitle":"Navigationsflikar",
+  "settingsReorderNavSubtitle":"Ändra ordningen och aktivera eller inaktivera flikar",
+  "addFonts":"Lägg till teckensnitt",
+  "alwaysShow":"Visa alltid",
+  "alwaysHide":"Alltid gömd",
+  "syncInterval":"Sync interval",
+  "syncIntervalSubtitle":"Kontrollerar serverns synkroniseringsfrekvens, överskrider 1-minuters mobildatarestriktionen om det sätts högre",
+  "emptyMsg":"Så tom…",
+  "history":"Historik",
+  "today":"Idag",
+  "yesterday":"Igår",
+  "complete":"Klar",
+  "playbackError":"uppspelningsfel",
+  "loginOidc":"Logga in med OpenID",
+  "or":"Eller",
+  "oidcRedirectUriHintPrefix":"Kräver",
+  "downloading":"Laddar ner",
+  "paused":"Pausad",
+  "failed":"Misslyckades",
+  "download":"Ladda ner",
+  "completed":"Slutförd",
+  "cancelled":"Avbruten",
+  "resumeDownload":"Fortsätt nedladdningen",
+  "removeDownloadQ":"Ta bort nedladdningen?",
+  "downloadFailed":"Nedladdningen misslyckades - tryck för att försöka igen",
+  "local":"Lokal",
+  "downloaded":"Nedladdad",
+  "connectionStatus":"Anslutningsstatus",
+  "connectionChecking":"Kontrollera anslutning…",
+  "connectionServerConnected":"Ansluten till server",
+  "connectionServerDisconnected":"Inte ansluten till server",
+  "connectionTypeWifi":"Wi-Fi",
+  "connectionTypeMobile":"Mobildata",
+  "connectionTypeEthernet":"Ethernet",
+  "connectionTypeNone":"Inget nätverk",
+  "connectionCantReachServer":"Kan inte nå server ({networkType})",
+  "@connectionCantReachServer":{
+    "placeholders":{
+      "networkType":{
+        "type":"String"
+      }
+    }
+  },
+  "connectionViaNetwork":"Ansluten via {networkType}",
+  "@connectionViaNetwork":{
+    "placeholders":{
+      "networkType":{
+        "type":"String"
+      }
+    }
+  },
+  "foundBugQ":"Hittat en bug?",
+  "audioBufferDurationDescription":"Hur mycket ljud att hålla före uppspelningen. Högre värden minskar avbrott vid långsamma anslutningar",
+  "avoidMobileData":"Undvik mobildata",
+  "avoidMobileDataSubtitle":"Nedladdningar pausar på mobila nätverk",
+  "totalListeningTime":"Total lyssningstid",
+  "thisMonth":"Den här månaden",
+  "thisYear":"Det här året",
+  "days":"dagar",
+  "daysAgo":"{days} dagar sedan",
+  "@daysAgo":{
+    "placeholders":{
+      "days":{
+        "type":"int"
+      }
+    }
+  },
+  "booksFinished":"Böcker avslutade",
+  "episodesFinished":"Avsnitt avslutade",
+  "volume":"Volym",
+  "increase":"Öka",
+  "decrease":"Sänk",
+  "showChapterPosition":"Visa kapitelposition",
+  "errorNetwork":"Ingen internetanslutning",
+  "errorNotFound":"Innehåll hittades inte",
+  "errorServer":"Server fel, försök igen",
+  "errorUnknown":"Något gick fel",
+  "errorType":"Typ fel",
+  "changeRestartRequired":"Förändringar träder i kraft efter omstart",
+  "playbackErrorNetwork":"Anslutningsproblem. Ljudet kan avbrytas",
+  "playbackErrorSource":"Ljudfilen kunde inte laddas",
+  "playbackErrorDecoder":"Filformatet stöds inte",
+  "playbackErrorUnknown":"Något gick fel med uppspelning",
+  "scrollThumbHeight":"Höjd",
+  "scrollThumbHeightDescription":"Tumhöjd i pixlar",
+  "scrollThumbWidth":"Bredd",
+  "scrollThumbWidthDescription":"Tumbredd i pixlar",
+  "off":"Av",
+  "binaryUnitsSubtitle":"1 KB = 1024 B",
+  "decimalUnitsSubtitle":"1 KB = 1000 B",
+  "backupDescription":"Exportera eller importera dina konton, inställningar och historia",
+  "tonalSpot":"Balanserad",
+  "tonalSpotSubtitle":"Mjuk, naturlig och lätt på ögonen",
+  "primary":"Primär",
+  "secondary":"Sekundär",
+  "tertiary":"Tertiär",
+  "error":"Fel",
+  "rememberSort":"Kom ihåg sortering",
+  "rememberSortSubtitle":"Ha kvar sortering när appen startar om",
+  "type":"Typ",
+  "added":"Tillagd",
+  "season":"Säsong",
+  "episode":"Avsnitt",
+  "libraryIsEmpty":"{library} Biblioteket är tomt!",
+  "@libraryIsEmpty":{
+    "placeholders":{
+      "library":{
+        "type":"String"
+      }
+    }
+  },
+  "storage":"Lagring",
+  "internalStorage":"Intern lagring",
+  "changeLocation":"Ändra plats",
+  "downloadLocation":"Nedladdningsplats",
+  "currentPosition":"Nuvarande position",
+  "bookmarks":"Bokmärken",
+  "bookmarkFailed":"Misslyckades med att spara bokmärket",
+  "addBookmark":"Lägg till bokmärke",
+  "editBookmark":"Ändra bokmärke",
+  "big":"Stor",
+  "login":"Logga in",
+  "logout":"Logga ut",
+  "addServer":"Lägg till server",
+  "serverUrl":"Server URL",
+  "loading":"Laddar",
+  "customHeaders":"Anpassade headers"
 }
