@@ -282,5 +282,7 @@
   "addServer":"Lägg till server",
   "serverUrl":"Server URL",
   "loading":"Laddar",
-  "customHeaders":"Anpassade headers"
+  "customHeaders":"Anpassade headers",
+  "key":"Nyckeln",
+  "value":"Värde"
 }
