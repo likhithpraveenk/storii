@@ -17,16 +17,20 @@ class SpeedButton extends ConsumerWidget {
     Future<void> openSheet() => AppBottomSheet.show(
       context,
       title: l10n.playbackSpeed,
-      body: WheelPicker.fromDoubleRange(
-        initialValue: speed,
-        min: 0.5,
-        max: 4.0,
-        step: 0.1,
-        labelBuilder: (v) => '${v}x',
-        onChangedEnd: (v) {
-          ref.read(localSpeedProvider.notifier).setSpeed(v);
+      body: Consumer(
+        builder: (context, ref, _) {
+          return WheelPicker.fromDoubleRange(
+            initialValue: speed,
+            min: 0.5,
+            max: 4.0,
+            step: 0.1,
+            labelBuilder: (v) => '${v}x',
+            onChangedEnd: (v) {
+              ref.read(localSpeedProvider.notifier).setSpeed(v);
+            },
+            presets: speedPresets,
+          );
         },
-        presets: speedPresets,
       ),
     );
     if (inOverflow) {
@@ -34,10 +38,7 @@ class SpeedButton extends ConsumerWidget {
         title: Text(l10n.playbackSpeed),
         leading: const Icon(Icons.speed_rounded),
         trailing: Text('${speed}x'),
-        onTap: () {
-          Navigator.of(context).pop();
-          openSheet();
-        },
+        onTap: openSheet,
       );
     }
 

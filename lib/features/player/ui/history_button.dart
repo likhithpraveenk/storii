@@ -55,10 +55,7 @@ class HistoryButton extends StatelessWidget {
       return ListTile(
         title: Text(l10n.history),
         leading: const Icon(Icons.history),
-        onTap: () {
-          Navigator.of(context).pop();
-          openSheet();
-        },
+        onTap: openSheet,
       );
     }
 

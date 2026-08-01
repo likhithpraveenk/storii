@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- speed change not saving when button is in overflow
+
 ## [v0.5.13] - 2026-07-27
 
 ### Added

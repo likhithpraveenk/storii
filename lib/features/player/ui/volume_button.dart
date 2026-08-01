@@ -22,10 +22,7 @@ class VolumeButton extends ConsumerWidget {
         title: Text(l10n.volume),
         leading: const Icon(Icons.volume_up),
         trailing: Text('${(volume * 100).round()}%'),
-        onTap: () {
-          Navigator.of(context).pop();
-          openSheet();
-        },
+        onTap: openSheet,
       );
     }
 
