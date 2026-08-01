@@ -45,15 +45,7 @@ class SpeedButton extends ConsumerWidget {
     return IconButton(
       onPressed: openSheet,
       tooltip: l10n.playbackSpeed,
-      icon: Column(
-        mainAxisSize: .min,
-        children: [
-          if (speed == 1.0)
-            const Icon(Icons.speed_rounded)
-          else
-            Text('${speed}x', style: Theme.of(context).textTheme.labelLarge),
-        ],
-      ),
+      icon: Text('${speed}x', style: Theme.of(context).textTheme.labelLarge),
     );
   }
 }

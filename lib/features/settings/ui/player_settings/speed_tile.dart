@@ -16,7 +16,7 @@ class SpeedTile extends ConsumerStatefulWidget {
 class _SpeedTileState extends ConsumerState<SpeedTile> {
   late double _selected;
 
-  static const _presets = [0.8, 1.0, 1.25, 1.5, 2.0];
+  static const _presets = [0.8, 1.0, 1.5, 2.0];
 
   @override
   void initState() {
