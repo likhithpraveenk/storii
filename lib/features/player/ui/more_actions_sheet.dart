@@ -51,14 +51,12 @@ class _MoreActionsSheetState extends ConsumerState<MoreActionsSheet> {
     });
   }
 
-  void _onToggle(FullPlayerActions action, bool isEnabled) {
-    setState(() {
-      if (isEnabled) {
-        _pinnedDraft.add(action);
-      } else if (_pinnedDraft.length > 1) {
-        _pinnedDraft.remove(action);
-      }
-    });
+  void _disable(FullPlayerActions action) {
+    setState(() => _pinnedDraft.remove(action));
+  }
+
+  void _enable(FullPlayerActions action) {
+    setState(() => _pinnedDraft.add(action));
   }
 
   @override
@@ -103,69 +101,93 @@ class _MoreActionsSheetState extends ConsumerState<MoreActionsSheet> {
                 .whereType<Widget>(),
           ],
           if (_editMode) ...[
-            ReorderableListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const .symmetric(horizontal: 16, vertical: 12),
-              itemCount: _masterOrder.length,
-              onReorderItem: _onReorder,
-              buildDefaultDragHandles: false,
-              proxyDecorator: (child, index, animation) =>
-                  Material(type: .transparency, child: child),
-              itemBuilder: (context, index) {
-                final action = _masterOrder[index];
-                final isEnabled = _pinnedDraft.contains(action);
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: .circular(kRadius),
+                color: scheme.surfaceContainerLowest,
+                border: .all(width: 1, color: scheme.outlineVariant),
+              ),
+              margin: const .symmetric(horizontal: 16, vertical: 12),
+              child: ReorderableListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: _masterOrder.length,
+                onReorderItem: _onReorder,
+                buildDefaultDragHandles: false,
+                proxyDecorator: (child, index, animation) => Material(
+                  color: scheme.surfaceContainerHighest,
+                  borderRadius: .circular(kRadius),
+                  child: child,
+                ),
+                itemBuilder: (context, index) {
+                  final action = _masterOrder[index];
+                  final isEnabled = _pinnedDraft.contains(action);
+                  if (!isEnabled) return SizedBox.shrink(key: ValueKey(action));
 
-                return Container(
-                  key: ValueKey(action),
-                  margin: const .only(bottom: 8),
-                  decoration: BoxDecoration(
-                    color: isEnabled
-                        ? scheme.surfaceContainerHighest.withValues(alpha: 0.5)
-                        : scheme.surface.withValues(alpha: 0.3),
-                    borderRadius: .circular(kRadius),
-                    border: Border.all(
-                      color: isEnabled
-                          ? scheme.outlineVariant.withValues(alpha: 0.5)
-                          : Colors.transparent,
-                    ),
-                  ),
-                  child: ListTile(
-                    contentPadding: const .symmetric(horizontal: 16),
-                    title: Text(
-                      action.label,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: .w600,
-                        color: isEnabled
-                            ? scheme.onSurface
-                            : scheme.onSurface.withValues(alpha: 0.4),
+                  return DecoratedBox(
+                    key: ValueKey(action),
+                    decoration: BoxDecoration(borderRadius: .circular(kRadius)),
+                    child: ListTile(
+                      leading: Icon(action.icon),
+                      contentPadding: const .symmetric(
+                        horizontal: 16,
+                        vertical: 4,
                       ),
-                    ),
-                    trailing: Row(
-                      mainAxisSize: .min,
-                      children: [
-                        Switch.adaptive(
-                          value: isEnabled,
-                          activeTrackColor: scheme.primary,
-                          onChanged: (value) => _onToggle(action, value),
+                      visualDensity: .compact,
+                      title: Text(
+                        action.label,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: .w600,
+                          color: scheme.onSurface,
                         ),
-                        const SizedBox(width: 8),
-                        ReorderableDragStartListener(
-                          index: index,
-                          child: Icon(
-                            Icons.drag_indicator_rounded,
-                            color: scheme.onSurfaceVariant.withValues(
-                              alpha: 0.6,
+                      ),
+                      trailing: Row(
+                        mainAxisSize: .min,
+                        children: [
+                          IconButton(
+                            onPressed: () => _disable(action),
+                            icon: const Icon(Icons.remove_circle),
+                          ),
+                          const SizedBox(width: 8),
+                          ReorderableDragStartListener(
+                            index: index,
+                            child: Icon(
+                              Icons.drag_indicator_rounded,
+                              color: scheme.onSurfaceVariant.withValues(
+                                alpha: 0.6,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-            const SizedBox(height: 16),
+            Wrap(
+              spacing: 12,
+              children: [
+                ..._masterOrder
+                    .where((a) => !_pinnedDraft.contains(a))
+                    .map(
+                      (a) => TextButton(
+                        onPressed: () => _enable(a),
+                        child: Row(
+                          mainAxisSize: .min,
+                          children: [
+                            Icon(a.icon),
+                            const SizedBox(width: 4),
+                            Text(a.label),
+                            const SizedBox(width: 4),
+                            const Icon(Icons.add_circle),
+                          ],
+                        ),
+                      ),
+                    ),
+              ],
+            ),
+            const SizedBox(height: 12),
             Padding(
               padding: const .symmetric(horizontal: 16),
               child: SizedBox(

@@ -1,4 +1,5 @@
 import 'package:abs_api/abs_api.dart';
+import 'package:flutter/material.dart';
 import 'package:storii/app/init.dart';
 
 enum Languages {
@@ -251,6 +252,17 @@ enum FullPlayerActions {
       .speed => l10n.playbackSpeed,
       .volume => l10n.volume,
       .bookmarks => l10n.bookmarks,
+    };
+  }
+
+  IconData get icon {
+    return switch (this) {
+      .history => Icons.history,
+      .chapters => Icons.menu_book,
+      .sleep => Icons.nightlight,
+      .speed => Icons.speed,
+      .volume => Icons.volume_up,
+      .bookmarks => Icons.bookmark,
     };
   }
 }
