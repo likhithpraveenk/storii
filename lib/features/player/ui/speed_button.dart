@@ -38,10 +38,7 @@ class SpeedButton extends ConsumerWidget {
         title: Text(l10n.playbackSpeed),
         leading: const Icon(Icons.speed_rounded),
         trailing: Text('${speed}x'),
-        onTap: () {
-          Navigator.of(context).pop();
-          openSheet();
-        },
+        onTap: openSheet,
       );
     }
 

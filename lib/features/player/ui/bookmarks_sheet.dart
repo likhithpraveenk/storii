@@ -31,7 +31,7 @@ class BookmarkButton extends StatelessWidget {
     useSafeArea: true,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      borderRadius: .vertical(top: .circular(24)),
     ),
     builder: (_) => _BookmarkSheetBody(itemId: itemId),
   );
@@ -42,12 +42,7 @@ class BookmarkButton extends StatelessWidget {
       return ListTile(
         title: Text(l10n.bookmarks),
         leading: const Icon(Icons.bookmark_outline),
-        onTap: isPodcast
-            ? null
-            : () {
-                Navigator.of(context).pop();
-                _openSheet(context);
-              },
+        onTap: isPodcast ? null : () => _openSheet(context),
       );
     }
 

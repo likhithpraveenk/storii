@@ -37,12 +37,7 @@ class ChaptersActionButton extends ConsumerWidget {
         title: Text(l10n.chapters),
         leading: const Icon(Icons.list_rounded),
         trailing: Text('${session.chapters.length}'),
-        onTap: session.isPodcastEpisode
-            ? null
-            : () {
-                Navigator.of(context).pop();
-                openSheet();
-              },
+        onTap: session.isPodcastEpisode ? null : openSheet,
       );
     }
 

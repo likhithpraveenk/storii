@@ -30,10 +30,7 @@ class SleepButton extends ConsumerWidget {
         trailing: sleepMinutes != null
             ? Text(Duration(minutes: sleepMinutes).toReadableDuration())
             : null,
-        onTap: () {
-          Navigator.of(context).pop();
-          openSheet();
-        },
+        onTap: openSheet,
       );
     }
 
