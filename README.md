@@ -11,10 +11,12 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 
 ### Download & Release Info
 
-[![GitHub Version](https://img.shields.io/github/v/release/likhithpraveenk/storii.svg?logo=github&label=GitHub&style=for-the-badge)](https://github.com/likhithpraveenk/storii/releases)
+![F-Droid Version](https://img.shields.io/f-droid/v/com.likhithpraveenk.storii?style=for-the-badge)
 [![IzzyOnDroid Version](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.likhithpraveenk.storii&label=IzzyOnDroid&style=for-the-badge)](https://apt.izzysoft.de/fdroid/index/apk/com.likhithpraveenk.storii)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge&logo=gnu&logoColor=white)](https://www.gnu.org/licenses/gpl-3.0)
+[![GitHub Version](https://img.shields.io/github/v/release/likhithpraveenk/storii.svg?label=GitHub&style=for-the-badge)](https://github.com/likhithpraveenk/storii/releases)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge)](https://www.gnu.org/licenses/gpl-3.0)
 
+[<img src="assets/get-it-on-fdroid.png" alt="Get it on F-Droid" height="50">](https://f-droid.org/packages/com.likhithpraveenk.storii)
 [<img src="assets/IzzyOnDroidButtonGreyBorder_nofont.png" alt="Get it on IzzyOnDroid" height="50">](https://apt.izzysoft.de/packages/com.likhithpraveenk.storii)
 [<img src="assets/get_it_on_github_badge.png" alt="Get it on GitHub" height="50">](https://github.com/likhithpraveenk/storii/releases/latest)
 [<img src="assets/badge_obtainium.png" alt="Get it on Obtainium" height="50">](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/likhithpraveenk/storii)
@@ -27,7 +29,7 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 - Personalized home shelves: continue listening, recent series, newest authors, etc.
 - Advanced library browsing with filters, sorting, and series grouping
 - Search across books, series, authors, narrators, tags, and genres
-- Customizable player: sleep timer, speed control, seek buttons, chapter navigation, and listening history
+- Customizable player: sleep timer, speed control, seek buttons, chapter navigation, listening history, and bookmarks
 - Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling
 - Navigation customization: reorder tabs, choose startup screen, label behavior
 
@@ -37,14 +39,14 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 
 ## Screenshots
 
-|                                                                                                                    |                                                                                                                          |                                                                                                                      |                                                                                                                              |
-| :----------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: |
-| <img src="metadata/android/en-US/images/phoneScreenshots/1.jpg" width="200" alt="library view showing audiobooks"> | <img src="metadata/android/en-US/images/phoneScreenshots/5.jpg" width="200" alt="audiobook detail screen with chapters"> | <img src="metadata/android/en-US/images/phoneScreenshots/6.jpg" width="200" alt="series view listing related books"> | <img src="metadata/android/en-US/images/phoneScreenshots/4.jpg" width="200" alt="now playing screen with playback controls"> |
-|     <img src="metadata/android/en-US/images/phoneScreenshots/9.jpg" width="200" alt="active downloads screen">     |     <img src="metadata/android/en-US/images/phoneScreenshots/3.jpg" width="200" alt="home screen with mini player">      |          <img src="metadata/android/en-US/images/phoneScreenshots/7.jpg" width="200" alt="settings screen">          |       <img src="metadata/android/en-US/images/phoneScreenshots/8.jpg" width="200" alt="appearance and theme settings">       |
+|                                                                                                                         |                                                                                                                          |                                                                                                                      |                                                                                                                              |
+| :---------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: |
+|   <img src="metadata/android/en-US/images/phoneScreenshots/1.jpg" width="200" alt="library view showing audiobooks">    | <img src="metadata/android/en-US/images/phoneScreenshots/5.jpg" width="200" alt="audiobook detail screen with chapters"> | <img src="metadata/android/en-US/images/phoneScreenshots/4.jpg" width="200" alt="series view listing related books"> | <img src="metadata/android/en-US/images/phoneScreenshots/2.jpg" width="200" alt="now playing screen with playback controls"> |
+| <img src="metadata/android/en-US/images/phoneScreenshots/3.jpg" width="200" alt="now playing screen with big controls"> |     <img src="metadata/android/en-US/images/phoneScreenshots/6.jpg" width="200" alt="home screen with mini player">      |        <img src="metadata/android/en-US/images/phoneScreenshots/7.jpg" width="200" alt="appearance settings">        |          <img src="metadata/android/en-US/images/phoneScreenshots/8.jpg" width="200" alt="customization settings">           |
 
 ## Roadmap
 
-- Additional player enhancements (bookmarks, equalizer)
+- Additional player enhancements (equalizer)
 - Collections / playlists support
 
 ## Tech Stack
