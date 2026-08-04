@@ -44,10 +44,37 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 |   <img src="metadata/android/en-US/images/phoneScreenshots/1.jpg" width="200" alt="library view showing audiobooks">    | <img src="metadata/android/en-US/images/phoneScreenshots/5.jpg" width="200" alt="audiobook detail screen with chapters"> | <img src="metadata/android/en-US/images/phoneScreenshots/4.jpg" width="200" alt="series view listing related books"> | <img src="metadata/android/en-US/images/phoneScreenshots/2.jpg" width="200" alt="now playing screen with playback controls"> |
 | <img src="metadata/android/en-US/images/phoneScreenshots/3.jpg" width="200" alt="now playing screen with big controls"> |     <img src="metadata/android/en-US/images/phoneScreenshots/6.jpg" width="200" alt="home screen with mini player">      |        <img src="metadata/android/en-US/images/phoneScreenshots/7.jpg" width="200" alt="appearance settings">        |          <img src="metadata/android/en-US/images/phoneScreenshots/8.jpg" width="200" alt="customization settings">           |
 
-## Roadmap
+## Feature Comparison
 
-- Additional player enhancements (equalizer)
-- Collections / playlists support
+> **Storii is not trying to out-feature the [official Audiobookshelf app](https://github.com/advplyr/audiobookshelf-app). It is an opinionated alternate UI focused on a clean listening experience.**
+
+| Feature                               | Storii | Official ABS app |
+| ------------------------------------- | :----: | :--------------: |
+| Audiobook & Podcast streaming         |   ✅   |        ✅        |
+| Offline downloads                     |   ✅   |        ✅        |
+| Sleep timer                           |   ✅   |        ✅        |
+| Playback speed control                |   ✅   |        ✅        |
+| Chapter navigation                    |   ✅   |        ✅        |
+| Bookmarks                             |   ✅   |        ✅        |
+| Multi-server support                  |   ✅   |        ✅        |
+| Multi-user / OIDC                     |   ✅   |        ✅        |
+| Library browsing (filter/sort/series) |   ✅   |        ✅        |
+| Listening history                     |   ✅   |        ✅        |
+| Custom themes & fonts                 |   ✅   |        ❌        |
+| Dynamic colors (Material You)         |   ✅   |        ❌        |
+| Navigation customization              |   ✅   |        ❌        |
+| Collections / Playlists               |   💡   |        ✅        |
+| Equalizer                             |   💡   |        ❓        |
+| Server management / admin             |   💡   |        ❌        |
+| eBook reader                          |   💡   |        ✅        |
+| Chromecast                            |   💡   |        ✅        |
+| Android Auto                          |   💡   |        ✅        |
+| iOS support [^1]                      |   ⚠️   |        ✅        |
+| Desktop apps                          |   💡   |        ❌        |
+
+> ✅ Supported &nbsp; ❌ **Not** supported &nbsp; 🔜 Planned &nbsp; 💡 On Request &nbsp; ⚠️ Partial
+
+[^1]: An IPA can be provided for sideloading. App Store version not planned
 
 ## Tech Stack
 
