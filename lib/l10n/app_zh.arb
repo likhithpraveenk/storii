@@ -473,5 +473,8 @@
   "colored": "纯色",
   "gradient": "渐变",
   "blurredImage": "模糊封面",
-  "playerBackgroundTheme": "播放器背景主题"
+  "playerBackgroundTheme": "播放器背景主题",
+  "playbackControlsLayout": "播放控制布局",
+  "defaultWord": "默认",
+  "big": "宽松"
 }
