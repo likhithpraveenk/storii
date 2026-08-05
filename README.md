@@ -99,9 +99,11 @@ Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before
 
 ### Localization
 
-Do you wish to use the app in your language? Help translate on [Weblate](https://hosted.weblate.org/engage/storii/).
+Do you wish to use the app in your language? Help translate on [Weblate/Storii](https://hosted.weblate.org/engage/storii/).
 
 [![Translation status](https://hosted.weblate.org/widget/storii/app/multi-auto.svg)](https://hosted.weblate.org/engage/storii/)
+
+Thanks to [Weblate](https://weblate.org/) for making this project's translations possible through their free, libre hosting.
 
 ## License
 
