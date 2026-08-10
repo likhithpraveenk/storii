@@ -34,6 +34,7 @@ class ApiRoutes {
   static const _librarySeriesById = '/api/libraries/:id/series/:seriesId';
   static const _authors = '/api/libraries/:id/authors';
   static const _librarySearch = '/api/libraries/:id/search';
+  static const _libraryScan = '/api/libraries/:id/scan';
 
   static String libraryById(String id) => _build(_libraryById, {'id': id});
   static String libraryItems(String id) => _build(_libraryItems, {'id': id});
@@ -46,6 +47,7 @@ class ApiRoutes {
       _build(_librarySeriesById, {'id': id, 'seriesId': seriesId});
   static String authors(String id) => _build(_authors, {'id': id});
   static String librarySearch(String id) => _build(_librarySearch, {'id': id});
+  static String libraryScan(String id) => _build(_libraryScan, {'id': id});
 
   // Items
   static const _itemById = '/api/items/:id';
@@ -54,6 +56,8 @@ class ApiRoutes {
   static const _itemCover = '/api/items/:id/cover';
   static const _itemPlay = '/api/items/:id/play';
   static const _itemPlayEpisode = '/api/items/:id/play/:episodeId';
+  static const _itemScan = '/api/items/:id/scan';
+  static const _itemMatch = '/api/items/:id/match';
 
   static String itemById(String id) => _build(_itemById, {'id': id});
   static String itemAudioFileDownload(String id, String ino) =>
@@ -63,6 +67,8 @@ class ApiRoutes {
   static String itemPlay(String id) => _build(_itemPlay, {'id': id});
   static String itemPlayEpisode(String id, String episodeId) =>
       _build(_itemPlayEpisode, {'id': id, 'episodeId': episodeId});
+  static String itemScan(String id) => _build(_itemScan, {'id': id});
+  static String itemMatch(String id) => _build(_itemMatch, {'id': id});
 
   // Author
   static const _authorById = '/api/authors/:id';
@@ -117,4 +123,9 @@ class ApiRoutes {
   static String sessionClose(String id) => _build(_sessionClose, {'id': id});
   static String sessionOpenTrack(String id, String index) =>
       _build(_sessionOpenTrack, {'id': id, 'index': index});
+
+  //
+  // Search Routes
+  //
+  static const metadataProviders = '/api/search/providers';
 }

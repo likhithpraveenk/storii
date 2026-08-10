@@ -9,6 +9,7 @@ dependencies:
   dio: ^5.9.2
   freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
+  mime: ^2.0.0
   socket_io_client: ^3.1.6
 
 dev_dependencies:
