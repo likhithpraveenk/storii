@@ -91,3 +91,36 @@ final class UserPermissionsProvider
 }
 
 String _$userPermissionsHash() => r'753fe88499d06fead54880b3b1504222ceaaa3de';
+
+@ProviderFor(isUserAdmin)
+final isUserAdminProvider = IsUserAdminProvider._();
+
+final class IsUserAdminProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
+    with $FutureModifier<bool>, $FutureProvider<bool> {
+  IsUserAdminProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'isUserAdminProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$isUserAdminHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<bool> create(Ref ref) {
+    return isUserAdmin(ref);
+  }
+}
+
+String _$isUserAdminHash() => r'a1e38ba84e3285e4003b13e9fec6dc4356f92ed4';

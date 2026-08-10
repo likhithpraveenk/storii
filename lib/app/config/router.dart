@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/admin/ui/admin_screen.dart';
 import 'package:storii/features/auth/logic/add_user_notifier.dart';
 import 'package:storii/features/auth/ui/server_list_screen.dart';
 import 'package:storii/features/author/ui/author_detail_screen.dart';
@@ -50,6 +51,7 @@ enum AppRoute {
   collections('/collections'),
   downloads('/downloads'),
   latest('/latest'),
+  admin('/admin'),
   more('/more'),
   settings('/more/settings'),
   appearanceSettings('/more/settings/appearance'),
@@ -287,6 +289,15 @@ final routerProvider = Provider<GoRouter>((ref) {
                   final id = extra['id'] as String;
                   return ItemDetailScreen(key: ValueKey(id), id: id);
                 },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoute.admin.path,
+                builder: (context, state) => const AdminScreen(),
+                routes: const [],
               ),
             ],
           ),

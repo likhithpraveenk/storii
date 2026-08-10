@@ -34,3 +34,9 @@ Future<UserPermissions?> userPermissions(Ref ref) async {
   final user = await ref.watch(serverUserProvider.future);
   return user.permissions;
 }
+
+@riverpod
+Future<bool> isUserAdmin(Ref ref) async {
+  final user = await ref.watch(serverUserProvider.future);
+  return user.type.isAdmin;
+}

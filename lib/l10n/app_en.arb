@@ -476,5 +476,8 @@
   "playerBackgroundTheme": "Player background theme",
   "playbackControlsLayout": "Playback Controls Layout",
   "defaultWord": "Default",
-  "big": "Big"
+  "big": "Big",
+  "admin": "Admin",
+  "loginWithAdmin": "Login with admin/root user to access this screen",
+  "scan": "Scan"
 }
