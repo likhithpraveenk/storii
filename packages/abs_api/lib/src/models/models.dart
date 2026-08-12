@@ -51,6 +51,7 @@ export 'sessions_response.dart';
 export 'shelf.dart';
 export 'sync_local_session_response.dart';
 export 'sync_session_request_params.dart';
+export 'task.dart';
 export 'upsert_progress_request_params.dart';
 export 'user.dart';
 export 'user_item_progress_updated_event.dart';

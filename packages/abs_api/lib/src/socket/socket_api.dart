@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:abs_api/src/socket/events/task_events.dart';
 import 'package:abs_api/src/socket/events/user_events.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 class SocketApi {
   final Socket socket;
   late final UserSocketEvents user;
+  late final TaskEvents taskEvents;
   bool _initialized = false;
   late final Stream<bool> isConnected;
 
@@ -18,6 +20,7 @@ class SocketApi {
             .build(),
       ) {
     user = UserSocketEvents(socket);
+    taskEvents = TaskEvents(socket);
 
     final controller = StreamController<bool>.broadcast();
     isConnected = controller.stream;

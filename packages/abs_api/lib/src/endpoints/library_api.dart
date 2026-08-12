@@ -139,7 +139,7 @@ class LibraryApi {
     await api.request(
       ApiRoutes.libraryScan(libraryId),
       method: .post,
-      body: {'force': forceScan ? '1' : '0'},
+      query: {'force': forceScan ? '1' : '0'},
     );
   }
 }
