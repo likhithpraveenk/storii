@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/user_provider.dart';
+import 'package:storii/features/admin/ui/library_management_screen.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
@@ -32,7 +33,7 @@ class AdminScreen extends ConsumerWidget {
               ),
             );
           }
-          return ListView(children: const []);
+          return ListView(children: const [LibraryManagementTile()]);
         },
         loading: () => const Center(child: RandomWaveform()),
         error: (e, st) => ErrorRetryWidget(

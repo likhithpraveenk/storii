@@ -5,6 +5,7 @@ import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/admin/ui/admin_screen.dart';
+import 'package:storii/features/admin/ui/library_management_screen.dart';
 import 'package:storii/features/auth/logic/add_user_notifier.dart';
 import 'package:storii/features/auth/ui/server_list_screen.dart';
 import 'package:storii/features/author/ui/author_detail_screen.dart';
@@ -52,6 +53,7 @@ enum AppRoute {
   downloads('/downloads'),
   latest('/latest'),
   admin('/admin'),
+  adminLibraries('/admin/libraries'),
   more('/more'),
   settings('/more/settings'),
   appearanceSettings('/more/settings/appearance'),
@@ -297,7 +299,13 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.admin.path,
                 builder: (context, state) => const AdminScreen(),
-                routes: const [],
+                routes: [
+                  GoRoute(
+                    path: 'libraries',
+                    builder: (context, state) =>
+                        const LibraryManagementScreen(),
+                  ),
+                ],
               ),
             ],
           ),
