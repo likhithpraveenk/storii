@@ -24,8 +24,11 @@ runs:
       shell: bash
       run: |
         dart run build_runner build
+        cd packages/abs_api
+        dart run build_runner build
+        cd ../..
         if [[ -n $(git status --porcelain) ]]; then
-          echo "::error::Please run 'dart run build_runner build' and commit the changes"
+          echo "::error::Please run 'dart run build_runner build' in either root directory or packages/abs_api and commit the changes"
           git status --porcelain
           exit 1
         fi
