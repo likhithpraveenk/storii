@@ -53,6 +53,9 @@ class HistoryEventTile extends ConsumerWidget {
     final listenedMinutes = event.listened.inMinutes;
     final listened = event.listened.toReadableDuration();
 
+    final chapterInfo = item?.historyPosition(event.position);
+    final globalPosition = event.position.toTime(padHours: true);
+
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -71,49 +74,64 @@ class HistoryEventTile extends ConsumerWidget {
             const SizedBox(width: 8),
             Icon(_icon, size: 16, color: _color(context)),
             const SizedBox(width: 8),
-            Expanded(
-              child: Text(event.kind.label, style: theme.textTheme.bodyMedium),
-            ),
-            if (event.playbackError) ...[
-              Text(
-                l10n.playbackError,
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.error,
-                  fontStyle: .italic,
-                  overflow: .ellipsis,
+            Text(event.kind.label, style: theme.textTheme.bodyMedium),
+            const Spacer(),
+            Column(
+              crossAxisAlignment: .end,
+              children: [
+                if (showChapter && chapterInfo?.name != null)
+                  Text(
+                    chapterInfo!.name!,
+                    style: theme.textTheme.bodySmall,
+                    textAlign: .right,
+                    overflow: .ellipsis,
+                  ),
+                Row(
+                  children: [
+                    if (event.playbackError) ...[
+                      Text(
+                        l10n.playbackError,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: theme.colorScheme.error,
+                          fontStyle: .italic,
+                          overflow: .ellipsis,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                    ],
+                    if (listenedMinutes > 0) ...[
+                      Text(
+                        '+$listened',
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                          fontStyle: .italic,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                    ],
+                    if (event.syncAttempt) ...[
+                      Icon(
+                        event.syncSuccess
+                            ? Icons.cloud_done_outlined
+                            : Icons.error_outline,
+                        size: 14,
+                        color: event.syncSuccess
+                            ? theme.colorScheme.primary
+                            : theme.colorScheme.error,
+                      ),
+                      const SizedBox(width: 6),
+                    ],
+                    Text(
+                      showChapter && chapterInfo?.position != null
+                          ? chapterInfo!.position
+                          : globalPosition,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontFeatures: [const .tabularFigures()],
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(width: 6),
-            ],
-            if (listenedMinutes > 0) ...[
-              Text(
-                '+$listened',
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                  fontStyle: .italic,
-                ),
-              ),
-              const SizedBox(width: 6),
-            ],
-            if (event.syncAttempt) ...[
-              Icon(
-                event.syncSuccess
-                    ? Icons.cloud_done_outlined
-                    : Icons.error_outline,
-                size: 14,
-                color: event.syncSuccess
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.error,
-              ),
-              const SizedBox(width: 6),
-            ],
-            Text(
-              showChapter
-                  ? '${item?.historyPosition(event.position)}'
-                  : event.position.toTime(padHours: true),
-              style: theme.textTheme.bodySmall?.copyWith(
-                fontFeatures: [const .tabularFigures()],
-              ),
+              ],
             ),
           ],
         ),

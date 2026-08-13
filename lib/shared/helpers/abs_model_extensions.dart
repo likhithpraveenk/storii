@@ -255,22 +255,22 @@ extension AudiobookX on LibraryItem {
   bool get hideFromContinue =>
       userMediaProgress?.hideFromContinueListening ?? false;
 
-  String historyPosition(Duration position) {
+  ({String? name, String position}) historyPosition(Duration position) {
     if (chapters.isNotEmpty) {
       final index = chapters.lastIndexWhere((c) => position >= c.start);
       final chapter = chapters[index < 0 ? 0 : index];
       final posString = (position - chapter.start).toTime(padHours: true);
-      return '#${index + 1} $posString';
+      return (name: chapter.title, position: posString);
     }
 
     if (tracks.isNotEmpty) {
       final index = tracks.lastIndexWhere((t) => position >= t.startOffset);
       final track = tracks[index < 0 ? 0 : index];
       final posString = (position - track.startOffset).toTime(padHours: true);
-      return '#${index + 1} $posString';
+      return (name: track.title, position: posString);
     }
 
-    return position.toTime(padHours: true);
+    return (name: null, position: position.toTime(padHours: true));
   }
 
   bool get isBook => mediaType == .book;
