@@ -85,7 +85,9 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
         .value;
 
     final options = <_Option>[];
-    if (mediaProgress != null && mediaProgress.isFinished == true) {
+    if (mediaProgress != null &&
+        mediaProgress.isFinished == true &&
+        !widget.inDetailScreen) {
       options.add((
         title: l10n.removeProgress,
         icon: Icons.delete_outline,
@@ -102,7 +104,9 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
           l10n.progressRemoveFailed,
         ),
       ));
-    } else {
+    }
+
+    if (mediaProgress?.isFinished != true && !widget.inDetailScreen) {
       options.add((
         title: l10n.markAsComplete,
         icon: Icons.beenhere_outlined,

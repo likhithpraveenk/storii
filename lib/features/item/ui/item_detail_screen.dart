@@ -166,6 +166,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                 itemId: widget.id,
                 inDetailScreen: true,
               ),
+              tooltip: l10n.more,
               icon: const Icon(Icons.more_horiz),
             ),
           ),
