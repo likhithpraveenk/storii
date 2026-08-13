@@ -3,14 +3,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 enum HttpMethod { get, post, patch, delete }
 
 enum UserType {
-  root(0),
-  admin(1),
-  user(2),
-  guest(3);
-
-  final int value;
-
-  const UserType(this.value);
+  root,
+  admin,
+  user,
+  guest;
 
   bool get isAdmin => switch (this) {
     .root || .admin => true,

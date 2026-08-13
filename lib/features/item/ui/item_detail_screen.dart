@@ -15,6 +15,7 @@ import 'package:storii/features/item/ui/metadata_wrap.dart';
 import 'package:storii/features/item/ui/play_button.dart';
 import 'package:storii/features/item/ui/progress_bar.dart';
 import 'package:storii/features/item/ui/series_chips_list.dart';
+import 'package:storii/features/library/ui/more_options_widget.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
@@ -154,6 +155,18 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                 context.pop();
               },
               icon: const Icon(Icons.arrow_back),
+            ),
+          ),
+          Positioned(
+            top: MediaQuery.paddingOf(context).top,
+            right: 4,
+            child: IconButton(
+              onPressed: () => showMoreItemOptionsSheet(
+                context,
+                itemId: widget.id,
+                inDetailScreen: true,
+              ),
+              icon: const Icon(Icons.more_horiz),
             ),
           ),
         ],

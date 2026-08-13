@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
-import 'package:storii/features/item/logic/progress_notifier.dart';
+import 'package:storii/features/item/logic/user_progress_actions.dart';
 import 'package:storii/features/item/ui/episode_metadata_sheet.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
@@ -49,7 +49,7 @@ class EpisodeActionButtons extends ConsumerWidget {
               onTap: () async {
                 final success = await ref
                     .read(
-                      mediaProgressProvider(
+                      userProgressActionsProvider(
                         episode.libraryItemId,
                         episode.id,
                       ).notifier,
@@ -71,11 +71,11 @@ class EpisodeActionButtons extends ConsumerWidget {
           ),
         if (progress != null)
           IconButton(
-            tooltip: l10n.removeProgressTitle,
+            tooltip: l10n.removeProgressQ,
             icon: const Icon(Icons.delete_outline, size: 20),
             onPressed: () => AppBottomSheet.show(
               context,
-              title: l10n.removeProgressTitle,
+              title: l10n.removeProgressQ,
               body: Padding(
                 padding: const .fromLTRB(24, 0, 24, 24),
                 child: Text(
@@ -91,7 +91,7 @@ class EpisodeActionButtons extends ConsumerWidget {
               onTap: () async {
                 final success = await ref
                     .read(
-                      mediaProgressProvider(
+                      userProgressActionsProvider(
                         episode.libraryItemId,
                         episode.id,
                       ).notifier,

@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/connection_providers.dart';
-import 'package:storii/features/item/logic/progress_notifier.dart';
+import 'package:storii/features/item/logic/user_progress_actions.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/playback_history.dart';
 import 'package:storii/features/player/logic/playback_sync_service.dart';
@@ -44,7 +44,7 @@ class SessionSyncWatcher extends _$SessionSyncWatcher {
         onClose: () => ref.read(sessionProvider.notifier).close(),
         onMarkComplete: () => ref
             .read(
-              mediaProgressProvider(
+              userProgressActionsProvider(
                 session.libraryItemId,
                 session.episodeId,
               ).notifier,

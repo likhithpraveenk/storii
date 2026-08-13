@@ -9,15 +9,24 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/library/ui/item_card_progress_widget.dart';
+import 'package:storii/features/library/ui/more_options_widget.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class LibraryItemCard extends ConsumerWidget {
-  const LibraryItemCard(this.item, {super.key, this.showPlay = false});
+  const LibraryItemCard(
+    this.item, {
+    super.key,
+    this.showPlay = false,
+    this.fromContinueListening = false,
+    this.fromContinueSeries = false,
+  });
   final LibraryItem item;
   final bool showPlay;
+  final bool fromContinueListening;
+  final bool fromContinueSeries;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,6 +49,18 @@ class LibraryItemCard extends ConsumerWidget {
           context.push(AppRoute.itemDetail.path, extra: {'id': item.id});
         }
       },
+      onLongPress: () => showMoreItemOptionsSheet(
+        context,
+        itemId: item.id,
+        episodeId: item.recentEpisode?.id,
+        fromContinueListening: fromContinueListening,
+        fromContinueSeries: fromContinueSeries,
+        seriesId:
+            item.collapsedSeries?.id ??
+            item.media.metadata.mapOrNull(
+              book: (m) => m.series?.firstOrNull?.id,
+            ),
+      ),
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       child: Column(

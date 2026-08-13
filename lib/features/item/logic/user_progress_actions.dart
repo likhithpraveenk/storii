@@ -7,10 +7,10 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
 
-part 'progress_notifier.g.dart';
+part 'user_progress_actions.g.dart';
 
 @riverpod
-class MediaProgressNotifier extends _$MediaProgressNotifier {
+class UserProgressActionsNotifier extends _$UserProgressActionsNotifier {
   @override
   void build(String itemId, [String? episodeId]) {}
 
@@ -24,7 +24,7 @@ class MediaProgressNotifier extends _$MediaProgressNotifier {
           episodeId: episodeId,
           params: const UpsertProgressRequestParams(isFinished: true),
         ),
-        source: 'MediaProgressNotifier',
+        source: 'UserProgressActionsNotifier',
       );
       return true;
     } on AppError catch (_) {
@@ -38,7 +38,7 @@ class MediaProgressNotifier extends _$MediaProgressNotifier {
     try {
       await ref.logApiCall(
         () => api.removeMediaProgress(mediaProgressId: progressId),
-        source: 'MediaProgressNotifier',
+        source: 'UserProgressActionsNotifier',
       );
       return true;
     } on AppError catch (_) {
@@ -56,7 +56,49 @@ class MediaProgressNotifier extends _$MediaProgressNotifier {
           episodeId: episodeId,
           params: const UpsertProgressRequestParams(isFinished: false),
         ),
-        source: 'MediaProgressNotifier',
+        source: 'UserProgressActionsNotifier',
+      );
+      return true;
+    } on AppError catch (_) {
+      return false;
+    }
+  }
+
+  Future<bool> removeFromContinueListening(String mediaProgressId) async {
+    final user = await ref.read(authenticatedUserProvider.future);
+    final api = ref.read(meApiProvider(user));
+    try {
+      await ref.logApiCall(
+        () => api.removeFromContinueListening(mediaProgressId: mediaProgressId),
+        source: 'UserProgressActionsNotifier',
+      );
+      return true;
+    } on AppError catch (_) {
+      return false;
+    }
+  }
+
+  Future<bool> removeSeriesFromContinueListening(String seriesId) async {
+    final user = await ref.read(authenticatedUserProvider.future);
+    final api = ref.read(meApiProvider(user));
+    try {
+      await ref.logApiCall(
+        () => api.removeSeriesFromContinueListening(seriesId: seriesId),
+        source: 'UserProgressActionsNotifier',
+      );
+      return true;
+    } on AppError catch (_) {
+      return false;
+    }
+  }
+
+  Future<bool> reAddSeriesToContinueListening(String seriesId) async {
+    final user = await ref.read(authenticatedUserProvider.future);
+    final api = ref.read(meApiProvider(user));
+    try {
+      await ref.logApiCall(
+        () => api.reAddSeriesToContinueListening(seriesId: seriesId),
+        source: 'UserProgressActionsNotifier',
       );
       return true;
     } on AppError catch (_) {

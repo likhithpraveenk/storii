@@ -91,6 +91,8 @@ class ApiRoutes {
   static const _meItemBookmarkTime = '/api/me/item/:id/bookmark/:time';
   static const _meSeriesRemove =
       '/api/me/series/:id/remove-from-continue-listening';
+  static const _meSeriesReAdd =
+      '/api/me/series/:id/readd-to-continue-listening';
 
   static String meProgressRemove(String id) =>
       _build(_meProgressRemove, {'id': id});
@@ -105,6 +107,7 @@ class ApiRoutes {
       _build(_meItemBookmarkTime, {'id': id, 'time': time});
   static String meSeriesRemove(String id) =>
       _build(_meSeriesRemove, {'id': id});
+  static String meSeriesReAdd(String id) => _build(_meSeriesReAdd, {'id': id});
 
   //
   // Playback Session Routes

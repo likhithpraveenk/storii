@@ -235,10 +235,10 @@
     }
   },
   "chapters": "章节",
-  "removeProgressTitle": "移除进度？",
+  "removeProgressQ": "移除进度？",
   "removeProgressMessage": "这将重置您的收听进度，且无法撤销。",
   "remove": "移除",
-  "markAsComplete": "标记为已完成？",
+  "markAsCompleteQ": "标记为已完成？",
   "confirm": "确认",
   "progressMarkedComplete": "已标记为完成",
   "progressMarkCompleteFailed": "标记为完成失败",

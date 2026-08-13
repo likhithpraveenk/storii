@@ -4,8 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/admin/ui/library_management_screen.dart';
-import 'package:storii/shared/widgets/error_retry.dart';
-import 'package:storii/shared/widgets/waveform.dart';
 
 class AdminScreen extends ConsumerWidget {
   const AdminScreen({super.key});
@@ -13,7 +11,16 @@ class AdminScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
-    final isUserAdminAsync = ref.watch(isUserAdminProvider);
+    final isAdmin = ref.watch(isUserAdminProvider);
+    if (!isAdmin) {
+      return Scaffold(
+        appBar: AppBar(title: Text(l10n.admin, style: textTheme.titleLarge)),
+        body: Padding(
+          padding: const .all(16),
+          child: Center(child: Text(l10n.loginWithAdmin, textAlign: .center)),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -23,24 +30,7 @@ class AdminScreen extends ConsumerWidget {
         ),
         title: Text(l10n.admin, style: textTheme.titleLarge),
       ),
-      body: isUserAdminAsync.when(
-        data: (isAdmin) {
-          if (!isAdmin) {
-            return Padding(
-              padding: const .all(16),
-              child: Center(
-                child: Text(l10n.loginWithAdmin, textAlign: .center),
-              ),
-            );
-          }
-          return ListView(children: const [LibraryManagementTile()]);
-        },
-        loading: () => const Center(child: RandomWaveform()),
-        error: (e, st) => ErrorRetryWidget(
-          '$e',
-          onRetry: () => ref.invalidate(serverUserProvider),
-        ),
-      ),
+      body: ListView(children: const [LibraryManagementTile()]),
     );
   }
 }

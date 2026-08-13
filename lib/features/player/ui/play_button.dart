@@ -89,6 +89,7 @@ class PlayButtonBig extends ConsumerWidget {
     return Material(
       color: isNone ? scheme.inverseSurface : scheme.onPrimaryContainer,
       shape: RoundedRectangleBorder(borderRadius: .circular(kRadius)),
+      clipBehavior: .antiAlias,
       child: InkWell(
         onTap: switch (playbackStatus) {
           .buffering => null,

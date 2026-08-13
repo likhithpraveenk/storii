@@ -10,20 +10,13 @@ class AdminTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isUserAdminAsync = ref.watch(isUserAdminProvider);
+    final isAdmin = ref.watch(isUserAdminProvider);
+    if (!isAdmin) return const SizedBox.shrink();
 
-    return isUserAdminAsync.when(
-      data: (isAdmin) {
-        if (!isAdmin) return const SizedBox.shrink();
-
-        return ListTile(
-          leading: const Icon(Icons.admin_panel_settings_outlined),
-          title: Text(l10n.admin),
-          onTap: () => context.push(AppRoute.admin.path),
-        );
-      },
-      loading: () => const SizedBox.shrink(),
-      error: (_, _) => const SizedBox.shrink(),
+    return ListTile(
+      leading: const Icon(Icons.admin_panel_settings_outlined),
+      title: Text(l10n.admin),
+      onTap: () => context.push(AppRoute.admin.path),
     );
   }
 }

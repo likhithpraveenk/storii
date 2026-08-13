@@ -133,4 +133,14 @@ class MeApi {
     );
     return fromJson(response.data, User.fromJson);
   }
+
+  Future<User> reAddSeriesToContinueListening({
+    required String seriesId,
+  }) async {
+    final response = await api.request(
+      method: .get,
+      ApiRoutes.meSeriesReAdd(seriesId),
+    );
+    return fromJson(response.data, User.fromJson);
+  }
 }
