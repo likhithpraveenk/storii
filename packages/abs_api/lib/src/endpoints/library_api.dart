@@ -134,4 +134,12 @@ class LibraryApi {
     );
     return fromJson(response.data, SearchResponse.fromJson);
   }
+
+  Future<void> scan(String libraryId, {bool forceScan = false}) async {
+    await api.request(
+      ApiRoutes.libraryScan(libraryId),
+      method: .post,
+      query: {'force': forceScan ? '1' : '0'},
+    );
+  }
 }

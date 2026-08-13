@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'progress_notifier.dart';
+part of 'user_progress_actions.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,35 +9,35 @@ part of 'progress_notifier.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(MediaProgressNotifier)
-final mediaProgressProvider = MediaProgressNotifierFamily._();
+@ProviderFor(UserProgressActionsNotifier)
+final userProgressActionsProvider = UserProgressActionsNotifierFamily._();
 
-final class MediaProgressNotifierProvider
-    extends $NotifierProvider<MediaProgressNotifier, void> {
-  MediaProgressNotifierProvider._({
-    required MediaProgressNotifierFamily super.from,
+final class UserProgressActionsNotifierProvider
+    extends $NotifierProvider<UserProgressActionsNotifier, void> {
+  UserProgressActionsNotifierProvider._({
+    required UserProgressActionsNotifierFamily super.from,
     required (String, String?) super.argument,
   }) : super(
          retry: null,
-         name: r'mediaProgressProvider',
+         name: r'userProgressActionsProvider',
          isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
 
   @override
-  String debugGetCreateSourceHash() => _$mediaProgressNotifierHash();
+  String debugGetCreateSourceHash() => _$userProgressActionsNotifierHash();
 
   @override
   String toString() {
-    return r'mediaProgressProvider'
+    return r'userProgressActionsProvider'
         ''
         '$argument';
   }
 
   @$internal
   @override
-  MediaProgressNotifier create() => MediaProgressNotifier();
+  UserProgressActionsNotifier create() => UserProgressActionsNotifier();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(void value) {
@@ -49,7 +49,8 @@ final class MediaProgressNotifierProvider
 
   @override
   bool operator ==(Object other) {
-    return other is MediaProgressNotifierProvider && other.argument == argument;
+    return other is UserProgressActionsNotifierProvider &&
+        other.argument == argument;
   }
 
   @override
@@ -58,38 +59,40 @@ final class MediaProgressNotifierProvider
   }
 }
 
-String _$mediaProgressNotifierHash() =>
-    r'13a3024d5c361281c7ecd339ec4e264575ea8b2f';
+String _$userProgressActionsNotifierHash() =>
+    r'33eed9157f503c81d8a5df213e8732b4c97d6b2c';
 
-final class MediaProgressNotifierFamily extends $Family
+final class UserProgressActionsNotifierFamily extends $Family
     with
         $ClassFamilyOverride<
-          MediaProgressNotifier,
+          UserProgressActionsNotifier,
           void,
           void,
           void,
           (String, String?)
         > {
-  MediaProgressNotifierFamily._()
+  UserProgressActionsNotifierFamily._()
     : super(
         retry: null,
-        name: r'mediaProgressProvider',
+        name: r'userProgressActionsProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
         isAutoDispose: true,
       );
 
-  MediaProgressNotifierProvider call(String itemId, [String? episodeId]) =>
-      MediaProgressNotifierProvider._(
-        argument: (itemId, episodeId),
-        from: this,
-      );
+  UserProgressActionsNotifierProvider call(
+    String itemId, [
+    String? episodeId,
+  ]) => UserProgressActionsNotifierProvider._(
+    argument: (itemId, episodeId),
+    from: this,
+  );
 
   @override
-  String toString() => r'mediaProgressProvider';
+  String toString() => r'userProgressActionsProvider';
 }
 
-abstract class _$MediaProgressNotifier extends $Notifier<void> {
+abstract class _$UserProgressActionsNotifier extends $Notifier<void> {
   late final _$args = ref.$arg as (String, String?);
   String get itemId => _$args.$1;
   String? get episodeId => _$args.$2;

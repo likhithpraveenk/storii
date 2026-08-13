@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- admin panel: library scan
+- library item "more" actions: re-scan, remove progress, mark complete, and remove from continue listening
+- more actions can also be triggered by long press of item card on home screen
+
 ## [v0.5.14] - 2026-08-01
 
 ### Added

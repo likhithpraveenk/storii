@@ -18,6 +18,7 @@ Future<UserDomain> authenticatedUser(Ref ref) async {
 
   try {
     await ref.logApiCall(
+      // TODO: user details may have changed. update here
       () => ref.read(serverApiProvider(user)).authorize(),
       source: 'authenticatedUser',
       logMessage: 'Error authenticating user',

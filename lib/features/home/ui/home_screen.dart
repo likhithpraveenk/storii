@@ -76,7 +76,13 @@ class HomeScreen extends ConsumerWidget {
                 ) = switch (shelf) {
                   LibraryItemsShelf() => (
                     maxCardWidthInGrid,
-                    (entity) => LibraryItemCard(entity, showPlay: showPlay),
+                    (entity) => LibraryItemCard(
+                      entity,
+                      showPlay: showPlay,
+                      fromContinueListening:
+                          shelf.identity == .continueListening,
+                      fromContinueSeries: shelf.identity == .continueSeries,
+                    ),
                   ),
                   AuthorShelf() => (
                     maxCardWidthInGrid,

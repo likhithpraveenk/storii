@@ -69,9 +69,9 @@ Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
 
 const _$UserTypeEnumMap = {
   UserType.root: 'root',
-  UserType.guest: 'guest',
-  UserType.user: 'user',
   UserType.admin: 'admin',
+  UserType.user: 'user',
+  UserType.guest: 'guest',
 };
 
 Value? _$JsonConverterFromJson<Json, Value>(

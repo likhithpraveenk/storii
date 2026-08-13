@@ -131,7 +131,7 @@
   "trustAllCertificatesDescription": "Inaktivera certifikat validering",
   "chapters": "Kapitel",
   "remove": "Ta bort",
-  "markAsComplete": "Markera som färdig?",
+  "markAsCompleteQ": "Markera som färdig?",
   "confirm": "Bekräfta",
   "progressMarkedComplete": "Markerad som klar",
   "progressMarkCompleteFailed": "Misslyckades med att markera som klar",

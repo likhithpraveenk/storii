@@ -91,3 +91,43 @@ final class UserPermissionsProvider
 }
 
 String _$userPermissionsHash() => r'753fe88499d06fead54880b3b1504222ceaaa3de';
+
+@ProviderFor(isUserAdmin)
+final isUserAdminProvider = IsUserAdminProvider._();
+
+final class IsUserAdminProvider extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  IsUserAdminProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'isUserAdminProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$isUserAdminHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    return isUserAdmin(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$isUserAdminHash() => r'c96de0368859e48e9ef7a9637eff8a66936f808c';

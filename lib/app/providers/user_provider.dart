@@ -4,6 +4,7 @@ import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 
 part 'user_provider.g.dart';
 
@@ -33,4 +34,13 @@ class ServerUser extends _$ServerUser {
 Future<UserPermissions?> userPermissions(Ref ref) async {
   final user = await ref.watch(serverUserProvider.future);
   return user.permissions;
+}
+
+@riverpod
+bool isUserAdmin(Ref ref) {
+  final user = ref.watch(authenticatedUserProvider).value;
+  if (user == null) return false;
+  final type = UserType.values.firstWhereOrNull((t) => t.name == user.userType);
+  if (type == null) return false;
+  return type.isAdmin;
 }
