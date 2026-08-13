@@ -345,6 +345,12 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setPlaybackControlsLayout(PlaybackControlsLayout value) =>
       _save(state?.copyWith(playbackControlsLayout: value));
+
+  Future<void> setShowChapterProgressSlider(bool value) =>
+      _save(state?.copyWith(showChapterProgressSlider: value));
+
+  Future<void> setScaleTimeBySpeed(bool value) =>
+      _save(state?.copyWith(scaleTimeBySpeed: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -706,4 +712,24 @@ final playbackControlsLayoutProvider = Provider<PlaybackControlsLayout>(
     ),
   ),
   name: 'playbackControlsLayoutProvider',
+);
+
+final showChapterProgressSliderProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.showChapterProgressSlider ??
+          DefaultUserSettings.showChapterProgressSlider,
+    ),
+  ),
+  name: 'showChapterProgressSliderProvider',
+);
+
+final scaleTimeBySpeedProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.scaleTimeBySpeed ?? DefaultUserSettings.scaleTimeBySpeed,
+    ),
+  ),
+  name: 'scaleTimeBySpeedProvider',
 );
