@@ -4,6 +4,7 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
 import 'package:storii/storage/local/session_store.dart';
@@ -47,7 +48,7 @@ class SessionsCleanup extends _$SessionsCleanup {
 
         if (session.playMethod == .local) {
           await ref.logApiCall(
-            () => sessionsApi.syncLocal(localSession: session),
+            () => sessionsApi.syncLocal(localSession: session.stripped),
             source: _source,
             debug: true,
           );

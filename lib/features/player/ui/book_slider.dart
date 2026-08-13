@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -15,6 +16,8 @@ class _BookSliderState extends ConsumerState<BookSlider> {
   double? _dragValue;
   double? _latestSeekValue;
 
+  String format(double ms) => Duration(milliseconds: ms.toInt()).toTime();
+
   @override
   Widget build(BuildContext context) {
     final isEpisode = ref.watch(
@@ -25,32 +28,42 @@ class _BookSliderState extends ConsumerState<BookSlider> {
     final globalPosition = ref.watch(globalPositionProvider).value;
     final totalDuration = ref.watch(totalDurationProvider);
 
+    final showChapterSlider = ref.watch(showChapterProgressSliderProvider);
+
     final Duration duration;
     final Duration position;
+    final bool useGlobalSeek;
 
-    if (isEpisode) {
+    if (isEpisode || !showChapterSlider) {
       duration = totalDuration;
       position = globalPosition ?? Duration.zero;
+      useGlobalSeek = true;
     } else {
       duration = chapter?.duration ?? Duration.zero;
       position = chapterPosition ?? Duration.zero;
+      useGlobalSeek = false;
     }
 
+    final speed = ref.watch(localSpeedProvider);
     final durationMs = duration.inMilliseconds.toDouble();
-    double positionMs = position.inMilliseconds.toDouble().clamp(
+    final positionMs = position.inMilliseconds.toDouble().clamp(
       0.0,
       durationMs,
     );
 
+    // everything below operates in scaled (display) milliseconds
+    final scaledDurationMs = durationMs / speed;
+    var scaledPositionMs = positionMs / speed;
+
     if (_latestSeekValue != null) {
-      if ((positionMs - _latestSeekValue!).abs() < 1000) {
+      if ((scaledPositionMs - _latestSeekValue!).abs() < 1000) {
         _latestSeekValue = null;
       } else {
-        positionMs = _latestSeekValue!;
+        scaledPositionMs = _latestSeekValue!;
       }
     }
 
-    String format(double ms) => Duration(milliseconds: ms.toInt()).toTime();
+    final displayValue = _dragValue ?? scaledPositionMs;
 
     return Column(
       mainAxisSize: .min,
@@ -60,20 +73,21 @@ class _BookSliderState extends ConsumerState<BookSlider> {
             context,
           ).copyWith(thumbShape: const RoundRectSliderThumbShape()),
           child: Slider(
-            value: _dragValue ?? positionMs,
-            max: durationMs,
+            value: displayValue,
+            max: scaledDurationMs,
             onChanged: (value) => setState(() => _dragValue = value),
             onChangeEnd: (value) async {
+              final seekMs = (value * speed).toInt();
               setState(() {
                 _latestSeekValue = value;
                 _dragValue = null;
               });
-              if (isEpisode) {
+              if (useGlobalSeek) {
                 await audioHandler.seekFromGlobalPosition(
-                  Duration(milliseconds: value.toInt()),
+                  Duration(milliseconds: seekMs),
                 );
               } else {
-                await audioHandler.seek(Duration(milliseconds: value.toInt()));
+                await audioHandler.seek(Duration(milliseconds: seekMs));
               }
             },
             padding: const .fromLTRB(0, 16, 0, 8),
@@ -82,8 +96,12 @@ class _BookSliderState extends ConsumerState<BookSlider> {
         Row(
           mainAxisAlignment: .spaceBetween,
           children: [
-            Text(format(_dragValue ?? positionMs)),
-            Text(duration.toTime()),
+            Text(format(displayValue)),
+            Text(
+              Duration(
+                microseconds: (duration.inMicroseconds / speed).round(),
+              ).toTime(),
+            ),
           ],
         ),
       ],

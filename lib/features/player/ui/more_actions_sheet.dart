@@ -99,6 +99,24 @@ class _MoreActionsSheetState extends ConsumerState<MoreActionsSheet> {
             ...widget.remaining
                 .map((a) => a.widget(context, widget.session, inOverflow: true))
                 .whereType<Widget>(),
+            SwitchListTile(
+              value: ref.watch(showChapterProgressSliderProvider),
+              title: Text(l10n.chapterProgressBar),
+              secondary: const Icon(Icons.segment),
+              subtitle: Text(l10n.chapterProgressBarSubtitle),
+              onChanged: (value) => ref
+                  .read(userSettingsProvider.notifier)
+                  .setShowChapterProgressSlider(value),
+            ),
+            SwitchListTile(
+              value: ref.watch(scaleTimeBySpeedProvider),
+              title: Text(l10n.speedAdjustedTime),
+              secondary: const Icon(Icons.av_timer),
+              subtitle: Text(l10n.speedAdjustedTimeSubtitle),
+              onChanged: (value) => ref
+                  .read(userSettingsProvider.notifier)
+                  .setScaleTimeBySpeed(value),
+            ),
           ],
           if (_editMode) ...[
             Container(

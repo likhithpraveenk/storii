@@ -129,6 +129,11 @@ _UserSettings _$UserSettingsFromJson(
         json['playbackControlsLayout'],
       ) ??
       DefaultUserSettings.playbackControlsLayout,
+  showChapterProgressSlider:
+      json['showChapterProgressSlider'] as bool? ??
+      DefaultUserSettings.showChapterProgressSlider,
+  scaleTimeBySpeed:
+      json['scaleTimeBySpeed'] as bool? ?? DefaultUserSettings.scaleTimeBySpeed,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -179,6 +184,8 @@ Map<String, dynamic> _$UserSettingsToJson(
       _$PlayerBackgroundThemeEnumMap[instance.playerBackgroundTheme]!,
   'playbackControlsLayout':
       _$PlaybackControlsLayoutEnumMap[instance.playbackControlsLayout]!,
+  'showChapterProgressSlider': instance.showChapterProgressSlider,
+  'scaleTimeBySpeed': instance.scaleTimeBySpeed,
 };
 
 const _$NavTargetEnumMap = {

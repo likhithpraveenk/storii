@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - admin panel: library scan
 - library item "more" actions: re-scan, remove progress, mark complete, and remove from continue listening
 - more actions can also be triggered by long press of item card on home screen
+- playback history tile now shows chapter name alongside position
+- time adjusted per speed setting, chapter/total progress bar toggle
+
+### Fixed
+
+- local playback session losing listen time
 
 ## [v0.5.14] - 2026-08-01
 

@@ -140,6 +140,16 @@ extension PlaybackSessionX on PlaybackSession {
   bool get isPodcastEpisode => episodeId != null;
 
   bool get isBook => episodeId == null;
+
+  PlaybackSession get stripped => copyWith(
+    user: null,
+    audioTracks: [],
+    libraryItem: null,
+    mediaMetadata: episodeId != null
+        ? const MediaMetadata.podcast()
+        : const MediaMetadata.book(),
+    chapters: [],
+  );
 }
 
 extension ToPlaybackSession on LibraryItem {

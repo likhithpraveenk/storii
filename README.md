@@ -32,6 +32,7 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 - Customizable player: sleep timer, speed control, seek buttons, chapter navigation, listening history, and bookmarks
 - Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling
 - Navigation customization: reorder tabs, choose startup screen, label behavior
+- Server admin tools (admin users): trigger library scans, re-scan/re-match items
 
 ## Demo
 
@@ -65,7 +66,7 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 | Navigation customization              |   ✅   |        ❌        |
 | Collections / Playlists               |   💡   |        ✅        |
 | Equalizer                             |   💡   |        ❓        |
-| Server management / admin             |   💡   |        ❌        |
+| Server management / admin             |   ⚠️   |        ❌        |
 | eBook reader                          |   💡   |        ✅        |
 | Chromecast                            |   💡   |        ✅        |
 | Android Auto                          |   💡   |        ✅        |

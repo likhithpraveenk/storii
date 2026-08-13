@@ -486,10 +486,19 @@
   "blurredImage": "Blurred Image",
   "playerBackgroundTheme": "Player background theme",
   "playbackControlsLayout": "Playback Controls Layout",
+  "chapterProgressBar": "Chapter progress bar",
+  "chapterProgressBarSubtitle": "Off: show total progress",
+  "speedAdjustedTime": "Speed-adjusted time",
+  "speedAdjustedTimeSubtitle": "Show real time based on current speed",
   "defaultWord": "Default",
   "big": "Big",
   "admin": "Admin",
   "loginWithAdmin": "Login with admin/root user to access this screen",
   "scan": "Scan",
-  "reScan": "Re-scan"
+  "reScan": "Re-scan",
+  "itemScanAdded": "Item scanned: new content added",
+  "itemScanUpdated": "Item scanned: content updated",
+  "itemScanRemoved": "Item scanned: content removed",
+  "itemScanUpToDate": "Item is already up to date",
+  "itemScanNothing": "Item scanned: no changes"
 }

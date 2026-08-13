@@ -30,8 +30,18 @@ class FullPlayer extends ConsumerWidget {
     final globalPosition =
         ref.watch(globalPositionProvider).value ?? Duration.zero;
 
-    final currentPosition = globalPosition.toTime();
-    final totalDuration = session.duration.toTime();
+    final localSpeed = ref.watch(localSpeedProvider);
+    final scaleTimeBySpeed = ref.watch(scaleTimeBySpeedProvider);
+    final showChapterProgressSlider = ref.watch(
+      showChapterProgressSliderProvider,
+    );
+
+    Duration scale(Duration d) => scaleTimeBySpeed
+        ? Duration(microseconds: (d.inMicroseconds / localSpeed).round())
+        : d;
+
+    final currentPosition = scale(globalPosition).toTime();
+    final totalDuration = scale(session.duration).toTime();
 
     final title = session.isPodcastEpisode
         ? session.displayTitle ?? l10n.noTitle
@@ -72,17 +82,18 @@ class FullPlayer extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  '$currentPosition / $totalDuration',
-                  style: theme.textTheme.labelSmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant.withValues(
-                      alpha: 0.7,
+                if (showChapterProgressSlider)
+                  Text(
+                    '$currentPosition / $totalDuration',
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant.withValues(
+                        alpha: 0.7,
+                      ),
+                      fontWeight: .bold,
+                      letterSpacing: 0.8,
                     ),
-                    fontWeight: .bold,
-                    letterSpacing: 0.8,
+                    textAlign: .center,
                   ),
-                  textAlign: .center,
-                ),
                 const Padding(
                   padding: .symmetric(horizontal: 24),
                   child: BookSlider(),

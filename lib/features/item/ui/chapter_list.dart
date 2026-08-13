@@ -248,7 +248,7 @@ class _ChapterTile extends ConsumerWidget {
                 child: isActive
                     ? const PulsingDot(size: 8)
                     : Text(
-                        (index + 1).toString().padLeft(2, '0'),
+                        index.toString().padLeft(2, '0'),
                         style: textTheme.labelSmall?.copyWith(
                           color: scheme.onSurfaceVariant.withValues(alpha: 0.5),
                         ),

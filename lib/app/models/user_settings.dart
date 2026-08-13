@@ -49,6 +49,8 @@ class DefaultUserSettings {
   static const showMiniPlayerSeekButtons = false;
   static const PlayerBackgroundTheme playerBackgroundTheme = .none;
   static const PlaybackControlsLayout playbackControlsLayout = .defaultLayout;
+  static const showChapterProgressSlider = true;
+  static const scaleTimeBySpeed = true;
 }
 
 @freezed
@@ -149,6 +151,11 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.playbackControlsLayout)
     PlaybackControlsLayout playbackControlsLayout,
+
+    @Default(DefaultUserSettings.showChapterProgressSlider)
+    bool showChapterProgressSlider,
+
+    @Default(DefaultUserSettings.scaleTimeBySpeed) bool scaleTimeBySpeed,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

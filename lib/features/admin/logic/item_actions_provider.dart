@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
@@ -16,13 +17,19 @@ class ScanItem extends _$ScanItem {
 
     try {
       state = AsyncData({...?state.value}..add(itemId));
-      // TODO: use the nullable result below and convert to appropriate string for ui. add relevant strings to app_en.arb. run flutter pub get to regenerate strings
       final result = await ref.logApiCall(
         () => api.scan(libraryItemId: itemId),
         logMessage: 'Error scanning item',
         source: 'scanItem',
       );
-      return result?.name;
+      return switch (result) {
+        .added => l10n.itemScanAdded,
+        .updated => l10n.itemScanUpdated,
+        .removed => l10n.itemScanRemoved,
+        .upToDate => l10n.itemScanUpToDate,
+        .nothing => l10n.itemScanNothing,
+        _ => null,
+      };
     } finally {
       state = AsyncData({...?state.value}..remove(itemId));
     }

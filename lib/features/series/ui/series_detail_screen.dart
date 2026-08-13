@@ -35,7 +35,7 @@ class SeriesDetailScreen extends ConsumerWidget {
         actions: [
           IconButton(
             tooltip: l10n.more,
-            icon: const Icon(Icons.expand_more),
+            icon: const Icon(Icons.more_horiz),
             onPressed: () => AppBottomSheet.show(
               context,
               title: l10n.more,
