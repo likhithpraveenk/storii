@@ -106,7 +106,7 @@ class SessionNotifier extends _$SessionNotifier {
 
     final updated = session.copyWith(
       currentTime: position,
-      timeListening: totalListened,
+      timeListening: session.timeListening + totalListened,
       updatedAt: DateTime.now(),
     );
 
@@ -124,7 +124,7 @@ class SessionNotifier extends _$SessionNotifier {
       await ref.logApiCall(
         () => ref
             .read(sessionsApiProvider(user))
-            .syncLocal(localSession: updated),
+            .syncLocal(localSession: updated.stripped),
         source: 'SessionNotifier',
       );
       await ref.read(sessionStoreProvider.notifier).delete(updated.id);
