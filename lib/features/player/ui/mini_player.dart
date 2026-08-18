@@ -28,19 +28,17 @@ class MiniPlayer extends ConsumerWidget {
     final playbackStatus = ref.watch(playbackStatusProvider).value;
     final isLoading = playbackStatus == .buffering;
 
-    final totalDuration = ref.watch(totalDurationProvider);
-    final globalPosition =
-        ref.watch(globalPositionProvider).value ?? Duration.zero;
     final localSpeed = ref.watch(localSpeedProvider);
+    final (:duration, :position) = ref.watch(displayProgressProvider);
     final scaleTimeBySpeed = ref.watch(scaleTimeBySpeedProvider);
-    final remainingDuration = scaleTimeBySpeed
+    final remainingDuration = duration - position;
+    final scaledRemaining = scaleTimeBySpeed
         ? Duration(
-            microseconds:
-                ((totalDuration - globalPosition).inMicroseconds / localSpeed)
-                    .round(),
+            microseconds: (remainingDuration.inMicroseconds / localSpeed)
+                .round(),
           )
-        : totalDuration - globalPosition;
-    final remainingStr = remainingDuration.toReadableDuration(isLeft: true);
+        : remainingDuration;
+    final remainingStr = scaledRemaining.toReadableDuration(isLeft: true);
     final showSeekButtons = ref.watch(showMiniPlayerSeekButtonsProvider);
 
     return ThemedBackground(

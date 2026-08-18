@@ -85,6 +85,27 @@ Duration totalDuration(Ref ref) {
   return session.duration;
 }
 
+@riverpod
+({Duration duration, Duration position}) displayProgress(Ref ref) {
+  final isEpisode = ref.watch(
+    sessionProvider.select((s) => s?.episodeId != null),
+  );
+  final showChapterSlider = ref.watch(showChapterProgressSliderProvider);
+  final chapter = ref.watch(currentChapterProvider).value;
+  final chapterPosition = ref.watch(chapterPositionProvider).value;
+  final globalPosition =
+      ref.watch(globalPositionProvider).value ?? Duration.zero;
+  final totalDuration = ref.watch(totalDurationProvider);
+
+  if (isEpisode || !showChapterSlider) {
+    return (duration: totalDuration, position: globalPosition);
+  }
+  return (
+    duration: chapter?.duration ?? Duration.zero,
+    position: chapterPosition ?? Duration.zero,
+  );
+}
+
 class AudioPlayerState {
   final String? loadingItemId;
   final String? loadingEpisodeId;

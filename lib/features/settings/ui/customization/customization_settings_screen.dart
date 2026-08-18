@@ -51,7 +51,6 @@ class CustomizationSettingsScreen extends StatelessWidget {
           const ReorderNavTabsTile(),
           const NavLabelTile(),
           SettingsHeader(title: l10n.miniPlayer),
-          // TODO: progess chapter/global
           const ShowSeekButtonsTile(),
           SettingsHeader(title: l10n.fullPlayer),
           const PlayerBackgroundThemeTile(),

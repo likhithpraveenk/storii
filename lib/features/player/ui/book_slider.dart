@@ -23,26 +23,10 @@ class _BookSliderState extends ConsumerState<BookSlider> {
     final isEpisode = ref.watch(
       sessionProvider.select((s) => s?.episodeId != null),
     );
-    final chapter = ref.watch(currentChapterProvider).value;
-    final chapterPosition = ref.watch(chapterPositionProvider).value;
-    final globalPosition = ref.watch(globalPositionProvider).value;
-    final totalDuration = ref.watch(totalDurationProvider);
-
     final showChapterSlider = ref.watch(showChapterProgressSliderProvider);
 
-    final Duration duration;
-    final Duration position;
-    final bool useGlobalSeek;
-
-    if (isEpisode || !showChapterSlider) {
-      duration = totalDuration;
-      position = globalPosition ?? Duration.zero;
-      useGlobalSeek = true;
-    } else {
-      duration = chapter?.duration ?? Duration.zero;
-      position = chapterPosition ?? Duration.zero;
-      useGlobalSeek = false;
-    }
+    final (:duration, :position) = ref.watch(displayProgressProvider);
+    final useGlobalSeek = isEpisode || !showChapterSlider;
 
     final speed = ref.watch(localSpeedProvider);
     final scaleTimeBySpeed = ref.watch(scaleTimeBySpeedProvider);
@@ -116,9 +100,8 @@ class MiniProgressIndicator extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final position = ref.watch(globalPositionProvider).value ?? Duration.zero;
-    final duration = ref.watch(totalDurationProvider).inSeconds;
-    final progress = (position.inSeconds / duration).clamp(0.0, 1.0);
+    final (:duration, :position) = ref.watch(displayProgressProvider);
+    final progress = (position.inSeconds / duration.inSeconds).clamp(0.0, 1.0);
 
     return LinearProgressIndicator(
       value: progress,
