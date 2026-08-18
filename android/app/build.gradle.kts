@@ -1,21 +1,22 @@
+import com.android.build.api.variant.FilterConfiguration.FilterType
 import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
     id("com.android.application")
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    // The Flutter Gradle Plugin must be applied after the Android plugin.
     id("dev.flutter.flutter-gradle-plugin")
 }
 
 val keystoreProperties = Properties()
-val keystorePropertiesFile: File? = rootProject.file("key.properties")
-if (keystorePropertiesFile?.exists() ?: false) {
+val keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
 android {
     namespace = "com.likhithpraveenk.storii"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -26,11 +27,10 @@ android {
 
     defaultConfig {
         applicationId = "com.likhithpraveenk.storii"
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 24
+        targetSdk = 37
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        resValue("string", "app_name", "Storii")
         multiDexEnabled = true
     }
 
@@ -49,14 +49,12 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            )
+            optimization {
+                enable = true
+            }
             signingConfig = when {
                 System.getenv("KEY_ALIAS") != null -> signingConfigs.getByName("release")
-                keystorePropertiesFile?.exists() == true -> signingConfigs.getByName("release")
+                keystorePropertiesFile.exists() -> signingConfigs.getByName("release")
                 else -> {
                     println("WARNING: No signing credentials found. Building unsigned apk")
                     null
@@ -65,7 +63,7 @@ android {
         }
         debug {
             applicationIdSuffix = ".debug"
-            resValue("string", "app_name", "Storii (Debug)")
+            versionNameSuffix = " (Debug)"
             signingConfig = signingConfigs.getByName("debug")
         }
     }
@@ -74,16 +72,17 @@ android {
         includeInApk = false
         includeInBundle = false
     }
+}
 
-    val abiCodes = mapOf("armeabi-v7a" to 1, "arm64-v8a" to 2, "x86_64" to 3)
-    applicationVariants.configureEach {
-        val variant = this
+val abiCodes = mapOf("armeabi-v7a" to 1, "arm64-v8a" to 2, "x86_64" to 3)
+androidComponents {
+    onVariants { variant ->
         variant.outputs.forEach { output ->
-            val abiVersionCode =
-                abiCodes[output.filters.find { it.filterType == "ABI" }?.identifier]
+            val abi = output.filters.find { it.filterType == FilterType.ABI }?.identifier
+            val abiVersionCode = abiCodes[abi]
             if (abiVersionCode != null) {
-                (output as com.android.build.gradle.internal.api.ApkVariantOutputImpl).versionCodeOverride =
-                    variant.versionCode * 10 + abiVersionCode
+                val currentCode = output.versionCode.get()
+                output.versionCode.set(currentCode * 10 + abiVersionCode)
             }
         }
     }
@@ -100,5 +99,5 @@ flutter {
 }
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 }

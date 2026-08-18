@@ -1,4 +1,5 @@
 {
+  "@@locale": "da",
   "login": "Log ind",
   "logout": "Log ud",
   "addServer": "Tilføj server",
