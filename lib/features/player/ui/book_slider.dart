@@ -51,7 +51,7 @@ class _BookSliderState extends ConsumerState<BookSlider> {
       durationMs,
     );
 
-    // everything below operates in scaled (display) milliseconds
+    // TODO: respect scaleTimeBySpeedProvider
     final scaledDurationMs = durationMs / speed;
     var scaledPositionMs = positionMs / speed;
 

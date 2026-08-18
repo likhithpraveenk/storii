@@ -500,5 +500,7 @@
   "itemScanUpdated": "Item scanned: content updated",
   "itemScanRemoved": "Item scanned: content removed",
   "itemScanUpToDate": "Item is already up to date",
-  "itemScanNothing": "Item scanned: no changes"
+  "itemScanNothing": "Item scanned: no changes",
+  "miniPlayer": "Mini Player",
+  "fullPlayer": "Full Player"
 }

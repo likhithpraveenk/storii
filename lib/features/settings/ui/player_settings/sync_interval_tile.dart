@@ -27,7 +27,7 @@ class _SyncIntervalTileState extends ConsumerState<SyncIntervalTile> {
     final syncInterval = ref.watch(syncIntervalProvider);
     final notifier = ref.read(appSettingsProvider.notifier);
 
-    const durations = [10, 20, 30, 60];
+    const durations = [20, 40, 60, 120];
 
     return ListTile(
       leading: const Icon(Icons.sync_rounded),
@@ -49,9 +49,9 @@ class _SyncIntervalTileState extends ConsumerState<SyncIntervalTile> {
                   children: [
                     WheelPicker.fromIntRange(
                       initialValue: _selected,
-                      min: 5,
-                      max: 120,
-                      step: 5,
+                      min: 20,
+                      max: 300,
+                      step: 10,
                       onChangedEnd: (sec) => _selected = sec,
                       labelBuilder: (v) => '${v}s',
                       presets: durations,

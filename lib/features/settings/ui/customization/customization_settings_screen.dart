@@ -8,6 +8,7 @@ import 'package:storii/features/settings/ui/customization/player_background_them
 import 'package:storii/features/settings/ui/customization/reorder_nav_tabs.dart';
 import 'package:storii/features/settings/ui/customization/show_seek_buttons_tile.dart';
 import 'package:storii/features/settings/ui/customization/startup_nav.dart';
+import 'package:storii/features/settings/ui/settings_header.dart';
 
 class CustomizationSettingsTile extends StatelessWidget {
   const CustomizationSettingsTile({super.key});
@@ -44,13 +45,17 @@ class CustomizationSettingsScreen extends StatelessWidget {
         ),
       ),
       body: ListView(
-        children: const [
-          StartupNavTile(),
-          ReorderNavTabsTile(),
-          NavLabelTile(),
-          ShowSeekButtonsTile(),
-          PlayerBackgroundThemeTile(),
-          PlaybackControlsLayoutTile(),
+        children: [
+          SettingsHeader(title: l10n.navBar),
+          const StartupNavTile(),
+          const ReorderNavTabsTile(),
+          const NavLabelTile(),
+          SettingsHeader(title: l10n.miniPlayer),
+          // TODO: progess chapter/global
+          const ShowSeekButtonsTile(),
+          SettingsHeader(title: l10n.fullPlayer),
+          const PlayerBackgroundThemeTile(),
+          const PlaybackControlsLayoutTile(),
         ],
       ),
     );

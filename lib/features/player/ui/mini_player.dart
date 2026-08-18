@@ -33,6 +33,7 @@ class MiniPlayer extends ConsumerWidget {
         ref.watch(globalPositionProvider).value ?? Duration.zero;
     final remaining = totalDuration - globalPosition;
     final remainingStr = remaining.toReadableDuration(isLeft: true);
+    // TODO: respect scaleTimeBySpeedProvider
     final showSeekButtons = ref.watch(showMiniPlayerSeekButtonsProvider);
 
     return ThemedBackground(
