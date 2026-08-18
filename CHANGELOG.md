@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- support android 17
+
+### Fixed
+
+- miniplayer now respects the chapter progress bar setting for remaining time
+- player time displays now respect the scale time by speed setting
+- session sync interval capped at 5 minutes
+
 ## [v0.6.0] - 2026-08-13
 
 ### Added
