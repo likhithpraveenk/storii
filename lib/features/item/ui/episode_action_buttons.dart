@@ -1,6 +1,6 @@
 import 'package:abs_api/abs_api.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/ui/play_button.dart';
 import 'package:storii/features/player/ui/seek_button.dart';

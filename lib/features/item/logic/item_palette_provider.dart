@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:palette_generator_master/palette_generator_master.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/features/library/logic/cover_url_provider.dart';
