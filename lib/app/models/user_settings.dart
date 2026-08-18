@@ -51,6 +51,9 @@ class DefaultUserSettings {
   static const PlaybackControlsLayout playbackControlsLayout = .defaultLayout;
   static const showChapterProgressSlider = true;
   static const scaleTimeBySpeed = true;
+  static const osNotificationCanSeek = true;
+  static const osNotificationCanSkip = true;
+  static const osNotificationCanSkipChapter = false;
 }
 
 @freezed
@@ -156,6 +159,15 @@ sealed class UserSettings with _$UserSettings {
     bool showChapterProgressSlider,
 
     @Default(DefaultUserSettings.scaleTimeBySpeed) bool scaleTimeBySpeed,
+
+    @Default(DefaultUserSettings.osNotificationCanSeek)
+    bool osNotificationCanSeek,
+
+    @Default(DefaultUserSettings.osNotificationCanSkip)
+    bool osNotificationCanSkip,
+
+    @Default(DefaultUserSettings.osNotificationCanSkipChapter)
+    bool osNotificationCanSkipChapter,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

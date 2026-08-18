@@ -351,6 +351,15 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setScaleTimeBySpeed(bool value) =>
       _save(state?.copyWith(scaleTimeBySpeed: value));
+
+  Future<void> setOsNotificationCanSeek(bool value) =>
+      _save(state?.copyWith(osNotificationCanSeek: value));
+
+  Future<void> setOsNotificationCanSkip(bool value) =>
+      _save(state?.copyWith(osNotificationCanSkip: value));
+
+  Future<void> setOsNotificationCanSkipChapter(bool value) =>
+      _save(state?.copyWith(osNotificationCanSkipChapter: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -732,4 +741,35 @@ final scaleTimeBySpeedProvider = Provider<bool>(
     ),
   ),
   name: 'scaleTimeBySpeedProvider',
+);
+
+final osNotificationCanSeekProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.osNotificationCanSeek ?? DefaultUserSettings.osNotificationCanSeek,
+    ),
+  ),
+  name: 'osNotificationCanSeekProvider',
+);
+
+final osNotificationCanSkipProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.osNotificationCanSkip ?? DefaultUserSettings.osNotificationCanSkip,
+    ),
+  ),
+  name: 'osNotificationCanSkipProvider',
+);
+
+final osNotificationCanSkipChapterProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.osNotificationCanSkipChapter ??
+          DefaultUserSettings.osNotificationCanSkipChapter,
+    ),
+  ),
+  name: 'osNotificationCanSkipChapterProvider',
 );

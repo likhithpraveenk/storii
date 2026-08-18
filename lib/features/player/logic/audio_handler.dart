@@ -32,6 +32,9 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   final Duration Function() getSkipForward;
   final Duration Function() getSkipBackward;
+  final bool Function() canSeekInOsNotification;
+  final bool Function() canSkipInOsNotification;
+  final bool Function() canSkipChapterInOsNotification;
 
   AppPlaybackStatus? _lastStatus;
 
@@ -40,32 +43,12 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     required double speed,
     required this.getSkipForward,
     required this.getSkipBackward,
+    required this.canSeekInOsNotification,
+    required this.canSkipInOsNotification,
+    required this.canSkipChapterInOsNotification,
   }) {
     // initial playback event
-    playbackState.add(
-      PlaybackState(
-        controls: [
-          rewindMediaControl,
-          .pause,
-          .play,
-          fastForwardMediaControl,
-          skipToNextMediaControl,
-          skipToPreviousMediaControl,
-        ],
-        systemActions: const {
-          .seek,
-          .seekForward,
-          .seekBackward,
-          .playPause,
-          .rewind,
-          .fastForward,
-          .skipToNext,
-          .skipToPrevious,
-        },
-        androidCompactActionIndices: const [0, 1, 2],
-        speed: speed,
-      ),
-    );
+    playbackState.add(PlaybackState(speed: speed));
     _player.stateStream.listen((state) {
       // log('state stream: $state');
       if (state.status == .completed) _eventController.add(.complete);
@@ -120,6 +103,26 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         resolver.resolveChapterFromTrack(state.index, state.bufferedPosition) ??
         resolved;
 
+    final controls = <MediaControl>[
+      if (canSeekInOsNotification()) rewindMediaControl,
+      .pause,
+      .play,
+      if (canSkipInOsNotification()) fastForwardMediaControl,
+      if (canSkipChapterInOsNotification()) skipToNextMediaControl,
+      if (canSkipChapterInOsNotification()) skipToPreviousMediaControl,
+    ];
+
+    final systemActions = <MediaAction>{
+      if (canSeekInOsNotification()) .seek,
+      if (canSeekInOsNotification()) .seekForward,
+      if (canSeekInOsNotification()) .seekBackward,
+      .playPause,
+      if (canSkipInOsNotification()) .rewind,
+      if (canSkipInOsNotification()) .fastForward,
+      if (canSkipChapterInOsNotification()) .skipToNext,
+      if (canSkipChapterInOsNotification()) .skipToPrevious,
+    };
+
     playbackState.add(
       playbackState.value.copyWith(
         processingState: switch (state.status) {
@@ -136,6 +139,9 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         speed: state.speed,
         queueIndex: resolved.chapterIndex,
         errorMessage: state.error?.name,
+        controls: controls,
+        systemActions: systemActions,
+        androidCompactActionIndices: const [0, 1, 2],
       ),
     );
   }

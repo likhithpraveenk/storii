@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/customization/nav_label_tile.dart';
+import 'package:storii/features/settings/ui/customization/os_notification_button_tiles.dart';
 import 'package:storii/features/settings/ui/customization/playback_controls_layout_tile.dart';
 import 'package:storii/features/settings/ui/customization/player_background_theme_tile.dart';
 import 'package:storii/features/settings/ui/customization/reorder_nav_tabs.dart';
@@ -55,6 +56,11 @@ class CustomizationSettingsScreen extends StatelessWidget {
           SettingsHeader(title: l10n.fullPlayer),
           const PlayerBackgroundThemeTile(),
           const PlaybackControlsLayoutTile(),
+          SettingsHeader(title: l10n.osNotification),
+          const OsNotificationCanSeekTile(),
+          const OsNotificationCanSkipTile(),
+          const OsNotificationCanSkipChapterTile(),
+          const SizedBox(height: 200),
         ],
       ),
     );

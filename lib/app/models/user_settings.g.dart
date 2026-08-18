@@ -134,6 +134,15 @@ _UserSettings _$UserSettingsFromJson(
       DefaultUserSettings.showChapterProgressSlider,
   scaleTimeBySpeed:
       json['scaleTimeBySpeed'] as bool? ?? DefaultUserSettings.scaleTimeBySpeed,
+  osNotificationCanSeek:
+      json['osNotificationCanSeek'] as bool? ??
+      DefaultUserSettings.osNotificationCanSeek,
+  osNotificationCanSkip:
+      json['osNotificationCanSkip'] as bool? ??
+      DefaultUserSettings.osNotificationCanSkip,
+  osNotificationCanSkipChapter:
+      json['osNotificationCanSkipChapter'] as bool? ??
+      DefaultUserSettings.osNotificationCanSkipChapter,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -186,6 +195,9 @@ Map<String, dynamic> _$UserSettingsToJson(
       _$PlaybackControlsLayoutEnumMap[instance.playbackControlsLayout]!,
   'showChapterProgressSlider': instance.showChapterProgressSlider,
   'scaleTimeBySpeed': instance.scaleTimeBySpeed,
+  'osNotificationCanSeek': instance.osNotificationCanSeek,
+  'osNotificationCanSkip': instance.osNotificationCanSkip,
+  'osNotificationCanSkipChapter': instance.osNotificationCanSkipChapter,
 };
 
 const _$NavTargetEnumMap = {

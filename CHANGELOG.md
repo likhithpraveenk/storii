@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - support android 17
+- OS notification controls: seek, skip forward/rewind, and skip chapter toggles
 
 ### Fixed
 
