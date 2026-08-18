@@ -45,15 +45,15 @@ class _BookSliderState extends ConsumerState<BookSlider> {
     }
 
     final speed = ref.watch(localSpeedProvider);
+    final scaleTimeBySpeed = ref.watch(scaleTimeBySpeedProvider);
     final durationMs = duration.inMilliseconds.toDouble();
     final positionMs = position.inMilliseconds.toDouble().clamp(
       0.0,
       durationMs,
     );
 
-    // TODO: respect scaleTimeBySpeedProvider
-    final scaledDurationMs = durationMs / speed;
-    var scaledPositionMs = positionMs / speed;
+    final scaledDurationMs = scaleTimeBySpeed ? durationMs / speed : durationMs;
+    var scaledPositionMs = scaleTimeBySpeed ? positionMs / speed : positionMs;
 
     if (_latestSeekValue != null) {
       if ((scaledPositionMs - _latestSeekValue!).abs() < 1000) {
@@ -99,7 +99,9 @@ class _BookSliderState extends ConsumerState<BookSlider> {
             Text(format(displayValue)),
             Text(
               Duration(
-                microseconds: (duration.inMicroseconds / speed).round(),
+                microseconds: scaleTimeBySpeed
+                    ? (duration.inMicroseconds / speed).round()
+                    : duration.inMicroseconds,
               ).toTime(),
             ),
           ],
