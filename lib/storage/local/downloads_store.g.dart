@@ -40,7 +40,7 @@ abstract class _$DownloadsStore
   Stream<Map<String, DownloadItem>> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref =
         this.ref
             as $Ref<
@@ -58,6 +58,6 @@ abstract class _$DownloadsStore
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

@@ -69,7 +69,7 @@ class ApiClient {
       }
 
       final newToken = await getAccessToken?.call();
-      return _retryRequest(failedRequest, newToken!);
+      return await _retryRequest(failedRequest, newToken!);
     } finally {
       _refreshFuture = null;
     }

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'filesystem_directory.dart';
@@ -9,6 +9,7 @@ part of 'filesystem_directory.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -66,7 +67,7 @@ class _$FilesystemDirectoryCopyWithImpl<$Res>
 /// Create a copy of FilesystemDirectory
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? path = null,Object? dirname = null,Object? fullPath = null,Object? level = null,Object? dirs = null,}) {
-  return _then(_self.copyWith(
+  return _then(FilesystemDirectory(
 path: null == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
 as String,dirname: null == dirname ? _self.dirname : dirname // ignore: cast_nullable_to_non_nullable
 as String,fullPath: null == fullPath ? _self.fullPath : fullPath // ignore: cast_nullable_to_non_nullable
@@ -207,7 +208,7 @@ return $default(_that.path,_that.dirname,_that.fullPath,_that.level,_that.dirs);
 @JsonSerializable()
 
 class _FilesystemDirectory implements FilesystemDirectory {
-  const _FilesystemDirectory({required this.path, required this.dirname, required this.fullPath, required this.level, required final  List<FilesystemDirectory> dirs}): _dirs = dirs;
+  const _FilesystemDirectory({required this.path, required this.dirname, required this.fullPath, required this.level, required  List<FilesystemDirectory> dirs}): _dirs = dirs;
   factory _FilesystemDirectory.fromJson(Map<String, dynamic> json) => _$FilesystemDirectoryFromJson(json);
 
 @override final  String path;

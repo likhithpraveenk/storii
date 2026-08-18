@@ -47,7 +47,7 @@ abstract class _$FilterData extends $Notifier<LibraryFilterData> {
   LibraryFilterData build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<LibraryFilterData, LibraryFilterData>;
     final element =
         ref.element
@@ -57,6 +57,6 @@ abstract class _$FilterData extends $Notifier<LibraryFilterData> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

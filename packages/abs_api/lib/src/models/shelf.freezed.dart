@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'shelf.dart';
@@ -9,6 +9,7 @@ part of 'shelf.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 Shelf _$ShelfFromJson(
@@ -246,7 +247,7 @@ return authors(_that.id,_that.label,_that.labelStringKey,_that.type,_that.entiti
 @JsonSerializable()
 
 class LibraryItemsShelf extends Shelf {
-  const LibraryItemsShelf({required this.id, required this.label, required this.labelStringKey, required this.type, required final  List<LibraryItem> entities, required this.total, final  String? $type}): _entities = entities,$type = $type ?? 'libraryItems',super._();
+  const LibraryItemsShelf({required this.id, required this.label, required this.labelStringKey, required this.type, required  List<LibraryItem> entities, required this.total,  String? $type}): _entities = entities,$type = $type ?? 'libraryItems',super._();
   factory LibraryItemsShelf.fromJson(Map<String, dynamic> json) => _$LibraryItemsShelfFromJson(json);
 
 @override final  String id;
@@ -335,7 +336,7 @@ as int,
 @JsonSerializable()
 
 class SeriesShelf extends Shelf {
-  const SeriesShelf({required this.id, required this.label, required this.labelStringKey, required this.type, required final  List<Series> entities, required this.total, final  String? $type}): _entities = entities,$type = $type ?? 'series',super._();
+  const SeriesShelf({required this.id, required this.label, required this.labelStringKey, required this.type, required  List<Series> entities, required this.total,  String? $type}): _entities = entities,$type = $type ?? 'series',super._();
   factory SeriesShelf.fromJson(Map<String, dynamic> json) => _$SeriesShelfFromJson(json);
 
 @override final  String id;
@@ -424,7 +425,7 @@ as int,
 @JsonSerializable()
 
 class AuthorShelf extends Shelf {
-  const AuthorShelf({required this.id, required this.label, required this.labelStringKey, required this.type, required final  List<Author> entities, required this.total, final  String? $type}): _entities = entities,$type = $type ?? 'authors',super._();
+  const AuthorShelf({required this.id, required this.label, required this.labelStringKey, required this.type, required  List<Author> entities, required this.total,  String? $type}): _entities = entities,$type = $type ?? 'authors',super._();
   factory AuthorShelf.fromJson(Map<String, dynamic> json) => _$AuthorShelfFromJson(json);
 
 @override final  String id;

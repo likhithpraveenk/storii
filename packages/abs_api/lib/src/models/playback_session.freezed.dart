@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'playback_session.dart';
@@ -9,6 +9,7 @@ part of 'playback_session.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -66,7 +67,7 @@ class _$PlaybackSessionCopyWithImpl<$Res>
 /// Create a copy of PlaybackSession
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? libraryId = null,Object? libraryItemId = null,Object? episodeId = freezed,Object? mediaType = null,Object? mediaMetadata = null,Object? chapters = null,Object? displayTitle = freezed,Object? displayAuthor = freezed,Object? coverPath = freezed,Object? duration = null,Object? playMethod = null,Object? mediaPlayer = null,Object? deviceInfo = freezed,Object? date = null,Object? dayOfWeek = null,Object? timeListening = null,Object? startTime = null,Object? currentTime = null,Object? startedAt = null,Object? updatedAt = null,Object? user = freezed,Object? audioTracks = freezed,Object? libraryItem = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(PlaybackSession(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,libraryId: null == libraryId ? _self.libraryId : libraryId // ignore: cast_nullable_to_non_nullable
@@ -279,7 +280,7 @@ return $default(_that.id,_that.userId,_that.libraryId,_that.libraryItemId,_that.
 @DateTimeEpochConverter()
 @DurationPreciseSecondsConverter()
 class _PlaybackSession implements PlaybackSession {
-  const _PlaybackSession({required this.id, required this.userId, required this.libraryId, required this.libraryItemId, this.episodeId, required this.mediaType, required this.mediaMetadata, required final  List<BookChapter> chapters, this.displayTitle, this.displayAuthor, this.coverPath, required this.duration, required this.playMethod, required this.mediaPlayer, this.deviceInfo, required this.date, required this.dayOfWeek, required this.timeListening, required this.startTime, required this.currentTime, required this.startedAt, required this.updatedAt, this.user, final  List<AudioTrack>? audioTracks, this.libraryItem}): _chapters = chapters,_audioTracks = audioTracks;
+  const _PlaybackSession({required this.id, required this.userId, required this.libraryId, required this.libraryItemId, this.episodeId, required this.mediaType, required this.mediaMetadata, required  List<BookChapter> chapters, this.displayTitle, this.displayAuthor, this.coverPath, required this.duration, required this.playMethod, required this.mediaPlayer, this.deviceInfo, required this.date, required this.dayOfWeek, required this.timeListening, required this.startTime, required this.currentTime, required this.startedAt, required this.updatedAt, this.user,  List<AudioTrack>? audioTracks, this.libraryItem}): _chapters = chapters,_audioTracks = audioTracks;
   factory _PlaybackSession.fromJson(Map<String, dynamic> json) => _$PlaybackSessionFromJson(json);
 
 @override final  String id;

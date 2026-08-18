@@ -21,7 +21,7 @@ class AuthApi {
         options: Options(headers: {'x-return-tokens': true}),
       );
 
-      return fromJson(response.data, LoginResponse.fromJson);
+      return await fromJson(response.data, LoginResponse.fromJson);
     } catch (e, st) {
       throw mapException(e, st);
     }
@@ -47,7 +47,7 @@ class AuthApi {
   Future<ServerStatusResponse> status() async {
     try {
       final response = await api.dio.get(ApiRoutes.status);
-      return fromJson(response.data, ServerStatusResponse.fromJson);
+      return await fromJson(response.data, ServerStatusResponse.fromJson);
     } catch (e, st) {
       throw mapException(e, st);
     }
@@ -114,7 +114,7 @@ class AuthApi {
       // log('oauth callback status: ${response.statusCode}');
       // log('oauth callback body: ${response.data}');
 
-      return fromJson(response.data, LoginResponse.fromJson);
+      return await fromJson(response.data, LoginResponse.fromJson);
     } catch (e, st) {
       throw mapException(e, st);
     }

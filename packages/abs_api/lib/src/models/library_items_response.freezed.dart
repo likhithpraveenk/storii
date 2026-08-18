@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'library_items_response.dart';
@@ -9,6 +9,7 @@ part of 'library_items_response.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -66,7 +67,7 @@ class _$LibraryItemsResponseCopyWithImpl<$Res>
 /// Create a copy of LibraryItemsResponse
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? results = null,Object? total = null,Object? limit = null,Object? page = null,Object? sortBy = freezed,Object? sortDesc = null,Object? filterBy = freezed,Object? mediaType = null,Object? minified = null,Object? collapseSeries = null,Object? include = null,}) {
-  return _then(_self.copyWith(
+  return _then(LibraryItemsResponse(
 results: null == results ? _self.results : results // ignore: cast_nullable_to_non_nullable
 as List<LibraryItem>,total: null == total ? _self.total : total // ignore: cast_nullable_to_non_nullable
 as int,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
@@ -213,7 +214,7 @@ return $default(_that.results,_that.total,_that.limit,_that.page,_that.sortBy,_t
 @JsonSerializable()
 @FilterConverter()
 class _LibraryItemsResponse implements LibraryItemsResponse {
-  const _LibraryItemsResponse({required final  List<LibraryItem> results, required this.total, required this.limit, required this.page, this.sortBy, required this.sortDesc, this.filterBy, required this.mediaType, required this.minified, @JsonKey(name: 'collapseseries') required this.collapseSeries, required this.include}): _results = results;
+  const _LibraryItemsResponse({required  List<LibraryItem> results, required this.total, required this.limit, required this.page, this.sortBy, required this.sortDesc, this.filterBy, required this.mediaType, required this.minified, @JsonKey(name: 'collapseseries') required this.collapseSeries, required this.include}): _results = results;
   factory _LibraryItemsResponse.fromJson(Map<String, dynamic> json) => _$LibraryItemsResponseFromJson(json);
 
  final  List<LibraryItem> _results;

@@ -47,7 +47,7 @@ abstract class _$PlayerMode extends $Notifier<PlayerViewState> {
   PlayerViewState build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<PlayerViewState, PlayerViewState>;
     final element =
         ref.element
@@ -57,7 +57,7 @@ abstract class _$PlayerMode extends $Notifier<PlayerViewState> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -99,7 +99,7 @@ abstract class _$PlayerHeight extends $Notifier<double> {
   double build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<double, double>;
     final element =
         ref.element
@@ -109,7 +109,7 @@ abstract class _$PlayerHeight extends $Notifier<double> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -151,7 +151,7 @@ abstract class _$PlayerBounds extends $Notifier<({double max, double min})> {
   ({double max, double min}) build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref =
         this.ref
             as $Ref<({double max, double min}), ({double max, double min})>;
@@ -166,7 +166,7 @@ abstract class _$PlayerBounds extends $Notifier<({double max, double min})> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 

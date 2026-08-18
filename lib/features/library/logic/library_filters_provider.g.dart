@@ -94,7 +94,7 @@ abstract class _$LibraryFiltersNotifier extends $Notifier<FilterState> {
   FilterState build(CurrentScreen screen);
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<FilterState, FilterState>;
     final element =
         ref.element
@@ -104,7 +104,7 @@ abstract class _$LibraryFiltersNotifier extends $Notifier<FilterState> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, () => build(_$args));
+    return element.handleCreate(ref, () => build(_$args));
   }
 }
 

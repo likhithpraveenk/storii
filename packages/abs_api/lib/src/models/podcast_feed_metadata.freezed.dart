@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'podcast_feed_metadata.dart';
@@ -9,6 +9,7 @@ part of 'podcast_feed_metadata.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -66,7 +67,7 @@ class _$PodcastFeedMetadataCopyWithImpl<$Res>
 /// Create a copy of PodcastFeedMetadata
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? image = null,Object? categories = null,Object? feedUrl = null,Object? description = null,Object? descriptionPlain = null,Object? title = null,Object? language = null,Object? explicit = null,Object? author = null,Object? pubDate = null,Object? link = null,}) {
-  return _then(_self.copyWith(
+  return _then(PodcastFeedMetadata(
 image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as Uri,categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
 as List<String>,feedUrl: null == feedUrl ? _self.feedUrl : feedUrl // ignore: cast_nullable_to_non_nullable
@@ -213,7 +214,7 @@ return $default(_that.image,_that.categories,_that.feedUrl,_that.description,_th
 @JsonSerializable()
 
 class _PodcastFeedMetadata implements PodcastFeedMetadata {
-  const _PodcastFeedMetadata({required this.image, required final  List<String> categories, required this.feedUrl, required this.description, required this.descriptionPlain, required this.title, required this.language, required this.explicit, required this.author, required this.pubDate, required this.link}): _categories = categories;
+  const _PodcastFeedMetadata({required this.image, required  List<String> categories, required this.feedUrl, required this.description, required this.descriptionPlain, required this.title, required this.language, required this.explicit, required this.author, required this.pubDate, required this.link}): _categories = categories;
   factory _PodcastFeedMetadata.fromJson(Map<String, dynamic> json) => _$PodcastFeedMetadataFromJson(json);
 
 @override final  Uri image;

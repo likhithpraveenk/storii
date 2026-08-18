@@ -48,7 +48,7 @@ abstract class _$SearchFilterNotifier extends $Notifier<SearchFilter> {
   SearchFilter build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<SearchFilter, SearchFilter>;
     final element =
         ref.element
@@ -58,7 +58,7 @@ abstract class _$SearchFilterNotifier extends $Notifier<SearchFilter> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -137,7 +137,7 @@ abstract class _$SearchNotifier extends $AsyncNotifier<SearchResponse?> {
   FutureOr<SearchResponse?> build(String query);
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AsyncValue<SearchResponse?>, SearchResponse?>;
     final element =
         ref.element
@@ -147,6 +147,6 @@ abstract class _$SearchNotifier extends $AsyncNotifier<SearchResponse?> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, () => build(_$args));
+    return element.handleCreate(ref, () => build(_$args));
   }
 }

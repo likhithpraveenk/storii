@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user_stats_response.dart';
@@ -9,6 +9,7 @@ part of 'user_stats_response.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -66,7 +67,7 @@ class _$UserStatsResponseCopyWithImpl<$Res>
 /// Create a copy of UserStatsResponse
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? totalTime = null,Object? items = null,Object? days = null,Object? dayOfWeek = null,Object? today = null,Object? recentSessions = null,}) {
-  return _then(_self.copyWith(
+  return _then(UserStatsResponse(
 totalTime: null == totalTime ? _self.totalTime : totalTime // ignore: cast_nullable_to_non_nullable
 as Duration,items: null == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
 as Map<String, ItemsListenedToResponse>,days: null == days ? _self.days : days // ignore: cast_nullable_to_non_nullable
@@ -214,7 +215,7 @@ return $default(_that.totalTime,_that.items,_that.days,_that.dayOfWeek,_that.tod
 @JsonSerializable()
 @DurationSecConverter()
 class _UserStatsResponse implements UserStatsResponse {
-  const _UserStatsResponse({required this.totalTime, required final  Map<String, ItemsListenedToResponse> items, @JsonKey(toJson: _daysToJson) required final  Map<DateTime, Duration> days, required final  Map<DayOfTheWeek, Duration> dayOfWeek, required this.today, required final  List<PlaybackSession> recentSessions}): _items = items,_days = days,_dayOfWeek = dayOfWeek,_recentSessions = recentSessions;
+  const _UserStatsResponse({required this.totalTime, required  Map<String, ItemsListenedToResponse> items, @JsonKey(toJson: _daysToJson) required  Map<DateTime, Duration> days, required  Map<DayOfTheWeek, Duration> dayOfWeek, required this.today, required  List<PlaybackSession> recentSessions}): _items = items,_days = days,_dayOfWeek = dayOfWeek,_recentSessions = recentSessions;
   factory _UserStatsResponse.fromJson(Map<String, dynamic> json) => _$UserStatsResponseFromJson(json);
 
 @override final  Duration totalTime;
@@ -368,7 +369,7 @@ class _$ItemsListenedToResponseCopyWithImpl<$Res>
 /// Create a copy of ItemsListenedToResponse
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? libraryItemId = null,Object? timeListening = null,Object? mediaMetadata = null,}) {
-  return _then(_self.copyWith(
+  return _then(ItemsListenedToResponse(
 libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
 as String,timeListening: null == timeListening ? _self.timeListening : timeListening // ignore: cast_nullable_to_non_nullable
 as Duration,mediaMetadata: null == mediaMetadata ? _self.mediaMetadata : mediaMetadata // ignore: cast_nullable_to_non_nullable
