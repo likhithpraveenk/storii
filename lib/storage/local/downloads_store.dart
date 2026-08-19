@@ -10,26 +10,44 @@ part 'downloads_store.g.dart';
 
 @Riverpod(keepAlive: true)
 class DownloadsStore extends _$DownloadsStore {
+  DownloadItem? _itemFromValue(String? value) {
+    if (value == null) return null;
+    try {
+      return DownloadItem.fromJson(jsonDecode(value));
+    } catch (e) {
+      log('Failed to decode download item: $e');
+      return null;
+    }
+  }
+
   Map<String, DownloadItem> _decode(Iterable<String> values) {
     return Map.fromEntries(
-      values.map((v) {
-        try {
-          final item = DownloadItem.fromJson(jsonDecode(v));
-          return MapEntry(item.key, item);
-        } catch (e) {
-          log('Failed to decode download item: $e');
-          return null;
-        }
-      }).nonNulls,
+      values
+          .map(_itemFromValue)
+          .whereType<DownloadItem>()
+          .map((item) => MapEntry(item.key, item)),
     );
   }
 
   @override
   Stream<Map<String, DownloadItem>> build() {
+    final items = _decode(downloadsBox.values);
     return downloadsBox
         .watch()
-        .map((_) => _decode(downloadsBox.values))
-        .startWith(_decode(downloadsBox.values));
+        .map((event) {
+          if (event.deleted) {
+            items.remove(event.key);
+          } else {
+            final item = _itemFromValue(event.value as String?);
+            if (item != null) {
+              items[item.key] = item;
+            } else {
+              items.remove(event.key);
+            }
+          }
+          return Map<String, DownloadItem>.from(items);
+        })
+        .startWith(Map<String, DownloadItem>.from(items));
   }
 
   Future<void> save(DownloadItem item) async {

@@ -9,6 +9,7 @@ import 'package:storii/features/downloads/logic/download_extensions.dart';
 import 'package:storii/features/downloads/logic/download_migration.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
+import 'package:storii/features/downloads/logic/throttled_persister.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
@@ -111,16 +112,30 @@ class DownloadQueue extends _$DownloadQueue {
   }
 
   Future<void> _download(String mediaItemKey) async {
+    final downloads = _store.getAll();
+    final downloadItem = downloads[mediaItemKey];
+    if (downloadItem == null) return;
+
+    await DownloadsNotificationService.instance.requestPermission();
+    await DownloadsNotificationService.instance.startForeground(
+      title: downloadItem.title,
+    );
+
+    final persister = ThrottledPersister(
+      store: _store,
+      onPersist: (item) =>
+          DownloadsNotificationService.instance.showProgressNotification(
+            title: item.title,
+            progress: (item.progress * 100).toInt(),
+            isComplete: item.isComplete,
+            isFailed: item.isFailed,
+            isPaused: item.status == .paused,
+            totalBytes: item.totalBytes,
+            useBinary: ref.read(useBinaryBytesProvider),
+          ),
+    );
+
     try {
-      final downloads = _store.getAll();
-      final downloadItem = downloads[mediaItemKey];
-      if (downloadItem == null) return;
-
-      await DownloadsNotificationService.instance.requestPermission();
-      await DownloadsNotificationService.instance.startForeground(
-        title: downloadItem.title,
-      );
-
       final user = await ref.read(authenticatedUserProvider.future);
 
       final stream = ref
@@ -128,23 +143,16 @@ class DownloadQueue extends _$DownloadQueue {
           .downloadItem(item: downloadItem, user: user);
 
       await for (final updated in stream) {
-        await _store.save(updated);
-
-        await DownloadsNotificationService.instance.showProgressNotification(
-          title: updated.title,
-          progress: (updated.progress * 100).toInt(),
-          isComplete: updated.isComplete,
-          isFailed: updated.isFailed,
-          isPaused: updated.status == .paused,
-          totalBytes: updated.totalBytes,
-          useBinary: ref.read(useBinaryBytesProvider),
-        );
-
-        if (updated.isComplete || updated.isFailed) {
+        final inActive = !updated.isActive;
+        await persister.update(updated);
+        if (inActive) {
           await DownloadsNotificationService.instance.stopForeground();
         }
       }
+
+      await persister.flush();
     } catch (e, st) {
+      await persister.flush();
       final error = AppError.from(e, st);
       LogService.log(
         'Download failed for $mediaItemKey: ${error.message}',
