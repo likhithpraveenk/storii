@@ -89,20 +89,24 @@ Future<List<Shelf>> rawShelves(Ref ref) async {
   if (!isConnected) {
     final downloads = await ref.read(downloadsProvider.future);
     final cache = ref.read(itemsCacheProvider.notifier);
-    final audiobooks = <LibraryItem>[];
-    final podcasts = <LibraryItem>[];
+
+    final dAudiobooks = <LibraryItem>[];
+    final dPodcasts = <LibraryItem>[];
 
     for (final d in downloads.values.where((d) => d.isComplete)) {
       final item = cache.get(d.libraryItemId);
       if (item != null) {
         switch (item.mediaType) {
           case .book:
-            audiobooks.add(item);
+            dAudiobooks.add(item);
           case .podcast:
-            podcasts.add(item);
+            dPodcasts.add(item);
         }
       }
     }
+
+    final audiobooks = dAudiobooks.take(10).toList();
+    final podcasts = dPodcasts.take(10).toList();
 
     final downloadShelves = [
       if (audiobooks.isNotEmpty)

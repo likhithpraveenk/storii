@@ -26,7 +26,9 @@ class ProgressStore extends _$ProgressStore {
       values
           .map(_itemFromValue)
           .whereType<MediaProgress>()
-          .map((p) => MapEntry(mediaItemIdKey(p.libraryItemId, p.episodeId), p)),
+          .map(
+            (p) => MapEntry(mediaItemIdKey(p.libraryItemId, p.episodeId), p),
+          ),
     );
   }
 

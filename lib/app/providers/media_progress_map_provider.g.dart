@@ -43,7 +43,7 @@ final class MediaProgressSyncControllerProvider
 }
 
 String _$mediaProgressSyncControllerHash() =>
-    r'43d3af1ea5fccdf931c3a422678d62edcdb12d7e';
+    r'fcab590ce6f87035d6c3f9779f9c09b35db663a7';
 
 abstract class _$MediaProgressSyncController extends $Notifier<void> {
   void build();
