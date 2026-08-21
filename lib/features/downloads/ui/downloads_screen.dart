@@ -1,16 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
-import 'package:storii/features/downloads/models/download_item.dart';
-import 'package:storii/features/downloads/ui/download_widgets.dart';
-import 'package:storii/features/library/ui/image_widget.dart';
-import 'package:storii/shared/helpers/helpers.dart';
+import 'package:storii/features/downloads/ui/download_sort_sheet.dart';
+import 'package:storii/features/downloads/ui/download_tile.dart';
+import 'package:storii/features/library/ui/items_grid_view.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
-import 'package:storii/shared/widgets/marquee_text.dart';
 
 enum DownloadsScreenTab { active, completed }
 
@@ -53,9 +49,12 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
 
   @override
   Widget build(BuildContext context) {
-    final activeDownloads = ref.watch(activeDownloadsProvider).value ?? [];
-    final completedDownloads =
-        ref.watch(completedDownloadsProvider).value ?? [];
+    final activeCount = ref.watch(
+      activeDownloadsProvider.select((list) => list.value?.length ?? 0),
+    );
+    final completedCount = ref.watch(
+      completedDownloadsProvider.select((list) => list.value?.length ?? 0),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -67,200 +66,62 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
           controller: _tabController,
           tabs: [
             Tab(
-              text: activeDownloads.isEmpty
+              text: activeCount == 0
                   ? l10n.active
-                  : '${l10n.active} (${activeDownloads.length})',
+                  : '${l10n.active} ($activeCount)',
             ),
             Tab(
-              text: completedDownloads.isEmpty
+              text: completedCount == 0
                   ? l10n.completed
-                  : '${l10n.completed} (${completedDownloads.length})',
+                  : '${l10n.completed} ($completedCount)',
             ),
           ],
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.sort),
+            tooltip: l10n.sort,
+            onPressed: () => AppBottomSheet.show(
+              context,
+              title: l10n.sort,
+              body: const DownloadSortSheet(),
+            ),
+          ),
+        ],
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
-          if (activeDownloads.isEmpty)
-            const EmptyState()
-          else
-            ListView.builder(
-              padding: const .only(bottom: 16, top: 4),
-              itemCount: activeDownloads.length,
-              itemBuilder: (context, index) {
-                final item = activeDownloads.elementAt(index);
-                return DownloadTile(item: item);
-              },
-            ),
-          if (completedDownloads.isEmpty)
-            const EmptyState()
-          else
-            ListView.builder(
-              padding: const .only(bottom: 16, top: 4),
-              itemCount: completedDownloads.length,
-              itemBuilder: (context, index) {
-                final item = completedDownloads.elementAt(index);
-                return CompletedItemTile(item);
-              },
-            ),
-        ],
+        children: const [ActiveDownloadsTab(), CompletedDownloadsTab()],
       ),
     );
   }
 }
 
-class CompletedItemTile extends ConsumerWidget {
-  const CompletedItemTile(this.item, {super.key});
-  final DownloadItem item;
+class ActiveDownloadsTab extends ConsumerWidget {
+  const ActiveDownloadsTab({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final useBinary = ref.watch(useBinaryBytesProvider);
+    final items = ref.watch(activeDownloadsProvider).value ?? [];
 
-    return ListTile(
-      onTap: () {
-        context.push(
-          AppRoute.itemDetail.path,
-          extra: {'id': item.libraryItemId},
-        );
-      },
-      contentPadding: const .fromLTRB(16, 8, 0, 8),
-      leading: AspectRatio(
-        aspectRatio: 1,
-        child: ClipRRect(
-          borderRadius: .circular(4),
-          child: ImageWidget(id: item.libraryItemId, type: .item),
-        ),
-      ),
-      minVerticalPadding: 0,
-      horizontalTitleGap: 8,
-      titleAlignment: .center,
-      title: Column(
-        mainAxisSize: .min,
-        crossAxisAlignment: .start,
-        children: [
-          MarqueeText(item.title, style: theme.textTheme.titleSmall),
-          const SizedBox(height: 2),
-          MarqueeText(
-            item.author,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 2),
-        ],
-      ),
-      subtitle: Text(
-        formatBytes(item.receivedBytes, useBinary: useBinary),
-        style: theme.textTheme.labelSmall,
-      ),
-      trailing: Consumer(
-        builder: (context, ref, _) {
-          return IconButton(
-            onPressed: () {
-              showDownloadsDeleteDialog(context, item: item, ref: ref);
-            },
-            icon: const Icon(Icons.delete_outline),
-          );
-        },
-      ),
+    if (items.isEmpty) {
+      return const EmptyState();
+    }
+
+    return ListView.builder(
+      padding: const .only(bottom: 16, top: 4),
+      itemCount: items.length,
+      itemBuilder: (context, index) => DownloadTile(item: items[index]),
     );
   }
 }
 
-class DownloadTile extends StatefulWidget {
-  const DownloadTile({super.key, required this.item});
-
-  final DownloadItem item;
+class CompletedDownloadsTab extends ConsumerWidget {
+  const CompletedDownloadsTab({super.key});
 
   @override
-  State<DownloadTile> createState() => _DownloadTileState();
-}
-
-class _DownloadTileState extends State<DownloadTile> {
-  bool isExpanded = true;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Column(
-      mainAxisSize: .min,
-      children: [
-        ListTile(
-          contentPadding: const .fromLTRB(16, 8, 16, 4),
-          onTap: widget.item.isComplete
-              ? () => context.push(
-                  AppRoute.itemDetail.path,
-                  extra: {
-                    'id': widget.item.libraryItemId,
-                    'isDownloaded': true,
-                  },
-                )
-              : null,
-          leading: AspectRatio(
-            aspectRatio: 1,
-            child: ClipRRect(
-              borderRadius: .circular(8),
-              child: ImageWidget(id: widget.item.libraryItemId, type: .item),
-            ),
-          ),
-          title: Column(
-            crossAxisAlignment: .start,
-            children: [
-              Text(
-                widget.item.title,
-                maxLines: 2,
-                overflow: .ellipsis,
-                style: theme.textTheme.titleSmall,
-              ),
-              if (widget.item.author.isNotEmpty)
-                Text(
-                  widget.item.author,
-                  maxLines: 1,
-                  overflow: .ellipsis,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                ),
-              const SizedBox(height: 4),
-              DownloadStatusRow(item: widget.item),
-            ],
-          ),
-          subtitle: Row(
-            mainAxisAlignment: .spaceEvenly,
-            children: [
-              Consumer(
-                builder: (context, ref, _) {
-                  return IconButton(
-                    icon: const Icon(Icons.delete_outline),
-                    onPressed: () => showDownloadsDeleteDialog(
-                      context,
-                      item: widget.item,
-                      ref: ref,
-                    ),
-                  );
-                },
-              ),
-              DownloadTileTrailingActions(item: widget.item),
-              IconButton(
-                icon: const Icon(Icons.more_horiz),
-                onPressed: () => setState(() {
-                  isExpanded = !isExpanded;
-                }),
-              ),
-            ],
-          ),
-        ),
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          child: isExpanded
-              ? DownloadTrackProgress(item: widget.item)
-              : const SizedBox.shrink(),
-        ),
-      ],
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final items = ref.watch(downloadedItemsProvider);
+    return ItemsGridView(items);
   }
 }

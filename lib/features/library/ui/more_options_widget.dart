@@ -5,6 +5,8 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/admin/logic/item_actions_provider.dart';
+import 'package:storii/features/downloads/logic/download_queue.dart';
+import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/item/logic/user_progress_actions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -160,6 +162,21 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
           l10n.seriesRemovedFromContinueListening,
           l10n.removeSeriesFromContinueListeningFailed,
         ),
+      ));
+    }
+
+    final downloaded = ref.watch(
+      downloadItemProvider(widget.itemId, widget.episodeId),
+    );
+    if (downloaded != null) {
+      options.add((
+        title: l10n.removeDownloadQ,
+        icon: Icons.delete_outline,
+        onTap: () async {
+          await ref
+              .read(downloadQueueProvider.notifier)
+              .delete(widget.itemId, widget.episodeId);
+        },
       ));
     }
 
