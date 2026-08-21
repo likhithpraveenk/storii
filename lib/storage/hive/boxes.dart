@@ -15,6 +15,7 @@ const usersBoxName = 'users_box';
 const serversBoxName = 'servers_box';
 const itemsBoxName = 'items_box';
 const localSessionsBoxName = 'local_sessions_box';
+const mediaProgressBoxName = 'media_progress_box';
 const playbackHistoryBoxName = 'playback_history_box';
 const downloadsBoxName = 'downloads_box';
 const speedsBoxName = 'speeds_box';
@@ -31,6 +32,7 @@ late final Box<String> localSessionsBox;
 late final Box<List<dynamic>> playbackHistoryBox;
 late final Box<String> downloadsBox;
 late final Box<double> speedsBox;
+late final Box<String> mediaProgressBox;
 
 Future<void> setupHive() async {
   await Hive.initFlutter();
@@ -59,6 +61,8 @@ Future<void> setupHive() async {
     Hive.openBox<double>(speedsBoxName),
   ).wait;
 
+  final mediaProgress = await Hive.openBox<String>(mediaProgressBoxName);
+
   appSettingsBox = appSettings;
   userSettingsBox = userSettings;
   usersBox = users;
@@ -68,6 +72,7 @@ Future<void> setupHive() async {
   playbackHistoryBox = playbackHistory;
   downloadsBox = downloads;
   speedsBox = speeds;
+  mediaProgressBox = mediaProgress;
 
   // dio cache
   final dir = await getApplicationDocumentsDirectory();

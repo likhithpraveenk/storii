@@ -48,6 +48,45 @@ final class ShelvesProvider
 
 String _$shelvesHash() => r'345fdd366f9cefc848d6b0ff19a4198de267b466';
 
+@ProviderFor(sortedShelves)
+final sortedShelvesProvider = SortedShelvesProvider._();
+
+final class SortedShelvesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Shelf>>,
+          List<Shelf>,
+          FutureOr<List<Shelf>>
+        >
+    with $FutureModifier<List<Shelf>>, $FutureProvider<List<Shelf>> {
+  SortedShelvesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'sortedShelvesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$sortedShelvesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Shelf>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Shelf>> create(Ref ref) {
+    return sortedShelves(ref);
+  }
+}
+
+String _$sortedShelvesHash() => r'cfc11ad73226a33e6f9b2241f5f36fa75c69b469';
+
 @ProviderFor(rawShelves)
 final rawShelvesProvider = RawShelvesProvider._();
 

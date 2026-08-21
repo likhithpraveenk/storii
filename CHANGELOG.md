@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - support android 17
 - OS notification controls: seek, skip forward/rewind, and skip chapter toggles
 - configurable skip-back after an external sound (e.g. notification) interrupts playback
+- persist media progress locally and order the downloads by most recently listened when offline
 
 ### Fixed
 

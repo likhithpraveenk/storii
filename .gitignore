@@ -33,7 +33,6 @@ lib/l10n/gen/
 .pub-cache/
 .pub/
 /build/
-.local/
 
 # Symbolication related
 app.*.symbols

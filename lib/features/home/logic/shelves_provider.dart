@@ -8,6 +8,7 @@ import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
 import 'package:storii/storage/local/items_cache.dart';
+import 'package:storii/storage/local/session_store.dart';
 
 part 'shelves_provider.g.dart';
 
@@ -45,6 +46,41 @@ Future<List<Shelf>> shelves(Ref ref) async {
         },
       )
       .toList();
+}
+
+@riverpod
+Future<List<Shelf>> sortedShelves(Ref ref) async {
+  final shelves = await ref.watch(shelvesProvider.future);
+  final sessions = ref.watch(sessionStoreProvider).value ?? [];
+
+  final latestSessionByItem = <String, PlaybackSession>{};
+  for (final session in sessions) {
+    final current = latestSessionByItem[session.libraryItemId];
+    if (current == null || session.updatedAt.isAfter(current.updatedAt)) {
+      latestSessionByItem[session.libraryItemId] = session;
+    }
+  }
+
+  DateTime lastListenedAt(LibraryItem item) {
+    final session = latestSessionByItem[item.id];
+    if (session != null) return session.updatedAt;
+    return item.userMediaProgress?.lastUpdate ?? DateTime(0);
+  }
+
+  return shelves.map((shelf) {
+    return switch (shelf) {
+      LibraryItemsShelf() =>
+        shelf.id == 'offline_downloads'
+            ? shelf.copyWith(
+                entities: [...shelf.entities]
+                  ..sort(
+                    (a, b) => lastListenedAt(b).compareTo(lastListenedAt(a)),
+                  ),
+              )
+            : shelf,
+      _ => shelf,
+    };
+  }).toList();
 }
 
 @riverpod

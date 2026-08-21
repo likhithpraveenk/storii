@@ -12,7 +12,13 @@ part 'session_store.g.dart';
 @Riverpod(keepAlive: true)
 class SessionStore extends _$SessionStore {
   @override
-  void build() {}
+  Stream<List<PlaybackSession>> build() {
+    final items = localSessionsBox.values.map(_parseSession).toList();
+    return localSessionsBox
+        .watch()
+        .map((_) => localSessionsBox.values.map(_parseSession).toList())
+        .startWith(items);
+  }
 
   Future<void> save(PlaybackSession session) async {
     await localSessionsBox.put(session.id, jsonEncode(session));
