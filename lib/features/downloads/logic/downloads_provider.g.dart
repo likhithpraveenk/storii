@@ -115,6 +115,59 @@ abstract class _$DownloadSortAscending extends $Notifier<bool> {
   }
 }
 
+@ProviderFor(DownloadSearchQuery)
+final downloadSearchQueryProvider = DownloadSearchQueryProvider._();
+
+final class DownloadSearchQueryProvider
+    extends $NotifierProvider<DownloadSearchQuery, String> {
+  DownloadSearchQueryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'downloadSearchQueryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$downloadSearchQueryHash();
+
+  @$internal
+  @override
+  DownloadSearchQuery create() => DownloadSearchQuery();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(String value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<String>(value),
+    );
+  }
+}
+
+String _$downloadSearchQueryHash() =>
+    r'f7264f5c22c141df1c8aa17ce40487528ffcc85e';
+
+abstract class _$DownloadSearchQuery extends $Notifier<String> {
+  String build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<String, String>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<String, String>,
+              String,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}
+
 @ProviderFor(downloads)
 final downloadsProvider = DownloadsProvider._();
 
@@ -437,7 +490,55 @@ final class SortedCompletedDownloadsProvider
 }
 
 String _$sortedCompletedDownloadsHash() =>
-    r'2a391cd3faf87a3bc77a0bed99e69e351870a252';
+    r'348d4a5900f7a560d91e5cf97eae1bb35bda4fed';
+
+@ProviderFor(sortedActiveDownloads)
+final sortedActiveDownloadsProvider = SortedActiveDownloadsProvider._();
+
+final class SortedActiveDownloadsProvider
+    extends
+        $FunctionalProvider<
+          List<DownloadItem>,
+          List<DownloadItem>,
+          List<DownloadItem>
+        >
+    with $Provider<List<DownloadItem>> {
+  SortedActiveDownloadsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'sortedActiveDownloadsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$sortedActiveDownloadsHash();
+
+  @$internal
+  @override
+  $ProviderElement<List<DownloadItem>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  List<DownloadItem> create(Ref ref) {
+    return sortedActiveDownloads(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<DownloadItem> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<DownloadItem>>(value),
+    );
+  }
+}
+
+String _$sortedActiveDownloadsHash() =>
+    r'8a40ac1209ce6a5ccfb91810a811a8d7555d368e';
 
 @ProviderFor(downloadedItems)
 final downloadedItemsProvider = DownloadedItemsProvider._();

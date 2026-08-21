@@ -2,6 +2,7 @@ import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/storage/local/downloads_store.dart';
@@ -40,6 +41,14 @@ class DownloadSortAscending extends _$DownloadSortAscending {
   bool build() => true;
 
   void toggle() => state = !state;
+}
+
+@Riverpod(keepAlive: true)
+class DownloadSearchQuery extends _$DownloadSearchQuery {
+  @override
+  String build() => '';
+
+  void set(String value) => state = value;
 }
 
 @Riverpod(keepAlive: true)
@@ -93,9 +102,32 @@ final _zeroEpoch = DateTime.fromMillisecondsSinceEpoch(0);
 @riverpod
 List<DownloadItem> sortedCompletedDownloads(Ref ref) {
   final items = ref.watch(completedDownloadsProvider).value ?? [];
+  final query = ref.watch(downloadSearchQueryProvider).trim().toLowerCase();
+  final filtered = query.isEmpty ? items : _filterDownloads(ref, items, query);
   final sort = ref.watch(downloadSortTypeProvider);
   final ascending = ref.watch(downloadSortAscendingProvider);
-  return _sortDownloads(ref, items, sort, ascending);
+  return _sortDownloads(ref, filtered, sort, ascending);
+}
+
+@riverpod
+List<DownloadItem> sortedActiveDownloads(Ref ref) {
+  final items = ref.watch(activeDownloadsProvider).value ?? [];
+  final query = ref.watch(downloadSearchQueryProvider).trim().toLowerCase();
+  return query.isEmpty ? items : _filterDownloads(ref, items, query);
+}
+
+List<DownloadItem> _filterDownloads(
+  Ref ref,
+  List<DownloadItem> items,
+  String query,
+) {
+  final cache = ref.read(itemsCacheProvider.notifier);
+  return items.where((item) {
+    final title = cache.get(item.libraryItemId)?.title ?? item.title;
+    final author = cache.get(item.libraryItemId)?.authorName ?? item.author;
+    return title.toLowerCase().contains(query) ||
+        author.toLowerCase().contains(query);
+  }).toList();
 }
 
 List<DownloadItem> _sortDownloads(
@@ -105,6 +137,10 @@ List<DownloadItem> _sortDownloads(
   bool ascending,
 ) {
   final cache = ref.read(itemsCacheProvider.notifier);
+  final settings = ref.watch(currentServerSettingsProvider);
+  final prefixes = settings?.sortingIgnorePrefix == true
+      ? settings?.sortingPrefixes ?? <String>[]
+      : <String>[];
   final titles = <String, String>{};
   final authors = <String, String>{};
   final listenedAt = <String, DateTime>{};
@@ -120,8 +156,18 @@ List<DownloadItem> _sortDownloads(
   final dir = ascending ? 1 : -1;
   list.sort(
     (a, b) => switch (sort) {
-      .title => dir * title(a).compareTo(title(b)),
-      .author => dir * author(a).compareTo(author(b)),
+      .title =>
+        dir *
+            _sortKey(
+              title(a),
+              prefixes,
+            ).compareTo(_sortKey(title(b), prefixes)),
+      .author =>
+        dir *
+            _sortKey(
+              author(a),
+              prefixes,
+            ).compareTo(_sortKey(author(b), prefixes)),
       .size => dir * a.totalBytes.compareTo(b.totalBytes),
       .added =>
         dir * (a.startedAt ?? _zeroEpoch).compareTo(b.startedAt ?? _zeroEpoch),
@@ -129,6 +175,17 @@ List<DownloadItem> _sortDownloads(
     },
   );
   return list;
+}
+
+String _sortKey(String value, List<String> prefixes) {
+  String result = value;
+  for (final prefix in prefixes) {
+    result = result.replaceFirst(
+      RegExp('^${RegExp.escape(prefix)}\\s+', caseSensitive: false),
+      '',
+    );
+  }
+  return result.toLowerCase();
 }
 
 DateTime _lastListenedTime(Ref ref, DownloadItem item) {

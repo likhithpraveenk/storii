@@ -4,7 +4,10 @@ import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/storage/local/server_settings_store.dart';
+import 'package:storii/storage/local/servers_store.dart';
 
 part 'user_provider.g.dart';
 
@@ -43,4 +46,16 @@ bool isUserAdmin(Ref ref) {
   final type = UserType.values.firstWhereOrNull((t) => t.name == user.userType);
   if (type == null) return false;
   return type.isAdmin;
+}
+
+@riverpod
+ServerSettings? currentServerSettings(Ref ref) {
+  final user = ref.watch(currentUserProvider);
+  if (user == null) return null;
+  final serverId = ref
+      .read(serversStoreProvider.notifier)
+      .get(user.serverUrl)
+      ?.id;
+  if (serverId == null) return null;
+  return ref.watch(serverSettingsStoreProvider).value?[serverId];
 }

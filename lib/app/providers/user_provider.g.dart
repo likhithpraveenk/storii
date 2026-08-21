@@ -131,3 +131,46 @@ final class IsUserAdminProvider extends $FunctionalProvider<bool, bool, bool>
 }
 
 String _$isUserAdminHash() => r'c96de0368859e48e9ef7a9637eff8a66936f808c';
+
+@ProviderFor(currentServerSettings)
+final currentServerSettingsProvider = CurrentServerSettingsProvider._();
+
+final class CurrentServerSettingsProvider
+    extends
+        $FunctionalProvider<ServerSettings?, ServerSettings?, ServerSettings?>
+    with $Provider<ServerSettings?> {
+  CurrentServerSettingsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'currentServerSettingsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$currentServerSettingsHash();
+
+  @$internal
+  @override
+  $ProviderElement<ServerSettings?> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ServerSettings? create(Ref ref) {
+    return currentServerSettings(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ServerSettings? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ServerSettings?>(value),
+    );
+  }
+}
+
+String _$currentServerSettingsHash() =>
+    r'2cec323c1be8fab5873bb9801d22d6748715ec3f';

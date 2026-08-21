@@ -22,6 +22,8 @@ class DownloadsScreen extends ConsumerStatefulWidget {
 class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final _searchController = TextEditingController();
+  bool _searching = false;
 
   @override
   void initState() {
@@ -43,12 +45,24 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
 
   @override
   void dispose() {
+    _searchController.dispose();
     _tabController.dispose();
     super.dispose();
   }
 
+  void _toggleSearch() {
+    setState(() {
+      _searching = !_searching;
+      if (!_searching) {
+        _searchController.clear();
+        ref.read(downloadSearchQueryProvider.notifier).set('');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final activeCount = ref.watch(
       activeDownloadsProvider.select((list) => list.value?.length ?? 0),
     );
@@ -58,10 +72,21 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          l10n.downloads,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
+        title: _searching
+            ? Material(
+                type: .transparency,
+                child: TextField(
+                  autofocus: true,
+                  controller: _searchController,
+                  onChanged: ref.read(downloadSearchQueryProvider.notifier).set,
+                  decoration: InputDecoration(
+                    hint: Text(l10n.search, style: theme.textTheme.titleSmall),
+                    border: .none,
+                  ),
+                ),
+              )
+            : Text(l10n.downloads, style: theme.textTheme.titleLarge),
+        titleSpacing: _searching ? 0 : theme.appBarTheme.titleSpacing,
         bottom: TabBar(
           controller: _tabController,
           tabs: [
@@ -78,6 +103,11 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
           ],
         ),
         actions: [
+          IconButton(
+            icon: Icon(_searching ? Icons.close : Icons.search),
+            tooltip: l10n.search,
+            onPressed: _toggleSearch,
+          ),
           IconButton(
             icon: const Icon(Icons.sort),
             tooltip: l10n.sort,
@@ -102,7 +132,7 @@ class ActiveDownloadsTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final items = ref.watch(activeDownloadsProvider).value ?? [];
+    final items = ref.watch(sortedActiveDownloadsProvider);
 
     if (items.isEmpty) {
       return const EmptyState();
