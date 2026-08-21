@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_sync_watcher.dart';
@@ -13,4 +14,5 @@ void appController(Ref ref) {
   ref.watch(sessionSyncWatcherProvider);
   ref.watch(audioSettingsWatcherProvider);
   ref.watch(appStartThemeUpdateProvider);
+  ref.watch(mediaProgressSyncControllerProvider);
 }

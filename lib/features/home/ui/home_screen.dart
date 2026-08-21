@@ -20,7 +20,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final shelvesAsync = ref.watch(shelvesProvider);
+    final shelvesAsync = ref.watch(sortedShelvesProvider);
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -29,7 +29,7 @@ class HomeScreen extends ConsumerWidget {
         onRefresh: () async {
           ref.invalidate(rawShelvesProvider);
           ref.invalidate(serverUserProvider);
-          await ref.read(shelvesProvider.future);
+          await ref.read(sortedShelvesProvider.future);
         },
         child: shelvesAsync.when(
           skipLoadingOnReload: true,

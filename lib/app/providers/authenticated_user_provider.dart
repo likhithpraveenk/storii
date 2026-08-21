@@ -6,6 +6,8 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
+import 'package:storii/storage/local/server_settings_store.dart';
+import 'package:storii/storage/local/servers_store.dart';
 
 part 'authenticated_user_provider.g.dart';
 
@@ -23,6 +25,15 @@ Future<UserDomain> authenticatedUser(Ref ref) async {
       source: 'authenticatedUser',
       logMessage: 'Error authenticating user',
     );
+    final serverId = ref
+        .read(serversStoreProvider.notifier)
+        .get(user.serverUrl)
+        ?.id;
+    if (serverId != null) {
+      await ref
+          .read(serverSettingsStoreProvider.notifier)
+          .save(serverId, response.serverSettings);
+    }
     final refreshed = UserDomain(
       id: user.id,
       username: response.user.username,

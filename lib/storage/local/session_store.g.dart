@@ -12,7 +12,8 @@ part of 'session_store.dart';
 @ProviderFor(SessionStore)
 final sessionStoreProvider = SessionStoreProvider._();
 
-final class SessionStoreProvider extends $NotifierProvider<SessionStore, void> {
+final class SessionStoreProvider
+    extends $StreamNotifierProvider<SessionStore, List<PlaybackSession>> {
   SessionStoreProvider._()
     : super(
         from: null,
@@ -30,29 +31,26 @@ final class SessionStoreProvider extends $NotifierProvider<SessionStore, void> {
   @$internal
   @override
   SessionStore create() => SessionStore();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(void value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<void>(value),
-    );
-  }
 }
 
-String _$sessionStoreHash() => r'32dd5e7685333502b05c9fba8550cf36911df8ac';
+String _$sessionStoreHash() => r'f7167ac455ec07dafa5bde4e179776a2e1719512';
 
-abstract class _$SessionStore extends $Notifier<void> {
-  void build();
+abstract class _$SessionStore extends $StreamNotifier<List<PlaybackSession>> {
+  Stream<List<PlaybackSession>> build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<void, void>;
+    final ref =
+        this.ref
+            as $Ref<AsyncValue<List<PlaybackSession>>, List<PlaybackSession>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<void, void>,
-              void,
+              AnyNotifier<
+                AsyncValue<List<PlaybackSession>>,
+                List<PlaybackSession>
+              >,
+              AsyncValue<List<PlaybackSession>>,
               Object?,
               Object?
             >;
