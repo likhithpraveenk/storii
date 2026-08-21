@@ -54,6 +54,9 @@ class DefaultUserSettings {
   static const osNotificationCanSeek = true;
   static const osNotificationCanSkip = true;
   static const osNotificationCanSkipChapter = false;
+  static const interruptionSkipBackward = Duration.zero;
+  static const interruptionLongSkipThreshold = Duration(seconds: 30);
+  static const interruptionLongSkipBackward = Duration.zero;
 }
 
 @freezed
@@ -168,6 +171,15 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.osNotificationCanSkipChapter)
     bool osNotificationCanSkipChapter,
+
+    @Default(DefaultUserSettings.interruptionSkipBackward)
+    Duration interruptionSkipBackward,
+
+    @Default(DefaultUserSettings.interruptionLongSkipThreshold)
+    Duration interruptionLongSkipThreshold,
+
+    @Default(DefaultUserSettings.interruptionLongSkipBackward)
+    Duration interruptionLongSkipBackward,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

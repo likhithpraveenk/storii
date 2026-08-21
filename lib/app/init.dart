@@ -88,6 +88,12 @@ Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
           container.read(osNotificationCanSkipProvider),
       canSkipChapterInOsNotification: () =>
           container.read(osNotificationCanSkipChapterProvider),
+      getInterruptionSkipBackward: () =>
+          container.read(interruptionSkipBackwardProvider),
+      getInterruptionLongSkipBackward: () =>
+          container.read(interruptionLongSkipBackwardProvider),
+      getInterruptionLongSkipThreshold: () =>
+          container.read(interruptionLongSkipThresholdProvider),
     ),
     config: AudioServiceConfig(
       androidNotificationChannelId: 'com.likhithpraveenk.storii.audio',

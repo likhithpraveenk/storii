@@ -360,6 +360,15 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setOsNotificationCanSkipChapter(bool value) =>
       _save(state?.copyWith(osNotificationCanSkipChapter: value));
+
+  Future<void> setInterruptionSkipBackward(Duration value) =>
+      _save(state?.copyWith(interruptionSkipBackward: value));
+
+  Future<void> setInterruptionLongSkipThreshold(Duration value) =>
+      _save(state?.copyWith(interruptionLongSkipThreshold: value));
+
+  Future<void> setInterruptionLongSkipBackward(Duration value) =>
+      _save(state?.copyWith(interruptionLongSkipBackward: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -772,4 +781,37 @@ final osNotificationCanSkipChapterProvider = Provider<bool>(
     ),
   ),
   name: 'osNotificationCanSkipChapterProvider',
+);
+
+final interruptionSkipBackwardProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.interruptionSkipBackward ??
+          DefaultUserSettings.interruptionSkipBackward,
+    ),
+  ),
+  name: 'interruptionSkipBackwardProvider',
+);
+
+final interruptionLongSkipThresholdProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.interruptionLongSkipThreshold ??
+          DefaultUserSettings.interruptionLongSkipThreshold,
+    ),
+  ),
+  name: 'interruptionLongSkipThresholdProvider',
+);
+
+final interruptionLongSkipBackwardProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.interruptionLongSkipBackward ??
+          DefaultUserSettings.interruptionLongSkipBackward,
+    ),
+  ),
+  name: 'interruptionLongSkipBackwardProvider',
 );

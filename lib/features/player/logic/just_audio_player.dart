@@ -19,6 +19,7 @@ AppAudioPlayer justAudioPlayer(Ref ref) {
 
   final player = JustAudioPlayer(
     AudioPlayer(
+      handleInterruptions: false,
       audioLoadConfiguration: AudioLoadConfiguration(
         androidLoadControl: AndroidLoadControl(
           minBufferDuration: minBuffer,

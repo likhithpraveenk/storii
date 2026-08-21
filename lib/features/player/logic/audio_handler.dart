@@ -35,8 +35,14 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final bool Function() canSeekInOsNotification;
   final bool Function() canSkipInOsNotification;
   final bool Function() canSkipChapterInOsNotification;
+  final Duration Function() getInterruptionSkipBackward;
+  final Duration Function() getInterruptionLongSkipBackward;
+  final Duration Function() getInterruptionLongSkipThreshold;
 
   AppPlaybackStatus? _lastStatus;
+
+  bool _pausedByInterruption = false;
+  DateTime? _interruptionStartedAt;
 
   AppAudioHandler({
     required this._player,
@@ -46,6 +52,9 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     required this.canSeekInOsNotification,
     required this.canSkipInOsNotification,
     required this.canSkipChapterInOsNotification,
+    required this.getInterruptionSkipBackward,
+    required this.getInterruptionLongSkipBackward,
+    required this.getInterruptionLongSkipThreshold,
   }) {
     // initial playback event
     playbackState.add(PlaybackState(speed: speed));
@@ -64,6 +73,11 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       if (state.error != null) {
         _handleError(state.error!);
       }
+
+      if (state.isPlaying && _pausedByInterruption) {
+        _pausedByInterruption = false;
+        _interruptionStartedAt = null;
+      }
     });
 
     setSpeed(speed);
@@ -73,6 +87,44 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   Future<void> _initAudioSession() async {
     final session = await AudioSession.instance;
     await session.configure(const AudioSessionConfiguration.speech());
+
+    session.interruptionEventStream.listen(_handleInterruption);
+    session.becomingNoisyEventStream.listen((_) {
+      if (_player.isPlaying) unawaited(pause());
+    });
+  }
+
+  Future<void> _handleInterruption(AudioInterruptionEvent event) async {
+    if (event.begin) {
+      if (_player.isPlaying) {
+        _pausedByInterruption = true;
+        _interruptionStartedAt = DateTime.now();
+        unawaited(pause());
+      }
+      return;
+    }
+
+    if (!_pausedByInterruption) return;
+    _pausedByInterruption = false;
+    final startedAt = _interruptionStartedAt;
+    _interruptionStartedAt = null;
+
+    final shortSkip = getInterruptionSkipBackward();
+    final longSkip = getInterruptionLongSkipBackward();
+    final longThreshold = getInterruptionLongSkipThreshold();
+
+    Duration skip;
+    if (longSkip > Duration.zero && longThreshold > Duration.zero) {
+      final elapsed = startedAt != null
+          ? DateTime.now().difference(startedAt)
+          : Duration.zero;
+      skip = elapsed > longThreshold ? longSkip : shortSkip;
+    } else {
+      skip = shortSkip;
+    }
+
+    await _seekRelative(-skip);
+    await play();
   }
 
   void _updatePlaybackState(AppPlaybackState state) {
