@@ -21,19 +21,19 @@ class FontService {
   }
 
   static Future<void> importFonts() async {
-    final result = await FilePicker.pickFiles(
+    final files = await FilePicker.pickFiles(
       type: .custom,
       allowedExtensions: ['ttf', 'otf'],
     );
 
-    if (result == null || result.files.isEmpty) return;
+    if (files.isEmpty) return;
 
     final fontsDir = await _getFontsDirectory();
     final existing = await _listFontFiles();
     final existingNames = existing.map((f) => _fontFamily(f.path)).toSet();
     existingNames.add('AtkinsonHyperlegibleNext');
 
-    for (final picked in result.files) {
+    for (final picked in files) {
       if (picked.path == null) continue;
 
       final source = File(picked.path!);

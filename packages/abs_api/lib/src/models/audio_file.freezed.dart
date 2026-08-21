@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'audio_file.dart';
@@ -9,6 +9,7 @@ part of 'audio_file.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -66,7 +67,7 @@ class _$AudioFileCopyWithImpl<$Res>
 /// Create a copy of AudioFile
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? ino = null,Object? metadata = null,Object? index = freezed,Object? addedAt = freezed,Object? updatedAt = freezed,Object? trackNumFromMeta = freezed,Object? discNumFromMeta = freezed,Object? trackNumFromFilename = freezed,Object? discNumFromFilename = freezed,Object? manuallyVerified = freezed,Object? exclude = freezed,Object? error = freezed,Object? format = freezed,Object? duration = freezed,Object? bitRate = freezed,Object? language = freezed,Object? codec = freezed,Object? timeBase = freezed,Object? channels = freezed,Object? channelLayout = freezed,Object? chapters = null,Object? embeddedCoverArt = freezed,Object? metaTags = freezed,Object? mimeType = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(AudioFile(
 ino: null == ino ? _self.ino : ino // ignore: cast_nullable_to_non_nullable
 as String,metadata: null == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
 as FileMetadata,index: freezed == index ? _self.index : index // ignore: cast_nullable_to_non_nullable
@@ -248,7 +249,7 @@ return $default(_that.ino,_that.metadata,_that.index,_that.addedAt,_that.updated
 @DateTimeEpochConverter()
 @DurationPreciseSecondsConverter()
 class _AudioFile implements AudioFile {
-  const _AudioFile({required this.ino, required this.metadata, this.index, this.addedAt, this.updatedAt, this.trackNumFromMeta, this.discNumFromMeta, this.trackNumFromFilename, this.discNumFromFilename, this.manuallyVerified, this.exclude, this.error, this.format, this.duration, this.bitRate, this.language, this.codec, this.timeBase, this.channels, this.channelLayout, final  List<BookChapter> chapters = const [], this.embeddedCoverArt, this.metaTags, this.mimeType}): _chapters = chapters;
+  const _AudioFile({required this.ino, required this.metadata, this.index, this.addedAt, this.updatedAt, this.trackNumFromMeta, this.discNumFromMeta, this.trackNumFromFilename, this.discNumFromFilename, this.manuallyVerified, this.exclude, this.error, this.format, this.duration, this.bitRate, this.language, this.codec, this.timeBase, this.channels, this.channelLayout,  List<BookChapter> chapters = const [], this.embeddedCoverArt, this.metaTags, this.mimeType}): _chapters = chapters;
   factory _AudioFile.fromJson(Map<String, dynamic> json) => _$AudioFileFromJson(json);
 
 @override final  String ino;

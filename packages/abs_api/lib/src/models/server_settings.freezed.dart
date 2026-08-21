@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'server_settings.dart';
@@ -9,6 +9,7 @@ part of 'server_settings.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -66,7 +67,7 @@ class _$ServerSettingsCopyWithImpl<$Res>
 /// Create a copy of ServerSettings
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? scannerFindCovers = freezed,Object? scannerParseSubtitle = freezed,Object? scannerPreferMatchedMetadata = freezed,Object? scannerDisableWatcher = freezed,Object? storeCoverWithItem = freezed,Object? storeMetadataWithItem = freezed,Object? metadataFileFormat = freezed,Object? rateLimitLoginRequests = freezed,Object? rateLimitLoginWindow = freezed,Object? backupsToKeep = freezed,Object? maxBackupSize = freezed,Object? loggerDailyLogsToKeep = freezed,Object? loggerScannerLogsToKeep = freezed,Object? homeBookshelfView = freezed,Object? bookshelfView = freezed,Object? sortingIgnorePrefix = freezed,Object? sortingPrefixes = freezed,Object? chromecastEnabled = freezed,Object? dateFormat = freezed,Object? language = freezed,Object? logLevel = freezed,Object? version = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(ServerSettings(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,scannerFindCovers: freezed == scannerFindCovers ? _self.scannerFindCovers : scannerFindCovers // ignore: cast_nullable_to_non_nullable
 as bool?,scannerParseSubtitle: freezed == scannerParseSubtitle ? _self.scannerParseSubtitle : scannerParseSubtitle // ignore: cast_nullable_to_non_nullable
@@ -225,7 +226,7 @@ return $default(_that.id,_that.scannerFindCovers,_that.scannerParseSubtitle,_tha
 @JsonSerializable()
 
 class _ServerSettings implements ServerSettings {
-  const _ServerSettings({this.id, this.scannerFindCovers, this.scannerParseSubtitle, this.scannerPreferMatchedMetadata, this.scannerDisableWatcher, this.storeCoverWithItem, this.storeMetadataWithItem, this.metadataFileFormat, this.rateLimitLoginRequests, @DurationMsConverter() this.rateLimitLoginWindow, this.backupsToKeep, this.maxBackupSize, this.loggerDailyLogsToKeep, this.loggerScannerLogsToKeep, @BoolBinaryConverter() this.homeBookshelfView, @BoolBinaryConverter() this.bookshelfView, this.sortingIgnorePrefix, final  List<String>? sortingPrefixes, this.chromecastEnabled, this.dateFormat, this.language, this.logLevel, this.version}): _sortingPrefixes = sortingPrefixes;
+  const _ServerSettings({this.id, this.scannerFindCovers, this.scannerParseSubtitle, this.scannerPreferMatchedMetadata, this.scannerDisableWatcher, this.storeCoverWithItem, this.storeMetadataWithItem, this.metadataFileFormat, this.rateLimitLoginRequests, @DurationMsConverter() this.rateLimitLoginWindow, this.backupsToKeep, this.maxBackupSize, this.loggerDailyLogsToKeep, this.loggerScannerLogsToKeep, @BoolBinaryConverter() this.homeBookshelfView, @BoolBinaryConverter() this.bookshelfView, this.sortingIgnorePrefix,  List<String>? sortingPrefixes, this.chromecastEnabled, this.dateFormat, this.language, this.logLevel, this.version}): _sortingPrefixes = sortingPrefixes;
   factory _ServerSettings.fromJson(Map<String, dynamic> json) => _$ServerSettingsFromJson(json);
 
 @override final  String? id;

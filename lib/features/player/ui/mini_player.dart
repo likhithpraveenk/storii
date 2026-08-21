@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -28,11 +28,17 @@ class MiniPlayer extends ConsumerWidget {
     final playbackStatus = ref.watch(playbackStatusProvider).value;
     final isLoading = playbackStatus == .buffering;
 
-    final totalDuration = ref.watch(totalDurationProvider);
-    final globalPosition =
-        ref.watch(globalPositionProvider).value ?? Duration.zero;
-    final remaining = totalDuration - globalPosition;
-    final remainingStr = remaining.toReadableDuration(isLeft: true);
+    final localSpeed = ref.watch(localSpeedProvider);
+    final (:duration, :position) = ref.watch(displayProgressProvider);
+    final scaleTimeBySpeed = ref.watch(scaleTimeBySpeedProvider);
+    final remainingDuration = duration - position;
+    final scaledRemaining = scaleTimeBySpeed
+        ? Duration(
+            microseconds: (remainingDuration.inMicroseconds / localSpeed)
+                .round(),
+          )
+        : remainingDuration;
+    final remainingStr = scaledRemaining.toReadableDuration(isLeft: true);
     final showSeekButtons = ref.watch(showMiniPlayerSeekButtonsProvider);
 
     return ThemedBackground(

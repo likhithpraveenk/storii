@@ -1,6 +1,6 @@
 import 'package:abs_api/abs_api.dart';
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/builder/annotations.dart';
@@ -51,6 +51,12 @@ class DefaultUserSettings {
   static const PlaybackControlsLayout playbackControlsLayout = .defaultLayout;
   static const showChapterProgressSlider = true;
   static const scaleTimeBySpeed = true;
+  static const osNotificationCanSeek = true;
+  static const osNotificationCanSkip = true;
+  static const osNotificationCanSkipChapter = false;
+  static const interruptionSkipBackward = Duration.zero;
+  static const interruptionLongSkipThreshold = Duration(seconds: 30);
+  static const interruptionLongSkipBackward = Duration.zero;
 }
 
 @freezed
@@ -156,6 +162,24 @@ sealed class UserSettings with _$UserSettings {
     bool showChapterProgressSlider,
 
     @Default(DefaultUserSettings.scaleTimeBySpeed) bool scaleTimeBySpeed,
+
+    @Default(DefaultUserSettings.osNotificationCanSeek)
+    bool osNotificationCanSeek,
+
+    @Default(DefaultUserSettings.osNotificationCanSkip)
+    bool osNotificationCanSkip,
+
+    @Default(DefaultUserSettings.osNotificationCanSkipChapter)
+    bool osNotificationCanSkipChapter,
+
+    @Default(DefaultUserSettings.interruptionSkipBackward)
+    Duration interruptionSkipBackward,
+
+    @Default(DefaultUserSettings.interruptionLongSkipThreshold)
+    Duration interruptionLongSkipThreshold,
+
+    @Default(DefaultUserSettings.interruptionLongSkipBackward)
+    Duration interruptionLongSkipBackward,
   }) = _UserSettings;
 
   factory UserSettings.fromJson(Map<String, dynamic> json) =>

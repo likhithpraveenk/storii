@@ -41,7 +41,7 @@ abstract class _$DownloadsNotifier
   Stream<Map<String, DownloadItem>> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref =
         this.ref
             as $Ref<
@@ -59,7 +59,7 @@ abstract class _$DownloadsNotifier
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 

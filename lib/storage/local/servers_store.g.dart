@@ -39,7 +39,7 @@ abstract class _$ServersStore extends $StreamNotifier<List<Server>> {
   Stream<List<Server>> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AsyncValue<List<Server>>, List<Server>>;
     final element =
         ref.element
@@ -49,6 +49,6 @@ abstract class _$ServersStore extends $StreamNotifier<List<Server>> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

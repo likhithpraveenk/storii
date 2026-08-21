@@ -48,7 +48,7 @@ abstract class _$EpisodeFilterNotifier extends $Notifier<EpisodeFilterState> {
   EpisodeFilterState build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<EpisodeFilterState, EpisodeFilterState>;
     final element =
         ref.element
@@ -58,7 +58,7 @@ abstract class _$EpisodeFilterNotifier extends $Notifier<EpisodeFilterState> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 

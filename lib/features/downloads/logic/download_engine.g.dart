@@ -41,13 +41,13 @@ final class DownloadEngineProvider
   }
 }
 
-String _$downloadEngineHash() => r'906055590a05732e3e1dc1e6600cadeafe9a180a';
+String _$downloadEngineHash() => r'385704d5cbc8e1c3dabdcd9383afabaac7618aea';
 
 abstract class _$DownloadEngine extends $Notifier<void> {
   void build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<void, void>;
     final element =
         ref.element
@@ -57,6 +57,6 @@ abstract class _$DownloadEngine extends $Notifier<void> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

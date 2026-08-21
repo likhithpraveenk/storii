@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
 
 class WheelPicker<T> extends StatefulWidget {
@@ -12,8 +12,9 @@ class WheelPicker<T> extends StatefulWidget {
     this.onChangedEnd,
     this.presets = const [],
     this.itemExtent = 48.0,
-    this.visibleItems = 5,
-  }) : assert(visibleItems % 2 == 1, 'visibleItems must be odd');
+    this.visibleItems = 4,
+    this.wheelWidth,
+  });
 
   final T initialValue;
   final List<T> items;
@@ -22,7 +23,8 @@ class WheelPicker<T> extends StatefulWidget {
   final ValueChanged<T>? onChangedEnd;
   final List<T> presets;
   final double itemExtent;
-  final int visibleItems;
+  final double visibleItems;
+  final double? wheelWidth;
 
   static WheelPicker<double> fromDoubleRange({
     Key? key,
@@ -35,7 +37,8 @@ class WheelPicker<T> extends StatefulWidget {
     ValueChanged<double>? onChangedEnd,
     List<double> presets = const [],
     double itemExtent = 48.0,
-    int visibleItems = 5,
+    double visibleItems = 4,
+    double? wheelWidth,
   }) {
     final items = <double>[];
     for (var v = min; v <= max + step * kEpsilon; v += step) {
@@ -51,6 +54,7 @@ class WheelPicker<T> extends StatefulWidget {
       presets: presets,
       itemExtent: itemExtent,
       visibleItems: visibleItems,
+      wheelWidth: wheelWidth,
     );
   }
 
@@ -65,7 +69,8 @@ class WheelPicker<T> extends StatefulWidget {
     ValueChanged<int>? onChangedEnd,
     List<int> presets = const [],
     double itemExtent = 48.0,
-    int visibleItems = 5,
+    double visibleItems = 4,
+    double? wheelWidth,
   }) {
     final count = ((max - min) / step).floor() + 1;
     final items = List.generate(count, (index) => min + (index * step));
@@ -79,6 +84,7 @@ class WheelPicker<T> extends StatefulWidget {
       presets: presets,
       itemExtent: itemExtent,
       visibleItems: visibleItems,
+      wheelWidth: wheelWidth,
     );
   }
 
@@ -123,14 +129,13 @@ class _WheelPickerState<T> extends State<WheelPicker<T>> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final singleHeight = widget.itemExtent * widget.visibleItems;
+    final height = widget.itemExtent * widget.visibleItems;
 
     return Column(
-      mainAxisSize: .min,
-      crossAxisAlignment: .stretch,
       children: [
         SizedBox(
-          height: singleHeight,
+          height: height,
+          width: widget.wheelWidth,
           child: Stack(
             children: [
               NotificationListener<ScrollEndNotification>(

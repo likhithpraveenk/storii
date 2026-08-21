@@ -394,6 +394,54 @@ final class TotalDurationProvider
 
 String _$totalDurationHash() => r'5b8043ca284de5972183decfc40d0b6f06647bdd';
 
+@ProviderFor(displayProgress)
+final displayProgressProvider = DisplayProgressProvider._();
+
+final class DisplayProgressProvider
+    extends
+        $FunctionalProvider<
+          ({Duration duration, Duration position}),
+          ({Duration duration, Duration position}),
+          ({Duration duration, Duration position})
+        >
+    with $Provider<({Duration duration, Duration position})> {
+  DisplayProgressProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'displayProgressProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$displayProgressHash();
+
+  @$internal
+  @override
+  $ProviderElement<({Duration duration, Duration position})> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ({Duration duration, Duration position}) create(Ref ref) {
+    return displayProgress(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(({Duration duration, Duration position}) value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride:
+          $SyncValueProvider<({Duration duration, Duration position})>(value),
+    );
+  }
+}
+
+String _$displayProgressHash() => r'2768e6c7029f8d78b9ac41297f953bfa73b91394';
+
 @ProviderFor(AudioPlayerNotifier)
 final audioPlayerProvider = AudioPlayerNotifierProvider._();
 
@@ -433,7 +481,7 @@ abstract class _$AudioPlayerNotifier extends $Notifier<AudioPlayerState> {
   AudioPlayerState build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AudioPlayerState, AudioPlayerState>;
     final element =
         ref.element
@@ -443,7 +491,7 @@ abstract class _$AudioPlayerNotifier extends $Notifier<AudioPlayerState> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -560,7 +608,7 @@ abstract class _$VolumeControl extends $Notifier<double> {
   double build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<double, double>;
     final element =
         ref.element
@@ -570,7 +618,7 @@ abstract class _$VolumeControl extends $Notifier<double> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -611,7 +659,7 @@ abstract class _$LocalSpeed extends $Notifier<double> {
   double build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<double, double>;
     final element =
         ref.element
@@ -621,7 +669,7 @@ abstract class _$LocalSpeed extends $Notifier<double> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 

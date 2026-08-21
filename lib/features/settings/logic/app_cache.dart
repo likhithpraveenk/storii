@@ -1,6 +1,7 @@
 import 'dart:io';
+import 'dart:typed_data';
 
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:cached_network_image_ce/cached_network_image.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:storii/storage/hive/boxes.dart';
@@ -32,20 +33,12 @@ class NetworkCache {
   }
 }
 
-class AppImageCacheManager extends CacheManager with ImageCacheManager {
-  static const _key = 'appImageCache';
+class AppImageCacheManager extends DefaultCacheManager {
+  static const _key = 'cached_network_image_ce';
 
   static final AppImageCacheManager instance = AppImageCacheManager._();
 
-  AppImageCacheManager._()
-    : super(
-        Config(
-          _key,
-          stalePeriod: const Duration(days: 30),
-          maxNrOfCacheObjects: 5000,
-          fileService: HttpFileService(),
-        ),
-      );
+  AppImageCacheManager._() : super(maxNrOfCacheObjects: 5000);
 
   Future<void> clear() async {
     await emptyCache();
@@ -63,5 +56,15 @@ class AppImageCacheManager extends CacheManager with ImageCacheManager {
       if (f is File) total += await f.length();
     }
     return total;
+  }
+
+  Future<Uint8List?> getCachedBytes(String url) async {
+    await for (final response in getFileStream(url)) {
+      if (response is FileInfo) {
+        return response.file.readAsBytes();
+      }
+    }
+
+    return null;
   }
 }

@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/player_settings/audio_buffer_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/fade_on_sleep_tile.dart';
+import 'package:storii/features/settings/ui/player_settings/interrupt_skip_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/skip_tiles.dart';
 import 'package:storii/features/settings/ui/player_settings/speed_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/sync_interval_tile.dart';
@@ -44,6 +45,7 @@ class PlayerSettingsScreen extends ConsumerWidget {
         children: const [
           SkipForwardTile(),
           SkipBackwardTile(),
+          InterruptSkipTile(),
           SyncIntervalTile(),
           SpeedTile(),
           AudioBufferTile(),

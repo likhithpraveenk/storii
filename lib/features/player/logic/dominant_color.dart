@@ -9,8 +9,9 @@ part 'dominant_color.g.dart';
 @riverpod
 /// getting dominant [Color] of an image via histogram/bucketing approach
 Future<Color?> dominantColor(Ref ref, String coverUrl) async {
-  final file = await AppImageCacheManager.instance.getSingleFile(coverUrl);
-  final bytes = await file.readAsBytes();
+  final bytes = await AppImageCacheManager.instance.getCachedBytes(coverUrl);
+  if (bytes == null) return null;
+
   final codec = await instantiateImageCodec(bytes, targetWidth: 100);
   final frame = await codec.getNextFrame();
   final image = frame.image;

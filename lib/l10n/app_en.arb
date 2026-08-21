@@ -258,6 +258,11 @@
   "playerSettings": "Player Settings",
   "skipForward": "Skip forward",
   "skipBack": "Skip back",
+  "interruptSkipBack": "Skip back after interruption",
+  "interruptSkipBackDescription": "Rewind a few seconds when an external sound (e.g. a notification) interrupts playback. Set to 0 to disable",
+  "interruptSkipBackShort": "Skip back on short interruptions",
+  "interruptSkipBackLong": "Skip back on long interruptions",
+  "interruptSkipLongThreshold": "Threshold for long interruption",
   "startPlayback": "Start playback",
   "playbackSpeed": "Playback speed",
   "sleepTimer": "Sleep timer",
@@ -500,5 +505,14 @@
   "itemScanUpdated": "Item scanned: content updated",
   "itemScanRemoved": "Item scanned: content removed",
   "itemScanUpToDate": "Item is already up to date",
-  "itemScanNothing": "Item scanned: no changes"
+  "itemScanNothing": "Item scanned: no changes",
+  "miniPlayer": "Mini Player",
+  "fullPlayer": "Full Player",
+  "osNotification": "OS Notification",
+  "osNotificationCanSeek": "Seek",
+  "osNotificationCanSeekSubtitle": "Allow seeking in OS notification",
+  "osNotificationCanSkip": "Skip forward / rewind",
+  "osNotificationCanSkipSubtitle": "Show skip forward and rewind buttons in OS notification",
+  "osNotificationCanSkipChapter": "Skip chapters",
+  "osNotificationCanSkipChapterSubtitle": "Show skip to next/previous chapter buttons in OS notification"
 }

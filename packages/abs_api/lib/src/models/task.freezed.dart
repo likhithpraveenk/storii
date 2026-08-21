@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'task.dart';
@@ -9,6 +9,7 @@ part of 'task.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -66,7 +67,7 @@ class _$TaskCopyWithImpl<$Res>
 /// Create a copy of Task
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? action = freezed,Object? data = freezed,Object? title = freezed,Object? titleSubs = freezed,Object? description = freezed,Object? descriptionSubs = freezed,Object? error = freezed,Object? errorSubs = freezed,Object? showSuccess = null,Object? isFailed = null,Object? isFinished = null,Object? startedAt = freezed,Object? finishedAt = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(Task(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,action: freezed == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
 as String?,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
@@ -228,7 +229,7 @@ return $default(_that.id,_that.action,_that.data,_that.title,_that.titleSubs,_th
 @JsonSerializable()
 @DateTimeEpochConverter()
 class _Task implements Task {
-  const _Task({this.id, this.action, this.data, this.title, final  List<String>? titleSubs, this.description, final  List<String>? descriptionSubs, this.error, final  List<String>? errorSubs, this.showSuccess = false, this.isFailed = false, this.isFinished = false, this.startedAt, this.finishedAt}): _titleSubs = titleSubs,_descriptionSubs = descriptionSubs,_errorSubs = errorSubs;
+  const _Task({this.id, this.action, this.data, this.title,  List<String>? titleSubs, this.description,  List<String>? descriptionSubs, this.error,  List<String>? errorSubs, this.showSuccess = false, this.isFailed = false, this.isFinished = false, this.startedAt, this.finishedAt}): _titleSubs = titleSubs,_descriptionSubs = descriptionSubs,_errorSubs = errorSubs;
   factory _Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
 
 @override final  String? id;
@@ -410,7 +411,7 @@ class _$TaskDataCopyWithImpl<$Res>
 /// Create a copy of TaskData
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? libraryId = freezed,Object? libraryName = freezed,Object? libraryMediaType = freezed,Object? scanResults = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(TaskData(
 libraryId: freezed == libraryId ? _self.libraryId : libraryId // ignore: cast_nullable_to_non_nullable
 as String?,libraryName: freezed == libraryName ? _self.libraryName : libraryName // ignore: cast_nullable_to_non_nullable
 as String?,libraryMediaType: freezed == libraryMediaType ? _self.libraryMediaType : libraryMediaType // ignore: cast_nullable_to_non_nullable
@@ -700,7 +701,7 @@ class _$TaskScanResultsCopyWithImpl<$Res>
 /// Create a copy of TaskScanResults
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? added = freezed,Object? updated = freezed,Object? missing = freezed,Object? elapsed = freezed,Object? text = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(TaskScanResults(
 added: freezed == added ? _self.added : added // ignore: cast_nullable_to_non_nullable
 as int?,updated: freezed == updated ? _self.updated : updated // ignore: cast_nullable_to_non_nullable
 as int?,missing: freezed == missing ? _self.missing : missing // ignore: cast_nullable_to_non_nullable

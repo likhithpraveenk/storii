@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'media.dart';
@@ -9,6 +9,7 @@ part of 'media.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 Media _$MediaFromJson(
@@ -246,7 +247,7 @@ return podcast(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.auto
 @JsonSerializable()
 @DurationPreciseSecondsConverter()
 class BookMedia implements Media {
-  const BookMedia({required this.id, required this.metadata, this.libraryItemId, final  List<String> tags = const [], this.duration, this.coverPath, final  List<AudioFile> audioFiles = const [], this.numAudioFiles = 0, final  List<AudioTrack> tracks = const [], this.numTracks = 0, final  List<BookChapter> chapters = const [], this.numChapters = 0, this.size, final  String? $type}): _tags = tags,_audioFiles = audioFiles,_tracks = tracks,_chapters = chapters,$type = $type ?? 'book';
+  const BookMedia({required this.id, required this.metadata, this.libraryItemId,  List<String> tags = const [], this.duration, this.coverPath,  List<AudioFile> audioFiles = const [], this.numAudioFiles = 0,  List<AudioTrack> tracks = const [], this.numTracks = 0,  List<BookChapter> chapters = const [], this.numChapters = 0, this.size,  String? $type}): _tags = tags,_audioFiles = audioFiles,_tracks = tracks,_chapters = chapters,$type = $type ?? 'book';
   factory BookMedia.fromJson(Map<String, dynamic> json) => _$BookMediaFromJson(json);
 
 @override final  String id;
@@ -376,7 +377,7 @@ $MediaMetadataCopyWith<$Res> get metadata {
 @JsonSerializable()
 @DateTimeEpochConverter()
 class PodcastMedia implements Media {
-  const PodcastMedia({required this.id, required this.metadata, this.libraryItemId, final  List<String> tags = const [], this.autoDownloadEpisodes = false, final  List<PodcastEpisode> episodes = const [], this.coverPath, this.lastEpisodeCheck, this.size, this.numEpisodes, final  String? $type}): _tags = tags,_episodes = episodes,$type = $type ?? 'podcast';
+  const PodcastMedia({required this.id, required this.metadata, this.libraryItemId,  List<String> tags = const [], this.autoDownloadEpisodes = false,  List<PodcastEpisode> episodes = const [], this.coverPath, this.lastEpisodeCheck, this.size, this.numEpisodes,  String? $type}): _tags = tags,_episodes = episodes,$type = $type ?? 'podcast';
   factory PodcastMedia.fromJson(Map<String, dynamic> json) => _$PodcastMediaFromJson(json);
 
 @override final  String id;

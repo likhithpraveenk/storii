@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
+import 'package:cached_network_image_ce/cached_network_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/cover_url_provider.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
@@ -31,12 +31,12 @@ class ThemedBackground extends ConsumerWidget {
             ? LinearGradient(
                 begin: .centerLeft,
                 end: .centerRight,
-                colors: [scheme.onPrimary, scheme.surface],
+                colors: [scheme.primaryContainer, scheme.surface],
               )
             : LinearGradient(
                 begin: .topCenter,
                 end: .bottomCenter,
-                colors: [scheme.onPrimary, scheme.surface],
+                colors: [scheme.primaryContainer, scheme.surface],
               ),
       ),
       .blur => BoxDecoration(

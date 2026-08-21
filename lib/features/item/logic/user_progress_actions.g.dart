@@ -100,7 +100,7 @@ abstract class _$UserProgressActionsNotifier extends $Notifier<void> {
   void build(String itemId, [String? episodeId]);
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<void, void>;
     final element =
         ref.element
@@ -110,6 +110,6 @@ abstract class _$UserProgressActionsNotifier extends $Notifier<void> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, () => build(_$args.$1, _$args.$2));
+    return element.handleCreate(ref, () => build(_$args.$1, _$args.$2));
   }
 }

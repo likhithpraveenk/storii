@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'library.dart';
@@ -9,6 +9,7 @@ part of 'library.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -66,7 +67,7 @@ class _$LibraryCopyWithImpl<$Res>
 /// Create a copy of Library
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? folders = null,Object? displayOrder = null,Object? icon = freezed,Object? mediaType = null,Object? provider = freezed,Object? createdAt = null,Object? lastUpdate = null,}) {
-  return _then(_self.copyWith(
+  return _then(Library(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,folders: null == folders ? _self.folders : folders // ignore: cast_nullable_to_non_nullable
@@ -211,7 +212,7 @@ return $default(_that.id,_that.name,_that.folders,_that.displayOrder,_that.icon,
 @JsonSerializable()
 @DateTimeEpochConverter()
 class _Library implements Library {
-  const _Library({required this.id, required this.name, required final  List<Folder> folders, required this.displayOrder, this.icon, required this.mediaType, this.provider, required this.createdAt, required this.lastUpdate}): _folders = folders;
+  const _Library({required this.id, required this.name, required  List<Folder> folders, required this.displayOrder, this.icon, required this.mediaType, this.provider, required this.createdAt, required this.lastUpdate}): _folders = folders;
   factory _Library.fromJson(Map<String, dynamic> json) => _$LibraryFromJson(json);
 
 @override final  String id;

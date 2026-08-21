@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'series.dart';
@@ -9,17 +9,14 @@ part of 'series.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$Series {
 
- String get id; String get name; String? get libraryId; String? get nameIgnorePrefix;// Common Metadata
- String? get description; DateTime? get addedAt; DateTime? get updatedAt;// Content / Collections
-@JsonKey(readValue: _booksOrItems) List<LibraryItem> get books; int? get numBooks;// Sequence & Sorting
- String? get sequence; String? get seriesSequenceList;// Progress & States
- List<String>? get libraryItemIds; SeriesProgress? get progress; bool? get inProgress; bool? get hasActiveBook; bool? get hideFromContinueListening; DateTime? get bookInProgressLastUpdate; LibraryItem? get firstBookUnread;
+ String get id; String get name; String? get libraryId; String? get nameIgnorePrefix; String? get description; DateTime? get addedAt; DateTime? get updatedAt;@JsonKey(readValue: _booksOrItems) List<LibraryItem> get books; int? get numBooks; String? get sequence; String? get seriesSequenceList; List<String>? get libraryItemIds; SeriesProgress? get progress; bool? get inProgress; bool? get hasActiveBook; bool? get hideFromContinueListening; DateTime? get bookInProgressLastUpdate; LibraryItem? get firstBookUnread;
 /// Create a copy of Series
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -70,7 +67,7 @@ class _$SeriesCopyWithImpl<$Res>
 /// Create a copy of Series
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? libraryId = freezed,Object? nameIgnorePrefix = freezed,Object? description = freezed,Object? addedAt = freezed,Object? updatedAt = freezed,Object? books = null,Object? numBooks = freezed,Object? sequence = freezed,Object? seriesSequenceList = freezed,Object? libraryItemIds = freezed,Object? progress = freezed,Object? inProgress = freezed,Object? hasActiveBook = freezed,Object? hideFromContinueListening = freezed,Object? bookInProgressLastUpdate = freezed,Object? firstBookUnread = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(Series(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,libraryId: freezed == libraryId ? _self.libraryId : libraryId // ignore: cast_nullable_to_non_nullable
@@ -249,20 +246,17 @@ return $default(_that.id,_that.name,_that.libraryId,_that.nameIgnorePrefix,_that
 @DateTimeEpochConverter()
 @DurationPreciseSecondsConverter()
 class _Series implements Series {
-  const _Series({required this.id, required this.name, this.libraryId, this.nameIgnorePrefix, this.description, this.addedAt, this.updatedAt, @JsonKey(readValue: _booksOrItems) final  List<LibraryItem> books = const [], this.numBooks, this.sequence, this.seriesSequenceList, final  List<String>? libraryItemIds, this.progress, this.inProgress, this.hasActiveBook, this.hideFromContinueListening, this.bookInProgressLastUpdate, this.firstBookUnread}): _books = books,_libraryItemIds = libraryItemIds;
+  const _Series({required this.id, required this.name, this.libraryId, this.nameIgnorePrefix, this.description, this.addedAt, this.updatedAt, @JsonKey(readValue: _booksOrItems)  List<LibraryItem> books = const [], this.numBooks, this.sequence, this.seriesSequenceList,  List<String>? libraryItemIds, this.progress, this.inProgress, this.hasActiveBook, this.hideFromContinueListening, this.bookInProgressLastUpdate, this.firstBookUnread}): _books = books,_libraryItemIds = libraryItemIds;
   factory _Series.fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);
 
 @override final  String id;
 @override final  String name;
 @override final  String? libraryId;
 @override final  String? nameIgnorePrefix;
-// Common Metadata
 @override final  String? description;
 @override final  DateTime? addedAt;
 @override final  DateTime? updatedAt;
-// Content / Collections
  final  List<LibraryItem> _books;
-// Content / Collections
 @override@JsonKey(readValue: _booksOrItems) List<LibraryItem> get books {
   if (_books is EqualUnmodifiableListView) return _books;
   // ignore: implicit_dynamic_type
@@ -270,12 +264,9 @@ class _Series implements Series {
 }
 
 @override final  int? numBooks;
-// Sequence & Sorting
 @override final  String? sequence;
 @override final  String? seriesSequenceList;
-// Progress & States
  final  List<String>? _libraryItemIds;
-// Progress & States
 @override List<String>? get libraryItemIds {
   final value = _libraryItemIds;
   if (value == null) return null;

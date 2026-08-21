@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'library_filter_data.dart';
@@ -9,6 +9,7 @@ part of 'library_filter_data.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -66,7 +67,7 @@ class _$LibraryFilterDataCopyWithImpl<$Res>
 /// Create a copy of LibraryFilterData
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? authors = null,Object? genres = null,Object? tags = null,Object? series = null,Object? narrators = null,Object? languages = null,Object? publishers = null,Object? publishedDecades = null,}) {
-  return _then(_self.copyWith(
+  return _then(LibraryFilterData(
 authors: null == authors ? _self.authors : authors // ignore: cast_nullable_to_non_nullable
 as List<Author>,genres: null == genres ? _self.genres : genres // ignore: cast_nullable_to_non_nullable
 as List<String>,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
@@ -216,7 +217,7 @@ return $default(_that.authors,_that.genres,_that.tags,_that.series,_that.narrato
 @JsonSerializable()
 
 class _LibraryFilterData implements LibraryFilterData {
-  const _LibraryFilterData({required final  List<Author> authors, required final  List<String> genres, required final  List<String> tags, required final  List<Series> series, required final  List<String> narrators, required final  List<String> languages, required final  List<String> publishers, required final  List<String> publishedDecades}): _authors = authors,_genres = genres,_tags = tags,_series = series,_narrators = narrators,_languages = languages,_publishers = publishers,_publishedDecades = publishedDecades;
+  const _LibraryFilterData({required  List<Author> authors, required  List<String> genres, required  List<String> tags, required  List<Series> series, required  List<String> narrators, required  List<String> languages, required  List<String> publishers, required  List<String> publishedDecades}): _authors = authors,_genres = genres,_tags = tags,_series = series,_narrators = narrators,_languages = languages,_publishers = publishers,_publishedDecades = publishedDecades;
   factory _LibraryFilterData.fromJson(Map<String, dynamic> json) => _$LibraryFilterDataFromJson(json);
 
  final  List<Author> _authors;

@@ -48,7 +48,7 @@ abstract class _$UserSessionController extends $Notifier<UsesSessionState> {
   UsesSessionState build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<UsesSessionState, UsesSessionState>;
     final element =
         ref.element
@@ -58,6 +58,6 @@ abstract class _$UserSessionController extends $Notifier<UsesSessionState> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

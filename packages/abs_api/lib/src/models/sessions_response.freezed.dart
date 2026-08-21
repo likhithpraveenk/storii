@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'sessions_response.dart';
@@ -9,6 +9,7 @@ part of 'sessions_response.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -66,7 +67,7 @@ class _$SessionsResponseCopyWithImpl<$Res>
 /// Create a copy of SessionsResponse
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? total = null,Object? numPages = null,Object? itemsPerPage = null,Object? sessions = null,Object? userFilter = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(SessionsResponse(
 total: null == total ? _self.total : total // ignore: cast_nullable_to_non_nullable
 as int,numPages: null == numPages ? _self.numPages : numPages // ignore: cast_nullable_to_non_nullable
 as int,itemsPerPage: null == itemsPerPage ? _self.itemsPerPage : itemsPerPage // ignore: cast_nullable_to_non_nullable
@@ -213,7 +214,7 @@ return $default(_that.total,_that.numPages,_that.itemsPerPage,_that.sessions,_th
 @JsonSerializable()
 
 class _SessionsResponse implements SessionsResponse {
-  const _SessionsResponse({required this.total, required this.numPages, required this.itemsPerPage, required final  List<PlaybackSession> sessions, this.userFilter}): _sessions = sessions;
+  const _SessionsResponse({required this.total, required this.numPages, required this.itemsPerPage, required  List<PlaybackSession> sessions, this.userFilter}): _sessions = sessions;
   factory _SessionsResponse.fromJson(Map<String, dynamic> json) => _$SessionsResponseFromJson(json);
 
 @override final  int total;

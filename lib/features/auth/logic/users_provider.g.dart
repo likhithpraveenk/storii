@@ -39,7 +39,7 @@ abstract class _$UsersNotifier extends $StreamNotifier<List<UserDomain>> {
   Stream<List<UserDomain>> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref =
         this.ref as $Ref<AsyncValue<List<UserDomain>>, List<UserDomain>>;
     final element =
@@ -50,7 +50,7 @@ abstract class _$UsersNotifier extends $StreamNotifier<List<UserDomain>> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 

@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:app_links/app_links.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -82,6 +82,18 @@ Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
       speed: container.read(speedProvider),
       getSkipForward: () => container.read(skipForwardProvider),
       getSkipBackward: () => container.read(skipBackwardProvider),
+      canSeekInOsNotification: () =>
+          container.read(osNotificationCanSeekProvider),
+      canSkipInOsNotification: () =>
+          container.read(osNotificationCanSkipProvider),
+      canSkipChapterInOsNotification: () =>
+          container.read(osNotificationCanSkipChapterProvider),
+      getInterruptionSkipBackward: () =>
+          container.read(interruptionSkipBackwardProvider),
+      getInterruptionLongSkipBackward: () =>
+          container.read(interruptionLongSkipBackwardProvider),
+      getInterruptionLongSkipThreshold: () =>
+          container.read(interruptionLongSkipThresholdProvider),
     ),
     config: AudioServiceConfig(
       androidNotificationChannelId: 'com.likhithpraveenk.storii.audio',

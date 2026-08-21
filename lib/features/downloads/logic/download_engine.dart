@@ -98,8 +98,6 @@ class DownloadEngine extends _$DownloadEngine {
           }
 
           var received = existingBytes;
-          int lastYieldedBytes = existingBytes;
-          const int throttleThreshold = 500 * 1024;
           await for (final chunk in res.data!.stream) {
             received += chunk.length;
             sink.add(chunk);
@@ -110,17 +108,13 @@ class DownloadEngine extends _$DownloadEngine {
               return;
             }
 
-            if (received - lastYieldedBytes >= throttleThreshold) {
-              lastYieldedBytes = received;
-
-              final updatedTracks = [...current.tracks];
-              updatedTracks[i] = current.tracks[i].copyWith(
-                status: .downloading,
-                bytesReceived: received,
-              );
-              current = current.copyWith(tracks: updatedTracks);
-              yield current;
-            }
+            final updatedTracks = [...current.tracks];
+            updatedTracks[i] = current.tracks[i].copyWith(
+              status: .downloading,
+              bytesReceived: received,
+            );
+            current = current.copyWith(tracks: updatedTracks);
+            yield current;
           }
 
           await sink.close();

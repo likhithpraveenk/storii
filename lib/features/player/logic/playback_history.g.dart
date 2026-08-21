@@ -95,7 +95,7 @@ abstract class _$PlaybackHistoryNotifier
   List<PlaybackEvent> build(String mediaItemId);
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<List<PlaybackEvent>, List<PlaybackEvent>>;
     final element =
         ref.element
@@ -105,6 +105,6 @@ abstract class _$PlaybackHistoryNotifier
               Object?,
               Object?
             >;
-    element.handleCreate(ref, () => build(_$args));
+    return element.handleCreate(ref, () => build(_$args));
   }
 }

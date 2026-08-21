@@ -48,7 +48,7 @@ class BackupService {
     _ => json,
   };
 
-  static Future<String?> createBackup() async {
+  static Future<Uri?> createBackup() async {
     final data = <String, dynamic>{};
 
     for (final box in _boxes) {

@@ -48,7 +48,7 @@ abstract class _$AppSettingsNotifier extends $Notifier<AppSettings> {
   AppSettings build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AppSettings, AppSettings>;
     final element =
         ref.element
@@ -58,7 +58,7 @@ abstract class _$AppSettingsNotifier extends $Notifier<AppSettings> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -101,7 +101,7 @@ abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<UserSettings?, UserSettings?>;
     final element =
         ref.element
@@ -111,7 +111,7 @@ abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -351,6 +351,24 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setScaleTimeBySpeed(bool value) =>
       _save(state?.copyWith(scaleTimeBySpeed: value));
+
+  Future<void> setOsNotificationCanSeek(bool value) =>
+      _save(state?.copyWith(osNotificationCanSeek: value));
+
+  Future<void> setOsNotificationCanSkip(bool value) =>
+      _save(state?.copyWith(osNotificationCanSkip: value));
+
+  Future<void> setOsNotificationCanSkipChapter(bool value) =>
+      _save(state?.copyWith(osNotificationCanSkipChapter: value));
+
+  Future<void> setInterruptionSkipBackward(Duration value) =>
+      _save(state?.copyWith(interruptionSkipBackward: value));
+
+  Future<void> setInterruptionLongSkipThreshold(Duration value) =>
+      _save(state?.copyWith(interruptionLongSkipThreshold: value));
+
+  Future<void> setInterruptionLongSkipBackward(Duration value) =>
+      _save(state?.copyWith(interruptionLongSkipBackward: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -732,4 +750,68 @@ final scaleTimeBySpeedProvider = Provider<bool>(
     ),
   ),
   name: 'scaleTimeBySpeedProvider',
+);
+
+final osNotificationCanSeekProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.osNotificationCanSeek ?? DefaultUserSettings.osNotificationCanSeek,
+    ),
+  ),
+  name: 'osNotificationCanSeekProvider',
+);
+
+final osNotificationCanSkipProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.osNotificationCanSkip ?? DefaultUserSettings.osNotificationCanSkip,
+    ),
+  ),
+  name: 'osNotificationCanSkipProvider',
+);
+
+final osNotificationCanSkipChapterProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.osNotificationCanSkipChapter ??
+          DefaultUserSettings.osNotificationCanSkipChapter,
+    ),
+  ),
+  name: 'osNotificationCanSkipChapterProvider',
+);
+
+final interruptionSkipBackwardProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.interruptionSkipBackward ??
+          DefaultUserSettings.interruptionSkipBackward,
+    ),
+  ),
+  name: 'interruptionSkipBackwardProvider',
+);
+
+final interruptionLongSkipThresholdProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.interruptionLongSkipThreshold ??
+          DefaultUserSettings.interruptionLongSkipThreshold,
+    ),
+  ),
+  name: 'interruptionLongSkipThresholdProvider',
+);
+
+final interruptionLongSkipBackwardProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.interruptionLongSkipBackward ??
+          DefaultUserSettings.interruptionLongSkipBackward,
+    ),
+  ),
+  name: 'interruptionLongSkipBackwardProvider',
 );

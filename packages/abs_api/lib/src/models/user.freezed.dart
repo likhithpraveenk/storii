@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user.dart';
@@ -9,6 +9,7 @@ part of 'user.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -66,7 +67,7 @@ class _$UserCopyWithImpl<$Res>
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? email = freezed,Object? type = null,Object? mediaProgress = null,Object? seriesHideFromContinueListening = null,Object? bookmarks = null,Object? isActive = freezed,Object? isLocked = freezed,Object? lastSeen = freezed,Object? createdAt = null,Object? permissions = null,Object? librariesAccessible = null,Object? itemTagsSelected = null,Object? hasOpenIDLink = freezed,Object? accessToken = freezed,Object? refreshToken = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(User(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -228,7 +229,7 @@ return $default(_that.id,_that.username,_that.email,_that.type,_that.mediaProgre
 @JsonSerializable()
 @DateTimeEpochConverter()
 class _User implements User {
-  const _User({required this.id, required this.username, this.email, required this.type, required final  List<MediaProgress> mediaProgress, required final  List<String> seriesHideFromContinueListening, required final  List<Bookmark> bookmarks, this.isActive, this.isLocked, this.lastSeen, required this.createdAt, required this.permissions, required final  List<String> librariesAccessible, required final  List<String> itemTagsSelected, this.hasOpenIDLink, this.accessToken, this.refreshToken}): _mediaProgress = mediaProgress,_seriesHideFromContinueListening = seriesHideFromContinueListening,_bookmarks = bookmarks,_librariesAccessible = librariesAccessible,_itemTagsSelected = itemTagsSelected;
+  const _User({required this.id, required this.username, this.email, required this.type, required  List<MediaProgress> mediaProgress, required  List<String> seriesHideFromContinueListening, required  List<Bookmark> bookmarks, this.isActive, this.isLocked, this.lastSeen, required this.createdAt, required this.permissions, required  List<String> librariesAccessible, required  List<String> itemTagsSelected, this.hasOpenIDLink, this.accessToken, this.refreshToken}): _mediaProgress = mediaProgress,_seriesHideFromContinueListening = seriesHideFromContinueListening,_bookmarks = bookmarks,_librariesAccessible = librariesAccessible,_itemTagsSelected = itemTagsSelected;
   factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
 @override final  String id;

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'update_item_media_req_params.dart';
@@ -9,6 +9,7 @@ part of 'update_item_media_req_params.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 UpdateItemMediaReqParams _$UpdateItemMediaReqParamsFromJson(
@@ -246,7 +247,7 @@ return podcast(_that.coverPath,_that.tags,_that.metadata,_that.autoDownloadEpiso
 @JsonSerializable()
 
 class UpdateBookReqParams implements UpdateItemMediaReqParams {
-  const UpdateBookReqParams({this.coverPath, final  List<String>? tags, this.metadata, final  List<BookChapter>? chapters, final  String? $type}): _tags = tags,_chapters = chapters,$type = $type ?? 'book';
+  const UpdateBookReqParams({this.coverPath,  List<String>? tags, this.metadata,  List<BookChapter>? chapters,  String? $type}): _tags = tags,_chapters = chapters,$type = $type ?? 'book';
   factory UpdateBookReqParams.fromJson(Map<String, dynamic> json) => _$UpdateBookReqParamsFromJson(json);
 
 @override final  String? coverPath;
@@ -353,7 +354,7 @@ $UpdateMediaMetadataReqParamsCopyWith<$Res>? get metadata {
 @JsonSerializable()
 
 class UpdatePodcastReqParams implements UpdateItemMediaReqParams {
-  const UpdatePodcastReqParams({this.coverPath, final  List<String>? tags, this.metadata, this.autoDownloadEpisodes, @JsonKey(includeIfNull: true) this.lastEpisodeCheck, this.maxEpisodesToKeep, this.maxNewEpisodesToDownload, final  String? $type}): _tags = tags,$type = $type ?? 'podcast';
+  const UpdatePodcastReqParams({this.coverPath,  List<String>? tags, this.metadata, this.autoDownloadEpisodes, @JsonKey(includeIfNull: true) this.lastEpisodeCheck, this.maxEpisodesToKeep, this.maxNewEpisodesToDownload,  String? $type}): _tags = tags,$type = $type ?? 'podcast';
   factory UpdatePodcastReqParams.fromJson(Map<String, dynamic> json) => _$UpdatePodcastReqParamsFromJson(json);
 
 @override final  String? coverPath;
@@ -679,7 +680,7 @@ return podcast(_that.title,_that.author,_that.description,_that.releaseDate,_tha
 @JsonSerializable()
 
 class UpdateBookMetadataReqParams implements UpdateMediaMetadataReqParams {
-  const UpdateBookMetadataReqParams({this.title, this.subtitle, final  List<Author>? authors, final  List<String>? narrators, final  List<Series>? series, final  List<String>? genres, this.publishedYear, this.publishedDate, this.publisher, this.description, this.isbn, this.asin, this.language, this.explicit, final  String? $type}): _authors = authors,_narrators = narrators,_series = series,_genres = genres,$type = $type ?? 'book';
+  const UpdateBookMetadataReqParams({this.title, this.subtitle,  List<Author>? authors,  List<String>? narrators,  List<Series>? series,  List<String>? genres, this.publishedYear, this.publishedDate, this.publisher, this.description, this.isbn, this.asin, this.language, this.explicit,  String? $type}): _authors = authors,_narrators = narrators,_series = series,_genres = genres,$type = $type ?? 'book';
   factory UpdateBookMetadataReqParams.fromJson(Map<String, dynamic> json) => _$UpdateBookMetadataReqParamsFromJson(json);
 
 @override final  String? title;
@@ -810,7 +811,7 @@ as bool?,
 @JsonSerializable()
 
 class UpdatePodcastMetadataReqParams implements UpdateMediaMetadataReqParams {
-  const UpdatePodcastMetadataReqParams({this.title, this.author, this.description, this.releaseDate, final  List<String>? genres, this.feedUrl, this.imageUrl, this.itunesPageUrl, this.itunesId, this.itunesArtistId, this.explicit, this.language, final  String? $type}): _genres = genres,$type = $type ?? 'podcast';
+  const UpdatePodcastMetadataReqParams({this.title, this.author, this.description, this.releaseDate,  List<String>? genres, this.feedUrl, this.imageUrl, this.itunesPageUrl, this.itunesId, this.itunesArtistId, this.explicit, this.language,  String? $type}): _genres = genres,$type = $type ?? 'podcast';
   factory UpdatePodcastMetadataReqParams.fromJson(Map<String, dynamic> json) => _$UpdatePodcastMetadataReqParamsFromJson(json);
 
 @override final  String? title;

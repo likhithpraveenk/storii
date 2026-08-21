@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'media_metadata.dart';
@@ -9,6 +9,7 @@ part of 'media_metadata.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 MediaMetadata _$MediaMetadataFromJson(
@@ -237,7 +238,7 @@ return podcast(_that.title,_that.titleIgnorePrefix,_that.author,_that.descriptio
 @JsonSerializable()
 
 class BookMetadata extends MediaMetadata {
-  const BookMetadata({this.title, this.titleIgnorePrefix, this.subtitle, final  List<Author>? authors, final  List<String>? narrators, @JsonKey(readValue: _readSeries) final  List<Series>? series, final  List<String> genres = const [], this.publishedYear, this.publishedDate, this.publisher, this.description, this.isbn, this.asin, this.language, this.explicit = false, this.abridged, this.authorName, this.authorNameLF, this.narratorName, this.seriesName, this.descriptionPlain, final  String? $type}): _authors = authors,_narrators = narrators,_series = series,_genres = genres,$type = $type ?? 'book',super._();
+  const BookMetadata({this.title, this.titleIgnorePrefix, this.subtitle,  List<Author>? authors,  List<String>? narrators, @JsonKey(readValue: _readSeries)  List<Series>? series,  List<String> genres = const [], this.publishedYear, this.publishedDate, this.publisher, this.description, this.isbn, this.asin, this.language, this.explicit = false, this.abridged, this.authorName, this.authorNameLF, this.narratorName, this.seriesName, this.descriptionPlain,  String? $type}): _authors = authors,_narrators = narrators,_series = series,_genres = genres,$type = $type ?? 'book',super._();
   factory BookMetadata.fromJson(Map<String, dynamic> json) => _$BookMetadataFromJson(json);
 
 @override final  String? title;
@@ -380,7 +381,7 @@ as String?,
 @JsonSerializable()
 
 class PodcastMetadata extends MediaMetadata {
-  const PodcastMetadata({this.title, this.titleIgnorePrefix, this.author, this.description, this.releaseDate, final  List<String> genres = const [], this.feedUrl, this.imageUrl, this.itunesPageUrl, this.itunesId, this.itunesArtistId, this.explicit = false, this.language, final  String? $type}): _genres = genres,$type = $type ?? 'podcast',super._();
+  const PodcastMetadata({this.title, this.titleIgnorePrefix, this.author, this.description, this.releaseDate,  List<String> genres = const [], this.feedUrl, this.imageUrl, this.itunesPageUrl, this.itunesId, this.itunesArtistId, this.explicit = false, this.language,  String? $type}): _genres = genres,$type = $type ?? 'podcast',super._();
   factory PodcastMetadata.fromJson(Map<String, dynamic> json) => _$PodcastMetadataFromJson(json);
 
 @override final  String? title;

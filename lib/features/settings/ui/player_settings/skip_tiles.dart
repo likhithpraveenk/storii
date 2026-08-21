@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -30,7 +30,7 @@ class _SkipForwardTileState extends ConsumerState<SkipForwardTile> {
     const durations = [10, 15, 30, 60];
 
     return ListTile(
-      leading: const Icon(Icons.replay),
+      leading: Transform.flip(flipX: true, child: const Icon(Icons.replay)),
       title: Text(l10n.skipForward),
       subtitle: Text('${skipForward.inSeconds}s'),
       trailing: const Icon(Icons.chevron_right),
@@ -98,7 +98,7 @@ class _SkipBackwardTileState extends ConsumerState<SkipBackwardTile> {
     const durations = [10, 15, 30, 60];
 
     return ListTile(
-      leading: Transform.flip(flipX: true, child: const Icon(Icons.replay)),
+      leading: const Icon(Icons.replay),
       title: Text(l10n.skipBack),
       subtitle: Text('${skipBackward.inSeconds}s'),
       trailing: const Icon(Icons.chevron_right),

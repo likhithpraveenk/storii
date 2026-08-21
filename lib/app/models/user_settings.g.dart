@@ -134,6 +134,30 @@ _UserSettings _$UserSettingsFromJson(
       DefaultUserSettings.showChapterProgressSlider,
   scaleTimeBySpeed:
       json['scaleTimeBySpeed'] as bool? ?? DefaultUserSettings.scaleTimeBySpeed,
+  osNotificationCanSeek:
+      json['osNotificationCanSeek'] as bool? ??
+      DefaultUserSettings.osNotificationCanSeek,
+  osNotificationCanSkip:
+      json['osNotificationCanSkip'] as bool? ??
+      DefaultUserSettings.osNotificationCanSkip,
+  osNotificationCanSkipChapter:
+      json['osNotificationCanSkipChapter'] as bool? ??
+      DefaultUserSettings.osNotificationCanSkipChapter,
+  interruptionSkipBackward: json['interruptionSkipBackward'] == null
+      ? DefaultUserSettings.interruptionSkipBackward
+      : Duration(
+          microseconds: (json['interruptionSkipBackward'] as num).toInt(),
+        ),
+  interruptionLongSkipThreshold: json['interruptionLongSkipThreshold'] == null
+      ? DefaultUserSettings.interruptionLongSkipThreshold
+      : Duration(
+          microseconds: (json['interruptionLongSkipThreshold'] as num).toInt(),
+        ),
+  interruptionLongSkipBackward: json['interruptionLongSkipBackward'] == null
+      ? DefaultUserSettings.interruptionLongSkipBackward
+      : Duration(
+          microseconds: (json['interruptionLongSkipBackward'] as num).toInt(),
+        ),
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -186,6 +210,14 @@ Map<String, dynamic> _$UserSettingsToJson(
       _$PlaybackControlsLayoutEnumMap[instance.playbackControlsLayout]!,
   'showChapterProgressSlider': instance.showChapterProgressSlider,
   'scaleTimeBySpeed': instance.scaleTimeBySpeed,
+  'osNotificationCanSeek': instance.osNotificationCanSeek,
+  'osNotificationCanSkip': instance.osNotificationCanSkip,
+  'osNotificationCanSkipChapter': instance.osNotificationCanSkipChapter,
+  'interruptionSkipBackward': instance.interruptionSkipBackward.inMicroseconds,
+  'interruptionLongSkipThreshold':
+      instance.interruptionLongSkipThreshold.inMicroseconds,
+  'interruptionLongSkipBackward':
+      instance.interruptionLongSkipBackward.inMicroseconds,
 };
 
 const _$NavTargetEnumMap = {
