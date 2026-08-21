@@ -476,5 +476,10 @@
   "playerBackgroundTheme": "播放器背景主题",
   "playbackControlsLayout": "播放控制布局",
   "defaultWord": "默认",
-  "big": "宽松"
+  "big": "宽松",
+  "removeProgress": "删除进度",
+  "markAsComplete": "标记为完成",
+  "removeFromContinueListening": "从继续收听中删除",
+  "removedFromContinueListening": "从继续收听中删除成功",
+  "removeFromContinueListeningFailed": "从继续收听中删除失败"
 }
