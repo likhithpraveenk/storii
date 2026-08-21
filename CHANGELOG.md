@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.6.1] - 2026-08-21
+
 ### Added
 
 - support android 17
@@ -548,7 +550,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.6.1...HEAD
+[v0.6.1]: https://github.com/likhithpraveenk/storii/compare/v0.6.0...v0.6.1
 [v0.6.0]: https://github.com/likhithpraveenk/storii/compare/v0.5.14...v0.6.0
 [v0.5.14]: https://github.com/likhithpraveenk/storii/compare/v0.5.13...v0.5.14
 [v0.5.13]: https://github.com/likhithpraveenk/storii/compare/v0.5.12...v0.5.13

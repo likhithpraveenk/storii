@@ -33,12 +33,16 @@ jobs:
       - name: Patch Dart JNI for Reproducible Build
         run: sed -i -e 's/-Wl,/-Wl,--build-id=none,/' ${PUB_CACHE}/hosted/*/jni-*/src/CMakeLists.txt || true
 
+      - name: Create key.properties
+        run: |
+          cat > android/key.properties <<EOF
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          storeFile=release.keystore
+          EOF
+
       - name: Build Signed APKs
-        env:
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEYSTORE_PATH: "release.keystore"
         run: flutter build apk --release --split-per-abi --no-pub
 
       - name: Remove Keystore
@@ -65,7 +69,7 @@ jobs:
         with:
           body: ${{ steps.changelog.outputs.changes }}
           generate_release_notes: true
-          draft: false
+          draft: true
           prerelease: ${{ contains(github.ref_name, 'beta') }}
           files: |
             build/app/outputs/flutter-apk/*.apk

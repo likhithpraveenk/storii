@@ -24,12 +24,12 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 ## Features
 
 - Audiobooks & Podcasts streaming with background playback and progress sync
-- Offline downloads - fully functional download manager with pause/resume and local playback
+- Offline downloads - fully functional download manager with pause/resume, search, and sort
 - Multi-user, multi-server and OIDC support with persistent sessions
 - Personalized home shelves: continue listening, recent series, newest authors, etc.
 - Advanced library browsing with filters, sorting, and series grouping
 - Search across books, series, authors, narrators, tags, and genres
-- Customizable player: sleep timer, speed control, seek buttons, chapter navigation, listening history, and bookmarks
+- Customizable player: sleep timer, speed control, seek buttons, chapter navigation, listening history, bookmarks, OS notification controls, and configurable skip-back after interruptions
 - Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling
 - Navigation customization: reorder tabs, choose startup screen, label behavior
 - Server admin tools (admin users): trigger library scans, re-scan/re-match items

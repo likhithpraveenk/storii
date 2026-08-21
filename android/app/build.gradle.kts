@@ -1,4 +1,5 @@
 import com.android.build.api.variant.FilterConfiguration.FilterType
+import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -21,8 +22,8 @@ android {
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     defaultConfig {
@@ -36,13 +37,10 @@ android {
 
     signingConfigs {
         create("release") {
-            keyAlias = System.getenv("KEY_ALIAS") ?: (keystoreProperties["keyAlias"] as String?)
-            keyPassword =
-                System.getenv("KEY_PASSWORD") ?: (keystoreProperties["keyPassword"] as String?)
-            storePassword =
-                System.getenv("STORE_PASSWORD") ?: (keystoreProperties["storePassword"] as String?)
-            val keystorePath =
-                System.getenv("KEYSTORE_PATH") ?: (keystoreProperties["storeFile"] as String?)
+            keyAlias = keystoreProperties["keyAlias"] as String?
+            keyPassword = keystoreProperties["keyPassword"] as String?
+            storePassword = keystoreProperties["storePassword"] as String?
+            val keystorePath = keystoreProperties["storeFile"] as String?
             storeFile = keystorePath?.let { file(it) }
         }
     }
@@ -72,17 +70,16 @@ android {
         includeInApk = false
         includeInBundle = false
     }
-}
 
-val abiCodes = mapOf("armeabi-v7a" to 1, "arm64-v8a" to 2, "x86_64" to 3)
-androidComponents {
-    onVariants { variant ->
+    val abiCodes = mapOf("armeabi-v7a" to 1, "arm64-v8a" to 2, "x86_64" to 3)
+    applicationVariants.configureEach {
+        val variant = this
         variant.outputs.forEach { output ->
-            val abi = output.filters.find { it.filterType == FilterType.ABI }?.identifier
-            val abiVersionCode = abiCodes[abi]
+            val abiVersionCode =
+                abiCodes[output.filters.find { it.filterType == FilterType.ABI.name }?.identifier]
             if (abiVersionCode != null) {
-                val currentCode = output.versionCode.get()
-                output.versionCode.set(currentCode * 10 + abiVersionCode)
+                (output as ApkVariantOutputImpl).versionCodeOverride =
+                    variant.versionCode * 10 + abiVersionCode
             }
         }
     }
@@ -90,7 +87,7 @@ androidComponents {
 
 kotlin {
     compilerOptions {
-        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
     }
 }
 
