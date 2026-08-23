@@ -1,4 +1,4 @@
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/search/ui/search_button.dart';
 import 'package:storii/shared/widgets/connection_status_icon.dart';

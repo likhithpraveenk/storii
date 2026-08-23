@@ -1,4 +1,4 @@
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:storii/app/config/constants.dart';
 
 class PlaceholderImage extends StatelessWidget {

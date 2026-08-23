@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
-import 'package:material_ui/material_ui.dart';
+
+import 'package:flutter/material.dart';
 
 /// A continuous loading indicator that simulates a random waveform by
 /// smoothly animating vertical bars between randomized heights

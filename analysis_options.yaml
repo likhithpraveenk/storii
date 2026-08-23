@@ -20,8 +20,6 @@ linter:
     - avoid_positional_boolean_parameters
 
 analyzer:
-  errors:
-    invalid_annotation_target: ignore
   exclude:
     - build/**
     - android/**
