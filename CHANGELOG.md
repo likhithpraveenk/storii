@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.6.2] - 2026-08-23
+
+### Fixed
+
+- crashes and unresponsive buttons on non-English languages
+
 ## [v0.6.1] - 2026-08-21
 
 ### Added
@@ -550,7 +556,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.6.1...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.6.2...HEAD
+[v0.6.2]: https://github.com/likhithpraveenk/storii/compare/v0.6.1...v0.6.2
 [v0.6.1]: https://github.com/likhithpraveenk/storii/compare/v0.6.0...v0.6.1
 [v0.6.0]: https://github.com/likhithpraveenk/storii/compare/v0.5.14...v0.6.0
 [v0.5.14]: https://github.com/likhithpraveenk/storii/compare/v0.5.13...v0.5.14
