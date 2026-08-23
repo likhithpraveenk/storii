@@ -11,6 +11,11 @@ part 'progress_store.g.dart';
 
 @Riverpod(keepAlive: true)
 class ProgressStore extends _$ProgressStore {
+  late final String _userId;
+
+  String _key(String id, String? episodeId) =>
+      '$_userId:${mediaItemIdKey(id, episodeId)}';
+
   MediaProgress? _itemFromValue(String? value) {
     if (value == null) return null;
     try {
@@ -21,22 +26,24 @@ class ProgressStore extends _$ProgressStore {
     }
   }
 
-  Map<String, MediaProgress> _decode(Iterable<String> values) {
-    return Map.fromEntries(
-      values
-          .map(_itemFromValue)
-          .whereType<MediaProgress>()
-          .map(
-            (p) => MapEntry(mediaItemIdKey(p.libraryItemId, p.episodeId), p),
-          ),
-    );
-  }
-
   @override
-  Stream<Map<String, MediaProgress>> build() {
-    final items = _decode(mediaProgressBox.values);
-    return mediaProgressBox
+  Stream<Map<String, MediaProgress>> build(String userId) {
+    _userId = userId;
+    final prefix = '$_userId:';
+
+    final items = <String, MediaProgress>{};
+    for (final entry in userMediaProgressBox.toMap().entries) {
+      final key = entry.key as String;
+      if (!key.startsWith(prefix)) continue;
+      final item = _itemFromValue(entry.value as String?);
+      if (item != null) {
+        items[mediaItemIdKey(item.libraryItemId, item.episodeId)] = item;
+      }
+    }
+
+    return userMediaProgressBox
         .watch()
+        .where((event) => (event.key as String).startsWith(prefix))
         .map((event) {
           if (event.deleted) {
             items.remove(event.key);
@@ -55,8 +62,8 @@ class ProgressStore extends _$ProgressStore {
 
   void put(MediaProgress progress) {
     try {
-      mediaProgressBox.put(
-        mediaItemIdKey(progress.libraryItemId, progress.episodeId),
+      userMediaProgressBox.put(
+        _key(progress.libraryItemId, progress.episodeId),
         jsonEncode(progress),
       );
     } catch (e) {

@@ -314,6 +314,9 @@ extension SearchX on SearchResponse {
   }
 }
 
+String userMediaItemIdKey(String userId, String itemId, [String? episodeId]) =>
+    '${userId}_${mediaItemIdKey(itemId, episodeId)}';
+
 String mediaItemIdKey(String id, [String? episodeId]) =>
     episodeId != null ? '$id$episodeId' : id;
 
