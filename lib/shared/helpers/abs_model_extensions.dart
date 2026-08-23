@@ -251,7 +251,6 @@ extension AudiobookX on LibraryItem {
 
   double get progress => userMediaProgress?.progress ?? 0.0;
   bool get isFinished => userMediaProgress?.isFinished ?? false;
-  Duration get currentOffset => userMediaProgress?.currentTime ?? Duration.zero;
   bool get hideFromContinue =>
       userMediaProgress?.hideFromContinueListening ?? false;
 
@@ -313,6 +312,9 @@ extension SearchX on SearchResponse {
     return tabs;
   }
 }
+
+String userMediaItemIdKey(String userId, String itemId, [String? episodeId]) =>
+    '${userId}_${mediaItemIdKey(itemId, episodeId)}';
 
 String mediaItemIdKey(String id, [String? episodeId]) =>
     episodeId != null ? '$id$episodeId' : id;

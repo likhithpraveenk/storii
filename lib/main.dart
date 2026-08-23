@@ -8,6 +8,7 @@ import 'package:storii/app/providers/app_controller.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/settings/logic/theme_provider.dart';
 import 'package:storii/l10n/gen/l10n.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/storage/hive/boxes.dart';
 import 'package:storii/storage/local/font_service.dart';
 
@@ -53,6 +54,8 @@ class MyApp extends ConsumerWidget {
       title: appName,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      localeResolutionCallback: (locale, supported) =>
+          supported.findBestMatch(locale),
       builder: (context, child) {
         init.l10n = AppLocalizations.of(context)!;
         return MediaQuery(

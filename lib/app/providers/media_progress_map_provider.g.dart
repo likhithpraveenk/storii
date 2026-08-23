@@ -43,7 +43,7 @@ final class MediaProgressSyncControllerProvider
 }
 
 String _$mediaProgressSyncControllerHash() =>
-    r'fcab590ce6f87035d6c3f9779f9c09b35db663a7';
+    r'd787c228a84667426732f257665960de4bd9efa1';
 
 abstract class _$MediaProgressSyncController extends $Notifier<void> {
   void build();
@@ -102,7 +102,7 @@ final class MediaProgressMapProvider
   }
 }
 
-String _$mediaProgressMapHash() => r'a4fbc446fc2c620fd069cb493f4258e01fa062bf';
+String _$mediaProgressMapHash() => r'32ed97a5aeef813ebfaa38b0ae61db06ab069e4c';
 
 @ProviderFor(totalFinishedBooks)
 final totalFinishedBooksProvider = TotalFinishedBooksProvider._();

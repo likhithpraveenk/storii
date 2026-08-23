@@ -4,6 +4,7 @@ import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/storage/local/progress_store.dart';
@@ -14,8 +15,6 @@ part 'media_progress_map_provider.g.dart';
 class MediaProgressSyncController extends _$MediaProgressSyncController {
   StreamSubscription? _progressSub;
 
-  ProgressStore get _store => ref.watch(progressStoreProvider.notifier);
-
   @override
   void build() async {
     ref.onDispose(() {
@@ -24,13 +23,15 @@ class MediaProgressSyncController extends _$MediaProgressSyncController {
     await _progressSub?.cancel();
 
     try {
-      final serverUser = await ref.watch(serverUserProvider.future);
-      _store.putAll(serverUser.mediaProgress);
-
       final user = await ref.watch(authenticatedUserProvider.future);
+      final store = ref.watch(progressStoreProvider(user.id).notifier);
+
+      final serverUser = await ref.watch(serverUserProvider.future);
+      store.putAll(serverUser.mediaProgress);
+
       final socket = await ref.read(socketApiProvider(user).future);
       _progressSub = socket.user.onProgressUpdate.listen((event) {
-        _store.put(event.data);
+        store.put(event.data);
       });
     } catch (_) {}
   }
@@ -38,7 +39,11 @@ class MediaProgressSyncController extends _$MediaProgressSyncController {
 
 @riverpod
 Future<Map<String, MediaProgress>> mediaProgressMap(Ref ref) {
-  return ref.watch(progressStoreProvider.future);
+  final user = ref.watch(currentUserProvider);
+  if (user == null) {
+    return Future.value({});
+  }
+  return ref.watch(progressStoreProvider(user.id).future);
 }
 
 @riverpod

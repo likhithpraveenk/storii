@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:hive_ce_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:http_cache_hive_store/http_cache_hive_store.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -15,7 +15,7 @@ const usersBoxName = 'users_box';
 const serversBoxName = 'servers_box';
 const itemsBoxName = 'items_box';
 const localSessionsBoxName = 'local_sessions_box';
-const mediaProgressBoxName = 'media_progress_box';
+const userMediaProgressBoxName = 'user_media_progress_box';
 const playbackHistoryBoxName = 'playback_history_box';
 const downloadsBoxName = 'downloads_box';
 const speedsBoxName = 'speeds_box';
@@ -33,7 +33,7 @@ late final Box<String> localSessionsBox;
 late final Box<List<dynamic>> playbackHistoryBox;
 late final Box<String> downloadsBox;
 late final Box<double> speedsBox;
-late final Box<String> mediaProgressBox;
+late final Box<String> userMediaProgressBox;
 late final Box<String> serverSettingsBox;
 
 Future<void> setupHive() async {
@@ -63,8 +63,8 @@ Future<void> setupHive() async {
     Hive.openBox<double>(speedsBoxName),
   ).wait;
 
-  final (mediaProgress, serverSettings) = await (
-    Hive.openBox<String>(mediaProgressBoxName),
+  final (userMediaProgress, serverSettings) = await (
+    Hive.openBox<String>(userMediaProgressBoxName),
     Hive.openBox<String>(serverSettingsBoxName),
   ).wait;
 
@@ -77,7 +77,7 @@ Future<void> setupHive() async {
   playbackHistoryBox = playbackHistory;
   downloadsBox = downloads;
   speedsBox = speeds;
-  mediaProgressBox = mediaProgress;
+  userMediaProgressBox = userMediaProgress;
   serverSettingsBox = serverSettings;
 
   // dio cache

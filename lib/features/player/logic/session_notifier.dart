@@ -7,6 +7,7 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/connection_providers.dart';
+import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/play_request_params.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
@@ -72,12 +73,20 @@ class SessionNotifier extends _$SessionNotifier {
       return existing;
     }
 
+    Duration currentOffset = Duration.zero;
+    final mediaProgress = await ref.read(
+      mediaProgressFromMapProvider(item.id, episodeId).future,
+    );
+    if (mediaProgress?.currentTime != null) {
+      currentOffset = mediaProgress!.currentTime!;
+    }
     final params = await ref.read(playRequestParamsProvider.future);
     final user = ref.read(currentUserProvider);
     var session = item.toPlaybackSession(
       user!.id,
       deviceInfo: params.deviceInfo,
       episodeId: episodeId,
+      currentOffset: currentOffset,
     );
     if (!isSameUser) {
       session = session.copyWith(
