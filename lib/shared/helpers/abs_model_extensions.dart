@@ -251,7 +251,6 @@ extension AudiobookX on LibraryItem {
 
   double get progress => userMediaProgress?.progress ?? 0.0;
   bool get isFinished => userMediaProgress?.isFinished ?? false;
-  Duration get currentOffset => userMediaProgress?.currentTime ?? Duration.zero;
   bool get hideFromContinue =>
       userMediaProgress?.hideFromContinueListening ?? false;
 

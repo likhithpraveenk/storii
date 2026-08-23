@@ -157,19 +157,24 @@ extension ToPlaybackSession on LibraryItem {
     String userId, {
     ClientDeviceInfo? deviceInfo,
     String? episodeId,
+    required Duration currentOffset,
   }) {
     final now = DateTime.now();
     final today = DayOfTheWeek.byValue[now.weekday % 7]!.name;
     final Duration thisDuration;
     final String? thisTitle;
-    final PodcastEpisode? episode;
+    final List<AudioTrack> sessionTracks;
     if (isPodcast) {
-      episode = episodes.firstWhereOrNull((e) => e.id == episodeId);
+     final episode = episodes.firstWhereOrNull((e) => e.id == episodeId);
       thisDuration = episode?.duration ?? Duration.zero;
       thisTitle = episode?.title;
+      sessionTracks = episode?.audioTrack != null
+          ? [episode!.audioTrack!]
+          : <AudioTrack>[];
     } else {
       thisDuration = duration;
       thisTitle = title;
+      sessionTracks = tracks;
     }
 
     return PlaybackSession(
@@ -192,7 +197,7 @@ extension ToPlaybackSession on LibraryItem {
       currentTime: currentOffset,
       startedAt: now,
       updatedAt: now,
-      audioTracks: tracks,
+      audioTracks: sessionTracks,
       libraryItem: this,
       deviceInfo: deviceInfo?.toDeviceInfo(),
       episodeId: episodeId,
