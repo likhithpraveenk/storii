@@ -165,7 +165,7 @@ extension ToPlaybackSession on LibraryItem {
     final String? thisTitle;
     final List<AudioTrack> sessionTracks;
     if (isPodcast) {
-     final episode = episodes.firstWhereOrNull((e) => e.id == episodeId);
+      final episode = episodes.firstWhereOrNull((e) => e.id == episodeId);
       thisDuration = episode?.duration ?? Duration.zero;
       thisTitle = episode?.title;
       sessionTracks = episode?.audioTrack != null
