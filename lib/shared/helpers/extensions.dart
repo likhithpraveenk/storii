@@ -258,3 +258,24 @@ extension PrettyJsonX on Map<String, dynamic> {
     return encoder.convert(copy);
   }
 }
+
+extension LocaleMatch on Iterable<Locale> {
+  Locale findBestMatch(Locale? target) {
+    if (target == null) return const Locale('en');
+
+    for (final l in this) {
+      if (l.languageCode == target.languageCode &&
+          l.countryCode == target.countryCode) {
+        return l;
+      }
+    }
+
+    for (final l in this) {
+      if (l.languageCode == target.languageCode) {
+        return l;
+      }
+    }
+
+    return const Locale('en');
+  }
+}
