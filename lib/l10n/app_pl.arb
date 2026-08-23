@@ -1,4 +1,5 @@
 {
+  "@@locale": "pl",
   "addServer": "Dodaj serwer",
   "serverUrl": "URL serwera",
   "validateServer": "Zweryfikuj serwer",
@@ -190,7 +191,7 @@
   "networkLogsDescription": "Zaloguj zapytania i odpowiedzi HTTP",
   "trustAllCertificates": "Ufaj wszystkim certyfikatom",
   "trustAllCertificatesDescription": "Wyłącza weryfikacje certyfikatów",
-  "readableDuration": "",
+  "readableDuration": "{hours, plural, =0{} other{{hours}h }}{minutes}m",
   "@readableDuration": {
     "placeholders": {
       "hours": {
