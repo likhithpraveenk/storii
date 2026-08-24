@@ -13,8 +13,7 @@ class IsBackground extends _$IsBackground with WidgetsBindingObserver {
   }
 
   @override
-  // ignore: avoid_renaming_method_parameters
-  void didChangeAppLifecycleState(AppLifecycleState appState) {
-    state = appState == .paused || appState == .hidden;
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    this.state = state == .paused || state == .hidden;
   }
 }

@@ -12,7 +12,7 @@ import 'package:storii/shared/widgets/waveform.dart';
 import 'package:storii/storage/local/font_service.dart';
 
 class FontFamilyTile extends ConsumerWidget {
-  const FontFamilyTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,7 +34,7 @@ class FontFamilyTile extends ConsumerWidget {
 }
 
 class FontFamilySheet extends ConsumerStatefulWidget {
-  const FontFamilySheet({super.key});
+  const new({super.key});
   @override
   ConsumerState<FontFamilySheet> createState() => _FontFamilySheetState();
 }
@@ -146,7 +146,7 @@ class _FontFamilySheetState extends ConsumerState<FontFamilySheet> {
 }
 
 class _FontTile extends StatelessWidget {
-  const _FontTile({
+  const new({
     required this.label,
     required this.value,
     required this.selected,

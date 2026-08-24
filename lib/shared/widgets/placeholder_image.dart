@@ -4,13 +4,13 @@ import 'package:storii/app/config/constants.dart';
 class PlaceholderImage extends StatelessWidget {
   final String? label;
 
-  const PlaceholderImage({super.key, this.label});
+  const new({super.key, this.label});
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
 
-    return Container(
+    return ColoredBox(
       color: scheme.surface,
       child: Stack(
         alignment: .center,

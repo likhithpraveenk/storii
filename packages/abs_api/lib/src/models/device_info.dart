@@ -5,7 +5,7 @@ part 'device_info.g.dart';
 
 @freezed
 abstract class DeviceInfo with _$DeviceInfo {
-  const factory DeviceInfo({
+  const factory({
     String? id,
     String? userId,
     String? deviceId,
@@ -23,6 +23,5 @@ abstract class DeviceInfo with _$DeviceInfo {
     String? clientVersion,
   }) = _DeviceInfo;
 
-  factory DeviceInfo.fromJson(Map<String, dynamic> json) =>
-      _$DeviceInfoFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$DeviceInfoFromJson(json);
 }

@@ -8,7 +8,7 @@ part 'playlist.g.dart';
 @freezed
 abstract class Playlist with _$Playlist {
   @DateTimeEpochConverter()
-  const factory Playlist({
+  const factory({
     required String id,
     required String name,
     required String libraryId,
@@ -19,6 +19,5 @@ abstract class Playlist with _$Playlist {
     required List<PlaylistItem> items,
   }) = _Playlist;
 
-  factory Playlist.fromJson(Map<String, dynamic> json) =>
-      _$PlaylistFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$PlaylistFromJson(json);
 }

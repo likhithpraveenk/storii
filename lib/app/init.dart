@@ -101,7 +101,6 @@ Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
       androidNotificationIcon: 'drawable/ic_notification',
       fastForwardInterval: container.read(skipForwardProvider),
       rewindInterval: container.read(skipBackwardProvider),
-      androidStopForegroundOnPause: true,
       androidNotificationOngoing: true,
       preloadArtwork: true,
     ),

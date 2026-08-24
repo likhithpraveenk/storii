@@ -7,11 +7,10 @@ part 'podcast_feed.g.dart';
 
 @freezed
 sealed class PodcastFeed with _$PodcastFeed {
-  const factory PodcastFeed({
+  const factory({
     required PodcastFeedMetadata metadata,
     List<PodcastFeedEpisode>? episodes,
   }) = _PodcastFeed;
 
-  factory PodcastFeed.fromJson(Map<String, dynamic> json) =>
-      _$PodcastFeedFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$PodcastFeedFromJson(json);
 }

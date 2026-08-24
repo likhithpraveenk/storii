@@ -7,7 +7,7 @@ import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
 
 class AudioBufferTile extends ConsumerStatefulWidget {
-  const AudioBufferTile({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<AudioBufferTile> createState() => _AudioBufferTileState();

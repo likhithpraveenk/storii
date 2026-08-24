@@ -24,7 +24,7 @@ class RandomWaveform extends StatefulWidget {
   /// The duration for animation
   final Duration speed;
 
-  const RandomWaveform({
+  const new({
     super.key,
     this.barCount = 10,
     this.barSpacing = 2.0,
@@ -92,8 +92,7 @@ class _RandomWaveformState extends State<RandomWaveform>
   }
 
   List<double> _shuffleHeights(List<double> heights) {
-    final copy = List<double>.from(heights);
-    copy.shuffle(_random);
+    final copy = List<double>.from(heights)..shuffle(_random);
     return copy;
   }
 
@@ -165,7 +164,7 @@ class SineWaveform extends StatefulWidget {
   /// - Lower values (e.g., 0.5) mean a shorter wavelength (choppier, more pronounced peaks)
   final double waveLengthFactor;
 
-  const SineWaveform({
+  const new({
     super.key,
     this.barCount = 10,
     this.barSpacing = 2.0,
@@ -217,7 +216,7 @@ class _SineWaveformState extends State<SineWaveform>
 
         final heights = List.generate(widget.barCount, (i) {
           final angle = (animationValue * _waveCycle) + (i * phaseShiftPerBar);
-          final normalizedValue = (sin(angle).abs());
+          final normalizedValue = sin(angle).abs();
           return baseMinHeight + (normalizedValue * maxAmplitude);
         });
 
@@ -242,7 +241,7 @@ class _WaveformPainter extends CustomPainter {
   final double barSpacing;
   final Color color;
 
-  _WaveformPainter({
+  new({
     required this.heights,
     required this.barWidth,
     required this.barSpacing,
@@ -254,7 +253,7 @@ class _WaveformPainter extends CustomPainter {
     final paint = Paint()..color = color;
     double x = 0;
 
-    for (var height in heights) {
+    for (final height in heights) {
       final barTop = (size.height - height) / 2;
       final barRect = RRect.fromRectAndRadius(
         Rect.fromLTWH(x, barTop, barWidth, height),

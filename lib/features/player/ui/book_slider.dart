@@ -6,7 +6,7 @@ import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 class BookSlider extends ConsumerStatefulWidget {
-  const BookSlider({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<BookSlider> createState() => _BookSliderState();
@@ -53,9 +53,8 @@ class _BookSliderState extends ConsumerState<BookSlider> {
       mainAxisSize: .min,
       children: [
         SliderTheme(
-          data: SliderTheme.of(
-            context,
-          ).copyWith(thumbShape: const RoundRectSliderThumbShape()),
+          data: SliderTheme.of(context)
+              .copyWith(thumbShape: const RoundRectSliderThumbShape()),
           child: Slider(
             value: displayValue,
             max: scaledDurationMs,
@@ -96,7 +95,7 @@ class _BookSliderState extends ConsumerState<BookSlider> {
 }
 
 class MiniProgressIndicator extends ConsumerWidget {
-  const MiniProgressIndicator({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -113,7 +112,7 @@ class MiniProgressIndicator extends ConsumerWidget {
 }
 
 class RoundRectSliderThumbShape extends SliderComponentShape {
-  const RoundRectSliderThumbShape();
+  const new();
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) =>

@@ -6,11 +6,9 @@ part 'match_item_response.g.dart';
 
 @freezed
 sealed class MatchItemResponse with _$MatchItemResponse {
-  const factory MatchItemResponse({
-    required bool updated,
-    required LibraryItem libraryItem,
-  }) = _MatchItemResponse;
+  const factory({required bool updated, required LibraryItem libraryItem}) =
+      _MatchItemResponse;
 
-  factory MatchItemResponse.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$MatchItemResponseFromJson(json);
 }

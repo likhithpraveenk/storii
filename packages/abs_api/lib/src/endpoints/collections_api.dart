@@ -4,7 +4,7 @@ import 'package:abs_api/src/models/models.dart';
 
 class CollectionsApi {
   final ApiClient api;
-  const CollectionsApi(this.api);
+  const new(this.api);
 
   Future<Collection> create({
     required CreateCollectionRequestParams params,

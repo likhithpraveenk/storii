@@ -16,7 +16,7 @@ import 'package:storii/shared/widgets/screen_options.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class SeriesListScreen extends ConsumerStatefulWidget {
-  const SeriesListScreen({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -81,11 +81,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
 }
 
 class SeriesListView extends StatelessWidget {
-  const SeriesListView({
-    super.key,
-    this.scrollController,
-    required this.series,
-  });
+  const new({super.key, this.scrollController, required this.series});
 
   final ScrollController? scrollController;
   final List<Series> series;
@@ -108,11 +104,7 @@ class SeriesListView extends StatelessWidget {
 }
 
 class SeriesGridView extends ConsumerWidget {
-  const SeriesGridView({
-    super.key,
-    this.scrollController,
-    required this.series,
-  });
+  const new({super.key, this.scrollController, required this.series});
 
   final ScrollController? scrollController;
   final List<Series> series;

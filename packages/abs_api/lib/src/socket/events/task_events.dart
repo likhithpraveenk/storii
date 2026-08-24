@@ -2,7 +2,7 @@ import 'package:abs_api/src/models/models.dart';
 import 'package:abs_api/src/socket/events/socket_events.dart';
 
 class TaskEvents extends SocketEvents {
-  TaskEvents(super.socket);
+  new(super.socket);
 
   Stream<Task> _onScanEvent(String event) =>
       onJson('task_$event', (json) => fromJson(json, Task.fromJson));

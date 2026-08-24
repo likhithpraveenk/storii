@@ -39,7 +39,7 @@ typedef _Option = ({
 });
 
 class _MoreOptionsWidget extends ConsumerStatefulWidget {
-  const _MoreOptionsWidget({
+  const new({
     required this.itemId,
     this.episodeId,
     required this.inDetailScreen,

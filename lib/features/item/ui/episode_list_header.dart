@@ -5,11 +5,7 @@ import 'package:storii/features/item/logic/episode_filter_provider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class EpisodeListHeader extends ConsumerWidget {
-  const EpisodeListHeader({
-    super.key,
-    required this.episodeCount,
-    required this.totalCount,
-  });
+  const new({super.key, required this.episodeCount, required this.totalCount});
 
   final int episodeCount;
   final int totalCount;
@@ -27,9 +23,8 @@ class EpisodeListHeader extends ConsumerWidget {
             filter == .all
                 ? '${l10n.episodes} ($episodeCount)'
                 : '$episodeCount / $totalCount',
-            style: Theme.of(
-              context,
-            ).textTheme.titleMedium?.copyWith(fontWeight: .w600),
+            style: Theme.of(context).textTheme.titleMedium
+                ?.copyWith(fontWeight: .w600),
           ),
           const Spacer(),
           IconButton(

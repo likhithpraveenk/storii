@@ -6,7 +6,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 
 class DisplayBottomSheet extends ConsumerWidget {
-  const DisplayBottomSheet(this.screen, this.controller, {super.key});
+  const new(this.screen, this.controller, {super.key});
   final CurrentScreen screen;
   final ScrollController controller;
 

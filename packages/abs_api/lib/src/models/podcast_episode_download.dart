@@ -7,7 +7,7 @@ part 'podcast_episode_download.g.dart';
 @freezed
 sealed class PodcastEpisodeDownload with _$PodcastEpisodeDownload {
   @DateTimeEpochConverter()
-  const factory PodcastEpisodeDownload({
+  const factory({
     required String id,
     required String episodeDisplayTitle,
     required Uri url,
@@ -20,6 +20,6 @@ sealed class PodcastEpisodeDownload with _$PodcastEpisodeDownload {
     DateTime? finishedAt,
   }) = _PodcastEpisodeDownload;
 
-  factory PodcastEpisodeDownload.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$PodcastEpisodeDownloadFromJson(json);
 }

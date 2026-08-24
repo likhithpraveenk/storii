@@ -6,18 +6,14 @@ BoxDecoration bottomSheetDecoration(BuildContext context) {
     borderRadius: const .vertical(top: .circular(24)),
     border: Border.all(
       width: 0.5,
-      strokeAlign: BorderSide.strokeAlignInside,
       color: Theme.of(context).colorScheme.primary,
     ),
   );
 }
 
 TextStyle? bottomSheetTitleTextStyle(BuildContext context) {
-  return Theme.of(context).textTheme.titleLarge?.copyWith(
-    fontSize: 20,
-    fontWeight: .w600,
-    letterSpacing: -0.3,
-  );
+  return Theme.of(context).textTheme.titleLarge
+      ?.copyWith(fontSize: 20, fontWeight: .w600, letterSpacing: -0.3);
 }
 
 TextStyle? bottomSheetSubtitleTextStyle(BuildContext context) {
@@ -28,7 +24,7 @@ TextStyle? bottomSheetSubtitleTextStyle(BuildContext context) {
 }
 
 class AppBottomSheet extends StatelessWidget {
-  const AppBottomSheet({
+  const new({
     super.key,
     required this.title,
     this.subtitle,
@@ -37,7 +33,10 @@ class AppBottomSheet extends StatelessWidget {
     this.actionIcon,
     this.isDestructive = false,
     this.onTap,
-  }) : assert((actionLabel == null) == (onTap == null));
+  }) : assert(
+         (actionLabel == null) == (onTap == null),
+         'both must be set or neither',
+       );
 
   final String title;
   final String? subtitle;

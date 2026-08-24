@@ -14,11 +14,7 @@ import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/pulsing_dot.dart';
 
 class ChaptersActionButton extends ConsumerWidget {
-  const ChaptersActionButton({
-    super.key,
-    required this.session,
-    required this.inOverflow,
-  });
+  const new({super.key, required this.session, required this.inOverflow});
 
   final PlaybackSession session;
   final bool inOverflow;
@@ -91,7 +87,7 @@ void showChapterListSheet(
 }
 
 class ChapterList extends ConsumerStatefulWidget {
-  const ChapterList({
+  const new({
     super.key,
     required this.chapters,
     required this.itemId,
@@ -157,7 +153,7 @@ class _ChapterListState extends ConsumerState<ChapterList> {
 }
 
 class _ChapterTile extends ConsumerWidget {
-  const _ChapterTile(
+  const new(
     this.index, {
     required this.chapter,
     required this.noOfChapters,
@@ -234,10 +230,7 @@ class _ChapterTile extends ConsumerWidget {
               : null,
           borderRadius: .circular(kRadius),
           border: isActive
-              ? Border.all(
-                  color: scheme.primary.withValues(alpha: 0.3),
-                  width: 1,
-                )
+              ? Border.all(color: scheme.primary.withValues(alpha: 0.3))
               : null,
         ),
         child: Row(

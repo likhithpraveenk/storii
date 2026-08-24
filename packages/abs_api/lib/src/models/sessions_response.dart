@@ -6,7 +6,7 @@ part 'sessions_response.g.dart';
 
 @freezed
 abstract class SessionsResponse with _$SessionsResponse {
-  const factory SessionsResponse({
+  const factory({
     required int total,
     required int numPages,
     required int itemsPerPage,
@@ -14,6 +14,6 @@ abstract class SessionsResponse with _$SessionsResponse {
     String? userFilter,
   }) = _SessionsResponse;
 
-  factory SessionsResponse.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$SessionsResponseFromJson(json);
 }

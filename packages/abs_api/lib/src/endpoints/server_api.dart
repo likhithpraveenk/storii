@@ -6,7 +6,7 @@ import 'package:abs_api/src/models/metadata_providers_response.dart';
 
 class ServerApi {
   final ApiClient api;
-  const ServerApi(this.api);
+  const new(this.api);
 
   Future<LoginResponse> authorize() async {
     final response = await api.request(ApiRoutes.authorize, method: .post);

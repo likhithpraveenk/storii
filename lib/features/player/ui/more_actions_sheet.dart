@@ -11,7 +11,7 @@ import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 
 class MoreActionsSheet extends ConsumerStatefulWidget {
-  const MoreActionsSheet({
+  const new({
     super.key,
     required this.remaining,
     required this.session,
@@ -74,7 +74,6 @@ class _MoreActionsSheetState extends ConsumerState<MoreActionsSheet> {
               alignment: .center,
               children: [
                 Align(
-                  alignment: .center,
                   child: Text(
                     l10n.more,
                     style: bottomSheetTitleTextStyle(context),

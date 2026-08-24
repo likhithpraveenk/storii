@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class TokenStorage {
   final FlutterSecureStorage _storage;
 
-  TokenStorage(this._storage);
+  new(this._storage);
 
   String _access(String userId) => '$userId:access';
   String _refresh(String userId) => '$userId:refresh';

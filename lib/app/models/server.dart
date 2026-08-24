@@ -5,11 +5,11 @@ part 'server.g.dart';
 
 @freezed
 sealed class Server with _$Server {
-  const factory Server({
+  const factory({
     required String id,
     required Uri url,
     @Default({}) Map<String, String> headers,
   }) = _Server;
 
-  factory Server.fromJson(Map<String, dynamic> json) => _$ServerFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$ServerFromJson(json);
 }

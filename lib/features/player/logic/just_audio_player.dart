@@ -45,7 +45,7 @@ AppAudioPlayer justAudioPlayer(Ref ref) {
 const _source = 'JustAudioPlayer';
 
 class JustAudioPlayer implements AppAudioPlayer {
-  JustAudioPlayer(this._player);
+  new(this._player);
 
   late final AudioPlayer _player;
   final _errorController = StreamController<AppPlaybackError>.broadcast();

@@ -11,7 +11,7 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class LibraryItemListTile extends StatelessWidget {
-  const LibraryItemListTile(this.item, {super.key});
+  const new(this.item, {super.key});
   final LibraryItem item;
 
   @override

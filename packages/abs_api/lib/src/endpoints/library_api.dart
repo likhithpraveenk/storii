@@ -16,7 +16,7 @@ import 'package:abs_api/src/models/shelf.dart';
 
 class LibraryApi {
   final ApiClient api;
-  const LibraryApi(this.api);
+  const new(this.api);
 
   Future<List<Library>> getAll() async {
     final response = await api.request(ApiRoutes.libraries, method: .get);

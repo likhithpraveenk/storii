@@ -2,7 +2,7 @@ import 'dart:io';
 
 class CustomHttpOverrides extends HttpOverrides {
   final bool Function() shouldTrust;
-  CustomHttpOverrides({required this.shouldTrust});
+  new({required this.shouldTrust});
 
   @override
   HttpClient createHttpClient(SecurityContext? context) {

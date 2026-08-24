@@ -6,14 +6,19 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 abstract class SocketEvents {
   final io.Socket socket;
 
-  const SocketEvents(this.socket);
+  const new(this.socket);
 
   Stream<dynamic> on(String event) {
     final controller = StreamController<dynamic>.broadcast();
     void onEvent(dynamic data) => controller.add(data);
 
-    controller.onListen = () => socket.on(event, onEvent);
-    controller.onCancel = () => socket.off(event, onEvent);
+    controller
+      ..onListen = () {
+        socket.on(event, onEvent);
+      }
+      ..onCancel = () {
+        socket.off(event, onEvent);
+      };
 
     return controller.stream;
   }

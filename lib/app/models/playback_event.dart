@@ -7,7 +7,7 @@ enum PlaybackEventKind { play, pause, seek, sync, stop, complete }
 
 @freezed
 sealed class PlaybackEvent with _$PlaybackEvent {
-  const factory PlaybackEvent({
+  const factory({
     required DateTime timestamp,
     required Duration position,
     required PlaybackEventKind kind,
@@ -17,6 +17,5 @@ sealed class PlaybackEvent with _$PlaybackEvent {
     @Default(false) bool playbackError,
   }) = _PlaybackEvent;
 
-  factory PlaybackEvent.fromJson(Map<String, dynamic> json) =>
-      _$PlaybackEventFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$PlaybackEventFromJson(json);
 }

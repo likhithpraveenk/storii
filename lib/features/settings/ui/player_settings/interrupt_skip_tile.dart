@@ -7,7 +7,7 @@ import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
 
 class InterruptSkipTile extends ConsumerWidget {
-  const InterruptSkipTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,7 +42,7 @@ class InterruptSkipTile extends ConsumerWidget {
 }
 
 class _InterruptSkipSheet extends ConsumerStatefulWidget {
-  const _InterruptSkipSheet({
+  const new({
     required this.initialShort,
     required this.initialLong,
     required this.initialThreshold,
@@ -98,13 +98,12 @@ class _InterruptSkipSheetState extends ConsumerState<_InterruptSkipSheet> {
           const SizedBox(height: 16),
           AppFilledButton(
             onPressed: () {
-              notifier.setInterruptionSkipBackward(Duration(seconds: _short));
-              notifier.setInterruptionLongSkipBackward(
-                Duration(seconds: _long),
-              );
-              notifier.setInterruptionLongSkipThreshold(
-                Duration(seconds: _threshold),
-              );
+              notifier
+                ..setInterruptionSkipBackward(Duration(seconds: _short))
+                ..setInterruptionLongSkipBackward(Duration(seconds: _long))
+                ..setInterruptionLongSkipThreshold(
+                  Duration(seconds: _threshold),
+                );
               Navigator.of(context).pop();
             },
             text: l10n.save,
@@ -116,7 +115,7 @@ class _InterruptSkipSheetState extends ConsumerState<_InterruptSkipSheet> {
 }
 
 class _Picker extends StatelessWidget {
-  const _Picker({
+  const new({
     required this.label,
     required this.initialValue,
     required this.onChanged,
@@ -131,7 +130,7 @@ class _Picker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const .all(0),
+      contentPadding: .zero,
       title: Row(
         children: [
           Expanded(child: Text(label)),

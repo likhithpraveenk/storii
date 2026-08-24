@@ -11,7 +11,7 @@ class MarqueeText extends ConsumerStatefulWidget {
   /// Overrides marqueeSpeedProvider value
   final double? speed;
 
-  const MarqueeText(this.text, {super.key, this.style, this.speed});
+  const new(this.text, {super.key, this.style, this.speed});
 
   @override
   ConsumerState<MarqueeText> createState() => _MarqueeTextState();

@@ -4,7 +4,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 class RecentSessions extends StatelessWidget {
-  const RecentSessions(this.sessions, {super.key});
+  const new(this.sessions, {super.key});
   final List<PlaybackSession> sessions;
 
   @override

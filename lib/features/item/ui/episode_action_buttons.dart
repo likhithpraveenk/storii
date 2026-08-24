@@ -12,11 +12,7 @@ import 'package:storii/features/player/ui/history_button.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class EpisodeActionButtons extends ConsumerWidget {
-  const EpisodeActionButtons({
-    required this.episode,
-    this.alignment = .spaceEvenly,
-    super.key,
-  });
+  const new({required this.episode, this.alignment = .spaceEvenly, super.key});
 
   final PodcastEpisode episode;
   final MainAxisAlignment alignment;
@@ -131,7 +127,7 @@ class EpisodeActionButtons extends ConsumerWidget {
 }
 
 class _EpisodePlayButton extends ConsumerWidget {
-  const _EpisodePlayButton({required this.episode});
+  const new({required this.episode});
   final PodcastEpisode episode;
 
   @override

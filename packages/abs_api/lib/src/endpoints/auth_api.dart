@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 
 class AuthApi {
   final BaseApiClient api;
-  const AuthApi(this.api);
+  const new(this.api);
 
   Future<LoginResponse> login({
     required String username,

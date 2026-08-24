@@ -8,7 +8,7 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 class HistoryEventTile extends ConsumerWidget {
-  const HistoryEventTile({
+  const new({
     required this.itemId,
     required this.event,
     required this.onTap,
@@ -46,9 +46,9 @@ class HistoryEventTile extends ConsumerWidget {
     final timeStr = event.timestamp.fString(format: 'HH:mm');
     final item = ref.watch(itemDetailProvider(itemId)).value;
 
-    final showChapter = item?.isPodcast == true
-        ? false
-        : ref.watch(showChapterPositionInHistoryProvider);
+    final showChapter =
+        !(item?.isPodcast == true) &&
+        ref.watch(showChapterPositionInHistoryProvider);
 
     final listenedMinutes = event.listened.inMinutes;
     final listened = event.listened.toReadableDuration();

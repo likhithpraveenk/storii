@@ -7,13 +7,12 @@ part 'book_chapter.g.dart';
 @freezed
 sealed class BookChapter with _$BookChapter {
   @DurationPreciseSecondsConverter()
-  const factory BookChapter({
+  const factory({
     required int id,
     required Duration start,
     required Duration end,
     required String title,
   }) = _BookChapter;
 
-  factory BookChapter.fromJson(Map<String, dynamic> json) =>
-      _$BookChapterFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$BookChapterFromJson(json);
 }

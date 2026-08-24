@@ -14,7 +14,7 @@ final mediaProgressSyncControllerProvider =
     MediaProgressSyncControllerProvider._();
 
 final class MediaProgressSyncControllerProvider
-    extends $NotifierProvider<MediaProgressSyncController, void> {
+    extends $AsyncNotifierProvider<MediaProgressSyncController, void> {
   MediaProgressSyncControllerProvider._()
     : super(
         from: null,
@@ -32,30 +32,22 @@ final class MediaProgressSyncControllerProvider
   @$internal
   @override
   MediaProgressSyncController create() => MediaProgressSyncController();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(void value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<void>(value),
-    );
-  }
 }
 
 String _$mediaProgressSyncControllerHash() =>
-    r'd787c228a84667426732f257665960de4bd9efa1';
+    r'183c69cd7832a1492c4402385dfc57622efcfef3';
 
-abstract class _$MediaProgressSyncController extends $Notifier<void> {
-  void build();
+abstract class _$MediaProgressSyncController extends $AsyncNotifier<void> {
+  FutureOr<void> build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<void, void>;
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<void, void>,
-              void,
+              AnyNotifier<AsyncValue<void>, void>,
+              AsyncValue<void>,
               Object?,
               Object?
             >;

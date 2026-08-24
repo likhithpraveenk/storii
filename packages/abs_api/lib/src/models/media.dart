@@ -13,7 +13,7 @@ part 'media.g.dart';
 @freezed
 sealed class Media with _$Media {
   @DurationPreciseSecondsConverter()
-  const factory Media.book({
+  const factory book({
     required String id,
     required MediaMetadata metadata,
     String? libraryItemId,
@@ -30,7 +30,7 @@ sealed class Media with _$Media {
   }) = BookMedia;
 
   @DateTimeEpochConverter()
-  const factory Media.podcast({
+  const factory podcast({
     required String id,
     required MediaMetadata metadata,
     String? libraryItemId,
@@ -43,12 +43,12 @@ sealed class Media with _$Media {
     int? numEpisodes,
   }) = PodcastMedia;
 
-  factory Media.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       const MediaConverter().fromJson(json);
 }
 
 class MediaConverter implements JsonConverter<Media, Map<String, dynamic>> {
-  const MediaConverter();
+  const new();
 
   @override
   Media fromJson(Map<String, dynamic> json) {

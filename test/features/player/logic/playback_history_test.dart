@@ -74,7 +74,7 @@ void main() {
     });
 
     test('hydrates from the store when a user is present', () async {
-      final seeded = [event(timestamp: DateTime(2026, 1, 1))];
+      final seeded = [event(timestamp: DateTime(2026))];
       store.seed(user.id, mediaItemId, seeded);
 
       container = ProviderContainer(
@@ -95,16 +95,8 @@ void main() {
 
   group('addEvent', () {
     test('appends', () async {
-      final e1 = event(
-        timestamp: DateTime(2026, 1, 1, 0, 0, 0),
-        kind: .sync,
-        syncSuccess: false,
-      );
-      final e2 = event(
-        timestamp: DateTime(2026, 1, 1, 0, 0, 1),
-        kind: .sync,
-        syncSuccess: false,
-      );
+      final e1 = event(timestamp: DateTime(2026), kind: .sync);
+      final e2 = event(timestamp: DateTime(2026, 1, 1, 0, 0, 1), kind: .sync);
 
       await notifier().addEvent(e1);
       await notifier().addEvent(e2);
@@ -142,7 +134,7 @@ void main() {
 
   group('updateEvent', () {
     test('replaces the event with a matching timestamp', () async {
-      final original = event(timestamp: DateTime(2026, 1, 1));
+      final original = event(timestamp: DateTime(2026));
       await notifier().addEvent(original);
 
       final updated = original.copyWith(playbackError: true);
@@ -155,16 +147,14 @@ void main() {
       'collapses consecutive sync events with matching syncSuccess',
       () async {
         final pending1 = event(
-          timestamp: DateTime(2026, 1, 1, 0, 0, 0),
+          timestamp: DateTime(2026),
           kind: .sync,
           syncAttempt: true,
-          syncSuccess: false,
         );
         final pending2 = event(
           timestamp: DateTime(2026, 1, 1, 0, 0, 1),
           kind: .sync,
           syncAttempt: true,
-          syncSuccess: false,
         );
 
         await notifier().addEvent(pending1);
@@ -180,7 +170,7 @@ void main() {
 
     test('sums listened duration when collapsing like events', () async {
       final e1 = event(
-        timestamp: DateTime(2026, 1, 1, 0, 0, 0),
+        timestamp: DateTime(2026),
         kind: .sync,
         listened: const Duration(seconds: 10),
       );
@@ -201,7 +191,7 @@ void main() {
 
     test('does not collapse across a non-like event in between', () async {
       final syncA = event(
-        timestamp: DateTime(2026, 1, 1, 0, 0, 0),
+        timestamp: DateTime(2026),
         kind: .sync,
         syncSuccess: true,
       );
@@ -226,7 +216,7 @@ void main() {
 
   group('clearHistory', () {
     test('empties state and removes from the store', () async {
-      await notifier().addEvent(event(timestamp: DateTime(2026, 1, 1)));
+      await notifier().addEvent(event(timestamp: DateTime(2026)));
 
       await notifier().clearHistory();
 

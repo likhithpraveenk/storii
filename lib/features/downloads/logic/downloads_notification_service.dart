@@ -5,7 +5,7 @@ import 'package:storii/shared/helpers/helpers.dart';
 const isolatePortName = 'downloads_action';
 
 class DownloadsNotificationService {
-  DownloadsNotificationService._();
+  new _();
   static final instance = DownloadsNotificationService._();
 
   final _plugin = FlutterLocalNotificationsPlugin();

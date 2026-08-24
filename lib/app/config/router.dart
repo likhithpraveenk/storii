@@ -65,7 +65,7 @@ enum AppRoute {
   stats('/more/stats');
 
   final String path;
-  const AppRoute(this.path);
+  new(this.path);
 }
 
 final publicRoutes = [

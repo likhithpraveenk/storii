@@ -8,14 +8,14 @@ part 'update_item_media_req_params.g.dart';
 
 @freezed
 sealed class UpdateItemMediaReqParams with _$UpdateItemMediaReqParams {
-  const factory UpdateItemMediaReqParams.book({
+  const factory book({
     String? coverPath,
     List<String>? tags,
     UpdateMediaMetadataReqParams? metadata,
     List<BookChapter>? chapters,
   }) = UpdateBookReqParams;
 
-  const factory UpdateItemMediaReqParams.podcast({
+  const factory podcast({
     String? coverPath,
     List<String>? tags,
     UpdateMediaMetadataReqParams? metadata,
@@ -25,13 +25,13 @@ sealed class UpdateItemMediaReqParams with _$UpdateItemMediaReqParams {
     int? maxNewEpisodesToDownload,
   }) = UpdatePodcastReqParams;
 
-  factory UpdateItemMediaReqParams.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$UpdateItemMediaReqParamsFromJson(json);
 }
 
 @freezed
 sealed class UpdateMediaMetadataReqParams with _$UpdateMediaMetadataReqParams {
-  const factory UpdateMediaMetadataReqParams.book({
+  const factory book({
     String? title,
     String? subtitle,
     List<Author>? authors,
@@ -48,7 +48,7 @@ sealed class UpdateMediaMetadataReqParams with _$UpdateMediaMetadataReqParams {
     bool? explicit,
   }) = UpdateBookMetadataReqParams;
 
-  const factory UpdateMediaMetadataReqParams.podcast({
+  const factory podcast({
     String? title,
     String? author,
     String? description,
@@ -63,6 +63,6 @@ sealed class UpdateMediaMetadataReqParams with _$UpdateMediaMetadataReqParams {
     String? language,
   }) = UpdatePodcastMetadataReqParams;
 
-  factory UpdateMediaMetadataReqParams.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$UpdateMediaMetadataReqParamsFromJson(json);
 }

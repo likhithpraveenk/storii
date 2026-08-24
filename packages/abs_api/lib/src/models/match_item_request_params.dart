@@ -6,7 +6,7 @@ part 'match_item_request_params.g.dart';
 
 @freezed
 sealed class MatchItemRequestParams with _$MatchItemRequestParams {
-  const factory MatchItemRequestParams({
+  const factory({
     required MetadataProvider provider,
     String? title,
     String? author,
@@ -15,6 +15,6 @@ sealed class MatchItemRequestParams with _$MatchItemRequestParams {
     String? asin,
   }) = _MatchItemRequestParams;
 
-  factory MatchItemRequestParams.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$MatchItemRequestParamsFromJson(json);
 }

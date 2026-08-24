@@ -7,7 +7,7 @@ import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
 
 class SkipForwardTile extends ConsumerStatefulWidget {
-  const SkipForwardTile({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<SkipForwardTile> createState() => _SkipForwardTileState();
@@ -75,7 +75,7 @@ class _SkipForwardTileState extends ConsumerState<SkipForwardTile> {
 }
 
 class SkipBackwardTile extends ConsumerStatefulWidget {
-  const SkipBackwardTile({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<SkipBackwardTile> createState() => _SkipBackwardTileState();

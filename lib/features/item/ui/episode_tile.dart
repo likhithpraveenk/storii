@@ -14,7 +14,7 @@ import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/pulsing_dot.dart';
 
 class EpisodeTile extends ConsumerWidget {
-  const EpisodeTile({required this.episode, super.key});
+  const new({required this.episode, super.key});
 
   final PodcastEpisode episode;
 
@@ -57,14 +57,12 @@ class EpisodeTile extends ConsumerWidget {
             : null,
         border: Border.all(
           color: scheme.primary.withValues(alpha: isActive ? 0.3 : 0),
-          width: 1,
         ),
       ),
       child: Column(
         crossAxisAlignment: .stretch,
         children: [
           Row(
-            crossAxisAlignment: .center,
             children: [
               SizedBox(
                 width: 48,
@@ -140,7 +138,7 @@ class EpisodeTile extends ConsumerWidget {
 }
 
 class _EpisodeMetaRow extends ConsumerWidget {
-  const _EpisodeMetaRow({required this.episode, this.progressPct});
+  const new({required this.episode, this.progressPct});
 
   final PodcastEpisode episode;
   final int? progressPct;
@@ -148,9 +146,8 @@ class _EpisodeMetaRow extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
-    final style = Theme.of(
-      context,
-    ).textTheme.labelSmall?.copyWith(color: scheme.onSurfaceVariant);
+    final style = Theme.of(context).textTheme.labelSmall
+        ?.copyWith(color: scheme.onSurfaceVariant);
 
     final parts = <String>[
       if (episode.duration != null) episode.duration!.toReadableDuration(),

@@ -7,7 +7,7 @@ import 'package:abs_api/src/models/sync_local_session_response.dart';
 import 'package:abs_api/src/models/sync_session_request_params.dart';
 
 class SessionsApi {
-  const SessionsApi(this.api);
+  const new(this.api);
 
   final ApiClient api;
 

@@ -7,13 +7,12 @@ part 'playlist_item.g.dart';
 
 @freezed
 sealed class PlaylistItem with _$PlaylistItem {
-  const factory PlaylistItem({
+  const factory({
     required String libraryItemId,
     String? episodeId,
     PodcastEpisode? episode,
     LibraryItem? libraryItem,
   }) = _PlaylistItem;
 
-  factory PlaylistItem.fromJson(Map<String, dynamic> json) =>
-      _$PlaylistItemFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$PlaylistItemFromJson(json);
 }

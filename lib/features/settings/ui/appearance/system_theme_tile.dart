@@ -6,7 +6,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/settings/logic/dynamic_colors.dart';
 
 class SystemThemeTile extends ConsumerWidget {
-  const SystemThemeTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -57,9 +57,9 @@ class SystemThemeTile extends ConsumerWidget {
                         shape: .circle,
                         border: isSelected
                             ? .all(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.inverseSurface,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .inverseSurface,
                                 width: 4,
                               )
                             : null,

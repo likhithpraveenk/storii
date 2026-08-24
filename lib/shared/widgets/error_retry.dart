@@ -3,7 +3,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 class ErrorRetryScreen extends StatelessWidget {
-  const ErrorRetryScreen(this.message, {super.key, this.onRetry});
+  const new(this.message, {super.key, this.onRetry});
 
   final String message;
   final void Function()? onRetry;
@@ -11,14 +11,14 @@ class ErrorRetryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: true, titleSpacing: 0),
+      appBar: AppBar(titleSpacing: 0),
       body: ErrorRetryWidget(message, onRetry: onRetry),
     );
   }
 }
 
 class ErrorRetryWidget extends StatelessWidget {
-  const ErrorRetryWidget(this.message, {super.key, this.onRetry});
+  const new(this.message, {super.key, this.onRetry});
 
   final String message;
   final void Function()? onRetry;
@@ -35,9 +35,8 @@ class ErrorRetryWidget extends StatelessWidget {
           children: [
             Text(
               message,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(color: scheme.error),
+              style: Theme.of(context).textTheme.bodyLarge
+                  ?.copyWith(color: scheme.error),
               textAlign: .center,
             ),
             if (onRetry != null) ...[

@@ -6,7 +6,7 @@ part 'server_status_response.g.dart';
 
 @freezed
 sealed class ServerStatusResponse with _$ServerStatusResponse {
-  const factory ServerStatusResponse({
+  const factory({
     String? app,
     String? serverVersion,
     required bool isInit,
@@ -17,18 +17,17 @@ sealed class ServerStatusResponse with _$ServerStatusResponse {
     AuthFormData? authFormData,
   }) = _ServerStatusResponse;
 
-  factory ServerStatusResponse.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$ServerStatusResponseFromJson(json);
 }
 
 @freezed
 sealed class AuthFormData with _$AuthFormData {
-  const factory AuthFormData({
+  const factory({
     String? authLoginCustomMessage,
     String? authOpenIDButtonText,
     bool? authOpenIDAutoLaunch,
   }) = _AuthFormData;
 
-  factory AuthFormData.fromJson(Map<String, dynamic> json) =>
-      _$AuthFormDataFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$AuthFormDataFromJson(json);
 }

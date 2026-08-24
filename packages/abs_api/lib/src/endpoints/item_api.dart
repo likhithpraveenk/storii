@@ -17,7 +17,7 @@ import 'package:dio/dio.dart';
 
 class ItemApi {
   final ApiClient api;
-  const ItemApi(this.api);
+  const new(this.api);
 
   Future<LibraryItem> get(
     String libraryItemId, {

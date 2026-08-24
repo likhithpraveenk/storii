@@ -12,9 +12,9 @@ part 'authors_list_provider.g.dart';
 @riverpod
 Future<List<Author>> authorsList(Ref ref) async {
   ref.watchConnection();
-  final libraryId = (await ref.watch(
-    activeLibraryDetailsProvider.future,
-  )).library.id;
+  final libraryId = (await ref.watch(activeLibraryDetailsProvider.future))
+      .library
+      .id;
   final params = ref.watch(
     libraryFiltersProvider(.authors).select((s) => s.toAuthorParams()),
   );

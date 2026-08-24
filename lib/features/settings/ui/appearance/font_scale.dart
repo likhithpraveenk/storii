@@ -5,7 +5,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class FontScaleTile extends ConsumerWidget {
-  const FontScaleTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,7 +31,7 @@ class FontScaleTile extends ConsumerWidget {
 }
 
 class _FontScaleSheet extends ConsumerStatefulWidget {
-  const _FontScaleSheet();
+  const new();
 
   @override
   ConsumerState<_FontScaleSheet> createState() => _FontScaleSheetState();
@@ -80,9 +80,8 @@ class _FontScaleSheetState extends ConsumerState<_FontScaleSheet> {
         Padding(
           padding: const .symmetric(horizontal: 24),
           child: MediaQuery(
-            data: MediaQuery.of(
-              context,
-            ).copyWith(textScaler: .linear(_scale / 20)),
+            data: MediaQuery.of(context)
+                .copyWith(textScaler: .linear(_scale / 20)),
             child: Text(
               l10n.sampleText,
               style: theme.textTheme.bodyMedium?.copyWith(

@@ -5,7 +5,7 @@ part 'filesystem_directory.g.dart';
 
 @freezed
 sealed class FilesystemDirectory with _$FilesystemDirectory {
-  const factory FilesystemDirectory({
+  const factory({
     required String path,
     required String dirname,
     required String fullPath,
@@ -13,6 +13,6 @@ sealed class FilesystemDirectory with _$FilesystemDirectory {
     required List<FilesystemDirectory> dirs,
   }) = _FilesystemDirectory;
 
-  factory FilesystemDirectory.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$FilesystemDirectoryFromJson(json);
 }

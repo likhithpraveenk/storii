@@ -7,7 +7,7 @@ enum LogLevel { http, debug, info, warning, error }
 
 @freezed
 sealed class LogEntry with _$LogEntry {
-  const factory LogEntry({
+  const factory({
     required DateTime timestamp,
     required String message,
     required LogLevel level,
@@ -15,6 +15,5 @@ sealed class LogEntry with _$LogEntry {
     String? stackTrace,
   }) = _LogEntry;
 
-  factory LogEntry.fromJson(Map<String, dynamic> json) =>
-      _$LogEntryFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$LogEntryFromJson(json);
 }

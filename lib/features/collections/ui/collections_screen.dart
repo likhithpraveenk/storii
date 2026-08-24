@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:storii/app/init.dart';
 
 class CollectionsScreen extends StatelessWidget {
-  const CollectionsScreen({super.key, this.fromMore = false});
+  const new({super.key, this.fromMore = false});
 
   final bool fromMore;
 

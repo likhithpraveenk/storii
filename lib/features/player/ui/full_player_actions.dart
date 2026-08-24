@@ -39,7 +39,7 @@ extension WidgetX on FullPlayerActions {
 }
 
 class FullPlayerActionsWidget extends ConsumerWidget {
-  const FullPlayerActionsWidget(this.session, {super.key});
+  const new(this.session, {super.key});
 
   final PlaybackSession session;
 
@@ -77,7 +77,7 @@ class FullPlayerActionsWidget extends ConsumerWidget {
 }
 
 class FullPlayerActionsBig extends ConsumerWidget {
-  const FullPlayerActionsBig({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

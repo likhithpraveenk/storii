@@ -7,7 +7,7 @@ import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
 
 class SyncIntervalTile extends ConsumerStatefulWidget {
-  const SyncIntervalTile({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<SyncIntervalTile> createState() => _SyncIntervalTileState();

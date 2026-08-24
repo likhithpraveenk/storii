@@ -6,7 +6,7 @@ import 'package:storii/storage/local/downloads_store.dart';
 const _persistenceInterval = Duration(milliseconds: 250);
 
 class ThrottledPersister {
-  ThrottledPersister({required this.store, required this.onPersist});
+  new({required this.store, required this.onPersist});
 
   final DownloadsStore store;
   final Future<void> Function(DownloadItem) onPersist;

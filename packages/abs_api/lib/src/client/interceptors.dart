@@ -5,10 +5,10 @@ import 'package:dio/dio.dart';
 class AuthInterceptor extends QueuedInterceptorsWrapper {
   final ApiClient api;
 
-  AuthInterceptor(this.api);
+  new(this.api);
 
   @override
-  void onRequest(
+  Future<void> onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
@@ -21,7 +21,10 @@ class AuthInterceptor extends QueuedInterceptorsWrapper {
   }
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) async {
+  Future<void> onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     final isAuthRoute =
         err.requestOptions.path.contains(ApiRoutes.authRefresh) ||
         err.requestOptions.path.contains(ApiRoutes.login);

@@ -10,10 +10,10 @@ extension AudiobookSortX on Iterable<LibraryItem> {
   List<LibraryItem> sortedBySequence() {
     return toList()..sort((a, b) {
       double parseSequence(String? seq) {
-        if (seq == null || seq.isEmpty) return 0.0;
+        if (seq == null || seq.isEmpty) return 0;
 
         final firstPart = seq.split(RegExp(r'[,\-]')).first;
-        final numericPart = firstPart.replaceAll(RegExp(r'[^0-9.]'), '');
+        final numericPart = firstPart.replaceAll(RegExp('[^0-9.]'), '');
 
         return double.tryParse(numericPart) ?? 0.0;
       }
@@ -292,8 +292,8 @@ extension SeriesX on Series {
       finished = books.where((b) => b.progress == 1.0).length;
     }
 
-    if (count == 0) return 0.0;
-    return (finished / count);
+    if (count == 0) return 0;
+    return finished / count;
   }
 }
 

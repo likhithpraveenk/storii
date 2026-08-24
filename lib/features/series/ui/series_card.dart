@@ -11,7 +11,7 @@ import 'package:storii/shared/widgets/placeholder_image.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class SeriesCard extends StatelessWidget {
-  const SeriesCard(this.series, {super.key});
+  const new(this.series, {super.key});
   final Series series;
 
   @override
@@ -34,9 +34,8 @@ class SeriesCard extends StatelessWidget {
                 series.name,
                 maxLines: 1,
                 overflow: .ellipsis,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleSmall?.copyWith(fontWeight: .bold),
+                style: Theme.of(context).textTheme.titleSmall
+                    ?.copyWith(fontWeight: .bold),
               ),
               if (authorName != null && authorName.isNotEmpty)
                 Text(
@@ -58,7 +57,7 @@ const _kMaxSpacingRatio = 0.7;
 const _kBookSizeRatio = 0.5;
 
 class _SeriesBookStack extends StatelessWidget {
-  const _SeriesBookStack(this.series);
+  const new(this.series);
 
   final Series series;
 

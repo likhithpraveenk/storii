@@ -12,7 +12,7 @@ import 'package:storii/features/settings/ui/customization/startup_nav.dart';
 import 'package:storii/features/settings/ui/settings_header.dart';
 
 class CustomizationSettingsTile extends StatelessWidget {
-  const CustomizationSettingsTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class CustomizationSettingsTile extends StatelessWidget {
 }
 
 class CustomizationSettingsScreen extends StatelessWidget {
-  const CustomizationSettingsScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

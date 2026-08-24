@@ -7,7 +7,7 @@ import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
 
 class SpeedTile extends ConsumerStatefulWidget {
-  const SpeedTile({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<SpeedTile> createState() => _SpeedTileState();
@@ -49,7 +49,7 @@ class _SpeedTileState extends ConsumerState<SpeedTile> {
                     WheelPicker.fromDoubleRange(
                       initialValue: _selected,
                       min: 0.5,
-                      max: 4.0,
+                      max: 4,
                       step: 0.1,
                       onChangedEnd: (v) => _selected = v,
                       labelBuilder: (v) => '${v}x',

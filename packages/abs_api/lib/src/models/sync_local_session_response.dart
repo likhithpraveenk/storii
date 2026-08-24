@@ -5,13 +5,13 @@ part 'sync_local_session_response.g.dart';
 
 @freezed
 abstract class SyncLocalSessionResponse with _$SyncLocalSessionResponse {
-  const factory SyncLocalSessionResponse({
+  const factory({
     required String id,
     required bool success,
     String? error,
     bool? progressSynced,
   }) = _SyncLocalSessionResponse;
 
-  factory SyncLocalSessionResponse.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$SyncLocalSessionResponseFromJson(json);
 }

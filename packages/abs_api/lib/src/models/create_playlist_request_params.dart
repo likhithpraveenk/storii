@@ -6,12 +6,12 @@ part 'create_playlist_request_params.g.dart';
 
 @freezed
 sealed class CreatePlaylistRequestParams with _$CreatePlaylistRequestParams {
-  const factory CreatePlaylistRequestParams({
+  const factory({
     required String libraryId,
     required String name,
     required List<PlaylistItem> items,
   }) = _CreatePlaylistRequestParams;
 
-  factory CreatePlaylistRequestParams.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$CreatePlaylistRequestParamsFromJson(json);
 }

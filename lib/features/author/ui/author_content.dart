@@ -8,7 +8,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 
 class AuthorContent extends StatelessWidget {
-  const AuthorContent({
+  const new({
     super.key,
     required this.authorId,
     required this.books,
@@ -47,7 +47,7 @@ class SectionHeader extends StatelessWidget {
   final int count;
   final VoidCallback onViewAll;
 
-  const SectionHeader({
+  const new({
     super.key,
     required this.title,
     required this.count,
@@ -64,12 +64,10 @@ class SectionHeader extends StatelessWidget {
             children: [
               const SizedBox(width: 16),
               Flexible(
-                flex: 1,
                 child: Text(
                   title,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleSmall?.copyWith(fontWeight: .bold),
+                  style: Theme.of(context).textTheme.titleSmall
+                      ?.copyWith(fontWeight: .bold),
                   maxLines: 1,
                   overflow: .ellipsis,
                 ),
@@ -113,7 +111,7 @@ class SectionHeader extends StatelessWidget {
 class SeriesSection extends StatelessWidget {
   final Series series;
 
-  const SeriesSection({super.key, required this.series});
+  const new({super.key, required this.series});
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +137,7 @@ class SeriesSection extends StatelessWidget {
 class HorizontalBooksCarousel extends ConsumerWidget {
   final List<LibraryItem> books;
 
-  const HorizontalBooksCarousel({super.key, required this.books});
+  const new({super.key, required this.books});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

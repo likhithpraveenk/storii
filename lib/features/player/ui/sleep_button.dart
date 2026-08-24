@@ -9,7 +9,7 @@ import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
 
 class SleepButton extends ConsumerWidget {
-  const SleepButton({super.key, required this.inOverflow});
+  const new({super.key, required this.inOverflow});
 
   final bool inOverflow;
 
@@ -48,7 +48,7 @@ class SleepButton extends ConsumerWidget {
 }
 
 class SleepTimerSheet extends ConsumerStatefulWidget {
-  const SleepTimerSheet({super.key});
+  const new({super.key});
   @override
   ConsumerState<SleepTimerSheet> createState() => _SleepTimerSheetState();
 }
@@ -123,7 +123,7 @@ class _SleepTimerSheetState extends ConsumerState<SleepTimerSheet> {
 }
 
 class _ChapterOptions extends ConsumerStatefulWidget {
-  const _ChapterOptions();
+  const new();
 
   @override
   ConsumerState<_ChapterOptions> createState() => _ChapterOptionsState();

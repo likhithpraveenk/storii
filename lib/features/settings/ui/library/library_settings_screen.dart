@@ -6,7 +6,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/library/remember_sort_tile.dart';
 
 class LibrarySettingsTile extends ConsumerWidget {
-  const LibrarySettingsTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +22,7 @@ class LibrarySettingsTile extends ConsumerWidget {
 }
 
 class LibrarySettingsScreen extends ConsumerWidget {
-  const LibrarySettingsScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

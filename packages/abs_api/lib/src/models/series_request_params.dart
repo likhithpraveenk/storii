@@ -7,9 +7,9 @@ part 'series_request_params.g.dart';
 
 @freezed
 abstract class SeriesRequestParams with _$SeriesRequestParams {
-  const SeriesRequestParams._();
+  const new _();
 
-  const factory SeriesRequestParams({
+  const factory({
     @Default(0) int limit,
     @Default(0) int page,
     String? sort,
@@ -17,6 +17,6 @@ abstract class SeriesRequestParams with _$SeriesRequestParams {
     @FilterConverter() Filter? filter,
   }) = _SeriesRequestParams;
 
-  factory SeriesRequestParams.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$SeriesRequestParamsFromJson(json);
 }

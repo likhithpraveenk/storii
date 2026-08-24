@@ -6,7 +6,7 @@ enum Languages {
   en('English');
 
   final String displayName;
-  const Languages(this.displayName);
+  new(this.displayName);
 }
 
 abstract class EnumHasValue {
@@ -31,7 +31,7 @@ enum AudiobookSort implements EnumHasValue {
 
   @override
   final String value;
-  const AudiobookSort(this.value);
+  new(this.value);
 
   @override
   String get label {
@@ -64,7 +64,7 @@ enum SeriesSort implements EnumHasValue {
 
   @override
   final String value;
-  const SeriesSort(this.value);
+  new(this.value);
 
   @override
   String get label {
@@ -89,7 +89,7 @@ enum AuthorSort implements EnumHasValue {
 
   @override
   final String value;
-  const AuthorSort(this.value);
+  new(this.value);
 
   @override
   String get label {
@@ -115,7 +115,7 @@ enum PodcastSort implements EnumHasValue {
 
   @override
   final String value;
-  const PodcastSort(this.value);
+  new(this.value);
 
   @override
   String get label {

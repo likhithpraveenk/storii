@@ -3,7 +3,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
 class TotalListeningTimeWidget extends StatelessWidget {
-  const TotalListeningTimeWidget(this.totalTime, {super.key});
+  const new(this.totalTime, {super.key});
   final Duration totalTime;
 
   @override
@@ -36,7 +36,7 @@ class TotalListeningTimeWidget extends StatelessWidget {
 }
 
 class StatVerticalDivider extends StatelessWidget {
-  const StatVerticalDivider({super.key});
+  const new({super.key});
   @override
   Widget build(BuildContext context) => Padding(
     padding: const .symmetric(horizontal: 16),

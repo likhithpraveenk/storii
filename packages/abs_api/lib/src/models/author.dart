@@ -9,7 +9,7 @@ part 'author.g.dart';
 @freezed
 sealed class Author with _$Author {
   @DateTimeEpochConverter()
-  const factory Author({
+  const factory({
     required String id,
     required String name,
     String? lastFirst,
@@ -24,5 +24,5 @@ sealed class Author with _$Author {
     List<Series>? series,
   }) = _Author;
 
-  factory Author.fromJson(Map<String, dynamic> json) => _$AuthorFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$AuthorFromJson(json);
 }

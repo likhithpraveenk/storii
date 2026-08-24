@@ -5,7 +5,7 @@ import 'package:storii/shared/widgets/connection_status_icon.dart';
 import 'package:storii/shared/widgets/library_switcher.dart';
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CommonAppBar({
+  const new({
     super.key,
     this.title,
     this.actions,

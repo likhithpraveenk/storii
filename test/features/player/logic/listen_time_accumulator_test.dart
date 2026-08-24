@@ -67,8 +67,9 @@ void main() {
   test('pause then resume preserves accumulated time', () async {
     accumulator.start();
     await Future.delayed(const Duration(milliseconds: 500));
-    accumulator.pause();
-    accumulator.resume();
+    accumulator
+      ..pause()
+      ..resume();
     await Future.delayed(const Duration(milliseconds: 100));
     final total = accumulator.snapshotAndReset(keepRunning: false);
     expect(total.inMilliseconds, greaterThanOrEqualTo(600));

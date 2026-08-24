@@ -9,7 +9,7 @@ part 'library_file.g.dart';
 @freezed
 sealed class LibraryFile with _$LibraryFile {
   @DateTimeEpochConverter()
-  const factory LibraryFile({
+  const factory({
     required String ino,
     required FileMetadata metadata,
     required DateTime addedAt,
@@ -17,6 +17,5 @@ sealed class LibraryFile with _$LibraryFile {
     required FileType fileType,
   }) = _LibraryFile;
 
-  factory LibraryFile.fromJson(Map<String, dynamic> json) =>
-      _$LibraryFileFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$LibraryFileFromJson(json);
 }

@@ -11,7 +11,7 @@ part 'audio_file.g.dart';
 sealed class AudioFile with _$AudioFile {
   @DateTimeEpochConverter()
   @DurationPreciseSecondsConverter()
-  const factory AudioFile({
+  const factory({
     required String ino,
     required FileMetadata metadata,
     int? index,
@@ -38,6 +38,5 @@ sealed class AudioFile with _$AudioFile {
     String? mimeType,
   }) = _AudioFile;
 
-  factory AudioFile.fromJson(Map<String, dynamic> json) =>
-      _$AudioFileFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$AudioFileFromJson(json);
 }

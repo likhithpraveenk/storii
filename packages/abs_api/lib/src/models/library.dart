@@ -9,7 +9,7 @@ part 'library.g.dart';
 @freezed
 sealed class Library with _$Library {
   @DateTimeEpochConverter()
-  const factory Library({
+  const factory({
     required String id,
     required String name,
     required List<Folder> folders,
@@ -21,6 +21,5 @@ sealed class Library with _$Library {
     required DateTime lastUpdate,
   }) = _Library;
 
-  factory Library.fromJson(Map<String, dynamic> json) =>
-      _$LibraryFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$LibraryFromJson(json);
 }

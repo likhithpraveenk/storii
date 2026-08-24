@@ -14,7 +14,7 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class ActionButtons extends ConsumerWidget {
-  const ActionButtons({required this.item, super.key});
+  const new({required this.item, super.key});
 
   final LibraryItem item;
 
@@ -88,9 +88,8 @@ class ActionButtons extends ConsumerWidget {
               onTap: () async {
                 final success = await ref
                     .read(
-                      userProgressActionsProvider(
-                        mediaProgress.libraryItemId,
-                      ).notifier,
+                      userProgressActionsProvider(mediaProgress.libraryItemId)
+                          .notifier,
                     )
                     .remove(mediaProgress.id);
                 if (context.mounted) {

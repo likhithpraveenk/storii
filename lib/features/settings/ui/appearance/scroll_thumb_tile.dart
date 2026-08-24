@@ -7,7 +7,7 @@ import 'package:storii/features/settings/ui/appearance/scroll_thumb_picker_tiles
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class ScrollThumbTile extends ConsumerWidget {
-  const ScrollThumbTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +30,7 @@ class ScrollThumbTile extends ConsumerWidget {
 }
 
 class ScrollThumbSettings extends ConsumerWidget {
-  const ScrollThumbSettings({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -104,11 +104,7 @@ String _labelDuration(int ms) =>
     '${(ms / Duration.millisecondsPerSecond).toStringAsFixed(1)}s';
 
 class _ScrollThumbPreview extends StatelessWidget {
-  const _ScrollThumbPreview({
-    required this.visible,
-    required this.height,
-    required this.width,
-  });
+  const new({required this.visible, required this.height, required this.width});
 
   final bool visible;
   final double height;

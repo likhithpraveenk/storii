@@ -12,7 +12,7 @@ import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/nav_bar.dart';
 
 class ShellScaffold extends ConsumerWidget {
-  const ShellScaffold({required this.navigationShell, super.key});
+  const new({required this.navigationShell, super.key});
 
   final StatefulNavigationShell navigationShell;
 
@@ -71,7 +71,7 @@ final lastNavIndexProvider = StateProvider<int>(
 );
 
 class _ShellBottomBar extends ConsumerWidget {
-  const _ShellBottomBar({
+  const new({
     required this.target,
     required this.navTargets,
     required this.factor,

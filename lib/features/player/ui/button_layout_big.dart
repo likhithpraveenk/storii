@@ -8,7 +8,7 @@ import 'package:storii/features/player/ui/play_button.dart';
 import 'package:storii/features/player/ui/seek_button.dart';
 
 class ButtonLayoutBig extends ConsumerWidget {
-  const ButtonLayoutBig({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -89,7 +89,7 @@ class ButtonLayoutBig extends ConsumerWidget {
 class _SkipButtonBig extends ConsumerWidget {
   final bool isForward;
 
-  const _SkipButtonBig({required this.isForward});
+  const new({required this.isForward});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

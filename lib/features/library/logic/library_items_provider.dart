@@ -40,9 +40,9 @@ Future<List<LibraryItem>> libraryItems(Ref ref) async {
 @riverpod
 Future<List<LibraryItem>> rawLibraryItems(Ref ref) async {
   ref.watchConnection();
-  final libraryId = (await ref.watch(
-    activeLibraryDetailsProvider.future,
-  )).library.id;
+  final libraryId = (await ref.watch(activeLibraryDetailsProvider.future))
+      .library
+      .id;
   final params = ref.watch(
     libraryFiltersProvider(.library).select((s) => s.toItemParams()),
   );

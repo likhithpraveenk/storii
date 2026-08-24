@@ -15,7 +15,7 @@ class _Section extends StatelessWidget {
   final VoidCallback? onViewAll;
   final Widget child;
 
-  const _Section({required this.title, this.onViewAll, required this.child});
+  const new({required this.title, this.onViewAll, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class _Section extends StatelessWidget {
 }
 
 class ItemsSection extends ConsumerWidget {
-  const ItemsSection({
+  const new({
     super.key,
     required this.items,
     required this.title,
@@ -102,7 +102,7 @@ class SearchChipsSection<T> extends StatelessWidget {
   final void Function(T) onTap;
   final bool isSeparate;
 
-  const SearchChipsSection({
+  const new({
     super.key,
     required this.title,
     required this.items,
@@ -139,7 +139,7 @@ class SearchChipsSection<T> extends StatelessWidget {
 }
 
 class AuthorsSection extends ConsumerWidget {
-  const AuthorsSection({
+  const new({
     super.key,
     required this.authors,
     required this.onViewAll,
@@ -180,7 +180,7 @@ class AuthorsSection extends ConsumerWidget {
 }
 
 class SeriesSection extends ConsumerWidget {
-  const SeriesSection({
+  const new({
     super.key,
     required this.series,
     required this.onViewAll,

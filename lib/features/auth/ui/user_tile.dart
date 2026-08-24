@@ -13,7 +13,7 @@ import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
 
 class UserTile extends ConsumerWidget {
-  const UserTile({super.key, required this.user, required this.server});
+  const new({super.key, required this.user, required this.server});
 
   final UserDomain user;
   final Server server;

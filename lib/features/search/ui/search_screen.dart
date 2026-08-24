@@ -12,7 +12,7 @@ import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
-  const SearchScreen({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<SearchScreen> createState() => _SearchScreenState();
@@ -103,7 +103,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 }
 
 class FilterChipsRow extends ConsumerWidget {
-  const FilterChipsRow(this.filterTabs, {super.key});
+  const new(this.filterTabs, {super.key});
 
   final List<SearchFilter> filterTabs;
 

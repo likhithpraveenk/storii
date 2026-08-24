@@ -51,7 +51,6 @@ extension ToDownloadItemX on LibraryItem {
           title: title ?? id,
           author: authorName ?? l10n.noAuthor,
           tracks: downloadTracks,
-          mediaType: .audiobook,
           startedAt: DateTime.now(),
           serverUrl: serverUrl,
           userId: userId,

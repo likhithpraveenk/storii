@@ -12,7 +12,7 @@ import 'package:storii/shared/widgets/filters_sheet.dart';
 import 'package:storii/shared/widgets/sort_sheet.dart';
 
 class ScreenOptionsButton extends StatelessWidget {
-  const ScreenOptionsButton(this.screen, {super.key});
+  const new(this.screen, {super.key});
   final CurrentScreen screen;
 
   @override
@@ -75,7 +75,7 @@ class ScreenOptionsButton extends StatelessWidget {
 }
 
 class _ScreenOptionsSheet extends ConsumerWidget {
-  const _ScreenOptionsSheet(this.screen, this.controller);
+  const new(this.screen, this.controller);
   final CurrentScreen screen;
   final ScrollController controller;
 

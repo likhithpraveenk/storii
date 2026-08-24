@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 
-typedef PlayerWidgetBuilder =
-    Widget Function(BuildContext context, double expandFactor);
+typedef PlayerWidgetBuilder = Widget Function(
+  BuildContext context,
+  double expandFactor,
+);
 
 class PlayerBuilder extends ConsumerStatefulWidget {
-  const PlayerBuilder({
+  const new({
     super.key,
     required this.builder,
     this.minHeight = 80,
@@ -86,8 +88,9 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
 
     _controller.stop();
     _heightTween = Tween(begin: currentHeight, end: targetHeight);
-    _controller.reset();
-    _controller.forward();
+    _controller
+      ..reset()
+      ..forward();
   }
 
   void _onVerticalDragUpdate(DragUpdateDetails details) {

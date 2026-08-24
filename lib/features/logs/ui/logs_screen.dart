@@ -11,7 +11,7 @@ import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 
 class LogsScreen extends ConsumerStatefulWidget {
-  const LogsScreen({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LogsScreenState();
@@ -109,7 +109,7 @@ class _LogsScreenState extends ConsumerState<LogsScreen> {
 }
 
 class _LogFilterBottomSheet extends ConsumerWidget {
-  const _LogFilterBottomSheet();
+  const new();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -146,7 +146,7 @@ class _LogFilterBottomSheet extends ConsumerWidget {
 }
 
 class _DeleteLogsButton extends ConsumerWidget {
-  const _DeleteLogsButton();
+  const new();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

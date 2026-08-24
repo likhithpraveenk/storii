@@ -11,7 +11,7 @@ part 'user.g.dart';
 @freezed
 sealed class User with _$User {
   @DateTimeEpochConverter()
-  const factory User({
+  const factory({
     required String id,
     required String username,
     String? email,
@@ -31,5 +31,5 @@ sealed class User with _$User {
     String? refreshToken,
   }) = _User;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }

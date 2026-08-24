@@ -9,7 +9,7 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/placeholder_image.dart';
 
 class SeriesCardListView extends StatelessWidget {
-  const SeriesCardListView(this.series, {super.key});
+  const new(this.series, {super.key});
   final Series series;
 
   @override
@@ -69,10 +69,8 @@ class SeriesCardListView extends StatelessWidget {
       ),
       trailing: Text(
         series.books.length.toString(),
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontSize: 12,
-          color: theme.colorScheme.onSurfaceVariant,
-        ),
+        style: Theme.of(context).textTheme.bodyMedium
+            ?.copyWith(fontSize: 12, color: theme.colorScheme.onSurfaceVariant),
       ),
     );
   }

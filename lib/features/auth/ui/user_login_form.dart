@@ -9,7 +9,7 @@ import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UserLoginForm extends ConsumerStatefulWidget {
-  const UserLoginForm({
+  const new({
     super.key,
     required this.serverUrl,
     required this.serverStatus,

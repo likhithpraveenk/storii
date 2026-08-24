@@ -7,7 +7,7 @@ part 'file_metadata.g.dart';
 @freezed
 sealed class FileMetadata with _$FileMetadata {
   @DateTimeEpochConverter()
-  const factory FileMetadata({
+  const factory({
     required String filename,
     required String ext,
     required String path,
@@ -18,6 +18,5 @@ sealed class FileMetadata with _$FileMetadata {
     @JsonKey(name: 'birthtimeMs') required DateTime birthtime,
   }) = _FileMetadata;
 
-  factory FileMetadata.fromJson(Map<String, dynamic> json) =>
-      _$FileMetadataFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$FileMetadataFromJson(json);
 }

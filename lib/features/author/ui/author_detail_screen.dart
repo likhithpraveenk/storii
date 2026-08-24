@@ -11,7 +11,7 @@ import 'package:storii/shared/widgets/expandable_text.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class AuthorDetailScreen extends ConsumerWidget {
-  const AuthorDetailScreen({super.key, required this.id});
+  const new({super.key, required this.id});
 
   final String id;
 

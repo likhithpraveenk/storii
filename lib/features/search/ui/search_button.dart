@@ -4,7 +4,7 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 
 class SearchButton extends StatelessWidget {
-  const SearchButton({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

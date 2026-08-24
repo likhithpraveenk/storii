@@ -5,9 +5,9 @@ sealed class Filter {
   final FilterGroup group;
   final String? value;
 
-  const Filter(this.group, [this.value]);
+  const new(this.group, [this.value]);
 
-  factory Filter.parse(String filter) {
+  factory parse(String filter) {
     final parts = filter.split('.');
 
     final group = FilterGroup.byName[parts.first]!;
@@ -80,31 +80,31 @@ enum FilterGroup {
 
   final String name;
 
-  const FilterGroup(this.name);
+  new(this.name);
 }
 
 class NoFilter extends Filter {
-  const NoFilter() : super(.all);
+  const new() : super(.all);
 }
 
 class GenreFilter extends Filter {
-  const GenreFilter(String genre) : super(.genres, genre);
+  const new(String genre) : super(.genres, genre);
 }
 
 class TagFilter extends Filter {
-  const TagFilter(String tag) : super(.tags, tag);
+  const new(String tag) : super(.tags, tag);
 }
 
 class SeriesFilter extends Filter {
-  const SeriesFilter(String seriesId) : super(.series, seriesId);
+  const new(String seriesId) : super(.series, seriesId);
 }
 
 class AuthorFilter extends Filter {
-  const AuthorFilter(String authorId) : super(.authors, authorId);
+  const new(String authorId) : super(.authors, authorId);
 }
 
 class ProgressFilter extends Filter {
-  ProgressFilter(ProgressFilterValue value) : super(.progress, value.name);
+  new(ProgressFilterValue value) : super(.progress, value.name);
 }
 
 enum ProgressFilterValue {
@@ -119,15 +119,15 @@ enum ProgressFilterValue {
 
   final String name;
 
-  const ProgressFilterValue(this.name);
+  new(this.name);
 }
 
 class NarratorFilter extends Filter {
-  const NarratorFilter(String narrator) : super(.narrators, narrator);
+  const new(String narrator) : super(.narrators, narrator);
 }
 
 class MissingFilter extends Filter {
-  MissingFilter(MissingFilterValue value) : super(.missing, value.name);
+  new(MissingFilterValue value) : super(.missing, value.name);
 }
 
 enum MissingFilterValue {
@@ -146,17 +146,17 @@ enum MissingFilterValue {
 }
 
 class LanguageFilter extends Filter {
-  const LanguageFilter(String language) : super(.languages, language);
+  const new(String language) : super(.languages, language);
 }
 
 class TracksFilter extends Filter {
-  TracksFilter(TracksFilterValue value) : super(.tracks, value.name);
+  new(TracksFilterValue value) : super(.tracks, value.name);
 }
 
 enum TracksFilterValue { none, single, multi }
 
 class IssuesFilter extends Filter {
-  const IssuesFilter() : super(.issues);
+  const new() : super(.issues);
 }
 
 enum EbooksFilterValue {
@@ -171,29 +171,29 @@ enum EbooksFilterValue {
 
   final String name;
 
-  const EbooksFilterValue(this.name);
+  new(this.name);
 }
 
 class EbooksFilter extends Filter {
-  EbooksFilter(EbooksFilterValue value) : super(.ebooks, value.name);
+  new(EbooksFilterValue value) : super(.ebooks, value.name);
 }
 
 class PublishersFilter extends Filter {
-  const PublishersFilter(String publisher) : super(.publishers, publisher);
+  const new(String publisher) : super(.publishers, publisher);
 }
 
 class PublishedDecadeFilter extends Filter {
-  const PublishedDecadeFilter(String decade) : super(.publishedDecade, decade);
+  const new(String decade) : super(.publishedDecade, decade);
 }
 
 class FeedOpenFilter extends Filter {
-  const FeedOpenFilter() : super(.feedOpen);
+  const new() : super(.feedOpen);
 }
 
 class AbridgedFilter extends Filter {
-  const AbridgedFilter() : super(.abridged);
+  const new() : super(.abridged);
 }
 
 class ExplicitFilter extends Filter {
-  const ExplicitFilter() : super(.explicit);
+  const new() : super(.explicit);
 }

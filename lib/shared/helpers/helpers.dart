@@ -39,7 +39,7 @@ String formatBitrate(int? bitrate) {
 
   for (final (value, label) in units) {
     if (bitrate >= value) {
-      return '${formatter.format((bitrate / value))} $label';
+      return '${formatter.format(bitrate / value)} $label';
     }
   }
 
@@ -49,8 +49,7 @@ String formatBitrate(int? bitrate) {
 Future<void> launchUrlHelper(BuildContext context, String url) async {
   final uri = Uri.parse(url);
   if (!await launchUrl(uri, mode: .externalApplication) && context.mounted) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(l10n.couldNotUrl(url))));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(l10n.couldNotUrl(url))));
   }
 }

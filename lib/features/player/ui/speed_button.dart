@@ -6,7 +6,7 @@ import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
 
 class SpeedButton extends ConsumerWidget {
-  const SpeedButton({super.key, required this.inOverflow});
+  const new({super.key, required this.inOverflow});
 
   final bool inOverflow;
 
@@ -22,7 +22,7 @@ class SpeedButton extends ConsumerWidget {
           return WheelPicker.fromDoubleRange(
             initialValue: speed,
             min: 0.5,
-            max: 4.0,
+            max: 4,
             step: 0.1,
             labelBuilder: (v) => '${v}x',
             onChangedEnd: (v) {

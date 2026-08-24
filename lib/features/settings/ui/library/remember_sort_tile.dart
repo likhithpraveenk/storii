@@ -4,7 +4,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 
 class RememberSortTile extends ConsumerWidget {
-  const RememberSortTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

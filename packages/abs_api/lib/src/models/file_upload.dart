@@ -4,7 +4,7 @@ part 'file_upload.freezed.dart';
 
 @freezed
 sealed class FileUpload with _$FileUpload {
-  const factory FileUpload({
+  const factory({
     required String filename,
     required Stream<List<int>> byteStream,
 
@@ -12,14 +12,12 @@ sealed class FileUpload with _$FileUpload {
     required int length,
   }) = _FileUpload;
 
-  const factory FileUpload.fromBytes({
+  const factory fromBytes({
     required String filename,
     required List<int> bytes,
   }) = FileUploadBytes;
 
   /// Only use in a `dart:io` environment.
-  const factory FileUpload.fromPath({
-    required String filename,
-    required String filePath,
-  }) = FileUploadPath;
+  const factory fromPath({required String filename, required String filePath}) =
+      FileUploadPath;
 }

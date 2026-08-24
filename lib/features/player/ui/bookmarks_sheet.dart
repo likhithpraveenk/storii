@@ -15,7 +15,7 @@ import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class BookmarkButton extends StatelessWidget {
-  const BookmarkButton({
+  const new({
     super.key,
     required this.itemId,
     required this.isPodcast,
@@ -55,7 +55,7 @@ class BookmarkButton extends StatelessWidget {
 }
 
 class _BookmarkSheetBody extends ConsumerWidget {
-  const _BookmarkSheetBody({required this.itemId});
+  const new({required this.itemId});
 
   final String itemId;
 
@@ -89,7 +89,6 @@ class _BookmarkSheetBody extends ConsumerWidget {
                     ),
                   ),
                   Align(
-                    alignment: .center,
                     child: Text(
                       l10n.bookmarks,
                       style: bottomSheetTitleTextStyle(context),
@@ -160,9 +159,8 @@ class _BookmarkSheetBody extends ConsumerWidget {
                               icon: const Icon(Icons.delete_outline),
                               onPressed: () => ref
                                   .read(
-                                    bookmarksControllerProvider(
-                                      itemId,
-                                    ).notifier,
+                                    bookmarksControllerProvider(itemId)
+                                        .notifier,
                                   )
                                   .remove(time: bookmark.time),
                             ),
@@ -227,9 +225,8 @@ Future<void> showBookmarkDialog(
       if (!context.mounted) return;
 
       if (!ok) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(l10n.bookmarkFailed)));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(l10n.bookmarkFailed)));
       }
     },
   );

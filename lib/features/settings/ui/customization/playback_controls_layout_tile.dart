@@ -6,7 +6,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class PlaybackControlsLayoutTile extends ConsumerWidget {
-  const PlaybackControlsLayoutTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

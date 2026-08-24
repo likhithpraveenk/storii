@@ -6,7 +6,7 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 
 class SeriesChipsList extends ConsumerWidget {
-  const SeriesChipsList(this.series, {super.key});
+  const new(this.series, {super.key});
 
   final List<Series> series;
 

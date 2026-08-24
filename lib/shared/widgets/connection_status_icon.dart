@@ -8,7 +8,7 @@ import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/spoiler_text.dart';
 
 class ConnectionStatusIcon extends ConsumerWidget {
-  const ConnectionStatusIcon({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,7 +50,7 @@ class ConnectionStatusIcon extends ConsumerWidget {
 }
 
 class _ConnectionDetailsSheet extends ConsumerWidget {
-  const _ConnectionDetailsSheet();
+  const new();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

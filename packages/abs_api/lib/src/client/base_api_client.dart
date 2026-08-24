@@ -5,7 +5,7 @@ class BaseApiClient {
   final List<Interceptor>? interceptors;
   final Map<String, String>? headers;
 
-  BaseApiClient({required Uri baseUrl, this.interceptors, this.headers})
+  new({required Uri baseUrl, this.interceptors, this.headers})
     : _dio = Dio(
         BaseOptions(
           baseUrl: baseUrl.toString(),

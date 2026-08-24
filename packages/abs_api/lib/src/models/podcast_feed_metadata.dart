@@ -5,7 +5,7 @@ part 'podcast_feed_metadata.g.dart';
 
 @freezed
 sealed class PodcastFeedMetadata with _$PodcastFeedMetadata {
-  const factory PodcastFeedMetadata({
+  const factory({
     required Uri image,
     required List<String> categories,
     required Uri feedUrl,
@@ -19,6 +19,6 @@ sealed class PodcastFeedMetadata with _$PodcastFeedMetadata {
     required Uri link,
   }) = _PodcastFeedMetadata;
 
-  factory PodcastFeedMetadata.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$PodcastFeedMetadataFromJson(json);
 }

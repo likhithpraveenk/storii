@@ -1,13 +1,13 @@
 class NoSetter {
-  const NoSetter();
+  const new();
 }
 
 class NoProvider {
-  const NoProvider();
+  const new();
 }
 
 class NoCodeGen {
-  const NoCodeGen();
+  const new();
 }
 
 const noCodeGen = NoCodeGen();

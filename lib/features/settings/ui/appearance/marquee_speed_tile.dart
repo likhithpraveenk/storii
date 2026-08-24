@@ -8,7 +8,7 @@ import 'package:storii/shared/widgets/marquee_text.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
 
 class MarqueeSpeedTile extends ConsumerWidget {
-  const MarqueeSpeedTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +30,7 @@ class MarqueeSpeedTile extends ConsumerWidget {
 }
 
 class _MarqueeSpeedSheet extends ConsumerStatefulWidget {
-  const _MarqueeSpeedSheet();
+  const new();
 
   @override
   ConsumerState<_MarqueeSpeedSheet> createState() => _MarqueeSpeedSheetState();
@@ -57,7 +57,6 @@ class _MarqueeSpeedSheetState extends ConsumerState<_MarqueeSpeedSheet> {
       padding: const .symmetric(horizontal: 24),
       child: Column(
         mainAxisSize: .min,
-        crossAxisAlignment: .center,
         children: [
           Container(
             width: 200,

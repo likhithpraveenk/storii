@@ -5,8 +5,8 @@ final dummyEpisode = PodcastEpisode(
   podcastId: 'podcastId',
   id: 'id',
   title:
-      'Title Title Title Title Title Title'
-      'Title Title Title Title Title Title'
+      'Title Title Title Title Title Title '
+      'Title Title Title Title Title Title '
       'Title Title Title Title Title Title',
   audioFile: AudioFile(
     ino: 'ino',

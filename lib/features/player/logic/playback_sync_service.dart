@@ -23,7 +23,7 @@ class PlaybackSyncService {
   Timer? _timer;
   bool _disposed = false;
 
-  PlaybackSyncService({
+  new({
     required this.session,
     required this.history,
     required this.onSync,

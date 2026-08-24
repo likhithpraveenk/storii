@@ -5,13 +5,12 @@ part 'user.g.dart';
 
 @freezed
 sealed class UserDomain with _$UserDomain {
-  const factory UserDomain({
+  const factory({
     required String id,
     required String username,
     required String userType,
     required Uri serverUrl,
   }) = _User;
 
-  factory UserDomain.fromJson(Map<String, dynamic> json) =>
-      _$UserDomainFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$UserDomainFromJson(json);
 }

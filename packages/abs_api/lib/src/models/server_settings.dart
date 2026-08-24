@@ -7,7 +7,7 @@ part 'server_settings.g.dart';
 
 @freezed
 sealed class ServerSettings with _$ServerSettings {
-  const factory ServerSettings({
+  const factory({
     String? id,
     bool? scannerFindCovers,
     bool? scannerParseSubtitle,
@@ -33,6 +33,5 @@ sealed class ServerSettings with _$ServerSettings {
     String? version,
   }) = _ServerSettings;
 
-  factory ServerSettings.fromJson(Map<String, dynamic> json) =>
-      _$ServerSettingsFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$ServerSettingsFromJson(json);
 }

@@ -9,7 +9,7 @@ class AppError implements Exception {
   final int? statusCode;
   final ApiExceptionType? type;
 
-  const AppError(
+  const new(
     this.message, {
     required this.localizedMessage,
     this.originalError,
@@ -18,7 +18,7 @@ class AppError implements Exception {
     this.type,
   });
 
-  factory AppError.from(Object error, StackTrace stackTrace) {
+  factory from(Object error, StackTrace stackTrace) {
     if (error is AppError) return error;
 
     if (error is ApiException) {

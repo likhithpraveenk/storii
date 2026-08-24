@@ -25,7 +25,7 @@ Future<String?> showAddServerSheet(
 }
 
 class AddServerSheet extends ConsumerStatefulWidget {
-  const AddServerSheet({super.key, this.server});
+  const new({super.key, this.server});
 
   final Server? server;
 

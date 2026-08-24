@@ -61,7 +61,7 @@ class DefaultUserSettings {
 
 @freezed
 sealed class UserSettings with _$UserSettings {
-  const factory UserSettings({
+  const factory({
     @noCodeGen required String userId,
 
     @Default(DefaultUserSettings.currentLibrary) Library? currentLibrary,
@@ -182,6 +182,5 @@ sealed class UserSettings with _$UserSettings {
     Duration interruptionLongSkipBackward,
   }) = _UserSettings;
 
-  factory UserSettings.fromJson(Map<String, dynamic> json) =>
-      _$UserSettingsFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);
 }

@@ -12,7 +12,7 @@ import 'package:storii/shared/widgets/screen_options.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class LibraryScreen extends ConsumerStatefulWidget {
-  const LibraryScreen({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LibraryScreenState();

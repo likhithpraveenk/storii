@@ -5,7 +5,7 @@ part 'rss_feed_metadata.g.dart';
 
 @freezed
 sealed class RssFeedMetadata with _$RssFeedMetadata {
-  const factory RssFeedMetadata({
+  const factory({
     required String title,
     required String description,
     required String author,
@@ -15,6 +15,6 @@ sealed class RssFeedMetadata with _$RssFeedMetadata {
     required bool explicit,
   }) = _RssFeedMetadata;
 
-  factory RssFeedMetadata.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$RssFeedMetadataFromJson(json);
 }

@@ -22,7 +22,7 @@ class UserState {
   final LoginStatus status;
   final String? message;
 
-  const UserState({this.status = .idle, this.message});
+  const new({this.status = .idle, this.message});
 
   UserState copyWith({LoginStatus? status, String? message}) {
     return UserState(

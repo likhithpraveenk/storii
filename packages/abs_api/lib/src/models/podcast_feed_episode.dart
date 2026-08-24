@@ -8,7 +8,7 @@ part 'podcast_feed_episode.g.dart';
 @freezed
 sealed class PodcastFeedEpisode with _$PodcastFeedEpisode {
   @DateTimeEpochConverter()
-  const factory PodcastFeedEpisode({
+  const factory({
     required String title,
     required String subtitle,
     required String description,
@@ -24,6 +24,6 @@ sealed class PodcastFeedEpisode with _$PodcastFeedEpisode {
     required PodcastEpisodeEnclosure enclosure,
   }) = _PodcastFeedEpisode;
 
-  factory PodcastFeedEpisode.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$PodcastFeedEpisodeFromJson(json);
 }

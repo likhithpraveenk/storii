@@ -8,7 +8,7 @@ import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 
 class FilterBottomSheet extends StatefulWidget {
-  const FilterBottomSheet({
+  const new({
     required this.screen,
     required this.currentFilter,
     required this.notifier,
@@ -125,7 +125,7 @@ class FilterSubOptionsList extends StatelessWidget {
   final Filter currentFilter;
   final ValueChanged<Filter> onSelect;
 
-  const FilterSubOptionsList({
+  const new({
     super.key,
     required this.group,
     required this.filterData,
@@ -162,7 +162,7 @@ class FilterSubOptionsList extends StatelessWidget {
 }
 
 class ActiveFiltersChips extends ConsumerWidget {
-  const ActiveFiltersChips(this.screen, {super.key});
+  const new(this.screen, {super.key});
 
   final CurrentScreen screen;
 

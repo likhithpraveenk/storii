@@ -6,7 +6,7 @@ import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/admin/ui/library_management_screen.dart';
 
 class AdminScreen extends ConsumerWidget {
-  const AdminScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

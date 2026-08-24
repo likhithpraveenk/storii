@@ -11,7 +11,7 @@ import 'package:storii/shared/widgets/empty_state.dart';
 enum DownloadsScreenTab { active, completed }
 
 class DownloadsScreen extends ConsumerStatefulWidget {
-  const DownloadsScreen({super.key, required this.tab});
+  const new({super.key, required this.tab});
 
   final DownloadsScreenTab tab;
 
@@ -128,7 +128,7 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
 }
 
 class ActiveDownloadsTab extends ConsumerWidget {
-  const ActiveDownloadsTab({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -147,7 +147,7 @@ class ActiveDownloadsTab extends ConsumerWidget {
 }
 
 class CompletedDownloadsTab extends ConsumerWidget {
-  const CompletedDownloadsTab({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -16,7 +16,7 @@ extension HeaderListX on Iterable<Header> {
 }
 
 class AdvancedOptions extends ConsumerStatefulWidget {
-  const AdvancedOptions({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<AdvancedOptions> createState() => _AdvancedOptionsState();

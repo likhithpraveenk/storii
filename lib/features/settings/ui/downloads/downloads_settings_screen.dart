@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/features/settings/ui/downloads/unmetered_only_tile.dart';
 
 class DownloadsSettingsTile extends StatelessWidget {
-  const DownloadsSettingsTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class DownloadsSettingsTile extends StatelessWidget {
 }
 
 class DownloadsSettingsScreen extends StatelessWidget {
-  const DownloadsSettingsScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class DownloadsSettingsScreen extends StatelessWidget {
       body: const SingleChildScrollView(
         child: Column(
           children: [
-            // UnmeteredOnlyTile(), // TODO: add unmetered only tile
+            UnmeteredOnlyTile(),
             // StorageTile(), // TODO: external download location
             // for SAF check the following packages
             // https://pub.dev/packages/saf_util

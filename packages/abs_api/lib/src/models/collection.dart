@@ -8,7 +8,7 @@ part 'collection.g.dart';
 @freezed
 sealed class Collection with _$Collection {
   @DateTimeEpochConverter()
-  const factory Collection({
+  const factory({
     required String id,
     required String libraryId,
     required String name,
@@ -18,6 +18,5 @@ sealed class Collection with _$Collection {
     required List<LibraryItem> books,
   }) = _Collection;
 
-  factory Collection.fromJson(Map<String, dynamic> json) =>
-      _$CollectionFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$CollectionFromJson(json);
 }

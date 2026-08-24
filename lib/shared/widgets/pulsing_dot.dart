@@ -4,7 +4,7 @@ class PulsingDot extends StatefulWidget {
   final double size;
   final Color? color;
 
-  const PulsingDot({super.key, this.size = 10, this.color});
+  const new({super.key, this.size = 10, this.color});
 
   @override
   State<PulsingDot> createState() => _PulsingDotState();

@@ -5,10 +5,7 @@ class OfflineCacheInterceptor extends Interceptor {
   final bool Function() isConnected;
   final CacheOptions cacheOptions;
 
-  OfflineCacheInterceptor({
-    required this.isConnected,
-    required this.cacheOptions,
-  });
+  new({required this.isConnected, required this.cacheOptions});
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
@@ -16,8 +13,9 @@ class OfflineCacheInterceptor extends Interceptor {
       options.extra.addAll(
         cacheOptions.copyWith(policy: CachePolicy.forceCache).toExtra(),
       );
-      options.connectTimeout = const Duration(seconds: 1);
-      options.receiveTimeout = const Duration(seconds: 1);
+      options
+        ..connectTimeout = const Duration(seconds: 1)
+        ..receiveTimeout = const Duration(seconds: 1);
     }
     super.onRequest(options, handler);
   }

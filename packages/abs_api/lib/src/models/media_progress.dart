@@ -6,7 +6,7 @@ part 'media_progress.g.dart';
 
 @freezed
 sealed class MediaProgress with _$MediaProgress {
-  const factory MediaProgress({
+  const factory({
     required String id,
     required String libraryItemId,
     String? episodeId,
@@ -20,6 +20,5 @@ sealed class MediaProgress with _$MediaProgress {
     @DateTimeEpochConverter() DateTime? finishedAt,
   }) = _MediaProgress;
 
-  factory MediaProgress.fromJson(Map<String, dynamic> json) =>
-      _$MediaProgressFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$MediaProgressFromJson(json);
 }

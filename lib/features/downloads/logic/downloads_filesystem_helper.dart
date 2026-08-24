@@ -15,7 +15,7 @@ DownloadsFilesystemHelper downloadsFsHelper(Ref ref) {
 }
 
 class DownloadsFilesystemHelper {
-  const DownloadsFilesystemHelper();
+  const new();
 
   Future<Directory> rootDirectory() async {
     // if (externalPath != null) {

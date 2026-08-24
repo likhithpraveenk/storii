@@ -4,7 +4,7 @@ import 'package:abs_api/src/models/models.dart';
 
 class PlaylistsApi {
   final ApiClient api;
-  const PlaylistsApi(this.api);
+  const new(this.api);
 
   Future<Playlist> create({required CreatePlaylistRequestParams params}) async {
     final response = await api.request(

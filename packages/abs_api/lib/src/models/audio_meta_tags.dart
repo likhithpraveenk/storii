@@ -6,7 +6,7 @@ part 'audio_meta_tags.g.dart';
 @freezed
 sealed class AudioMetaTags with _$AudioMetaTags {
   @JsonSerializable(includeIfNull: false)
-  const factory AudioMetaTags({
+  const factory({
     String? tagAlbum,
     String? tagArtist,
     String? tagGenre,
@@ -39,6 +39,5 @@ sealed class AudioMetaTags with _$AudioMetaTags {
     String? tagMusicBrainzArtistId,
   }) = _AudioMetaTags;
 
-  factory AudioMetaTags.fromJson(Map<String, dynamic> json) =>
-      _$AudioMetaTagsFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$AudioMetaTagsFromJson(json);
 }

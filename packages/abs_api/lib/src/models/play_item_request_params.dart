@@ -18,7 +18,7 @@ class PlayItemRequestParams {
   final List<String>? supportedMimeTypes;
   final String mediaPlayer;
 
-  const PlayItemRequestParams({
+  const new({
     this.deviceInfo,
     this.forceDirectPlay = false,
     this.forceTranscode = false,
@@ -40,7 +40,7 @@ class ClientDeviceInfo {
   final String? model;
   final String? sdkVersion;
 
-  const ClientDeviceInfo({
+  const new({
     this.deviceId,
     this.clientName,
     this.deviceName,

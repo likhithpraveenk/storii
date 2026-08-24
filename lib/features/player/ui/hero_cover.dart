@@ -8,7 +8,7 @@ import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/widgets/placeholder_image.dart';
 
 class HeroCover extends ConsumerWidget {
-  const HeroCover({super.key, required this.expandFactor});
+  const new({super.key, required this.expandFactor});
 
   final double expandFactor;
 

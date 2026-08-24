@@ -9,7 +9,7 @@ import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class AppCacheTile extends ConsumerWidget {
-  const AppCacheTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

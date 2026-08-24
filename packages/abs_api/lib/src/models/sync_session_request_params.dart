@@ -7,10 +7,7 @@ class SyncSessionRequestParams {
   final Duration currentTime;
   final Duration timeListened;
 
-  const SyncSessionRequestParams({
-    required this.currentTime,
-    required this.timeListened,
-  });
+  const new({required this.currentTime, required this.timeListened});
 
   Map<String, dynamic>? toJson() => _$SyncSessionRequestParamsToJson(this);
 }

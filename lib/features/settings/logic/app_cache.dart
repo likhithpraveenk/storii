@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:storii/storage/hive/boxes.dart';
 
 class NetworkCache {
-  NetworkCache._();
+  new _();
 
   static final NetworkCache instance = NetworkCache._();
 
@@ -38,7 +38,7 @@ class AppImageCacheManager extends DefaultCacheManager {
 
   static final AppImageCacheManager instance = AppImageCacheManager._();
 
-  AppImageCacheManager._() : super(maxNrOfCacheObjects: 5000);
+  new _() : super(maxNrOfCacheObjects: 5000);
 
   Future<void> clear() async {
     await emptyCache();

@@ -37,9 +37,10 @@ late final Box<String> serverSettingsBox;
 
 Future<void> setupHive() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(ServerAdapter());
-  Hive.registerAdapter(UserDomainAdapter());
-  Hive.registerAdapter(UriAdapter());
+  Hive
+    ..registerAdapter(ServerAdapter())
+    ..registerAdapter(UserDomainAdapter())
+    ..registerAdapter(UriAdapter());
 
   final (
     appSettings,

@@ -11,7 +11,7 @@ import 'package:abs_api/src/models/user_stats_response.dart';
 
 class MeApi {
   final ApiClient api;
-  const MeApi(this.api);
+  const new(this.api);
 
   Future<User> getUser() async {
     final response = await api.request(ApiRoutes.me, method: .get);

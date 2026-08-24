@@ -16,7 +16,7 @@ import 'package:storii/features/settings/ui/appearance/system_theme_tile.dart';
 import 'package:storii/features/settings/ui/settings_header.dart';
 
 class AppearanceTile extends ConsumerWidget {
-  const AppearanceTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,7 +40,7 @@ class AppearanceTile extends ConsumerWidget {
 }
 
 class AppearanceScreen extends ConsumerWidget {
-  const AppearanceScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

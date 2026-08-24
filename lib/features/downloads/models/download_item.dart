@@ -12,9 +12,9 @@ enum DownloadMediaType { audiobook, podcast }
 
 @freezed
 sealed class DownloadTrack with _$DownloadTrack {
-  const DownloadTrack._();
+  const new _();
 
-  const factory DownloadTrack({
+  const factory({
     required AudioTrack audioTrack,
     required String localPath,
     @Default('migrateOldDownload') String ino,
@@ -23,15 +23,14 @@ sealed class DownloadTrack with _$DownloadTrack {
     @Default(DownloadStatus.queued) DownloadStatus status,
   }) = _DownloadTrack;
 
-  factory DownloadTrack.fromJson(Map<String, dynamic> json) =>
-      _$DownloadTrackFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$DownloadTrackFromJson(json);
 }
 
 @freezed
 sealed class DownloadItem with _$DownloadItem {
-  const DownloadItem._();
+  const new _();
 
-  const factory DownloadItem({
+  const factory({
     required Uri serverUrl,
     required String libraryItemId,
     required String userId,
@@ -44,8 +43,7 @@ sealed class DownloadItem with _$DownloadItem {
     String? episodeId,
   }) = _DownloadItem;
 
-  factory DownloadItem.fromJson(Map<String, dynamic> json) =>
-      _$DownloadItemFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$DownloadItemFromJson(json);
 
   String get key => mediaItemIdKey(libraryItemId, episodeId);
 

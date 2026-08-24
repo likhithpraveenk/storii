@@ -11,7 +11,7 @@ class SocketApi {
   bool _initialized = false;
   late final Stream<bool> isConnected;
 
-  SocketApi(String baseUrl, String? token)
+  new(String baseUrl, String? token)
     : socket = io(
         baseUrl,
         OptionBuilder()

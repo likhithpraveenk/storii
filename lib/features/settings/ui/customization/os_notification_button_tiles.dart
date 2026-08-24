@@ -4,7 +4,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 
 class OsNotificationCanSeekTile extends ConsumerWidget {
-  const OsNotificationCanSeekTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +23,7 @@ class OsNotificationCanSeekTile extends ConsumerWidget {
 }
 
 class OsNotificationCanSkipTile extends ConsumerWidget {
-  const OsNotificationCanSkipTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,7 +42,7 @@ class OsNotificationCanSkipTile extends ConsumerWidget {
 }
 
 class OsNotificationCanSkipChapterTile extends ConsumerWidget {
-  const OsNotificationCanSkipChapterTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

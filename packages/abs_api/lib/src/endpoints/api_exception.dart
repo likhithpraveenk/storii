@@ -24,7 +24,7 @@ class ApiException implements Exception {
   final ApiExceptionType type;
   final StackTrace? stackTrace;
 
-  const ApiException(
+  const new(
     this.message, {
     this.statusCode,
     this.originalError,

@@ -11,7 +11,7 @@ import 'package:storii/features/settings/ui/player_settings/speed_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/sync_interval_tile.dart';
 
 class PlayerSettingsTile extends ConsumerWidget {
-  const PlayerSettingsTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,7 +27,7 @@ class PlayerSettingsTile extends ConsumerWidget {
 }
 
 class PlayerSettingsScreen extends ConsumerWidget {
-  const PlayerSettingsScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

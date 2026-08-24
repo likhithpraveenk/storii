@@ -9,10 +9,11 @@ part 'app_controller.g.dart';
 
 @riverpod
 void appController(Ref ref) {
-  ref.watch(librarySyncControllerProvider);
-  ref.watch(playerStateWatcherProvider);
-  ref.watch(sessionSyncWatcherProvider);
-  ref.watch(audioSettingsWatcherProvider);
-  ref.watch(appStartThemeUpdateProvider);
-  ref.watch(mediaProgressSyncControllerProvider);
+  ref
+    ..watch(librarySyncControllerProvider)
+    ..watch(playerStateWatcherProvider)
+    ..watch(sessionSyncWatcherProvider)
+    ..watch(audioSettingsWatcherProvider)
+    ..watch(appStartThemeUpdateProvider)
+    ..watch(mediaProgressSyncControllerProvider);
 }

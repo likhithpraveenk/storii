@@ -11,7 +11,7 @@ part 'audio_track.g.dart';
 sealed class AudioTrack with _$AudioTrack {
   @DateTimeEpochConverter()
   @DurationPreciseSecondsConverter()
-  const factory AudioTrack({
+  const factory({
     required int index,
     required Duration startOffset,
     required Duration duration,
@@ -41,6 +41,5 @@ sealed class AudioTrack with _$AudioTrack {
     AudioMetaTags? metaTags,
   }) = _AudioTrack;
 
-  factory AudioTrack.fromJson(Map<String, dynamic> json) =>
-      _$AudioTrackFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$AudioTrackFromJson(json);
 }

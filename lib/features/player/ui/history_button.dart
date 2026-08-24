@@ -15,7 +15,7 @@ import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 
 class HistoryButton extends StatelessWidget {
-  const HistoryButton({
+  const new({
     super.key,
     required this.itemId,
     this.episodeId,
@@ -68,7 +68,7 @@ class HistoryButton extends StatelessWidget {
 }
 
 class HistorySheet extends ConsumerWidget {
-  const HistorySheet({
+  const new({
     super.key,
     required this.itemId,
     this.episodeId,
@@ -99,7 +99,6 @@ class HistorySheet extends ConsumerWidget {
             alignment: .center,
             children: [
               Align(
-                alignment: .center,
                 child: Text(
                   l10n.history,
                   style: bottomSheetTitleTextStyle(context),
@@ -131,49 +130,50 @@ class HistorySheet extends ConsumerWidget {
                   .setShowChapterPositionInHistory(value);
             },
           ),
-        history.isEmpty
-            ? const Expanded(child: EmptyState())
-            : Expanded(
-                child: ListView.builder(
-                  controller: controller,
-                  padding: const .only(bottom: 48),
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    final item = items[index];
-                    if (item is String) return _DayHeader(item);
-                    final event = item as PlaybackEvent;
-                    return HistoryEventTile(
-                      itemId: itemId,
-                      event: event,
-                      onTap: () {
-                        if (isCurrentItem) {
-                          unawaited(
-                            audioHandler.seekFromGlobalPosition(event.position),
-                          );
-                        } else {
-                          unawaited(
-                            ref
-                                .read(audioPlayerProvider.notifier)
-                                .play(
-                                  itemId: itemId,
-                                  episodeId: episodeId,
-                                  initialPosition: event.position,
-                                ),
-                          );
-                        }
-                        Navigator.pop(context);
-                      },
-                    );
+        if (history.isEmpty)
+          const Expanded(child: EmptyState())
+        else
+          Expanded(
+            child: ListView.builder(
+              controller: controller,
+              padding: const .only(bottom: 48),
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final item = items[index];
+                if (item is String) return _DayHeader(item);
+                final event = item as PlaybackEvent;
+                return HistoryEventTile(
+                  itemId: itemId,
+                  event: event,
+                  onTap: () {
+                    if (isCurrentItem) {
+                      unawaited(
+                        audioHandler.seekFromGlobalPosition(event.position),
+                      );
+                    } else {
+                      unawaited(
+                        ref
+                            .read(audioPlayerProvider.notifier)
+                            .play(
+                              itemId: itemId,
+                              episodeId: episodeId,
+                              initialPosition: event.position,
+                            ),
+                      );
+                    }
+                    Navigator.pop(context);
                   },
-                ),
-              ),
+                );
+              },
+            ),
+          ),
       ],
     );
   }
 }
 
 class _DayHeader extends StatelessWidget {
-  const _DayHeader(this.label);
+  const new(this.label);
   final String label;
 
   @override

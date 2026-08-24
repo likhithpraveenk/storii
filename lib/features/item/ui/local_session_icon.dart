@@ -8,7 +8,7 @@ import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/storage/local/session_store.dart';
 
 class LocalSessionIcon extends ConsumerWidget {
-  const LocalSessionIcon({super.key, required this.itemId, this.episodeId});
+  const new({super.key, required this.itemId, this.episodeId});
 
   final String itemId;
   final String? episodeId;
@@ -91,7 +91,7 @@ class LocalSessionIcon extends ConsumerWidget {
 }
 
 class _SessionInfoRow extends StatelessWidget {
-  const _SessionInfoRow({required this.label, required this.value});
+  const new({required this.label, required this.value});
 
   final String label;
   final String? value;

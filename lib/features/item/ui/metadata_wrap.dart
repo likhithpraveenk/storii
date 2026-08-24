@@ -7,7 +7,7 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 
 class MetadataWrap extends ConsumerWidget {
-  const MetadataWrap(this.item, {super.key});
+  const new(this.item, {super.key});
 
   final LibraryItem item;
 
@@ -40,7 +40,7 @@ class _MetaItem extends StatelessWidget {
   final IconData icon;
   final String? label;
 
-  const _MetaItem({required this.icon, this.label});
+  const new({required this.icon, this.label});
 
   @override
   Widget build(BuildContext context) {

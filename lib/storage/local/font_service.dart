@@ -30,8 +30,8 @@ class FontService {
 
     final fontsDir = await _getFontsDirectory();
     final existing = await _listFontFiles();
-    final existingNames = existing.map((f) => _fontFamily(f.path)).toSet();
-    existingNames.add('AtkinsonHyperlegibleNext');
+    final existingNames = existing.map((f) => _fontFamily(f.path)).toSet()
+      ..add('AtkinsonHyperlegibleNext');
 
     for (final picked in files) {
       if (picked.path == null) continue;

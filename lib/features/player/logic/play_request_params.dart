@@ -33,7 +33,7 @@ Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
     IosDeviceInfo d => (
       kMediaPlayer,
       d.identifierForVendor ?? '',
-      (d.name),
+      d.name,
       'Apple',
       d.model,
       d.systemVersion,

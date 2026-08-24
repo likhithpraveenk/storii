@@ -7,7 +7,7 @@ import 'package:storii/features/downloads/ui/download_widgets.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 
 class DownloadTile extends StatefulWidget {
-  const DownloadTile({super.key, required this.item});
+  const new({super.key, required this.item});
 
   final DownloadItem item;
 

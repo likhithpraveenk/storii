@@ -18,8 +18,51 @@ linter:
     - combinators_ordering
     - avoid_types_on_closure_parameters
     - avoid_positional_boolean_parameters
+    - empty_container_bodies
+    - initialize_in_field_declaration
+    - unnecessary_const_in_enum_constructor
+    - unnecessary_primary_constructor_body
+    - unnecessary_type_name_in_constructor
+    - avoid_bool_literals_in_conditional_expressions
+    - avoid_field_initializers_in_const_classes
+    - avoid_redundant_argument_values
+    - avoid_void_async
+    - cascade_invocations
+    - document_ignores
+    - join_return_with_assignment
+    - leading_newlines_in_multiline_strings
+    - literal_only_boolean_expressions
+    - missing_whitespace_between_adjacent_strings
+    - no_self_assignments
+    - noop_primitive_operations
+    - prefer_asserts_with_message
+    - prefer_final_in_for_each
+    - prefer_foreach
+    - prefer_if_elements_to_conditional_expressions
+    - prefer_int_literals
+    - prefer_null_aware_method_calls
+    - switch_on_type
+    - throw_in_finally
+    - unnecessary_breaks
+    - unnecessary_ignore
+    - unnecessary_parenthesis
+    - unnecessary_raw_strings
+    - unnecessary_statements
+    - unnecessary_unawaited
+    - use_is_even_rather_than_modulo
+    - use_named_constants
+    - use_raw_strings
+    - use_string_buffers
+    - use_to_and_as_if_applicable
+    - use_truncating_division
+    - sized_box_shrink_expand
+    - use_colored_box
+    - use_decorated_box
+    # - migrate_design_widgets
 
 analyzer:
+  errors:
+    invalid_annotation_target: ignore
   exclude:
     - build/**
     - android/**

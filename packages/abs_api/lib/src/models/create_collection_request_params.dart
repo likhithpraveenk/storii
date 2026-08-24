@@ -6,12 +6,12 @@ part 'create_collection_request_params.g.dart';
 @freezed
 sealed class CreateCollectionRequestParams
     with _$CreateCollectionRequestParams {
-  const factory CreateCollectionRequestParams({
+  const factory({
     required String libraryId,
     required String name,
     required List<String> books,
   }) = _CreateCollectionRequestParams;
 
-  factory CreateCollectionRequestParams.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$CreateCollectionRequestParamsFromJson(json);
 }

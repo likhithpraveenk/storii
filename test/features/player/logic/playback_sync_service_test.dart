@@ -86,8 +86,9 @@ void main() {
     playing = true;
     await service.onPlay();
     await Future.delayed(const Duration(milliseconds: 500));
-    service.onBuffering();
-    service.onBufferingComplete();
+    service
+      ..onBuffering()
+      ..onBufferingComplete();
     await service.onSeek();
     expect(syncCalls.last.listened.inMilliseconds, greaterThanOrEqualTo(500));
   });

@@ -7,7 +7,7 @@ import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 
 class ItemCardProgressWidget extends ConsumerWidget {
-  const ItemCardProgressWidget({super.key, required this.item});
+  const new({super.key, required this.item});
 
   final LibraryItem item;
 

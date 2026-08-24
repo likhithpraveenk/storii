@@ -8,9 +8,9 @@ part 'media_metadata.g.dart';
 
 @freezed
 sealed class MediaMetadata with _$MediaMetadata {
-  const MediaMetadata._();
+  const new _();
 
-  const factory MediaMetadata.book({
+  const factory book({
     String? title,
     String? titleIgnorePrefix,
     String? subtitle,
@@ -34,7 +34,7 @@ sealed class MediaMetadata with _$MediaMetadata {
     String? descriptionPlain,
   }) = BookMetadata;
 
-  const factory MediaMetadata.podcast({
+  const factory podcast({
     String? title,
     String? titleIgnorePrefix,
     String? author,
@@ -50,13 +50,13 @@ sealed class MediaMetadata with _$MediaMetadata {
     String? language,
   }) = PodcastMetadata;
 
-  factory MediaMetadata.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       const MediaMetadataConverter().fromJson(json);
 }
 
 class MediaMetadataConverter
     implements JsonConverter<MediaMetadata, Map<String, dynamic>> {
-  const MediaMetadataConverter();
+  const new();
 
   @override
   MediaMetadata fromJson(Map<String, dynamic> json) {

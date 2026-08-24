@@ -11,7 +11,7 @@ import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class StatsScreen extends ConsumerWidget {
-  const StatsScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -75,7 +75,7 @@ class StatsScreen extends ConsumerWidget {
 }
 
 class _Divider extends StatelessWidget {
-  const _Divider();
+  const new();
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class _Divider extends StatelessWidget {
 }
 
 class _DurationStat extends StatelessWidget {
-  const _DurationStat({required this.label, required this.value});
+  const new({required this.label, required this.value});
   final String label, value;
 
   @override

@@ -8,7 +8,7 @@ part 'rss_feed_episode.g.dart';
 @freezed
 sealed class RssFeedEpisode with _$RssFeedEpisode {
   @DurationPreciseSecondsConverter()
-  const factory RssFeedEpisode({
+  const factory({
     required String id,
     required String title,
     required String description,
@@ -24,6 +24,5 @@ sealed class RssFeedEpisode with _$RssFeedEpisode {
     required String fullPath,
   }) = _RssFeedEpisode;
 
-  factory RssFeedEpisode.fromJson(Map<String, dynamic> json) =>
-      _$RssFeedEpisodeFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$RssFeedEpisodeFromJson(json);
 }

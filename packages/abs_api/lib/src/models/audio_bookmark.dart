@@ -7,13 +7,12 @@ part 'audio_bookmark.g.dart';
 @freezed
 sealed class AudioBookmark with _$AudioBookmark {
   @DateTimeEpochConverter()
-  const factory AudioBookmark({
+  const factory({
     required String libraryItemId,
     required String title,
     @DurationSecConverter() required Duration time,
     required DateTime createdAt,
   }) = _AudioBookmark;
 
-  factory AudioBookmark.fromJson(Map<String, dynamic> json) =>
-      _$AudioBookmarkFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$AudioBookmarkFromJson(json);
 }

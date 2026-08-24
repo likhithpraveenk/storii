@@ -8,7 +8,7 @@ import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class AuthorCard extends ConsumerWidget {
-  const AuthorCard(this.author, {super.key});
+  const new(this.author, {super.key});
   final Author author;
 
   @override
@@ -56,7 +56,7 @@ class AuthorCard extends ConsumerWidget {
 }
 
 class AuthorCardListView extends ConsumerWidget {
-  const AuthorCardListView(this.author, {super.key});
+  const new(this.author, {super.key});
   final Author author;
 
   @override
@@ -87,10 +87,8 @@ class AuthorCardListView extends ConsumerWidget {
       trailing: author.numBooks != null
           ? Text(
               author.numBooks!.toString(),
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontSize: 12,
-                color: scheme.onSurfaceVariant,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium
+                  ?.copyWith(fontSize: 12, color: scheme.onSurfaceVariant),
             )
           : null,
     );

@@ -6,13 +6,12 @@ part 'bookmark.g.dart';
 
 @freezed
 sealed class Bookmark with _$Bookmark {
-  const factory Bookmark({
+  const factory({
     required String libraryItemId,
     required String title,
     @DurationSecConverter() required Duration time,
     @DateTimeEpochConverter() required DateTime createdAt,
   }) = _Bookmark;
 
-  factory Bookmark.fromJson(Map<String, dynamic> json) =>
-      _$BookmarkFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$BookmarkFromJson(json);
 }

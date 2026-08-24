@@ -11,7 +11,7 @@ import 'package:storii/shared/widgets/dashed_underline.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
 
 class CoverImageTitle extends StatelessWidget {
-  const CoverImageTitle(this.item, {super.key});
+  const new(this.item, {super.key});
   final LibraryItem item;
 
   @override
