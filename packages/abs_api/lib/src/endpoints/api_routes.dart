@@ -78,6 +78,38 @@ class ApiRoutes {
   static String authorImage(String id) => _build(_authorImage, {'id': id});
 
   //
+  // Collection Routes
+  //
+  static const collections = '/api/collections';
+  static const _collectionById = '/api/collections/:id';
+  static const _collectionBatchAdd = '/api/collections/:id/batch/add';
+  static const _collectionBatchRemove = '/api/collections/:id/batch/remove';
+
+  static String collectionById(String id) =>
+      _build(_collectionById, {'id': id});
+  static String collectionBatchAdd(String id) =>
+      _build(_collectionBatchAdd, {'id': id});
+  static String collectionBatchRemove(String id) =>
+      _build(_collectionBatchRemove, {'id': id});
+
+  //
+  // Playlist Routes
+  //
+  static const playlists = '/api/playlists';
+  static const _playlistById = '/api/playlists/:id';
+  static const _playlistBatchAdd = '/api/playlists/:id/batch/add';
+  static const _playlistBatchRemove = '/api/playlists/:id/batch/remove';
+  static const _playlistCollection = '/api/playlists/collection/:collectionId';
+
+  static String playlistById(String id) => _build(_playlistById, {'id': id});
+  static String playlistBatchAdd(String id) =>
+      _build(_playlistBatchAdd, {'id': id});
+  static String playlistBatchRemove(String id) =>
+      _build(_playlistBatchRemove, {'id': id});
+  static String playlistCollection(String collectionId) =>
+      _build(_playlistCollection, {'collectionId': collectionId});
+
+  //
   // Current User Routes (Me)
   //
   static const me = '/api/me';
