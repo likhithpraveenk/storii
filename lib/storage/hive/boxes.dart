@@ -7,7 +7,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/storage/hive/hive_adapters.dart';
-import 'package:storii/storage/hive/hive_registrar.g.dart';
 
 const appSettingsBoxName = 'app_settings_box';
 const userSettingsBoxName = 'user_settings_box';
@@ -38,7 +37,8 @@ late final Box<String> serverSettingsBox;
 
 Future<void> setupHive() async {
   await Hive.initFlutter();
-  Hive.registerAdapters();
+  Hive.registerAdapter(ServerAdapter());
+  Hive.registerAdapter(UserDomainAdapter());
   Hive.registerAdapter(UriAdapter());
 
   final (
