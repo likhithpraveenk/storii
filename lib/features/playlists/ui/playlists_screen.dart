@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/features/collections/logic/collections_provider.dart';
-import 'package:storii/features/collections/ui/collection_card.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
+import 'package:storii/features/playlists/logic/playlists_provider.dart';
+import 'package:storii/features/playlists/ui/playlist_card.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
@@ -12,14 +12,14 @@ import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/scrollable_widget.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
-class CollectionsScreen extends ConsumerStatefulWidget {
+class PlaylistsScreen extends ConsumerStatefulWidget {
   const new({super.key});
 
   @override
-  ConsumerState<CollectionsScreen> createState() => _CollectionsScreenState();
+  ConsumerState<PlaylistsScreen> createState() => _PlaylistsScreenState();
 }
 
-class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
+class _PlaylistsScreenState extends ConsumerState<PlaylistsScreen> {
   final _scrollController = ScrollController();
 
   @override
@@ -30,24 +30,24 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final collectionsAsync = ref.watch(collectionsProvider);
+    final playlistsAsync = ref.watch(playlistsProvider);
 
     return Scaffold(
       appBar: CommonAppBar(
         title: Text(
-          l10n.collections,
+          l10n.playlists,
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          ref.invalidate(collectionsProvider);
-          await ref.read(collectionsProvider.future);
+          ref.invalidate(playlistsProvider);
+          await ref.read(playlistsProvider.future);
         },
-        child: collectionsAsync.when(
+        child: playlistsAsync.when(
           skipLoadingOnReload: true,
-          data: (collections) {
-            if (collections.isEmpty) {
+          data: (playlists) {
+            if (playlists.isEmpty) {
               return const ScrollableWidget(child: Center(child: EmptyState()));
             }
 
@@ -57,10 +57,10 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
               child: AppScrollbar(
                 controller: _scrollController,
                 child: GridView.builder(
-                  key: const ValueKey('collections_grid_view'),
+                  key: const ValueKey('playlists_grid_view'),
                   physics: const AlwaysScrollableScrollPhysics(),
                   controller: _scrollController,
-                  itemCount: collections.length,
+                  itemCount: playlists.length,
                   padding: const .symmetric(horizontal: 16, vertical: 16),
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: maxSeriesCardWidthInGrid,
@@ -69,11 +69,8 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
                     mainAxisSpacing: 16,
                   ),
                   itemBuilder: (context, index) {
-                    final collection = collections[index];
-                    return CollectionCard(
-                      key: ValueKey(collection.id),
-                      collection,
-                    );
+                    final playlist = playlists[index];
+                    return PlaylistCard(key: ValueKey(playlist.id), playlist);
                   },
                 ),
               ),
@@ -84,7 +81,7 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
           error: (e, _) => ScrollableWidget(
             child: ErrorRetryWidget(
               e.toString(),
-              onRetry: () => ref.invalidate(collectionsProvider),
+              onRetry: () => ref.invalidate(playlistsProvider),
             ),
           ),
         ),

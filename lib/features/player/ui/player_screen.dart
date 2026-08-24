@@ -26,13 +26,15 @@ class PlayerScreen extends ConsumerWidget {
     ref.listen(playbackErrorsProvider, (_, next) {
       next.whenData((type) {
         ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          SnackBar(
-            content: Text(type.label),
-            backgroundColor: type == .network ? scheme.tertiary : scheme.error,
-          ),
-        );
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(type.label),
+              backgroundColor: type == .network
+                  ? scheme.tertiary
+                  : scheme.error,
+            ),
+          );
       });
     });
 

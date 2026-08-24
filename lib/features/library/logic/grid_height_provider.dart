@@ -40,8 +40,16 @@ double seriesGridHeight(Ref ref) {
   final scaler = ref.watch(textScalerProvider);
 
   final titleSlot = scaler.scale(32);
-  final authorSlot = scaler.scale(16);
+  final authorSlot = scaler.scale(20);
   final metadataHeight = titleSlot + authorSlot;
 
   return (maxSeriesCardWidthInGrid * 0.46) + metadataHeight;
+}
+
+@riverpod
+double collectionsGridHeight(Ref ref) {
+  final scaler = ref.watch(textScalerProvider);
+  final titleSlot = scaler.scale(32);
+
+  return (maxSeriesCardWidthInGrid * 0.48) + titleSlot;
 }

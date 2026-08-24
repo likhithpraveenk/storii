@@ -17,11 +17,6 @@ class CollectionsApi {
     return fromJson(response.data, Collection.fromJson);
   }
 
-  Future<List<Collection>> getAll() async {
-    final response = await api.request(ApiRoutes.collections, method: .get);
-    return listFromJsonKey(response.data, 'results', Collection.fromJson);
-  }
-
   Future<Collection> get({required String collectionId}) async {
     final response = await api.request(
       ApiRoutes.collectionById(collectionId),

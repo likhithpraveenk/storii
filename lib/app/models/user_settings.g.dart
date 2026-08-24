@@ -228,6 +228,7 @@ const _$NavTargetEnumMap = {
   NavTarget.downloads: 'downloads',
   NavTarget.collections: 'collections',
   NavTarget.authors: 'authors',
+  NavTarget.playlists: 'playlists',
   NavTarget.more: 'more',
 };
 

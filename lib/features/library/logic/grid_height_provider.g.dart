@@ -130,4 +130,46 @@ final class SeriesGridHeightProvider
   }
 }
 
-String _$seriesGridHeightHash() => r'ec530f304d8f3bb4e0ea07636d43b6804112038d';
+String _$seriesGridHeightHash() => r'0dcce70a804b2287f6f9a7e58bff7a4bb921fcae';
+
+@ProviderFor(collectionsGridHeight)
+final collectionsGridHeightProvider = CollectionsGridHeightProvider._();
+
+final class CollectionsGridHeightProvider
+    extends $FunctionalProvider<double, double, double>
+    with $Provider<double> {
+  CollectionsGridHeightProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'collectionsGridHeightProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$collectionsGridHeightHash();
+
+  @$internal
+  @override
+  $ProviderElement<double> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  double create(Ref ref) {
+    return collectionsGridHeight(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(double value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<double>(value),
+    );
+  }
+}
+
+String _$collectionsGridHeightHash() =>
+    r'4de1b78ad694e8a8ec1b863e48610629e0927f83';

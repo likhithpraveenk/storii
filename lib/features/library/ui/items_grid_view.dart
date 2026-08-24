@@ -23,6 +23,7 @@ class ItemsGridView extends ConsumerWidget {
 
     return GridView.builder(
       controller: scrollController,
+      physics: const AlwaysScrollableScrollPhysics(),
       padding: const .symmetric(horizontal: 16, vertical: 16),
       itemCount: items.length,
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(

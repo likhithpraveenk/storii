@@ -15,11 +15,6 @@ class PlaylistsApi {
     return fromJson(response.data, Playlist.fromJson);
   }
 
-  Future<List<Playlist>> getAll() async {
-    final response = await api.request(ApiRoutes.playlists, method: .get);
-    return listFromJsonKey(response.data, 'results', Playlist.fromJson);
-  }
-
   Future<Playlist> get({required String playlistId}) async {
     final response = await api.request(
       ApiRoutes.playlistById(playlistId),

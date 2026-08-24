@@ -40,6 +40,7 @@ export 'podcast_episode_enclosure.dart';
 export 'podcast_feed.dart';
 export 'podcast_feed_episode.dart';
 export 'podcast_feed_metadata.dart';
+export 'recent_episodes_response.dart';
 export 'rss_feed.dart';
 export 'rss_feed_episode.dart';
 export 'rss_feed_episode_enclosure.dart';

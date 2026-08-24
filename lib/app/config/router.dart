@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/keys.dart';
@@ -11,6 +10,7 @@ import 'package:storii/features/auth/ui/server_list_screen.dart';
 import 'package:storii/features/author/ui/author_detail_screen.dart';
 import 'package:storii/features/author/ui/author_list_screen.dart';
 import 'package:storii/features/author/ui/standalone_books.dart';
+import 'package:storii/features/collections/ui/collection_detail_screen.dart';
 import 'package:storii/features/collections/ui/collections_screen.dart';
 import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/features/home/ui/home_screen.dart';
@@ -20,6 +20,8 @@ import 'package:storii/features/library/ui/library_screen.dart';
 import 'package:storii/features/logs/ui/logs_screen.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
 import 'package:storii/features/more/ui/more_screen.dart';
+import 'package:storii/features/playlists/ui/playlist_detail_screen.dart';
+import 'package:storii/features/playlists/ui/playlists_screen.dart';
 import 'package:storii/features/search/ui/search_screen.dart';
 import 'package:storii/features/series/ui/series_detail_screen.dart';
 import 'package:storii/features/series/ui/series_list_screen.dart';
@@ -50,6 +52,9 @@ enum AppRoute {
   authorDetail('/authors/detail'),
   authorBooks('/authors/detail/books'),
   collections('/collections'),
+  collectionDetail('/collections/detail'),
+  playlists('/playlists'),
+  playlistDetail('/playlists/detail'),
   downloads('/downloads'),
   latest('/latest'),
   admin('/admin'),
@@ -157,7 +162,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                     path: 'detail',
                     builder: (context, state) {
                       final id = state.extra as String;
-                      return SeriesDetailScreen(key: ValueKey(id), id: id);
+                      return SeriesDetailScreen(id: id);
                     },
                   ),
                 ],
@@ -190,14 +195,14 @@ final routerProvider = Provider<GoRouter>((ref) {
                     path: 'detail',
                     builder: (context, state) {
                       final id = state.extra as String;
-                      return AuthorDetailScreen(key: ValueKey(id), id: id);
+                      return AuthorDetailScreen(id: id);
                     },
                     routes: [
                       GoRoute(
                         path: 'books',
                         builder: (context, state) {
                           final id = state.extra as String;
-                          return StandaloneBooks(key: ValueKey(id), id: id);
+                          return StandaloneBooks(id: id);
                         },
                       ),
                     ],
@@ -212,6 +217,15 @@ final routerProvider = Provider<GoRouter>((ref) {
                 path: AppRoute.collections.path,
                 pageBuilder: (context, state) =>
                     const NoTransitionPage(child: CollectionsScreen()),
+                routes: [
+                  GoRoute(
+                    path: 'detail',
+                    builder: (context, state) {
+                      final id = state.extra as String;
+                      return CollectionDetailScreen(id: id);
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -277,6 +291,24 @@ final routerProvider = Provider<GoRouter>((ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
+                path: AppRoute.playlists.path,
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: PlaylistsScreen()),
+                routes: [
+                  GoRoute(
+                    path: 'detail',
+                    builder: (context, state) {
+                      final id = state.extra as String;
+                      return PlaylistDetailScreen(id: id);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
                 path: AppRoute.search.path,
                 builder: (context, state) => const SearchScreen(),
               ),
@@ -289,7 +321,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                 builder: (context, state) {
                   final extra = state.extra as Map<String, dynamic>;
                   final id = extra['id'] as String;
-                  return ItemDetailScreen(key: ValueKey(id), id: id);
+                  return ItemDetailScreen(id: id);
                 },
               ),
             ],

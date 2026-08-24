@@ -35,6 +35,8 @@ class ApiRoutes {
   static const _authors = '/api/libraries/:id/authors';
   static const _librarySearch = '/api/libraries/:id/search';
   static const _libraryScan = '/api/libraries/:id/scan';
+  static const _libraryCollections = '/api/libraries/:id/collections';
+  static const _libraryPlaylists = '/api/libraries/:id/playlists';
 
   static String libraryById(String id) => _build(_libraryById, {'id': id});
   static String libraryItems(String id) => _build(_libraryItems, {'id': id});
@@ -48,6 +50,10 @@ class ApiRoutes {
   static String authors(String id) => _build(_authors, {'id': id});
   static String librarySearch(String id) => _build(_librarySearch, {'id': id});
   static String libraryScan(String id) => _build(_libraryScan, {'id': id});
+  static String libraryCollections(String id) =>
+      _build(_libraryCollections, {'id': id});
+  static String libraryPlaylists(String id) =>
+      _build(_libraryPlaylists, {'id': id});
 
   // Items
   static const _itemById = '/api/items/:id';
