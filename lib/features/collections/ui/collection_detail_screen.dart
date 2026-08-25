@@ -103,6 +103,14 @@ class _CollectionDetailScreenState
                           index: index,
                           title: book.title ?? l10n.noTitle,
                           subtitle: book.authorName ?? l10n.noAuthor,
+                          onRemove: () async {
+                            return await ref
+                                .read(collectionMutationsProvider.notifier)
+                                .removeItem(
+                                  collectionId: collection.id,
+                                  libraryItemId: book.id,
+                                );
+                          },
                         );
                       },
                       prototypeItem: const ReorderableItemCard(

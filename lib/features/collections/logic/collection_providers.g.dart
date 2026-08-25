@@ -9,17 +9,11 @@ part of 'collection_providers.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(collections)
+@ProviderFor(Collections)
 final collectionsProvider = CollectionsProvider._();
 
 final class CollectionsProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<Collection>>,
-          List<Collection>,
-          FutureOr<List<Collection>>
-        >
-    with $FutureModifier<List<Collection>>, $FutureProvider<List<Collection>> {
+    extends $AsyncNotifierProvider<Collections, List<Collection>> {
   CollectionsProvider._()
     : super(
         from: null,
@@ -36,29 +30,35 @@ final class CollectionsProvider
 
   @$internal
   @override
-  $FutureProviderElement<List<Collection>> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
+  Collections create() => Collections();
+}
 
+String _$collectionsHash() => r'd70fd1dbd050feee3f3d00bf45053a3c14c8f521';
+
+abstract class _$Collections extends $AsyncNotifier<List<Collection>> {
+  FutureOr<List<Collection>> build();
+  @$mustCallSuper
   @override
-  FutureOr<List<Collection>> create(Ref ref) {
-    return collections(ref);
+  WhenComplete runBuild() {
+    final ref =
+        this.ref as $Ref<AsyncValue<List<Collection>>, List<Collection>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<List<Collection>>, List<Collection>>,
+              AsyncValue<List<Collection>>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
   }
 }
 
-String _$collectionsHash() => r'fa274f9302c9193e7208979b92af4b2bc733d1d1';
-
-@ProviderFor(collectionDetail)
+@ProviderFor(CollectionDetail)
 final collectionDetailProvider = CollectionDetailFamily._();
 
 final class CollectionDetailProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<Collection>,
-          Collection,
-          FutureOr<Collection>
-        >
-    with $FutureModifier<Collection>, $FutureProvider<Collection> {
+    extends $AsyncNotifierProvider<CollectionDetail, Collection> {
   CollectionDetailProvider._({
     required CollectionDetailFamily super.from,
     required String super.argument,
@@ -82,14 +82,7 @@ final class CollectionDetailProvider
 
   @$internal
   @override
-  $FutureProviderElement<Collection> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<Collection> create(Ref ref) {
-    final argument = this.argument as String;
-    return collectionDetail(ref, argument);
-  }
+  CollectionDetail create() => CollectionDetail();
 
   @override
   bool operator ==(Object other) {
@@ -102,10 +95,17 @@ final class CollectionDetailProvider
   }
 }
 
-String _$collectionDetailHash() => r'0a859a9322b323a5e8de06aa6f703d6a2433e9fa';
+String _$collectionDetailHash() => r'45032bef9f29c416b6b0b0cb5528ed6567915422';
 
 final class CollectionDetailFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<Collection>, String> {
+    with
+        $ClassFamilyOverride<
+          CollectionDetail,
+          AsyncValue<Collection>,
+          Collection,
+          FutureOr<Collection>,
+          String
+        > {
   CollectionDetailFamily._()
     : super(
         retry: null,
@@ -120,4 +120,70 @@ final class CollectionDetailFamily extends $Family
 
   @override
   String toString() => r'collectionDetailProvider';
+}
+
+abstract class _$CollectionDetail extends $AsyncNotifier<Collection> {
+  late final _$args = ref.$arg as String;
+  String get id => _$args;
+
+  FutureOr<Collection> build(String id);
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<Collection>, Collection>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<Collection>, Collection>,
+              AsyncValue<Collection>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, () => build(_$args));
+  }
+}
+
+@ProviderFor(CollectionMutations)
+final collectionMutationsProvider = CollectionMutationsProvider._();
+
+final class CollectionMutationsProvider
+    extends $AsyncNotifierProvider<CollectionMutations, void> {
+  CollectionMutationsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'collectionMutationsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$collectionMutationsHash();
+
+  @$internal
+  @override
+  CollectionMutations create() => CollectionMutations();
+}
+
+String _$collectionMutationsHash() =>
+    r'16f8684bb27460bd411619a6a6ffcf55e06b4ed9';
+
+abstract class _$CollectionMutations extends $AsyncNotifier<void> {
+  FutureOr<void> build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<void>, void>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<void>, void>,
+              AsyncValue<void>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
 }

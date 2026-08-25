@@ -15,6 +15,8 @@ class ReorderableItemCard extends ConsumerWidget {
     required this.index,
     required this.title,
     required this.subtitle,
+    this.inCollection = true,
+    this.onRemove,
     this.episodeId,
     super.key,
   });
@@ -24,6 +26,8 @@ class ReorderableItemCard extends ConsumerWidget {
   final String title;
   final String subtitle;
   final int index;
+  final bool inCollection;
+  final Future<void> Function()? onRemove;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,7 +45,29 @@ class ReorderableItemCard extends ConsumerWidget {
       highlightColor: Colors.transparent,
       onTap: () => context.push(AppRoute.itemDetail.path, extra: itemId),
       onLongPress: () {
-        // TODO: more options: remove from collection/playlist
+        AppBottomSheet.show(
+          context,
+          title: l10n.more,
+          body: Column(
+            children: [
+              ListTile(
+                title: Text(
+                  inCollection
+                      ? l10n.removeFromCollection
+                      : l10n.removeFromPlaylist,
+                ),
+                leading: const Icon(Icons.cancel_outlined),
+                onTap: () async {
+                  await onRemove?.call();
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+              const SizedBox(height: 48),
+            ],
+          ),
+        );
       },
       child: Padding(
         padding: const .symmetric(horizontal: 16, vertical: 8),

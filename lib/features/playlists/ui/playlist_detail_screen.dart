@@ -113,6 +113,15 @@ class _PlaylistDetailScreenState extends ConsumerState<PlaylistDetailScreen> {
                           index: index,
                           title: title ?? l10n.noTitle,
                           subtitle: subtitle ?? '',
+                          inCollection: false,
+                          onRemove: () async {
+                            return await ref
+                                .read(playlistMutationsProvider.notifier)
+                                .removeItem(
+                                  playlistId: playlist.id,
+                                  item: item,
+                                );
+                          },
                         );
                       },
                       prototypeItem: const ReorderableItemCard(
