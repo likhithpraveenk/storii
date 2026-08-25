@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'playlists_provider.dart';
+part of 'playlist_providers.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -48,30 +48,30 @@ final class PlaylistsProvider
 
 String _$playlistsHash() => r'2e7b23683b8b812f3fe566fd0a9de71aa807d9aa';
 
-@ProviderFor(playlist)
-final playlistProvider = PlaylistFamily._();
+@ProviderFor(playlistDetail)
+final playlistDetailProvider = PlaylistDetailFamily._();
 
-final class PlaylistProvider
+final class PlaylistDetailProvider
     extends
         $FunctionalProvider<AsyncValue<Playlist>, Playlist, FutureOr<Playlist>>
     with $FutureModifier<Playlist>, $FutureProvider<Playlist> {
-  PlaylistProvider._({
-    required PlaylistFamily super.from,
+  PlaylistDetailProvider._({
+    required PlaylistDetailFamily super.from,
     required String super.argument,
   }) : super(
          retry: null,
-         name: r'playlistProvider',
+         name: r'playlistDetailProvider',
          isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
 
   @override
-  String debugGetCreateSourceHash() => _$playlistHash();
+  String debugGetCreateSourceHash() => _$playlistDetailHash();
 
   @override
   String toString() {
-    return r'playlistProvider'
+    return r'playlistDetailProvider'
         ''
         '($argument)';
   }
@@ -84,12 +84,12 @@ final class PlaylistProvider
   @override
   FutureOr<Playlist> create(Ref ref) {
     final argument = this.argument as String;
-    return playlist(ref, argument);
+    return playlistDetail(ref, argument);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is PlaylistProvider && other.argument == argument;
+    return other is PlaylistDetailProvider && other.argument == argument;
   }
 
   @override
@@ -98,22 +98,22 @@ final class PlaylistProvider
   }
 }
 
-String _$playlistHash() => r'87450d5408ea2e392ef5ad502d723c11e8063501';
+String _$playlistDetailHash() => r'9e5de70ab3360dbc258ddd0a5a3fe61887e80066';
 
-final class PlaylistFamily extends $Family
+final class PlaylistDetailFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<Playlist>, String> {
-  PlaylistFamily._()
+  PlaylistDetailFamily._()
     : super(
         retry: null,
-        name: r'playlistProvider',
+        name: r'playlistDetailProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
         isAutoDispose: true,
       );
 
-  PlaylistProvider call(String id) =>
-      PlaylistProvider._(argument: id, from: this);
+  PlaylistDetailProvider call(String id) =>
+      PlaylistDetailProvider._(argument: id, from: this);
 
   @override
-  String toString() => r'playlistProvider';
+  String toString() => r'playlistDetailProvider';
 }

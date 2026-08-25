@@ -5,30 +5,30 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
 
-part 'collections_provider.g.dart';
+part 'playlist_providers.g.dart';
 
 @riverpod
-Future<List<Collection>> collections(Ref ref) async {
+Future<List<Playlist>> playlists(Ref ref) async {
   ref.watchConnection();
   final activeLibrary = await ref.watch(activeLibraryDetailsProvider.future);
   final user = await ref.read(authenticatedUserProvider.future);
   final api = ref.read(libraryApiProvider(user));
 
   return ref.logApiCall(
-    () => api.getCollections(libraryId: activeLibrary.library.id),
-    source: 'collections',
+    () => api.getUserPlaylists(libraryId: activeLibrary.library.id),
+    source: 'playlists',
     logMessage:
-        'Error getting collections for library: ${activeLibrary.library.name}',
+        'Error getting playlists for library: ${activeLibrary.library.name}',
   );
 }
 
 @riverpod
-Future<Collection> collection(Ref ref, String id) async {
+Future<Playlist> playlistDetail(Ref ref, String id) async {
   final user = await ref.read(authenticatedUserProvider.future);
-  final api = ref.read(collectionsApiProvider(user));
+  final api = ref.read(playlistsApiProvider(user));
   return ref.logApiCall(
-    () => api.get(collectionId: id),
-    source: 'collection',
-    logMessage: 'Error getting collection $id',
+    () => api.get(playlistId: id),
+    source: 'playlist',
+    logMessage: 'Error getting playlist $id',
   );
 }

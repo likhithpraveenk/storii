@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'collections_provider.dart';
+part of 'collection_providers.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -48,10 +48,10 @@ final class CollectionsProvider
 
 String _$collectionsHash() => r'fa274f9302c9193e7208979b92af4b2bc733d1d1';
 
-@ProviderFor(collection)
-final collectionProvider = CollectionFamily._();
+@ProviderFor(collectionDetail)
+final collectionDetailProvider = CollectionDetailFamily._();
 
-final class CollectionProvider
+final class CollectionDetailProvider
     extends
         $FunctionalProvider<
           AsyncValue<Collection>,
@@ -59,23 +59,23 @@ final class CollectionProvider
           FutureOr<Collection>
         >
     with $FutureModifier<Collection>, $FutureProvider<Collection> {
-  CollectionProvider._({
-    required CollectionFamily super.from,
+  CollectionDetailProvider._({
+    required CollectionDetailFamily super.from,
     required String super.argument,
   }) : super(
          retry: null,
-         name: r'collectionProvider',
+         name: r'collectionDetailProvider',
          isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
 
   @override
-  String debugGetCreateSourceHash() => _$collectionHash();
+  String debugGetCreateSourceHash() => _$collectionDetailHash();
 
   @override
   String toString() {
-    return r'collectionProvider'
+    return r'collectionDetailProvider'
         ''
         '($argument)';
   }
@@ -88,12 +88,12 @@ final class CollectionProvider
   @override
   FutureOr<Collection> create(Ref ref) {
     final argument = this.argument as String;
-    return collection(ref, argument);
+    return collectionDetail(ref, argument);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is CollectionProvider && other.argument == argument;
+    return other is CollectionDetailProvider && other.argument == argument;
   }
 
   @override
@@ -102,22 +102,22 @@ final class CollectionProvider
   }
 }
 
-String _$collectionHash() => r'79361a0c16b30580a7a5e0fbee4740ef3167d4a7';
+String _$collectionDetailHash() => r'0a859a9322b323a5e8de06aa6f703d6a2433e9fa';
 
-final class CollectionFamily extends $Family
+final class CollectionDetailFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<Collection>, String> {
-  CollectionFamily._()
+  CollectionDetailFamily._()
     : super(
         retry: null,
-        name: r'collectionProvider',
+        name: r'collectionDetailProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
         isAutoDispose: true,
       );
 
-  CollectionProvider call(String id) =>
-      CollectionProvider._(argument: id, from: this);
+  CollectionDetailProvider call(String id) =>
+      CollectionDetailProvider._(argument: id, from: this);
 
   @override
-  String toString() => r'collectionProvider';
+  String toString() => r'collectionDetailProvider';
 }

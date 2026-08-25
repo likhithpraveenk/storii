@@ -7,7 +7,7 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
-import 'package:storii/features/playlists/logic/playlists_provider.dart';
+import 'package:storii/features/playlists/logic/playlist_providers.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';

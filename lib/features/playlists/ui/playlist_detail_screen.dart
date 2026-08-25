@@ -1,20 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/features/playlists/logic/playlists_provider.dart';
+import 'package:storii/features/collections/ui/reorderable_item_card.dart';
+import 'package:storii/features/playlists/logic/playlist_providers.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
+import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/expandable_text.dart';
+import 'package:storii/shared/widgets/marquee_text.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
-class PlaylistDetailScreen extends ConsumerWidget {
+class PlaylistDetailScreen extends ConsumerStatefulWidget {
   const new({required this.id, super.key});
   final String id;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final playlistAsync = ref.watch(playlistProvider(id));
+  ConsumerState<PlaylistDetailScreen> createState() =>
+      _PlaylistDetailScreenState();
+}
+
+class _PlaylistDetailScreenState extends ConsumerState<PlaylistDetailScreen> {
+  final _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final playlistAsync = ref.watch(playlistDetailProvider(widget.id));
+    final title = playlistAsync.value != null
+        ? '${playlistAsync.value?.name} (${playlistAsync.value?.items.length})'
+        : '';
 
     return Scaffold(
       appBar: AppBar(
@@ -22,8 +45,9 @@ class PlaylistDetailScreen extends ConsumerWidget {
           onPressed: () => context.pop(),
           icon: const Icon(Icons.arrow_back),
         ),
-        title: Text(
-          playlistAsync.value?.name ?? '',
+        titleSpacing: 0,
+        title: MarqueeText(
+          title,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         actions: [
@@ -39,27 +63,78 @@ class PlaylistDetailScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: playlistAsync.when(
-        data: (playlist) {
-          return Column(
-            children: [
-              if (playlist.description != null)
-                Padding(
-                  padding: const .all(16),
-                  child: ExpandableHtml(data: playlist.description!),
-                ),
-
-              // TODO: show playlist items
-              const Expanded(child: Placeholder()),
-            ],
-          );
+      body: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(playlistDetailProvider(widget.id));
+          await ref.read(playlistDetailProvider(widget.id).future);
         },
-        loading: () => const Center(child: RandomWaveform()),
-        error: (e, s) => ErrorRetryWidget(
-          e.toString(),
-          onRetry: () {
-            ref.invalidate(playlistProvider(id));
+        child: playlistAsync.when(
+          data: (playlist) {
+            return SafeArea(
+              child: AppScrollbar(
+                controller: _scrollController,
+                child: CustomScrollView(
+                  controller: _scrollController,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  slivers: [
+                    if (playlist.description != null)
+                      SliverPadding(
+                        padding: const .all(16),
+                        sliver: SliverToBoxAdapter(
+                          child: ExpandableHtml(data: playlist.description!),
+                        ),
+                      ),
+                    SliverReorderableList(
+                      itemCount: playlist.items.length,
+                      proxyDecorator: (child, index, animation) => Material(
+                        color: scheme.surfaceContainerLowest,
+                        borderRadius: .circular(kRadius),
+                        child: child,
+                      ),
+                      onReorderItem: (oldIndex, newIndex) {
+                        // TODO: reorder playlist
+                      },
+                      itemBuilder: (context, index) {
+                        final item = playlist.items[index];
+                        final String? title, subtitle;
+                        if (item.episode != null) {
+                          title = item.episode?.title;
+                          subtitle = item.episode?.podcast?.metadata.title;
+                        } else {
+                          title = item.libraryItem?.title;
+                          subtitle =
+                              item.libraryItem?.authorName ?? l10n.noAuthor;
+                        }
+
+                        return ReorderableItemCard(
+                          key: ValueKey(index),
+                          itemId: item.libraryItemId,
+                          episodeId: item.episodeId,
+                          index: index,
+                          title: title ?? l10n.noTitle,
+                          subtitle: subtitle ?? '',
+                        );
+                      },
+                      prototypeItem: const ReorderableItemCard(
+                        itemId: '',
+                        index: 0,
+                        title: '',
+                        subtitle: '',
+                      ),
+                    ),
+                    const SliverToBoxAdapter(child: SizedBox(height: 200)),
+                  ],
+                ),
+              ),
+            );
           },
+          loading: () => const Center(child: RandomWaveform()),
+          error: (e, s) => ErrorRetryWidget(
+            e.toString(),
+            onRetry: () {
+              ref.invalidate(playlistDetailProvider(widget.id));
+            },
+          ),
         ),
       ),
     );

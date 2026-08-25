@@ -241,6 +241,7 @@
   "removeProgressMessage": "This will reset your listening progress and cannot be undone.",
   "remove": "Remove",
   "markAsComplete": "Mark as complete",
+  "markAsIncomplete": "Mark as incomplete",
   "markAsCompleteQ": "Mark as complete?",
   "confirm": "Confirm",
   "progressMarkedComplete": "Marked as complete",

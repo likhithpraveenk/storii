@@ -20,7 +20,7 @@ final class UserProgressActionsNotifierProvider
   }) : super(
          retry: null,
          name: r'userProgressActionsProvider',
-         isAutoDispose: true,
+         isAutoDispose: false,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -60,7 +60,7 @@ final class UserProgressActionsNotifierProvider
 }
 
 String _$userProgressActionsNotifierHash() =>
-    r'33eed9157f503c81d8a5df213e8732b4c97d6b2c';
+    r'100a8851a05fef649b08115a826d71f9e0513ca8';
 
 final class UserProgressActionsNotifierFamily extends $Family
     with
@@ -77,7 +77,7 @@ final class UserProgressActionsNotifierFamily extends $Family
         name: r'userProgressActionsProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: true,
+        isAutoDispose: false,
       );
 
   UserProgressActionsNotifierProvider call(

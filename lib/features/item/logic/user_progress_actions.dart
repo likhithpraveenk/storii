@@ -9,12 +9,12 @@ import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'user_progress_actions.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class UserProgressActionsNotifier extends _$UserProgressActionsNotifier {
   @override
   void build(String itemId, [String? episodeId]) {}
 
-  Future<bool> markComplete() async {
+  Future<bool> markComplete({bool isFinished = true}) async {
     final user = await ref.read(authenticatedUserProvider.future);
     final api = ref.read(meApiProvider(user));
     try {
@@ -22,7 +22,7 @@ class UserProgressActionsNotifier extends _$UserProgressActionsNotifier {
         () => api.upsertMediaProgress(
           libraryItemId: itemId,
           episodeId: episodeId,
-          params: const UpsertProgressRequestParams(isFinished: true),
+          params: UpsertProgressRequestParams(isFinished: isFinished),
         ),
         source: 'UserProgressActionsNotifier',
       );
