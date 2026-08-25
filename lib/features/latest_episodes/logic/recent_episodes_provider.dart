@@ -9,7 +9,7 @@ part 'recent_episodes_provider.g.dart';
 
 @riverpod
 Future<List<PodcastEpisode>> recentEpisodes(Ref ref) async {
-  ref.watchConnection();
+  ref.invalidateOnReconnect();
   final libraryId = (await ref.watch(activeLibraryDetailsProvider.future))
       .library
       .id;

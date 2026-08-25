@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - collections & playlists screens
 
+### Fixed
+
+- excessive api requests on socket reconnect
+
 ## [v0.6.3] - 2026-08-23
 
 ### Added

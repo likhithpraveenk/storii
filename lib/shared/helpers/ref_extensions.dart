@@ -28,8 +28,14 @@ extension RefExtensions on Ref {
     }
   }
 
-  /// for providers to re-run on server connection
-  bool watchConnection() {
-    return watch(serverConnectionProvider);
+  bool readConnection() {
+    return read(serverConnectionProvider);
+  }
+
+  /// invalidates this provider on reconnect (false→true edge only)
+  void invalidateOnReconnect() {
+    listen(serverConnectionProvider, (prev, next) {
+      if (prev == false && next == true) invalidateSelf();
+    });
   }
 }

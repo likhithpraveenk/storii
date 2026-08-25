@@ -15,7 +15,7 @@ Stream<bool> socketStatus(Ref ref) async* {
     return;
   }
 
-  final socketApi = await ref.watch(socketApiProvider(user).future);
+  final socketApi = await ref.read(socketApiProvider(user).future);
   yield* socketApi.isConnected;
 }
 
@@ -57,6 +57,8 @@ bool serverConnection(Ref ref) {
   );
   if (connectionNone) return false;
 
-  final socketStatus = ref.watch(socketStatusProvider);
-  return socketStatus.value ?? true;
+  final connected = ref.watch(
+    socketStatusProvider.select((s) => s.value ?? true),
+  );
+  return connected;
 }

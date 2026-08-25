@@ -12,7 +12,7 @@ part 'series_provider.g.dart';
 
 @riverpod
 Future<Series> series(Ref ref, String seriesId) async {
-  ref.watchConnection();
+  ref.invalidateOnReconnect();
   final user = await ref.watch(authenticatedUserProvider.future);
   final libraryId = (await ref.watch(activeLibraryDetailsProvider.future))
       .library

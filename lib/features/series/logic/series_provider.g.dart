@@ -58,7 +58,7 @@ final class SeriesProvider
   }
 }
 
-String _$seriesHash() => r'a604f9f1d7b458928388639d463a0a9d907ef48c';
+String _$seriesHash() => r'e79ae221af3aa45cfb377c2dce245c60d7f1b3bc';
 
 final class SeriesFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<Series>, String> {

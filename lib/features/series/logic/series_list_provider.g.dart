@@ -85,4 +85,4 @@ final class RawSeriesListProvider
   }
 }
 
-String _$rawSeriesListHash() => r'591e5b0163868992abde38b8cb97a50a10c1aa36';
+String _$rawSeriesListHash() => r'26c04477a28438877476b15f17db9c8dfbc3e51b';

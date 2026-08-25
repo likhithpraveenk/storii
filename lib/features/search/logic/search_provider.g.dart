@@ -103,7 +103,7 @@ final class SearchNotifierProvider
   }
 }
 
-String _$searchNotifierHash() => r'02016ab31f98e4b6342614f155c9db4fe9faf47c';
+String _$searchNotifierHash() => r'807e1b364bb21933af01e58cb45958792d4d0c9e';
 
 final class SearchNotifierFamily extends $Family
     with
