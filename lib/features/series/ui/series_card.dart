@@ -1,14 +1,9 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
-import 'package:storii/app/config/theme.dart';
-import 'package:storii/app/init.dart';
-import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
-import 'package:storii/shared/widgets/placeholder_image.dart';
-import 'package:storii/shared/widgets/stack_badge.dart';
+import 'package:storii/shared/widgets/stacked_images_card.dart';
 
 class SeriesCard extends StatelessWidget {
   const new(this.series, {super.key});
@@ -17,142 +12,14 @@ class SeriesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authorName = series.books.firstOrNull?.authorName;
+    final itemIds = series.books.map((b) => b.id).toList();
 
-    return InkWell(
+    return StackedImagesCard(
       onTap: () => context.push(AppRoute.seriesDetail.path, extra: series.id),
-      splashFactory: NoSplash.splashFactory,
-      highlightColor: Colors.transparent,
-      child: Column(
-        mainAxisSize: .min,
-        children: [
-          _SeriesBookStack(series),
-          const SizedBox(height: 8),
-          Column(
-            mainAxisSize: .min,
-            children: [
-              Text(
-                series.name,
-                maxLines: 1,
-                overflow: .ellipsis,
-                style: Theme.of(context).textTheme.titleSmall
-                    ?.copyWith(fontWeight: .bold),
-              ),
-              if (authorName != null && authorName.isNotEmpty)
-                Text(
-                  authorName,
-                  maxLines: 1,
-                  overflow: .ellipsis,
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-const _kMinSpacingRatio = 0.2;
-const _kMaxSpacingRatio = 0.7;
-const _kBookSizeRatio = 0.5;
-
-class _SeriesBookStack extends StatelessWidget {
-  const new(this.series);
-
-  final Series series;
-
-  @override
-  Widget build(BuildContext context) {
-    final progress = series.finishRatio;
-    final scheme = Theme.of(context).colorScheme;
-
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (series.books.isEmpty) {
-          return ClipRRect(
-            borderRadius: .circular(kRadius),
-            child: PlaceholderImage(label: l10n.noImage),
-          );
-        }
-
-        final maxWidth = constraints.maxWidth;
-        final bookSize = maxWidth * _kBookSizeRatio;
-
-        final visibleBooks = series.books.reversed.take(4).toList();
-        final count = visibleBooks.length;
-        final spacing = count <= 1
-            ? 0.0
-            : count == 2
-            ? bookSize
-            : ((maxWidth - bookSize) / (count - 1)).clamp(
-                bookSize * _kMinSpacingRatio,
-                bookSize * _kMaxSpacingRatio,
-              );
-        final start = -(count - 1) * spacing / 2;
-
-        return Container(
-          height: bookSize,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: scheme.primaryFixedDim.withValues(alpha: 0.2),
-            borderRadius: .circular(kRadius),
-          ),
-          clipBehavior: .hardEdge,
-          child: Stack(
-            alignment: .center,
-            children: [
-              ...List.generate(count, (index) {
-                final reverseIndex = count - 1 - index;
-                final book = visibleBooks[reverseIndex];
-                final xOffset = start + reverseIndex * spacing;
-
-                return Transform.translate(
-                  offset: Offset(xOffset, 0),
-                  child: Container(
-                    width: bookSize,
-                    height: bookSize,
-                    decoration: BoxDecoration(
-                      borderRadius: .circular(kRadius),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(
-                            alpha: reverseIndex == 0 ? 0.3 : 0.1,
-                          ),
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: ClipRRect(
-                      borderRadius: .circular(kRadius),
-                      child: ImageWidget(id: book.id, type: .item),
-                    ),
-                  ),
-                );
-              }),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  height: 2.4,
-                  child: LinearProgressIndicator(
-                    value: progress,
-                    borderRadius: .circular(kRadius),
-                    backgroundColor: Colors.transparent,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      progress == 1.0 ? appGreenColor : appRedColor,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 6,
-                right: 6,
-                child: StackBadge(series.books.length),
-              ),
-            ],
-          ),
-        );
-      },
+      itemIds: itemIds,
+      title: series.name,
+      subtitle: authorName,
+      progress: series.finishRatio,
     );
   }
 }

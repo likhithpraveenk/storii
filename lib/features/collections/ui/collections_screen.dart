@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/config/nav_targets.dart';
+import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/features/collections/logic/collections_provider.dart';
-import 'package:storii/features/collections/ui/collection_card.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/scrollable_widget.dart';
+import 'package:storii/shared/widgets/stacked_images_card.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class CollectionsScreen extends ConsumerStatefulWidget {
@@ -31,13 +35,18 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
   @override
   Widget build(BuildContext context) {
     final collectionsAsync = ref.watch(collectionsProvider);
+    final inBottomNav = ref
+        .watch(effectiveNavTargetsProvider)
+        .contains(NavTarget.collections);
 
     return Scaffold(
       appBar: CommonAppBar(
-        title: Text(
-          l10n.collections,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
+        title: inBottomNav
+            ? null
+            : Text(
+                l10n.collections,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -70,9 +79,15 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
                   ),
                   itemBuilder: (context, index) {
                     final collection = collections[index];
-                    return CollectionCard(
+                    final itemIds = collection.books.map((i) => i.id).toList();
+                    return StackedImagesCard(
                       key: ValueKey(collection.id),
-                      collection,
+                      itemIds: itemIds,
+                      title: collection.name,
+                      onTap: () => context.push(
+                        AppRoute.collectionDetail.path,
+                        extra: collection.id,
+                      ),
                     );
                   },
                 ),

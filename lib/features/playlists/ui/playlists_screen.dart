@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/config/nav_targets.dart';
+import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/playlists/logic/playlists_provider.dart';
-import 'package:storii/features/playlists/ui/playlist_card.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/scrollable_widget.dart';
+import 'package:storii/shared/widgets/stacked_images_card.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class PlaylistsScreen extends ConsumerStatefulWidget {
@@ -31,13 +35,18 @@ class _PlaylistsScreenState extends ConsumerState<PlaylistsScreen> {
   @override
   Widget build(BuildContext context) {
     final playlistsAsync = ref.watch(playlistsProvider);
+    final inBottomNav = ref
+        .watch(effectiveNavTargetsProvider)
+        .contains(NavTarget.playlists);
 
     return Scaffold(
       appBar: CommonAppBar(
-        title: Text(
-          l10n.playlists,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
+        title: inBottomNav
+            ? null
+            : Text(
+                l10n.playlists,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -70,7 +79,18 @@ class _PlaylistsScreenState extends ConsumerState<PlaylistsScreen> {
                   ),
                   itemBuilder: (context, index) {
                     final playlist = playlists[index];
-                    return PlaylistCard(key: ValueKey(playlist.id), playlist);
+                    final itemIds = playlist.items
+                        .map((i) => i.libraryItemId)
+                        .toList();
+                    return StackedImagesCard(
+                      key: ValueKey(playlist.id),
+                      itemIds: itemIds,
+                      title: playlist.name,
+                      onTap: () => context.push(
+                        AppRoute.playlistDetail.path,
+                        extra: playlist.id,
+                      ),
+                    );
                   },
                 ),
               ),
