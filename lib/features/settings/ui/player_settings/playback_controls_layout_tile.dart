@@ -12,6 +12,7 @@ class PlaybackControlsLayoutTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final layout = ref.watch(playbackControlsLayoutProvider);
     return ListTile(
+      leading: const Icon(Icons.view_module),
       trailing: const Icon(Icons.chevron_right),
       title: Text(l10n.playbackControlsLayout),
       subtitle: Text(layout.label),

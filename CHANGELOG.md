@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - collections & playlists screens
+- setting to control covers shown in stacked item cards
+
+### Changed
+
+- reorganized settings: scroll thumb moved to customization and player UI controls to player settings
 
 ### Fixed
 

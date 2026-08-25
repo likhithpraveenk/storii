@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/library/remember_sort_tile.dart';
+import 'package:storii/features/settings/ui/library/stacked_images_visible_tile.dart';
+import 'package:storii/features/settings/ui/settings_header.dart';
 
 class LibrarySettingsTile extends ConsumerWidget {
   const new({super.key});
@@ -36,7 +38,13 @@ class LibrarySettingsScreen extends ConsumerWidget {
         ),
         title: Text(l10n.librarySettings, style: textTheme.titleLarge),
       ),
-      body: const Column(children: [RememberSortTile()]),
+      body: ListView(
+        children: [
+          const RememberSortTile(),
+          SettingsHeader(title: l10n.display),
+          const StackedImagesVisibleTile(),
+        ],
+      ),
     );
   }
 }

@@ -12,6 +12,7 @@ class PlayerBackgroundThemeTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(playerBackgroundThemeProvider);
     return ListTile(
+      leading: const Icon(Icons.wallpaper),
       trailing: const Icon(Icons.chevron_right),
       title: Text(l10n.playerBackgroundTheme),
       subtitle: Text(theme.label),

@@ -30,6 +30,7 @@ class DefaultUserSettings {
   static const useBinaryBytes = true;
   static const minBufferDuration = Duration(seconds: 30);
   static const marqueeSpeed = 40.0;
+  static const stackedImagesVisible = 4;
   static const rememberSort = true;
   static const librarySortAscending = true;
   static const authorSortAscending = true;
@@ -95,6 +96,8 @@ sealed class UserSettings with _$UserSettings {
     @Default(DefaultUserSettings.skipBackward) Duration skipBackward,
 
     @Default(DefaultUserSettings.speed) double speed,
+
+    @Default(DefaultUserSettings.stackedImagesVisible) int stackedImagesVisible,
 
     @Default(DefaultUserSettings.historyLimit) int historyLimit,
 

@@ -3,11 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/customization/nav_label_tile.dart';
-import 'package:storii/features/settings/ui/customization/os_notification_button_tiles.dart';
-import 'package:storii/features/settings/ui/customization/playback_controls_layout_tile.dart';
-import 'package:storii/features/settings/ui/customization/player_background_theme_tile.dart';
 import 'package:storii/features/settings/ui/customization/reorder_nav_tabs.dart';
-import 'package:storii/features/settings/ui/customization/show_seek_buttons_tile.dart';
+import 'package:storii/features/settings/ui/customization/scroll_thumb_tile.dart';
 import 'package:storii/features/settings/ui/customization/startup_nav.dart';
 import 'package:storii/features/settings/ui/settings_header.dart';
 
@@ -51,15 +48,8 @@ class CustomizationSettingsScreen extends StatelessWidget {
           const StartupNavTile(),
           const ReorderNavTabsTile(),
           const NavLabelTile(),
-          SettingsHeader(title: l10n.miniPlayer),
-          const ShowSeekButtonsTile(),
-          SettingsHeader(title: l10n.fullPlayer),
-          const PlayerBackgroundThemeTile(),
-          const PlaybackControlsLayoutTile(),
-          SettingsHeader(title: l10n.osNotification),
-          const OsNotificationCanSeekTile(),
-          const OsNotificationCanSkipTile(),
-          const OsNotificationCanSkipChapterTile(),
+          SettingsHeader(title: l10n.lists),
+          const ScrollThumbTile(),
           const SizedBox(height: 200),
         ],
       ),

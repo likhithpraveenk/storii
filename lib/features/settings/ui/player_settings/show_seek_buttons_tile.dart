@@ -12,6 +12,7 @@ class ShowSeekButtonsTile extends ConsumerWidget {
 
     return SwitchListTile(
       value: showSeekButtons,
+      secondary: const Icon(Icons.more_outlined),
       title: Text(l10n.extraControls),
       subtitle: Text(l10n.extraControlsSubtitle),
       onChanged: (value) {

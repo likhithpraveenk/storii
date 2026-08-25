@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/widgets/placeholder_image.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
@@ -59,15 +61,16 @@ const _kMinSpacingRatio = 0.2;
 const _kMaxSpacingRatio = 0.7;
 const _kImageSizeRatio = 0.5;
 
-class _ImageStack extends StatelessWidget {
+class _ImageStack extends ConsumerWidget {
   const new({required this.itemIds, this.progress});
 
   final List<String> itemIds;
   final double? progress;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
+    final imagesVisible = ref.watch(stackedImagesVisibleProvider);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -81,8 +84,6 @@ class _ImageStack extends StatelessWidget {
         final maxWidth = constraints.maxWidth;
         final imageSize = maxWidth * _kImageSizeRatio;
 
-        // TODO setting
-        const imagesVisible = 4;
         final visibleImages = itemIds.reversed.take(imagesVisible).toList();
         final count = visibleImages.length;
         final spacing = count <= 1
