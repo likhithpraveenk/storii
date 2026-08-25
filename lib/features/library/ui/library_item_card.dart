@@ -46,7 +46,7 @@ class LibraryItemCard extends ConsumerWidget {
             extra: item.collapsedSeries!.id,
           );
         } else {
-          context.push(AppRoute.itemDetail.path, extra: {'id': item.id});
+          context.push(AppRoute.itemDetail.path, extra: item.id);
         }
       },
       onLongPress: () => showMoreItemOptionsSheet(

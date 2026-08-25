@@ -319,8 +319,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoute.itemDetail.path,
                 builder: (context, state) {
-                  final extra = state.extra as Map<String, dynamic>;
-                  final id = extra['id'] as String;
+                  final id = state.extra as String;
                   return ItemDetailScreen(id: id);
                 },
               ),

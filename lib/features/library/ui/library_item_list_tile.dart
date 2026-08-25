@@ -31,7 +31,7 @@ class LibraryItemListTile extends StatelessWidget {
             extra: item.collapsedSeries!.id,
           );
         } else {
-          context.push(AppRoute.itemDetail.path, extra: {'id': item.id});
+          context.push(AppRoute.itemDetail.path, extra: item.id);
         }
       },
       contentPadding: const .fromLTRB(16, 8, 16, 8),

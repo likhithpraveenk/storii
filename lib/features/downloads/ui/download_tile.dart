@@ -30,10 +30,7 @@ class _DownloadTileState extends State<DownloadTile> {
           onTap: widget.item.isComplete
               ? () => context.push(
                   AppRoute.itemDetail.path,
-                  extra: {
-                    'id': widget.item.libraryItemId,
-                    'isDownloaded': true,
-                  },
+                  extra: widget.item.libraryItemId,
                 )
               : null,
           leading: AspectRatio(

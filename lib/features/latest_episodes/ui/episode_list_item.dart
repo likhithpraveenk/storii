@@ -55,7 +55,7 @@ class EpisodeListItem extends ConsumerWidget {
                       onTap: () {
                         context.push(
                           AppRoute.itemDetail.path,
-                          extra: {'id': episode.libraryItemId},
+                          extra: episode.libraryItemId,
                         );
                       },
                       child: CustomPaint(
