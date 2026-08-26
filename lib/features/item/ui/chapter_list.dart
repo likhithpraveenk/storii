@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -209,7 +210,7 @@ class _ChapterTile extends ConsumerWidget {
             onTap: () async {
               unawaited(
                 ref
-                    .read(audioPlayerProvider.notifier)
+                    .read(queueProvider.notifier)
                     .play(itemId: itemId, chapter: chapter),
               );
               Navigator.of(context).pop();

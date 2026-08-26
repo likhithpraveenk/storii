@@ -20,6 +20,7 @@ const playbackHistoryBoxName = 'playback_history_box';
 const downloadsBoxName = 'downloads_box';
 const speedsBoxName = 'speeds_box';
 const serverSettingsBoxName = 'server_settings_box';
+const playbackQueueBoxName = 'playback_queue_box';
 
 //* any new hive box should be added to this list
 final _knownNames = [
@@ -34,6 +35,7 @@ final _knownNames = [
   downloadsBoxName,
   speedsBoxName,
   serverSettingsBoxName,
+  playbackQueueBoxName,
 ];
 
 const networkCacheDir = 'dio_cache';
@@ -50,6 +52,7 @@ late final Box<String> downloadsBox;
 late final Box<double> speedsBox;
 late final Box<String> userMediaProgressBox;
 late final Box<String> serverSettingsBox;
+late final Box<String> playbackQueueBox;
 
 Future<void> setupHive() async {
   await Hive.initFlutter();
@@ -80,9 +83,10 @@ Future<void> setupHive() async {
     Hive.openBox<double>(speedsBoxName),
   ).wait;
 
-  final (userMediaProgress, serverSettings) = await (
+  final (userMediaProgress, serverSettings, playbackQueue) = await (
     Hive.openBox<String>(userMediaProgressBoxName),
     Hive.openBox<String>(serverSettingsBoxName),
+    Hive.openBox<String>(playbackQueueBoxName),
   ).wait;
 
   appSettingsBox = appSettings;
@@ -96,6 +100,7 @@ Future<void> setupHive() async {
   speedsBox = speeds;
   userMediaProgressBox = userMediaProgress;
   serverSettingsBox = serverSettings;
+  playbackQueueBox = playbackQueue;
 
   // dio cache
   final dir = await getApplicationDocumentsDirectory();

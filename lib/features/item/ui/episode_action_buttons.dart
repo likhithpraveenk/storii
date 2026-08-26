@@ -7,6 +7,7 @@ import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/user_progress_actions.dart';
 import 'package:storii/features/item/ui/episode_metadata_sheet.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/history_button.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -148,7 +149,7 @@ class _EpisodePlayButton extends ConsumerWidget {
           return;
         }
         ref
-            .read(audioPlayerProvider.notifier)
+            .read(queueProvider.notifier)
             .play(itemId: episode.libraryItemId, episodeId: episode.id);
       },
       icon: Icon(

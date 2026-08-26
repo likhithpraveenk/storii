@@ -58,6 +58,7 @@ class DefaultUserSettings {
   static const interruptionSkipBackward = Duration.zero;
   static const interruptionLongSkipThreshold = Duration(seconds: 30);
   static const interruptionLongSkipBackward = Duration.zero;
+  static const autoplay = true;
 }
 
 @freezed
@@ -183,6 +184,8 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.interruptionLongSkipBackward)
     Duration interruptionLongSkipBackward,
+
+    @Default(DefaultUserSettings.autoplay) bool autoplay,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);

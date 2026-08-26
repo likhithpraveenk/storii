@@ -7,6 +7,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/bookmarks_provider.dart';
+import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -133,7 +134,7 @@ class _BookmarkSheetBody extends ConsumerWidget {
                             audioHandler.seekFromGlobalPosition(bookmark.time);
                           } else {
                             ref
-                                .read(audioPlayerProvider.notifier)
+                                .read(queueProvider.notifier)
                                 .play(
                                   itemId: itemId,
                                   initialPosition: bookmark.time,

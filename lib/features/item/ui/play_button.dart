@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -69,7 +70,7 @@ class PlayButton extends ConsumerWidget {
           await audioHandler.togglePlay();
         } else {
           await ref
-              .read(audioPlayerProvider.notifier)
+              .read(queueProvider.notifier)
               .play(itemId: item.id, episodeId: episodeId);
         }
       },

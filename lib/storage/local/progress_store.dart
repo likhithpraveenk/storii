@@ -11,10 +11,8 @@ part 'progress_store.g.dart';
 
 @Riverpod(keepAlive: true)
 class ProgressStore extends _$ProgressStore {
-  late final String _userId;
-
   String _key(String id, String? episodeId) =>
-      '$_userId:${mediaItemIdKey(id, episodeId)}';
+      '$userId:${mediaItemIdKey(id, episodeId)}';
 
   MediaProgress? _itemFromValue(String? value) {
     if (value == null) return null;
@@ -28,8 +26,7 @@ class ProgressStore extends _$ProgressStore {
 
   @override
   Stream<Map<String, MediaProgress>> build(String userId) {
-    _userId = userId;
-    final prefix = '$_userId:';
+    final prefix = '$userId:';
 
     final items = <String, MediaProgress>{};
     for (final entry in userMediaProgressBox.toMap().entries) {
