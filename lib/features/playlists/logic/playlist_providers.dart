@@ -76,6 +76,22 @@ class PlaylistDetail extends _$PlaylistDetail {
       logMessage: 'Error getting playlist $id',
     );
   }
+
+  Future<void> reorder(int oldIndex, int newIndex) async {
+    if (!state.hasValue) return;
+    final current = state.value!;
+    final items = List<PlaylistItem>.from(current.items);
+    final moved = items.removeAt(oldIndex);
+    items.insert(newIndex, moved);
+    state = AsyncData(current.copyWith(items: items));
+    try {
+      await ref
+          .read(playlistMutationsProvider.notifier)
+          .reorderItems(current.id, items);
+    } catch (_) {
+      ref.invalidateSelf();
+    }
+  }
 }
 
 @Riverpod(keepAlive: true)

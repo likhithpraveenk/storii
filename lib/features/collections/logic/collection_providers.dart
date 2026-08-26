@@ -76,6 +76,22 @@ class CollectionDetail extends _$CollectionDetail {
       logMessage: 'Error getting collection $id',
     );
   }
+
+  Future<void> reorder(int oldIndex, int newIndex) async {
+    if (!state.hasValue) return;
+    final current = state.value!;
+    final books = List<LibraryItem>.from(current.books);
+    final moved = books.removeAt(oldIndex);
+    books.insert(newIndex, moved);
+    state = AsyncData(current.copyWith(books: books));
+    try {
+      await ref
+          .read(collectionMutationsProvider.notifier)
+          .reorderItems(current.id, books.map((b) => b.id).toList());
+    } catch (_) {
+      ref.invalidateSelf();
+    }
+  }
 }
 
 @Riverpod(keepAlive: true)

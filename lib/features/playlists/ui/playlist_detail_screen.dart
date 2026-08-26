@@ -85,9 +85,9 @@ class _PlaylistDetailScreenState extends ConsumerState<PlaylistDetailScreen> {
                         borderRadius: .circular(kRadius),
                         child: child,
                       ),
-                      onReorderItem: (oldIndex, newIndex) {
-                        // TODO: reorder playlist
-                      },
+                      onReorderItem: (oldIndex, newIndex) => ref
+                          .read(playlistDetailProvider(widget.id).notifier)
+                          .reorder(oldIndex, newIndex),
                       itemBuilder: (context, index) {
                         final item = playlist.items[index];
                         final String? title, subtitle;

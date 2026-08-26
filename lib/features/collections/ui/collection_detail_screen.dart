@@ -83,9 +83,9 @@ class _CollectionDetailScreenState
                       ),
                     SliverReorderableList(
                       itemCount: collection.books.length,
-                      onReorderItem: (oldIndex, newIndex) {
-                        // TODO: reorder collection
-                      },
+                      onReorderItem: (oldIndex, newIndex) => ref
+                          .read(collectionDetailProvider(widget.id).notifier)
+                          .reorder(oldIndex, newIndex),
                       proxyDecorator: (child, index, animation) => Material(
                         color: scheme.surfaceContainerLowest,
                         borderRadius: .circular(kRadius),
