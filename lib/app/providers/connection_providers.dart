@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 
@@ -15,7 +15,7 @@ Stream<bool> socketStatus(Ref ref) async* {
     return;
   }
 
-  final socketApi = await ref.read(socketApiProvider(user).future);
+  final socketApi = await ref.watch(socketApiProvider(user).future);
   yield* socketApi.isConnected;
 }
 
@@ -35,9 +35,11 @@ enum ConnectionType {
   }
 }
 
-@Riverpod(keepAlive: true)
-Stream<List<ConnectivityResult>> connectivityStream(Ref ref) {
-  return Connectivity().onConnectivityChanged;
+@riverpod
+Stream<List<ConnectivityResult>> connectivityStream(Ref ref) async* {
+  final connectivity = Connectivity();
+  yield await connectivity.checkConnectivity();
+  yield* connectivity.onConnectivityChanged;
 }
 
 @Riverpod(keepAlive: true)
@@ -51,14 +53,26 @@ ConnectionType connectionType(Ref ref) {
 }
 
 @Riverpod(keepAlive: true)
-bool serverConnection(Ref ref) {
-  final connectionNone = ref.watch(
-    connectionTypeProvider.select((c) => c == .none),
-  );
-  if (connectionNone) return false;
+class ServerConnection extends _$ServerConnection {
+  @override
+  bool build() {
+    ref.listen(connectivityStreamProvider, (_, next) {
+      final list = next.value ?? [];
+      if (list.contains(ConnectivityResult.none)) {
+        LogService.log('No connections available', level: .info);
+        state = false;
+      }
+    });
 
-  final connected = ref.watch(
-    socketStatusProvider.select((s) => s.value ?? true),
-  );
-  return connected;
+    ref.listen(socketStatusProvider, (prev, next) {
+      final connected = next.value ?? false;
+      LogService.log(
+        'Socket ${connected ? 'connected' : 'disconnected'}',
+        level: .info,
+      );
+      state = connected;
+    });
+
+    return true; //! optimistic true
+  }
 }

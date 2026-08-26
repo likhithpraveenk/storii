@@ -641,7 +641,7 @@ final class SocketApiProvider
   }) : super(
          retry: null,
          name: r'socketApiProvider',
-         isAutoDispose: true,
+         isAutoDispose: false,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -678,7 +678,7 @@ final class SocketApiProvider
   }
 }
 
-String _$socketApiHash() => r'ef0d385aa33047674aa60189e8421ca1f325c4b9';
+String _$socketApiHash() => r'3305bfc609b9e44ce2bc4d72e38b4bac3e6c2101';
 
 final class SocketApiFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<SocketApi>, UserDomain> {
@@ -688,7 +688,7 @@ final class SocketApiFamily extends $Family
         name: r'socketApiProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: true,
+        isAutoDispose: false,
       );
 
   SocketApiProvider call(UserDomain user) =>

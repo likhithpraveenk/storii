@@ -96,12 +96,12 @@ Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
           container.read(interruptionLongSkipThresholdProvider),
     ),
     config: AudioServiceConfig(
-      androidNotificationChannelId: 'com.likhithpraveenk.storii.audio',
-      androidNotificationChannelName: 'Audio Playback',
+      androidNotificationChannelId: 'com.likhithpraveenk.storii.playback',
+      androidNotificationChannelName: l10n.playback,
       androidNotificationIcon: 'drawable/ic_notification',
       fastForwardInterval: container.read(skipForwardProvider),
       rewindInterval: container.read(skipBackwardProvider),
-      androidNotificationOngoing: true,
+      androidStopForegroundOnPause: false,
       preloadArtwork: true,
     ),
   );

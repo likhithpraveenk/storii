@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 
 const isolatePortName = 'downloads_action';
@@ -16,7 +17,7 @@ class DownloadsNotificationService {
       >();
 
   static const channelId = 'com.likhithpraveenk.storii.downloads';
-  static const channelName = 'Downloads';
+  static final channelName = l10n.downloads;
   static const actionPause = 'action_pause';
   static const actionResume = 'action_resume';
   static const actionCancel = 'action_cancel';
@@ -40,7 +41,7 @@ class DownloadsNotificationService {
   }
 
   Future<void> startForeground({required String title}) async {
-    const androidDetails = AndroidNotificationDetails(
+    final androidDetails = AndroidNotificationDetails(
       channelId,
       channelName,
       channelDescription: 'Shows download progress',
