@@ -40,7 +40,7 @@ final class SocketStatusProvider
   }
 }
 
-String _$socketStatusHash() => r'd1d8fb1a24aae0ce250909cdf959706c79b8b374';
+String _$socketStatusHash() => r'c5cd6a92e3767afdf9ed2d07918125accdafcb57';
 
 @ProviderFor(connectivityStream)
 final connectivityStreamProvider = ConnectivityStreamProvider._();
@@ -61,7 +61,7 @@ final class ConnectivityStreamProvider
         argument: null,
         retry: null,
         name: r'connectivityStreamProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -82,7 +82,7 @@ final class ConnectivityStreamProvider
 }
 
 String _$connectivityStreamHash() =>
-    r'9f60aae6c128e0af3ad3f37236c4f05ce64c4a99';
+    r'63b6e0e427b796cdff6b172cd47ea2b1a7aca8cc';
 
 @ProviderFor(connectionType)
 final connectionTypeProvider = ConnectionTypeProvider._();
@@ -125,12 +125,11 @@ final class ConnectionTypeProvider
 
 String _$connectionTypeHash() => r'ac4f22daf36ed3faf6afdf9ab5031fabf818733a';
 
-@ProviderFor(serverConnection)
+@ProviderFor(ServerConnection)
 final serverConnectionProvider = ServerConnectionProvider._();
 
 final class ServerConnectionProvider
-    extends $FunctionalProvider<bool, bool, bool>
-    with $Provider<bool> {
+    extends $NotifierProvider<ServerConnection, bool> {
   ServerConnectionProvider._()
     : super(
         from: null,
@@ -147,13 +146,7 @@ final class ServerConnectionProvider
 
   @$internal
   @override
-  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  bool create(Ref ref) {
-    return serverConnection(ref);
-  }
+  ServerConnection create() => ServerConnection();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(bool value) {
@@ -164,4 +157,22 @@ final class ServerConnectionProvider
   }
 }
 
-String _$serverConnectionHash() => r'b5b671b84521b0172641e0934a944ba34d2d6cdc';
+String _$serverConnectionHash() => r'fda792dbfa7176481fc441b1dbb0964f79d6fb8b';
+
+abstract class _$ServerConnection extends $Notifier<bool> {
+  bool build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<bool, bool>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<bool, bool>,
+              bool,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

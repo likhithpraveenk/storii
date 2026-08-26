@@ -12,10 +12,8 @@ class ConnectionStatusIcon extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final socketAsync = ref.watch(socketStatusProvider);
+    final isConnected = ref.watch(socketStatusProvider).value ?? false;
     final connectionType = ref.watch(connectionTypeProvider);
-
-    final isConnected = socketAsync.value ?? false;
     final scheme = Theme.of(context).colorScheme;
 
     return IconButton(
@@ -54,11 +52,9 @@ class _ConnectionDetailsSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final socketAsync = ref.watch(socketStatusProvider);
+    final isConnected = ref.watch(socketStatusProvider).value ?? false;
     final connectionType = ref.watch(connectionTypeProvider);
     final user = ref.watch(currentUserProvider);
-
-    final isConnected = socketAsync.value ?? false;
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 

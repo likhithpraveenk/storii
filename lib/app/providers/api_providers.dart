@@ -129,7 +129,7 @@ SessionsApi sessionsApi(Ref ref, UserDomain user) {
   return SessionsApi(apiClient);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
   final token = await ref.read(tokenProvider).getAccessToken(user.id);
   final api = SocketApi(user.serverUrl.toString(), token);

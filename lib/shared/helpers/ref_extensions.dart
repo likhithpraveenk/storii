@@ -32,7 +32,6 @@ extension RefExtensions on Ref {
     return read(serverConnectionProvider);
   }
 
-  /// invalidates this provider on reconnect (false→true edge only)
   void invalidateOnReconnect() {
     listen(serverConnectionProvider, (prev, next) {
       if (prev == false && next == true) invalidateSelf();

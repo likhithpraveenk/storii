@@ -33,7 +33,10 @@ class SocketApi {
     isConnected = controller.stream;
     socket.onConnect((_) => controller.add(true));
     socket.onDisconnect((_) => controller.add(false));
-    controller.onListen = () => controller.add(socket.connected);
+    socket.onConnectError((_) => controller.add(false));
+    socket.onError((_) => controller.add(false));
+
+    controller.onListen = () => controller.add(true); //! optimistic true
 
     _init(token);
   }
