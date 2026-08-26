@@ -5,9 +5,9 @@ part 'chapter.g.dart';
 
 @freezed
 sealed class Chapter with _$Chapter {
-  const Chapter._();
+  const new _();
 
-  const factory Chapter({
+  const factory({
     required Duration start,
     required Duration end,
     required String title,
@@ -15,8 +15,7 @@ sealed class Chapter with _$Chapter {
     @Default(false) bool fromTracks,
   }) = _Chapter;
 
-  factory Chapter.fromJson(Map<String, dynamic> json) =>
-      _$ChapterFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$ChapterFromJson(json);
 
   Duration get duration => end - start;
 }

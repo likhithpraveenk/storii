@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/library_items_provider.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/library_item_list_tile.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/common_app_bar.dart';
+import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/screen_options.dart';
+import 'package:storii/shared/widgets/scrollable_widget.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class LibraryScreen extends ConsumerStatefulWidget {
-  const LibraryScreen({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LibraryScreenState();
@@ -42,44 +43,44 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
           skipLoadingOnReload: true,
           data: (items) {
             if (items.isEmpty) {
-              return SingleChildScrollView(
-                child: Container(
-                  height: MediaQuery.of(context).size.height - kToolbarHeight,
-                  alignment: .center,
-                  child: Text(l10n.empty),
-                ),
-              );
+              return const ScrollableWidget(child: Center(child: EmptyState()));
             }
 
             final displayMode = ref.watch(libraryDisplayModeProvider);
             final isListView = displayMode == .listView;
 
-            return AppScrollbar(
-              controller: _scrollController,
-              child: !isListView
-                  ? ItemsGridView(
-                      items,
-                      scrollController: _scrollController,
-                      key: const ValueKey('items_grid_view'),
-                    )
-                  : ListView.builder(
-                      key: const ValueKey('items_list_view'),
-                      controller: _scrollController,
-                      padding: const .symmetric(vertical: 16),
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        return LibraryItemListTile(
-                          key: ValueKey(items[index].id),
-                          items[index],
-                        );
-                      },
-                    ),
+            return SafeArea(
+              child: AppScrollbar(
+                controller: _scrollController,
+                child: isListView
+                    ? ListView.builder(
+                        key: const ValueKey('items_list_view'),
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        controller: _scrollController,
+                        padding: const .symmetric(vertical: 16),
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          return LibraryItemListTile(
+                            key: ValueKey(items[index].id),
+                            items[index],
+                          );
+                        },
+                      )
+                    : ItemsGridView(
+                        items,
+                        scrollController: _scrollController,
+                        key: const ValueKey('items_grid_view'),
+                      ),
+              ),
             );
           },
-          loading: () => const Center(child: RandomWaveform()),
-          error: (e, _) => ErrorRetryWidget(
-            e.toString(),
-            onRetry: () => ref.invalidate(rawLibraryItemsProvider),
+          loading: () =>
+              const ScrollableWidget(child: Center(child: RandomWaveform())),
+          error: (e, _) => ScrollableWidget(
+            child: ErrorRetryWidget(
+              e.toString(),
+              onRetry: () => ref.invalidate(rawLibraryItemsProvider),
+            ),
           ),
         ),
       ),

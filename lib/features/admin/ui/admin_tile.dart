@@ -6,7 +6,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/user_provider.dart';
 
 class AdminTile extends ConsumerWidget {
-  const AdminTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

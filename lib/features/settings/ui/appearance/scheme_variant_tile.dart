@@ -8,7 +8,7 @@ import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 class SchemeVariantTile extends StatelessWidget {
-  const SchemeVariantTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class SchemeVariantTile extends StatelessWidget {
 }
 
 class _SchemeVariantSheet extends ConsumerStatefulWidget {
-  const _SchemeVariantSheet();
+  const new();
 
   @override
   ConsumerState<_SchemeVariantSheet> createState() =>
@@ -98,7 +98,7 @@ class _SchemeVariantSheetState extends ConsumerState<_SchemeVariantSheet> {
 }
 
 class _SchemeSwatch extends StatelessWidget {
-  const _SchemeSwatch(this.scheme);
+  const new(this.scheme);
   final ColorScheme scheme;
 
   @override
@@ -126,7 +126,7 @@ class _SchemeSwatch extends StatelessWidget {
 }
 
 class _Dot extends StatelessWidget {
-  const _Dot({required this.color});
+  const new({required this.color});
   final Color color;
 
   @override

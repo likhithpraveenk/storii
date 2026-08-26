@@ -11,12 +11,11 @@ import 'package:storii/features/settings/ui/appearance/font_family.dart';
 import 'package:storii/features/settings/ui/appearance/font_scale.dart';
 import 'package:storii/features/settings/ui/appearance/marquee_speed_tile.dart';
 import 'package:storii/features/settings/ui/appearance/scheme_variant_tile.dart';
-import 'package:storii/features/settings/ui/appearance/scroll_thumb_tile.dart';
 import 'package:storii/features/settings/ui/appearance/system_theme_tile.dart';
 import 'package:storii/features/settings/ui/settings_header.dart';
 
 class AppearanceTile extends ConsumerWidget {
-  const AppearanceTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,7 +39,7 @@ class AppearanceTile extends ConsumerWidget {
 }
 
 class AppearanceScreen extends ConsumerWidget {
-  const AppearanceScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -103,7 +102,6 @@ class AppearanceScreen extends ConsumerWidget {
           const FontScaleTile(),
           const DateTimeFormatTile(),
           const MarqueeSpeedTile(),
-          const ScrollThumbTile(),
           const BinaryBytesTile(),
           const SizedBox(height: 100),
         ],

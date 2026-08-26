@@ -10,7 +10,7 @@ import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class LibrarySwitcher extends ConsumerWidget {
-  const LibrarySwitcher({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

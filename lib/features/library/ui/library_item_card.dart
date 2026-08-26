@@ -16,7 +16,7 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class LibraryItemCard extends ConsumerWidget {
-  const LibraryItemCard(
+  const new(
     this.item, {
     super.key,
     this.showPlay = false,
@@ -46,7 +46,7 @@ class LibraryItemCard extends ConsumerWidget {
             extra: item.collapsedSeries!.id,
           );
         } else {
-          context.push(AppRoute.itemDetail.path, extra: {'id': item.id});
+          context.push(AppRoute.itemDetail.path, extra: item.id);
         }
       },
       onLongPress: () => showMoreItemOptionsSheet(
@@ -145,7 +145,7 @@ class LibraryItemCard extends ConsumerWidget {
 }
 
 class TitleWidget extends StatelessWidget {
-  const TitleWidget({super.key, required this.item, this.inStack = false});
+  const new({super.key, required this.item, this.inStack = false});
 
   final LibraryItem item;
   final bool inStack;
@@ -204,7 +204,7 @@ class TitleWidget extends StatelessWidget {
 }
 
 class PlayButtonBadge extends ConsumerWidget {
-  const PlayButtonBadge({super.key, required this.itemId, this.episodeId});
+  const new({super.key, required this.itemId, this.episodeId});
 
   final String itemId;
   final String? episodeId;

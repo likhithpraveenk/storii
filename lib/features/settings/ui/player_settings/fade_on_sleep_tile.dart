@@ -7,7 +7,7 @@ import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/wheel_picker.dart';
 
 class FadeOnSleepTile extends ConsumerWidget {
-  const FadeOnSleepTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,7 +33,7 @@ class FadeOnSleepTile extends ConsumerWidget {
 }
 
 class FadeOnSleepDurationTile extends ConsumerStatefulWidget {
-  const FadeOnSleepDurationTile({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<FadeOnSleepDurationTile> createState() =>
@@ -106,7 +106,7 @@ class _FadeOnSleepDurationTileState
 }
 
 class FadeOnSleepMinVolumeTile extends ConsumerStatefulWidget {
-  const FadeOnSleepMinVolumeTile({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<FadeOnSleepMinVolumeTile> createState() =>
@@ -150,8 +150,8 @@ class _FadeOnSleepMinVolumeTileState
                   children: [
                     WheelPicker.fromDoubleRange(
                       initialValue: _volume,
-                      min: 0.0,
-                      max: 1.0,
+                      min: 0,
+                      max: 1,
                       step: 0.05,
                       onChangedEnd: (v) => _volume = v,
                       labelBuilder: (v) => '${(v * 100).round()}%',

@@ -8,7 +8,7 @@ part 'ebook_file.g.dart';
 @freezed
 sealed class EBookFile with _$EBookFile {
   @DateTimeEpochConverter()
-  const factory EBookFile({
+  const factory({
     required String ino,
     required FileMetadata metadata,
     required String ebookFormat,
@@ -16,6 +16,5 @@ sealed class EBookFile with _$EBookFile {
     required DateTime updatedAt,
   }) = _EBookFile;
 
-  factory EBookFile.fromJson(Map<String, dynamic> json) =>
-      _$EBookFileFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$EBookFileFromJson(json);
 }

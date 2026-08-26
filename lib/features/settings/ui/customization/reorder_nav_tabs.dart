@@ -9,7 +9,7 @@ import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 class ReorderNavTabsTile extends StatelessWidget {
-  const ReorderNavTabsTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class ReorderNavTabsTile extends StatelessWidget {
 }
 
 class ReorderNavTabs extends ConsumerStatefulWidget {
-  const ReorderNavTabs({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<ReorderNavTabs> createState() => _ReorderNavTabsState();
@@ -107,10 +107,8 @@ class _ReorderNavTabsState extends ConsumerState<ReorderNavTabs> {
                   leading: Icon(target.item.selectedIcon),
                   title: Text(
                     target.label,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontWeight: .w600,
-                      color: scheme.onSurface,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge
+                        ?.copyWith(fontWeight: .w600, color: scheme.onSurface),
                   ),
                   trailing: Row(
                     mainAxisSize: .min,

@@ -10,7 +10,7 @@ part 'series.g.dart';
 sealed class Series with _$Series {
   @DateTimeEpochConverter()
   @DurationPreciseSecondsConverter()
-  const factory Series({
+  const factory({
     required String id,
     required String name,
     String? libraryId,
@@ -42,7 +42,7 @@ sealed class Series with _$Series {
     // RssFeed? rssFeed,
   }) = _Series;
 
-  factory Series.fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);
 }
 
 Object? _booksOrItems(Map json, String key) {

@@ -40,7 +40,7 @@ final class IsBackgroundProvider extends $NotifierProvider<IsBackground, bool> {
   }
 }
 
-String _$isBackgroundHash() => r'f46f1f3a863c1fd6f57ccfab2a46b1a76dc095c3';
+String _$isBackgroundHash() => r'414a2ba1de6079f4252d4e0b81f72332a3b38508';
 
 abstract class _$IsBackground extends $Notifier<bool> {
   bool build();

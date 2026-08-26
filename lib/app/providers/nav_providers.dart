@@ -10,7 +10,9 @@ List<NavTarget> effectiveNavTargets(Ref ref) {
   final library = ref.watch(currentLibraryProvider);
 
   if (library?.mediaType == .podcast) {
-    return userTargets.where((t) => t != .series && t != .authors).toList();
+    return userTargets
+        .where((t) => t != .series && t != .authors && t != .collections)
+        .toList();
   } else {
     return userTargets.where((t) => t != .latest).toList();
   }
@@ -24,7 +26,9 @@ List<NavTarget> remainingNavTargets(Ref ref) {
   final remaining = NavTarget.values.where((t) => !effective.contains(t));
 
   if (library?.mediaType == .podcast) {
-    return remaining.where((t) => t != .series && t != .authors).toList();
+    return remaining
+        .where((t) => t != .series && t != .authors && t != .collections)
+        .toList();
   } else {
     return remaining.where((t) => t != .latest).toList();
   }

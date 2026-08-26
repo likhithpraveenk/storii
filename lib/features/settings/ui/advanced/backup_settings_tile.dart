@@ -9,7 +9,7 @@ import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/storage/local/backup_service.dart';
 
 class BackupSettingsTile extends StatelessWidget {
-  const BackupSettingsTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class BackupSettingsTile extends StatelessWidget {
 }
 
 class RestoreButton extends StatelessWidget {
-  const RestoreButton({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class RestoreButton extends StatelessWidget {
 }
 
 class _BackupSettingsSheet extends ConsumerStatefulWidget {
-  const _BackupSettingsSheet({this.onlyRestore = false});
+  const new({this.onlyRestore = false});
 
   final bool onlyRestore;
 
@@ -64,9 +64,8 @@ class _BackupSettingsSheetState extends ConsumerState<_BackupSettingsSheet> {
   bool _restoring = false;
 
   void _snack(BuildContext context, String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _createBackup(BuildContext context) async {

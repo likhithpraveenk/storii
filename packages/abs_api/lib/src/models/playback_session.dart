@@ -15,7 +15,7 @@ part 'playback_session.g.dart';
 abstract class PlaybackSession with _$PlaybackSession {
   @DateTimeEpochConverter()
   @DurationPreciseSecondsConverter()
-  const factory PlaybackSession({
+  const factory({
     required String id,
     required String userId,
     required String libraryId,
@@ -43,6 +43,6 @@ abstract class PlaybackSession with _$PlaybackSession {
     LibraryItem? libraryItem,
   }) = _PlaybackSession;
 
-  factory PlaybackSession.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$PlaybackSessionFromJson(json);
 }

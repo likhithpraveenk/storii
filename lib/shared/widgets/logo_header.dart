@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:storii/app/config/constants.dart';
 
 class LogoHeader extends StatelessWidget {
-  const LogoHeader({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

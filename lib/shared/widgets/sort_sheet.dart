@@ -6,7 +6,7 @@ import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
 
 class SortBottomSheet extends ConsumerWidget {
-  const SortBottomSheet(this.screen, this.controller, {super.key});
+  const new(this.screen, this.controller, {super.key});
   final CurrentScreen screen;
   final ScrollController controller;
 

@@ -271,6 +271,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setSpeed(double value) => _save(state?.copyWith(speed: value));
 
+  Future<void> setStackedImagesVisible(int value) =>
+      _save(state?.copyWith(stackedImagesVisible: value));
+
   Future<void> setHistoryLimit(int value) =>
       _save(state?.copyWith(historyLimit: value));
 
@@ -493,6 +496,16 @@ final speedProvider = Provider<double>(
     userSettingsProvider.select((s) => s?.speed ?? DefaultUserSettings.speed),
   ),
   name: 'speedProvider',
+);
+
+final stackedImagesVisibleProvider = Provider<int>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.stackedImagesVisible ?? DefaultUserSettings.stackedImagesVisible,
+    ),
+  ),
+  name: 'stackedImagesVisibleProvider',
 );
 
 final historyLimitProvider = Provider<int>(

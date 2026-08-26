@@ -93,7 +93,7 @@ final class PlayerHeightProvider
   }
 }
 
-String _$playerHeightHash() => r'5c5706541b1eadcfc79bc54dbe99693e6229d3fa';
+String _$playerHeightHash() => r'8378aa9631047c8ae9f9437be73cd013bf763e1e';
 
 abstract class _$PlayerHeight extends $Notifier<double> {
   double build();
@@ -210,7 +210,7 @@ final class PlayerExpandFactorProvider
 }
 
 String _$playerExpandFactorHash() =>
-    r'286f12dba3cd5788ec79aaebf1be9ee9617920eb';
+    r'8ed4eeb9b7f68f15f1624c49459bd8cfc485e96a';
 
 @ProviderFor(playerViewState)
 final playerViewStateProvider = PlayerViewStateProvider._();

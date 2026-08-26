@@ -9,7 +9,7 @@ part 'series_response.g.dart';
 @freezed
 sealed class SeriesResponse with _$SeriesResponse {
   @FilterConverter()
-  const factory SeriesResponse({
+  const factory({
     required List<Series> results,
     required int total,
     required int limit,
@@ -21,6 +21,5 @@ sealed class SeriesResponse with _$SeriesResponse {
     required String include,
   }) = _SeriesResponse;
 
-  factory SeriesResponse.fromJson(Map<String, dynamic> json) =>
-      _$SeriesResponseFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$SeriesResponseFromJson(json);
 }

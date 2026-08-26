@@ -15,7 +15,7 @@ import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class ServerTile extends ConsumerStatefulWidget {
-  const ServerTile(this.server, {super.key});
+  const new(this.server, {super.key});
 
   final Server server;
 
@@ -63,7 +63,7 @@ class _ServerTileState extends ConsumerState<ServerTile> {
                   Padding(
                     padding: const .symmetric(horizontal: 8),
                     child: Text(
-                      '${(usersAsync.value)?.length}',
+                      '${usersAsync.value?.length}',
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                   ),
@@ -82,7 +82,7 @@ class _ServerTileState extends ConsumerState<ServerTile> {
           error: (e, _) => Center(
             child: Padding(
               padding: const .all(16),
-              child: Text('${l10n.errorLoadingUsers}: ${e.toString()}'),
+              child: Text('${l10n.errorLoadingUsers}: $e'),
             ),
           ),
           data: (users) => Column(
@@ -113,9 +113,9 @@ class _ServerTileState extends ConsumerState<ServerTile> {
                                       '${widget.server.url.cleanString}\n\n'
                                       '${users.isEmpty ? l10n.noUsersServer : '${l10n.followingUsers}\n'
                                                 '${users.map((e) => '• ${e.username}').join('\n')}'}',
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.bodyLarge,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge,
                                     ),
                                     isDestructive: true,
                                     actionLabel: l10n.delete,

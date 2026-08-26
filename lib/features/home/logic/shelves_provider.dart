@@ -85,7 +85,8 @@ Future<List<Shelf>> sortedShelves(Ref ref) async {
 
 @riverpod
 Future<List<Shelf>> rawShelves(Ref ref) async {
-  final isConnected = ref.watchConnection();
+  ref.invalidateOnReconnect();
+  final isConnected = ref.readConnection();
   if (!isConnected) {
     final downloads = await ref.read(downloadsProvider.future);
     final cache = ref.read(itemsCacheProvider.notifier);
@@ -131,9 +132,9 @@ Future<List<Shelf>> rawShelves(Ref ref) async {
     if (downloadShelves.isNotEmpty) return downloadShelves;
   }
 
-  final libraryId = (await ref.watch(
-    activeLibraryDetailsProvider.future,
-  )).library.id;
+  final libraryId = (await ref.watch(activeLibraryDetailsProvider.future))
+      .library
+      .id;
 
   final user = await ref.watch(authenticatedUserProvider.future);
   final api = ref.watch(libraryApiProvider(user));

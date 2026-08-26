@@ -12,7 +12,7 @@ import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
-  const SearchScreen({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<SearchScreen> createState() => _SearchScreenState();
@@ -38,37 +38,40 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        automaticallyImplyLeading: false,
-        title: Material(
-          type: .transparency,
-          child: TextField(
-            autofocus: true,
-            controller: _controller,
-            onChanged: (value) {
-              _debounce?.cancel();
+        titleSpacing: 0,
+        title: Padding(
+          padding: const .only(right: 24),
+          child: Material(
+            type: .transparency,
+            child: TextField(
+              autofocus: true,
+              controller: _controller,
+              onChanged: (value) {
+                _debounce?.cancel();
 
-              _debounce = Timer(const Duration(milliseconds: 500), () {
-                setState(() {
-                  _query = value;
+                _debounce = Timer(const Duration(milliseconds: 500), () {
+                  setState(() {
+                    _query = value;
+                  });
                 });
-              });
-            },
-            decoration: InputDecoration(
-              hint: Text(
-                l10n.search,
-                style: Theme.of(context).textTheme.titleSmall,
+              },
+              decoration: InputDecoration(
+                hint: Text(
+                  l10n.search,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                suffixIcon: _controller.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          _controller.clear();
+                          setState(() {
+                            _query = '';
+                          });
+                        },
+                      )
+                    : null,
               ),
-              suffixIcon: _controller.text.isNotEmpty
-                  ? IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
-                        _controller.clear();
-                        setState(() {
-                          _query = '';
-                        });
-                      },
-                    )
-                  : null,
             ),
           ),
         ),
@@ -103,7 +106,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 }
 
 class FilterChipsRow extends ConsumerWidget {
-  const FilterChipsRow(this.filterTabs, {super.key});
+  const new(this.filterTabs, {super.key});
 
   final List<SearchFilter> filterTabs;
 

@@ -10,7 +10,7 @@ part 'library_items_response.g.dart';
 @freezed
 sealed class LibraryItemsResponse with _$LibraryItemsResponse {
   @FilterConverter()
-  const factory LibraryItemsResponse({
+  const factory({
     required List<LibraryItem> results,
     required int total,
     required int limit,
@@ -24,6 +24,6 @@ sealed class LibraryItemsResponse with _$LibraryItemsResponse {
     required String include,
   }) = _LibraryItemsResponse;
 
-  factory LibraryItemsResponse.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$LibraryItemsResponseFromJson(json);
 }

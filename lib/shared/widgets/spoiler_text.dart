@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SpoilerText extends StatefulWidget {
-  const SpoilerText(this.text, {super.key});
+  const new(this.text, {super.key});
 
   final Widget text;
 
@@ -20,7 +20,7 @@ class _SpoilerTextState extends State<SpoilerText> {
       onTap: () => setState(() => _revealed = !_revealed),
       child: _revealed
           ? widget.text
-          : Container(
+          : DecoratedBox(
               decoration: BoxDecoration(
                 color: scheme.inverseSurface,
                 borderRadius: .circular(4),

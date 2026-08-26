@@ -110,7 +110,7 @@ class AudioPlayerState {
   final String? loadingItemId;
   final String? loadingEpisodeId;
 
-  const AudioPlayerState({this.loadingItemId, this.loadingEpisodeId});
+  const new({this.loadingItemId, this.loadingEpisodeId});
 }
 
 @Riverpod(keepAlive: true)

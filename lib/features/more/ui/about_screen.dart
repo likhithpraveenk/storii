@@ -12,7 +12,7 @@ import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/logo_header.dart';
 
 class AboutTile extends StatelessWidget {
-  const AboutTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class AboutTile extends StatelessWidget {
 }
 
 class AboutScreen extends ConsumerWidget {
-  const AboutScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -82,9 +82,8 @@ class AboutScreen extends ConsumerWidget {
                     if (!context.mounted) return;
                     await Clipboard.setData(ClipboardData(text: body));
                     if (!context.mounted) return;
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showAppSnackBar('Bug report copied to clipboard');
+                    ScaffoldMessenger.of(context)
+                        .showAppSnackBar('Bug report copied to clipboard');
                     await launchUrlHelper(context, githubIssueLink);
                   },
                 ),

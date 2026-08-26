@@ -16,7 +16,7 @@ import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class HomeScreen extends ConsumerWidget {
-  const HomeScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,8 +27,9 @@ class HomeScreen extends ConsumerWidget {
       appBar: const CommonAppBar(),
       body: RefreshIndicator(
         onRefresh: () async {
-          ref.invalidate(rawShelvesProvider);
-          ref.invalidate(serverUserProvider);
+          ref
+            ..invalidate(rawShelvesProvider)
+            ..invalidate(serverUserProvider);
           await ref.read(sortedShelvesProvider.future);
         },
         child: shelvesAsync.when(

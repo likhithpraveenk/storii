@@ -9,9 +9,9 @@ part 'shelf.g.dart';
 
 @freezed
 sealed class Shelf with _$Shelf {
-  const Shelf._();
+  const new _();
 
-  const factory Shelf.libraryItems({
+  const factory libraryItems({
     required String id,
     required String label,
     required String labelStringKey,
@@ -20,7 +20,7 @@ sealed class Shelf with _$Shelf {
     required int total,
   }) = LibraryItemsShelf;
 
-  const factory Shelf.series({
+  const factory series({
     required String id,
     required String label,
     required String labelStringKey,
@@ -29,7 +29,7 @@ sealed class Shelf with _$Shelf {
     required int total,
   }) = SeriesShelf;
 
-  const factory Shelf.authors({
+  const factory authors({
     required String id,
     required String label,
     required String labelStringKey,
@@ -38,14 +38,14 @@ sealed class Shelf with _$Shelf {
     required int total,
   }) = AuthorShelf;
 
-  factory Shelf.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       const ShelfConverter().fromJson(json);
 
   ShelfIdentity? get identity => ShelfIdentity.fromId(id);
 }
 
 class ShelfConverter implements JsonConverter<Shelf, Map<String, dynamic>> {
-  const ShelfConverter();
+  const new();
 
   @override
   Shelf fromJson(Map<String, dynamic> json) {

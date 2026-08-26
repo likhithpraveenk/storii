@@ -10,7 +10,7 @@ import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
 
 class MiniPlayer extends ConsumerWidget {
-  const MiniPlayer({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

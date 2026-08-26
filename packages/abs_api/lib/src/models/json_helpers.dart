@@ -75,7 +75,7 @@ T fromJsonT<T, S>(
 }
 
 class UnsupportedJsonException extends ApiException {
-  UnsupportedJsonException(super.message);
+  new(super.message);
 }
 
 extension JsonRemoveDefaults on Map<String, dynamic> {

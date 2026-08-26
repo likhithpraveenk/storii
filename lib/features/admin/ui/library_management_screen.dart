@@ -18,7 +18,7 @@ extension on Task {
 }
 
 class LibraryManagementTile extends StatelessWidget {
-  const LibraryManagementTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class LibraryManagementTile extends StatelessWidget {
 }
 
 class LibraryManagementScreen extends ConsumerWidget {
-  const LibraryManagementScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,12 +45,9 @@ class LibraryManagementScreen extends ConsumerWidget {
       final task = next.value;
       if (task?.snackBarMessage != null) {
         if (!context.mounted) return;
-        final messenger = ScaffoldMessenger.of(context);
-        messenger.hideCurrentSnackBar();
-        messenger.showAppSnackBar(
-          task!.snackBarMessage!,
-          isError: task.isFailed,
-        );
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showAppSnackBar(task!.snackBarMessage!, isError: task.isFailed);
       }
     });
 

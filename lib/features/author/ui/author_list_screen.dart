@@ -12,10 +12,11 @@ import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/screen_options.dart';
+import 'package:storii/shared/widgets/scrollable_widget.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class AuthorListScreen extends ConsumerStatefulWidget {
-  const AuthorListScreen({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -52,29 +53,34 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
           skipLoadingOnReload: true,
           data: (authors) {
             if (authors.isEmpty) {
-              return const EmptyState();
+              return const ScrollableWidget(child: Center(child: EmptyState()));
             }
 
             final isListView =
                 ref.watch(authorDisplayModeProvider) == .listView;
 
-            return AppScrollbar(
-              controller: _scrollController,
-              child: isListView
-                  ? AuthorsListView(
-                      scrollController: _scrollController,
-                      authors: authors,
-                    )
-                  : AuthorsGridView(
-                      scrollController: _scrollController,
-                      authors: authors,
-                    ),
+            return SafeArea(
+              child: AppScrollbar(
+                controller: _scrollController,
+                child: isListView
+                    ? AuthorsListView(
+                        scrollController: _scrollController,
+                        authors: authors,
+                      )
+                    : AuthorsGridView(
+                        scrollController: _scrollController,
+                        authors: authors,
+                      ),
+              ),
             );
           },
-          loading: () => const Center(child: RandomWaveform()),
-          error: (e, _) => ErrorRetryWidget(
-            e.toString(),
-            onRetry: () => ref.invalidate(authorsListProvider),
+          loading: () =>
+              const ScrollableWidget(child: Center(child: RandomWaveform())),
+          error: (e, _) => ScrollableWidget(
+            child: ErrorRetryWidget(
+              e.toString(),
+              onRetry: () => ref.invalidate(authorsListProvider),
+            ),
           ),
         ),
       ),
@@ -83,11 +89,7 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
 }
 
 class AuthorsListView extends StatelessWidget {
-  const AuthorsListView({
-    super.key,
-    this.scrollController,
-    required this.authors,
-  });
+  const new({super.key, this.scrollController, required this.authors});
 
   final ScrollController? scrollController;
   final List<Author> authors;
@@ -96,6 +98,7 @@ class AuthorsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       key: const ValueKey('author_list_view'),
+      physics: const AlwaysScrollableScrollPhysics(),
       controller: scrollController,
       itemCount: authors.length,
       padding: const .symmetric(vertical: 16),
@@ -110,11 +113,7 @@ class AuthorsListView extends StatelessWidget {
 }
 
 class AuthorsGridView extends ConsumerWidget {
-  const AuthorsGridView({
-    super.key,
-    this.scrollController,
-    required this.authors,
-  });
+  const new({super.key, this.scrollController, required this.authors});
 
   final ScrollController? scrollController;
   final List<Author> authors;
@@ -125,6 +124,7 @@ class AuthorsGridView extends ConsumerWidget {
 
     return GridView.builder(
       key: const ValueKey('author_grid_view'),
+      physics: const AlwaysScrollableScrollPhysics(),
       controller: scrollController,
       itemCount: authors.length,
       padding: const .symmetric(horizontal: 16, vertical: 16),

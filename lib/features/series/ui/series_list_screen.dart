@@ -13,10 +13,11 @@ import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/screen_options.dart';
+import 'package:storii/shared/widgets/scrollable_widget.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class SeriesListScreen extends ConsumerStatefulWidget {
-  const SeriesListScreen({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -50,29 +51,34 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
           skipLoadingOnReload: true,
           data: (series) {
             if (series.isEmpty) {
-              return const EmptyState();
+              return const ScrollableWidget(child: Center(child: EmptyState()));
             }
 
             final isListView =
                 ref.watch(seriesDisplayModeProvider) == .listView;
 
-            return AppScrollbar(
-              controller: _scrollController,
-              child: isListView
-                  ? SeriesListView(
-                      scrollController: _scrollController,
-                      series: series,
-                    )
-                  : SeriesGridView(
-                      scrollController: _scrollController,
-                      series: series,
-                    ),
+            return SafeArea(
+              child: AppScrollbar(
+                controller: _scrollController,
+                child: isListView
+                    ? SeriesListView(
+                        scrollController: _scrollController,
+                        series: series,
+                      )
+                    : SeriesGridView(
+                        scrollController: _scrollController,
+                        series: series,
+                      ),
+              ),
             );
           },
-          loading: () => const Center(child: RandomWaveform()),
-          error: (e, _) => ErrorRetryWidget(
-            e.toString(),
-            onRetry: () => ref.invalidate(rawSeriesListProvider),
+          loading: () =>
+              const ScrollableWidget(child: Center(child: RandomWaveform())),
+          error: (e, _) => ScrollableWidget(
+            child: ErrorRetryWidget(
+              e.toString(),
+              onRetry: () => ref.invalidate(rawSeriesListProvider),
+            ),
           ),
         ),
       ),
@@ -81,11 +87,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
 }
 
 class SeriesListView extends StatelessWidget {
-  const SeriesListView({
-    super.key,
-    this.scrollController,
-    required this.series,
-  });
+  const new({super.key, this.scrollController, required this.series});
 
   final ScrollController? scrollController;
   final List<Series> series;
@@ -94,6 +96,7 @@ class SeriesListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       key: const ValueKey('series_list_view'),
+      physics: const AlwaysScrollableScrollPhysics(),
       controller: scrollController,
       itemCount: series.length,
       padding: const .symmetric(vertical: 16),
@@ -108,11 +111,7 @@ class SeriesListView extends StatelessWidget {
 }
 
 class SeriesGridView extends ConsumerWidget {
-  const SeriesGridView({
-    super.key,
-    this.scrollController,
-    required this.series,
-  });
+  const new({super.key, this.scrollController, required this.series});
 
   final ScrollController? scrollController;
   final List<Series> series;
@@ -123,6 +122,7 @@ class SeriesGridView extends ConsumerWidget {
 
     return GridView.builder(
       key: const ValueKey('series_grid_view'),
+      physics: const AlwaysScrollableScrollPhysics(),
       controller: scrollController,
       padding: const .symmetric(horizontal: 16, vertical: 16),
       itemCount: series.length,

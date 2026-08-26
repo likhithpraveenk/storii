@@ -99,7 +99,6 @@ extension PlaybackSessionX on PlaybackSession {
 
       final source = AppAudioSource(
         uri: uri,
-        headers: const {},
         tag: tag,
         duration: duration,
         type: mimeType,

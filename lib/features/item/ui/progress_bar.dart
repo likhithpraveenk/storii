@@ -4,7 +4,7 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 
 class ProgressBar extends ConsumerWidget {
-  const ProgressBar({required this.itemId, super.key});
+  const new({required this.itemId, super.key});
   final String itemId;
 
   @override

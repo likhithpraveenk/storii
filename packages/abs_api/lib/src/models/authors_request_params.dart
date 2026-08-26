@@ -7,14 +7,14 @@ part 'authors_request_params.g.dart';
 
 @freezed
 abstract class AuthorsRequestParams with _$AuthorsRequestParams {
-  const AuthorsRequestParams._();
+  const new _();
 
-  const factory AuthorsRequestParams({
+  const factory({
     String? sort,
     @BoolBinaryConverter() bool? desc,
     @FilterConverter() Filter? filter,
   }) = _AuthorsRequestParams;
 
-  factory AuthorsRequestParams.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$AuthorsRequestParamsFromJson(json);
 }

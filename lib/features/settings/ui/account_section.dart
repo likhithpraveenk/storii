@@ -8,7 +8,7 @@ import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class AccountSection extends ConsumerWidget {
-  const AccountSection({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

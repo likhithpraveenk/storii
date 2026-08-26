@@ -5,7 +5,7 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class MoreMetadataButton extends StatelessWidget {
-  const MoreMetadataButton(this.item, {super.key});
+  const new(this.item, {super.key});
 
   final LibraryItem item;
 
@@ -41,7 +41,7 @@ class MoreMetadataButton extends StatelessWidget {
 }
 
 class _MoreMetadataSheet extends StatelessWidget {
-  const _MoreMetadataSheet(this.item);
+  const new(this.item);
 
   final LibraryItem item;
 
@@ -103,7 +103,7 @@ class _MoreMetadataSheet extends StatelessWidget {
 }
 
 class _MetadataRow extends StatelessWidget {
-  const _MetadataRow(this.label, this.value);
+  const new(this.label, this.value);
   final String label;
   final String? value;
 
@@ -116,7 +116,6 @@ class _MetadataRow extends StatelessWidget {
     return Padding(
       padding: const .symmetric(vertical: 4),
       child: Row(
-        crossAxisAlignment: .center,
         children: [
           SizedBox(
             width: 120,

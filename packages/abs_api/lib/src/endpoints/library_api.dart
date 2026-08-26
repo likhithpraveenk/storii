@@ -1,22 +1,10 @@
 import 'package:abs_api/src/client/api_client.dart';
 import 'package:abs_api/src/endpoints/api_routes.dart';
-import 'package:abs_api/src/models/author.dart';
-import 'package:abs_api/src/models/authors_request_params.dart';
-import 'package:abs_api/src/models/json_helpers.dart';
-import 'package:abs_api/src/models/library.dart';
-import 'package:abs_api/src/models/library_items_request_params.dart';
-import 'package:abs_api/src/models/library_items_response.dart';
-import 'package:abs_api/src/models/library_response.dart';
-import 'package:abs_api/src/models/recent_episodes_response.dart';
-import 'package:abs_api/src/models/search_response.dart';
-import 'package:abs_api/src/models/series.dart';
-import 'package:abs_api/src/models/series_request_params.dart';
-import 'package:abs_api/src/models/series_response.dart';
-import 'package:abs_api/src/models/shelf.dart';
+import 'package:abs_api/src/models/models.dart';
 
 class LibraryApi {
   final ApiClient api;
-  const LibraryApi(this.api);
+  const new(this.api);
 
   Future<List<Library>> getAll() async {
     final response = await api.request(ApiRoutes.libraries, method: .get);
@@ -141,5 +129,21 @@ class LibraryApi {
       method: .post,
       query: {'force': forceScan ? '1' : '0'},
     );
+  }
+
+  Future<List<Collection>> getCollections({required String libraryId}) async {
+    final response = await api.request(
+      ApiRoutes.libraryCollections(libraryId),
+      method: .get,
+    );
+    return listFromJsonKey(response.data, 'results', Collection.fromJson);
+  }
+
+  Future<List<Playlist>> getUserPlaylists({required String libraryId}) async {
+    final response = await api.request(
+      ApiRoutes.libraryPlaylists(libraryId),
+      method: .get,
+    );
+    return listFromJsonKey(response.data, 'results', Playlist.fromJson);
   }
 }

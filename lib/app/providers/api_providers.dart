@@ -136,3 +136,15 @@ Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
   ref.onDispose(api.dispose);
   return api;
 }
+
+@riverpod
+CollectionsApi collectionsApi(Ref ref, UserDomain user) {
+  final apiClient = ref.watch(apiClientProvider(user));
+  return CollectionsApi(apiClient);
+}
+
+@riverpod
+PlaylistsApi playlistsApi(Ref ref, UserDomain user) {
+  final apiClient = ref.watch(apiClientProvider(user));
+  return PlaylistsApi(apiClient);
+}

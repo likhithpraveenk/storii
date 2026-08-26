@@ -5,11 +5,7 @@ class ExpandableHtml extends StatefulWidget {
   final String data;
   final double collapsedHeight;
 
-  const ExpandableHtml({
-    super.key,
-    required this.data,
-    this.collapsedHeight = 80,
-  });
+  const new({super.key, required this.data, this.collapsedHeight = 80});
 
   @override
   State<ExpandableHtml> createState() => _ExpandableHtmlState();
@@ -43,7 +39,7 @@ class _ExpandableHtmlState extends State<ExpandableHtml> {
                   end: .bottomCenter,
                   colors: [
                     Colors.black,
-                    isExpanded ? Colors.black : Colors.transparent,
+                    if (isExpanded) Colors.black else Colors.transparent,
                   ],
                   stops: const [0.8, 1.0],
                 ).createShader(bounds),

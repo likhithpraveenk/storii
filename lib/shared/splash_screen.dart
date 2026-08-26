@@ -3,7 +3,7 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -19,7 +19,7 @@ BoxDecoration dialogDecoration(BuildContext context) {
 }
 
 class AppDialog extends StatelessWidget {
-  const AppDialog({
+  const new({
     super.key,
     required this.title,
     this.body,

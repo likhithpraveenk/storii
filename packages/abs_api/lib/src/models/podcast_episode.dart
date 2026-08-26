@@ -8,7 +8,7 @@ part 'podcast_episode.g.dart';
 sealed class PodcastEpisode with _$PodcastEpisode {
   @DateTimeEpochConverter()
   @DurationPreciseSecondsConverter()
-  const factory PodcastEpisode({
+  const factory({
     required String libraryItemId,
     required String podcastId,
     required String id,
@@ -31,6 +31,5 @@ sealed class PodcastEpisode with _$PodcastEpisode {
     PodcastMedia? podcast,
   }) = _PodcastEpisode;
 
-  factory PodcastEpisode.fromJson(Map<String, dynamic> json) =>
-      _$PodcastEpisodeFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$PodcastEpisodeFromJson(json);
 }

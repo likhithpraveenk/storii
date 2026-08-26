@@ -14,7 +14,7 @@ class SearchResultsView extends ConsumerWidget {
   final SearchResponse response;
   final void Function(SearchFilter filter)? onViewAll;
 
-  const SearchResultsView(this.response, {super.key, this.onViewAll});
+  const new(this.response, {super.key, this.onViewAll});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

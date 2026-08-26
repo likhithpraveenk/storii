@@ -697,3 +697,157 @@ final class SocketApiFamily extends $Family
   @override
   String toString() => r'socketApiProvider';
 }
+
+@ProviderFor(collectionsApi)
+final collectionsApiProvider = CollectionsApiFamily._();
+
+final class CollectionsApiProvider
+    extends $FunctionalProvider<CollectionsApi, CollectionsApi, CollectionsApi>
+    with $Provider<CollectionsApi> {
+  CollectionsApiProvider._({
+    required CollectionsApiFamily super.from,
+    required UserDomain super.argument,
+  }) : super(
+         retry: null,
+         name: r'collectionsApiProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$collectionsApiHash();
+
+  @override
+  String toString() {
+    return r'collectionsApiProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $ProviderElement<CollectionsApi> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  CollectionsApi create(Ref ref) {
+    final argument = this.argument as UserDomain;
+    return collectionsApi(ref, argument);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CollectionsApi value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CollectionsApi>(value),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is CollectionsApiProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$collectionsApiHash() => r'81965b59696806c10543bf865734e6d74c9e63ee';
+
+final class CollectionsApiFamily extends $Family
+    with $FunctionalFamilyOverride<CollectionsApi, UserDomain> {
+  CollectionsApiFamily._()
+    : super(
+        retry: null,
+        name: r'collectionsApiProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  CollectionsApiProvider call(UserDomain user) =>
+      CollectionsApiProvider._(argument: user, from: this);
+
+  @override
+  String toString() => r'collectionsApiProvider';
+}
+
+@ProviderFor(playlistsApi)
+final playlistsApiProvider = PlaylistsApiFamily._();
+
+final class PlaylistsApiProvider
+    extends $FunctionalProvider<PlaylistsApi, PlaylistsApi, PlaylistsApi>
+    with $Provider<PlaylistsApi> {
+  PlaylistsApiProvider._({
+    required PlaylistsApiFamily super.from,
+    required UserDomain super.argument,
+  }) : super(
+         retry: null,
+         name: r'playlistsApiProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$playlistsApiHash();
+
+  @override
+  String toString() {
+    return r'playlistsApiProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $ProviderElement<PlaylistsApi> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  PlaylistsApi create(Ref ref) {
+    final argument = this.argument as UserDomain;
+    return playlistsApi(ref, argument);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PlaylistsApi value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PlaylistsApi>(value),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is PlaylistsApiProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$playlistsApiHash() => r'28818475d3d2267563fbeef4b0db178842e8e8e0';
+
+final class PlaylistsApiFamily extends $Family
+    with $FunctionalFamilyOverride<PlaylistsApi, UserDomain> {
+  PlaylistsApiFamily._()
+    : super(
+        retry: null,
+        name: r'playlistsApiProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  PlaylistsApiProvider call(UserDomain user) =>
+      PlaylistsApiProvider._(argument: user, from: this);
+
+  @override
+  String toString() => r'playlistsApiProvider';
+}

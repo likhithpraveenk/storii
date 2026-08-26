@@ -7,7 +7,7 @@ import 'package:storii/features/player/logic/audio_providers.dart';
 class AppSeekButton extends ConsumerWidget {
   final bool isForward;
 
-  const AppSeekButton({super.key, required this.isForward});
+  const new({super.key, required this.isForward});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -63,7 +63,7 @@ String _getDurationLabel(Duration duration) {
 class AppSeekButtonBig extends ConsumerWidget {
   final bool isForward;
 
-  const AppSeekButtonBig({super.key, required this.isForward});
+  const new({super.key, required this.isForward});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -59,3 +59,15 @@ ServerSettings? currentServerSettings(Ref ref) {
   if (serverId == null) return null;
   return ref.watch(serverSettingsStoreProvider).value?[serverId];
 }
+
+@riverpod
+Future<bool> canUserUpdate(Ref ref) async {
+  final permissions = await ref.watch(userPermissionsProvider.future);
+  return permissions?.update ?? false;
+}
+
+@riverpod
+Future<bool> canUserDelete(Ref ref) async {
+  final permissions = await ref.watch(userPermissionsProvider.future);
+  return permissions?.delete ?? false;
+}

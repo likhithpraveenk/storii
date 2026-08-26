@@ -4,7 +4,7 @@ import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 
 class NavBar extends ConsumerWidget {
-  const NavBar({required this.currentIndex, required this.onTap, super.key});
+  const new({required this.currentIndex, required this.onTap, super.key});
 
   final int currentIndex;
   final void Function(int) onTap;

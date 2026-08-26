@@ -48,7 +48,7 @@ class PlayerMode extends _$PlayerMode {
 @riverpod
 class PlayerHeight extends _$PlayerHeight {
   @override
-  double build() => 0.0;
+  double build() => 0;
 
   void set(double value) => state = value;
 
@@ -75,7 +75,7 @@ double playerExpandFactor(Ref ref) {
   final height = ref.watch(playerHeightProvider);
   final bounds = ref.watch(playerBoundsProvider);
 
-  if (height <= bounds.min) return 0.0;
+  if (height <= bounds.min) return 0;
   return ((height - bounds.min) / (bounds.max - bounds.min)).clamp(0.0, 1.0);
 }
 

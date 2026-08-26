@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class DashedUnderlinePainter extends CustomPainter {
   final Color color;
-  DashedUnderlinePainter({required this.color});
+  new({required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {

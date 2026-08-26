@@ -6,7 +6,7 @@ class NavItem {
   final IconData icon;
   final IconData selectedIcon;
 
-  const NavItem({
+  const new({
     required this.route,
     required this.icon,
     required this.selectedIcon,

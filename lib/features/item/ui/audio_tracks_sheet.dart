@@ -55,7 +55,7 @@ void showAudioTracksSheet(
 }
 
 class _AudioTrackTile extends StatefulWidget {
-  const _AudioTrackTile({
+  const new({
     required this.track,
     required this.index,
     this.audioFile,
@@ -153,7 +153,7 @@ class _AudioTrackTileState extends State<_AudioTrackTile> {
 }
 
 class _ExpandedDetails extends StatelessWidget {
-  const _ExpandedDetails({required this.file, required this.track});
+  const new({required this.file, required this.track});
 
   final AudioFile file;
   final AudioTrack track;

@@ -2,7 +2,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:storii/shared/helpers/audio_mime_helper.dart';
 
 class AppAudioSource {
-  const AppAudioSource({
+  const new({
     required this.uri,
     required this.tag,
     required this.type,

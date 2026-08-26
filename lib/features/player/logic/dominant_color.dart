@@ -16,7 +16,7 @@ Future<Color?> dominantColor(Ref ref, String coverUrl) async {
   final frame = await codec.getNextFrame();
   final image = frame.image;
 
-  final byteData = await image.toByteData(format: .rawRgba);
+  final byteData = await image.toByteData();
   if (byteData == null) return null;
 
   final pixels = byteData.buffer.asUint8List();
@@ -46,10 +46,10 @@ Future<Color?> dominantColor(Ref ref, String coverUrl) async {
         ((g ~/ bucketSize) << 8) |
         (b ~/ bucketSize);
 
-    final bucket = buckets.putIfAbsent(key, _ColorBucket.new);
-    bucket.r += r;
-    bucket.g += g;
-    bucket.b += b;
+    final bucket = buckets.putIfAbsent(key, _ColorBucket.new)
+      ..r += r
+      ..g += g
+      ..b += b;
     bucket.count++;
   }
 

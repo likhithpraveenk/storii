@@ -90,8 +90,8 @@ ThemeData themeData(Ref ref, Brightness brightness) {
       thumbColor: WidgetStateProperty.all(colorScheme.primaryContainer),
       radius: const .circular(16),
       interactive: true,
-      mainAxisMargin: 4.0,
-      crossAxisMargin: 2.0,
+      mainAxisMargin: 4,
+      crossAxisMargin: 2,
       thumbVisibility: WidgetStateProperty.all(true),
     ),
   );
@@ -104,7 +104,7 @@ TextScaler textScaler(Ref ref) {
 }
 
 @riverpod
-void appStartThemeUpdate(Ref ref) async {
+Future<void> appStartThemeUpdate(Ref ref) async {
   final useDynamic = ref.read(useDynamicColorProvider);
   if (useDynamic) {
     final appColor = ref.read(appColorProvider);

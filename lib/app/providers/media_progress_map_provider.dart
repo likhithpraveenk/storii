@@ -16,7 +16,7 @@ class MediaProgressSyncController extends _$MediaProgressSyncController {
   StreamSubscription? _progressSub;
 
   @override
-  void build() async {
+  Future<void> build() async {
     ref.onDispose(() {
       _progressSub?.cancel();
     });

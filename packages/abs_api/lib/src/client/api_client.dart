@@ -20,7 +20,7 @@ class ApiClient {
 
   Future<bool>? _refreshFuture;
 
-  ApiClient({
+  new({
     required this.baseUrl,
     this.getAccessToken,
     this.getRefreshToken,

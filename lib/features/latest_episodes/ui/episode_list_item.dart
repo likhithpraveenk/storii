@@ -12,7 +12,7 @@ import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/dashed_underline.dart';
 
 class EpisodeListItem extends ConsumerWidget {
-  const EpisodeListItem(this.episode, {super.key});
+  const new(this.episode, {super.key});
 
   final PodcastEpisode episode;
 
@@ -55,7 +55,7 @@ class EpisodeListItem extends ConsumerWidget {
                       onTap: () {
                         context.push(
                           AppRoute.itemDetail.path,
-                          extra: {'id': episode.libraryItemId},
+                          extra: episode.libraryItemId,
                         );
                       },
                       child: CustomPaint(

@@ -21,7 +21,7 @@ const requestToJsonRemoveNull = JsonSerializable(
 );
 
 class BoolBinaryConverter implements JsonConverter<bool, int> {
-  const BoolBinaryConverter();
+  const new();
 
   @override
   bool fromJson(int json) => json == 1;
@@ -31,7 +31,7 @@ class BoolBinaryConverter implements JsonConverter<bool, int> {
 }
 
 class DateTimeEpochConverter implements JsonConverter<DateTime, int> {
-  const DateTimeEpochConverter();
+  const new();
 
   @override
   DateTime fromJson(int json) => DateTime.fromMillisecondsSinceEpoch(json);
@@ -42,7 +42,7 @@ class DateTimeEpochConverter implements JsonConverter<DateTime, int> {
 
 class DurationPreciseSecondsConverter
     implements JsonConverter<Duration, Object> {
-  const DurationPreciseSecondsConverter();
+  const new();
 
   @override
   Duration fromJson(Object json) {
@@ -61,7 +61,7 @@ class DurationPreciseSecondsConverter
 }
 
 class DurationMsConverter implements JsonConverter<Duration, int> {
-  const DurationMsConverter();
+  const new();
 
   @override
   Duration fromJson(int json) => Duration(milliseconds: json);
@@ -71,7 +71,7 @@ class DurationMsConverter implements JsonConverter<Duration, int> {
 }
 
 class DurationSecConverter implements JsonConverter<Duration, int> {
-  const DurationSecConverter();
+  const new();
 
   @override
   Duration fromJson(int json) => Duration(seconds: json);
@@ -81,7 +81,7 @@ class DurationSecConverter implements JsonConverter<Duration, int> {
 }
 
 class DurationMinConverter implements JsonConverter<Duration, int> {
-  const DurationMinConverter();
+  const new();
 
   @override
   Duration fromJson(int json) => Duration(minutes: json);
@@ -91,7 +91,7 @@ class DurationMinConverter implements JsonConverter<Duration, int> {
 }
 
 class FilterConverter implements JsonConverter<Filter?, String?> {
-  const FilterConverter();
+  const new();
 
   @override
   Filter? fromJson(String? json) => json != null ? Filter.parse(json) : null;

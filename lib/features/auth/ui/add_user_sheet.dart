@@ -25,7 +25,7 @@ Future<void> showAddUserSheet(
 }
 
 class AddUserSheet extends ConsumerStatefulWidget {
-  const AddUserSheet(this.serverUrl, {super.key, this.username});
+  const new(this.serverUrl, {super.key, this.username});
 
   final Uri serverUrl;
   final String? username;
@@ -57,9 +57,8 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
 
     return SafeArea(
       child: Padding(
-        padding: MediaQuery.viewInsetsOf(
-          context,
-        ).add(const .symmetric(horizontal: 24)),
+        padding: MediaQuery.viewInsetsOf(context)
+            .add(const .symmetric(horizontal: 24)),
         child: Column(
           children: [
             serverStatusAsync.when(

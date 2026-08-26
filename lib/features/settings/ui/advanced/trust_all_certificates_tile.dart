@@ -4,7 +4,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 
 class TrustAllCertificatesTile extends ConsumerWidget {
-  const TrustAllCertificatesTile({super.key, this.inSettings = true});
+  const new({super.key, this.inSettings = true});
 
   final bool inSettings;
 

@@ -5,7 +5,7 @@ import 'package:abs_api/src/models/json_helpers.dart';
 
 class AuthorApi {
   final ApiClient api;
-  const AuthorApi(this.api);
+  const new(this.api);
 
   Future<Author> get(String authorId, String libraryId) async {
     final response = await api.request(

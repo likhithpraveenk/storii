@@ -50,6 +50,9 @@ _UserSettings _$UserSettingsFromJson(
       ? DefaultUserSettings.skipBackward
       : Duration(microseconds: (json['skipBackward'] as num).toInt()),
   speed: (json['speed'] as num?)?.toDouble() ?? DefaultUserSettings.speed,
+  stackedImagesVisible:
+      (json['stackedImagesVisible'] as num?)?.toInt() ??
+      DefaultUserSettings.stackedImagesVisible,
   historyLimit:
       (json['historyLimit'] as num?)?.toInt() ??
       DefaultUserSettings.historyLimit,
@@ -179,6 +182,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'skipForward': instance.skipForward.inMicroseconds,
   'skipBackward': instance.skipBackward.inMicroseconds,
   'speed': instance.speed,
+  'stackedImagesVisible': instance.stackedImagesVisible,
   'historyLimit': instance.historyLimit,
   'downloadOnUnmeteredOnly': instance.downloadOnUnmeteredOnly,
   'showChapterPositionInHistory': instance.showChapterPositionInHistory,
@@ -228,6 +232,7 @@ const _$NavTargetEnumMap = {
   NavTarget.downloads: 'downloads',
   NavTarget.collections: 'collections',
   NavTarget.authors: 'authors',
+  NavTarget.playlists: 'playlists',
   NavTarget.more: 'more',
 };
 

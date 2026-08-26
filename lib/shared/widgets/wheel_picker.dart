@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:storii/app/config/constants.dart';
 
 class WheelPicker<T> extends StatefulWidget {
-  const WheelPicker({
+  const new({
     super.key,
     required this.initialValue,
     required this.items,

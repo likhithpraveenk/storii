@@ -6,12 +6,12 @@ part 'recent_episodes_response.g.dart';
 
 @freezed
 sealed class RecentEpisodesResponse with _$RecentEpisodesResponse {
-  const factory RecentEpisodesResponse({
+  const factory({
     required List<PodcastEpisode> episodes,
     required int limit,
     required int page,
   }) = _RecentEpisodesResponse;
 
-  factory RecentEpisodesResponse.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$RecentEpisodesResponseFromJson(json);
 }

@@ -7,7 +7,7 @@ part 'library_filter_data.g.dart';
 
 @freezed
 abstract class LibraryFilterData with _$LibraryFilterData {
-  const factory LibraryFilterData({
+  const factory({
     required List<Author> authors,
     required List<String> genres,
     required List<String> tags,
@@ -18,6 +18,6 @@ abstract class LibraryFilterData with _$LibraryFilterData {
     required List<String> publishedDecades,
   }) = _LibraryFilterData;
 
-  factory LibraryFilterData.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$LibraryFilterDataFromJson(json);
 }

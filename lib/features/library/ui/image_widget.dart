@@ -12,7 +12,7 @@ import 'package:storii/features/settings/logic/app_cache.dart';
 import 'package:storii/shared/widgets/placeholder_image.dart';
 
 class ImageWidget extends ConsumerStatefulWidget {
-  const ImageWidget({
+  const new({
     super.key,
     required this.id,
     required this.type,

@@ -10,11 +10,7 @@ class AppScrollbar extends ConsumerStatefulWidget {
   final Widget child;
   final ScrollController controller;
 
-  const AppScrollbar({
-    super.key,
-    required this.child,
-    required this.controller,
-  });
+  const new({super.key, required this.child, required this.controller});
 
   @override
   ConsumerState<AppScrollbar> createState() => _AppScrollbarState();
@@ -151,7 +147,7 @@ class _AppScrollbarState extends ConsumerState<AppScrollbar>
 
 class Thumb extends StatelessWidget {
   final double width, height;
-  const Thumb({required this.width, required this.height, super.key});
+  const new({required this.width, required this.height, super.key});
 
   @override
   Widget build(BuildContext context) {

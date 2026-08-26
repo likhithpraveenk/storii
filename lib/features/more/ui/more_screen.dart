@@ -9,7 +9,7 @@ import 'package:storii/features/more/ui/about_screen.dart';
 import 'package:storii/shared/widgets/logo_header.dart';
 
 class MoreScreen extends ConsumerWidget {
-  const MoreScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

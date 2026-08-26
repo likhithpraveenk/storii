@@ -26,8 +26,7 @@ Future<FormData> _multipart(
   Map<String, String> fields,
   Map<String, FileUpload> files,
 ) async {
-  final map = <String, dynamic>{};
-  map.addAll(fields);
+  final map = <String, dynamic>{}..addAll(fields);
 
   final multiParts = await Future.wait(
     files.entries.map((entry) async {

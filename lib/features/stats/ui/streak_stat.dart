@@ -3,7 +3,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/features/stats/ui/stat_widgets.dart';
 
 class StreakStat extends StatelessWidget {
-  const StreakStat(this.days, {super.key});
+  const new(this.days, {super.key});
   final Map<DateTime, Duration> days;
 
   @override
@@ -35,12 +35,9 @@ class StreakStat extends StatelessWidget {
 ({int current, int longest}) findStreaks(Map<DateTime, Duration> daysMap) {
   if (daysMap.isEmpty) return (current: 0, longest: 0);
 
-  final normalDays = daysMap.keys
-      .map((d) => DateTime(d.year, d.month, d.day))
-      .toSet()
-      .toList();
-
-  normalDays.sort();
+  final normalDays =
+      daysMap.keys.map((d) => DateTime(d.year, d.month, d.day)).toSet().toList()
+        ..sort();
 
   int longest = 1;
   int currentRun = 1;
@@ -81,11 +78,7 @@ class StreakStat extends StatelessWidget {
 }
 
 class _StreakStat extends StatelessWidget {
-  const _StreakStat({
-    required this.icon,
-    required this.label,
-    required this.days,
-  });
+  const new({required this.icon, required this.label, required this.days});
   final IconData icon;
   final String label;
   final int days;

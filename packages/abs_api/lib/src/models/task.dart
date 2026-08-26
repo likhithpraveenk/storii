@@ -7,7 +7,7 @@ part 'task.g.dart';
 @freezed
 sealed class Task with _$Task {
   @DateTimeEpochConverter()
-  const factory Task({
+  const factory({
     String? id,
     String? action,
     TaskData? data,
@@ -24,25 +24,24 @@ sealed class Task with _$Task {
     DateTime? finishedAt,
   }) = _Task;
 
-  factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
 }
 
 @freezed
 sealed class TaskData with _$TaskData {
-  const factory TaskData({
+  const factory({
     String? libraryId,
     String? libraryName,
     MediaType? libraryMediaType,
     TaskScanResults? scanResults,
   }) = _TaskData;
 
-  factory TaskData.fromJson(Map<String, dynamic> json) =>
-      _$TaskDataFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$TaskDataFromJson(json);
 }
 
 @freezed
 sealed class TaskScanResults with _$TaskScanResults {
-  const factory TaskScanResults({
+  const factory({
     int? added,
     int? updated,
     int? missing,
@@ -50,6 +49,6 @@ sealed class TaskScanResults with _$TaskScanResults {
     String? text,
   }) = _TaskScanResults;
 
-  factory TaskScanResults.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$TaskScanResultsFromJson(json);
 }

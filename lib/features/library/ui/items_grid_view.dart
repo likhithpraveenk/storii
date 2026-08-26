@@ -7,7 +7,7 @@ import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 
 class ItemsGridView extends ConsumerWidget {
-  const ItemsGridView(this.items, {super.key, this.scrollController});
+  const new(this.items, {super.key, this.scrollController});
 
   final List<LibraryItem> items;
   final ScrollController? scrollController;
@@ -23,6 +23,7 @@ class ItemsGridView extends ConsumerWidget {
 
     return GridView.builder(
       controller: scrollController,
+      physics: const AlwaysScrollableScrollPhysics(),
       padding: const .symmetric(horizontal: 16, vertical: 16),
       itemCount: items.length,
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -30,7 +31,6 @@ class ItemsGridView extends ConsumerWidget {
         mainAxisExtent: isSquare ? null : height,
         mainAxisSpacing: isSquare ? 16 : 4,
         crossAxisSpacing: 16,
-        childAspectRatio: 1,
       ),
       itemBuilder: (context, index) {
         return LibraryItemCard(key: ValueKey(items[index].id), items[index]);

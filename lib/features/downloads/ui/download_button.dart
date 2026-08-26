@@ -11,7 +11,7 @@ import 'package:storii/features/downloads/ui/download_widgets.dart';
 import 'package:storii/features/downloads/ui/downloads_screen.dart';
 
 class ActiveDownloadsButton extends ConsumerWidget {
-  const ActiveDownloadsButton({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,11 +61,7 @@ class ActiveDownloadsButton extends ConsumerWidget {
 }
 
 class DownloadButton extends ConsumerWidget {
-  const DownloadButton({
-    super.key,
-    required this.libraryItemId,
-    this.episodeId,
-  });
+  const new({super.key, required this.libraryItemId, this.episodeId});
 
   final String libraryItemId;
   final String? episodeId;
@@ -119,7 +115,7 @@ class DownloadButton extends ConsumerWidget {
 }
 
 class _ProgressButton extends StatelessWidget {
-  const _ProgressButton({required this.progress, required this.onCancel});
+  const new({required this.progress, required this.onCancel});
 
   final double progress;
   final VoidCallback onCancel;

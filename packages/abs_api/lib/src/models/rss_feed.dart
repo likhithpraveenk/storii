@@ -9,7 +9,7 @@ part 'rss_feed.g.dart';
 @freezed
 sealed class RssFeed with _$RssFeed {
   @DateTimeEpochConverter()
-  const factory RssFeed({
+  const factory({
     required String id,
     required String entityId,
     required String entityType,
@@ -24,6 +24,5 @@ sealed class RssFeed with _$RssFeed {
     DateTime? updatedAt,
   }) = _RssFeed;
 
-  factory RssFeed.fromJson(Map<String, dynamic> json) =>
-      _$RssFeedFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$RssFeedFromJson(json);
 }

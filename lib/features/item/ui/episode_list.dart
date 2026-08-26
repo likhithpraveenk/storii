@@ -7,7 +7,7 @@ import 'package:storii/features/item/ui/episode_tile.dart';
 import 'package:storii/shared/helpers/dummy_models.dart';
 
 class EpisodeList extends ConsumerStatefulWidget {
-  const EpisodeList({super.key, required this.episodes, required this.itemId});
+  const new({super.key, required this.episodes, required this.itemId});
   final List<PodcastEpisode> episodes;
   final String itemId;
 

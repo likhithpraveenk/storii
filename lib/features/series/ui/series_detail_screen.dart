@@ -14,7 +14,7 @@ import 'package:storii/shared/widgets/expandable_text.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class SeriesDetailScreen extends ConsumerWidget {
-  const SeriesDetailScreen({super.key, required this.id});
+  const new({super.key, required this.id});
 
   final String id;
 
@@ -71,7 +71,7 @@ class SeriesDetailScreen extends ConsumerWidget {
 }
 
 class _SeriesOptionsWidget extends ConsumerWidget {
-  const _SeriesOptionsWidget({required this.seriesId});
+  const new({required this.seriesId});
 
   final String seriesId;
 

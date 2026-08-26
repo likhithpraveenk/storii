@@ -235,14 +235,11 @@ void main() {
       },
     );
 
-    test(
-      'resolveSeek overshooting chapter 0 into the boundary resolves to next track',
-      () {
-        final result = resolver.resolveSeek(0, const Duration(seconds: 45));
-        expect(result?.trackIndex, 1);
-        expect(result?.trackPosition, Duration.zero);
-      },
-    );
+    test('resolveSeek overshooting chapter 0 into the boundary resolves to next track', () {
+      final result = resolver.resolveSeek(0, const Duration(seconds: 45));
+      expect(result?.trackIndex, 1);
+      expect(result?.trackPosition, Duration.zero);
+    });
 
     test('resolveSeek past total duration returns null', () {
       final result = resolver.resolveSeek(1, const Duration(seconds: 50));

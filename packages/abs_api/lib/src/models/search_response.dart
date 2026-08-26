@@ -6,7 +6,7 @@ part 'search_response.g.dart';
 
 @freezed
 abstract class SearchResponse with _$SearchResponse {
-  const factory SearchResponse({
+  const factory({
     @Default([]) List<SearchResultItem> narrators,
     @Default([]) List<Author> authors,
     @Default([]) List<SearchResultItem> tags,
@@ -18,18 +18,15 @@ abstract class SearchResponse with _$SearchResponse {
     @JsonKey(readValue: _seriesCombined) @Default([]) List<Series> series,
   }) = _SearchResponse;
 
-  factory SearchResponse.fromJson(Map<String, dynamic> json) =>
-      _$SearchResponseFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$SearchResponseFromJson(json);
 }
 
 @freezed
 sealed class SearchResultItem with _$SearchResultItem {
-  const factory SearchResultItem({
-    required String name,
-    @Default(0) int numBooks,
-  }) = _SearchResultItem;
+  const factory({required String name, @Default(0) int numBooks}) =
+      _SearchResultItem;
 
-  factory SearchResultItem.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$SearchResultItemFromJson(json);
 }
 

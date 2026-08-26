@@ -9,7 +9,7 @@ part 'app_settings.g.dart';
 
 @freezed
 sealed class AppSettings with _$AppSettings {
-  const factory AppSettings({
+  const factory({
     @Default(ThemeMode.system) ThemeMode themeMode,
 
     @Default(false) bool useDynamicColor,
@@ -37,6 +37,5 @@ sealed class AppSettings with _$AppSettings {
     @Default(false) bool trustAllCertificates,
   }) = _AppSettings;
 
-  factory AppSettings.fromJson(Map<String, dynamic> json) =>
-      _$AppSettingsFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);
 }

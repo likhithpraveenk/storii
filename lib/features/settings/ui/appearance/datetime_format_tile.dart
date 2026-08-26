@@ -8,7 +8,7 @@ import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 class DateTimeFormatTile extends ConsumerWidget {
-  const DateTimeFormatTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +30,7 @@ class DateTimeFormatTile extends ConsumerWidget {
 }
 
 class DateTimeFormatSheet extends ConsumerStatefulWidget {
-  const DateTimeFormatSheet({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<DateTimeFormatSheet> createState() =>
@@ -127,7 +127,7 @@ class _DateTimeFormatSheetState extends ConsumerState<DateTimeFormatSheet> {
 }
 
 class _PreviewBox extends StatelessWidget {
-  const _PreviewBox({required this.isValid, required this.previewPattern});
+  const new({required this.isValid, required this.previewPattern});
 
   final bool isValid;
   final String previewPattern;

@@ -4,10 +4,11 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 
 class UnmeteredOnlyTile extends ConsumerWidget {
-  const UnmeteredOnlyTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // TODO: use unmetered only in downloads
     final unMeteredOnly = ref.watch(downloadOnUnmeteredOnlyProvider);
 
     return SwitchListTile(

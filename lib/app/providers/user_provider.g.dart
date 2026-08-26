@@ -174,3 +174,69 @@ final class CurrentServerSettingsProvider
 
 String _$currentServerSettingsHash() =>
     r'2cec323c1be8fab5873bb9801d22d6748715ec3f';
+
+@ProviderFor(canUserUpdate)
+final canUserUpdateProvider = CanUserUpdateProvider._();
+
+final class CanUserUpdateProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
+    with $FutureModifier<bool>, $FutureProvider<bool> {
+  CanUserUpdateProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'canUserUpdateProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$canUserUpdateHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<bool> create(Ref ref) {
+    return canUserUpdate(ref);
+  }
+}
+
+String _$canUserUpdateHash() => r'01927116eba35e47a54f3cb256bd973fda2ce2ba';
+
+@ProviderFor(canUserDelete)
+final canUserDeleteProvider = CanUserDeleteProvider._();
+
+final class CanUserDeleteProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
+    with $FutureModifier<bool>, $FutureProvider<bool> {
+  CanUserDeleteProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'canUserDeleteProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$canUserDeleteHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<bool> create(Ref ref) {
+    return canUserDelete(ref);
+  }
+}
+
+String _$canUserDeleteHash() => r'9d62277a56e6b487f0acc0188b6bb145c820a657';

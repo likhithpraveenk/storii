@@ -9,7 +9,7 @@ String _labelDuration(int ms) =>
     '${(ms / Duration.millisecondsPerSecond).toStringAsFixed(1)}s';
 
 class ScrollThumbDurationTile extends ConsumerStatefulWidget {
-  const ScrollThumbDurationTile({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<ScrollThumbDurationTile> createState() =>
@@ -64,7 +64,7 @@ class _ScrollThumbDurationTileState
 }
 
 class ScrollThumbHeightTile extends ConsumerStatefulWidget {
-  const ScrollThumbHeightTile({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<ScrollThumbHeightTile> createState() =>
@@ -116,7 +116,7 @@ class _ScrollThumbHeightTileState extends ConsumerState<ScrollThumbHeightTile> {
 }
 
 class ScrollThumbWidthTile extends ConsumerStatefulWidget {
-  const ScrollThumbWidthTile({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<ScrollThumbWidthTile> createState() =>

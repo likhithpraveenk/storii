@@ -13,7 +13,7 @@ class ExpandableDescriptionWithChips extends ConsumerStatefulWidget {
   final List<String> tags;
   final double collapsedHeight;
 
-  const ExpandableDescriptionWithChips({
+  const new({
     super.key,
     required this.data,
     required this.genres,
@@ -90,7 +90,7 @@ class _ExpandableDescriptionWithChipsState
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.black,
-                    isExpanded ? Colors.black : Colors.transparent,
+                    if (isExpanded) Colors.black else Colors.transparent,
                   ],
                   stops: const [0.6, 1.0],
                 ).createShader(bounds),
@@ -109,16 +109,17 @@ class _ExpandableDescriptionWithChipsState
               isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
             ),
             if (chips.isNotEmpty)
-              isExpanded
-                  ? Padding(
-                      padding: const .symmetric(horizontal: 16),
-                      child: Wrap(spacing: 8, runSpacing: 4, children: chips),
-                    )
-                  : SingleChildScrollView(
-                      scrollDirection: .horizontal,
-                      padding: const .symmetric(horizontal: 16, vertical: 8),
-                      child: Row(spacing: 8, children: chips),
-                    ),
+              if (isExpanded)
+                Padding(
+                  padding: const .symmetric(horizontal: 16),
+                  child: Wrap(spacing: 8, runSpacing: 4, children: chips),
+                )
+              else
+                SingleChildScrollView(
+                  scrollDirection: .horizontal,
+                  padding: const .symmetric(horizontal: 16, vertical: 8),
+                  child: Row(spacing: 8, children: chips),
+                ),
           ],
         ),
       ),

@@ -62,7 +62,7 @@ final class DominantColorProvider
   }
 }
 
-String _$dominantColorHash() => r'd840ba0dc4600065578dcd80042fddd8df7939ae';
+String _$dominantColorHash() => r'6187ec7b67dea7bc65a0bf7b75c5511017783084';
 
 /// getting dominant [Color] of an image via histogram/bucketing approach
 

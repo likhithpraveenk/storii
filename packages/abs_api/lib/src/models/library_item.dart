@@ -7,7 +7,7 @@ part 'library_item.g.dart';
 @freezed
 sealed class LibraryItem with _$LibraryItem {
   @DateTimeEpochConverter()
-  const factory LibraryItem({
+  const factory({
     required String id,
     required String libraryId,
     required DateTime addedAt,
@@ -24,6 +24,5 @@ sealed class LibraryItem with _$LibraryItem {
     PodcastEpisode? recentEpisode,
   }) = _LibraryItem;
 
-  factory LibraryItem.fromJson(Map<String, dynamic> json) =>
-      _$LibraryItemFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$LibraryItemFromJson(json);
 }

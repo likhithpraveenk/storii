@@ -6,12 +6,13 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class PlayerBackgroundThemeTile extends ConsumerWidget {
-  const PlayerBackgroundThemeTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(playerBackgroundThemeProvider);
     return ListTile(
+      leading: const Icon(Icons.wallpaper),
       trailing: const Icon(Icons.chevron_right),
       title: Text(l10n.playerBackgroundTheme),
       subtitle: Text(theme.label),

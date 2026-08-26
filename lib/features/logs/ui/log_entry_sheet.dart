@@ -16,7 +16,7 @@ void showLogEntrySheet(BuildContext context, LogEntry entry) {
         return Column(
           children: [
             Padding(
-              padding: const .symmetric(horizontal: 8.0, vertical: 4.0),
+              padding: const .symmetric(horizontal: 8, vertical: 4),
               child: Stack(
                 alignment: .center,
                 children: [
@@ -89,7 +89,7 @@ ${entry.stackTrace != null ? '\nStackTrace:\n${entry.stackTrace}' : ''}
 }
 
 class _LogRow extends StatelessWidget {
-  const _LogRow(this.label, this.value);
+  const new(this.label, this.value);
   final String label;
   final String value;
 

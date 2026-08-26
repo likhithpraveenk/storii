@@ -6,7 +6,7 @@ import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class PlayButton extends ConsumerWidget {
-  const PlayButton({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +30,7 @@ class PlayButton extends ConsumerWidget {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeIn,
         width: isWide ? 110.0 : 80.0,
-        height: 80.0,
+        height: 80,
         decoration: BoxDecoration(
           color: scheme.inverseSurface,
           borderRadius: .circular(isPlaying ? 30 : 40),
@@ -74,7 +74,7 @@ class PlayButton extends ConsumerWidget {
 }
 
 class PlayButtonBig extends ConsumerWidget {
-  const PlayButtonBig({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -97,7 +97,6 @@ class PlayButtonBig extends ConsumerWidget {
           _ => audioHandler.togglePlay,
         },
         child: Align(
-          alignment: .center,
           child: switch (playbackStatus) {
             .buffering => RandomWaveform(color: iconColor),
             .completed => Icon(

@@ -9,7 +9,7 @@ import 'package:storii/app/models/playback_event.dart';
 
 extension IterableExtensions<T> on Iterable<T> {
   T? firstWhereOrNull(bool Function(T element) test) {
-    for (var element in this) {
+    for (final element in this) {
       if (test(element)) return element;
     }
     return null;
@@ -20,11 +20,11 @@ extension ColorX on Uri {
   Color get color {
     final r = (hashCode & 0xFF0000) >> 16;
     final g = (hashCode & 0x00FF00) >> 8;
-    final b = (hashCode & 0x0000FF);
+    final b = hashCode & 0x0000FF;
 
-    final brightR = (r - 30).clamp(0, 255).toInt();
-    final brightG = (g - 30).clamp(0, 255).toInt();
-    final brightB = (b - 30).clamp(0, 255).toInt();
+    final brightR = (r - 30).clamp(0, 255);
+    final brightG = (g - 30).clamp(0, 255);
+    final brightB = (b - 30).clamp(0, 255);
 
     return Color.fromARGB(255, brightR, brightG, brightB);
   }

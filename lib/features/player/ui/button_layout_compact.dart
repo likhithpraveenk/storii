@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 
 class ButtonLayoutCompact extends StatelessWidget {
-  const ButtonLayoutCompact({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class ButtonLayoutCompact extends StatelessWidget {
 class _SeekButtonCompact extends StatelessWidget {
   final bool isForward;
 
-  const _SeekButtonCompact({required this.isForward});
+  const new({required this.isForward});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class _SeekButtonCompact extends StatelessWidget {
 }
 
 class _PlayButtonCompact extends ConsumerWidget {
-  const _PlayButtonCompact();
+  const new();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

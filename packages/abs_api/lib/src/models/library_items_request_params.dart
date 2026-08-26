@@ -7,9 +7,9 @@ part 'library_items_request_params.g.dart';
 
 @freezed
 abstract class LibraryItemsRequestParams with _$LibraryItemsRequestParams {
-  const LibraryItemsRequestParams._();
+  const new _();
 
-  const factory LibraryItemsRequestParams({
+  const factory({
     @Default(0) int limit,
     @Default(0) int page,
     String? sort,
@@ -21,6 +21,6 @@ abstract class LibraryItemsRequestParams with _$LibraryItemsRequestParams {
     bool? collapseSeries,
   }) = _LibraryItemsRequestParams;
 
-  factory LibraryItemsRequestParams.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$LibraryItemsRequestParamsFromJson(json);
 }

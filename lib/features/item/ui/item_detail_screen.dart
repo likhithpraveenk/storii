@@ -24,7 +24,7 @@ import 'package:storii/shared/widgets/waveform.dart';
 class ItemDetailScreen extends ConsumerStatefulWidget {
   final String id;
 
-  const ItemDetailScreen({super.key, required this.id});
+  const new({super.key, required this.id});
 
   @override
   ConsumerState<ItemDetailScreen> createState() => _ItemDetailScreenState();
@@ -56,8 +56,9 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
             ),
             data: (item) => RefreshIndicator(
               onRefresh: () async {
-                ref.invalidate(serverUserProvider);
-                ref.invalidate(itemDetailProvider(widget.id));
+                ref
+                  ..invalidate(serverUserProvider)
+                  ..invalidate(itemDetailProvider(widget.id));
                 await ref.read(itemDetailProvider(widget.id).future);
               },
               child: AppScrollbar(

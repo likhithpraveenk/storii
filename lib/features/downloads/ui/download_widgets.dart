@@ -9,7 +9,7 @@ import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
 
 class DownloadTrackProgress extends ConsumerWidget {
-  const DownloadTrackProgress({super.key, required this.item});
+  const new({super.key, required this.item});
   final DownloadItem item;
 
   @override
@@ -82,7 +82,7 @@ class DownloadTrackProgress extends ConsumerWidget {
 }
 
 class DownloadStatusRow extends ConsumerWidget {
-  const DownloadStatusRow({super.key, required this.item});
+  const new({super.key, required this.item});
 
   final DownloadItem item;
 
@@ -141,7 +141,7 @@ class DownloadStatusRow extends ConsumerWidget {
 }
 
 class DownloadTileTrailingActions extends ConsumerWidget {
-  const DownloadTileTrailingActions({super.key, required this.item});
+  const new({super.key, required this.item});
 
   final DownloadItem item;
 

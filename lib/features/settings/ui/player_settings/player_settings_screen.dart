@@ -6,12 +6,17 @@ import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/player_settings/audio_buffer_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/fade_on_sleep_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/interrupt_skip_tile.dart';
+import 'package:storii/features/settings/ui/player_settings/os_notification_button_tiles.dart';
+import 'package:storii/features/settings/ui/player_settings/playback_controls_layout_tile.dart';
+import 'package:storii/features/settings/ui/player_settings/player_background_theme_tile.dart';
+import 'package:storii/features/settings/ui/player_settings/show_seek_buttons_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/skip_tiles.dart';
 import 'package:storii/features/settings/ui/player_settings/speed_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/sync_interval_tile.dart';
+import 'package:storii/features/settings/ui/settings_header.dart';
 
 class PlayerSettingsTile extends ConsumerWidget {
-  const PlayerSettingsTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,7 +32,7 @@ class PlayerSettingsTile extends ConsumerWidget {
 }
 
 class PlayerSettingsScreen extends ConsumerWidget {
-  const PlayerSettingsScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,14 +47,23 @@ class PlayerSettingsScreen extends ConsumerWidget {
         title: Text(l10n.playerSettings, style: textTheme.titleLarge),
       ),
       body: ListView(
-        children: const [
-          SkipForwardTile(),
-          SkipBackwardTile(),
-          InterruptSkipTile(),
-          SyncIntervalTile(),
-          SpeedTile(),
-          AudioBufferTile(),
-          FadeOnSleepTile(),
+        children: [
+          const SkipForwardTile(),
+          const SkipBackwardTile(),
+          const InterruptSkipTile(),
+          const SyncIntervalTile(),
+          const SpeedTile(),
+          const AudioBufferTile(),
+          const FadeOnSleepTile(),
+          SettingsHeader(title: l10n.miniPlayer),
+          const ShowSeekButtonsTile(),
+          SettingsHeader(title: l10n.fullPlayer),
+          const PlayerBackgroundThemeTile(),
+          const PlaybackControlsLayoutTile(),
+          SettingsHeader(title: l10n.osNotification),
+          const OsNotificationCanSeekTile(),
+          const OsNotificationCanSkipTile(),
+          const OsNotificationCanSkipChapterTile(),
         ],
       ),
     );

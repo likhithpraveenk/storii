@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final class ProviderLogger extends ProviderObserver {
-  const ProviderLogger();
+  const new();
 
   static const _noisy = {
     'globalPositionProvider',

@@ -12,7 +12,7 @@ import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class LatestEpisodesScreen extends ConsumerStatefulWidget {
-  const LatestEpisodesScreen({super.key});
+  const new({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>

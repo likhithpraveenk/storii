@@ -12,8 +12,8 @@ double gridHeight(Ref ref) {
   return switch (mode) {
     .comfortable => () {
       final scaler = ref.watch(textScalerProvider);
-      final titleSlot = scaler.scale(32.0);
-      final authorSlot = scaler.scale(20.0);
+      final titleSlot = scaler.scale(32);
+      final authorSlot = scaler.scale(20);
       const padding = 16.0;
       final metadataHeight = titleSlot + padding + authorSlot;
 
@@ -29,7 +29,7 @@ double gridHeight(Ref ref) {
 @riverpod
 double authorsGridHeight(Ref ref) {
   final scaler = ref.watch(textScalerProvider);
-  final scaledTitleHeight = scaler.scale(32.0);
+  final scaledTitleHeight = scaler.scale(32);
   const padding = 16.0;
 
   return maxCardWidthInGrid + scaledTitleHeight + padding;
@@ -39,9 +39,17 @@ double authorsGridHeight(Ref ref) {
 double seriesGridHeight(Ref ref) {
   final scaler = ref.watch(textScalerProvider);
 
-  final titleSlot = scaler.scale(32.0);
-  final authorSlot = scaler.scale(16.0);
+  final titleSlot = scaler.scale(32);
+  final authorSlot = scaler.scale(20);
   final metadataHeight = titleSlot + authorSlot;
 
   return (maxSeriesCardWidthInGrid * 0.46) + metadataHeight;
+}
+
+@riverpod
+double collectionsGridHeight(Ref ref) {
+  final scaler = ref.watch(textScalerProvider);
+  final titleSlot = scaler.scale(32);
+
+  return (maxSeriesCardWidthInGrid * 0.48) + titleSlot;
 }

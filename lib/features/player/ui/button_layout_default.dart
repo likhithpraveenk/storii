@@ -4,7 +4,7 @@ import 'package:storii/features/player/ui/play_button.dart';
 import 'package:storii/features/player/ui/seek_button.dart';
 
 class ButtonLayoutDefault extends StatelessWidget {
-  const ButtonLayoutDefault({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

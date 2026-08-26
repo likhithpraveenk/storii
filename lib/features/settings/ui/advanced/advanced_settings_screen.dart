@@ -8,7 +8,7 @@ import 'package:storii/features/settings/ui/advanced/http_logs.dart';
 import 'package:storii/features/settings/ui/advanced/trust_all_certificates_tile.dart';
 
 class AdvancedSettingsTile extends StatelessWidget {
-  const AdvancedSettingsTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class AdvancedSettingsTile extends StatelessWidget {
 }
 
 class AdvancedSettingsScreen extends StatelessWidget {
-  const AdvancedSettingsScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

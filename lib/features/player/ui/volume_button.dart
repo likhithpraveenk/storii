@@ -5,7 +5,7 @@ import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class VolumeButton extends ConsumerWidget {
-  const VolumeButton({super.key, required this.inOverflow});
+  const new({super.key, required this.inOverflow});
 
   final bool inOverflow;
 
@@ -41,7 +41,7 @@ class VolumeButton extends ConsumerWidget {
 }
 
 class _VolumeSliderSheet extends ConsumerStatefulWidget {
-  const _VolumeSliderSheet(this.initialVolume);
+  const new(this.initialVolume);
   final double initialVolume;
 
   @override
@@ -90,7 +90,6 @@ class _VolumeSliderSheetState extends ConsumerState<_VolumeSliderSheet> {
                   showValueIndicator: .onDrag,
                   value: _volume.clamp(0.0, _max),
                   divisions: (_max * 20).round(),
-                  min: 0.0,
                   max: _max,
                   onChanged: (v) => setState(() => _volume = v),
                   onChangeEnd: (v) {

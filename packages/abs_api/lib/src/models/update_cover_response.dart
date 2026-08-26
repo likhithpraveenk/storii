@@ -5,11 +5,9 @@ part 'update_cover_response.g.dart';
 
 @freezed
 sealed class UpdateCoverResponse with _$UpdateCoverResponse {
-  const factory UpdateCoverResponse({
-    required bool success,
-    required String cover,
-  }) = _UpdateCoverResponse;
+  const factory({required bool success, required String cover}) =
+      _UpdateCoverResponse;
 
-  factory UpdateCoverResponse.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$UpdateCoverResponseFromJson(json);
 }

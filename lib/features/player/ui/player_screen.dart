@@ -15,7 +15,7 @@ import 'package:storii/features/player/ui/player_builder.dart';
 import 'package:storii/features/player/ui/themed_background.dart';
 
 class PlayerScreen extends ConsumerWidget {
-  const PlayerScreen({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,14 +25,16 @@ class PlayerScreen extends ConsumerWidget {
         ref.watch(playerThemeProvider(defaultTheme.brightness)) ?? defaultTheme;
     ref.listen(playbackErrorsProvider, (_, next) {
       next.whenData((type) {
-        final messenger = ScaffoldMessenger.of(context);
-        messenger.hideCurrentSnackBar();
-        messenger.showSnackBar(
-          SnackBar(
-            content: Text(type.label),
-            backgroundColor: type == .network ? scheme.tertiary : scheme.error,
-          ),
-        );
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(type.label),
+              backgroundColor: type == .network
+                  ? scheme.tertiary
+                  : scheme.error,
+            ),
+          );
       });
     });
 
@@ -58,8 +60,8 @@ class PlayerScreen extends ConsumerWidget {
     final imgLeftDelta = targetImgLeft - imgLeftPaddingInMiniPlayer;
     final imgTopDelta = targetImgTop - imgLeftPaddingInMiniPlayer;
 
-    const miniInterval = Interval(0.0, 0.3);
-    const fullInterval = Interval(0.6, 1.0);
+    const miniInterval = Interval(0, 0.3);
+    const fullInterval = Interval(0.6, 1);
 
     return PlayerBuilder(
       maxHeight: screenHeight,

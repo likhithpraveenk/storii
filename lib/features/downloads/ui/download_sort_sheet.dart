@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 
 class DownloadSortSheet extends ConsumerWidget {
-  const DownloadSortSheet({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

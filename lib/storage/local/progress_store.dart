@@ -71,9 +71,5 @@ class ProgressStore extends _$ProgressStore {
     }
   }
 
-  void putAll(List<MediaProgress> list) {
-    for (final progress in list) {
-      put(progress);
-    }
-  }
+  void putAll(List<MediaProgress> list) => list.forEach(put);
 }

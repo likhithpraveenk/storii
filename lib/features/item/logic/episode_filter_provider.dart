@@ -35,7 +35,7 @@ enum EpisodeSort {
 }
 
 class EpisodeFilterState {
-  const EpisodeFilterState({
+  const new({
     this.filter = .all,
     this.sort = .published,
     this.ascending = false,

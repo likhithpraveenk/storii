@@ -5,7 +5,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
 
 class ResetSettingsAction extends ConsumerWidget {
-  const ResetSettingsAction({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,9 +21,8 @@ class ResetSettingsAction extends ConsumerWidget {
             await ref.read(appSettingsProvider.notifier).reset();
 
             if (context.mounted) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text(l10n.settingsReset)));
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(l10n.settingsReset)));
             }
           },
         );

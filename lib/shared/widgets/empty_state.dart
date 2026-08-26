@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:storii/app/init.dart';
 
 const List<String> emojis = [
-  '¯\\_(ツ)_/¯',
+  r'¯\_(ツ)_/¯',
   '(・_・)',
   '(－_－)',
   '(￣_￣)',
@@ -20,7 +20,7 @@ class EmptyState extends StatelessWidget {
   final String? subtitle;
   final Widget? action;
 
-  const EmptyState({super.key, this.subtitle, this.action});
+  const new({super.key, this.subtitle, this.action});
 
   @override
   Widget build(BuildContext context) {

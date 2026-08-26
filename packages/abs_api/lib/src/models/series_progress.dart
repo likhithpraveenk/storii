@@ -5,12 +5,11 @@ part 'series_progress.g.dart';
 
 @freezed
 sealed class SeriesProgress with _$SeriesProgress {
-  const factory SeriesProgress({
+  const factory({
     required List<String> libraryItemIds,
     required List<String> libraryItemIdsFinished,
     required bool isFinished,
   }) = _SeriesProgress;
 
-  factory SeriesProgress.fromJson(Map<String, dynamic> json) =>
-      _$SeriesProgressFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$SeriesProgressFromJson(json);
 }

@@ -44,7 +44,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   bool _pausedByInterruption = false;
   DateTime? _interruptionStartedAt;
 
-  AppAudioHandler({
+  new({
     required this._player,
     required double speed,
     required this.getSkipForward,

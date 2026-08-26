@@ -40,7 +40,7 @@ final class SocketStatusProvider
   }
 }
 
-String _$socketStatusHash() => r'c5cd6a92e3767afdf9ed2d07918125accdafcb57';
+String _$socketStatusHash() => r'd1d8fb1a24aae0ce250909cdf959706c79b8b374';
 
 @ProviderFor(connectivityStream)
 final connectivityStreamProvider = ConnectivityStreamProvider._();
@@ -164,4 +164,4 @@ final class ServerConnectionProvider
   }
 }
 
-String _$serverConnectionHash() => r'b5dee88f030891395b574d7625a19a7d897e4b60';
+String _$serverConnectionHash() => r'b5b671b84521b0172641e0934a944ba34d2d6cdc';

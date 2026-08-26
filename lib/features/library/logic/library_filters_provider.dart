@@ -11,9 +11,9 @@ enum CurrentScreen { authors, library, series }
 
 @freezed
 sealed class FilterState with _$FilterState {
-  const FilterState._();
+  const new _();
 
-  const factory FilterState({
+  const factory({
     required EnumHasValue sortType,
     @Default(NoFilter()) Filter filter,
     @Default(true) bool sortAscending,

@@ -7,7 +7,7 @@ import 'package:storii/features/downloads/ui/download_widgets.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 
 class DownloadTile extends StatefulWidget {
-  const DownloadTile({super.key, required this.item});
+  const new({super.key, required this.item});
 
   final DownloadItem item;
 
@@ -30,10 +30,7 @@ class _DownloadTileState extends State<DownloadTile> {
           onTap: widget.item.isComplete
               ? () => context.push(
                   AppRoute.itemDetail.path,
-                  extra: {
-                    'id': widget.item.libraryItemId,
-                    'isDownloaded': true,
-                  },
+                  extra: widget.item.libraryItemId,
                 )
               : null,
           leading: AspectRatio(

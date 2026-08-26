@@ -7,7 +7,7 @@ import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/settings/logic/app_cache.dart';
 
 class ThemedBackground extends ConsumerWidget {
-  const ThemedBackground({super.key, this.miniplayer = false, this.child});
+  const new({super.key, this.miniplayer = false, this.child});
 
   final Widget? child;
   final bool miniplayer;
@@ -28,11 +28,7 @@ class ThemedBackground extends ConsumerWidget {
       .colored => BoxDecoration(color: scheme.surface),
       .gradient => BoxDecoration(
         gradient: miniplayer
-            ? LinearGradient(
-                begin: .centerLeft,
-                end: .centerRight,
-                colors: [scheme.primaryContainer, scheme.surface],
-              )
+            ? LinearGradient(colors: [scheme.primaryContainer, scheme.surface])
             : LinearGradient(
                 begin: .topCenter,
                 end: .bottomCenter,

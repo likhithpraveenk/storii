@@ -8,7 +8,7 @@ import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class StandaloneBooks extends ConsumerWidget {
-  const StandaloneBooks({super.key, required this.id});
+  const new({super.key, required this.id});
 
   final String id;
 

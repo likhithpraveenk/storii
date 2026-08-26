@@ -7,7 +7,7 @@ import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 
 class EpisodeMetadataSheet extends ConsumerWidget {
-  const EpisodeMetadataSheet({super.key, required this.episode});
+  const new({super.key, required this.episode});
   final PodcastEpisode episode;
 
   @override
@@ -107,7 +107,7 @@ class EpisodeMetadataSheet extends ConsumerWidget {
 }
 
 class _RowData {
-  const _RowData(this.label, this.value);
+  const new(this.label, this.value);
   final String label;
   final String? value;
 }

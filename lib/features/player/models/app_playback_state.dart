@@ -24,7 +24,7 @@ class AppPlaybackState {
 
   final AppPlaybackError? error;
 
-  const AppPlaybackState({
+  const new({
     this.status = .idle,
     this.isPlaying = false,
     this.position = Duration.zero,

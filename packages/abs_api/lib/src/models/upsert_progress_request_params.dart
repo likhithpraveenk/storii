@@ -13,7 +13,7 @@ class UpsertProgressRequestParams {
   final DateTime? finishedAt;
   final DateTime? startedAt;
 
-  const UpsertProgressRequestParams({
+  const new({
     this.duration,
     this.progress,
     this.currentTime,

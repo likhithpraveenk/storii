@@ -10,7 +10,7 @@ part 'user_stats_response.g.dart';
 @freezed
 abstract class UserStatsResponse with _$UserStatsResponse {
   @DurationSecConverter()
-  const factory UserStatsResponse({
+  const factory({
     required Duration totalTime,
     required Map<String, ItemsListenedToResponse> items,
     @JsonKey(toJson: _daysToJson) required Map<DateTime, Duration> days,
@@ -19,7 +19,7 @@ abstract class UserStatsResponse with _$UserStatsResponse {
     required List<PlaybackSession> recentSessions,
   }) = _UserStatsResponse;
 
-  factory UserStatsResponse.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$UserStatsResponseFromJson(json);
 }
 
@@ -40,12 +40,12 @@ String _dateTimeToDateString(DateTime date) {
 @freezed
 abstract class ItemsListenedToResponse with _$ItemsListenedToResponse {
   @DurationSecConverter()
-  const factory ItemsListenedToResponse({
+  const factory({
     @JsonKey(name: 'id') required String libraryItemId,
     required Duration timeListening,
     required MediaMetadata mediaMetadata,
   }) = _ItemsListenedToResponse;
 
-  factory ItemsListenedToResponse.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$ItemsListenedToResponseFromJson(json);
 }

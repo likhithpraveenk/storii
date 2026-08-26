@@ -10,7 +10,7 @@ import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 class PlayButton extends ConsumerWidget {
-  const PlayButton(this.item, {super.key});
+  const new(this.item, {super.key});
 
   final LibraryItem item;
 

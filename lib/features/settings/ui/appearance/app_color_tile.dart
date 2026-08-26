@@ -9,7 +9,7 @@ import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 class AppColorTile extends ConsumerWidget {
-  const AppColorTile({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,7 +35,7 @@ class AppColorTile extends ConsumerWidget {
 }
 
 class _AppColorSheet extends ConsumerStatefulWidget {
-  const _AppColorSheet();
+  const new();
 
   @override
   ConsumerState<_AppColorSheet> createState() => _AppColorSheetState();
@@ -166,11 +166,7 @@ class _AppColorSheetState extends ConsumerState<_AppColorSheet> {
 }
 
 class _PreviewDot extends StatelessWidget {
-  const _PreviewDot({
-    required this.color,
-    required this.label,
-    required this.outline,
-  });
+  const new({required this.color, required this.label, required this.outline});
 
   final Color color;
   final Color outline;

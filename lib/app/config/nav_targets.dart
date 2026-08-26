@@ -11,6 +11,7 @@ enum NavTarget {
   downloads,
   collections,
   authors,
+  playlists,
   more;
 
   NavItem get item => switch (this) {
@@ -49,6 +50,11 @@ enum NavTarget {
       icon: Icons.collections_bookmark_outlined,
       selectedIcon: Icons.collections_bookmark,
     ),
+    .playlists => const NavItem(
+      route: AppRoute.playlists,
+      icon: Icons.queue_music_outlined,
+      selectedIcon: Icons.queue_music,
+    ),
     .more => const NavItem(
       route: AppRoute.more,
       icon: Icons.more_horiz_outlined,
@@ -64,21 +70,21 @@ enum NavTarget {
     .downloads => 3,
     .authors => 4,
     .collections => 5,
+    .playlists => 8,
     .more => 6,
   };
 
-  String get label {
-    return switch (this) {
-      .home => l10n.home,
-      .latest => l10n.latest,
-      .library => l10n.library,
-      .series => l10n.series,
-      .downloads => l10n.downloads,
-      .collections => l10n.collections,
-      .authors => l10n.authors,
-      .more => l10n.more,
-    };
-  }
+  String get label => switch (this) {
+    .home => l10n.home,
+    .latest => l10n.latest,
+    .library => l10n.library,
+    .series => l10n.series,
+    .downloads => l10n.downloads,
+    .collections => l10n.collections,
+    .authors => l10n.authors,
+    .playlists => l10n.playlists,
+    .more => l10n.more,
+  };
 }
 
 const defaultNavTargets = <NavTarget>[

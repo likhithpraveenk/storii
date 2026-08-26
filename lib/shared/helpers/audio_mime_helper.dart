@@ -26,7 +26,7 @@ enum AudioMimeType {
 enum PlaybackCapability { directPlay, adaptiveStream, unsupported }
 
 class AudioMimeHelper {
-  const AudioMimeHelper._();
+  const new _();
 
   static AudioMimeType fromMimeString(String? mime) {
     if (mime == null || mime.isEmpty) return .unknown;

@@ -5,7 +5,7 @@ part 'user_permissions.g.dart';
 
 @freezed
 sealed class UserPermissions with _$UserPermissions {
-  const factory UserPermissions({
+  const factory({
     bool? download,
     bool? update,
     bool? delete,
@@ -17,6 +17,6 @@ sealed class UserPermissions with _$UserPermissions {
     bool? selectedTagsNotAccessible,
   }) = _UserPermissions;
 
-  factory UserPermissions.fromJson(Map<String, dynamic> json) =>
+  factory fromJson(Map<String, dynamic> json) =>
       _$UserPermissionsFromJson(json);
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class AppFilledButton extends StatelessWidget {
-  const AppFilledButton({
+  const new({
     super.key,
     required this.text,
     required this.onPressed,
@@ -46,7 +46,7 @@ class AppFilledButton extends StatelessWidget {
 }
 
 class AppOutlinedButton extends StatelessWidget {
-  const AppOutlinedButton({
+  const new({
     super.key,
     required this.text,
     required this.onPressed,
@@ -88,7 +88,7 @@ class AppOutlinedButton extends StatelessWidget {
 }
 
 class AppTextButton extends StatelessWidget {
-  const AppTextButton({
+  const new({
     super.key,
     required this.text,
     required this.onPressed,

@@ -11,7 +11,7 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class LibraryItemListTile extends StatelessWidget {
-  const LibraryItemListTile(this.item, {super.key});
+  const new(this.item, {super.key});
   final LibraryItem item;
 
   @override
@@ -31,7 +31,7 @@ class LibraryItemListTile extends StatelessWidget {
             extra: item.collapsedSeries!.id,
           );
         } else {
-          context.push(AppRoute.itemDetail.path, extra: {'id': item.id});
+          context.push(AppRoute.itemDetail.path, extra: item.id);
         }
       },
       contentPadding: const .fromLTRB(16, 8, 16, 8),

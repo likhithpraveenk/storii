@@ -15,7 +15,7 @@ enum ServerStatus { idle, checking, available, unavailable }
 class ServerState {
   final ServerStatus status;
   final String? message;
-  const ServerState({this.status = .idle, this.message});
+  const new({this.status = .idle, this.message});
 }
 
 @riverpod

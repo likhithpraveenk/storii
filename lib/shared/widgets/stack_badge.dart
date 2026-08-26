@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class StackBadge extends StatelessWidget {
-  const StackBadge(this.value, {super.key});
+  const new(this.value, {super.key});
 
   /// anything with toString()
   final Object value;
@@ -34,7 +34,7 @@ class StackBadge extends StatelessWidget {
 }
 
 class DownloadBadge extends StatelessWidget {
-  const DownloadBadge({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

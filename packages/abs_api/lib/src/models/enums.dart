@@ -24,7 +24,7 @@ enum ServerLogLevel {
   error(3);
 
   final int value;
-  const ServerLogLevel(this.value);
+  new(this.value);
 }
 
 @JsonEnum(valueField: 'type')
@@ -34,7 +34,7 @@ enum MediaType {
 
   final String type;
 
-  const MediaType(this.type);
+  new(this.type);
 }
 
 enum FileType { image, audio, ebook, video, text, metadata, unknown }
@@ -50,7 +50,7 @@ enum ShelfIdentity {
   listenAgain('listen-again');
 
   final String id;
-  const ShelfIdentity(this.id);
+  new(this.id);
 
   static ShelfIdentity? fromId(String id) {
     for (final val in ShelfIdentity.values) {
@@ -73,7 +73,7 @@ enum PlayMethod {
 
   final int value;
 
-  const PlayMethod(this.value);
+  new(this.value);
 }
 
 @JsonEnum(valueField: 'name')
@@ -93,7 +93,7 @@ enum DayOfTheWeek {
   final int value;
   final String name;
 
-  const DayOfTheWeek(this.value, this.name);
+  new(this.value, this.name);
 }
 
 enum ScanItemResult {
@@ -109,7 +109,7 @@ enum ScanItemResult {
 
   final String name;
 
-  const ScanItemResult(this.name);
+  new(this.name);
 }
 
 @JsonEnum(valueField: 'value')
@@ -132,5 +132,5 @@ enum Month {
   final int value;
   final String name;
 
-  const Month(this.value, this.name);
+  new(this.value, this.name);
 }

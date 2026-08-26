@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'download_item.dart';
@@ -9,6 +9,7 @@ part of 'download_item.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -66,7 +67,7 @@ class _$DownloadTrackCopyWithImpl<$Res>
 /// Create a copy of DownloadTrack
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? audioTrack = null,Object? localPath = null,Object? ino = null,Object? bytesReceived = null,Object? bytesTotal = null,Object? status = null,}) {
-  return _then(_self.copyWith(
+  return _then(DownloadTrack(
 audioTrack: null == audioTrack ? _self.audioTrack : audioTrack // ignore: cast_nullable_to_non_nullable
 as AudioTrack,localPath: null == localPath ? _self.localPath : localPath // ignore: cast_nullable_to_non_nullable
 as String,ino: null == ino ? _self.ino : ino // ignore: cast_nullable_to_non_nullable
@@ -356,7 +357,7 @@ class _$DownloadItemCopyWithImpl<$Res>
 /// Create a copy of DownloadItem
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? serverUrl = null,Object? libraryItemId = null,Object? userId = null,Object? title = null,Object? author = null,Object? tracks = null,Object? mediaType = null,Object? status = null,Object? startedAt = freezed,Object? episodeId = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(DownloadItem(
 serverUrl: null == serverUrl ? _self.serverUrl : serverUrl // ignore: cast_nullable_to_non_nullable
 as Uri,libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -502,7 +503,7 @@ return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.title,_th
 @JsonSerializable()
 
 class _DownloadItem extends DownloadItem {
-  const _DownloadItem({required this.serverUrl, required this.libraryItemId, required this.userId, required this.title, required this.author, required final  List<DownloadTrack> tracks, this.mediaType = DownloadMediaType.audiobook, this.status = DownloadStatus.queued, this.startedAt, this.episodeId}): _tracks = tracks,super._();
+  const _DownloadItem({required this.serverUrl, required this.libraryItemId, required this.userId, required this.title, required this.author, required  List<DownloadTrack> tracks, this.mediaType = DownloadMediaType.audiobook, this.status = DownloadStatus.queued, this.startedAt, this.episodeId}): _tracks = tracks,super._();
   factory _DownloadItem.fromJson(Map<String, dynamic> json) => _$DownloadItemFromJson(json);
 
 @override final  Uri serverUrl;
