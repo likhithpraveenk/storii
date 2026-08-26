@@ -74,15 +74,19 @@ class _ImageStack extends ConsumerWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (itemIds.isEmpty) {
-          return ClipRRect(
-            borderRadius: .circular(kRadius),
-            child: PlaceholderImage(label: l10n.noImage),
-          );
-        }
-
         final maxWidth = constraints.maxWidth;
         final imageSize = maxWidth * _kImageSizeRatio;
+
+        if (itemIds.isEmpty) {
+          return SizedBox(
+            height: imageSize,
+            width: double.infinity,
+            child: ClipRRect(
+              borderRadius: .circular(kRadius),
+              child: PlaceholderImage(label: l10n.noImage),
+            ),
+          );
+        }
 
         final visibleImages = itemIds.reversed.take(imagesVisible).toList();
         final count = visibleImages.length;
