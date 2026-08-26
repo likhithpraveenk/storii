@@ -40,34 +40,8 @@ class PlaybackHistoryNotifier extends _$PlaybackHistoryNotifier {
     if (index == -1) return;
 
     current[index] = event;
-    state = _collapseLikeEvents(current);
+    state = _store.collapseLikeEvents(current);
     await _store.put(user.id, mediaItemId, state);
-  }
-
-  List<PlaybackEvent> _collapseLikeEvents(List<PlaybackEvent> events) {
-    if (events.isEmpty) return events;
-
-    final collapsed = <PlaybackEvent>[events.first];
-    for (final event in events.skip(1)) {
-      final last = collapsed.last;
-      if (_isLikeEvent(last, event)) {
-        collapsed[collapsed.length - 1] = event.copyWith(
-          listened: last.listened + event.listened,
-        );
-      } else {
-        collapsed.add(event);
-      }
-    }
-    return collapsed;
-  }
-
-  bool _isLikeEvent(PlaybackEvent a, PlaybackEvent b) {
-    if (a.kind != b.kind) return false;
-
-    return switch (a.kind) {
-      .sync => a.syncSuccess == b.syncSuccess,
-      _ => false,
-    };
   }
 
   Future<void> clearHistory() async {
