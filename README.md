@@ -63,7 +63,7 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 | Custom themes & fonts                 |   ✅   |        ❌        |
 | Dynamic colors (Material You)         |   ✅   |        ❌        |
 | Navigation customization              |   ✅   |        ❌        |
-| Collections / Playlists               |   💡   |        ✅        |
+| Collections / Playlists               |   ✅   |        ✅        |
 | Equalizer                             |   💡   |        ❓        |
 | Server management / admin             |   ⚠️   |        ❌        |
 | eBook reader                          |   💡   |        ✅        |
