@@ -1,3 +1,4 @@
+import 'package:abs_api/abs_api.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'queue_state.freezed.dart';
@@ -5,7 +6,12 @@ part 'queue_state.g.dart';
 
 @freezed
 sealed class QueueItem with _$QueueItem {
-  const factory({required String itemId, String? episodeId}) = _QueueItem;
+  const factory({
+    required String itemId,
+    String? episodeId,
+    LibraryItem? libraryItem,
+    PodcastEpisode? episode,
+  }) = _QueueItem;
   factory fromJson(Map<String, dynamic> json) => _$QueueItemFromJson(json);
 }
 

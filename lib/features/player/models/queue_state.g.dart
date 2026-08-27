@@ -9,12 +9,20 @@ part of 'queue_state.dart';
 _QueueItem _$QueueItemFromJson(Map<String, dynamic> json) => _QueueItem(
   itemId: json['itemId'] as String,
   episodeId: json['episodeId'] as String?,
+  libraryItem: json['libraryItem'] == null
+      ? null
+      : LibraryItem.fromJson(json['libraryItem'] as Map<String, dynamic>),
+  episode: json['episode'] == null
+      ? null
+      : PodcastEpisode.fromJson(json['episode'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$QueueItemToJson(_QueueItem instance) =>
     <String, dynamic>{
       'itemId': instance.itemId,
       'episodeId': ?instance.episodeId,
+      'libraryItem': ?instance.libraryItem?.toJson(),
+      'episode': ?instance.episode?.toJson(),
     };
 
 _QueueState _$QueueStateFromJson(Map<String, dynamic> json) => _QueueState(

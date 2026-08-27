@@ -8,6 +8,7 @@ import 'package:storii/features/admin/logic/item_actions_provider.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/item/logic/user_progress_actions.dart';
+import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
@@ -86,7 +87,19 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
         .watch(mediaProgressFromMapProvider(widget.itemId, widget.episodeId))
         .value;
 
-    final options = <_Option>[];
+    final options = <_Option>[
+      (
+        title: l10n.addToQueue,
+        icon: Icons.queue_music,
+        onTap: () async {
+          await ref
+              .read(queueProvider.notifier)
+              .addToQueue(itemId: widget.itemId, episodeId: widget.episodeId);
+          globalMessengerKey.currentState?.showAppSnackBar(l10n.addedToQueue);
+        },
+      ),
+    ];
+
     if (mediaProgress != null &&
         mediaProgress.isFinished == true &&
         !widget.inDetailScreen) {

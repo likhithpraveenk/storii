@@ -40,6 +40,7 @@ class _CollectionDetailScreenState
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final notifier = ref.read(collectionDetailProvider(widget.id).notifier);
     final collectionAsync = ref.watch(collectionDetailProvider(widget.id));
     final collection = collectionAsync.value;
     final title = collection != null
@@ -83,9 +84,7 @@ class _CollectionDetailScreenState
                       ),
                     SliverReorderableList(
                       itemCount: collection.books.length,
-                      onReorderItem: (oldIndex, newIndex) => ref
-                          .read(collectionDetailProvider(widget.id).notifier)
-                          .reorder(oldIndex, newIndex),
+                      onReorderItem: notifier.reorder,
                       proxyDecorator: (child, index, animation) => Material(
                         color: scheme.surfaceContainerLowest,
                         borderRadius: .circular(kRadius),
@@ -100,12 +99,10 @@ class _CollectionDetailScreenState
                           title: book.title ?? l10n.noTitle,
                           subtitle: book.authorName ?? l10n.noAuthor,
                           onRemove: () async {
-                            return await ref
-                                .read(collectionMutationsProvider.notifier)
-                                .removeItem(
-                                  collectionId: collection.id,
-                                  libraryItemId: book.id,
-                                );
+                            return await notifier.removeItem(
+                              collectionId: collection.id,
+                              libraryItemId: book.id,
+                            );
                           },
                         );
                       },
@@ -145,9 +142,7 @@ class _CollectionDetailScreenState
                       child: AppFilledButton(
                         icon: const Icon(Icons.play_circle_filled_outlined),
                         text: l10n.playAll,
-                        onPressed: () {
-                          // TODO: add all to queue and play the first unfinished
-                        },
+                        onPressed: notifier.playCollection,
                       ),
                     ),
                   const SizedBox(width: 4),
@@ -159,9 +154,8 @@ class _CollectionDetailScreenState
                         context,
                         initialName: collection.name,
                         initialDescription: collection.description,
-                        onSave: ({required name, description}) => ref
-                            .read(collectionMutationsProvider.notifier)
-                            .updateMetadata(
+                        onSave: ({required name, description}) =>
+                            notifier.updateMetadata(
                               collectionId: collection.id,
                               name: name,
                               description: description,
@@ -184,9 +178,7 @@ class _CollectionDetailScreenState
                         actionLabel: l10n.confirm,
                         actionIcon: Icons.delete,
                         onTap: () {
-                          return ref
-                              .read(collectionMutationsProvider.notifier)
-                              .delete(collection.id);
+                          return notifier.delete(collection.id);
                         },
                       ),
                     ),

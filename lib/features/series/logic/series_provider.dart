@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -49,4 +50,11 @@ Future<Series> series(Ref ref, String seriesId) async {
     logMessage: 'Error fetching series detail',
     source: 'series',
   );
+}
+
+@riverpod
+bool addToContinueSeries(Ref ref, String seriesId) {
+  final user = ref.watch(serverUserProvider).value;
+  if (user == null) return false;
+  return user.seriesHideFromContinueListening.contains(seriesId);
 }

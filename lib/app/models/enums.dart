@@ -34,23 +34,21 @@ enum AudiobookSort implements EnumHasValue {
   new(this.value);
 
   @override
-  String get label {
-    return switch (this) {
-      title => l10n.title,
-      authorName => l10n.author,
-      authorNameLF => l10n.authorLastFirst,
-      addedAt => l10n.dateAdded,
-      publishedYear => l10n.publishedYear,
-      size => l10n.size,
-      duration => l10n.duration,
-      fileBirthTime => l10n.fileCreatedDate,
-      fileModified => l10n.fileModifiedDate,
-      progressLastUpdated => l10n.lastPlayed,
-      progressStartedAt => l10n.dateStarted,
-      progressFinishedAt => l10n.dateFinished,
-      random => l10n.random,
-    };
-  }
+  String get label => switch (this) {
+    title => l10n.title,
+    authorName => l10n.author,
+    authorNameLF => l10n.authorLastFirst,
+    addedAt => l10n.dateAdded,
+    publishedYear => l10n.publishedYear,
+    size => l10n.size,
+    duration => l10n.duration,
+    fileBirthTime => l10n.fileCreatedDate,
+    fileModified => l10n.fileModifiedDate,
+    progressLastUpdated => l10n.lastPlayed,
+    progressStartedAt => l10n.dateStarted,
+    progressFinishedAt => l10n.dateFinished,
+    random => l10n.random,
+  };
 }
 
 enum SeriesSort implements EnumHasValue {
@@ -67,17 +65,15 @@ enum SeriesSort implements EnumHasValue {
   new(this.value);
 
   @override
-  String get label {
-    return switch (this) {
-      numBooks => l10n.numOfBooks,
-      addedAt => l10n.dateAdded,
-      name => l10n.name,
-      totalDuration => l10n.duration,
-      lastBookAdded => l10n.lastBookAdded,
-      lastBookUpdated => l10n.lastBookUpdated,
-      random => l10n.random,
-    };
-  }
+  String get label => switch (this) {
+    numBooks => l10n.numOfBooks,
+    addedAt => l10n.dateAdded,
+    name => l10n.name,
+    totalDuration => l10n.duration,
+    lastBookAdded => l10n.lastBookAdded,
+    lastBookUpdated => l10n.lastBookUpdated,
+    random => l10n.random,
+  };
 }
 
 enum AuthorSort implements EnumHasValue {
@@ -92,15 +88,13 @@ enum AuthorSort implements EnumHasValue {
   new(this.value);
 
   @override
-  String get label {
-    return switch (this) {
-      name => l10n.name,
-      lastFirst => l10n.lastFirst,
-      addedAt => l10n.dateAdded,
-      updatedAt => l10n.lastUpdated,
-      numBooks => l10n.numOfBooks,
-    };
-  }
+  String get label => switch (this) {
+    name => l10n.name,
+    lastFirst => l10n.lastFirst,
+    addedAt => l10n.dateAdded,
+    updatedAt => l10n.lastUpdated,
+    numBooks => l10n.numOfBooks,
+  };
 }
 
 enum PodcastSort implements EnumHasValue {
@@ -118,18 +112,16 @@ enum PodcastSort implements EnumHasValue {
   new(this.value);
 
   @override
-  String get label {
-    return switch (this) {
-      addedAt => l10n.dateAdded,
-      size => l10n.size,
-      birthTime => l10n.fileCreatedDate,
-      mtime => l10n.fileModifiedDate,
-      author => l10n.author,
-      title => l10n.title,
-      numEpisodes => l10n.numOfEpisodes,
-      random => l10n.random,
-    };
-  }
+  String get label => switch (this) {
+    addedAt => l10n.dateAdded,
+    size => l10n.size,
+    birthTime => l10n.fileCreatedDate,
+    mtime => l10n.fileModifiedDate,
+    author => l10n.author,
+    title => l10n.title,
+    numEpisodes => l10n.numOfEpisodes,
+    random => l10n.random,
+  };
 }
 
 enum FilterAudiobooks {
@@ -221,19 +213,17 @@ enum SearchFilter {
   podcasts,
   episodes;
 
-  String get label {
-    return switch (this) {
-      .all => l10n.all,
-      .books => l10n.books,
-      .series => l10n.series,
-      .authors => l10n.authors,
-      .narrators => l10n.narrators,
-      .tags => l10n.tags,
-      .genres => l10n.genres,
-      .podcasts => l10n.podcasts,
-      .episodes => l10n.episodes,
-    };
-  }
+  String get label => switch (this) {
+    .all => l10n.all,
+    .books => l10n.books,
+    .series => l10n.series,
+    .authors => l10n.authors,
+    .narrators => l10n.narrators,
+    .tags => l10n.tags,
+    .genres => l10n.genres,
+    .podcasts => l10n.podcasts,
+    .episodes => l10n.episodes,
+  };
 }
 
 enum FullPlayerActions {
@@ -242,29 +232,28 @@ enum FullPlayerActions {
   sleep,
   speed,
   volume,
-  bookmarks;
+  bookmarks,
+  queue;
 
-  String get label {
-    return switch (this) {
-      .history => l10n.history,
-      .chapters => l10n.chapters,
-      .sleep => l10n.sleepTimer,
-      .speed => l10n.playbackSpeed,
-      .volume => l10n.volume,
-      .bookmarks => l10n.bookmarks,
-    };
-  }
+  String get label => switch (this) {
+    .history => l10n.history,
+    .chapters => l10n.chapters,
+    .sleep => l10n.sleepTimer,
+    .speed => l10n.playbackSpeed,
+    .volume => l10n.volume,
+    .bookmarks => l10n.bookmarks,
+    .queue => l10n.queue,
+  };
 
-  IconData get icon {
-    return switch (this) {
-      .history => Icons.history,
-      .chapters => Icons.menu_book,
-      .sleep => Icons.nightlight,
-      .speed => Icons.speed,
-      .volume => Icons.volume_up,
-      .bookmarks => Icons.bookmark,
-    };
-  }
+  IconData get icon => switch (this) {
+    .history => Icons.history,
+    .chapters => Icons.menu_book,
+    .sleep => Icons.nightlight,
+    .speed => Icons.speed,
+    .volume => Icons.volume_up,
+    .bookmarks => Icons.bookmark,
+    .queue => Icons.queue_music,
+  };
 }
 
 const defaultPlayerActions = <FullPlayerActions>[
@@ -281,14 +270,12 @@ enum PlayerBackgroundTheme {
   gradient,
   blur;
 
-  String get label {
-    return switch (this) {
-      .none => l10n.none,
-      .colored => l10n.colored,
-      .gradient => l10n.gradient,
-      .blur => l10n.blurredImage,
-    };
-  }
+  String get label => switch (this) {
+    .none => l10n.none,
+    .colored => l10n.colored,
+    .gradient => l10n.gradient,
+    .blur => l10n.blurredImage,
+  };
 }
 
 enum PlaybackControlsLayout {

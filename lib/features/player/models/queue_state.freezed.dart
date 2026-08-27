@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$QueueItem {
 
- String get itemId; String? get episodeId;
+ String get itemId; String? get episodeId; LibraryItem? get libraryItem; PodcastEpisode? get episode;
 /// Create a copy of QueueItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $QueueItemCopyWith<QueueItem> get copyWith => _$QueueItemCopyWithImpl<QueueItem>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is QueueItem&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is QueueItem&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.libraryItem, libraryItem) || other.libraryItem == libraryItem)&&(identical(other.episode, episode) || other.episode == episode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,itemId,episodeId);
+int get hashCode => Object.hash(runtimeType,itemId,episodeId,libraryItem,episode);
 
 @override
 String toString() {
-  return 'QueueItem(itemId: $itemId, episodeId: $episodeId)';
+  return 'QueueItem(itemId: $itemId, episodeId: $episodeId, libraryItem: $libraryItem, episode: $episode)';
 }
 
 
@@ -49,11 +49,11 @@ abstract mixin class $QueueItemCopyWith<$Res>  {
   factory $QueueItemCopyWith(QueueItem value, $Res Function(QueueItem) _then) = _$QueueItemCopyWithImpl;
 @useResult
 $Res call({
- String itemId, String? episodeId
+ String itemId, String? episodeId, LibraryItem? libraryItem, PodcastEpisode? episode
 });
 
 
-
+$LibraryItemCopyWith<$Res>? get libraryItem;$PodcastEpisodeCopyWith<$Res>? get episode;
 
 }
 /// @nodoc
@@ -66,14 +66,40 @@ class _$QueueItemCopyWithImpl<$Res>
 
 /// Create a copy of QueueItem
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? itemId = null,Object? episodeId = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? itemId = null,Object? episodeId = freezed,Object? libraryItem = freezed,Object? episode = freezed,}) {
   return _then(QueueItem(
 itemId: null == itemId ? _self.itemId : itemId // ignore: cast_nullable_to_non_nullable
 as String,episodeId: freezed == episodeId ? _self.episodeId : episodeId // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,libraryItem: freezed == libraryItem ? _self.libraryItem : libraryItem // ignore: cast_nullable_to_non_nullable
+as LibraryItem?,episode: freezed == episode ? _self.episode : episode // ignore: cast_nullable_to_non_nullable
+as PodcastEpisode?,
   ));
 }
+/// Create a copy of QueueItem
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LibraryItemCopyWith<$Res>? get libraryItem {
+    if (_self.libraryItem == null) {
+    return null;
+  }
 
+  return $LibraryItemCopyWith<$Res>(_self.libraryItem!, (value) {
+    return _then(_self.copyWith(libraryItem: value));
+  });
+}/// Create a copy of QueueItem
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PodcastEpisodeCopyWith<$Res>? get episode {
+    if (_self.episode == null) {
+    return null;
+  }
+
+  return $PodcastEpisodeCopyWith<$Res>(_self.episode!, (value) {
+    return _then(_self.copyWith(episode: value));
+  });
+}
 }
 
 
@@ -152,10 +178,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String itemId,  String? episodeId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String itemId,  String? episodeId,  LibraryItem? libraryItem,  PodcastEpisode? episode)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _QueueItem() when $default != null:
-return $default(_that.itemId,_that.episodeId);case _:
+return $default(_that.itemId,_that.episodeId,_that.libraryItem,_that.episode);case _:
   return orElse();
 
 }
@@ -173,10 +199,10 @@ return $default(_that.itemId,_that.episodeId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String itemId,  String? episodeId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String itemId,  String? episodeId,  LibraryItem? libraryItem,  PodcastEpisode? episode)  $default,) {final _that = this;
 switch (_that) {
 case _QueueItem():
-return $default(_that.itemId,_that.episodeId);}
+return $default(_that.itemId,_that.episodeId,_that.libraryItem,_that.episode);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -190,10 +216,10 @@ return $default(_that.itemId,_that.episodeId);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String itemId,  String? episodeId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String itemId,  String? episodeId,  LibraryItem? libraryItem,  PodcastEpisode? episode)?  $default,) {final _that = this;
 switch (_that) {
 case _QueueItem() when $default != null:
-return $default(_that.itemId,_that.episodeId);case _:
+return $default(_that.itemId,_that.episodeId,_that.libraryItem,_that.episode);case _:
   return null;
 
 }
@@ -205,11 +231,13 @@ return $default(_that.itemId,_that.episodeId);case _:
 @JsonSerializable()
 
 class _QueueItem implements QueueItem {
-  const _QueueItem({required this.itemId, this.episodeId});
+  const _QueueItem({required this.itemId, this.episodeId, this.libraryItem, this.episode});
   factory _QueueItem.fromJson(Map<String, dynamic> json) => _$QueueItemFromJson(json);
 
 @override final  String itemId;
 @override final  String? episodeId;
+@override final  LibraryItem? libraryItem;
+@override final  PodcastEpisode? episode;
 
 /// Create a copy of QueueItem
 /// with the given fields replaced by the non-null parameter values.
@@ -224,16 +252,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _QueueItem&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _QueueItem&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.libraryItem, libraryItem) || other.libraryItem == libraryItem)&&(identical(other.episode, episode) || other.episode == episode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,itemId,episodeId);
+int get hashCode => Object.hash(runtimeType,itemId,episodeId,libraryItem,episode);
 
 @override
 String toString() {
-  return 'QueueItem(itemId: $itemId, episodeId: $episodeId)';
+  return 'QueueItem(itemId: $itemId, episodeId: $episodeId, libraryItem: $libraryItem, episode: $episode)';
 }
 
 
@@ -244,11 +272,11 @@ abstract mixin class _$QueueItemCopyWith<$Res> implements $QueueItemCopyWith<$Re
   factory _$QueueItemCopyWith(_QueueItem value, $Res Function(_QueueItem) _then) = __$QueueItemCopyWithImpl;
 @override @useResult
 $Res call({
- String itemId, String? episodeId
+ String itemId, String? episodeId, LibraryItem? libraryItem, PodcastEpisode? episode
 });
 
 
-
+@override $LibraryItemCopyWith<$Res>? get libraryItem;@override $PodcastEpisodeCopyWith<$Res>? get episode;
 
 }
 /// @nodoc
@@ -261,15 +289,41 @@ class __$QueueItemCopyWithImpl<$Res>
 
 /// Create a copy of QueueItem
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? itemId = null,Object? episodeId = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? itemId = null,Object? episodeId = freezed,Object? libraryItem = freezed,Object? episode = freezed,}) {
   return _then(_QueueItem(
 itemId: null == itemId ? _self.itemId : itemId // ignore: cast_nullable_to_non_nullable
 as String,episodeId: freezed == episodeId ? _self.episodeId : episodeId // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,libraryItem: freezed == libraryItem ? _self.libraryItem : libraryItem // ignore: cast_nullable_to_non_nullable
+as LibraryItem?,episode: freezed == episode ? _self.episode : episode // ignore: cast_nullable_to_non_nullable
+as PodcastEpisode?,
   ));
 }
 
+/// Create a copy of QueueItem
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$LibraryItemCopyWith<$Res>? get libraryItem {
+    if (_self.libraryItem == null) {
+    return null;
+  }
 
+  return $LibraryItemCopyWith<$Res>(_self.libraryItem!, (value) {
+    return _then(_self.copyWith(libraryItem: value));
+  });
+}/// Create a copy of QueueItem
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PodcastEpisodeCopyWith<$Res>? get episode {
+    if (_self.episode == null) {
+    return null;
+  }
+
+  return $PodcastEpisodeCopyWith<$Res>(_self.episode!, (value) {
+    return _then(_self.copyWith(episode: value));
+  });
+}
 }
 
 

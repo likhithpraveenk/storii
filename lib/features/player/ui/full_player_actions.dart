@@ -11,6 +11,7 @@ import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/bookmarks_sheet.dart';
 import 'package:storii/features/player/ui/history_button.dart';
 import 'package:storii/features/player/ui/more_actions_sheet.dart';
+import 'package:storii/features/player/ui/queue_sheet.dart';
 import 'package:storii/features/player/ui/sleep_button.dart';
 import 'package:storii/features/player/ui/speed_button.dart';
 import 'package:storii/features/player/ui/volume_button.dart';
@@ -35,6 +36,7 @@ extension WidgetX on FullPlayerActions {
       isPodcast: session.isPodcastEpisode,
       inOverflow: inOverflow,
     ),
+    .queue => QueueButton(inOverflow: inOverflow),
   };
 }
 

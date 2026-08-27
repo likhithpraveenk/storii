@@ -77,3 +77,81 @@ final class SeriesFamily extends $Family
   @override
   String toString() => r'seriesProvider';
 }
+
+@ProviderFor(addToContinueSeries)
+final addToContinueSeriesProvider = AddToContinueSeriesFamily._();
+
+final class AddToContinueSeriesProvider
+    extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  AddToContinueSeriesProvider._({
+    required AddToContinueSeriesFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'addToContinueSeriesProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$addToContinueSeriesHash();
+
+  @override
+  String toString() {
+    return r'addToContinueSeriesProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    final argument = this.argument as String;
+    return addToContinueSeries(ref, argument);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is AddToContinueSeriesProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$addToContinueSeriesHash() =>
+    r'a684690decebe893b0c9ed2bb8dce53b64584688';
+
+final class AddToContinueSeriesFamily extends $Family
+    with $FunctionalFamilyOverride<bool, String> {
+  AddToContinueSeriesFamily._()
+    : super(
+        retry: null,
+        name: r'addToContinueSeriesProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  AddToContinueSeriesProvider call(String seriesId) =>
+      AddToContinueSeriesProvider._(argument: seriesId, from: this);
+
+  @override
+  String toString() => r'addToContinueSeriesProvider';
+}

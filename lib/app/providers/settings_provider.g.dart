@@ -372,9 +372,6 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setInterruptionLongSkipBackward(Duration value) =>
       _save(state?.copyWith(interruptionLongSkipBackward: value));
-
-  Future<void> setAutoplay(bool value) =>
-      _save(state?.copyWith(autoplay: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -830,13 +827,4 @@ final interruptionLongSkipBackwardProvider = Provider<Duration>(
     ),
   ),
   name: 'interruptionLongSkipBackwardProvider',
-);
-
-final autoplayProvider = Provider<bool>(
-  (ref) => ref.watch(
-    userSettingsProvider.select(
-      (s) => s?.autoplay ?? DefaultUserSettings.autoplay,
-    ),
-  ),
-  name: 'autoplayProvider',
 );

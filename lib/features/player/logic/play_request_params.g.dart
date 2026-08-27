@@ -48,4 +48,4 @@ final class PlayRequestParamsProvider
   }
 }
 
-String _$playRequestParamsHash() => r'fd7c19ba653437018ce5422beeb6de8322e76600';
+String _$playRequestParamsHash() => r'5ed293127a1a51850e69b6710d2377d18e7efd31';

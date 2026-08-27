@@ -2,8 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
@@ -11,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - collections & playlists screens
 - setting to control covers shown in stacked item cards
+- playback queue: enqueue books or episodes, reorder, and remove
 
 ### Changed
 
@@ -130,7 +130,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Advanced settings tile to the settings screen
-- Use playback session's public track URLs 
+- Use playback session's public track URLs
 
 ## [v0.5.8] - 2026-07-17
 

@@ -3,8 +3,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
+import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/features/playlists/logic/playlist_events_provider.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'playlist_providers.g.dart';
@@ -85,19 +88,27 @@ class PlaylistDetail extends _$PlaylistDetail {
     items.insert(newIndex, moved);
     state = AsyncData(current.copyWith(items: items));
     try {
-      await ref
-          .read(playlistMutationsProvider.notifier)
-          .reorderItems(current.id, items);
+      final user = await ref.read(authenticatedUserProvider.future);
+      final api = ref.read(playlistsApiProvider(user));
+      await ref.logApiCall(
+        () => api.reorder(playlistId: current.id, items: items),
+        source: 'PlaylistDetail',
+        logMessage: 'Error reordering items in playlist ${current.name}',
+      );
     } catch (_) {
       ref.invalidateSelf();
     }
   }
-}
 
-@Riverpod(keepAlive: true)
-class PlaylistMutations extends _$PlaylistMutations {
-  @override
-  Future<void> build() async {}
+  Future<void> playPlaylist() async {
+    final progressMap = await ref.watch(mediaProgressMapProvider.future);
+    final items = (state.value?.items ?? []).where((item) {
+      final progress =
+          progressMap[mediaItemIdKey(item.libraryItemId, item.episodeId)];
+      return progress?.isFinished != true && progress?.progress != 1;
+    }).toList();
+    await ref.read(queueProvider.notifier).playMany(items.toQueueItems());
+  }
 
   Future<Playlist> create({
     required String name,
@@ -117,7 +128,7 @@ class PlaylistMutations extends _$PlaylistMutations {
           ],
         ),
       ),
-      source: 'PlaylistMutations',
+      source: 'PlaylistDetail',
       logMessage: 'Error creating playlist',
     );
   }
@@ -135,7 +146,7 @@ class PlaylistMutations extends _$PlaylistMutations {
         name: name,
         description: description,
       ),
-      source: 'PlaylistMutations',
+      source: 'PlaylistDetail',
       logMessage: 'Error updating playlist $name',
     );
   }
@@ -145,7 +156,7 @@ class PlaylistMutations extends _$PlaylistMutations {
     final api = ref.read(playlistsApiProvider(user));
     return ref.logApiCall(
       () => api.delete(playlistId: playlistId),
-      source: 'PlaylistMutations',
+      source: 'PlaylistDetail',
       logMessage: 'Error deleting playlist $playlistId',
     );
   }
@@ -164,7 +175,7 @@ class PlaylistMutations extends _$PlaylistMutations {
           PlaylistItem(libraryItemId: libraryItemId, episodeId: episodeId),
         ],
       ),
-      source: 'PlaylistMutations',
+      source: 'PlaylistDetail',
       logMessage: 'Error adding item to playlist $playlistId',
     );
   }
@@ -177,26 +188,8 @@ class PlaylistMutations extends _$PlaylistMutations {
     final api = ref.read(playlistsApiProvider(user));
     return ref.logApiCall(
       () => api.batchRemove(playlistId: playlistId, items: [item]),
-      source: 'PlaylistMutations',
+      source: 'PlaylistDetail',
       logMessage: 'Error removing item from playlist $playlistId',
     );
-  }
-
-  Future<void> reorderItems(
-    String playlistId,
-    List<PlaylistItem> newOrder,
-  ) async {
-    final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(playlistsApiProvider(user));
-    return ref.logApiCall(
-      () => api.reorder(playlistId: playlistId, items: newOrder),
-      source: 'PlaylistMutations',
-      logMessage: 'Error reordering items in playlist $playlistId',
-    );
-  }
-
-  Future<void> playPlaylist(String playlistId) async {
-    // TODO: add to playback queue
-    throw UnimplementedError();
   }
 }

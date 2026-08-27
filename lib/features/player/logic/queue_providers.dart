@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/models/queue_state.dart';
+import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/storage/local/queue_store.dart';
 
 part 'queue_providers.g.dart';
@@ -18,7 +20,7 @@ class QueueNotifier extends _$QueueNotifier {
 
   void _persist() => unawaited(_store.save(state));
 
-  void addItem(QueueItem item) {
+  void _addItem(QueueItem item) {
     state = state.copyWith(items: [...state.items, item]);
     _persist();
   }
@@ -68,24 +70,42 @@ class QueueNotifier extends _$QueueNotifier {
     _persist();
   }
 
+  Future<void> addToQueue({required String itemId, String? episodeId}) async {
+    final index = state.items.indexWhere(
+      (e) => e.itemId == itemId && e.episodeId == episodeId,
+    );
+    if (index == -1) {
+      final item = await ref.read(itemDetailProvider(itemId).future);
+      final episode = item.isPodcast
+          ? item.episodes.firstWhereOrNull((e) => e.id == episodeId)
+          : null;
+      _addItem(
+        QueueItem(
+          itemId: itemId,
+          episodeId: episodeId,
+          libraryItem: item,
+          episode: episode,
+        ),
+      );
+    }
+  }
+
   Future<void> play({
     required String itemId,
     String? episodeId,
     Duration? initialPosition,
     BookChapter? chapter,
   }) async {
-    var index = state.items.indexWhere(
-      (e) => e.itemId == itemId && e.episodeId == episodeId,
-    );
-    if (index == -1) {
-      addItem(QueueItem(itemId: itemId, episodeId: episodeId));
-      index = state.items.length - 1;
-    }
-    await playFromIndex(
-      index,
-      initialPosition: initialPosition,
-      chapter: chapter,
-    );
+    state = const QueueState();
+    await addToQueue(itemId: itemId, episodeId: episodeId);
+    await playFromIndex(0, initialPosition: initialPosition, chapter: chapter);
+  }
+
+  Future<void> playMany(List<QueueItem> items) async {
+    if (items.isEmpty) return;
+    state = QueueState(items: items);
+    _persist();
+    await playFromIndex(0);
   }
 
   Future<void> playFromIndex(
@@ -107,14 +127,21 @@ class QueueNotifier extends _$QueueNotifier {
         );
   }
 
-  Future<void> clear() async {
-    state = const QueueState();
-    await _store.clear();
+  Future<void> clear({bool removeCurrentPlaying = true}) async {
+    if (removeCurrentPlaying) {
+      state = const QueueState();
+      await _store.clear();
+    } else {
+      final current = state.currentIndex;
+      if (current != null && current < state.items.length) {
+        final currentItem = state.items[current];
+        state = QueueState(items: [currentItem], currentIndex: 0);
+        _persist();
+      }
+    }
   }
 
   Future<void> onPlaybackComplete() async {
-    final autoplay = ref.read(autoplayProvider);
-    if (!autoplay) return;
     final current = state.currentIndex;
     if (current == null || current + 1 >= state.items.length) return;
     await playFromIndex(current + 1);
@@ -133,4 +160,20 @@ void queueController(Ref ref) {
       unawaited(ref.read(queueProvider.notifier).onPlaybackComplete());
     }
   });
+}
+
+extension QueueItemX1 on Iterable<LibraryItem> {
+  List<QueueItem> toQueueItems() =>
+      map((i) => QueueItem(itemId: i.id, libraryItem: i)).toList();
+}
+
+extension QueueItemX2 on Iterable<PlaylistItem> {
+  List<QueueItem> toQueueItems() => map(
+    (i) => QueueItem(
+      itemId: i.libraryItemId,
+      episodeId: i.episodeId,
+      libraryItem: i.libraryItem,
+      episode: i.episode,
+    ),
+  ).toList();
 }

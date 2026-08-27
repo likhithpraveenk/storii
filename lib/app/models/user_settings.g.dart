@@ -161,7 +161,6 @@ _UserSettings _$UserSettingsFromJson(
       : Duration(
           microseconds: (json['interruptionLongSkipBackward'] as num).toInt(),
         ),
-  autoplay: json['autoplay'] as bool? ?? DefaultUserSettings.autoplay,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -223,7 +222,6 @@ Map<String, dynamic> _$UserSettingsToJson(
       instance.interruptionLongSkipThreshold.inMicroseconds,
   'interruptionLongSkipBackward':
       instance.interruptionLongSkipBackward.inMicroseconds,
-  'autoplay': instance.autoplay,
 };
 
 const _$NavTargetEnumMap = {
@@ -303,6 +301,7 @@ const _$FullPlayerActionsEnumMap = {
   FullPlayerActions.speed: 'speed',
   FullPlayerActions.volume: 'volume',
   FullPlayerActions.bookmarks: 'bookmarks',
+  FullPlayerActions.queue: 'queue',
 };
 
 const _$PlayerBackgroundThemeEnumMap = {

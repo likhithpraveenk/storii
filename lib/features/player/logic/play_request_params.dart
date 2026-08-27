@@ -45,7 +45,7 @@ Future<PlayItemRequestParams> playRequestParams(Ref ref) async {
     mediaPlayer: mediaPlayer,
     supportedMimeTypes: AudioMimeHelper.platformSupportedMimeTypes,
     deviceInfo: ClientDeviceInfo(
-      clientName: 'storii',
+      clientName: 'Storii',
       clientVersion: package.version,
       deviceId: deviceId,
       deviceName: deviceName,
