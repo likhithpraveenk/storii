@@ -38,6 +38,7 @@ class _PlaylistDetailScreenState extends ConsumerState<PlaylistDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final notifier = ref.read(playlistDetailProvider(widget.id).notifier);
     final playlistAsync = ref.watch(playlistDetailProvider(widget.id));
     final playlist = playlistAsync.value;
     final title = playlist != null
@@ -109,12 +110,10 @@ class _PlaylistDetailScreenState extends ConsumerState<PlaylistDetailScreen> {
                           subtitle: subtitle ?? '',
                           inCollection: false,
                           onRemove: () async {
-                            return await ref
-                                .read(playlistMutationsProvider.notifier)
-                                .removeItem(
-                                  playlistId: playlist.id,
-                                  item: item,
-                                );
+                            return await notifier.removeItem(
+                              playlistId: playlist.id,
+                              item: item,
+                            );
                           },
                         );
                       },
@@ -153,9 +152,7 @@ class _PlaylistDetailScreenState extends ConsumerState<PlaylistDetailScreen> {
                     child: AppFilledButton(
                       icon: const Icon(Icons.play_circle_filled_outlined),
                       text: l10n.playAll,
-                      onPressed: () {
-                        // TODO: add all to queue and play the first unfinished
-                      },
+                      onPressed: notifier.playPlaylist,
                     ),
                   ),
                   const SizedBox(width: 4),
@@ -166,9 +163,8 @@ class _PlaylistDetailScreenState extends ConsumerState<PlaylistDetailScreen> {
                       context,
                       initialName: playlist.name,
                       initialDescription: playlist.description,
-                      onSave: ({required name, description}) => ref
-                          .read(playlistMutationsProvider.notifier)
-                          .updateMetadata(
+                      onSave: ({required name, description}) =>
+                          notifier.updateMetadata(
                             playlistId: playlist.id,
                             name: name,
                             description: description,
@@ -190,9 +186,7 @@ class _PlaylistDetailScreenState extends ConsumerState<PlaylistDetailScreen> {
                       actionLabel: l10n.confirm,
                       actionIcon: Icons.delete,
                       onTap: () {
-                        return ref
-                            .read(playlistMutationsProvider.notifier)
-                            .delete(playlist.id);
+                        return notifier.delete(playlist.id);
                       },
                     ),
                   ),

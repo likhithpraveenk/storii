@@ -301,6 +301,7 @@ const _$FullPlayerActionsEnumMap = {
   FullPlayerActions.speed: 'speed',
   FullPlayerActions.volume: 'volume',
   FullPlayerActions.bookmarks: 'bookmarks',
+  FullPlayerActions.queue: 'queue',
 };
 
 const _$PlayerBackgroundThemeEnumMap = {

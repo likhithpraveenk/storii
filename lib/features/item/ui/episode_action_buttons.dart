@@ -1,14 +1,17 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/user_progress_actions.dart';
 import 'package:storii/features/item/ui/episode_metadata_sheet.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/history_button.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
 class EpisodeActionButtons extends ConsumerWidget {
@@ -33,6 +36,19 @@ class EpisodeActionButtons extends ConsumerWidget {
           episodeId: episode.id,
         ),
         HistoryButton(itemId: episode.libraryItemId, episodeId: episode.id),
+        IconButton(
+          tooltip: l10n.addToQueue,
+          icon: const Icon(Icons.playlist_add_outlined, size: 20),
+          onPressed: () {
+            ref
+                .read(queueProvider.notifier)
+                .addToQueue(
+                  itemId: episode.libraryItemId,
+                  episodeId: episode.id,
+                );
+            globalMessengerKey.currentState?.showAppSnackBar(l10n.addedToQueue);
+          },
+        ),
         if (progress?.isFinished != true)
           IconButton(
             tooltip: l10n.markAsComplete,
@@ -148,7 +164,7 @@ class _EpisodePlayButton extends ConsumerWidget {
           return;
         }
         ref
-            .read(audioPlayerProvider.notifier)
+            .read(queueProvider.notifier)
             .play(itemId: episode.libraryItemId, episodeId: episode.id);
       },
       icon: Icon(

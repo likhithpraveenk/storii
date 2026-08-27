@@ -167,7 +167,7 @@ void main() {
     late PositionResolver resolver;
 
     setUp(() {
-      // tracks become chapters via toAudioSources logic —
+      // tracks become chapters via toAudioSources logic
       // each track is its own chapter, start = accumulated offset
       final track0Chapters = [
         chapterJson(

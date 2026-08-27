@@ -11,6 +11,7 @@ import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/library/ui/item_card_progress_widget.dart';
 import 'package:storii/features/library/ui/more_options_widget.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
@@ -231,7 +232,7 @@ class PlayButtonBadge extends ConsumerWidget {
           await audioHandler.togglePlay();
         } else {
           await ref
-              .read(audioPlayerProvider.notifier)
+              .read(queueProvider.notifier)
               .play(itemId: itemId, episodeId: episodeId);
         }
       },

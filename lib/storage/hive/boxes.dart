@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:http_cache_hive_store/http_cache_hive_store.dart';
@@ -19,6 +20,23 @@ const playbackHistoryBoxName = 'playback_history_box';
 const downloadsBoxName = 'downloads_box';
 const speedsBoxName = 'speeds_box';
 const serverSettingsBoxName = 'server_settings_box';
+const playbackQueueBoxName = 'playback_queue_box';
+
+//* any new hive box should be added to this list
+final _knownNames = [
+  appSettingsBoxName,
+  userSettingsBoxName,
+  usersBoxName,
+  serversBoxName,
+  itemsBoxName,
+  localSessionsBoxName,
+  userMediaProgressBoxName,
+  playbackHistoryBoxName,
+  downloadsBoxName,
+  speedsBoxName,
+  serverSettingsBoxName,
+  playbackQueueBoxName,
+];
 
 const networkCacheDir = 'dio_cache';
 late final HiveCacheStore networkCacheStore;
@@ -34,6 +52,7 @@ late final Box<String> downloadsBox;
 late final Box<double> speedsBox;
 late final Box<String> userMediaProgressBox;
 late final Box<String> serverSettingsBox;
+late final Box<String> playbackQueueBox;
 
 Future<void> setupHive() async {
   await Hive.initFlutter();
@@ -64,9 +83,10 @@ Future<void> setupHive() async {
     Hive.openBox<double>(speedsBoxName),
   ).wait;
 
-  final (userMediaProgress, serverSettings) = await (
+  final (userMediaProgress, serverSettings, playbackQueue) = await (
     Hive.openBox<String>(userMediaProgressBoxName),
     Hive.openBox<String>(serverSettingsBoxName),
+    Hive.openBox<String>(playbackQueueBoxName),
   ).wait;
 
   appSettingsBox = appSettings;
@@ -80,8 +100,26 @@ Future<void> setupHive() async {
   speedsBox = speeds;
   userMediaProgressBox = userMediaProgress;
   serverSettingsBox = serverSettings;
+  playbackQueueBox = playbackQueue;
 
   // dio cache
   final dir = await getApplicationDocumentsDirectory();
   networkCacheStore = HiveCacheStore(p.join(dir.path, networkCacheDir));
+
+  unawaited(_cleanupOldBoxes());
+}
+
+Future<void> _cleanupOldBoxes() async {
+  final dir = await getApplicationDocumentsDirectory();
+  if (!await dir.exists()) return;
+
+  await for (final entity in dir.list()) {
+    if (entity is! File || !entity.path.endsWith('.hive')) continue;
+    final boxName = p.basenameWithoutExtension(entity.path);
+    if (!_knownNames.contains(boxName)) {
+      try {
+        await Hive.deleteBoxFromDisk(boxName);
+      } catch (_) {}
+    }
+  }
 }

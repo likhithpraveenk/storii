@@ -7,6 +7,7 @@ import 'package:storii/app/models/playback_event.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/playback_history.dart';
+import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/history_event_tile.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
@@ -153,7 +154,7 @@ class HistorySheet extends ConsumerWidget {
                     } else {
                       unawaited(
                         ref
-                            .read(audioPlayerProvider.notifier)
+                            .read(queueProvider.notifier)
                             .play(
                               itemId: itemId,
                               episodeId: episodeId,

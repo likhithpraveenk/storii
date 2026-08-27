@@ -94,7 +94,7 @@ final class PlaylistDetailProvider
   }
 }
 
-String _$playlistDetailHash() => r'd8c2a1126aad793a523d22f8bfd631d7eea48077';
+String _$playlistDetailHash() => r'5a6adfcbfc25f65739364f9e30c67404a52afd50';
 
 final class PlaylistDetailFamily extends $Family
     with
@@ -139,49 +139,5 @@ abstract class _$PlaylistDetail extends $AsyncNotifier<Playlist> {
               Object?
             >;
     return element.handleCreate(ref, () => build(_$args));
-  }
-}
-
-@ProviderFor(PlaylistMutations)
-final playlistMutationsProvider = PlaylistMutationsProvider._();
-
-final class PlaylistMutationsProvider
-    extends $AsyncNotifierProvider<PlaylistMutations, void> {
-  PlaylistMutationsProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'playlistMutationsProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$playlistMutationsHash();
-
-  @$internal
-  @override
-  PlaylistMutations create() => PlaylistMutations();
-}
-
-String _$playlistMutationsHash() => r'45e8a2c9a3accc3e77639641d49e3a926595dead';
-
-abstract class _$PlaylistMutations extends $AsyncNotifier<void> {
-  FutureOr<void> build();
-  @$mustCallSuper
-  @override
-  WhenComplete runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<void>, void>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<AsyncValue<void>, void>,
-              AsyncValue<void>,
-              Object?,
-              Object?
-            >;
-    return element.handleCreate(ref, build);
   }
 }

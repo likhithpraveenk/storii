@@ -34,7 +34,7 @@ final class PlaybackHistoryStoreProvider
 }
 
 String _$playbackHistoryStoreHash() =>
-    r'24ba8b22d167db7c4f85fba50b2500bd3151ab97';
+    r'2c39baf9ddbecac50eb61299c52bb8cbb5fdff5e';
 
 abstract class _$PlaybackHistoryStore extends $AsyncNotifier<void> {
   FutureOr<void> build();

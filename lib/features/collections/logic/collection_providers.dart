@@ -3,8 +3,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/collections/logic/collection_events_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
+import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'collection_providers.g.dart';
@@ -72,7 +74,7 @@ class CollectionDetail extends _$CollectionDetail {
     final api = ref.read(collectionsApiProvider(user));
     return ref.logApiCall(
       () => api.get(collectionId: id),
-      source: 'collection',
+      source: 'CollectionDetail',
       logMessage: 'Error getting collection $id',
     );
   }
@@ -85,19 +87,33 @@ class CollectionDetail extends _$CollectionDetail {
     books.insert(newIndex, moved);
     state = AsyncData(current.copyWith(books: books));
     try {
-      await ref
-          .read(collectionMutationsProvider.notifier)
-          .reorderItems(current.id, books.map((b) => b.id).toList());
+      final user = await ref.read(authenticatedUserProvider.future);
+      final api = ref.read(collectionsApiProvider(user));
+      await ref.logApiCall(
+        () => api.reorder(
+          collectionId: current.id,
+          books: books.map((b) => b.id).toList(),
+        ),
+        source: 'CollectionDetail',
+        logMessage: 'Error reordering books in collection ${current.name}',
+      );
     } catch (_) {
       ref.invalidateSelf();
     }
   }
-}
 
-@Riverpod(keepAlive: true)
-class CollectionMutations extends _$CollectionMutations {
-  @override
-  Future<void> build() async {}
+  Future<void> playCollection() async {
+    final progressMap = await ref.watch(mediaProgressMapProvider.future);
+    final unfinished = (state.value?.books ?? [])
+        .map((item) => item.copyWith(userMediaProgress: progressMap[item.id]))
+        .where(
+          (book) =>
+              book.userMediaProgress?.isFinished != true &&
+              book.userMediaProgress?.progress != 1,
+        )
+        .toQueueItems();
+    await ref.read(queueProvider.notifier).playMany(unfinished);
+  }
 
   Future<Collection> create({
     required String name,
@@ -114,7 +130,7 @@ class CollectionMutations extends _$CollectionMutations {
           books: [libraryItemId],
         ),
       ),
-      source: 'CollectionMutations',
+      source: 'CollectionDetail',
       logMessage: 'Error creating collection',
     );
   }
@@ -132,7 +148,7 @@ class CollectionMutations extends _$CollectionMutations {
         name: name,
         description: description,
       ),
-      source: 'CollectionMutations',
+      source: 'CollectionDetail',
       logMessage: 'Error updating collection $name',
     );
   }
@@ -142,7 +158,7 @@ class CollectionMutations extends _$CollectionMutations {
     final api = ref.read(collectionsApiProvider(user));
     return ref.logApiCall(
       () => api.delete(collectionId: collectionId),
-      source: 'CollectionMutations',
+      source: 'CollectionDetail',
       logMessage: 'Error deleting collection $collectionId',
     );
   }
@@ -158,7 +174,7 @@ class CollectionMutations extends _$CollectionMutations {
         collectionId: collectionId,
         libraryItemIds: [libraryItemId],
       ),
-      source: 'CollectionMutations',
+      source: 'CollectionDetail',
       logMessage: 'Error adding book to collection $collectionId',
     );
   }
@@ -174,23 +190,8 @@ class CollectionMutations extends _$CollectionMutations {
         collectionId: collectionId,
         libraryItemIds: [libraryItemId],
       ),
-      source: 'CollectionMutations',
+      source: 'CollectionDetail',
       logMessage: 'Error removing book from collection $collectionId',
     );
-  }
-
-  Future<void> reorderItems(String collectionId, List<String> newOrder) async {
-    final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(collectionsApiProvider(user));
-    return ref.logApiCall(
-      () => api.reorder(collectionId: collectionId, books: newOrder),
-      source: 'CollectionMutations',
-      logMessage: 'Error reordering books in collection $collectionId',
-    );
-  }
-
-  Future<void> playCollection(String collectionId) async {
-    // TODO: add to playback queue
-    throw UnimplementedError();
   }
 }
