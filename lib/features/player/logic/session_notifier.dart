@@ -119,25 +119,45 @@ class SessionNotifier extends _$SessionNotifier {
       updatedAt: DateTime.now(),
     );
 
-    await ref.read(sessionStoreProvider.notifier).save(updated);
-    state = updated;
-
-    final isConnected = await ref.read(socketStatusProvider.future);
-    if (!isConnected) {
-      LogService.log('No Server Connection', source: 'SessionNotifier');
-      throw 'No Server Connection';
-    }
-
-    final user = await ref.read(authenticatedUserProvider.future);
     if (isLocal) {
-      await ref.logApiCall(
-        () => ref
-            .read(sessionsApiProvider(user))
-            .syncLocal(localSession: updated.stripped),
-        source: 'SessionNotifier',
-      );
-      await ref.read(sessionStoreProvider.notifier).delete(updated.id);
+      await ref.read(sessionStoreProvider.notifier).save(updated);
+      state = updated;
+
+      final isConnected = await ref.read(socketStatusProvider.future);
+      if (!isConnected) {
+        return;
+      }
+
+      try {
+        final user = await ref.read(authenticatedUserProvider.future);
+        await ref.logApiCall(
+          () => ref
+              .read(sessionsApiProvider(user))
+              .syncLocal(localSession: updated.stripped),
+          source: 'SessionNotifier',
+        );
+      } catch (e) {
+        LogService.log(
+          'Local session saved locally, server sync deferred',
+          source: 'SessionNotifier',
+          originalError: e,
+          level: .error,
+        );
+        return;
+      }
     } else {
+      final isConnected = await ref.read(socketStatusProvider.future);
+      if (!isConnected) {
+        final withPosition = session.copyWith(
+          currentTime: position,
+          updatedAt: DateTime.now(),
+        );
+        await ref.read(sessionStoreProvider.notifier).save(withPosition);
+        state = withPosition;
+        throw 'No Server Connection';
+      }
+
+      final user = await ref.read(authenticatedUserProvider.future);
       await ref.logApiCall(
         () => ref
             .read(sessionsApiProvider(user))
@@ -150,8 +170,11 @@ class SessionNotifier extends _$SessionNotifier {
             ),
         source: 'SessionNotifier',
       );
-      await ref.read(sessionStoreProvider.notifier).delete(updated.id);
     }
+
+    await ref.read(sessionStoreProvider.notifier).delete(updated.id);
+    state = updated;
+
     log(
       '${position.toTime()}: sync success '
       'listened: ${totalListened.toReadableDuration(showSeconds: true)}',
