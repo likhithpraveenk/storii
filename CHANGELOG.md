@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- downloaded books over-reported time listened while offline, inflating stats
+
 ## [v0.7.0] - 2026-08-27
 
 ### Added
