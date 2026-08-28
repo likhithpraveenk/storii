@@ -1,8 +1,7 @@
 ---
 name: Feature Request
-about: Suggest an idea or improvement
+about: Suggest an improvement
 labels: feature
-title: [Feature] 
 ---
 
 ## Use Case
