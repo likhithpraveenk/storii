@@ -82,8 +82,8 @@
   "custom": "Niestandardowe",
   "systemTheme": "Motyw systemowy",
   "systemThemeSubtitle": "Dopasuj kolory do urządzenia",
-  "pureBlack": "Pełny czarny",
-  "pureBlackSubtitle": "Motyw wysokiego kontrastu",
+  "pureBlack": "Czysta czerń (AMOLED)",
+  "pureBlackSubtitle": "Tryb wysokiego kontrastu dla ekranów AMOLED",
   "fontScale": "Rozmiar czcionki",
   "language": "Język",
   "navBar": "Pasek nawigacji",
@@ -187,8 +187,8 @@
       }
     }
   },
-  "networkLogs": "Logi komunikacji sieciowej",
-  "networkLogsDescription": "Zaloguj zapytania i odpowiedzi HTTP",
+  "networkLogs": "Logi komunikacji z serwerem",
+  "networkLogsDescription": "Zapisz komunikację HTTP(S)",
   "trustAllCertificates": "Ufaj wszystkim certyfikatom",
   "trustAllCertificatesDescription": "Wyłącza weryfikacje certyfikatów",
   "readableDuration": "{hours, plural, =0{} other{{hours}h }}{minutes}m",
@@ -237,7 +237,7 @@
   "playerSettings": "Ustawienia odtwarzacza",
   "skipForward": "Przewiń do przodu",
   "skipBack": "Przewiń do tyłu",
-  "interruptSkipBack": "Przewiń w tył gdy przerwano",
+  "interruptSkipBack": "Przewiń do tyłu gdy przerwano",
   "interruptSkipBackDescription": "Przewiń wstecz parę sekund jeśli słuchanie zostało przerwane (np. przez powiadomienie). Ustaw 0 by wyłączyć",
   "interruptSkipBackShort": "Przewiń wstecz przy krótkich przerwach",
   "interruptSkipBackLong": "Przewiń wstecz przy długich przerwach",
@@ -263,8 +263,8 @@
       }
     }
   },
-  "settingsStartupRouteTitle": "Domyślna karta przy starcie aplikacji",
-  "settingsReorderNavTitle": "Karty aplikacji",
+  "settingsStartupRouteTitle": "Karta przy starcie aplikacji",
+  "settingsReorderNavTitle": "Wyświetlane karty",
   "settingsReorderNavSubtitle": "Aktywuj/dezaktywuj/zmień kolejność kart",
   "addFonts": "Dodaj czcionki",
   "appCache": "Cache aplikacji",
@@ -336,8 +336,8 @@
   "audioBufferDuration": "Rozmiar bufora dźwięku",
   "audioBufferDurationDescription": "Ile sekund dźwięku zapisać w buforze aplikacji? Większa wartość zmniejsza ryzyko przerwania przy wolnych połączeniach",
   "fadeOnSleep": "Zanikanie dźwięku (fade-out)",
-  "fadeOnSleepSubtitle": "Powoli zmniejsza głośność odtwarzania gdy \"Sleep Timer\" się kończy",
-  "fadeOnSleepDuration": "Czas rozpoczęcia wyciszania (fade-out)",
+  "fadeOnSleepSubtitle": "Zmniejszenie głośności zgodnie ze \"sleep timer\"",
+  "fadeOnSleepDuration": "Rozpocznij wyciszanie (fade-out)",
   "fadeOnSleepDurationDescription": "Ustawia jak długo jest aktywne zanikanie dźwięku nim \"Sleep timer\" się skończy",
   "fadeOnSleepMinVolume": "Minimalna głośnosć (fade-out)",
   "fadeOnSleepMinVolumeDescription": "Ustawia minimalny poziom dźwięku jaki zostanie ustawiony dla \"Sleep timer\"",
@@ -390,9 +390,9 @@
   "scrollThumbWidth": "Szerokość",
   "scrollThumbWidthDescription": "Szerokość paska przewijania (w px)",
   "off": "Wyłączony",
-  "binaryUnits": "Rozmiary binarne (dwójkowe)",
+  "binaryUnits": "Rozmiary plików (dwójkowe)",
   "binaryUnitsSubtitle": "1 KB = 1024 B",
-  "decimalUnits": "Rozmiary dziesiętne (system SI)",
+  "decimalUnits": "Rozmiary plików (dziesiętne)",
   "decimalUnitsSubtitle": "1 KB = 1000 B",
   "backup": "Kopia zapasowa i przywracanie",
   "createBackup": "Utwórz kopię zapasową",
@@ -525,5 +525,11 @@
       }
     }
   },
-  "sampleText": "Zażółć gęślą jaźń - 0123456789"
+  "sampleText": "Zażółć gęślą jaźń - 0123456789",
+  "queue": "Kolejka odtwarzania",
+  "addToQueue": "Dodaj do kolejki odtwarzania",
+  "addedToQueue": "Dodano do kolejki",
+  "clearQueue": "Wyczyść kolejkę",
+  "autoplay": "Autoodtwarzanie",
+  "errorTimeout": "Upłynął limit czasu połączenia"
 }
