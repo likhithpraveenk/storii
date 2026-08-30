@@ -68,6 +68,9 @@ class SleepTimer extends _$SleepTimer {
       cancel();
       return;
     }
+    if (_initialVolume != null) {
+      _restoreVolume();
+    }
     _initialVolume = null;
     state = clamped;
     _ticker ??= Timer.periodic(_tick, (_) => _onTick());
