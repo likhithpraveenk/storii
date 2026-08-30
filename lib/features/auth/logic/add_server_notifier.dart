@@ -6,6 +6,7 @@ import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/helpers/local_network.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'add_server_notifier.g.dart';
@@ -31,6 +32,7 @@ class AddServerNotifier extends _$AddServerNotifier {
     state = const ServerState(status: .checking);
 
     try {
+      await ensureLocalNetworkAccess(url.normalizedUri);
       await ref.logApiCall(() async {
         final authApi = ref.read(authApiProvider(url.normalizedUri));
         await authApi.healthCheck();

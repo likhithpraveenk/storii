@@ -50,7 +50,7 @@ final class ProgressStoreProvider
   }
 }
 
-String _$progressStoreHash() => r'0577b320f9e92f44f3f0bec6a9c684cdbadcec5f';
+String _$progressStoreHash() => r'66e5d759f45a812127f8bf6554480a9d59af1f67';
 
 final class ProgressStoreFamily extends $Family
     with

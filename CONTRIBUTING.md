@@ -8,8 +8,10 @@ You do **not** need to write code to contribute. If you spot any text errors (ty
 
 ## Requirements
 
-- Flutter SDK (stable)
-- Access to an Audiobookshelf server for testing
+- Flutter SDK (pinned version in [pubspec.yaml](pubspec.yaml))
+  > you can use `fvm` to manage versions
+- An Audiobookshelf server for testing
+- Android emulator or a real device (Android 7-17 supported)
 
 ## Setup
 
@@ -20,7 +22,22 @@ You do **not** need to write code to contribute. If you spot any text errors (ty
 ```bash
 git clone https://github.com/YOUR_USERNAME/storii.git
 cd storii
+(cd packages/abs_api && dart pub get && dart run build_runner build)
 flutter pub get
+dart run build_runner build
+```
+
+## Running the app
+
+```bash
+flutter run
+```
+
+For a release build
+
+```bash
+flutter build apk --split-per-abi
+flutter install
 ```
 
 ## Code Generation

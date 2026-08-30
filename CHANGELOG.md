@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- sleep timer now restores original volume when adding/setting time during fade-out
+- android 17 local network access permission
+
 ## [v0.7.1] - 2026-08-29
 
 ### Fixed

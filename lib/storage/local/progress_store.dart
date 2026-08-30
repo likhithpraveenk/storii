@@ -42,14 +42,15 @@ class ProgressStore extends _$ProgressStore {
         .watch()
         .where((event) => (event.key as String).startsWith(prefix))
         .map((event) {
+          final mapKey = (event.key as String).substring(prefix.length);
           if (event.deleted) {
-            items.remove(event.key);
+            items.remove(mapKey);
           } else {
             final item = _itemFromValue(event.value as String?);
             if (item != null) {
               items[mediaItemIdKey(item.libraryItemId, item.episodeId)] = item;
             } else {
-              items.remove(event.key);
+              items.remove(mapKey);
             }
           }
           return Map<String, MediaProgress>.from(items);

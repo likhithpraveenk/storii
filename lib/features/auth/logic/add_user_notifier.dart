@@ -10,6 +10,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/auth/logic/users_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
+import 'package:storii/shared/helpers/local_network.dart';
 import 'package:storii/shared/helpers/oauth_helpers.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -43,6 +44,7 @@ class AddUserNotifier extends _$AddUserNotifier {
   Future<void> login(Uri url, String username, String password) async {
     state = state.copyWith(status: .loading);
     try {
+      await ensureLocalNetworkAccess(url);
       final authApi = ref.read(authApiProvider(url));
       final response = await ref.logApiCall(
         () => authApi.login(username: username.trim(), password: password),
@@ -62,6 +64,7 @@ class AddUserNotifier extends _$AddUserNotifier {
   Future<void> loginWithOIDC(Uri url) async {
     state = state.copyWith(status: .loading);
     try {
+      await ensureLocalNetworkAccess(url);
       final response = await _performOidcFlow(url);
       await _finalize(response, url);
       LogService.log(
