@@ -24,8 +24,11 @@ jobs:
           flutter-version-file: ./pubspec.yaml
           cache: true
 
-      - name: Get dependencies
-        run: flutter pub get
+      - name: abs_api - get dependencies & run code gen
+        run: (cd packages/abs_api && dart pub get && dart run build_runner build)
+
+      - name: storii - get dependencies & run code gen
+        run: flutter pub get --enforce-lockfile && dart run build_runner build
 
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/release.keystore
