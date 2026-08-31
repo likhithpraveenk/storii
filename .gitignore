@@ -34,6 +34,10 @@ lib/l10n/gen/
 .pub/
 /build/
 
+*.g.dart
+*.freezed.dart
+
+
 # Symbolication related
 app.*.symbols
 
