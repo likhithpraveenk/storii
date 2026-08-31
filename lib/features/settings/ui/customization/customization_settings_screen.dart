@@ -44,12 +44,18 @@ class CustomizationSettingsScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          SettingsHeader(title: l10n.navBar),
-          const StartupNavTile(),
-          const ReorderNavTabsTile(),
-          const NavLabelTile(),
-          SettingsHeader(title: l10n.lists),
-          const ScrollThumbTile(),
+          SettingsHeader(
+            title: l10n.navBar,
+            children: const [
+              StartupNavTile(),
+              ReorderNavTabsTile(),
+              NavLabelTile(),
+            ],
+          ),
+          SettingsHeader(
+            title: l10n.lists,
+            children: const [ScrollThumbTile()],
+          ),
           const SizedBox(height: 200),
         ],
       ),

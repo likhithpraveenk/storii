@@ -41,8 +41,10 @@ class LibrarySettingsScreen extends ConsumerWidget {
       body: ListView(
         children: [
           const RememberSortTile(),
-          SettingsHeader(title: l10n.display),
-          const StackedImagesVisibleTile(),
+          SettingsHeader(
+            title: l10n.display,
+            children: const [StackedImagesVisibleTile()],
+          ),
         ],
       ),
     );

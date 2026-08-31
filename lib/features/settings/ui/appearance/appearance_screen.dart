@@ -61,48 +61,56 @@ class AppearanceScreen extends ConsumerWidget {
       ),
       body: ListView(
         children: [
-          SettingsHeader(title: l10n.theme),
-          Padding(
-            padding: const .symmetric(horizontal: 16),
-            child: SegmentedButton<ThemeMode>(
-              segments: [
-                ButtonSegment(
-                  value: ThemeMode.system,
-                  icon: const Icon(Icons.settings_brightness),
-                  label: Text(l10n.system),
+          SettingsHeader(
+            title: l10n.theme,
+            children: [
+              Padding(
+                padding: const .symmetric(horizontal: 16),
+                child: SegmentedButton<ThemeMode>(
+                  segments: [
+                    ButtonSegment(
+                      value: ThemeMode.system,
+                      icon: const Icon(Icons.settings_brightness),
+                      label: Text(l10n.system),
+                    ),
+                    ButtonSegment(
+                      value: ThemeMode.light,
+                      icon: const Icon(Icons.light_mode),
+                      label: Text(l10n.light),
+                    ),
+                    ButtonSegment(
+                      value: ThemeMode.dark,
+                      icon: const Icon(Icons.dark_mode),
+                      label: Text(l10n.dark),
+                    ),
+                  ],
+                  selected: {themeMode},
+                  onSelectionChanged: (mode) {
+                    notifier.setThemeMode(mode.first);
+                  },
                 ),
-                ButtonSegment(
-                  value: ThemeMode.light,
-                  icon: const Icon(Icons.light_mode),
-                  label: Text(l10n.light),
-                ),
-                ButtonSegment(
-                  value: ThemeMode.dark,
-                  icon: const Icon(Icons.dark_mode),
-                  label: Text(l10n.dark),
-                ),
-              ],
-              selected: {themeMode},
-              onSelectionChanged: (mode) {
-                notifier.setThemeMode(mode.first);
-              },
-            ),
+              ),
+              SwitchListTile(
+                title: Text(l10n.pureBlack),
+                subtitle: Text(l10n.pureBlackSubtitle),
+                value: isPureBlack,
+                onChanged: notifier.setUsePureBlack,
+              ),
+              const SystemThemeTile(),
+              const AppColorTile(),
+              const SchemeVariantTile(),
+            ],
           ),
-          SwitchListTile(
-            title: Text(l10n.pureBlack),
-            subtitle: Text(l10n.pureBlackSubtitle),
-            value: isPureBlack,
-            onChanged: notifier.setUsePureBlack,
+          SettingsHeader(
+            title: l10n.display,
+            children: const [
+              FontFamilyTile(),
+              FontScaleTile(),
+              DateTimeFormatTile(),
+              MarqueeSpeedTile(),
+              BinaryBytesTile(),
+            ],
           ),
-          const SystemThemeTile(),
-          const AppColorTile(),
-          const SchemeVariantTile(),
-          SettingsHeader(title: l10n.display),
-          const FontFamilyTile(),
-          const FontScaleTile(),
-          const DateTimeFormatTile(),
-          const MarqueeSpeedTile(),
-          const BinaryBytesTile(),
           const SizedBox(height: 100),
         ],
       ),

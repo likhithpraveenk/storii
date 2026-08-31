@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 ### Changed
 
 - miniplayer title now shows chapter name when chapter progress slider is enabled, book title otherwise
+- settings sections are now collapsible
 
 ### Added
 
