@@ -20,3 +20,6 @@ const downloadsDir = 'downloads';
 const audiobooksSubDir = 'audiobooks';
 const podcastsSubDir = 'podcasts';
 const coverName = 'cover.jpg';
+
+// special symbols
+const kDot = '•';

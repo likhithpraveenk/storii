@@ -1,6 +1,7 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
@@ -173,8 +174,8 @@ class _EpisodeMetaRow extends ConsumerWidget {
               ),
             ),
           if (progressPct != null && parts.isNotEmpty)
-            const TextSpan(text: ' • '),
-          if (parts.isNotEmpty) TextSpan(text: parts.join(' • ')),
+            const TextSpan(text: ' $kDot '),
+          if (parts.isNotEmpty) TextSpan(text: parts.join(' $kDot ')),
         ],
       ),
     );

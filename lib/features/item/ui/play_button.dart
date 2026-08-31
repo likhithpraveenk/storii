@@ -1,6 +1,7 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
@@ -59,7 +60,7 @@ class PlayButton extends ConsumerWidget {
           : progress == 1.0
           ? l10n.replay
           : progress > 0
-          ? '${l10n.resume} • $remaining'
+          ? '${l10n.resume} $kDot $remaining'
           : l10n.play;
     }
 
