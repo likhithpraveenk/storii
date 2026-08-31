@@ -20,6 +20,19 @@ runs:
       shell: bash
       run: dart format --set-exit-if-changed .
 
+    - name: code generation check
+      shell: bash
+      run: |
+        dart run build_runner build --force-aot
+        cd packages/abs_api
+        dart run build_runner build --force-aot
+        cd ../..
+        if [[ -n $(git status --porcelain) ]]; then
+          echo "::error::Please run 'dart run build_runner build' in either root directory or packages/abs_api and commit the changes"
+          git status --porcelain
+          exit 1
+        fi
+
     - name: dart fix check
       shell: bash
       run: |
