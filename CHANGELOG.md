@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- a new progress bar in book detail screen to show local session progress
+
 ## [v0.7.2] - 2026-08-30
 
 ### Fixed

@@ -149,6 +149,10 @@ extension PlaybackSessionX on PlaybackSession {
         : const MediaMetadata.book(),
     chapters: [],
   );
+
+  double? get localProgress => playMethod == .local && duration > Duration.zero
+      ? (currentTime.inMilliseconds / duration.inMilliseconds).clamp(0.0, 1.0)
+      : null;
 }
 
 extension ToPlaybackSession on LibraryItem {
