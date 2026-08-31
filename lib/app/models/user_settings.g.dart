@@ -161,6 +161,18 @@ _UserSettings _$UserSettingsFromJson(
       : Duration(
           microseconds: (json['interruptionLongSkipBackward'] as num).toInt(),
         ),
+  globalProgressEndLabel:
+      $enumDecodeNullable(
+        _$ProgressEndLabelEnumMap,
+        json['globalProgressEndLabel'],
+      ) ??
+      DefaultUserSettings.globalProgressEndLabel,
+  progressEndLabel:
+      $enumDecodeNullable(
+        _$ProgressEndLabelEnumMap,
+        json['progressEndLabel'],
+      ) ??
+      DefaultUserSettings.progressEndLabel,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -222,6 +234,9 @@ Map<String, dynamic> _$UserSettingsToJson(
       instance.interruptionLongSkipThreshold.inMicroseconds,
   'interruptionLongSkipBackward':
       instance.interruptionLongSkipBackward.inMicroseconds,
+  'globalProgressEndLabel':
+      _$ProgressEndLabelEnumMap[instance.globalProgressEndLabel]!,
+  'progressEndLabel': _$ProgressEndLabelEnumMap[instance.progressEndLabel]!,
 };
 
 const _$NavTargetEnumMap = {
@@ -315,4 +330,9 @@ const _$PlaybackControlsLayoutEnumMap = {
   PlaybackControlsLayout.defaultLayout: 'defaultLayout',
   PlaybackControlsLayout.compact: 'compact',
   PlaybackControlsLayout.big: 'big',
+};
+
+const _$ProgressEndLabelEnumMap = {
+  ProgressEndLabel.total: 'total',
+  ProgressEndLabel.remaining: 'remaining',
 };

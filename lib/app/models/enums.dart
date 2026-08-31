@@ -289,3 +289,5 @@ enum PlaybackControlsLayout {
     .big => l10n.big,
   };
 }
+
+enum ProgressEndLabel { total, remaining }

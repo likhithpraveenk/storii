@@ -48,13 +48,27 @@ class _BookSliderState extends ConsumerState<BookSlider> {
     }
 
     final displayValue = _dragValue ?? scaledPositionMs;
+    final label = ref.watch(progressEndLabelProvider);
+    final scaledDuration = Duration(
+      microseconds: scaleTimeBySpeed
+          ? (duration.inMicroseconds / speed).round()
+          : duration.inMicroseconds,
+    );
+    final remaining =
+        scaledDuration - Duration(milliseconds: displayValue.toInt());
+    final end = switch (label) {
+      .total => scaledDuration.toTime(),
+      .remaining => '-${remaining.toTime()}',
+    };
 
     return Column(
       mainAxisSize: .min,
       children: [
         SliderTheme(
-          data: SliderTheme.of(context)
-              .copyWith(thumbShape: const RoundRectSliderThumbShape()),
+          data: SliderTheme.of(context).copyWith(
+            thumbShape: const RoundRectSliderThumbShape(),
+            trackShape: const RoundedRectSliderTrackShape(),
+          ),
           child: Slider(
             value: displayValue,
             max: scaledDurationMs,
@@ -80,12 +94,12 @@ class _BookSliderState extends ConsumerState<BookSlider> {
           mainAxisAlignment: .spaceBetween,
           children: [
             Text(format(displayValue)),
-            Text(
-              Duration(
-                microseconds: scaleTimeBySpeed
-                    ? (duration.inMicroseconds / speed).round()
-                    : duration.inMicroseconds,
-              ).toTime(),
+            GestureDetector(
+              behavior: .opaque,
+              onTap: () => ref
+                  .read(userSettingsProvider.notifier)
+                  .setProgressEndLabel(label == .total ? .remaining : .total),
+              child: Text(end),
             ),
           ],
         ),

@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 ### Added
 
 - a new progress bar in book detail screen to show local session progress
+- tap the progress slider's end duration label (full player) to toggle between total and remaining time
 
 ## [v0.7.2] - 2026-08-30
 

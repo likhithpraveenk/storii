@@ -372,6 +372,12 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setInterruptionLongSkipBackward(Duration value) =>
       _save(state?.copyWith(interruptionLongSkipBackward: value));
+
+  Future<void> setGlobalProgressEndLabel(ProgressEndLabel value) =>
+      _save(state?.copyWith(globalProgressEndLabel: value));
+
+  Future<void> setProgressEndLabel(ProgressEndLabel value) =>
+      _save(state?.copyWith(progressEndLabel: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -827,4 +833,24 @@ final interruptionLongSkipBackwardProvider = Provider<Duration>(
     ),
   ),
   name: 'interruptionLongSkipBackwardProvider',
+);
+
+final globalProgressEndLabelProvider = Provider<ProgressEndLabel>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.globalProgressEndLabel ??
+          DefaultUserSettings.globalProgressEndLabel,
+    ),
+  ),
+  name: 'globalProgressEndLabelProvider',
+);
+
+final progressEndLabelProvider = Provider<ProgressEndLabel>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.progressEndLabel ?? DefaultUserSettings.progressEndLabel,
+    ),
+  ),
+  name: 'progressEndLabelProvider',
 );
