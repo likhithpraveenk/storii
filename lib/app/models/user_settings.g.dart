@@ -173,6 +173,12 @@ _UserSettings _$UserSettingsFromJson(
         json['progressEndLabel'],
       ) ??
       DefaultUserSettings.progressEndLabel,
+  miniplayerSubtitleMode:
+      $enumDecodeNullable(
+        _$MiniplayerSubtitleModeEnumMap,
+        json['miniplayerSubtitleMode'],
+      ) ??
+      DefaultUserSettings.miniplayerSubtitleMode,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -237,6 +243,8 @@ Map<String, dynamic> _$UserSettingsToJson(
   'globalProgressEndLabel':
       _$ProgressEndLabelEnumMap[instance.globalProgressEndLabel]!,
   'progressEndLabel': _$ProgressEndLabelEnumMap[instance.progressEndLabel]!,
+  'miniplayerSubtitleMode':
+      _$MiniplayerSubtitleModeEnumMap[instance.miniplayerSubtitleMode]!,
 };
 
 const _$NavTargetEnumMap = {
@@ -335,4 +343,10 @@ const _$PlaybackControlsLayoutEnumMap = {
 const _$ProgressEndLabelEnumMap = {
   ProgressEndLabel.total: 'total',
   ProgressEndLabel.remaining: 'remaining',
+};
+
+const _$MiniplayerSubtitleModeEnumMap = {
+  MiniplayerSubtitleMode.remaining: 'remaining',
+  MiniplayerSubtitleMode.position: 'position',
+  MiniplayerSubtitleMode.both: 'both',
 };

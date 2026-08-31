@@ -6,6 +6,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/player_settings/audio_buffer_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/fade_on_sleep_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/interrupt_skip_tile.dart';
+import 'package:storii/features/settings/ui/player_settings/miniplayer_subtitle_mode_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/os_notification_button_tiles.dart';
 import 'package:storii/features/settings/ui/player_settings/playback_controls_layout_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/player_background_theme_tile.dart';
@@ -57,6 +58,7 @@ class PlayerSettingsScreen extends ConsumerWidget {
           const FadeOnSleepTile(),
           SettingsHeader(title: l10n.miniPlayer),
           const ShowSeekButtonsTile(),
+          const MiniplayerSubtitleModeTile(),
           SettingsHeader(title: l10n.fullPlayer),
           const PlayerBackgroundThemeTile(),
           const PlaybackControlsLayoutTile(),

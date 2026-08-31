@@ -291,3 +291,15 @@ enum PlaybackControlsLayout {
 }
 
 enum ProgressEndLabel { total, remaining }
+
+enum MiniplayerSubtitleMode {
+  remaining,
+  position,
+  both;
+
+  String get label => switch (this) {
+    .remaining => l10n.remainingDuration,
+    .position => l10n.currentPosition,
+    .both => l10n.both,
+  };
+}

@@ -378,6 +378,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setProgressEndLabel(ProgressEndLabel value) =>
       _save(state?.copyWith(progressEndLabel: value));
+
+  Future<void> setMiniplayerSubtitleMode(MiniplayerSubtitleMode value) =>
+      _save(state?.copyWith(miniplayerSubtitleMode: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -853,4 +856,15 @@ final progressEndLabelProvider = Provider<ProgressEndLabel>(
     ),
   ),
   name: 'progressEndLabelProvider',
+);
+
+final miniplayerSubtitleModeProvider = Provider<MiniplayerSubtitleMode>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.miniplayerSubtitleMode ??
+          DefaultUserSettings.miniplayerSubtitleMode,
+    ),
+  ),
+  name: 'miniplayerSubtitleModeProvider',
 );

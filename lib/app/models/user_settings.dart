@@ -60,6 +60,7 @@ class DefaultUserSettings {
   static const interruptionLongSkipBackward = Duration.zero;
   static const globalProgressEndLabel = ProgressEndLabel.total;
   static const progressEndLabel = ProgressEndLabel.total;
+  static const miniplayerSubtitleMode = MiniplayerSubtitleMode.both;
 }
 
 @freezed
@@ -191,6 +192,9 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.progressEndLabel)
     ProgressEndLabel progressEndLabel,
+
+    @Default(DefaultUserSettings.miniplayerSubtitleMode)
+    MiniplayerSubtitleMode miniplayerSubtitleMode,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);
