@@ -23,3 +23,4 @@ const coverName = 'cover.jpg';
 
 // special symbols
 const kDot = '•';
+const kMinus = '\u2212';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
@@ -58,7 +59,7 @@ class _BookSliderState extends ConsumerState<BookSlider> {
         scaledDuration - Duration(milliseconds: displayValue.toInt());
     final end = switch (label) {
       .total => scaledDuration.toTime(),
-      .remaining => '-${remaining.toTime()}',
+      .remaining => '$kMinus${remaining.toTime()}',
     };
 
     return Column(

@@ -21,6 +21,13 @@ class MiniPlayer extends ConsumerWidget {
     final displayTitle = ref.watch(
       sessionProvider.select((s) => s?.displayTitle),
     );
+    final showChapterSlider = ref.watch(showChapterProgressSliderProvider);
+    final chapterTitle = ref.watch(currentChapterProvider).value?.title;
+
+    final title =
+        (showChapterSlider && chapterTitle != null && chapterTitle.isNotEmpty
+        ? chapterTitle
+        : displayTitle ?? l10n.noTitle);
 
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
@@ -48,8 +55,9 @@ class MiniPlayer extends ConsumerWidget {
     final miniplayerSubtitleMode = ref.watch(miniplayerSubtitleModeProvider);
     final subtitle = switch (miniplayerSubtitleMode) {
       .both => '$positionStr  $kDot  $remainingStr',
-      .remaining => remainingStr,
-      .position => positionStr,
+      .remaining =>
+        '$kMinus${scaledRemaining.toReadableDuration(showSeconds: true)}',
+      .position => scaledPosition.toReadableDuration(showSeconds: true),
     };
 
     return ThemedBackground(
@@ -66,7 +74,7 @@ class MiniPlayer extends ConsumerWidget {
                 crossAxisAlignment: .start,
                 children: [
                   MarqueeText(
-                    displayTitle ?? l10n.noTitle,
+                    title,
                     style: textTheme.labelLarge?.copyWith(fontWeight: .bold),
                   ),
                   Text(

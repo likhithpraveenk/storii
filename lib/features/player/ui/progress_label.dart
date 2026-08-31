@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
@@ -25,7 +26,7 @@ class ProgressLabel extends ConsumerWidget {
 
     final end = switch (label) {
       .total => totalDuration.toTime(),
-      .remaining => '-${(totalDuration - currentPosition).toTime()}',
+      .remaining => '$kMinus${(totalDuration - currentPosition).toTime()}',
     };
 
     return Padding(

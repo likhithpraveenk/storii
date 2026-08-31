@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- miniplayer title now shows chapter name when chapter progress slider is enabled, book title otherwise
+
 ### Added
 
 - a new progress bar in book detail screen to show local session progress
