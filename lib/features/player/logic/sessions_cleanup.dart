@@ -7,6 +7,7 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
+import 'package:storii/storage/local/progress_store.dart';
 import 'package:storii/storage/local/session_store.dart';
 
 part 'sessions_cleanup.g.dart';
@@ -52,6 +53,9 @@ class SessionsCleanup extends _$SessionsCleanup {
             source: _source,
             debug: true,
           );
+          ref
+              .read(progressStoreProvider(user.id).notifier)
+              .put(session.toMediaProgress());
         } else {
           await ref.logApiCall(
             () => sessionsApi.syncSession(

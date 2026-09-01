@@ -10,8 +10,8 @@ import 'package:storii/features/player/ui/button_layout_big.dart';
 import 'package:storii/features/player/ui/button_layout_compact.dart';
 import 'package:storii/features/player/ui/button_layout_default.dart';
 import 'package:storii/features/player/ui/full_player_actions.dart';
+import 'package:storii/features/player/ui/progress_label.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
 
 class FullPlayer extends ConsumerWidget {
@@ -40,8 +40,8 @@ class FullPlayer extends ConsumerWidget {
         ? Duration(microseconds: (d.inMicroseconds / localSpeed).round())
         : d;
 
-    final currentPosition = scale(globalPosition).toTime();
-    final totalDuration = scale(session.duration).toTime();
+    final currentPosition = scale(globalPosition);
+    final totalDuration = scale(session.duration);
 
     final title = session.isPodcastEpisode
         ? session.displayTitle ?? l10n.noTitle
@@ -83,16 +83,9 @@ class FullPlayer extends ConsumerWidget {
                 ),
                 const SizedBox(height: 4),
                 if (showChapterProgressSlider)
-                  Text(
-                    '$currentPosition / $totalDuration',
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant.withValues(
-                        alpha: 0.7,
-                      ),
-                      fontWeight: .bold,
-                      letterSpacing: 0.8,
-                    ),
-                    textAlign: .center,
+                  ProgressLabel(
+                    currentPosition: currentPosition,
+                    totalDuration: totalDuration,
                   ),
                 const Padding(
                   padding: .symmetric(horizontal: 24),

@@ -19,45 +19,49 @@ class AccountSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: .start,
       children: [
-        SettingsHeader(title: user?.username ?? l10n.username),
-        ListTile(
-          leading: const Icon(Icons.switch_account),
-          title: Text(l10n.switchAccount),
-          onTap: () async {
-            final confirmed = await AppDialog.show<bool>(
-              context,
-              title: l10n.switchAccount,
-              body: Text(l10n.switchAccountConfirm),
-              actionLabel: l10n.switchAccount,
-              onTap: () async {},
-            );
-            if (confirmed == true) {
-              await ref
-                  .read(userSessionControllerProvider.notifier)
-                  .switchUser();
-            }
-          },
-        ),
-        ListTile(
-          leading: const Icon(Icons.logout),
-          title: isLoggingOut ? const RandomWaveform() : Text(l10n.logout),
-          onTap: user == null || isLoggingOut
-              ? null
-              : () async {
-                  final confirmed = await AppDialog.show<bool>(
-                    context,
-                    title: l10n.logout,
-                    body: Text(l10n.logoutConfirm),
-                    actionLabel: l10n.logout,
-                    isDestructive: true,
-                    onTap: () async {},
-                  );
-                  if (confirmed == true) {
-                    await ref
-                        .read(userSessionControllerProvider.notifier)
-                        .logout(user);
-                  }
-                },
+        SettingsHeader(
+          title: user?.username ?? l10n.username,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.switch_account),
+              title: Text(l10n.switchAccount),
+              onTap: () async {
+                final confirmed = await AppDialog.show<bool>(
+                  context,
+                  title: l10n.switchAccount,
+                  body: Text(l10n.switchAccountConfirm),
+                  actionLabel: l10n.switchAccount,
+                  onTap: () async {},
+                );
+                if (confirmed == true) {
+                  await ref
+                      .read(userSessionControllerProvider.notifier)
+                      .switchUser();
+                }
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: isLoggingOut ? const RandomWaveform() : Text(l10n.logout),
+              onTap: user == null || isLoggingOut
+                  ? null
+                  : () async {
+                      final confirmed = await AppDialog.show<bool>(
+                        context,
+                        title: l10n.logout,
+                        body: Text(l10n.logoutConfirm),
+                        actionLabel: l10n.logout,
+                        isDestructive: true,
+                        onTap: () async {},
+                      );
+                      if (confirmed == true) {
+                        await ref
+                            .read(userSessionControllerProvider.notifier)
+                            .logout(user);
+                      }
+                    },
+            ),
+          ],
         ),
       ],
     );

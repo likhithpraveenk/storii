@@ -21,6 +21,13 @@ class MiniPlayer extends ConsumerWidget {
     final displayTitle = ref.watch(
       sessionProvider.select((s) => s?.displayTitle),
     );
+    final showChapterSlider = ref.watch(showChapterProgressSliderProvider);
+    final chapterTitle = ref.watch(currentChapterProvider).value?.title;
+
+    final title =
+        (showChapterSlider && chapterTitle != null && chapterTitle.isNotEmpty
+        ? chapterTitle
+        : displayTitle ?? l10n.noTitle);
 
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
@@ -32,6 +39,9 @@ class MiniPlayer extends ConsumerWidget {
     final (:duration, :position) = ref.watch(displayProgressProvider);
     final scaleTimeBySpeed = ref.watch(scaleTimeBySpeedProvider);
     final remainingDuration = duration - position;
+    final scaledPosition = scaleTimeBySpeed
+        ? Duration(microseconds: (position.inMicroseconds / localSpeed).round())
+        : position;
     final scaledRemaining = scaleTimeBySpeed
         ? Duration(
             microseconds: (remainingDuration.inMicroseconds / localSpeed)
@@ -39,7 +49,16 @@ class MiniPlayer extends ConsumerWidget {
           )
         : remainingDuration;
     final remainingStr = scaledRemaining.toReadableDuration(isLeft: true);
+    final positionStr = scaledPosition.toReadableDuration();
     final showSeekButtons = ref.watch(showMiniPlayerSeekButtonsProvider);
+
+    final miniplayerSubtitleMode = ref.watch(miniplayerSubtitleModeProvider);
+    final subtitle = switch (miniplayerSubtitleMode) {
+      .both => '$positionStr  $kDot  $remainingStr',
+      .remaining =>
+        '$kMinus${scaledRemaining.toReadableDuration(showSeconds: true)}',
+      .position => scaledPosition.toReadableDuration(showSeconds: true),
+    };
 
     return ThemedBackground(
       miniplayer: true,
@@ -55,11 +74,11 @@ class MiniPlayer extends ConsumerWidget {
                 crossAxisAlignment: .start,
                 children: [
                   MarqueeText(
-                    displayTitle ?? l10n.noTitle,
+                    title,
                     style: textTheme.labelLarge?.copyWith(fontWeight: .bold),
                   ),
                   Text(
-                    remainingStr,
+                    subtitle,
                     style: textTheme.labelSmall?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                       fontWeight: .bold,

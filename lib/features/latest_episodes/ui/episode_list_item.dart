@@ -2,6 +2,7 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -83,7 +84,7 @@ class EpisodeListItem extends ConsumerWidget {
                             ),
                           ),
                           if (pubDate != null)
-                            Text('  •  ', style: textTheme.labelSmall),
+                            Text('  $kDot  ', style: textTheme.labelSmall),
                         ],
                         if (pubDate != null)
                           Text(pubDate, style: textTheme.labelSmall),

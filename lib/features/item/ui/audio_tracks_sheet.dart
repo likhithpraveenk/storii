@@ -118,7 +118,7 @@ class _AudioTrackTileState extends State<_AudioTrackTile> {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        '${formatBitrate(bitRate)}  •  ${duration.toReadableDuration()}',
+                        '${formatBitrate(bitRate)}  $kDot  ${duration.toReadableDuration()}',
                         style: textTheme.bodySmall?.copyWith(
                           color: scheme.onSurfaceVariant,
                         ),

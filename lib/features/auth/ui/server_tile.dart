@@ -112,7 +112,7 @@ class _ServerTileState extends ConsumerState<ServerTile> {
                                     body: Text(
                                       '${widget.server.url.cleanString}\n\n'
                                       '${users.isEmpty ? l10n.noUsersServer : '${l10n.followingUsers}\n'
-                                                '${users.map((e) => '• ${e.username}').join('\n')}'}',
+                                                '${users.map((e) => '$kDot ${e.username}').join('\n')}'}',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge,

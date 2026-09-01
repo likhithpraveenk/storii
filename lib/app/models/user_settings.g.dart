@@ -161,6 +161,24 @@ _UserSettings _$UserSettingsFromJson(
       : Duration(
           microseconds: (json['interruptionLongSkipBackward'] as num).toInt(),
         ),
+  globalProgressEndLabel:
+      $enumDecodeNullable(
+        _$ProgressEndLabelEnumMap,
+        json['globalProgressEndLabel'],
+      ) ??
+      DefaultUserSettings.globalProgressEndLabel,
+  progressEndLabel:
+      $enumDecodeNullable(
+        _$ProgressEndLabelEnumMap,
+        json['progressEndLabel'],
+      ) ??
+      DefaultUserSettings.progressEndLabel,
+  miniplayerSubtitleMode:
+      $enumDecodeNullable(
+        _$MiniplayerSubtitleModeEnumMap,
+        json['miniplayerSubtitleMode'],
+      ) ??
+      DefaultUserSettings.miniplayerSubtitleMode,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -222,6 +240,11 @@ Map<String, dynamic> _$UserSettingsToJson(
       instance.interruptionLongSkipThreshold.inMicroseconds,
   'interruptionLongSkipBackward':
       instance.interruptionLongSkipBackward.inMicroseconds,
+  'globalProgressEndLabel':
+      _$ProgressEndLabelEnumMap[instance.globalProgressEndLabel]!,
+  'progressEndLabel': _$ProgressEndLabelEnumMap[instance.progressEndLabel]!,
+  'miniplayerSubtitleMode':
+      _$MiniplayerSubtitleModeEnumMap[instance.miniplayerSubtitleMode]!,
 };
 
 const _$NavTargetEnumMap = {
@@ -315,4 +338,15 @@ const _$PlaybackControlsLayoutEnumMap = {
   PlaybackControlsLayout.defaultLayout: 'defaultLayout',
   PlaybackControlsLayout.compact: 'compact',
   PlaybackControlsLayout.big: 'big',
+};
+
+const _$ProgressEndLabelEnumMap = {
+  ProgressEndLabel.total: 'total',
+  ProgressEndLabel.remaining: 'remaining',
+};
+
+const _$MiniplayerSubtitleModeEnumMap = {
+  MiniplayerSubtitleMode.remaining: 'remaining',
+  MiniplayerSubtitleMode.position: 'position',
+  MiniplayerSubtitleMode.both: 'both',
 };

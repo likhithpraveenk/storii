@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- miniplayer title now shows chapter name when chapter progress slider is enabled, book title otherwise
+- settings sections are now collapsible
+
+### Added
+
+- a new progress bar in book detail screen to show local session progress
+- tap the progress slider's end duration label (full player) to toggle between total and remaining time
+- miniplayer subtitle is now configurable: show remaining time, current position, or both
+
+### Fixed
+
+- fix offline progress reverting to older position after sync
+
 ## [v0.7.2] - 2026-08-30
 
 ### Fixed

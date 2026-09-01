@@ -77,8 +77,9 @@ class SessionNotifier extends _$SessionNotifier {
     final mediaProgress = await ref.read(
       mediaProgressFromMapProvider(item.id, episodeId).future,
     );
-    if (mediaProgress?.currentTime != null) {
-      currentOffset = mediaProgress!.currentTime!;
+    final progress = _latestProgress(mediaProgress, item.userMediaProgress);
+    if (progress?.currentTime != null) {
+      currentOffset = progress!.currentTime!;
     }
     final params = await ref.read(playRequestParamsProvider.future);
     final user = ref.read(currentUserProvider);
@@ -210,6 +211,16 @@ class SessionNotifier extends _$SessionNotifier {
       state = null;
     }
   }
+}
+
+MediaProgress? _latestProgress(MediaProgress? a, MediaProgress? b) {
+  if (a == null) return b;
+  if (b == null) return a;
+  return a.lastUpdate != null &&
+          b.lastUpdate != null &&
+          a.lastUpdate!.isAfter(b.lastUpdate!)
+      ? a
+      : b;
 }
 
 @riverpod
