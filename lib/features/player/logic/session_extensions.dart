@@ -153,6 +153,24 @@ extension PlaybackSessionX on PlaybackSession {
   double? get localProgress => playMethod == .local && duration > Duration.zero
       ? (currentTime.inMilliseconds / duration.inMilliseconds).clamp(0.0, 1.0)
       : null;
+
+  MediaProgress toMediaProgress() {
+    final progress = duration > .zero
+        ? (currentTime.inMilliseconds / duration.inMilliseconds).clamp(0.0, 1.0)
+        : 0.0;
+    return MediaProgress(
+      id: id,
+      libraryItemId: libraryItemId,
+      currentTime: currentTime,
+      duration: duration,
+      episodeId: episodeId,
+      lastUpdate: updatedAt,
+      progress: progress,
+      isFinished: progress == 1,
+      startedAt: startedAt,
+      finishedAt: progress == 1 ? updatedAt : null,
+    );
+  }
 }
 
 extension ToPlaybackSession on LibraryItem {
