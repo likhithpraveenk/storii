@@ -1,3 +1,9 @@
+<br />
+<div align="center">
+   <img alt="Storii banner" src="assets/banner.png" width="600">
+</div>
+<br />
+
 # Storii
 
 A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobookshelf</a> focused on simple UX and maintainable architecture
