@@ -1,0 +1,16 @@
+## [v0.7.3] - 2026-09-01
+
+### Changed
+
+- miniplayer title now shows chapter name when chapter progress slider is enabled, book title otherwise
+- settings sections are now collapsible
+
+### Added
+
+- a new progress bar in book detail screen to show local session progress
+- tap the progress slider's end duration label (full player) to toggle between total and remaining time
+- miniplayer subtitle is now configurable: show remaining time, current position, or both
+
+### Fixed
+
+- fix offline progress reverting to older position after sync

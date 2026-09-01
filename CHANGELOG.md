@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+## [v0.7.3] - 2026-09-01
+
 ### Changed
 
 - miniplayer title now shows chapter name when chapter progress slider is enabled, book title otherwise
@@ -610,7 +612,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.7.2...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.7.3...HEAD
+[v0.7.3]: https://github.com/likhithpraveenk/storii/compare/v0.7.2...v0.7.3
 [v0.7.2]: https://github.com/likhithpraveenk/storii/compare/v0.7.1...v0.7.2
 [v0.7.1]: https://github.com/likhithpraveenk/storii/compare/v0.7.0...v0.7.1
 [v0.7.0]: https://github.com/likhithpraveenk/storii/compare/v0.6.3...v0.7.0
