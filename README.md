@@ -27,6 +27,8 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 [<img src="assets/get_it_on_github_badge.png" alt="Get it on GitHub" height="50">](https://github.com/likhithpraveenk/storii/releases/latest)
 [<img src="assets/badge_obtainium.png" alt="Get it on Obtainium" height="50">](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/likhithpraveenk/storii)
 
+>  **Disclaimer:** This is an unofficial Audiobookshelf client. It is neither affiliated with nor endorsed by the Audiobookshelf project or its maintainers.
+
 ## Features
 
 - Audiobooks & Podcasts streaming with background playback and progress sync
