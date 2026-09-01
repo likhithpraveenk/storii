@@ -1,3 +1,67 @@
 {
-  "@@locale": "fr"
+  "@@locale": "fr",
+  "login": "Connexion",
+  "logout": "Déconnexion",
+  "addServer": "Ajouter un serveur",
+  "serverUrl": "URL du serveur",
+  "validateServer": "Valider le serveur",
+  "advanced": "Avancé",
+  "customHeaders": "En-têtes personnalisés",
+  "key": "Clé",
+  "value": "Valeur",
+  "required": "Requis",
+  "duplicateHeader": "En-tête dupliqué",
+  "username": "Nom d'utilisateur",
+  "password": "Mot de passe",
+  "delete": "Supprimer",
+  "cancel": "Annuler",
+  "deleteServer": "Supprimer le serveur",
+  "deleteServerQ": "Supprimer le serveur ?",
+  "deleteUserQ": "Supprimer {user} ?",
+  "@deleteUserQ": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
+  "noUsersServer": "Pas d'utilisateur lié à ce serveur.",
+  "followingUsers": "Vous êtes sur le point de supprimer les utilisateurs suivants",
+  "urlCopied": "URL copié",
+  "addUser": "Ajouter un utilisateur",
+  "edit": "Modifier",
+  "editServer": "Modifier le serveur",
+  "errorLoadingUsers": "Erreur lors du chargement des utilisateurs",
+  "switchingToUser": "Échanger avec {user}",
+  "@switchingToUser": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
+  "loading": "Chargement",
+  "active": "Actif",
+  "noSession": "Pas de session",
+  "recentSessions": "Sessions récentes",
+  "noAuthor": "Pas d'auteur",
+  "noArtist": "Pas d'artiste",
+  "noTitle": "Pas de titre",
+  "noImage": "Pas d'image",
+  "errorImage": "Erreur lors du chargement de l'image",
+  "downloads": "Téléchargements",
+  "settings": "Paramètres",
+  "logs": "Journaux",
+  "about": "À propos",
+  "switchAccount": "Changer de compte",
+  "switchAccountConfirm": "Changer vers un autre compte ?",
+  "logoutConfirm": "Se déconnecter de ce compte ?",
+  "noLibrary": "Pas de bibliothèque",
+  "libraries": "Bibliothèque",
+  "empty": "Vide",
+  "collapse": "Réduire",
+  "refresh": "Recharger",
+  "retry": "Réessayer",
+  "description": "Description",
+  "noDescription": "Pas de description disponible"
 }
