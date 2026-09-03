@@ -51,12 +51,6 @@ extension LibraryItemAndroidAutoX on LibraryItem {
   }
 }
 
-extension LibraryItemsShelfAndroidAutoX on LibraryItemsShelf {
-  MediaItem toAndroidAutoMediaItem() {
-    return MediaItem(id: 'shelf:$id', title: label, playable: false);
-  }
-}
-
 extension PodcastEpisodeAndroidAutoX on PodcastEpisode {
   Future<MediaItem> toAndroidAutoMediaItem({
     required String itemId,

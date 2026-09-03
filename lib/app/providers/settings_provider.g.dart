@@ -387,6 +387,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setMiniplayerSubtitleMode(MiniplayerSubtitleMode value) =>
       _save(state?.copyWith(miniplayerSubtitleMode: value));
+
+  Future<void> setHomeShelves(List<ShelfIdentity> value) =>
+      _save(state?.copyWith(homeShelves: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -894,4 +897,13 @@ final miniplayerSubtitleModeProvider = Provider<MiniplayerSubtitleMode>(
     ),
   ),
   name: 'miniplayerSubtitleModeProvider',
+);
+
+final homeShelvesProvider = Provider<List<ShelfIdentity>>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.homeShelves ?? DefaultUserSettings.homeShelves,
+    ),
+  ),
+  name: 'homeShelvesProvider',
 );
