@@ -12,6 +12,7 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/security/custom_http_overrides.dart';
 import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
+import 'package:storii/features/player/logic/android_auto_helper.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/just_audio_player.dart';
@@ -76,6 +77,7 @@ Future<void> setupDownloadServices() async {
 }
 
 Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
+  final androidAuto = AndroidAutoHelper(container);
   return await AudioService.init(
     builder: () => AppAudioHandler(
       player: container.read(justAudioPlayerProvider),
@@ -94,6 +96,8 @@ Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
           container.read(interruptionLongSkipBackwardProvider),
       getInterruptionLongSkipThreshold: () =>
           container.read(interruptionLongSkipThresholdProvider),
+      loadChildren: androidAuto.loadChildren,
+      playItem: androidAuto.playItem,
     ),
     config: AudioServiceConfig(
       androidNotificationChannelId: 'com.likhithpraveenk.storii.playback',
@@ -103,6 +107,14 @@ Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
       rewindInterval: container.read(skipBackwardProvider),
       androidStopForegroundOnPause: false,
       preloadArtwork: true,
+      androidBrowsableRootExtras: {
+        AndroidContentStyle.supportedKey: true,
+        AndroidContentStyle.playableHintKey:
+            AndroidContentStyle.listItemHintValue,
+        AndroidContentStyle.browsableHintKey:
+            AndroidContentStyle.listItemHintValue,
+        'android.media.browse.SEARCH_SUPPORTED': false,
+      },
     ),
   );
 }

@@ -95,10 +95,16 @@ class QueueNotifier extends _$QueueNotifier {
     String? episodeId,
     Duration? initialPosition,
     BookChapter? chapter,
+    bool forAndroidAuto = false,
   }) async {
     state = const QueueState();
     await addToQueue(itemId: itemId, episodeId: episodeId);
-    await playFromIndex(0, initialPosition: initialPosition, chapter: chapter);
+    await playFromIndex(
+      0,
+      initialPosition: initialPosition,
+      chapter: chapter,
+      forAndroidAuto: forAndroidAuto,
+    );
   }
 
   Future<void> playMany(List<QueueItem> items) async {
@@ -112,6 +118,7 @@ class QueueNotifier extends _$QueueNotifier {
     int index, {
     Duration? initialPosition,
     BookChapter? chapter,
+    bool forAndroidAuto = false,
   }) async {
     if (index < 0 || index >= state.items.length) return;
     final item = state.items.elementAt(index);
@@ -124,6 +131,7 @@ class QueueNotifier extends _$QueueNotifier {
           episodeId: item.episodeId,
           chapter: chapter,
           initialPosition: initialPosition,
+          forAndroidAuto: forAndroidAuto,
         );
   }
 
