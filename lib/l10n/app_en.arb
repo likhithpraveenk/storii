@@ -50,6 +50,14 @@
   "noImage": "No Image",
   "errorImage": "Error loading image",
   "continueWord": "Continue",
+  "shelfContinueListening": "Continue Listening",
+  "shelfContinueSeries": "Continue Series",
+  "shelfDiscover": "Discover",
+  "shelfRecentlyAdded": "Recently Added",
+  "shelfRecentSeries": "Recent Series",
+  "shelfNewestAuthors": "Newest Authors",
+  "shelfNewestEpisodes": "Newest Episodes",
+  "shelfListenAgain": "Listen Again",
   "downloads": "Downloads",
   "settings": "Settings",
   "logs": "Logs",
@@ -304,6 +312,8 @@
   "settingsStartupRouteTitle": "Start on app open",
   "settingsReorderNavTitle": "Navigation tabs",
   "settingsReorderNavSubtitle": "Reorder and enable or disable tabs",
+  "settingsHomeShelvesTitle": "Home shelves",
+  "settingsHomeShelvesSubtitle": "Reorder and show or hide shelves",
   "sampleText": "Sphinx of black quartz, judge my vow - 0123456789",
   "addFonts": "Add fonts",
   "appCache": "App Cache",
@@ -535,5 +545,7 @@
   "osNotificationCanSkip": "Skip forward / rewind",
   "osNotificationCanSkipSubtitle": "Show skip forward and rewind buttons in OS notification",
   "osNotificationCanSkipChapter": "Skip chapters",
-  "osNotificationCanSkipChapterSubtitle": "Show skip to next/previous chapter buttons in OS notification"
+  "osNotificationCanSkipChapterSubtitle": "Show skip to next/previous chapter buttons in OS notification",
+  "osNotificationCanStopSubtitle": "Show stop button in OS notification",
+  "osNotificationCanSpeedSubtitle": "Show playback speed button in OS notification"
 }

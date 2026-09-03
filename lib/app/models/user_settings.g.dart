@@ -146,6 +146,12 @@ _UserSettings _$UserSettingsFromJson(
   osNotificationCanSkipChapter:
       json['osNotificationCanSkipChapter'] as bool? ??
       DefaultUserSettings.osNotificationCanSkipChapter,
+  osNotificationCanStop:
+      json['osNotificationCanStop'] as bool? ??
+      DefaultUserSettings.osNotificationCanStop,
+  osNotificationCanSpeed:
+      json['osNotificationCanSpeed'] as bool? ??
+      DefaultUserSettings.osNotificationCanSpeed,
   interruptionSkipBackward: json['interruptionSkipBackward'] == null
       ? DefaultUserSettings.interruptionSkipBackward
       : Duration(
@@ -179,6 +185,11 @@ _UserSettings _$UserSettingsFromJson(
         json['miniplayerSubtitleMode'],
       ) ??
       DefaultUserSettings.miniplayerSubtitleMode,
+  homeShelves:
+      (json['homeShelves'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$ShelfIdentityEnumMap, e))
+          .toList() ??
+      DefaultUserSettings.homeShelves,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -235,6 +246,8 @@ Map<String, dynamic> _$UserSettingsToJson(
   'osNotificationCanSeek': instance.osNotificationCanSeek,
   'osNotificationCanSkip': instance.osNotificationCanSkip,
   'osNotificationCanSkipChapter': instance.osNotificationCanSkipChapter,
+  'osNotificationCanStop': instance.osNotificationCanStop,
+  'osNotificationCanSpeed': instance.osNotificationCanSpeed,
   'interruptionSkipBackward': instance.interruptionSkipBackward.inMicroseconds,
   'interruptionLongSkipThreshold':
       instance.interruptionLongSkipThreshold.inMicroseconds,
@@ -245,6 +258,9 @@ Map<String, dynamic> _$UserSettingsToJson(
   'progressEndLabel': _$ProgressEndLabelEnumMap[instance.progressEndLabel]!,
   'miniplayerSubtitleMode':
       _$MiniplayerSubtitleModeEnumMap[instance.miniplayerSubtitleMode]!,
+  'homeShelves': instance.homeShelves
+      .map((e) => _$ShelfIdentityEnumMap[e]!)
+      .toList(),
 };
 
 const _$NavTargetEnumMap = {
@@ -349,4 +365,15 @@ const _$MiniplayerSubtitleModeEnumMap = {
   MiniplayerSubtitleMode.remaining: 'remaining',
   MiniplayerSubtitleMode.position: 'position',
   MiniplayerSubtitleMode.both: 'both',
+};
+
+const _$ShelfIdentityEnumMap = {
+  ShelfIdentity.continueListening: 'continueListening',
+  ShelfIdentity.continueSeries: 'continueSeries',
+  ShelfIdentity.discover: 'discover',
+  ShelfIdentity.recentlyAdded: 'recentlyAdded',
+  ShelfIdentity.recentSeries: 'recentSeries',
+  ShelfIdentity.newestAuthors: 'newestAuthors',
+  ShelfIdentity.newestEpisodes: 'newestEpisodes',
+  ShelfIdentity.listenAgain: 'listenAgain',
 };

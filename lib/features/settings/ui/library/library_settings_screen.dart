@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/library/remember_sort_tile.dart';
+import 'package:storii/features/settings/ui/library/reorder_home_shelves.dart';
 import 'package:storii/features/settings/ui/library/stacked_images_visible_tile.dart';
 import 'package:storii/features/settings/ui/settings_header.dart';
 
@@ -40,7 +41,10 @@ class LibrarySettingsScreen extends ConsumerWidget {
       ),
       body: ListView(
         children: [
-          const RememberSortTile(),
+          SettingsHeader(
+            title: l10n.library,
+            children: const [ReorderHomeShelvesTile(), RememberSortTile()],
+          ),
           SettingsHeader(
             title: l10n.display,
             children: const [StackedImagesVisibleTile()],

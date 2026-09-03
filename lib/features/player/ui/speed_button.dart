@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -13,7 +14,6 @@ class SpeedButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final speed = ref.watch(localSpeedProvider);
-    const speedPresets = [0.8, 1.0, 1.5, 2.0];
     Future<void> openSheet() => AppBottomSheet.show(
       context,
       title: l10n.playbackSpeed,

@@ -24,3 +24,6 @@ const coverName = 'cover.jpg';
 // special symbols
 const kDot = '•';
 const kMinus = '\u2212';
+const kMultiple = '\u00D7';
+
+const speedPresets = [1.0, 1.2, 1.5, 1.8, 2.0];

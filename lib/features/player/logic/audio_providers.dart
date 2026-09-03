@@ -236,6 +236,9 @@ void playerStateWatcher(Ref ref) {
 Stream<double> volume(Ref ref) => audioHandler.volumeStream;
 
 @riverpod
+Stream<double> speedStream(Ref ref) => audioHandler.speedStream;
+
+@riverpod
 class VolumeControl extends _$VolumeControl {
   @override
   double build() => audioHandler.volume;
@@ -273,5 +276,11 @@ class LocalSpeed extends _$LocalSpeed {
 void audioSettingsWatcher(Ref ref) {
   ref.listen(localSpeedProvider, (_, next) {
     audioHandler.setSpeed(next);
+  });
+  ref.listen(speedStreamProvider, (_, next) {
+    final speed = next.value;
+    if (speed != null) {
+      ref.read(localSpeedProvider.notifier).setSpeed(speed);
+    }
   });
 }

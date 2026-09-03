@@ -90,6 +90,10 @@ Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
           container.read(osNotificationCanSkipProvider),
       canSkipChapterInOsNotification: () =>
           container.read(osNotificationCanSkipChapterProvider),
+      canStopInOsNotification: () =>
+          container.read(osNotificationCanStopProvider),
+      canSpeedInOsNotification: () =>
+          container.read(osNotificationCanSpeedProvider),
       getInterruptionSkipBackward: () =>
           container.read(interruptionSkipBackwardProvider),
       getInterruptionLongSkipBackward: () =>

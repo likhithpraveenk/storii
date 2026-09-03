@@ -9,6 +9,7 @@ import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/features/series/ui/series_card.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
@@ -47,25 +48,14 @@ class HomeScreen extends ConsumerWidget {
                 ),
               );
             }
-            final displayList =
-                shelves
-                    .where(
-                      (s) => s.identity != null || s.id == 'offline_downloads',
-                    )
-                    .toList()
-                  ..sort(
-                    (a, b) => (a.identity?.index ?? -1).compareTo(
-                      b.identity?.index ?? -1,
-                    ),
-                  );
             final screenWidth = MediaQuery.sizeOf(context).width;
 
             return ListView.separated(
               padding: const .symmetric(vertical: 16),
-              itemCount: displayList.length,
+              itemCount: shelves.length,
               separatorBuilder: (_, _) => const SizedBox(height: 16),
               itemBuilder: (context, index) {
-                final shelf = displayList[index];
+                final shelf = shelves[index];
                 final showPlay =
                     shelf.identity == .continueListening ||
                     shelf.identity == .listenAgain ||
@@ -103,7 +93,7 @@ class HomeScreen extends ConsumerWidget {
                     Padding(
                       padding: const .symmetric(horizontal: 16),
                       child: Text(
-                        shelf.label,
+                        shelf.localizedLabel,
                         style: theme.textTheme.titleSmall?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                         ),

@@ -57,6 +57,9 @@ class JustAudioPlayer implements AppAudioPlayer {
   Duration get position => _player.position;
 
   @override
+  double get speed => _player.speed;
+
+  @override
   bool get isPlaying => _player.playing;
 
   @override
@@ -93,6 +96,9 @@ class JustAudioPlayer implements AppAudioPlayer {
 
   @override
   Stream<double> get volumeStream => _player.volumeStream;
+
+  @override
+  Stream<double> get speedStream => _player.speedStream;
 
   @override
   Future<void> setSpeed(double speed) => _player.setSpeed(speed);

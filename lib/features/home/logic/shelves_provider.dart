@@ -4,6 +4,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
@@ -50,7 +51,7 @@ Future<List<Shelf>> shelves(Ref ref) async {
 
 @riverpod
 Future<List<Shelf>> sortedShelves(Ref ref) async {
-  // TODO: add setting to filter and sort shelves
+  final order = ref.watch(homeShelvesProvider);
   final shelves = await ref.watch(shelvesProvider.future);
   final sessions = ref.watch(sessionStoreProvider).value ?? [];
 
@@ -68,20 +69,31 @@ Future<List<Shelf>> sortedShelves(Ref ref) async {
     return item.userMediaProgress?.lastUpdate ?? DateTime(0);
   }
 
-  return shelves.map((shelf) {
-    return switch (shelf) {
-      LibraryItemsShelf() =>
-        shelf.id == 'offline_downloads'
-            ? shelf.copyWith(
-                entities: [...shelf.entities]
-                  ..sort(
-                    (a, b) => lastListenedAt(b).compareTo(lastListenedAt(a)),
-                  ),
-              )
-            : shelf,
-      _ => shelf,
-    };
-  }).toList();
+  final identityOrder = <ShelfIdentity, int>{};
+  for (var i = 0; i < order.length; i++) {
+    identityOrder[order[i]] = i;
+  }
+
+  return shelves
+      .map((shelf) {
+        if (shelf.id == 'offline_downloads' && shelf is LibraryItemsShelf) {
+          return shelf.copyWith(
+            entities: [...shelf.entities]
+              ..sort((a, b) => lastListenedAt(b).compareTo(lastListenedAt(a))),
+          );
+        }
+        return shelf;
+      })
+      .where((shelf) {
+        if (shelf.id == 'offline_downloads') return true;
+        return identityOrder.containsKey(shelf.identity);
+      })
+      .toList()
+    ..sort((a, b) {
+      final aIndex = identityOrder[a.identity] ?? 999;
+      final bIndex = identityOrder[b.identity] ?? 999;
+      return aIndex.compareTo(bIndex);
+    });
 }
 
 @riverpod

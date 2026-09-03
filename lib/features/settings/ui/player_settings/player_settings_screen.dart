@@ -81,7 +81,8 @@ class PlayerSettingsScreen extends ConsumerWidget {
               OsNotificationCanSeekTile(),
               OsNotificationCanSkipTile(),
               OsNotificationCanSkipChapterTile(),
-              // TODO: add stop (false), speed (true) icons
+              OsNotificationCanStopTile(),
+              OsNotificationCanSpeedTile(),
             ],
           ),
         ],

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:storii/app/config/theme.dart';
@@ -278,4 +279,21 @@ extension LocaleMatch on Iterable<Locale> {
 
     return const Locale('en');
   }
+}
+
+extension ShelfX on Shelf {
+  String get localizedLabel => identity?.label ?? label;
+}
+
+extension ShelfIdentityX on ShelfIdentity {
+  String get label => switch (this) {
+    .continueListening => l10n.shelfContinueListening,
+    .continueSeries => l10n.shelfContinueSeries,
+    .discover => l10n.shelfDiscover,
+    .recentlyAdded => l10n.shelfRecentlyAdded,
+    .recentSeries => l10n.shelfRecentSeries,
+    .newestAuthors => l10n.shelfNewestAuthors,
+    .newestEpisodes => l10n.shelfNewestEpisodes,
+    .listenAgain => l10n.shelfListenAgain,
+  };
 }

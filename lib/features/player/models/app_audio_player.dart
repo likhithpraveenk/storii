@@ -5,11 +5,13 @@ abstract class AppAudioPlayer {
   int? get index;
   Duration get position;
   AppPlaybackState get state;
+  double get speed;
   bool get isPlaying;
 
   Stream<AppPlaybackState> get stateStream;
   Stream<Duration> get positionStream;
   Stream<double> get volumeStream;
+  Stream<double> get speedStream;
 
   Future<void> setAudioSources(
     List<AppAudioSource> sources, {

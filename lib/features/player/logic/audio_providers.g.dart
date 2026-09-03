@@ -570,6 +570,39 @@ final class VolumeProvider
 
 String _$volumeHash() => r'54055e2429339375a86ddb671ed28784322d870b';
 
+@ProviderFor(speedStream)
+final speedStreamProvider = SpeedStreamProvider._();
+
+final class SpeedStreamProvider
+    extends $FunctionalProvider<AsyncValue<double>, double, Stream<double>>
+    with $FutureModifier<double>, $StreamProvider<double> {
+  SpeedStreamProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'speedStreamProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$speedStreamHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<double> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<double> create(Ref ref) {
+    return speedStream(ref);
+  }
+}
+
+String _$speedStreamHash() => r'ba933ca44b054ccccf0dac2795039037770e83cd';
+
 @ProviderFor(VolumeControl)
 final volumeControlProvider = VolumeControlProvider._();
 
@@ -713,4 +746,4 @@ final class AudioSettingsWatcherProvider
 }
 
 String _$audioSettingsWatcherHash() =>
-    r'49473a06d199a3ddcd990924cdcb9783520ac9b3';
+    r'7ba94a050cee8a7a75f55c60eb79ec9589cf8078';

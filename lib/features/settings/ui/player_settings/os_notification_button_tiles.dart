@@ -33,7 +33,7 @@ class OsNotificationCanSkipTile extends ConsumerWidget {
       value: canSkip,
       title: Text(l10n.osNotificationCanSkip),
       subtitle: Text(l10n.osNotificationCanSkipSubtitle),
-      secondary: const Icon(Icons.skip_next),
+      secondary: const Icon(Icons.refresh),
       onChanged: (value) {
         ref.read(userSettingsProvider.notifier).setOsNotificationCanSkip(value);
       },
@@ -57,6 +57,44 @@ class OsNotificationCanSkipChapterTile extends ConsumerWidget {
         ref
             .read(userSettingsProvider.notifier)
             .setOsNotificationCanSkipChapter(value);
+      },
+    );
+  }
+}
+
+class OsNotificationCanStopTile extends ConsumerWidget {
+  const new({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final canStop = ref.watch(osNotificationCanStopProvider);
+    return SwitchListTile(
+      value: canStop,
+      title: Text(l10n.stop),
+      subtitle: Text(l10n.osNotificationCanStopSubtitle),
+      secondary: const Icon(Icons.stop_outlined),
+      onChanged: (value) {
+        ref.read(userSettingsProvider.notifier).setOsNotificationCanStop(value);
+      },
+    );
+  }
+}
+
+class OsNotificationCanSpeedTile extends ConsumerWidget {
+  const new({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final canSpeed = ref.watch(osNotificationCanSpeedProvider);
+    return SwitchListTile(
+      value: canSpeed,
+      title: Text(l10n.playbackSpeed),
+      subtitle: Text(l10n.osNotificationCanSpeedSubtitle),
+      secondary: const Icon(Icons.speed),
+      onChanged: (value) {
+        ref
+            .read(userSettingsProvider.notifier)
+            .setOsNotificationCanSpeed(value);
       },
     );
   }
