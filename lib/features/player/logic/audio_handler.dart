@@ -294,7 +294,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   Future<List<MediaItem>> getChildren(
     String parentMediaId, [
     Map<String, dynamic>? options,
-  ]) => loadChildren(parentMediaId);
+  ]) => loadChildren(parentMediaId, options);
 
   @override
   Future<void> playFromMediaId(
