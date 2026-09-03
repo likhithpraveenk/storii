@@ -123,6 +123,8 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
     String? episodeId,
     BookChapter? chapter,
     Duration? initialPosition,
+    bool forAndroidAuto = false,
+    bool autoplay = true,
   }) async {
     state = AudioPlayerState(
       loadingItemId: itemId,
@@ -169,10 +171,11 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
         log('local playback has $localCount/$totalTracks tracks');
       }
 
-      final sources = session.toAudioSources(
+      final sources = await session.toAudioSources(
         serverUrl,
         localPaths: localPaths,
         coverPath: coverPath,
+        forAndroidAuto: forAndroidAuto,
       );
 
       await audioHandler.setSources(
@@ -183,7 +186,9 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
 
       await audioHandler.statusStream.firstWhere((s) => s == .ready);
       state = const AudioPlayerState();
-      await audioHandler.play();
+      if (autoplay) {
+        await audioHandler.play();
+      }
     } catch (e, st) {
       final error = AppError.from(e, st);
       LogService.log(

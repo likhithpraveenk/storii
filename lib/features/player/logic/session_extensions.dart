@@ -3,6 +3,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/chapter.dart';
+import 'package:storii/features/player/logic/android_auto_extensions.dart';
 import 'package:storii/features/player/models/app_audio_source.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/audio_mime_helper.dart';
@@ -13,16 +14,23 @@ extension PlaybackSessionX on PlaybackSession {
   String get mediaItemIdKey =>
       episodeId != null ? '$libraryItemId$episodeId' : libraryItemId;
 
-  List<AppAudioSource> toAudioSources(
+  Future<List<AppAudioSource>> toAudioSources(
     Uri? serverUrl, {
     String? coverPath,
     Map<int, String> localPaths = const {},
-  }) {
-    final coverUri = coverPath != null
-        ? Uri.file(coverPath)
-        : serverUrl
-              ?.resolve(ApiRoutes.itemCover(libraryItemId))
-              .replace(queryParameters: {'raw': '1'});
+    bool forAndroidAuto = false,
+  }) async {
+    Uri? coverUri;
+    if (coverPath != null) {
+      coverUri = Uri.file(coverPath);
+    } else if (serverUrl != null) {
+      coverUri = serverUrl
+          .resolve(ApiRoutes.itemCover(libraryItemId))
+          .replace(queryParameters: {'raw': '1'});
+    }
+    final coverUriForPlayback = forAndroidAuto && coverUri != null
+        ? await wrapContentUri(coverUri)
+        : coverUri;
     Duration accumulated = Duration.zero;
     final sources = <AppAudioSource>[];
 
@@ -77,7 +85,7 @@ extension PlaybackSessionX on PlaybackSession {
         album: isEpisode
             ? mediaMetadata.title
             : mediaMetadata.mapOrNull(book: (b) => b.seriesName),
-        artUri: coverUri,
+        artUri: coverUriForPlayback,
         extras: {
           if (index == 0) 'chapters': jsonChapters,
           'startOffset': startOffset.inMicroseconds,

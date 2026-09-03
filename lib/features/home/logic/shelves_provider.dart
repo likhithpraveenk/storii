@@ -50,6 +50,7 @@ Future<List<Shelf>> shelves(Ref ref) async {
 
 @riverpod
 Future<List<Shelf>> sortedShelves(Ref ref) async {
+  // TODO: add setting to filter and sort shelves
   final shelves = await ref.watch(shelvesProvider.future);
   final sessions = ref.watch(sessionStoreProvider).value ?? [];
 

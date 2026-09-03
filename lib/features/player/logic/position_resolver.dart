@@ -140,6 +140,7 @@ extension ChapterX on Chapter {
       title: fromTracks ? item.title : title,
       duration: duration,
       artist: item.artist,
+      artUri: item.artUri,
     );
   }
 }
