@@ -98,6 +98,7 @@ Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
           container.read(interruptionLongSkipThresholdProvider),
       loadChildren: androidAuto.loadChildren,
       playItem: androidAuto.playItem,
+      searchFn: androidAuto.search,
     ),
     config: AudioServiceConfig(
       androidNotificationChannelId: 'com.likhithpraveenk.storii.playback',
@@ -113,7 +114,7 @@ Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
             AndroidContentStyle.listItemHintValue,
         AndroidContentStyle.browsableHintKey:
             AndroidContentStyle.listItemHintValue,
-        'android.media.browse.SEARCH_SUPPORTED': false,
+        'android.media.browse.SEARCH_SUPPORTED': true,
       },
     ),
   );

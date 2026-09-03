@@ -49,4 +49,4 @@ final class AndroidAutoTopLevelNodesProvider
 }
 
 String _$androidAutoTopLevelNodesHash() =>
-    r'02ff34a0372bc0275c8705f1e9a152dc17e69ecb';
+    r'c5fb6a5ceb48852b8b241d94c6c2e168033c446c';

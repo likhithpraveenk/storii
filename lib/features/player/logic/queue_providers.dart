@@ -96,6 +96,7 @@ class QueueNotifier extends _$QueueNotifier {
     Duration? initialPosition,
     BookChapter? chapter,
     bool forAndroidAuto = false,
+    bool autoplay = true,
   }) async {
     state = const QueueState();
     await addToQueue(itemId: itemId, episodeId: episodeId);
@@ -119,6 +120,7 @@ class QueueNotifier extends _$QueueNotifier {
     Duration? initialPosition,
     BookChapter? chapter,
     bool forAndroidAuto = false,
+    bool autoplay = true,
   }) async {
     if (index < 0 || index >= state.items.length) return;
     final item = state.items.elementAt(index);
@@ -132,6 +134,7 @@ class QueueNotifier extends _$QueueNotifier {
           chapter: chapter,
           initialPosition: initialPosition,
           forAndroidAuto: forAndroidAuto,
+          autoplay: autoplay,
         );
   }
 

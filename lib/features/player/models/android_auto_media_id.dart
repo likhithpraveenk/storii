@@ -1,19 +1,11 @@
-enum AndroidAutoNodeKind { resume, shelf, downloads }
+enum AndroidAutoNodeKind { resume, library, downloads }
 
 class AndroidAutoNode {
-  const new({
-    required this.id,
-    required this.title,
-    this.playable = false,
-    required this.kind,
-    this.shelfId,
-  });
+  const new({required this.title, this.playable = false, required this.kind});
 
-  final String id;
   final String title;
   final bool playable;
   final AndroidAutoNodeKind kind;
-  final String? shelfId;
 }
 
 sealed class AndroidAutoMediaId {
@@ -26,7 +18,6 @@ sealed class AndroidAutoMediaId {
     if (parts.length < 2) return const AndroidAutoMediaInvalid();
 
     return switch (parts[0]) {
-      'shelf' => AndroidAutoMediaShelf(parts[1]),
       'item' => AndroidAutoMediaItem(parts[1]),
       'dlItem' => AndroidAutoMediaItem(parts[1], fromDownloads: true),
       'episode' => () {
@@ -40,11 +31,6 @@ sealed class AndroidAutoMediaId {
 
 final class AndroidAutoMediaRoot extends AndroidAutoMediaId {
   const new();
-}
-
-final class AndroidAutoMediaShelf extends AndroidAutoMediaId {
-  const new(this.id);
-  final String id;
 }
 
 final class AndroidAutoMediaItem extends AndroidAutoMediaId {

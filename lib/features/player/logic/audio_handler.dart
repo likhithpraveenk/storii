@@ -46,8 +46,17 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     Map<String, dynamic>? options,
   ])
   loadChildren;
-  final Future<void> Function({required String itemId, String? episodeId})
+  final Future<void> Function({
+    required String itemId,
+    String? episodeId,
+    required bool autoplay,
+  })
   playItem;
+  final Future<List<MediaItem>> Function(
+    String query, [
+    Map<String, dynamic>? options,
+  ])
+  searchFn;
 
   AppPlaybackStatus? _lastStatus;
 
@@ -67,6 +76,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     required this.getInterruptionLongSkipThreshold,
     required this.loadChildren,
     required this.playItem,
+    required this.searchFn,
   }) {
     // initial playback event
     playbackState.add(PlaybackState(speed: speed));
@@ -297,6 +307,22 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   ]) => loadChildren(parentMediaId, options);
 
   @override
+  Future<void> prepareFromMediaId(
+    String mediaId, [
+    Map<String, dynamic>? extras,
+  ]) async {
+    final parsed = AndroidAutoMediaId.parse(mediaId);
+    switch (parsed) {
+      case AndroidAutoMediaItem(:final id):
+        await playItem(itemId: id, episodeId: null, autoplay: false);
+      case AndroidAutoMediaEpisode(:final itemId, :final episodeId):
+        await playItem(itemId: itemId, episodeId: episodeId, autoplay: false);
+      default:
+        break;
+    }
+  }
+
+  @override
   Future<void> playFromMediaId(
     String mediaId, [
     Map<String, dynamic>? extras,
@@ -304,13 +330,30 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     final parsed = AndroidAutoMediaId.parse(mediaId);
     switch (parsed) {
       case AndroidAutoMediaItem(:final id):
-        await playItem(itemId: id, episodeId: null);
+        await playItem(itemId: id, episodeId: null, autoplay: true);
       case AndroidAutoMediaEpisode(:final itemId, :final episodeId):
-        await playItem(itemId: itemId, episodeId: episodeId);
+        await playItem(itemId: itemId, episodeId: episodeId, autoplay: true);
       default:
         break;
     }
   }
+
+  @override
+  Future<void> playFromSearch(
+    String query, [
+    Map<String, dynamic>? extras,
+  ]) async {
+    final results = await search(query);
+    if (results.isNotEmpty) {
+      await playFromMediaId(results.first.id, extras);
+    }
+  }
+
+  @override
+  Future<List<MediaItem>> search(
+    String query, [
+    Map<String, dynamic>? extras,
+  ]) => searchFn(query, extras);
 
   Future<void> togglePlay() async {
     if (_player.isPlaying) {

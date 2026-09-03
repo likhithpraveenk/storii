@@ -3,13 +3,17 @@ import 'package:audio_service/audio_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
-import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
+import 'package:storii/features/library/logic/active_library_provider.dart';
+import 'package:storii/features/library/logic/library_items_provider.dart';
 import 'package:storii/features/player/logic/android_auto_extensions.dart';
+import 'package:storii/features/player/logic/android_auto_paging.dart';
 import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/features/player/models/android_auto_media_id.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
@@ -20,25 +24,11 @@ part 'android_auto_helper.g.dart';
 
 @riverpod
 Future<List<AndroidAutoNode>> androidAutoTopLevelNodes(Ref ref) async {
-  final shelves = await ref.watch(rawShelvesProvider.future);
-  final itemsShelves = shelves
-      .whereType<LibraryItemsShelf>()
-      .where(
-        (s) =>
-            s.identity != .continueListening && s.identity != .continueSeries,
-      )
-      .toList();
-
+  final currentLibrary = await ref.read(activeLibraryDetailsProvider.future);
   return [
-    AndroidAutoNode(id: 'continue', title: l10n.continueWord, kind: .resume),
-    for (final shelf in itemsShelves)
-      AndroidAutoNode(
-        id: 'shelf:${shelf.id}',
-        title: shelf.label,
-        kind: .shelf,
-        shelfId: shelf.id,
-      ),
-    AndroidAutoNode(id: 'downloads', title: l10n.downloads, kind: .downloads),
+    AndroidAutoNode(title: l10n.continueWord, kind: .resume),
+    AndroidAutoNode(title: currentLibrary.library.name, kind: .library),
+    AndroidAutoNode(title: l10n.downloads, kind: .downloads),
   ];
 }
 
@@ -52,9 +42,6 @@ class AndroidAutoHelper {
 
   DownloadsFilesystemHelper get _fsHelper =>
       _container.read(downloadsFsHelperProvider);
-
-  Future<Map<String, MediaProgress>> get _progressMap =>
-      _container.read(mediaProgressMapProvider.future);
 
   ItemsCache get _itemsCache => _container.read(itemsCacheProvider.notifier);
 
@@ -70,20 +57,19 @@ class AndroidAutoHelper {
       final items = nodes
           .map(
             (n) => MediaItem(
-              id: n.id,
+              id: n.kind.name,
               title: n.title,
               playable: n.playable,
-              extras: {
-                AndroidContentStyle.browsableHintKey:
-                    AndroidContentStyle.listItemHintValue,
-              },
             ),
           )
           .toList();
-      return _applyPaging(items, _pagingFromOptions(options));
+      return applyAndroidAutoPaging(
+        items,
+        androidAutoPagingFromOptions(options),
+      );
     }
 
-    final node = nodes.firstWhereOrNull((n) => n.id == parentMediaId);
+    final node = nodes.firstWhereOrNull((n) => n.kind.name == parentMediaId);
     if (node != null) {
       return _loadNodeChildren(node, options);
     }
@@ -100,7 +86,11 @@ class AndroidAutoHelper {
     };
   }
 
-  Future<void> playItem({required String itemId, String? episodeId}) async {
+  Future<void> playItem({
+    required String itemId,
+    String? episodeId,
+    required bool autoplay,
+  }) async {
     try {
       await _container
           .read(queueProvider.notifier)
@@ -116,21 +106,48 @@ class AndroidAutoHelper {
     }
   }
 
+  Future<List<MediaItem>> search(
+    String query, [
+    Map<String, dynamic>? options,
+  ]) async {
+    final user = await _container.read(authenticatedUserProvider.future);
+    final libraryId = _container.read(currentLibraryProvider)?.id;
+    if (libraryId == null) return [];
+
+    final api = _container.read(libraryApiProvider(user));
+    final result = await api.search(libraryId, query: query);
+    final items = <LibraryItem>[
+      ...result.book,
+      ...result.podcast,
+      ...result.episodes,
+    ];
+    final paged = applyAndroidAutoPaging(
+      items,
+      androidAutoPagingFromOptions(options),
+    );
+    return Future.wait(
+      paged.map(
+        (item) => item.toAndroidAutoMediaItem(
+          serverUrl: _serverUrl,
+          fsHelper: _fsHelper,
+        ),
+      ),
+    );
+  }
+
   Future<List<MediaItem>> _loadNodeChildren(
     AndroidAutoNode node,
     Map<String, dynamic>? options,
   ) {
     return switch (node.kind) {
       .resume => _loadContinue(options),
-      .shelf => _loadShelf(node.shelfId ?? '', options),
       .downloads => _loadDownloads(options),
+      .library => _loadLibraryItems(options),
     };
   }
 
   Future<List<MediaItem>> _loadContinue(Map<String, dynamic>? options) async {
     final shelves = await _container.read(rawShelvesProvider.future);
-    final progressMap = await _progressMap;
-
     final continueShelves = shelves
         .whereType<LibraryItemsShelf>()
         .where(
@@ -147,37 +164,15 @@ class AndroidAutoHelper {
       }
     }
 
-    final paged = _applyPaging(items, _pagingFromOptions(options));
+    final paged = applyAndroidAutoPaging(
+      items,
+      androidAutoPagingFromOptions(options),
+    );
     return Future.wait(
       paged.map(
         (item) => item.toAndroidAutoMediaItem(
           serverUrl: _serverUrl,
           fsHelper: _fsHelper,
-          progress: progressMap[mediaItemIdKey(item.id)],
-        ),
-      ),
-    );
-  }
-
-  Future<List<MediaItem>> _loadShelf(
-    String shelfId,
-    Map<String, dynamic>? options,
-  ) async {
-    final shelves = await _container.read(rawShelvesProvider.future);
-    final progressMap = await _progressMap;
-
-    final shelf = shelves.whereType<LibraryItemsShelf>().firstWhereOrNull(
-      (s) => s.id == shelfId,
-    );
-    if (shelf == null) return const [];
-
-    final paged = _applyPaging(shelf.entities, _pagingFromOptions(options));
-    return Future.wait(
-      paged.map(
-        (item) => item.toAndroidAutoMediaItem(
-          serverUrl: _serverUrl,
-          fsHelper: _fsHelper,
-          progress: progressMap[mediaItemIdKey(item.id)],
         ),
       ),
     );
@@ -186,7 +181,6 @@ class AndroidAutoHelper {
   Future<List<MediaItem>> _loadDownloads(Map<String, dynamic>? options) async {
     try {
       final downloads = await _container.read(downloadsProvider.future);
-      final progressMap = await _progressMap;
 
       final seen = <String>{};
       final items = <LibraryItem>[];
@@ -197,14 +191,14 @@ class AndroidAutoHelper {
         items.add(libraryItem);
       }
 
-      final paged = _applyPaging(items, _pagingFromOptions(options));
+      final paged = applyAndroidAutoPaging(
+        items,
+        androidAutoPagingFromOptions(options),
+      );
       final mediaItems = await Future.wait(
         paged.map(
-          (item) => item.toAndroidAutoMediaItem(
-            serverUrl: null,
-            fsHelper: _fsHelper,
-            progress: progressMap[mediaItemIdKey(item.id)],
-          ),
+          (item) =>
+              item.toAndroidAutoMediaItem(serverUrl: null, fsHelper: _fsHelper),
         ),
       );
       return mediaItems.map((mediaItem) {
@@ -223,6 +217,24 @@ class AndroidAutoHelper {
     }
   }
 
+  Future<List<MediaItem>> _loadLibraryItems(
+    Map<String, dynamic>? options,
+  ) async {
+    final items = await _container.read(libraryItemsProvider.future);
+    final paged = applyAndroidAutoPaging(
+      items,
+      androidAutoPagingFromOptions(options),
+    );
+    return Future.wait(
+      paged.map(
+        (item) => item.toAndroidAutoMediaItem(
+          serverUrl: _serverUrl,
+          fsHelper: _fsHelper,
+        ),
+      ),
+    );
+  }
+
   Future<List<MediaItem>> _loadItemChildren({
     required String itemId,
     bool fromDownloads = false,
@@ -230,16 +242,13 @@ class AndroidAutoHelper {
   }) async {
     try {
       final item = await _container.read(itemDetailProvider(itemId).future);
-      final progressMap = await _progressMap;
-
       if (item.isBook) {
-        return _applyPaging([
+        return applyAndroidAutoPaging([
           await item.toAndroidAutoMediaItem(
             serverUrl: _serverUrl,
             fsHelper: _fsHelper,
-            progress: progressMap[mediaItemIdKey(item.id)],
           ),
-        ], _pagingFromOptions(options));
+        ], androidAutoPagingFromOptions(options));
       }
 
       var episodes = item.episodes;
@@ -256,7 +265,10 @@ class AndroidAutoHelper {
         episodes = episodes.where((e) => downloadedIds.contains(e.id)).toList();
       }
 
-      final paged = _applyPaging(episodes, _pagingFromOptions(options));
+      final paged = applyAndroidAutoPaging(
+        episodes,
+        androidAutoPagingFromOptions(options),
+      );
       return await Future.wait(
         paged.map(
           (e) => e.toAndroidAutoMediaItem(
@@ -264,7 +276,6 @@ class AndroidAutoHelper {
             podcastTitle: item.title,
             serverUrl: _serverUrl,
             helper: _fsHelper,
-            progress: progressMap[mediaItemIdKey(itemId, e.id)],
           ),
         ),
       );
@@ -280,27 +291,4 @@ class AndroidAutoHelper {
 
     return [];
   }
-}
-
-class _Paging {
-  const new({required this.page, required this.pageSize});
-
-  final int page;
-  final int pageSize;
-}
-
-_Paging _pagingFromOptions(Map<String, dynamic>? options) {
-  const pageKey = 'android.media.browse.extra.PAGE';
-  const pageSizeKey = 'android.media.browse.extra.PAGE_SIZE';
-  final page = (options?[pageKey] as int?) ?? 0;
-  final pageSize = ((options?[pageSizeKey] as int?) ?? 50).clamp(0, 100);
-  return _Paging(page: page, pageSize: pageSize);
-}
-
-List<T> _applyPaging<T>(List<T> items, _Paging paging) {
-  if (paging.pageSize <= 0) return items;
-  final start = paging.page * paging.pageSize;
-  if (start >= items.length) return const [];
-  final end = (start + paging.pageSize).clamp(0, items.length);
-  return items.sublist(start, end);
 }

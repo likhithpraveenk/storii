@@ -7,13 +7,8 @@ import 'package:storii/app/init.dart';
 import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 
-const _playbackStatusKey = 'android.media.extra.PLAYBACK_STATUS';
-const _completionPercentageKey =
-    'androidx.media.MediaItem.Extras.COMPLETION_PERCENTAGE';
 const _coversAuthoritySuffix = '.covers';
-
 String? _cachedCoversAuthority;
-
 Future<String> _coversAuthority() async {
   if (_cachedCoversAuthority != null) return _cachedCoversAuthority!;
   final info = await PackageInfo.fromPlatform();
@@ -28,31 +23,10 @@ Future<Uri> wrapContentUri(Uri url) async {
   return Uri.parse('content://${await _coversAuthority()}/$encoded');
 }
 
-Map<String, dynamic> _styleExtras({required bool playable}) => {
-  if (playable)
-    AndroidContentStyle.playableHintKey: AndroidContentStyle.gridItemHintValue
-  else
-    AndroidContentStyle.browsableHintKey: AndroidContentStyle.listItemHintValue,
-};
-
-Map<String, dynamic> _completionExtras(MediaProgress? progress) {
-  final status = switch (progress) {
-    null => 0,
-    _ when progress.isFinished == true => 2,
-    _ when (progress.progress ?? 0) > 0 => 1,
-    _ => 0,
-  };
-  return {
-    _playbackStatusKey: status,
-    _completionPercentageKey: progress?.progress ?? 0.0,
-  };
-}
-
 extension LibraryItemAndroidAutoX on LibraryItem {
   Future<MediaItem> toAndroidAutoMediaItem({
     required Uri? serverUrl,
     required DownloadsFilesystemHelper fsHelper,
-    MediaProgress? progress,
   }) async {
     final Uri? artUri;
     if (serverUrl != null) {
@@ -73,22 +47,13 @@ extension LibraryItemAndroidAutoX on LibraryItem {
       playable: isBook,
       artUri: artUri,
       duration: duration,
-      extras: {
-        ..._styleExtras(playable: isBook),
-        ..._completionExtras(progress),
-      },
     );
   }
 }
 
 extension LibraryItemsShelfAndroidAutoX on LibraryItemsShelf {
   MediaItem toAndroidAutoMediaItem() {
-    return MediaItem(
-      id: 'shelf:$id',
-      title: label,
-      playable: false,
-      extras: _styleExtras(playable: false),
-    );
+    return MediaItem(id: 'shelf:$id', title: label, playable: false);
   }
 }
 
@@ -98,7 +63,6 @@ extension PodcastEpisodeAndroidAutoX on PodcastEpisode {
     String? podcastTitle,
     Uri? serverUrl,
     required DownloadsFilesystemHelper helper,
-    MediaProgress? progress,
   }) async {
     final Uri? coverUri;
     if (serverUrl != null) {
@@ -118,7 +82,6 @@ extension PodcastEpisodeAndroidAutoX on PodcastEpisode {
       artist: podcastTitle,
       artUri: coverUri,
       duration: duration ?? Duration.zero,
-      extras: {..._styleExtras(playable: true), ..._completionExtras(progress)},
     );
   }
 }

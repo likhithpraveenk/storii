@@ -124,6 +124,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
     BookChapter? chapter,
     Duration? initialPosition,
     bool forAndroidAuto = false,
+    bool autoplay = true,
   }) async {
     state = AudioPlayerState(
       loadingItemId: itemId,
@@ -185,7 +186,9 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
 
       await audioHandler.statusStream.firstWhere((s) => s == .ready);
       state = const AudioPlayerState();
-      await audioHandler.play();
+      if (autoplay) {
+        await audioHandler.play();
+      }
     } catch (e, st) {
       final error = AppError.from(e, st);
       LogService.log(

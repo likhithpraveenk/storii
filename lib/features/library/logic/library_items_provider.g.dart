@@ -28,7 +28,7 @@ final class LibraryItemsProvider
         argument: null,
         retry: null,
         name: r'libraryItemsProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -48,7 +48,7 @@ final class LibraryItemsProvider
   }
 }
 
-String _$libraryItemsHash() => r'8d33c4486270c9bcd7ea9a73c1ec67d69347785f';
+String _$libraryItemsHash() => r'35de169c2ded80235c24d2518d9e0e2e1cb97613';
 
 @ProviderFor(rawLibraryItems)
 final rawLibraryItemsProvider = RawLibraryItemsProvider._();
