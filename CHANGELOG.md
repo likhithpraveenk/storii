@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Android Auto browse and playback
+- Android Auto offline downloads
+- Android Auto search
+
 ## [v0.7.3] - 2026-09-01
 
 ### Changed
@@ -667,3 +673,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 [v0.1.2]: https://github.com/likhithpraveenk/storii/compare/v0.1.1...v0.1.2
 [v0.1.1]: https://github.com/likhithpraveenk/storii/compare/v0.1...v0.1.1
 [v0.1]: https://github.com/likhithpraveenk/storii/compare/3fd448b...v0.1
+
+[Unreleased]: compare/v0.7.3...HEAD
+[v0.8.0]: compare/v0.7.3...v0.8.0
