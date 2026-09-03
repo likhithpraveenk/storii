@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:audio_service/audio_service.dart';
 import 'package:audio_session/audio_session.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/chapter.dart';
 import 'package:storii/features/player/logic/custom_media_icons.dart';
@@ -36,6 +37,8 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final bool Function() canSeekInOsNotification;
   final bool Function() canSkipInOsNotification;
   final bool Function() canSkipChapterInOsNotification;
+  final bool Function() canStopInOsNotification;
+  final bool Function() canSpeedInOsNotification;
   final Duration Function() getInterruptionSkipBackward;
   final Duration Function() getInterruptionLongSkipBackward;
   final Duration Function() getInterruptionLongSkipThreshold;
@@ -71,6 +74,8 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     required this.canSeekInOsNotification,
     required this.canSkipInOsNotification,
     required this.canSkipChapterInOsNotification,
+    required this.canStopInOsNotification,
+    required this.canSpeedInOsNotification,
     required this.getInterruptionSkipBackward,
     required this.getInterruptionLongSkipBackward,
     required this.getInterruptionLongSkipThreshold,
@@ -186,6 +191,8 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       if (canSkipInOsNotification()) fastForwardMediaControl,
       if (canSkipChapterInOsNotification()) skipToNextMediaControl,
       if (canSkipChapterInOsNotification()) skipToPreviousMediaControl,
+      if (canStopInOsNotification()) stopMediaControl,
+      if (canSpeedInOsNotification()) speedMediaControl(_player.speed),
     ];
 
     final systemActions = <MediaAction>{
@@ -197,6 +204,8 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       if (canSkipInOsNotification()) .fastForward,
       if (canSkipChapterInOsNotification()) .skipToNext,
       if (canSkipChapterInOsNotification()) .skipToPrevious,
+      if (canStopInOsNotification()) .stop,
+      if (canSpeedInOsNotification()) .setSpeed,
     };
 
     playbackState.add(
@@ -270,6 +279,18 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   @override
   Future<void> setSpeed(double speed) => _player.setSpeed(speed);
+
+  Stream<double> get speedStream => _player.speedStream.distinct();
+
+  @override
+  Future<void> customAction(String name, [Map<String, dynamic>? extras]) async {
+    if (name == 'cycleSpeed') {
+      final current = _player.speed;
+      final index = speedPresets.indexWhere((s) => (s - current).abs() < 0.01);
+      final next = speedPresets[(index + 1) % speedPresets.length];
+      await _player.setSpeed(next);
+    }
+  }
 
   double get volume => _player.state.volume;
 

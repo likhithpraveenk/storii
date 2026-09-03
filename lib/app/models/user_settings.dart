@@ -55,6 +55,8 @@ class DefaultUserSettings {
   static const osNotificationCanSeek = true;
   static const osNotificationCanSkip = true;
   static const osNotificationCanSkipChapter = false;
+  static const osNotificationCanStop = false;
+  static const osNotificationCanSpeed = false;
   static const interruptionSkipBackward = Duration.zero;
   static const interruptionLongSkipThreshold = Duration(seconds: 30);
   static const interruptionLongSkipBackward = Duration.zero;
@@ -177,6 +179,12 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.osNotificationCanSkipChapter)
     bool osNotificationCanSkipChapter,
+
+    @Default(DefaultUserSettings.osNotificationCanStop)
+    bool osNotificationCanStop,
+
+    @Default(DefaultUserSettings.osNotificationCanSpeed)
+    bool osNotificationCanSpeed,
 
     @Default(DefaultUserSettings.interruptionSkipBackward)
     Duration interruptionSkipBackward,

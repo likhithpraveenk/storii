@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - Android Auto browse and playback
 - Android Auto offline downloads
 - Android Auto search
+- OS notification stop button
+- OS notification playback speed cycle
 
 ## [v0.7.3] - 2026-09-01
 

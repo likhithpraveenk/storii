@@ -146,6 +146,12 @@ _UserSettings _$UserSettingsFromJson(
   osNotificationCanSkipChapter:
       json['osNotificationCanSkipChapter'] as bool? ??
       DefaultUserSettings.osNotificationCanSkipChapter,
+  osNotificationCanStop:
+      json['osNotificationCanStop'] as bool? ??
+      DefaultUserSettings.osNotificationCanStop,
+  osNotificationCanSpeed:
+      json['osNotificationCanSpeed'] as bool? ??
+      DefaultUserSettings.osNotificationCanSpeed,
   interruptionSkipBackward: json['interruptionSkipBackward'] == null
       ? DefaultUserSettings.interruptionSkipBackward
       : Duration(
@@ -235,6 +241,8 @@ Map<String, dynamic> _$UserSettingsToJson(
   'osNotificationCanSeek': instance.osNotificationCanSeek,
   'osNotificationCanSkip': instance.osNotificationCanSkip,
   'osNotificationCanSkipChapter': instance.osNotificationCanSkipChapter,
+  'osNotificationCanStop': instance.osNotificationCanStop,
+  'osNotificationCanSpeed': instance.osNotificationCanSpeed,
   'interruptionSkipBackward': instance.interruptionSkipBackward.inMicroseconds,
   'interruptionLongSkipThreshold':
       instance.interruptionLongSkipThreshold.inMicroseconds,

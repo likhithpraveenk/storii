@@ -535,5 +535,7 @@
   "osNotificationCanSkip": "Skip forward / rewind",
   "osNotificationCanSkipSubtitle": "Show skip forward and rewind buttons in OS notification",
   "osNotificationCanSkipChapter": "Skip chapters",
-  "osNotificationCanSkipChapterSubtitle": "Show skip to next/previous chapter buttons in OS notification"
+  "osNotificationCanSkipChapterSubtitle": "Show skip to next/previous chapter buttons in OS notification",
+  "osNotificationCanStopSubtitle": "Show stop button in OS notification",
+  "osNotificationCanSpeedSubtitle": "Show playback speed button in OS notification"
 }

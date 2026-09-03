@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -16,8 +17,6 @@ class SpeedTile extends ConsumerStatefulWidget {
 class _SpeedTileState extends ConsumerState<SpeedTile> {
   late double _selected;
 
-  static const _presets = [0.8, 1.0, 1.5, 2.0];
-
   @override
   void initState() {
     super.initState();
@@ -32,7 +31,7 @@ class _SpeedTileState extends ConsumerState<SpeedTile> {
     return ListTile(
       leading: const Icon(Icons.speed_rounded),
       title: Text(l10n.playbackSpeed),
-      subtitle: Text('${speed}x'),
+      subtitle: Text('$speed$kMultiple'),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
         AppBottomSheet.show(
@@ -52,8 +51,8 @@ class _SpeedTileState extends ConsumerState<SpeedTile> {
                       max: 4,
                       step: 0.1,
                       onChangedEnd: (v) => _selected = v,
-                      labelBuilder: (v) => '${v}x',
-                      presets: _presets,
+                      labelBuilder: (v) => '$v$kMultiple',
+                      presets: speedPresets,
                     ),
                     const SizedBox(height: 24),
                     AppFilledButton(
