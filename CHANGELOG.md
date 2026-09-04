@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+## [v0.8.0] - 2026-09-04
+
 ### Added
 
 - Android Auto browse and playback
@@ -621,7 +623,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.7.3...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.8.0...HEAD
+[v0.8.0]: https://github.com/likhithpraveenk/storii/compare/v0.7.3...v0.8.0
 [v0.7.3]: https://github.com/likhithpraveenk/storii/compare/v0.7.2...v0.7.3
 [v0.7.2]: https://github.com/likhithpraveenk/storii/compare/v0.7.1...v0.7.2
 [v0.7.1]: https://github.com/likhithpraveenk/storii/compare/v0.7.0...v0.7.1

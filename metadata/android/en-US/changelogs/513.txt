@@ -1,0 +1,3 @@
+- add: Android Auto browse, search, playback and offline downloads
+- add: OS notification stop & playback speed
+- add: reorder and show/hide home screen shelves
