@@ -27,7 +27,12 @@ class FakeSocketApi extends SocketApi {
   bool _current = false;
   final StreamController<bool> _controller = StreamController<bool>.broadcast();
 
-  new() : super('http://localhost', null) {
+  new()
+    : super(
+        baseUrl: 'http://localhost',
+        token: null,
+        tokenUpdates: const Stream.empty(),
+      ) {
     _controller.onListen = () {
       if (!_controller.isClosed) _controller.add(_current);
     };

@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- socket to use refreshed access token
+
 ## [v0.8.0] - 2026-09-04
 
 ### Added
