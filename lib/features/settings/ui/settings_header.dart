@@ -55,12 +55,18 @@ class _SettingsHeaderState extends State<SettingsHeader>
             ),
           ),
         ),
-        AnimatedSize(
+        AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOutCubic,
+          switchInCurve: Curves.easeInOutCubic,
+          switchOutCurve: Curves.easeInOutCubic,
+          transitionBuilder: (child, animation) =>
+              SizeTransition(sizeFactor: animation, child: child),
           child: _expanded
-              ? Column(children: widget.children)
-              : const SizedBox.shrink(),
+              ? Column(
+                  key: const ValueKey('expanded'),
+                  children: widget.children,
+                )
+              : const SizedBox.shrink(key: ValueKey('collapsed')),
         ),
       ],
     );

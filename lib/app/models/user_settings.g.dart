@@ -190,6 +190,21 @@ _UserSettings _$UserSettingsFromJson(
           ?.map((e) => $enumDecode(_$ShelfIdentityEnumMap, e))
           .toList() ??
       DefaultUserSettings.homeShelves,
+  shakeDuringSleepTimer:
+      $enumDecodeNullable(
+        _$ShakeDuringSleepTimerActionEnumMap,
+        json['shakeDuringSleepTimer'],
+      ) ??
+      DefaultUserSettings.shakeDuringSleepTimer,
+  shakeSleepTimerAddMinutes:
+      (json['shakeSleepTimerAddMinutes'] as num?)?.toInt() ??
+      DefaultUserSettings.shakeSleepTimerAddMinutes,
+  shakeSensitivity:
+      $enumDecodeNullable(
+        _$ShakeSensitivityEnumMap,
+        json['shakeSensitivity'],
+      ) ??
+      DefaultUserSettings.shakeSensitivity,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -261,6 +276,10 @@ Map<String, dynamic> _$UserSettingsToJson(
   'homeShelves': instance.homeShelves
       .map((e) => _$ShelfIdentityEnumMap[e]!)
       .toList(),
+  'shakeDuringSleepTimer':
+      _$ShakeDuringSleepTimerActionEnumMap[instance.shakeDuringSleepTimer]!,
+  'shakeSleepTimerAddMinutes': instance.shakeSleepTimerAddMinutes,
+  'shakeSensitivity': _$ShakeSensitivityEnumMap[instance.shakeSensitivity]!,
 };
 
 const _$NavTargetEnumMap = {
@@ -376,4 +395,16 @@ const _$ShelfIdentityEnumMap = {
   ShelfIdentity.newestAuthors: 'newestAuthors',
   ShelfIdentity.newestEpisodes: 'newestEpisodes',
   ShelfIdentity.listenAgain: 'listenAgain',
+};
+
+const _$ShakeDuringSleepTimerActionEnumMap = {
+  ShakeDuringSleepTimerAction.off: 'off',
+  ShakeDuringSleepTimerAction.addTime: 'addTime',
+  ShakeDuringSleepTimerAction.restart: 'restart',
+};
+
+const _$ShakeSensitivityEnumMap = {
+  ShakeSensitivity.low: 'low',
+  ShakeSensitivity.medium: 'medium',
+  ShakeSensitivity.high: 'high',
 };

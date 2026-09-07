@@ -64,6 +64,9 @@ class DefaultUserSettings {
   static const progressEndLabel = ProgressEndLabel.total;
   static const miniplayerSubtitleMode = MiniplayerSubtitleMode.both;
   static const homeShelves = ShelfIdentity.values;
+  static const shakeDuringSleepTimer = ShakeDuringSleepTimerAction.addTime;
+  static const shakeSleepTimerAddMinutes = 5;
+  static const shakeSensitivity = ShakeSensitivity.medium;
 }
 
 @freezed
@@ -206,6 +209,15 @@ sealed class UserSettings with _$UserSettings {
     MiniplayerSubtitleMode miniplayerSubtitleMode,
 
     @Default(DefaultUserSettings.homeShelves) List<ShelfIdentity> homeShelves,
+
+    @Default(DefaultUserSettings.shakeDuringSleepTimer)
+    ShakeDuringSleepTimerAction shakeDuringSleepTimer,
+
+    @Default(DefaultUserSettings.shakeSleepTimerAddMinutes)
+    int shakeSleepTimerAddMinutes,
+
+    @Default(DefaultUserSettings.shakeSensitivity)
+    ShakeSensitivity shakeSensitivity,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);
