@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
+import 'package:storii/shared/widgets/app_slider.dart';
 
 class FontScaleTile extends ConsumerWidget {
   const new({super.key});
@@ -63,12 +64,13 @@ class _FontScaleSheetState extends ConsumerState<_FontScaleSheet> {
           ),
         ),
         const SizedBox(height: 16),
-        Slider(
+        AppSlider(
           value: _scale,
           min: 16,
           max: 40,
           divisions: 12,
-          label: _display(_scale),
+          labelBuilder: _display,
+          padding: const .symmetric(horizontal: 24),
           onChanged: (value) {
             setState(() => _scale = value);
           },

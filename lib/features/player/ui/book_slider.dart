@@ -5,6 +5,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/widgets/app_slider.dart';
 
 class BookSlider extends ConsumerStatefulWidget {
   const new({super.key});
@@ -14,7 +15,6 @@ class BookSlider extends ConsumerStatefulWidget {
 }
 
 class _BookSliderState extends ConsumerState<BookSlider> {
-  double? _dragValue;
   double? _latestSeekValue;
 
   String format(double ms) => Duration(milliseconds: ms.toInt()).toTime();
@@ -48,16 +48,15 @@ class _BookSliderState extends ConsumerState<BookSlider> {
       }
     }
 
-    final displayValue = _dragValue ?? scaledPositionMs;
-    final label = ref.watch(progressEndLabelProvider);
+    final endLabel = ref.watch(progressEndLabelProvider);
     final scaledDuration = Duration(
       microseconds: scaleTimeBySpeed
           ? (duration.inMicroseconds / speed).round()
           : duration.inMicroseconds,
     );
     final remaining =
-        scaledDuration - Duration(milliseconds: displayValue.toInt());
-    final end = switch (label) {
+        scaledDuration - Duration(milliseconds: scaledPositionMs.toInt());
+    final end = switch (endLabel) {
       .total => scaledDuration.toTime(),
       .remaining => '$kMinus${remaining.toTime()}',
     };
@@ -65,41 +64,38 @@ class _BookSliderState extends ConsumerState<BookSlider> {
     return Column(
       mainAxisSize: .min,
       children: [
-        SliderTheme(
-          data: SliderTheme.of(context).copyWith(
-            thumbShape: const RoundRectSliderThumbShape(),
-            trackShape: const RoundedRectSliderTrackShape(),
-          ),
-          child: Slider(
-            value: displayValue,
-            max: scaledDurationMs,
-            onChanged: (value) => setState(() => _dragValue = value),
-            onChangeEnd: (value) async {
-              final seekMs = (value * speed).toInt();
-              setState(() {
-                _latestSeekValue = value;
-                _dragValue = null;
-              });
-              if (useGlobalSeek) {
-                await audioHandler.seekFromGlobalPosition(
-                  Duration(milliseconds: seekMs),
-                );
-              } else {
-                await audioHandler.seek(Duration(milliseconds: seekMs));
-              }
-            },
-            padding: const .fromLTRB(0, 16, 0, 8),
-          ),
+        AppSlider(
+          value: scaledPositionMs,
+          max: scaledDurationMs,
+          trackHeight: 10,
+          labelBuilder: (value) =>
+              Duration(milliseconds: value.toInt()).toTime(),
+          onChangeEnd: (value) async {
+            final seekMs = (value * speed).toInt();
+            setState(() {
+              _latestSeekValue = value;
+            });
+            if (useGlobalSeek) {
+              await audioHandler.seekFromGlobalPosition(
+                Duration(milliseconds: seekMs),
+              );
+            } else {
+              await audioHandler.seek(Duration(milliseconds: seekMs));
+            }
+          },
+          padding: const .fromLTRB(0, 16, 0, 8),
         ),
         Row(
           mainAxisAlignment: .spaceBetween,
           children: [
-            Text(format(displayValue)),
+            Text(format(scaledPositionMs)),
             GestureDetector(
               behavior: .opaque,
               onTap: () => ref
                   .read(userSettingsProvider.notifier)
-                  .setProgressEndLabel(label == .total ? .remaining : .total),
+                  .setProgressEndLabel(
+                    endLabel == .total ? .remaining : .total,
+                  ),
               child: Text(end),
             ),
           ],
@@ -122,45 +118,6 @@ class MiniProgressIndicator extends ConsumerWidget {
       minHeight: 2,
       backgroundColor: Colors.transparent,
       color: Theme.of(context).colorScheme.primary,
-    );
-  }
-}
-
-class RoundRectSliderThumbShape extends SliderComponentShape {
-  const new();
-
-  @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete) =>
-      const Size.fromRadius(4);
-
-  @override
-  void paint(
-    PaintingContext context,
-    Offset center, {
-    required Animation<double> activationAnimation,
-    required Animation<double> enableAnimation,
-    required bool isDiscrete,
-    required TextPainter labelPainter,
-    required RenderBox parentBox,
-    required SliderThemeData sliderTheme,
-    required TextDirection textDirection,
-    required double value,
-    required double textScaleFactor,
-    required Size sizeWithOverflow,
-  }) {
-    final paint = Paint()
-      ..color = sliderTheme.thumbColor ?? Colors.blue
-      ..style = .fill;
-
-    context.canvas.drawRRect(
-      RRect.fromLTRBR(
-        center.dx - 2,
-        center.dy - 8,
-        center.dx + 2,
-        center.dy + 8,
-        const .circular(4),
-      ),
-      paint,
     );
   }
 }

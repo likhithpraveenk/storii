@@ -24,6 +24,7 @@ class PositionResolver {
     final chapters = List<Chapter>.unmodifiable(
       raw.map((c) => Chapter.fromJson(c as Map<String, dynamic>)),
     );
+    // TODO: consider the case of chapters not fully encompassing the duration of whole book
 
     return PositionResolver(trackOffsets: offsets, chapters: chapters);
   }

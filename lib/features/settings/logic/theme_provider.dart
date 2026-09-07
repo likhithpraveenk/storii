@@ -14,6 +14,8 @@ ThemeData themeData(Ref ref, Brightness brightness) {
   final appColor = ref.watch(appColorProvider);
   final schemeVariant = ref.watch(schemeVariantProvider);
 
+  // TODO: now playing theme to whole app
+
   var colorScheme = ColorScheme.fromSeed(
     seedColor: appColor,
     brightness: brightness,

@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- replace player slider with new AppSlider supporting cancel-on-pull-up gesture
+
 ### Fixed
 
 - socket to use refreshed access token
