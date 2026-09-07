@@ -67,6 +67,7 @@ class DefaultUserSettings {
   static const shakeDuringSleepTimer = ShakeDuringSleepTimerAction.addTime;
   static const shakeSleepTimerAddMinutes = 5;
   static const shakeSensitivity = ShakeSensitivity.medium;
+  static const useNowPlayingTheme = false;
 }
 
 @freezed
@@ -218,6 +219,8 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.shakeSensitivity)
     ShakeSensitivity shakeSensitivity,
+
+    @Default(DefaultUserSettings.useNowPlayingTheme) bool useNowPlayingTheme,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);

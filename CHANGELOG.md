@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 ### Added
 
 - shake during sleep timer & sensitivity settings
+- now playing theme setting to use dominant color from current playing media for app-wide theme
 
 ### Changed
 

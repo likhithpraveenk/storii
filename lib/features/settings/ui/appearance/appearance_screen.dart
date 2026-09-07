@@ -69,17 +69,17 @@ class AppearanceScreen extends ConsumerWidget {
                 child: SegmentedButton<ThemeMode>(
                   segments: [
                     ButtonSegment(
-                      value: ThemeMode.system,
+                      value: .system,
                       icon: const Icon(Icons.settings_brightness),
                       label: Text(l10n.system),
                     ),
                     ButtonSegment(
-                      value: ThemeMode.light,
+                      value: .light,
                       icon: const Icon(Icons.light_mode),
                       label: Text(l10n.light),
                     ),
                     ButtonSegment(
-                      value: ThemeMode.dark,
+                      value: .dark,
                       icon: const Icon(Icons.dark_mode),
                       label: Text(l10n.dark),
                     ),
@@ -95,6 +95,16 @@ class AppearanceScreen extends ConsumerWidget {
                 subtitle: Text(l10n.pureBlackSubtitle),
                 value: isPureBlack,
                 onChanged: notifier.setUsePureBlack,
+              ),
+              SwitchListTile(
+                title: Text(l10n.nowPlayingTheme),
+                subtitle: Text(l10n.nowPlayingThemeSubtitle),
+                value: ref.watch(useNowPlayingThemeProvider),
+                onChanged: (value) {
+                  ref
+                      .read(userSettingsProvider.notifier)
+                      .setUseNowPlayingTheme(value);
+                },
               ),
               const SystemThemeTile(),
               const AppColorTile(),

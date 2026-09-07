@@ -399,6 +399,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setShakeSensitivity(ShakeSensitivity value) =>
       _save(state?.copyWith(shakeSensitivity: value));
+
+  Future<void> setUseNowPlayingTheme(bool value) =>
+      _save(state?.copyWith(useNowPlayingTheme: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -945,4 +948,13 @@ final shakeSensitivityProvider = Provider<ShakeSensitivity>(
     ),
   ),
   name: 'shakeSensitivityProvider',
+);
+
+final useNowPlayingThemeProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.useNowPlayingTheme ?? DefaultUserSettings.useNowPlayingTheme,
+    ),
+  ),
+  name: 'useNowPlayingThemeProvider',
 );

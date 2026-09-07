@@ -102,6 +102,8 @@
   "systemThemeSubtitle": "Match device palette",
   "pureBlack": "Pure Black",
   "pureBlackSubtitle": "High contrast theme",
+  "nowPlayingTheme": "Now Playing Theme",
+  "nowPlayingThemeSubtitle": "Use dominant color from playing media",
   "fontScale": "Font Scale",
   "language": "Language",
   "navBar": "Navbar",

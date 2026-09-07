@@ -205,6 +205,9 @@ _UserSettings _$UserSettingsFromJson(
         json['shakeSensitivity'],
       ) ??
       DefaultUserSettings.shakeSensitivity,
+  useNowPlayingTheme:
+      json['useNowPlayingTheme'] as bool? ??
+      DefaultUserSettings.useNowPlayingTheme,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -280,6 +283,7 @@ Map<String, dynamic> _$UserSettingsToJson(
       _$ShakeDuringSleepTimerActionEnumMap[instance.shakeDuringSleepTimer]!,
   'shakeSleepTimerAddMinutes': instance.shakeSleepTimerAddMinutes,
   'shakeSensitivity': _$ShakeSensitivityEnumMap[instance.shakeSensitivity]!,
+  'useNowPlayingTheme': instance.useNowPlayingTheme,
 };
 
 const _$NavTargetEnumMap = {
