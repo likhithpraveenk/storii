@@ -13,3 +13,4 @@ Storii is a modern, feature-rich client for <a href="https://github.com/advplyr/
 - Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling
 - Navigation customization: reorder tabs, choose startup screen, label behavior
 - Server admin tools (admin users): trigger library scans, re-scan/re-match items
+- Android Auto: browse library and play books and episodes

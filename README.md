@@ -40,6 +40,7 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 - Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling
 - Navigation customization: reorder tabs, choose startup screen, label behavior
 - Server admin tools (admin users): trigger library scans, re-scan/re-match items
+- Android Auto: browse library and play books and episodes
 
 ## Demo
 
@@ -74,13 +75,19 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 | Server management / admin             |   ⚠️   |        ❌        |
 | eBook reader                          |   💡   |        ✅        |
 | Chromecast                            |   💡   |        ✅        |
-| Android Auto                          |   💡   |        ✅        |
-| iOS support [^1]                      |   ⚠️   |        ✅        |
+| Android Auto                          |   ✅   |        ✅        |
 | Desktop apps                          |   💡   |        ❌        |
 
 > ✅ Supported &nbsp; ❌ **Not** supported &nbsp; 🔜 Planned &nbsp; 💡 On Request &nbsp; ⚠️ Partial
 
-[^1]: An IPA can be provided for sideloading. App Store version not planned
+## Android Auto
+
+Since Storii is not available on the Play Store, you need to enable unknown sources for it in Android Auto's developer settings:
+
+1. Open **Android Auto** app on your phone
+2. Go to **Settings** > **Version** and tap it 10 times to enable **Developer settings**
+3. Go back to **Settings** > **Developer settings**
+4. Enable **Unknown sources** to allow apps like Storii to appear in Android Auto
 
 ## Tech Stack
 
