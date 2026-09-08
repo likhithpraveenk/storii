@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 ### Fixed
 
 - socket to use refreshed access token
+- fill gaps when chapters do not cover the whole book duration
 
 ## [v0.8.0] - 2026-09-04
 
