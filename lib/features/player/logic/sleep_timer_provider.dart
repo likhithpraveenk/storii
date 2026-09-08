@@ -12,6 +12,7 @@ part 'sleep_timer_provider.g.dart';
 @Riverpod(keepAlive: true)
 class SleepTimer extends _$SleepTimer {
   Timer? _ticker;
+  Duration? _initialDuration;
   static const _tick = Duration(seconds: 1);
   static const _max = Duration(hours: 12);
 
@@ -68,12 +69,21 @@ class SleepTimer extends _$SleepTimer {
       cancel();
       return;
     }
+    _initialDuration = clamped;
     if (_initialVolume != null) {
       _restoreVolume();
     }
     _initialVolume = null;
     state = clamped;
     _ticker ??= Timer.periodic(_tick, (_) => _onTick());
+  }
+
+  void restart() {
+    final initial = _initialDuration;
+    if (initial != null) {
+      cancel();
+      set(initial);
+    }
   }
 
   void add(Duration delta) {
@@ -84,6 +94,7 @@ class SleepTimer extends _$SleepTimer {
   void cancel() {
     _restoreVolume();
     _cancelTicker();
+    _initialDuration = null;
     state = null;
   }
 

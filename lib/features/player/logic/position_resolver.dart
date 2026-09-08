@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:storii/app/models/chapter.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 
 class PositionResolver {
   final List<Duration> _trackOffsets;
@@ -20,12 +21,66 @@ class PositionResolver {
       ),
     );
 
+    final totalDuration = Duration(
+      microseconds: items.firstOrNull?.extras?['totalDuration'] as int? ?? 0,
+    );
+
     final raw = items.firstOrNull?.extras?['chapters'] as List<dynamic>? ?? [];
     final chapters = List<Chapter>.unmodifiable(
       raw.map((c) => Chapter.fromJson(c as Map<String, dynamic>)),
     );
 
-    return PositionResolver(trackOffsets: offsets, chapters: chapters);
+    final filledChapters = <Chapter>[];
+    Duration coveredUntil = Duration.zero;
+
+    final titleForFill = items.firstOrNull?.title ?? '';
+    final subtitleForFill =
+        items.firstOrNull?.artist ?? items.firstOrNull?.album ?? '';
+
+    for (final chapter in chapters) {
+      final chapterStart = chapter.start.clamp(Duration.zero, totalDuration);
+      final chapterEnd = chapter.end.clamp(Duration.zero, totalDuration);
+
+      if (chapterEnd <= chapterStart) continue;
+
+      if (chapterStart > coveredUntil) {
+        filledChapters.add(
+          Chapter(
+            start: coveredUntil,
+            end: chapterStart,
+            title: titleForFill,
+            subtitle: subtitleForFill,
+          ),
+        );
+      }
+
+      filledChapters.add(
+        Chapter(
+          start: chapterStart,
+          end: chapterEnd,
+          title: chapter.title,
+          subtitle: chapter.subtitle,
+          fromTracks: chapter.fromTracks,
+        ),
+      );
+      coveredUntil = chapterEnd;
+    }
+
+    if (coveredUntil < totalDuration) {
+      filledChapters.add(
+        Chapter(
+          start: coveredUntil,
+          end: totalDuration,
+          title: titleForFill,
+          subtitle: subtitleForFill,
+        ),
+      );
+    }
+
+    return PositionResolver(
+      trackOffsets: offsets,
+      chapters: List<Chapter>.unmodifiable(filledChapters),
+    );
   }
 
   int _trackIndexFor(Duration globalPosition) {

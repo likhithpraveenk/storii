@@ -303,3 +303,27 @@ enum MiniplayerSubtitleMode {
     .both => l10n.both,
   };
 }
+
+enum ShakeDuringSleepTimerAction {
+  off,
+  addTime,
+  restart;
+
+  String get label => switch (this) {
+    .off => l10n.off,
+    .addTime => l10n.shakeAddTime,
+    .restart => l10n.restart,
+  };
+}
+
+enum ShakeSensitivity {
+  low,
+  medium,
+  high;
+
+  String get label => switch (this) {
+    .low => l10n.low,
+    .medium => l10n.medium,
+    .high => l10n.high,
+  };
+}

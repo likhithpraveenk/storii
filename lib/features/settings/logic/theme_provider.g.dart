@@ -66,7 +66,7 @@ final class ThemeDataProvider
   }
 }
 
-String _$themeDataHash() => r'2b45ac369ca553334e66f9839a3a55d0dfc8dd86';
+String _$themeDataHash() => r'a6b06cae77f3548152f727d797bbd9cb0afcf0ec';
 
 final class ThemeDataFamily extends $Family
     with $FunctionalFamilyOverride<ThemeData, Brightness> {
@@ -160,3 +160,45 @@ final class AppStartThemeUpdateProvider
 
 String _$appStartThemeUpdateHash() =>
     r'b054adb36129ee7dba26d47d62ce0df72dec9e2f';
+
+@ProviderFor(nowPlayingThemeColor)
+final nowPlayingThemeColorProvider = NowPlayingThemeColorProvider._();
+
+final class NowPlayingThemeColorProvider
+    extends $FunctionalProvider<Color?, Color?, Color?>
+    with $Provider<Color?> {
+  NowPlayingThemeColorProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'nowPlayingThemeColorProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$nowPlayingThemeColorHash();
+
+  @$internal
+  @override
+  $ProviderElement<Color?> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Color? create(Ref ref) {
+    return nowPlayingThemeColor(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Color? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Color?>(value),
+    );
+  }
+}
+
+String _$nowPlayingThemeColorHash() =>
+    r'b94b5e53c6de0404b5bf55d39caae891beee92b3';

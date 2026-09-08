@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/library/logic/cover_url_provider.dart';
+import 'package:storii/features/player/logic/dominant_color.dart';
+import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/settings/logic/dynamic_colors.dart';
 
 part 'theme_provider.g.dart';
@@ -13,12 +17,19 @@ ThemeData themeData(Ref ref, Brightness brightness) {
   final isPureBlack = ref.watch(usePureBlackProvider);
   final appColor = ref.watch(appColorProvider);
   final schemeVariant = ref.watch(schemeVariantProvider);
+  final useNowPlaying = ref.watch(useNowPlayingThemeProvider);
+
+  Color seedColor = appColor;
+  if (useNowPlaying) {
+    final nowPlayingColor = ref.watch(nowPlayingThemeColorProvider);
+    if (nowPlayingColor != null) seedColor = nowPlayingColor;
+  }
 
   var colorScheme = ColorScheme.fromSeed(
-    seedColor: appColor,
+    seedColor: seedColor,
     brightness: brightness,
     dynamicSchemeVariant: schemeVariant,
-    surface: getSurfaceColor(appColor, brightness),
+    surface: getSurfaceColor(seedColor, brightness),
   );
 
   if (brightness == .dark && isPureBlack) {
@@ -113,4 +124,18 @@ Future<void> appStartThemeUpdate(Ref ref) async {
       await ref.read(appSettingsProvider.notifier).setAppColor(colors.first);
     }
   }
+}
+
+@riverpod
+Color? nowPlayingThemeColor(Ref ref) {
+  final useNowPlaying = ref.watch(useNowPlayingThemeProvider);
+  if (!useNowPlaying) return null;
+
+  final itemId = ref.watch(sessionProvider.select((s) => s?.libraryItemId));
+  if (itemId == null) return null;
+
+  final coverUrl = ref.watch(coverUrlProvider(itemId, type: .item));
+  if (coverUrl == null) return null;
+
+  return ref.watch(dominantColorProvider(coverUrl)).value;
 }

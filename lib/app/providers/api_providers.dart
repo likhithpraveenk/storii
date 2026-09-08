@@ -131,8 +131,16 @@ SessionsApi sessionsApi(Ref ref, UserDomain user) {
 
 @Riverpod(keepAlive: true)
 Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
-  final token = await ref.read(tokenProvider).getAccessToken(user.id);
-  final api = SocketApi(user.serverUrl.toString(), token);
+  final tokenService = ref.read(tokenProvider);
+  final token = await tokenService.getAccessToken(user.id);
+  final api = SocketApi(
+    baseUrl: user.serverUrl.toString(),
+    token: token,
+    tokenUpdates: tokenService.tokenStream(user.id),
+    onAuthFailure: () {
+      LogService.log('Socket authentication failed', level: .error);
+    },
+  );
   ref.onDispose(api.dispose);
   return api;
 }

@@ -390,6 +390,18 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setHomeShelves(List<ShelfIdentity> value) =>
       _save(state?.copyWith(homeShelves: value));
+
+  Future<void> setShakeDuringSleepTimer(ShakeDuringSleepTimerAction value) =>
+      _save(state?.copyWith(shakeDuringSleepTimer: value));
+
+  Future<void> setShakeSleepTimerAddMinutes(int value) =>
+      _save(state?.copyWith(shakeSleepTimerAddMinutes: value));
+
+  Future<void> setShakeSensitivity(ShakeSensitivity value) =>
+      _save(state?.copyWith(shakeSensitivity: value));
+
+  Future<void> setUseNowPlayingTheme(bool value) =>
+      _save(state?.copyWith(useNowPlayingTheme: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -906,4 +918,43 @@ final homeShelvesProvider = Provider<List<ShelfIdentity>>(
     ),
   ),
   name: 'homeShelvesProvider',
+);
+
+final shakeDuringSleepTimerProvider = Provider<ShakeDuringSleepTimerAction>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.shakeDuringSleepTimer ?? DefaultUserSettings.shakeDuringSleepTimer,
+    ),
+  ),
+  name: 'shakeDuringSleepTimerProvider',
+);
+
+final shakeSleepTimerAddMinutesProvider = Provider<int>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.shakeSleepTimerAddMinutes ??
+          DefaultUserSettings.shakeSleepTimerAddMinutes,
+    ),
+  ),
+  name: 'shakeSleepTimerAddMinutesProvider',
+);
+
+final shakeSensitivityProvider = Provider<ShakeSensitivity>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.shakeSensitivity ?? DefaultUserSettings.shakeSensitivity,
+    ),
+  ),
+  name: 'shakeSensitivityProvider',
+);
+
+final useNowPlayingThemeProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.useNowPlayingTheme ?? DefaultUserSettings.useNowPlayingTheme,
+    ),
+  ),
+  name: 'useNowPlayingThemeProvider',
 );

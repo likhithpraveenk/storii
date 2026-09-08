@@ -8,45 +8,82 @@ import 'package:socket_io_client/socket_io_client.dart';
 
 class SocketApi {
   final Socket socket;
+
+  late final StreamSubscription<String?> _tokenSub;
+  late final StreamController<bool> _connController;
+  final Function? onAuthFailure;
+
   late final UserSocketEvents user;
   late final TaskEvents taskEvents;
   late final CollectionEvents collectionEvents;
   late final PlaylistEvents playlistEvents;
 
-  bool _initialized = false;
   late final Stream<bool> isConnected;
 
-  new(String baseUrl, String? token)
-    : socket = io(
-        baseUrl,
-        OptionBuilder()
-            .setTransports(['websocket'])
-            .disableAutoConnect()
-            .build(),
-      ) {
+  String? _currentToken;
+
+  new({
+    required String baseUrl,
+    required String? token,
+    required Stream<String?> tokenUpdates,
+    this.onAuthFailure,
+  }) : socket = io(
+         baseUrl,
+         OptionBuilder()
+             .setTransports(['websocket'])
+             .disableAutoConnect()
+             .build(),
+       ),
+       _currentToken = token {
     user = UserSocketEvents(socket);
     taskEvents = TaskEvents(socket);
     collectionEvents = CollectionEvents(socket);
     playlistEvents = PlaylistEvents(socket);
 
-    final controller = StreamController<bool>.broadcast();
-    isConnected = controller.stream;
-    socket.onConnect((_) => controller.add(true));
-    socket.onDisconnect((_) => controller.add(false));
-    socket.onConnectError((_) => controller.add(false));
-    socket.onError((_) => controller.add(false));
+    _connController = StreamController<bool>.broadcast();
+    isConnected = _connController.stream;
 
-    controller.onListen = () => controller.add(true); //! optimistic true
+    socket.onConnect((_) {
+      _connController.add(true);
+      _authenticate();
+    });
+    socket.onDisconnect((_) {
+      _connController.add(false);
+      _currentToken = null;
+    });
+    socket.onConnectError((_) {
+      _connController.add(false);
+      _currentToken = null;
+    });
+    socket.on('auth_failed', (_) {
+      _currentToken = null;
+      return onAuthFailure?.call();
+    });
 
-    _init(token);
-  }
+    _tokenSub = tokenUpdates.listen(_onTokenUpdate);
 
-  void _init(String? token) {
-    if (_initialized) return;
-    socket.onConnect((_) => socket.emit('auth', token));
     socket.connect();
-    _initialized = true;
   }
 
-  void dispose() => socket.dispose();
+  void _authenticate() {
+    final token = _currentToken;
+
+    if (token != null) {
+      socket.emit('auth', token);
+    }
+  }
+
+  void _onTokenUpdate(String? newToken) {
+    _currentToken = newToken;
+
+    if (socket.connected && newToken != null) {
+      _authenticate();
+    }
+  }
+
+  void dispose() {
+    _tokenSub.cancel();
+    _connController.close();
+    socket.dispose();
+  }
 }

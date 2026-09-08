@@ -53,7 +53,7 @@ extension PlaybackSessionX on PlaybackSession {
                 (t) => Chapter(
                   start: t.startOffset,
                   end: t.startOffset + t.duration,
-                  title: displayTitle ?? l10n.noTitle,
+                  title: t.title,
                   subtitle: displayAuthor ?? l10n.noAuthor,
                 ).toJson(),
               )
@@ -92,6 +92,7 @@ extension PlaybackSessionX on PlaybackSession {
           'itemId': libraryItemId,
           if (isEpisode) 'episodeId': episodeId,
           'isLocal': isLocal,
+          'totalDuration': duration.inMicroseconds,
         },
       );
 

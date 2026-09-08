@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- shake during sleep timer & sensitivity settings
+- now playing theme setting to use dominant color from current playing media for app-wide theme
+
+### Changed
+
+- replace player slider with new AppSlider supporting cancel-on-pull-up gesture
+
+### Fixed
+
+- socket to use refreshed access token
+- fill gaps when chapters do not cover the whole book duration
+
 ## [v0.8.0] - 2026-09-04
 
 ### Added

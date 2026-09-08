@@ -18,11 +18,16 @@ void main() {
     required List<Map<String, dynamic>>? chapters,
     String id = 'track',
     Duration duration = const Duration(seconds: 60),
+    required Duration totalDuration,
   }) => MediaItem(
     id: id,
     title: 'Title',
     duration: duration,
-    extras: {'chapters': ?chapters, 'startOffset': startOffset.inMicroseconds},
+    extras: {
+      'chapters': ?chapters,
+      'startOffset': startOffset.inMicroseconds,
+      'totalDuration': totalDuration.inMicroseconds,
+    },
   );
 
   group('single track, multiple chapters', () {
@@ -42,7 +47,11 @@ void main() {
         ),
       ];
       resolver = makeFromItems([
-        makeTrack(startOffset: Duration.zero, chapters: chapters),
+        makeTrack(
+          startOffset: Duration.zero,
+          chapters: chapters,
+          totalDuration: const Duration(seconds: 60),
+        ),
       ]);
     });
 
@@ -95,11 +104,17 @@ void main() {
         ),
       ];
       resolver = makeFromItems([
-        makeTrack(startOffset: Duration.zero, chapters: chapters, id: 'track0'),
+        makeTrack(
+          startOffset: Duration.zero,
+          chapters: chapters,
+          id: 'track0',
+          totalDuration: const Duration(seconds: 120),
+        ),
         makeTrack(
           startOffset: const Duration(seconds: 60),
           chapters: null,
           id: 'track1',
+          totalDuration: const Duration(seconds: 120),
         ),
       ]);
     });
@@ -151,11 +166,17 @@ void main() {
       ),
     ];
     final resolver = makeFromItems([
-      makeTrack(startOffset: Duration.zero, chapters: chapters, id: 'track0'),
+      makeTrack(
+        startOffset: Duration.zero,
+        chapters: chapters,
+        id: 'track0',
+        totalDuration: const Duration(seconds: 120),
+      ),
       makeTrack(
         startOffset: const Duration(seconds: 60),
         chapters: null,
         id: 'track1',
+        totalDuration: const Duration(seconds: 120),
       ),
     ]);
     final r = resolver.chapterPositionFromGlobal(const Duration(seconds: 50));
@@ -187,12 +208,14 @@ void main() {
           chapters: track0Chapters,
           id: 'track0',
           duration: const Duration(seconds: 45),
+          totalDuration: const Duration(seconds: 90),
         ),
         makeTrack(
           startOffset: const Duration(seconds: 45),
           chapters: null,
           id: 'track1',
           duration: const Duration(seconds: 45),
+          totalDuration: const Duration(seconds: 90),
         ),
       ]);
     });
@@ -249,6 +272,66 @@ void main() {
     test('resolveSeek before the start of the first chapter returns null', () {
       final result = resolver.resolveSeek(0, const Duration(seconds: -100));
       expect(result, isNull);
+    });
+  });
+
+  group('gap filling in chapters', () {
+    Map<String, dynamic> chapterForTrack(int trackIndex) {
+      return chapterJson(
+        start: Duration(seconds: trackIndex * 60),
+        end: Duration(seconds: (trackIndex + 1) * 60),
+        title: 'Chapter ${trackIndex + 1}',
+      );
+    }
+
+    List<MediaItem> makeItemsFromChapters(List<Map<String, dynamic>> chapters) {
+      return [
+        makeTrack(
+          startOffset: Duration.zero,
+          id: 'track0',
+          chapters: chapters,
+          totalDuration: const Duration(minutes: 3),
+        ),
+        makeTrack(
+          startOffset: const Duration(seconds: 60),
+          id: 'track1',
+          chapters: null,
+          totalDuration: const Duration(minutes: 3),
+        ),
+        makeTrack(
+          startOffset: const Duration(seconds: 120),
+          id: 'track2',
+          chapters: null,
+          totalDuration: const Duration(minutes: 3),
+        ),
+      ];
+    }
+
+    test('1,3 chapters given -> filler for track 2', () {
+      final chapters = [chapterForTrack(0), chapterForTrack(2)];
+      final resolver = PositionResolver.from(makeItemsFromChapters(chapters));
+
+      expect(resolver.chapters.length, 3);
+      expect(resolver.chapters[1].start, const Duration(seconds: 60));
+      expect(resolver.chapters[1].end, const Duration(seconds: 120));
+    });
+
+    test('1,2 chapters given -> filler for track 3', () {
+      final chapters = [chapterForTrack(0), chapterForTrack(1)];
+      final resolver = PositionResolver.from(makeItemsFromChapters(chapters));
+
+      expect(resolver.chapters.length, 3);
+      expect(resolver.chapters[2].start, const Duration(seconds: 120));
+      expect(resolver.chapters[2].end, const Duration(seconds: 180));
+    });
+
+    test('2,3 chapters given -> filler for track 1', () {
+      final chapters = [chapterForTrack(1), chapterForTrack(2)];
+      final resolver = PositionResolver.from(makeItemsFromChapters(chapters));
+
+      expect(resolver.chapters.length, 3);
+      expect(resolver.chapters[0].start, Duration.zero);
+      expect(resolver.chapters[0].end, const Duration(seconds: 60));
     });
   });
 }

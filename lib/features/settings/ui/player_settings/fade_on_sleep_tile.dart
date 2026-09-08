@@ -23,17 +23,17 @@ class FadeOnSleepTile extends ConsumerWidget {
           onChanged: (value) =>
               ref.read(userSettingsProvider.notifier).setFadeOnSleep(value),
         ),
-        if (enabled) ...[
-          const FadeOnSleepDurationTile(),
-          const FadeOnSleepMinVolumeTile(),
-        ],
+        FadeOnSleepDurationTile(enabled: enabled),
+        FadeOnSleepMinVolumeTile(enabled: enabled),
       ],
     );
   }
 }
 
 class FadeOnSleepDurationTile extends ConsumerStatefulWidget {
-  const new({super.key});
+  const new({super.key, required this.enabled});
+
+  final bool enabled;
 
   @override
   ConsumerState<FadeOnSleepDurationTile> createState() =>
@@ -58,6 +58,7 @@ class _FadeOnSleepDurationTileState
     final notifier = ref.read(userSettingsProvider.notifier);
 
     return ListTile(
+      enabled: widget.enabled,
       leading: const Icon(Icons.timelapse),
       title: Text(l10n.fadeOnSleepDuration),
       subtitle: Text('${duration.inSeconds}s'),
@@ -106,7 +107,8 @@ class _FadeOnSleepDurationTileState
 }
 
 class FadeOnSleepMinVolumeTile extends ConsumerStatefulWidget {
-  const new({super.key});
+  const new({required this.enabled, super.key});
+  final bool enabled;
 
   @override
   ConsumerState<FadeOnSleepMinVolumeTile> createState() =>
@@ -131,6 +133,7 @@ class _FadeOnSleepMinVolumeTileState
     final notifier = ref.read(userSettingsProvider.notifier);
 
     return ListTile(
+      enabled: widget.enabled,
       leading: const Icon(Icons.volume_down),
       title: Text(l10n.fadeOnSleepMinVolume),
       subtitle: Text('${(volume * 100).round()}%'),
