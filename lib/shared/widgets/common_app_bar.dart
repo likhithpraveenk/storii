@@ -31,11 +31,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
           ]
         : <Widget>[];
 
-    final dark = Theme.of(context).brightness == .dark;
     return AppBar(
-      systemOverlayStyle: dark ? .light : .dark,
-      backgroundColor: Colors.transparent,
-      surfaceTintColor: Colors.transparent,
       leading: leading,
       title: title ?? const LibrarySwitcher(),
       actions: [...defaultActions, ...?actions],

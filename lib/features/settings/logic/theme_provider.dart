@@ -105,6 +105,12 @@ ThemeData themeData(Ref ref, Brightness brightness) {
       crossAxisMargin: 2,
       thumbVisibility: WidgetStateProperty.all(true),
     ),
+    appBarTheme: AppBarThemeData(
+      systemOverlayStyle: brightness == .dark ? .light : .dark,
+      backgroundColor: Colors.transparent,
+      surfaceTintColor: Colors.transparent,
+      shadowColor: Colors.transparent,
+    ),
   );
 }
 

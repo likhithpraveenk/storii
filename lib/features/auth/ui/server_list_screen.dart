@@ -27,9 +27,6 @@ class ServerListScreen extends ConsumerWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        shadowColor: Colors.transparent,
         actions: [
           IconButton(
             tooltip: l10n.logs,
