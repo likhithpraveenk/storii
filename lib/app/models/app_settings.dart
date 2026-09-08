@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:storii/app/config/theme.dart';
+import 'package:storii/app/models/storage_location.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/shared/helpers/converters.dart';
 
@@ -35,6 +36,9 @@ sealed class AppSettings with _$AppSettings {
     @Default(false) bool downloadPathsV2Migrated,
 
     @Default(false) bool trustAllCertificates,
+
+    @Default([defaultInternalAudiobooks, defaultInternalPodcasts])
+    List<StorageLocation> storageLocations,
   }) = _AppSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/features/settings/ui/downloads/storage_tile.dart';
 import 'package:storii/features/settings/ui/downloads/unmetered_only_tile.dart';
 
 class DownloadsSettingsTile extends StatelessWidget {
@@ -38,17 +39,7 @@ class DownloadsSettingsScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
-      body: const SingleChildScrollView(
-        child: Column(
-          children: [
-            UnmeteredOnlyTile(),
-            // StorageTile(), // TODO: external download location
-            // for SAF check the following packages
-            // https://pub.dev/packages/saf_util
-            // https://pub.dev/packages/saf_stream
-          ],
-        ),
-      ),
+      body: ListView(children: const [UnmeteredOnlyTile(), StorageTile()]),
     );
   }
 }

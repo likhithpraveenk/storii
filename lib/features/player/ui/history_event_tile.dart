@@ -79,6 +79,7 @@ class HistoryEventTile extends ConsumerWidget {
             Column(
               crossAxisAlignment: .end,
               children: [
+                // TODO: add padding
                 if (showChapter && chapterInfo?.name != null)
                   Text(
                     chapterInfo!.name!,

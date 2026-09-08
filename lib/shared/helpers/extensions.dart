@@ -61,6 +61,44 @@ extension StringExtensions on String {
       return this;
     }
   }
+
+  /// only for SAF paths
+  String toUiPath(BuildContext context) {
+    final isRtl = Directionality.of(context) == .rtl;
+    final separator = isRtl ? ' < ' : ' > ';
+
+    try {
+      final uri = Uri.parse(this);
+      final decodedPath = Uri.decodeComponent(uri.path);
+      final treePath = decodedPath.contains('/document/')
+          ? decodedPath.split('/document/').first
+          : decodedPath;
+
+      final rawId = treePath.contains('/tree/')
+          ? treePath.split('/tree/').last
+          : treePath;
+
+      if (rawId.startsWith('primary:')) {
+        final relPath = rawId
+            .replaceFirst('primary:', '')
+            .replaceAll('/', separator);
+        return relPath.isEmpty
+            ? l10n.internalStorage
+            : '${l10n.internalStorage}$separator$relPath';
+      }
+
+      if (rawId.contains(':')) {
+        final parts = rawId.split(':');
+        final relPath = parts.sublist(1).join(':').replaceAll('/', separator);
+        final label = '${l10n.sdCard} (${parts[0]})';
+        return relPath.isEmpty ? label : '$label$separator$relPath';
+      }
+
+      return uri.pathSegments.isNotEmpty ? uri.pathSegments.last : this;
+    } catch (_) {
+      return this;
+    }
+  }
 }
 
 extension LogLevelX on LogLevel {

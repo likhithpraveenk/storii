@@ -1,0 +1,30 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'storage_location.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_StorageLocation _$StorageLocationFromJson(Map<String, dynamic> json) =>
+    _StorageLocation(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      uri: json['uri'] as String,
+      mediaType: $enumDecode(_$MediaTypeEnumMap, json['mediaType']),
+      isInternal: json['isInternal'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$StorageLocationToJson(_StorageLocation instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'uri': instance.uri,
+      'mediaType': _$MediaTypeEnumMap[instance.mediaType]!,
+      'isInternal': instance.isInternal,
+    };
+
+const _$MediaTypeEnumMap = {
+  MediaType.book: 'book',
+  MediaType.podcast: 'podcast',
+};

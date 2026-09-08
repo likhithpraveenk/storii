@@ -157,6 +157,9 @@ extension AppSettingsSetters on AppSettingsNotifier {
 
   Future<void> setTrustAllCertificates(bool value) =>
       _save(state.copyWith(trustAllCertificates: value));
+
+  Future<void> setStorageLocations(List<StorageLocation> value) =>
+      _save(state.copyWith(storageLocations: value));
 }
 
 final themeModeProvider = Provider<ThemeMode>(
@@ -223,6 +226,11 @@ final downloadPathsV2MigratedProvider = Provider<bool>(
 final trustAllCertificatesProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.trustAllCertificates)),
   name: 'trustAllCertificatesProvider',
+);
+
+final storageLocationsProvider = Provider<List<StorageLocation>>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.storageLocations)),
+  name: 'storageLocationsProvider',
 );
 
 // **************************************************************************

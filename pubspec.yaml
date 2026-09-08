@@ -46,6 +46,8 @@ dependencies:
   permission_handler: ^13.0.1
   riverpod_annotation: ^4.0.6
   rxdart: ^0.28.0
+  saf_stream: ^4.0.1
+  saf_util: ^3.1.0
   sensors_plus: ^7.1.0
   source_gen: ^4.2.4
   ttf_metadata: ^0.0.6

@@ -39,24 +39,31 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
       : Duration(microseconds: (json['syncIntervalMetered'] as num).toInt()),
   downloadPathsV2Migrated: json['downloadPathsV2Migrated'] as bool? ?? false,
   trustAllCertificates: json['trustAllCertificates'] as bool? ?? false,
+  storageLocations:
+      (json['storageLocations'] as List<dynamic>?)
+          ?.map((e) => StorageLocation.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [defaultInternalAudiobooks, defaultInternalPodcasts],
 );
 
-Map<String, dynamic> _$AppSettingsToJson(_AppSettings instance) =>
-    <String, dynamic>{
-      'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,
-      'useDynamicColor': instance.useDynamicColor,
-      'appColor': const ColorConverter().toJson(instance.appColor),
-      'schemeVariant': _$DynamicSchemeVariantEnumMap[instance.schemeVariant]!,
-      'usePureBlack': instance.usePureBlack,
-      'currentUser': ?instance.currentUser?.toJson(),
-      'serverUrl': ?instance.serverUrl?.toString(),
-      'maxLogs': instance.maxLogs,
-      'enableHttpLogs': instance.enableHttpLogs,
-      'syncInterval': instance.syncInterval.inMicroseconds,
-      'syncIntervalMetered': instance.syncIntervalMetered.inMicroseconds,
-      'downloadPathsV2Migrated': instance.downloadPathsV2Migrated,
-      'trustAllCertificates': instance.trustAllCertificates,
-    };
+Map<String, dynamic> _$AppSettingsToJson(
+  _AppSettings instance,
+) => <String, dynamic>{
+  'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,
+  'useDynamicColor': instance.useDynamicColor,
+  'appColor': const ColorConverter().toJson(instance.appColor),
+  'schemeVariant': _$DynamicSchemeVariantEnumMap[instance.schemeVariant]!,
+  'usePureBlack': instance.usePureBlack,
+  'currentUser': ?instance.currentUser?.toJson(),
+  'serverUrl': ?instance.serverUrl?.toString(),
+  'maxLogs': instance.maxLogs,
+  'enableHttpLogs': instance.enableHttpLogs,
+  'syncInterval': instance.syncInterval.inMicroseconds,
+  'syncIntervalMetered': instance.syncIntervalMetered.inMicroseconds,
+  'downloadPathsV2Migrated': instance.downloadPathsV2Migrated,
+  'trustAllCertificates': instance.trustAllCertificates,
+  'storageLocations': instance.storageLocations.map((e) => e.toJson()).toList(),
+};
 
 const _$ThemeModeEnumMap = {
   ThemeMode.system: 'system',
