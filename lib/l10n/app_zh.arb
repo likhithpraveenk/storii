@@ -526,5 +526,8 @@
   "chapterProgressBarSubtitle": "关闭：显示总进度",
   "admin": "管理员",
   "miniPlayer": "迷你播放器",
-  "fullPlayer": "播放器"
+  "fullPlayer": "播放器",
+  "continueWord": "继续",
+  "shelfDiscover": "发现",
+  "shelfRecentlyAdded": "最近添加"
 }
