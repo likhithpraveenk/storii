@@ -529,5 +529,18 @@
   "fullPlayer": "播放器",
   "continueWord": "继续",
   "shelfDiscover": "发现",
-  "shelfRecentlyAdded": "最近添加"
+  "shelfRecentlyAdded": "最近添加",
+  "shelfContinueListening": "继续收听",
+  "shelfContinueSeries": "继续系列",
+  "shelfRecentSeries": "最近的系列",
+  "shelfNewestAuthors": "最新的作者",
+  "shelfNewestEpisodes": "最新的剧集",
+  "shelfListenAgain": "再听一遍",
+  "queue": "队列",
+  "addToQueue": "添加到队列",
+  "addedToQueue": "已加入队列",
+  "clearQueue": "清空队列",
+  "autoplay": "自动播放",
+  "nowPlayingTheme": "正在播放主题",
+  "nowPlayingThemeSubtitle": "使用播放媒体的主色"
 }
