@@ -61,7 +61,7 @@
   "retry": "Wiederholen",
   "description": "Beschreibung",
   "noDescription": "Keine Beschreibung verfügbar",
-  "resume": "wiederaufnehmen",
+  "resume": "fortsetzen",
   "play": "Abspielen",
   "playAll": "Alle abspielen",
   "queue": "Warteschlange",
@@ -106,7 +106,7 @@
   "addToPlaylist": "Zur Playlist hinzufügen",
   "removeFromPlaylist": "Von der Playlist entfernen",
   "deletePlaylistSubtitle": "Sind Sie sicher, dass Sie diese Wiedergabeliste löschen möchten?",
-  "latest": "Letzter Beitrag",
+  "latest": "Zuletzt",
   "latestEpisodes": "Neueste Folgen",
   "all": "Alle",
   "series": "Serien",
@@ -157,13 +157,13 @@
   "finished": "Beendet",
   "notStarted": "Nicht gestartet",
   "inComplete": "Unvollständig",
-  "inProgress": "im Gange",
+  "inProgress": "Begonnen",
   "notFinished": "Nicht Beendet",
   "subtitle": "Untertitel",
   "singleTrack": "Einzeltitel",
   "multipleTracks": "Mehrere Titel",
   "noTracks": "Keine Titel",
-  "itemsWithIssues": "Dinge mit Mängeln",
+  "itemsWithIssues": "Objekte mit Mängeln",
   "moreInfo": "Mehr Info",
   "explicit": "Explizit",
   "abridged": "Gekürzt",
@@ -448,8 +448,8 @@
   "itemScanUpToDate": "Das Element ist bereits auf dem neuesten Stand",
   "itemScanNothing": "Element gescannt: keine Änderungen",
   "miniplayerSubtitle": "Miniplayer-Untertitel",
-  "osNotification": "Benachrichtigung des Betriebssystems",
-  "osNotificationCanSeekSubtitle": "Spulen in der Betriebssystem-Benachrichtigung erlauben",
+  "osNotification": "Systembenachrichtigungen",
+  "osNotificationCanSeekSubtitle": "Spulen in der Systembenachrichtigung erlauben",
   "osNotificationCanSeek": "Spulen",
   "osNotificationCanSkip": "Vorwärtsspulen / Zurückspulen",
   "osNotificationCanSkipSubtitle": "Schaltflächen zum Vorspulen und Zurückspulen in der Systembenachrichtigung anzeigen",
@@ -481,7 +481,7 @@
       }
     }
   },
-  "readableDuration": "{hours, plural, =0{} other{{hours}h }}{minutes}m",
+  "readableDuration": "{hours, plural, =0{} other{{hours}Std. }}{minutes}Min.",
   "@readableDuration": {
     "placeholders": {
       "hours": {
@@ -492,7 +492,7 @@
       }
     }
   },
-  "readableDurationFull": "{hours, plural, =0{} other{{hours}h }}{minutes}m {seconds}s",
+  "readableDurationFull": "{hours, plural, =0{} other{{hours}Std. }}{minutes}Min. {seconds}Sek.",
   "@readableDurationFull": {
     "placeholders": {
       "hours": {
@@ -506,7 +506,7 @@
       }
     }
   },
-  "durationLeft": "{hours, plural, =0{} other{{hours}h }}{minutes}m left",
+  "durationLeft": "{hours, plural, =0{} other{{hours}Std. }}{minutes}Min. verbleibend",
   "@durationLeft": {
     "placeholders": {
       "hours": {
@@ -530,10 +530,22 @@
   "binaryUnitsSubtitle": "1 KB = 1024 B",
   "decimalUnitsSubtitle": "1 KB = 1000 B",
   "monochrome": "Monochrome",
-  "season": "Season",
+  "season": "Staffel",
   "gradient": "Gradient",
   "admin": "Admin",
   "scan": "Scannen",
   "miniPlayer": "Mini Player",
-  "fullPlayer": "Vollständiger Player"
+  "fullPlayer": "Vollständiger Player",
+  "shelfContinueListening": "Weiterhören",
+  "shelfContinueSeries": "Serie fortsetzen",
+  "shelfDiscover": "Entdecken",
+  "shelfRecentlyAdded": "Kürzlich hinzugefügt",
+  "shelfRecentSeries": "Aktuelle Serien",
+  "shelfNewestAuthors": "Neueste Autoren",
+  "shelfNewestEpisodes": "Neueste Folgen",
+  "shelfListenAgain": "Erneut anhören",
+  "settingsHomeShelvesTitle": "Home Widgets",
+  "settingsHomeShelvesSubtitle": "Widgets neu anordnen und ein- oder ausblenden",
+  "osNotificationCanStopSubtitle": "Schaltfläche „Stopp“ in der Systembenachrichtigung anzeigen",
+  "osNotificationCanSpeedSubtitle": "Schaltfläche für Wiedergabegeschwindigkeit in der Systembenachrichtigung anzeigen"
 }
