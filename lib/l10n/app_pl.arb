@@ -547,5 +547,14 @@
   "both": "Obydwa",
   "miniplayerSubtitle": "Podtytuł w mini odtwarzaczu",
   "osNotificationCanStopSubtitle": "Przycisk stop w notyfikacji systemowej",
-  "osNotificationCanSpeedSubtitle": "Prędkość odtwarzania w notyfikacji systemowej"
+  "osNotificationCanSpeedSubtitle": "Prędkość odtwarzania w notyfikacji systemowej",
+  "nowPlayingTheme": "Motyw aktualnie odtwarzany",
+  "nowPlayingThemeSubtitle": "Użyj koloru z odtwarzanego materiału",
+  "shakeDuringSleepTimer": "Działanie po potrząśnięciu",
+  "shakeAddTime": "Dodaj czas",
+  "restart": "Rozpocznij odliczanie od nowa",
+  "shakeSensitivity": "Czułość potrząśnięcia",
+  "low": "Niska",
+  "medium": "Średnia",
+  "high": "Wysoka"
 }
