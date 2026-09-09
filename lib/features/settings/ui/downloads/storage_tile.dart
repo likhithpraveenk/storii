@@ -91,7 +91,7 @@ class _StorageTileSheetState extends ConsumerState<_StorageTileSheet> {
         Padding(
           padding: const .fromLTRB(24, 24, 24, 16),
           child: Text(
-            widget.mediaType == MediaType.book
+            widget.mediaType == .book
                 ? l10n.audiobooks
                 : l10n.podcasts,
             style: bottomSheetTitleTextStyle(context),
@@ -161,7 +161,7 @@ class _StorageTileSheetState extends ConsumerState<_StorageTileSheet> {
                   id: const Uuid().v4(),
                   name: folder.name,
                   uri: folder.uri,
-                  mediaType: widget.mediaType,
+                  mediaType: widget.mediaType == .book ? .audiobook : .podcast,
                 );
                 final current = ref.read(storageLocationsProvider);
                 final updated = [...current, newLocation];

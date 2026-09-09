@@ -11,7 +11,7 @@ _StorageLocation _$StorageLocationFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       name: json['name'] as String,
       uri: json['uri'] as String,
-      mediaType: $enumDecode(_$MediaTypeEnumMap, json['mediaType']),
+      mediaType: $enumDecode(_$DownloadMediaTypeEnumMap, json['mediaType']),
       isInternal: json['isInternal'] as bool? ?? false,
     );
 
@@ -20,11 +20,11 @@ Map<String, dynamic> _$StorageLocationToJson(_StorageLocation instance) =>
       'id': instance.id,
       'name': instance.name,
       'uri': instance.uri,
-      'mediaType': _$MediaTypeEnumMap[instance.mediaType]!,
+      'mediaType': _$DownloadMediaTypeEnumMap[instance.mediaType]!,
       'isInternal': instance.isInternal,
     };
 
-const _$MediaTypeEnumMap = {
-  MediaType.book: 'book',
-  MediaType.podcast: 'podcast',
+const _$DownloadMediaTypeEnumMap = {
+  DownloadMediaType.audiobook: 'audiobook',
+  DownloadMediaType.podcast: 'podcast',
 };
