@@ -65,11 +65,11 @@ class _SleepShakeHandlerState extends ConsumerState<SleepShakeHandler> {
     switch (action) {
       case .restart:
         timer.restart();
-        HapticFeedback.heavyImpact();
+        HapticFeedback.vibrate();
       case .addTime:
         final minutes = ref.read(shakeSleepTimerAddMinutesProvider);
         timer.add(Duration(minutes: minutes));
-        HapticFeedback.heavyImpact();
+        HapticFeedback.vibrate();
       case .off:
         break;
     }
