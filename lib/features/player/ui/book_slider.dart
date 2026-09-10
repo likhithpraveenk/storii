@@ -83,7 +83,7 @@ class _BookSliderState extends ConsumerState<BookSlider> {
               await audioHandler.seek(Duration(milliseconds: seekMs));
             }
           },
-          padding: const .fromLTRB(0, 16, 0, 8),
+          padding: const .fromLTRB(0, 4, 0, 4),
         ),
         Row(
           mainAxisAlignment: .spaceBetween,

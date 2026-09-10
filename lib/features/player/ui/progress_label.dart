@@ -32,9 +32,8 @@ class ProgressLabel extends ConsumerWidget {
     return Padding(
       padding: const .symmetric(horizontal: 24),
       child: Row(
-        mainAxisAlignment: .center,
         children: [
-          Text(currentPosition.toTime(), style: textStyle, textAlign: .center),
+          Text(currentPosition.toTime(), style: textStyle),
           const Spacer(),
           GestureDetector(
             behavior: .opaque,
@@ -45,7 +44,7 @@ class ProgressLabel extends ConsumerWidget {
                     label == .total ? .remaining : .total,
                   );
             },
-            child: Text(end, style: textStyle, textAlign: .center),
+            child: Text(end, style: textStyle),
           ),
         ],
       ),
