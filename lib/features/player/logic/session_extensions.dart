@@ -68,12 +68,16 @@ extension PlaybackSessionX on PlaybackSession {
       final localPath = localPaths[track.index];
       final isLocal = localPath != null;
 
-      final uri = isLocal
-          ? Uri.file(localPath)
-          : serverUrl!.resolve(
-              ApiRoutes.sessionOpenTrack(id, '${track.index}'),
-            );
-      //! either we get local path or server url
+      final Uri uri;
+      if (isLocal) {
+        uri = localPath.startsWith('content:')
+            ? Uri.parse(localPath)
+            : Uri.file(localPath);
+      } else {
+        uri = serverUrl!.resolve(
+          ApiRoutes.sessionOpenTrack(id, '${track.index}'),
+        );
+      } //! either we get local path or server url
 
       final isEpisode = mediaType == .podcast && episodeId != null;
 
