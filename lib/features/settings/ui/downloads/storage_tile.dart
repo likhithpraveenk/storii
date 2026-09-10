@@ -10,6 +10,7 @@ import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
+import 'package:storii/storage/local/downloads_store.dart';
 
 class StorageTile extends ConsumerWidget {
   const new({super.key});
@@ -123,6 +124,9 @@ class _StorageTileSheetState extends ConsumerState<_StorageTileSheet> {
                             actionIcon: Icons.delete,
                             isDestructive: true,
                             onTap: () async {
+                              await ref
+                                  .read(downloadsStoreProvider.notifier)
+                                  .removeAllFromLocation(location.uri);
                               final current = ref.read(
                                 storageLocationsProvider,
                               );
