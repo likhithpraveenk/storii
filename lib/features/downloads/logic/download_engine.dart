@@ -5,7 +5,8 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/token_provider.dart';
-import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
+import 'package:storii/features/downloads/logic/cover_helper.dart';
+import 'package:storii/features/downloads/logic/storage_service_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
@@ -20,8 +21,6 @@ class DownloadEngine extends _$DownloadEngine {
       receiveTimeout: const Duration(minutes: 10),
     ),
   );
-  DownloadsFilesystemHelper get _filesystem =>
-      ref.read(downloadsFsHelperProvider);
   final Map<String, CancelToken> _coverTokens = {};
   final Map<String, Map<int, CancelToken>> _tokens = {};
 
@@ -54,6 +53,13 @@ class DownloadEngine extends _$DownloadEngine {
     );
     _coverTokens.remove(item.libraryItemId);
 
+    final service = ref.read(storageServiceForItemProvider(item));
+    if (service == null) {
+      _tokens.remove(item.key);
+      yield current.copyWith(status: .failed);
+      return;
+    }
+
     for (int i = 0; i < current.tracks.length; i++) {
       final initialTrack = current.tracks[i];
       if (initialTrack.status == .completed) continue;
@@ -63,11 +69,17 @@ class DownloadEngine extends _$DownloadEngine {
         final cancelToken = CancelToken();
         trackTokens[i] = cancelToken;
 
-        final existingBytes = await _filesystem.existingBytes(
-          initialTrack.localPath,
+        final existingBytes = await service.existingBytes(
+          libraryItemId: item.libraryItemId,
+          episodeId: item.episodeId,
+          filename: initialTrack.filename ?? '',
         );
 
-        final sink = await _filesystem.openAppendSink(initialTrack.localPath);
+        final sink = await service.openAppendSink(
+          libraryItemId: item.libraryItemId,
+          filename: initialTrack.filename ?? '',
+          mimeType: initialTrack.mimeType,
+        );
 
         try {
           final url = user.serverUrl
@@ -196,11 +208,12 @@ class DownloadEngine extends _$DownloadEngine {
         logMessage: 'Failed to download cover for $libraryItemId',
       );
       if (imageBytes != null) {
-        if (isPodcast) {
-          await _filesystem.savePodcastCover(libraryItemId, imageBytes);
-        } else {
-          await _filesystem.saveAudiobookCover(libraryItemId, imageBytes);
-        }
+        final coverHelper = ref.read(coverHelperProvider);
+        await coverHelper.saveCover(
+          libraryItemId,
+          data: imageBytes,
+          isPodcast: isPodcast,
+        );
       }
     } on AppError catch (_) {}
   }

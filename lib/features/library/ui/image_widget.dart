@@ -5,7 +5,7 @@ import 'package:cached_network_image_ce/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
+import 'package:storii/features/downloads/logic/cover_helper.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/logic/cover_url_provider.dart';
 import 'package:storii/features/settings/logic/app_cache.dart';
@@ -51,11 +51,12 @@ class _ImageWidgetState extends ConsumerState<ImageWidget> {
     final download = ref.read(downloadItemProvider(widget.id));
     if (download != null) {
       _lastDownloadId = download.libraryItemId;
-      final helper = ref.read(downloadsFsHelperProvider);
+      final helper = ref.read(coverHelperProvider);
 
-      _localPathFuture = download.mediaType == .podcast
-          ? helper.podcastCoverPathIfExists(download.libraryItemId)
-          : helper.audiobookCoverPathIfExists(download.libraryItemId);
+      _localPathFuture = helper.coverPathIfExists(
+        download.libraryItemId,
+        isPodcast: download.mediaType == .podcast,
+      );
     } else {
       _localPathFuture = null;
       _lastDownloadId = null;

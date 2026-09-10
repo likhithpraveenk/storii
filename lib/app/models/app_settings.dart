@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:storii/app/config/theme.dart';
+import 'package:storii/app/models/storage_location.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/shared/helpers/converters.dart';
 
@@ -32,9 +33,12 @@ sealed class AppSettings with _$AppSettings {
 
     @Default(Duration(minutes: 1)) Duration syncIntervalMetered,
 
-    @Default(false) bool downloadPathsV2Migrated,
-
     @Default(false) bool trustAllCertificates,
+
+    @Default([defaultInternalAudiobooks, defaultInternalPodcasts])
+    List<StorageLocation> storageLocations,
+
+    @Default(false) bool downloadPathsV3Migrated,
   }) = _AppSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);

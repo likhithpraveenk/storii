@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:saf_stream/saf_stream.dart';
+import 'package:saf_util/saf_util.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/security/custom_http_overrides.dart';
@@ -20,6 +22,8 @@ import 'package:storii/l10n/gen/l10n.dart';
 
 late final AppLinks appLinks;
 late AppLocalizations l10n;
+late final SafStream safStream;
+late final SafUtil safUtil;
 
 Future<void> setupGlobals({Locale? locale}) async {
   appLinks = AppLinks();
@@ -30,6 +34,8 @@ Future<void> setupGlobals({Locale? locale}) async {
       ? locale
       : const Locale('en');
   l10n = await AppLocalizations.delegate.load(supported);
+  safStream = SafStream();
+  safUtil = SafUtil();
 }
 
 Future<void> setupLicenses() async {

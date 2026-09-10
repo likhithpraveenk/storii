@@ -120,6 +120,14 @@ class AppBottomSheet extends StatelessWidget {
                     if (context.mounted) Navigator.of(context).pop();
                   },
                   text: actionLabel!,
+                  icon: actionIcon != null
+                      ? Icon(
+                          actionIcon,
+                          color: isDestructive
+                              ? Theme.of(context).colorScheme.onError
+                              : null,
+                        )
+                      : null,
                 ),
               ),
               const SizedBox(height: 24),

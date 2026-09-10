@@ -11,8 +11,7 @@ _DownloadTrack _$DownloadTrackFromJson(Map<String, dynamic> json) =>
       audioTrack: AudioTrack.fromJson(
         json['audioTrack'] as Map<String, dynamic>,
       ),
-      localPath: json['localPath'] as String,
-      ino: json['ino'] as String? ?? 'migrateOldDownload',
+      ino: json['ino'] as String,
       bytesReceived: (json['bytesReceived'] as num?)?.toInt() ?? 0,
       bytesTotal: (json['bytesTotal'] as num?)?.toInt() ?? 0,
       status:
@@ -23,7 +22,6 @@ _DownloadTrack _$DownloadTrackFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$DownloadTrackToJson(_DownloadTrack instance) =>
     <String, dynamic>{
       'audioTrack': instance.audioTrack.toJson(),
-      'localPath': instance.localPath,
       'ino': instance.ino,
       'bytesReceived': instance.bytesReceived,
       'bytesTotal': instance.bytesTotal,
@@ -58,6 +56,7 @@ _DownloadItem _$DownloadItemFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['startedAt'] as String),
       episodeId: json['episodeId'] as String?,
+      folderPath: json['folderPath'] as String? ?? kMigrateToV3Sentinel,
     );
 
 Map<String, dynamic> _$DownloadItemToJson(_DownloadItem instance) =>
@@ -72,6 +71,7 @@ Map<String, dynamic> _$DownloadItemToJson(_DownloadItem instance) =>
       'status': _$DownloadStatusEnumMap[instance.status]!,
       'startedAt': ?instance.startedAt?.toIso8601String(),
       'episodeId': ?instance.episodeId,
+      'folderPath': instance.folderPath,
     };
 
 const _$DownloadMediaTypeEnumMap = {

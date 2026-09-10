@@ -23,23 +23,32 @@ class FontFamilyTile extends ConsumerWidget {
       subtitle: Text(fontFamily ?? l10n.system),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
-        AppBottomSheet.show(
-          context,
-          title: l10n.fontFamily,
-          body: const FontFamilySheet(),
+        showModalBottomSheet(
+          context: context,
+          useSafeArea: true,
+          isScrollControlled: true,
+          shape: const RoundedRectangleBorder(
+            borderRadius: .vertical(top: .circular(24)),
+          ),
+          builder: (_) => SafeArea(
+            child: DecoratedBox(
+              decoration: bottomSheetDecoration(context),
+              child: const _FontFamilySheet(),
+            ),
+          ),
         );
       },
     );
   }
 }
 
-class FontFamilySheet extends ConsumerStatefulWidget {
-  const new({super.key});
+class _FontFamilySheet extends ConsumerStatefulWidget {
+  const new();
   @override
-  ConsumerState<FontFamilySheet> createState() => _FontFamilySheetState();
+  ConsumerState<_FontFamilySheet> createState() => _FontFamilySheetState();
 }
 
-class _FontFamilySheetState extends ConsumerState<FontFamilySheet> {
+class _FontFamilySheetState extends ConsumerState<_FontFamilySheet> {
   String? _selected;
 
   @override
@@ -50,45 +59,63 @@ class _FontFamilySheetState extends ConsumerState<FontFamilySheet> {
     final theme = Theme.of(context);
 
     return Column(
+      mainAxisSize: .min,
       children: [
         Padding(
-          padding: const .fromLTRB(24, 0, 24, 24),
-          child: Text(
-            l10n.sampleText,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              fontFamily: _selected,
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-            textAlign: .center,
+          padding: const .fromLTRB(24, 24, 24, 16),
+          child: Column(
+            children: [
+              Text(
+                l10n.fontFamily,
+                style: bottomSheetTitleTextStyle(context),
+                textAlign: .center,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                l10n.sampleText,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontFamily: _selected,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+                textAlign: .center,
+              ),
+            ],
           ),
         ),
-        _FontTile(
-          label: l10n.system,
-          value: 'system',
-          selected: _selected,
-          onTap: (v) => setState(() => _selected = v),
-        ),
-        _FontTile(
-          label: 'AtkinsonHyperlegibleNext',
-          value: 'AtkinsonHyperlegibleNext',
-          selected: _selected,
-          onTap: (v) => setState(() => _selected = v),
-        ),
-        userFontsAsync.when(
-          data: (fonts) => Column(
-            children: fonts
-                .map(
-                  (font) => _FontTile(
-                    label: font,
-                    value: font,
-                    selected: _selected,
-                    onTap: (v) => setState(() => _selected = v),
-                  ),
-                )
-                .toList(),
+        Flexible(
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              _FontTile(
+                label: l10n.system,
+                value: 'system',
+                selected: _selected,
+                onTap: (v) => setState(() => _selected = v),
+              ),
+              _FontTile(
+                label: 'AtkinsonHyperlegibleNext',
+                value: 'AtkinsonHyperlegibleNext',
+                selected: _selected,
+                onTap: (v) => setState(() => _selected = v),
+              ),
+              userFontsAsync.when(
+                data: (fonts) => Column(
+                  children: fonts
+                      .map(
+                        (font) => _FontTile(
+                          label: font,
+                          value: font,
+                          selected: _selected,
+                          onTap: (v) => setState(() => _selected = v),
+                        ),
+                      )
+                      .toList(),
+                ),
+                loading: () => const Center(child: RandomWaveform()),
+                error: (_, _) => const SizedBox.shrink(),
+              ),
+            ],
           ),
-          loading: () => const Center(child: RandomWaveform()),
-          error: (_, _) => const SizedBox.shrink(),
         ),
         Padding(
           padding: const .fromLTRB(24, 16, 24, 0),

@@ -158,7 +158,8 @@ class DownloadTileTrailingActions extends ConsumerWidget {
       .paused || .failed => IconButton(
         icon: const Icon(Icons.play_circle_outline),
         tooltip: l10n.resume,
-        onPressed: () => queue.enqueue(item.libraryItemId, item.episodeId),
+        onPressed: () =>
+            queue.continueDownload(item.libraryItemId, item.episodeId),
       ),
       .completed => IconButton(
         icon: Icon(

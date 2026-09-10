@@ -152,11 +152,14 @@ extension AppSettingsSetters on AppSettingsNotifier {
   Future<void> setSyncIntervalMetered(Duration value) =>
       _save(state.copyWith(syncIntervalMetered: value));
 
-  Future<void> setDownloadPathsV2Migrated(bool value) =>
-      _save(state.copyWith(downloadPathsV2Migrated: value));
-
   Future<void> setTrustAllCertificates(bool value) =>
       _save(state.copyWith(trustAllCertificates: value));
+
+  Future<void> setStorageLocations(List<StorageLocation> value) =>
+      _save(state.copyWith(storageLocations: value));
+
+  Future<void> setDownloadPathsV3Migrated(bool value) =>
+      _save(state.copyWith(downloadPathsV3Migrated: value));
 }
 
 final themeModeProvider = Provider<ThemeMode>(
@@ -214,15 +217,20 @@ final syncIntervalMeteredProvider = Provider<Duration>(
   name: 'syncIntervalMeteredProvider',
 );
 
-final downloadPathsV2MigratedProvider = Provider<bool>(
-  (ref) =>
-      ref.watch(appSettingsProvider.select((s) => s.downloadPathsV2Migrated)),
-  name: 'downloadPathsV2MigratedProvider',
-);
-
 final trustAllCertificatesProvider = Provider<bool>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.trustAllCertificates)),
   name: 'trustAllCertificatesProvider',
+);
+
+final storageLocationsProvider = Provider<List<StorageLocation>>(
+  (ref) => ref.watch(appSettingsProvider.select((s) => s.storageLocations)),
+  name: 'storageLocationsProvider',
+);
+
+final downloadPathsV3MigratedProvider = Provider<bool>(
+  (ref) =>
+      ref.watch(appSettingsProvider.select((s) => s.downloadPathsV3Migrated)),
+  name: 'downloadPathsV3MigratedProvider',
 );
 
 // **************************************************************************

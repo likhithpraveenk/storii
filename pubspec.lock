@@ -807,10 +807,11 @@ packages:
   just_audio:
     dependency: "direct main"
     description:
-      name: just_audio
-      sha256: e60aa97b233ddea025e13dfac59195207f528fa5e9e4a4a49a8c0766701e5fe6
-      url: "https://pub.dev"
-    source: hosted
+      path: just_audio
+      ref: minor
+      resolved-ref: "569d924795ca883bfeebe6470a6568ab951b2953"
+      url: "https://github.com/likhithpraveenk/just_audio.git"
+    source: git
     version: "0.10.6"
   just_audio_platform_interface:
     dependency: transitive
@@ -1188,6 +1189,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.28.0"
+  saf_stream:
+    dependency: "direct main"
+    description:
+      name: saf_stream
+      sha256: "3f740a4bb8411100d2b6b209e9cbbc3e711f4992d5af2c1513d9f047f2162620"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.1"
+  saf_util:
+    dependency: "direct main"
+    description:
+      name: saf_util
+      sha256: "35cd99ec282f9fc68ec0fb35338315a7198250f8ff0d24006f8507a6aae3d344"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   sensors_plus:
     dependency: "direct main"
     description:

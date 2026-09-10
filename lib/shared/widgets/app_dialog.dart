@@ -106,7 +106,14 @@ class AppDialog extends StatelessWidget {
                       if (context.mounted) Navigator.of(context).pop(true);
                     },
                     text: actionLabel,
-                    icon: actionIcon != null ? Icon(actionIcon) : null,
+                    icon: actionIcon != null
+                        ? Icon(
+                            actionIcon,
+                            color: isDestructive
+                                ? Theme.of(context).colorScheme.onError
+                                : null,
+                          )
+                        : null,
                   ),
                 ],
               ),

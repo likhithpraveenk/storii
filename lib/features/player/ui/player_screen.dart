@@ -86,8 +86,8 @@ class PlayerScreen extends ConsumerWidget {
                 const Positioned.fill(child: ThemedBackground()),
                 if (f > 0.5)
                   Positioned(
-                    top: isLandscape ? 48 : targetImgTop + maxImgSize + 16,
-                    left: isLandscape ? screenWidth * 0.25 : 0,
+                    top: isLandscape ? 48 : imgTop + imgSize + 16,
+                    left: isLandscape ? imgLeft + imgSize : 0,
                     bottom: 0,
                     right: 0,
                     child: Opacity(

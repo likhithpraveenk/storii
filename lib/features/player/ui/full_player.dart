@@ -81,7 +81,7 @@ class FullPlayer extends ConsumerWidget {
                     overflow: .ellipsis,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 8),
                 if (showChapterProgressSlider)
                   ProgressLabel(
                     currentPosition: currentPosition,
@@ -96,10 +96,10 @@ class FullPlayer extends ConsumerWidget {
                   .compact => const ButtonLayoutCompact(),
                   .big => const ButtonLayoutBig(),
                 },
-                const SizedBox(height: 12),
+                const SizedBox(height: 8),
                 if (layout != .big) ...[
                   FullPlayerActionsWidget(session),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 8),
                 ],
                 Text(
                   session.playMethod.label,
