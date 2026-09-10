@@ -10,7 +10,6 @@ import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
-import 'package:uuid/uuid.dart';
 
 class StorageTile extends ConsumerWidget {
   const new({super.key});
@@ -91,9 +90,7 @@ class _StorageTileSheetState extends ConsumerState<_StorageTileSheet> {
         Padding(
           padding: const .fromLTRB(24, 24, 24, 16),
           child: Text(
-            widget.mediaType == .book
-                ? l10n.audiobooks
-                : l10n.podcasts,
+            widget.mediaType == .book ? l10n.audiobooks : l10n.podcasts,
             style: bottomSheetTitleTextStyle(context),
             textAlign: .center,
           ),
@@ -158,7 +155,6 @@ class _StorageTileSheetState extends ConsumerState<_StorageTileSheet> {
                 );
                 if (folder == null) return;
                 final newLocation = StorageLocation(
-                  id: const Uuid().v4(),
                   name: folder.name,
                   uri: folder.uri,
                   mediaType: widget.mediaType == .book ? .audiobook : .podcast,

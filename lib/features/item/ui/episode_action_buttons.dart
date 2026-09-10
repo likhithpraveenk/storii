@@ -34,6 +34,7 @@ class EpisodeActionButtons extends ConsumerWidget {
         DownloadButton(
           libraryItemId: episode.libraryItemId,
           episodeId: episode.id,
+          mediaType: .podcast,
         ),
         HistoryButton(itemId: episode.libraryItemId, episodeId: episode.id),
         IconButton(

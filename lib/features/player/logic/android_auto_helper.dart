@@ -6,7 +6,7 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
+import 'package:storii/features/downloads/logic/cover_helper.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
@@ -40,8 +40,7 @@ class AndroidAutoHelper {
   Uri? get _serverUrl =>
       _container.read(authenticatedUserProvider).value?.serverUrl;
 
-  DownloadsFilesystemHelper get _fsHelper =>
-      _container.read(downloadsFsHelperProvider);
+  CoverHelper get _helper => _container.read(coverHelperProvider);
 
   ItemsCache get _itemsCache => _container.read(itemsCacheProvider.notifier);
 
@@ -127,10 +126,8 @@ class AndroidAutoHelper {
     );
     return Future.wait(
       paged.map(
-        (item) => item.toAndroidAutoMediaItem(
-          serverUrl: _serverUrl,
-          fsHelper: _fsHelper,
-        ),
+        (item) =>
+            item.toAndroidAutoMediaItem(serverUrl: _serverUrl, helper: _helper),
       ),
     );
   }
@@ -170,10 +167,8 @@ class AndroidAutoHelper {
     );
     return Future.wait(
       paged.map(
-        (item) => item.toAndroidAutoMediaItem(
-          serverUrl: _serverUrl,
-          fsHelper: _fsHelper,
-        ),
+        (item) =>
+            item.toAndroidAutoMediaItem(serverUrl: _serverUrl, helper: _helper),
       ),
     );
   }
@@ -198,7 +193,7 @@ class AndroidAutoHelper {
       final mediaItems = await Future.wait(
         paged.map(
           (item) =>
-              item.toAndroidAutoMediaItem(serverUrl: null, fsHelper: _fsHelper),
+              item.toAndroidAutoMediaItem(serverUrl: null, helper: _helper),
         ),
       );
       return mediaItems.map((mediaItem) {
@@ -227,10 +222,8 @@ class AndroidAutoHelper {
     );
     return Future.wait(
       paged.map(
-        (item) => item.toAndroidAutoMediaItem(
-          serverUrl: _serverUrl,
-          fsHelper: _fsHelper,
-        ),
+        (item) =>
+            item.toAndroidAutoMediaItem(serverUrl: _serverUrl, helper: _helper),
       ),
     );
   }
@@ -246,7 +239,7 @@ class AndroidAutoHelper {
         return applyAndroidAutoPaging([
           await item.toAndroidAutoMediaItem(
             serverUrl: _serverUrl,
-            fsHelper: _fsHelper,
+            helper: _helper,
           ),
         ], androidAutoPagingFromOptions(options));
       }
@@ -275,7 +268,7 @@ class AndroidAutoHelper {
             itemId: itemId,
             podcastTitle: item.title,
             serverUrl: _serverUrl,
-            helper: _fsHelper,
+            helper: _helper,
           ),
         ),
       );

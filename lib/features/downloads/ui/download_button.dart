@@ -1,14 +1,20 @@
+import 'package:abs_api/abs_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/models/storage_location.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
+import 'package:storii/features/downloads/logic/storage_locations_provider.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';
 import 'package:storii/features/downloads/ui/downloads_screen.dart';
+import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
+import 'package:storii/shared/widgets/app_dialog.dart';
 
 class ActiveDownloadsButton extends ConsumerWidget {
   const new({super.key});
@@ -61,10 +67,16 @@ class ActiveDownloadsButton extends ConsumerWidget {
 }
 
 class DownloadButton extends ConsumerWidget {
-  const new({super.key, required this.libraryItemId, this.episodeId});
+  const new({
+    super.key,
+    required this.libraryItemId,
+    this.episodeId,
+    this.mediaType = .book,
+  });
 
   final String libraryItemId;
   final String? episodeId;
+  final MediaType mediaType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -80,7 +92,25 @@ class DownloadButton extends ConsumerWidget {
       null => IconButton(
         tooltip: l10n.download,
         icon: const Icon(Icons.file_download_outlined),
-        onPressed: () => queue.enqueue(libraryItemId, episodeId),
+        onPressed: () async {
+          final availableLocations = ref.read(
+            storageLocationsByTypeProvider(mediaType),
+          );
+          if (availableLocations.length == 1) {
+            return queue.enqueue(
+              libraryItemId,
+              episodeId,
+              location: availableLocations.first,
+            );
+          }
+          final location = await showDialog<StorageLocation?>(
+            context: context,
+            builder: (_) => _ChooseLocationDialog(mediaType),
+          );
+          if (location != null) {
+            return queue.enqueue(libraryItemId, episodeId, location: location);
+          }
+        },
       ),
       .queued => IconButton(
         tooltip: l10n.queued,
@@ -103,12 +133,12 @@ class DownloadButton extends ConsumerWidget {
       .failed => IconButton(
         tooltip: l10n.downloadFailed,
         icon: Icon(Icons.refresh, color: scheme.error),
-        onPressed: () => queue.enqueue(libraryItemId, episodeId),
+        onPressed: () => queue.continueDownload(libraryItemId, episodeId),
       ),
       .paused => IconButton(
         tooltip: l10n.resumeDownload,
         icon: Icon(Icons.play_circle_outline, color: scheme.tertiary),
-        onPressed: () => queue.enqueue(libraryItemId, episodeId),
+        onPressed: () => queue.continueDownload(libraryItemId, episodeId),
       ),
     };
   }
@@ -139,6 +169,58 @@ class _ProgressButton extends StatelessWidget {
           ),
           Icon(Icons.close, size: 12, color: scheme.onSurface),
         ],
+      ),
+    );
+  }
+}
+
+class _ChooseLocationDialog extends ConsumerWidget {
+  const new(this.mediaType);
+
+  final MediaType mediaType;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locations = ref.watch(storageLocationsByTypeProvider(mediaType));
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      insetPadding: const .symmetric(horizontal: 24, vertical: 40),
+      child: DecoratedBox(
+        decoration: dialogDecoration(context),
+        child: Padding(
+          padding: const .all(24),
+          child: Column(
+            mainAxisSize: .min,
+            crossAxisAlignment: .stretch,
+            children: [
+              Text(
+                l10n.downloadLocation,
+                style: bottomSheetTitleTextStyle(context),
+                textAlign: .center,
+              ),
+              const SizedBox(height: 16),
+              ...locations.map(
+                (l) => ListTile(
+                  leading: Icon(
+                    l.isInternal ? Icons.memory : Icons.sd_card_outlined,
+                  ),
+                  title: Text(l.isInternal ? l10n.internalAppStorage : l.name),
+                  subtitle: Text(l.uri.toUiPath(context)),
+                  contentPadding: const .symmetric(horizontal: 16),
+                  onTap: () => Navigator.of(context).pop(l),
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(l10n.cancel),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

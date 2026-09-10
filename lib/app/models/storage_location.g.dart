@@ -8,7 +8,6 @@ part of 'storage_location.dart';
 
 _StorageLocation _$StorageLocationFromJson(Map<String, dynamic> json) =>
     _StorageLocation(
-      id: json['id'] as String,
       name: json['name'] as String,
       uri: json['uri'] as String,
       mediaType: $enumDecode(_$DownloadMediaTypeEnumMap, json['mediaType']),
@@ -17,7 +16,6 @@ _StorageLocation _$StorageLocationFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$StorageLocationToJson(_StorageLocation instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'name': instance.name,
       'uri': instance.uri,
       'mediaType': _$DownloadMediaTypeEnumMap[instance.mediaType]!,

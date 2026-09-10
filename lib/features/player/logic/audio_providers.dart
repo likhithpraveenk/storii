@@ -9,8 +9,8 @@ import 'package:storii/app/models/chapter.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/is_background_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
+import 'package:storii/features/downloads/logic/storage_service_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
@@ -132,11 +132,10 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
     );
     try {
       final download = ref.read(downloadItemProvider(itemId, episodeId));
-      final fs = ref.read(downloadsFsHelperProvider);
       final isFullyDownloaded =
           download != null &&
           download.isComplete &&
-          await fs.isFullyDownloaded(download);
+          await ref.read(isItemFullyDownloadedProvider(download).future);
 
       final PlaybackSession session;
       Uri? serverUrl;
@@ -164,11 +163,13 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
           ? session.chapterToTrackOffset(chapter)
           : session.getIndexAndOffset(initialPosition);
 
-      final (localPaths, coverPath) = await fs.resolveLocalPaths(session);
-      final localCount = localPaths.length;
+      final (localPaths, coverPath) = await ref.read(
+        resolveLocalPathsProvider(session).future,
+      );
+
       final totalTracks = session.audioTracks?.length ?? 0;
-      if (localCount > 0) {
-        log('local playback has $localCount/$totalTracks tracks');
+      if (localPaths.isNotEmpty) {
+        log('local playback has ${localPaths.length}/$totalTracks tracks');
       }
 
       final sources = await session.toAudioSources(
@@ -184,10 +185,20 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
         initialPosition: position,
       );
 
-      await audioHandler.statusStream.firstWhere((s) => s == .ready);
       state = const AudioPlayerState();
-      if (autoplay) {
-        await audioHandler.play();
+      try {
+        await audioHandler.statusStream
+            .firstWhere((s) => s == .ready)
+            .timeout(const Duration(seconds: 10));
+        if (autoplay) {
+          await audioHandler.play();
+        }
+      } on TimeoutException {
+        LogService.log(
+          'timeout: audio handler not ready',
+          level: .warning,
+          source: 'AudioPlayerNotifier',
+        );
       }
     } catch (e, st) {
       final error = AppError.from(e, st);

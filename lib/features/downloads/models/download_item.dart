@@ -16,15 +16,19 @@ sealed class DownloadTrack with _$DownloadTrack {
 
   const factory({
     required AudioTrack audioTrack,
-    required String localPath,
-    @Default('migrateOldDownload') String ino,
+    required String ino,
     @Default(0) int bytesReceived,
     @Default(0) int bytesTotal,
     @Default(DownloadStatus.queued) DownloadStatus status,
   }) = _DownloadTrack;
 
+  String? get filename => audioTrack.metadata?.filename;
+  String? get mimeType => audioTrack.mimeType;
+
   factory fromJson(Map<String, dynamic> json) => _$DownloadTrackFromJson(json);
 }
+
+const kMigrateToV3Sentinel = '__v3_migrate__';
 
 @freezed
 sealed class DownloadItem with _$DownloadItem {
@@ -41,6 +45,7 @@ sealed class DownloadItem with _$DownloadItem {
     @Default(DownloadStatus.queued) DownloadStatus status,
     DateTime? startedAt,
     String? episodeId,
+    @Default(kMigrateToV3Sentinel) String folderPath,
   }) = _DownloadItem;
 
   factory fromJson(Map<String, dynamic> json) => _$DownloadItemFromJson(json);
@@ -63,6 +68,8 @@ sealed class DownloadItem with _$DownloadItem {
       status == .queued &&
       startedAt != null &&
       DateTime.now().difference(startedAt!).inMinutes > 5;
+
+  bool get isPodcast => mediaType == .podcast;
 }
 
 extension DownloadStatusX on DownloadStatus {

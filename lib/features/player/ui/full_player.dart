@@ -95,6 +95,7 @@ class FullPlayer extends ConsumerWidget {
                   .defaultLayout => const ButtonLayoutDefault(),
                   .compact => const ButtonLayoutCompact(),
                   .big => const ButtonLayoutBig(),
+                  // TODO: landscape is broken
                 },
                 const SizedBox(height: 12),
                 if (layout != .big) ...[

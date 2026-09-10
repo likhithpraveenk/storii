@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- add external storage download support
+
 ## [v0.8.1] - 2026-09-08
 
 ### Added

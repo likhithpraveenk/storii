@@ -74,7 +74,7 @@ final class StorageLocationsByTypeProvider
 }
 
 String _$storageLocationsByTypeHash() =>
-    r'f07cc07ea2bf572144760501de193411326034e5';
+    r'e7ca092cddacb2b351eb6355dee2a2251ae72914';
 
 final class StorageLocationsByTypeFamily extends $Family
     with $FunctionalFamilyOverride<List<StorageLocation>, MediaType> {

@@ -2,18 +2,20 @@ import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/models/storage_location.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/download_engine.dart';
 import 'package:storii/features/downloads/logic/download_extensions.dart';
 import 'package:storii/features/downloads/logic/download_migration.dart';
-import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
 import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
+import 'package:storii/features/downloads/logic/storage_service_provider.dart';
 import 'package:storii/features/downloads/logic/throttled_persister.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/app_error.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/storage/local/downloads_store.dart';
 import 'package:storii/storage/local/items_cache.dart';
 
@@ -28,7 +30,7 @@ class DownloadQueue extends _$DownloadQueue {
   @override
   List<String> build() {
     Future.microtask(
-      () => ref.read(downloadMigrationV2Provider.notifier).runIfNeeded(),
+      () => ref.read(downloadMigrationV3Provider.notifier).runIfNeeded(),
     );
 
     final downloads = _store.getAll();
@@ -51,7 +53,11 @@ class DownloadQueue extends _$DownloadQueue {
     return keys;
   }
 
-  Future<void> enqueue(String libraryItemId, String? episodeId) async {
+  Future<void> enqueue(
+    String libraryItemId,
+    String? episodeId, {
+    required StorageLocation location,
+  }) async {
     final key = mediaItemIdKey(libraryItemId, episodeId);
     if (state.contains(key)) return;
     try {
@@ -60,7 +66,7 @@ class DownloadQueue extends _$DownloadQueue {
 
       final user = await ref.read(authenticatedUserProvider.future);
       final existing = _store.getAll()[key];
-      final fs = ref.read(downloadsFsHelperProvider);
+      final service = ref.read(storageServiceProvider(location));
 
       final DownloadItem downloadItem;
 
@@ -69,15 +75,14 @@ class DownloadQueue extends _$DownloadQueue {
         downloadItem = await episode.toDownloadItem(
           userId: user.id,
           serverUrl: user.serverUrl,
-          fs: fs,
-          itemTitle: item.title ?? libraryItemId,
+          service: service,
           existing: existing,
         );
       } else {
         downloadItem = await item.toDownloadItem(
           userId: user.id,
           serverUrl: user.serverUrl,
-          fs: fs,
+          service: service,
           existing: existing,
         );
       }
@@ -177,6 +182,23 @@ class DownloadQueue extends _$DownloadQueue {
     }
   }
 
+  Future<void> continueDownload(String id, String? episodeId) async {
+    final key = mediaItemIdKey(id, episodeId);
+    final item = _store.getAll()[key];
+    if (item == null) return;
+
+    final location = ref
+        .read(storageLocationsProvider)
+        .firstWhereOrNull((l) => l.uri == item.folderPath);
+    if (location == null) return;
+
+    ref.read(downloadEngineProvider.notifier).cancel(key);
+    await DownloadsNotificationService.instance.stopForeground();
+    await DownloadsNotificationService.instance.dismiss();
+    state = state.where((i) => i != key).toList();
+    await enqueue(id, episodeId, location: location);
+  }
+
   Future<void> pause(String id) async {
     ref.read(downloadEngineProvider.notifier).cancel(id);
     final processing = _processing;
@@ -207,11 +229,10 @@ class DownloadQueue extends _$DownloadQueue {
     state = state.where((i) => i != key).toList();
     final downloads = _store.getAll();
     final item = downloads[key];
-    if (item != null) {
+    final service = ref.read(storageServiceForItemProvider(item));
+    if (item != null && service != null) {
       if (item.episodeId != null) {
-        await ref
-            .read(downloadsFsHelperProvider)
-            .deletePodcastEpisode(item.libraryItemId, item.episodeId!);
+        await service.deleteEpisode(item.libraryItemId, item.episodeId!);
 
         final otherEpisodes = _store.getAll().values.where(
           (d) =>
@@ -220,18 +241,14 @@ class DownloadQueue extends _$DownloadQueue {
               d.isComplete,
         );
         if (otherEpisodes.isEmpty) {
-          await ref
-              .read(downloadsFsHelperProvider)
-              .deletePodcastIfEmpty(item.libraryItemId);
+          await service.deleteItem(item.libraryItemId);
           await ref
               .read(itemsCacheProvider.notifier)
               .delete(item.libraryItemId);
         }
       } else {
-        await ref
-            .read(downloadsFsHelperProvider)
-            .deleteAudiobook(item.libraryItemId);
-        await ref.read(itemsCacheProvider.notifier).delete(id);
+        await service.deleteItem(item.libraryItemId);
+        await ref.read(itemsCacheProvider.notifier).delete(item.libraryItemId);
       }
     }
     await _store.remove(key);

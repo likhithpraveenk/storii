@@ -13,7 +13,6 @@ sealed class StorageLocation with _$StorageLocation {
   ///
   /// for Internal Storage [uri] is subdir path
   const factory({
-    required String id,
     required String name,
     required String uri,
     required DownloadMediaType mediaType,
@@ -27,7 +26,6 @@ sealed class StorageLocation with _$StorageLocation {
 }
 
 const defaultInternalAudiobooks = StorageLocation(
-  id: audiobooksSubDir,
   name: audiobooksSubDir,
   uri: '$downloadsDir/$audiobooksSubDir',
   mediaType: .audiobook,
@@ -35,7 +33,6 @@ const defaultInternalAudiobooks = StorageLocation(
 );
 
 const defaultInternalPodcasts = StorageLocation(
-  id: podcastsSubDir,
   name: podcastsSubDir,
   uri: '$downloadsDir/$podcastsSubDir',
   mediaType: .podcast,

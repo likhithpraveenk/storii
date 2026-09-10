@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$StorageLocation {
 
- String get id; String get name; String get uri; DownloadMediaType get mediaType; bool get isInternal;
+ String get name; String get uri; DownloadMediaType get mediaType; bool get isInternal;
 /// Create a copy of StorageLocation
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $StorageLocationCopyWith<StorageLocation> get copyWith => _$StorageLocationCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StorageLocation&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.uri, uri) || other.uri == uri)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.isInternal, isInternal) || other.isInternal == isInternal));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StorageLocation&&(identical(other.name, name) || other.name == name)&&(identical(other.uri, uri) || other.uri == uri)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.isInternal, isInternal) || other.isInternal == isInternal));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,uri,mediaType,isInternal);
+int get hashCode => Object.hash(runtimeType,name,uri,mediaType,isInternal);
 
 @override
 String toString() {
-  return 'StorageLocation(id: $id, name: $name, uri: $uri, mediaType: $mediaType, isInternal: $isInternal)';
+  return 'StorageLocation(name: $name, uri: $uri, mediaType: $mediaType, isInternal: $isInternal)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $StorageLocationCopyWith<$Res>  {
   factory $StorageLocationCopyWith(StorageLocation value, $Res Function(StorageLocation) _then) = _$StorageLocationCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String uri, DownloadMediaType mediaType, bool isInternal
+ String name, String uri, DownloadMediaType mediaType, bool isInternal
 });
 
 
@@ -66,10 +66,9 @@ class _$StorageLocationCopyWithImpl<$Res>
 
 /// Create a copy of StorageLocation
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? uri = null,Object? mediaType = null,Object? isInternal = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? uri = null,Object? mediaType = null,Object? isInternal = null,}) {
   return _then(StorageLocation(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,uri: null == uri ? _self.uri : uri // ignore: cast_nullable_to_non_nullable
 as String,mediaType: null == mediaType ? _self.mediaType : mediaType // ignore: cast_nullable_to_non_nullable
 as DownloadMediaType,isInternal: null == isInternal ? _self.isInternal : isInternal // ignore: cast_nullable_to_non_nullable
@@ -155,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String uri,  DownloadMediaType mediaType,  bool isInternal)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String uri,  DownloadMediaType mediaType,  bool isInternal)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StorageLocation() when $default != null:
-return $default(_that.id,_that.name,_that.uri,_that.mediaType,_that.isInternal);case _:
+return $default(_that.name,_that.uri,_that.mediaType,_that.isInternal);case _:
   return orElse();
 
 }
@@ -176,10 +175,10 @@ return $default(_that.id,_that.name,_that.uri,_that.mediaType,_that.isInternal);
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String uri,  DownloadMediaType mediaType,  bool isInternal)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String uri,  DownloadMediaType mediaType,  bool isInternal)  $default,) {final _that = this;
 switch (_that) {
 case _StorageLocation():
-return $default(_that.id,_that.name,_that.uri,_that.mediaType,_that.isInternal);}
+return $default(_that.name,_that.uri,_that.mediaType,_that.isInternal);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -193,10 +192,10 @@ return $default(_that.id,_that.name,_that.uri,_that.mediaType,_that.isInternal);
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String uri,  DownloadMediaType mediaType,  bool isInternal)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String uri,  DownloadMediaType mediaType,  bool isInternal)?  $default,) {final _that = this;
 switch (_that) {
 case _StorageLocation() when $default != null:
-return $default(_that.id,_that.name,_that.uri,_that.mediaType,_that.isInternal);case _:
+return $default(_that.name,_that.uri,_that.mediaType,_that.isInternal);case _:
   return null;
 
 }
@@ -208,10 +207,9 @@ return $default(_that.id,_that.name,_that.uri,_that.mediaType,_that.isInternal);
 @JsonSerializable()
 
 class _StorageLocation extends StorageLocation {
-  const _StorageLocation({required this.id, required this.name, required this.uri, required this.mediaType, this.isInternal = false}): super._();
+  const _StorageLocation({required this.name, required this.uri, required this.mediaType, this.isInternal = false}): super._();
   factory _StorageLocation.fromJson(Map<String, dynamic> json) => _$StorageLocationFromJson(json);
 
-@override final  String id;
 @override final  String name;
 @override final  String uri;
 @override final  DownloadMediaType mediaType;
@@ -230,16 +228,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StorageLocation&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.uri, uri) || other.uri == uri)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.isInternal, isInternal) || other.isInternal == isInternal));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StorageLocation&&(identical(other.name, name) || other.name == name)&&(identical(other.uri, uri) || other.uri == uri)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.isInternal, isInternal) || other.isInternal == isInternal));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,uri,mediaType,isInternal);
+int get hashCode => Object.hash(runtimeType,name,uri,mediaType,isInternal);
 
 @override
 String toString() {
-  return 'StorageLocation(id: $id, name: $name, uri: $uri, mediaType: $mediaType, isInternal: $isInternal)';
+  return 'StorageLocation(name: $name, uri: $uri, mediaType: $mediaType, isInternal: $isInternal)';
 }
 
 
@@ -250,7 +248,7 @@ abstract mixin class _$StorageLocationCopyWith<$Res> implements $StorageLocation
   factory _$StorageLocationCopyWith(_StorageLocation value, $Res Function(_StorageLocation) _then) = __$StorageLocationCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String uri, DownloadMediaType mediaType, bool isInternal
+ String name, String uri, DownloadMediaType mediaType, bool isInternal
 });
 
 
@@ -267,10 +265,9 @@ class __$StorageLocationCopyWithImpl<$Res>
 
 /// Create a copy of StorageLocation
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? uri = null,Object? mediaType = null,Object? isInternal = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? uri = null,Object? mediaType = null,Object? isInternal = null,}) {
   return _then(_StorageLocation(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,uri: null == uri ? _self.uri : uri // ignore: cast_nullable_to_non_nullable
 as String,mediaType: null == mediaType ? _self.mediaType : mediaType // ignore: cast_nullable_to_non_nullable
 as DownloadMediaType,isInternal: null == isInternal ? _self.isInternal : isInternal // ignore: cast_nullable_to_non_nullable

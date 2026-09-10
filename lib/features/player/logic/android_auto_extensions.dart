@@ -4,7 +4,7 @@ import 'package:abs_api/abs_api.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/features/downloads/logic/downloads_filesystem_helper.dart';
+import 'package:storii/features/downloads/logic/cover_helper.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 
 const _coversAuthoritySuffix = '.covers';
@@ -26,15 +26,13 @@ Future<Uri> wrapContentUri(Uri url) async {
 extension LibraryItemAndroidAutoX on LibraryItem {
   Future<MediaItem> toAndroidAutoMediaItem({
     required Uri? serverUrl,
-    required DownloadsFilesystemHelper fsHelper,
+    required CoverHelper helper,
   }) async {
     final Uri? artUri;
     if (serverUrl != null) {
       artUri = await wrapContentUri(serverUrl.resolve(ApiRoutes.itemCover(id)));
     } else {
-      final coverPath = isBook
-          ? await fsHelper.audiobookCoverPathIfExists(id)
-          : await fsHelper.podcastCoverPathIfExists(id);
+      final coverPath = await helper.coverPathIfExists(id, isPodcast: false);
       artUri = coverPath != null
           ? await wrapContentUri(Uri.file(coverPath))
           : null;
@@ -56,7 +54,7 @@ extension PodcastEpisodeAndroidAutoX on PodcastEpisode {
     required String itemId,
     String? podcastTitle,
     Uri? serverUrl,
-    required DownloadsFilesystemHelper helper,
+    required CoverHelper helper,
   }) async {
     final Uri? coverUri;
     if (serverUrl != null) {
@@ -64,7 +62,7 @@ extension PodcastEpisodeAndroidAutoX on PodcastEpisode {
         serverUrl.resolve(ApiRoutes.itemCover(itemId)),
       );
     } else {
-      final coverPath = await helper.podcastCoverPathIfExists(itemId);
+      final coverPath = await helper.coverPathIfExists(itemId, isPodcast: true);
       coverUri = coverPath != null
           ? await wrapContentUri(Uri.file(coverPath))
           : null;
