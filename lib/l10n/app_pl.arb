@@ -443,10 +443,7 @@
   },
   "storage": "Pamięć",
   "internalStorage": "Pamięć wewnętrzna",
-  "changeLocation": "Zmień lokalizację",
-  "resetToInternal": "Zresetuj na pamięć wewnętrzną",
   "downloadLocation": "Lokalizacja pobierania",
-  "storageSubDirsNote": "Audiobooki and podcasty będą przechowywane w oddzielnych katalogach: \n- audiobooks/<itemId>/\n- podcasts/<podcastId>/\nTo zapewnia, że ścieżki do plików pozostaną poprawne nawet jeśli metadane na serwerze ulegną zmianie",
   "localSession": "Lokalna sesja",
   "currentPosition": "Aktualna pozycja",
   "localSessionSheetBody": "Postęp zapisany lokalnie. Oczekiwanie na synchronizacje.",
@@ -547,5 +544,14 @@
   "both": "Obydwa",
   "miniplayerSubtitle": "Podtytuł w mini odtwarzaczu",
   "osNotificationCanStopSubtitle": "Przycisk stop w notyfikacji systemowej",
-  "osNotificationCanSpeedSubtitle": "Prędkość odtwarzania w notyfikacji systemowej"
+  "osNotificationCanSpeedSubtitle": "Prędkość odtwarzania w notyfikacji systemowej",
+  "nowPlayingTheme": "Motyw aktualnie odtwarzany",
+  "nowPlayingThemeSubtitle": "Użyj koloru z odtwarzanego materiału",
+  "shakeDuringSleepTimer": "Działanie po potrząśnięciu",
+  "shakeAddTime": "Dodaj czas",
+  "restart": "Rozpocznij odliczanie od nowa",
+  "shakeSensitivity": "Czułość potrząśnięcia",
+  "low": "Niska",
+  "medium": "Średnia",
+  "high": "Wysoka"
 }
