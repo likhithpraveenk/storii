@@ -68,5 +68,11 @@ class DownloadsStore extends _$DownloadsStore {
     }
   }
 
+  Future<void> removeAllFromLocation(String uri) async {
+    getAll().values
+        .where((i) => i.folderPath == uri)
+        .forEach((i) => remove(i.key));
+  }
+
   Future<void> clear() => downloadsBox.clear();
 }

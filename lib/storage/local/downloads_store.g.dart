@@ -33,7 +33,7 @@ final class DownloadsStoreProvider
   DownloadsStore create() => DownloadsStore();
 }
 
-String _$downloadsStoreHash() => r'8967a460ddfac37e120fcc7a7de0286bed9453b5';
+String _$downloadsStoreHash() => r'56dc7e9a3efe6a5f756f3da3704d8f722380ad17';
 
 abstract class _$DownloadsStore
     extends $StreamNotifier<Map<String, DownloadItem>> {

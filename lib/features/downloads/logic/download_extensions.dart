@@ -14,24 +14,20 @@ extension ToDownloadItemX on LibraryItem {
   }) async {
     final downloadTracks = await Future.wait(
       tracks.map((track) async {
-        final prev = existing?.tracks.firstWhereOrNull(
-          (dt) => dt.audioTrack.index == track.index,
-        );
+        final audioFile = audioFiles.firstWhere((f) => f.index == track.index);
+        final filename = track.metadata?.filename;
 
-        final intact =
-            prev?.status == .completed &&
-            await service.fileIntact(
-              libraryItemId: id,
-              filename: prev?.filename ?? '',
-              expectedBytes: track.metadata?.size ?? 0,
-            );
+        final intact = await service.fileIntact(
+          libraryItemId: id,
+          filename: filename ?? '',
+          expectedBytes: track.metadata?.size ?? 0,
+        );
 
         final existingBytes = await service.existingBytes(
           libraryItemId: id,
-          filename: prev?.filename ?? '',
+          filename: filename ?? '',
         );
 
-        final audioFile = audioFiles.firstWhere((f) => f.index == track.index);
         return DownloadTrack(
           audioTrack: track,
           ino: audioFile.ino,

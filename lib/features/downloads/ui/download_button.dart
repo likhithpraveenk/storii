@@ -14,7 +14,6 @@ import 'package:storii/features/downloads/ui/download_widgets.dart';
 import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
-import 'package:storii/shared/widgets/app_dialog.dart';
 
 class ActiveDownloadsButton extends ConsumerWidget {
   const new({super.key});
@@ -182,13 +181,23 @@ class _ChooseLocationDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locations = ref.watch(storageLocationsByTypeProvider(mediaType));
+    final theme = Theme.of(context);
     return Dialog(
       backgroundColor: Colors.transparent,
       insetPadding: const .symmetric(horizontal: 24, vertical: 40),
-      child: DecoratedBox(
-        decoration: dialogDecoration(context),
+      child: Material(
+        clipBehavior: .hardEdge,
+        color: theme.colorScheme.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: .circular(24),
+          side: .new(
+            width: 0.5,
+            strokeAlign: BorderSide.strokeAlignInside,
+            color: theme.colorScheme.primary,
+          ),
+        ),
         child: Padding(
-          padding: const .all(24),
+          padding: const .symmetric(vertical: 24),
           child: Column(
             mainAxisSize: .min,
             crossAxisAlignment: .stretch,
@@ -211,11 +220,14 @@ class _ChooseLocationDialog extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(l10n.cancel),
+              Padding(
+                padding: const .symmetric(horizontal: 24),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(l10n.cancel),
+                  ),
                 ),
               ),
             ],
