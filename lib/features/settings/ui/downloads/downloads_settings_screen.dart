@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/downloads/storage_tile.dart';
-import 'package:storii/features/settings/ui/downloads/unmetered_only_tile.dart';
 
 class DownloadsSettingsTile extends StatelessWidget {
   const new({super.key});
@@ -39,7 +38,7 @@ class DownloadsSettingsScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
-      body: ListView(children: const [UnmeteredOnlyTile(), StorageTile()]),
+      body: ListView(children: const [StorageTile()]),
     );
   }
 }
