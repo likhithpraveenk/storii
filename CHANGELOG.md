@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 - long chapter names alignment in history sheet
 - full player landscape mode
+- can delete external storage and re-add downloads if valid
 
 ## [v0.8.1] - 2026-09-08
 
