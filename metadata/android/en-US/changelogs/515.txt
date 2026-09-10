@@ -1,0 +1,9 @@
+Added:
+
+- external storage download support
+
+Fixed:
+
+- long chapter names alignment in history sheet
+- full player landscape mode
+- can delete external storage and re-add downloads if valid
