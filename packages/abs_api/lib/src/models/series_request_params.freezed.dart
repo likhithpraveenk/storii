@@ -29,16 +29,21 @@ $SeriesRequestParamsCopyWith<SeriesRequestParams> get copyWith => _$SeriesReques
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeriesRequestParams&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.page, page) || other.page == page)&&(identical(other.sort, sort) || other.sort == sort)&&(identical(other.desc, desc) || other.desc == desc)&&(identical(other.filter, filter) || other.filter == filter));
+  final _this = this as SeriesRequestParams;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeriesRequestParams&&(identical(other.limit, _this.limit) || other.limit == _this.limit)&&(identical(other.page, _this.page) || other.page == _this.page)&&(identical(other.sort, _this.sort) || other.sort == _this.sort)&&(identical(other.desc, _this.desc) || other.desc == _this.desc)&&(identical(other.filter, _this.filter) || other.filter == _this.filter));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,limit,page,sort,desc,filter);
+int get hashCode {
+  final _this = this as SeriesRequestParams;
+  return Object.hash(runtimeType,_this.limit,_this.page,_this.sort,_this.desc,_this.filter);
+}
 
 @override
 String toString() {
-  return 'SeriesRequestParams(limit: $limit, page: $page, sort: $sort, desc: $desc, filter: $filter)';
+  final _this = this as SeriesRequestParams;
+  return 'SeriesRequestParams(limit: ${_this.limit}, page: ${_this.page}, sort: ${_this.sort}, desc: ${_this.desc}, filter: ${_this.filter})';
 }
 
 
@@ -236,16 +241,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeriesRequestParams&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.page, page) || other.page == page)&&(identical(other.sort, sort) || other.sort == sort)&&(identical(other.desc, desc) || other.desc == desc)&&(identical(other.filter, filter) || other.filter == filter));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeriesRequestParams&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.page, page) || other.page == page)&&(identical(other.sort, sort) || other.sort == sort)&&(identical(other.desc, desc) || other.desc == desc)&&(identical(other.filter, filter) || other.filter == filter));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,limit,page,sort,desc,filter);
+int get hashCode {
+    return Object.hash(runtimeType,limit,page,sort,desc,filter);
+}
 
 @override
 String toString() {
-  return 'SeriesRequestParams(limit: $limit, page: $page, sort: $sort, desc: $desc, filter: $filter)';
+    return 'SeriesRequestParams(limit: $limit, page: $page, sort: $sort, desc: $desc, filter: $filter)';
 }
 
 

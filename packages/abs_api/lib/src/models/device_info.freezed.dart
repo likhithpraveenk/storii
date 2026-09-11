@@ -29,16 +29,21 @@ $DeviceInfoCopyWith<DeviceInfo> get copyWith => _$DeviceInfoCopyWithImpl<DeviceI
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeviceInfo&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.deviceId, deviceId) || other.deviceId == deviceId)&&(identical(other.ipAddress, ipAddress) || other.ipAddress == ipAddress)&&(identical(other.browserName, browserName) || other.browserName == browserName)&&(identical(other.browserVersion, browserVersion) || other.browserVersion == browserVersion)&&(identical(other.osName, osName) || other.osName == osName)&&(identical(other.osVersion, osVersion) || other.osVersion == osVersion)&&(identical(other.deviceType, deviceType) || other.deviceType == deviceType)&&(identical(other.manufacturer, manufacturer) || other.manufacturer == manufacturer)&&(identical(other.model, model) || other.model == model)&&(identical(other.sdkVersion, sdkVersion) || other.sdkVersion == sdkVersion)&&(identical(other.clientName, clientName) || other.clientName == clientName)&&(identical(other.deviceName, deviceName) || other.deviceName == deviceName)&&(identical(other.clientVersion, clientVersion) || other.clientVersion == clientVersion));
+  final _this = this as DeviceInfo;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeviceInfo&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.deviceId, _this.deviceId) || other.deviceId == _this.deviceId)&&(identical(other.ipAddress, _this.ipAddress) || other.ipAddress == _this.ipAddress)&&(identical(other.browserName, _this.browserName) || other.browserName == _this.browserName)&&(identical(other.browserVersion, _this.browserVersion) || other.browserVersion == _this.browserVersion)&&(identical(other.osName, _this.osName) || other.osName == _this.osName)&&(identical(other.osVersion, _this.osVersion) || other.osVersion == _this.osVersion)&&(identical(other.deviceType, _this.deviceType) || other.deviceType == _this.deviceType)&&(identical(other.manufacturer, _this.manufacturer) || other.manufacturer == _this.manufacturer)&&(identical(other.model, _this.model) || other.model == _this.model)&&(identical(other.sdkVersion, _this.sdkVersion) || other.sdkVersion == _this.sdkVersion)&&(identical(other.clientName, _this.clientName) || other.clientName == _this.clientName)&&(identical(other.deviceName, _this.deviceName) || other.deviceName == _this.deviceName)&&(identical(other.clientVersion, _this.clientVersion) || other.clientVersion == _this.clientVersion));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,deviceId,ipAddress,browserName,browserVersion,osName,osVersion,deviceType,manufacturer,model,sdkVersion,clientName,deviceName,clientVersion);
+int get hashCode {
+  final _this = this as DeviceInfo;
+  return Object.hash(runtimeType,_this.id,_this.userId,_this.deviceId,_this.ipAddress,_this.browserName,_this.browserVersion,_this.osName,_this.osVersion,_this.deviceType,_this.manufacturer,_this.model,_this.sdkVersion,_this.clientName,_this.deviceName,_this.clientVersion);
+}
 
 @override
 String toString() {
-  return 'DeviceInfo(id: $id, userId: $userId, deviceId: $deviceId, ipAddress: $ipAddress, browserName: $browserName, browserVersion: $browserVersion, osName: $osName, osVersion: $osVersion, deviceType: $deviceType, manufacturer: $manufacturer, model: $model, sdkVersion: $sdkVersion, clientName: $clientName, deviceName: $deviceName, clientVersion: $clientVersion)';
+  final _this = this as DeviceInfo;
+  return 'DeviceInfo(id: ${_this.id}, userId: ${_this.userId}, deviceId: ${_this.deviceId}, ipAddress: ${_this.ipAddress}, browserName: ${_this.browserName}, browserVersion: ${_this.browserVersion}, osName: ${_this.osName}, osVersion: ${_this.osVersion}, deviceType: ${_this.deviceType}, manufacturer: ${_this.manufacturer}, model: ${_this.model}, sdkVersion: ${_this.sdkVersion}, clientName: ${_this.clientName}, deviceName: ${_this.deviceName}, clientVersion: ${_this.clientVersion})';
 }
 
 
@@ -256,16 +261,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeviceInfo&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.deviceId, deviceId) || other.deviceId == deviceId)&&(identical(other.ipAddress, ipAddress) || other.ipAddress == ipAddress)&&(identical(other.browserName, browserName) || other.browserName == browserName)&&(identical(other.browserVersion, browserVersion) || other.browserVersion == browserVersion)&&(identical(other.osName, osName) || other.osName == osName)&&(identical(other.osVersion, osVersion) || other.osVersion == osVersion)&&(identical(other.deviceType, deviceType) || other.deviceType == deviceType)&&(identical(other.manufacturer, manufacturer) || other.manufacturer == manufacturer)&&(identical(other.model, model) || other.model == model)&&(identical(other.sdkVersion, sdkVersion) || other.sdkVersion == sdkVersion)&&(identical(other.clientName, clientName) || other.clientName == clientName)&&(identical(other.deviceName, deviceName) || other.deviceName == deviceName)&&(identical(other.clientVersion, clientVersion) || other.clientVersion == clientVersion));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeviceInfo&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.deviceId, deviceId) || other.deviceId == deviceId)&&(identical(other.ipAddress, ipAddress) || other.ipAddress == ipAddress)&&(identical(other.browserName, browserName) || other.browserName == browserName)&&(identical(other.browserVersion, browserVersion) || other.browserVersion == browserVersion)&&(identical(other.osName, osName) || other.osName == osName)&&(identical(other.osVersion, osVersion) || other.osVersion == osVersion)&&(identical(other.deviceType, deviceType) || other.deviceType == deviceType)&&(identical(other.manufacturer, manufacturer) || other.manufacturer == manufacturer)&&(identical(other.model, model) || other.model == model)&&(identical(other.sdkVersion, sdkVersion) || other.sdkVersion == sdkVersion)&&(identical(other.clientName, clientName) || other.clientName == clientName)&&(identical(other.deviceName, deviceName) || other.deviceName == deviceName)&&(identical(other.clientVersion, clientVersion) || other.clientVersion == clientVersion));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,deviceId,ipAddress,browserName,browserVersion,osName,osVersion,deviceType,manufacturer,model,sdkVersion,clientName,deviceName,clientVersion);
+int get hashCode {
+    return Object.hash(runtimeType,id,userId,deviceId,ipAddress,browserName,browserVersion,osName,osVersion,deviceType,manufacturer,model,sdkVersion,clientName,deviceName,clientVersion);
+}
 
 @override
 String toString() {
-  return 'DeviceInfo(id: $id, userId: $userId, deviceId: $deviceId, ipAddress: $ipAddress, browserName: $browserName, browserVersion: $browserVersion, osName: $osName, osVersion: $osVersion, deviceType: $deviceType, manufacturer: $manufacturer, model: $model, sdkVersion: $sdkVersion, clientName: $clientName, deviceName: $deviceName, clientVersion: $clientVersion)';
+    return 'DeviceInfo(id: $id, userId: $userId, deviceId: $deviceId, ipAddress: $ipAddress, browserName: $browserName, browserVersion: $browserVersion, osName: $osName, osVersion: $osVersion, deviceType: $deviceType, manufacturer: $manufacturer, model: $model, sdkVersion: $sdkVersion, clientName: $clientName, deviceName: $deviceName, clientVersion: $clientVersion)';
 }
 
 

@@ -52,16 +52,21 @@ $MediaCopyWith<Media> get copyWith => _$MediaCopyWithImpl<Media>(this as Media, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Media&&(identical(other.id, id) || other.id == id)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&(identical(other.size, size) || other.size == size));
+  final _this = this as Media;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Media&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.metadata, _this.metadata) || other.metadata == _this.metadata)&&(identical(other.libraryItemId, _this.libraryItemId) || other.libraryItemId == _this.libraryItemId)&&const DeepCollectionEquality().equals(other.tags, _this.tags)&&(identical(other.coverPath, _this.coverPath) || other.coverPath == _this.coverPath)&&(identical(other.size, _this.size) || other.size == _this.size));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,metadata,libraryItemId,const DeepCollectionEquality().hash(tags),coverPath,size);
+int get hashCode {
+  final _this = this as Media;
+  return Object.hash(runtimeType,_this.id,_this.metadata,_this.libraryItemId,const DeepCollectionEquality().hash(_this.tags),_this.coverPath,_this.size);
+}
 
 @override
 String toString() {
-  return 'Media(id: $id, metadata: $metadata, libraryItemId: $libraryItemId, tags: $tags, coverPath: $coverPath, size: $size)';
+  final _this = this as Media;
+  return 'Media(id: ${_this.id}, metadata: ${_this.metadata}, libraryItemId: ${_this.libraryItemId}, tags: ${_this.tags}, coverPath: ${_this.coverPath}, size: ${_this.size})';
 }
 
 
@@ -305,16 +310,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BookMedia&&(identical(other.id, id) || other.id == id)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&const DeepCollectionEquality().equals(other._audioFiles, _audioFiles)&&(identical(other.numAudioFiles, numAudioFiles) || other.numAudioFiles == numAudioFiles)&&const DeepCollectionEquality().equals(other._tracks, _tracks)&&(identical(other.numTracks, numTracks) || other.numTracks == numTracks)&&const DeepCollectionEquality().equals(other._chapters, _chapters)&&(identical(other.numChapters, numChapters) || other.numChapters == numChapters)&&(identical(other.size, size) || other.size == size));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is BookMedia&&(identical(other.id, id) || other.id == id)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&const DeepCollectionEquality().equals(other.tags, _tags)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&const DeepCollectionEquality().equals(other.audioFiles, _audioFiles)&&(identical(other.numAudioFiles, numAudioFiles) || other.numAudioFiles == numAudioFiles)&&const DeepCollectionEquality().equals(other.tracks, _tracks)&&(identical(other.numTracks, numTracks) || other.numTracks == numTracks)&&const DeepCollectionEquality().equals(other.chapters, _chapters)&&(identical(other.numChapters, numChapters) || other.numChapters == numChapters)&&(identical(other.size, size) || other.size == size));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,metadata,libraryItemId,const DeepCollectionEquality().hash(_tags),duration,coverPath,const DeepCollectionEquality().hash(_audioFiles),numAudioFiles,const DeepCollectionEquality().hash(_tracks),numTracks,const DeepCollectionEquality().hash(_chapters),numChapters,size);
+int get hashCode {
+    return Object.hash(runtimeType,id,metadata,libraryItemId,const DeepCollectionEquality().hash(_tags),duration,coverPath,const DeepCollectionEquality().hash(_audioFiles),numAudioFiles,const DeepCollectionEquality().hash(_tracks),numTracks,const DeepCollectionEquality().hash(_chapters),numChapters,size);
+}
 
 @override
 String toString() {
-  return 'Media.book(id: $id, metadata: $metadata, libraryItemId: $libraryItemId, tags: $tags, duration: $duration, coverPath: $coverPath, audioFiles: $audioFiles, numAudioFiles: $numAudioFiles, tracks: $tracks, numTracks: $numTracks, chapters: $chapters, numChapters: $numChapters, size: $size)';
+    return 'Media.book(id: $id, metadata: $metadata, libraryItemId: $libraryItemId, tags: $tags, duration: $duration, coverPath: $coverPath, audioFiles: $audioFiles, numAudioFiles: $numAudioFiles, tracks: $tracks, numTracks: $numTracks, chapters: $chapters, numChapters: $numChapters, size: $size)';
 }
 
 
@@ -420,16 +427,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastMedia&&(identical(other.id, id) || other.id == id)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.autoDownloadEpisodes, autoDownloadEpisodes) || other.autoDownloadEpisodes == autoDownloadEpisodes)&&const DeepCollectionEquality().equals(other._episodes, _episodes)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&(identical(other.lastEpisodeCheck, lastEpisodeCheck) || other.lastEpisodeCheck == lastEpisodeCheck)&&(identical(other.size, size) || other.size == size)&&(identical(other.numEpisodes, numEpisodes) || other.numEpisodes == numEpisodes));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastMedia&&(identical(other.id, id) || other.id == id)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&const DeepCollectionEquality().equals(other.tags, _tags)&&(identical(other.autoDownloadEpisodes, autoDownloadEpisodes) || other.autoDownloadEpisodes == autoDownloadEpisodes)&&const DeepCollectionEquality().equals(other.episodes, _episodes)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&(identical(other.lastEpisodeCheck, lastEpisodeCheck) || other.lastEpisodeCheck == lastEpisodeCheck)&&(identical(other.size, size) || other.size == size)&&(identical(other.numEpisodes, numEpisodes) || other.numEpisodes == numEpisodes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,metadata,libraryItemId,const DeepCollectionEquality().hash(_tags),autoDownloadEpisodes,const DeepCollectionEquality().hash(_episodes),coverPath,lastEpisodeCheck,size,numEpisodes);
+int get hashCode {
+    return Object.hash(runtimeType,id,metadata,libraryItemId,const DeepCollectionEquality().hash(_tags),autoDownloadEpisodes,const DeepCollectionEquality().hash(_episodes),coverPath,lastEpisodeCheck,size,numEpisodes);
+}
 
 @override
 String toString() {
-  return 'Media.podcast(id: $id, metadata: $metadata, libraryItemId: $libraryItemId, tags: $tags, autoDownloadEpisodes: $autoDownloadEpisodes, episodes: $episodes, coverPath: $coverPath, lastEpisodeCheck: $lastEpisodeCheck, size: $size, numEpisodes: $numEpisodes)';
+    return 'Media.podcast(id: $id, metadata: $metadata, libraryItemId: $libraryItemId, tags: $tags, autoDownloadEpisodes: $autoDownloadEpisodes, episodes: $episodes, coverPath: $coverPath, lastEpisodeCheck: $lastEpisodeCheck, size: $size, numEpisodes: $numEpisodes)';
 }
 
 

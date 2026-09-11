@@ -29,16 +29,21 @@ $LibraryItemCopyWith<LibraryItem> get copyWith => _$LibraryItemCopyWithImpl<Libr
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItem&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isMissing, isMissing) || other.isMissing == isMissing)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.media, media) || other.media == media)&&(identical(other.size, size) || other.size == size)&&(identical(other.sequence, sequence) || other.sequence == sequence)&&(identical(other.seriesSequence, seriesSequence) || other.seriesSequence == seriesSequence)&&(identical(other.userMediaProgress, userMediaProgress) || other.userMediaProgress == userMediaProgress)&&(identical(other.collapsedSeries, collapsedSeries) || other.collapsedSeries == collapsedSeries)&&(identical(other.recentEpisode, recentEpisode) || other.recentEpisode == recentEpisode));
+  final _this = this as LibraryItem;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItem&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.libraryId, _this.libraryId) || other.libraryId == _this.libraryId)&&(identical(other.addedAt, _this.addedAt) || other.addedAt == _this.addedAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&(identical(other.isMissing, _this.isMissing) || other.isMissing == _this.isMissing)&&(identical(other.mediaType, _this.mediaType) || other.mediaType == _this.mediaType)&&(identical(other.media, _this.media) || other.media == _this.media)&&(identical(other.size, _this.size) || other.size == _this.size)&&(identical(other.sequence, _this.sequence) || other.sequence == _this.sequence)&&(identical(other.seriesSequence, _this.seriesSequence) || other.seriesSequence == _this.seriesSequence)&&(identical(other.userMediaProgress, _this.userMediaProgress) || other.userMediaProgress == _this.userMediaProgress)&&(identical(other.collapsedSeries, _this.collapsedSeries) || other.collapsedSeries == _this.collapsedSeries)&&(identical(other.recentEpisode, _this.recentEpisode) || other.recentEpisode == _this.recentEpisode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,libraryId,addedAt,updatedAt,isMissing,mediaType,media,size,sequence,seriesSequence,userMediaProgress,collapsedSeries,recentEpisode);
+int get hashCode {
+  final _this = this as LibraryItem;
+  return Object.hash(runtimeType,_this.id,_this.libraryId,_this.addedAt,_this.updatedAt,_this.isMissing,_this.mediaType,_this.media,_this.size,_this.sequence,_this.seriesSequence,_this.userMediaProgress,_this.collapsedSeries,_this.recentEpisode);
+}
 
 @override
 String toString() {
-  return 'LibraryItem(id: $id, libraryId: $libraryId, addedAt: $addedAt, updatedAt: $updatedAt, isMissing: $isMissing, mediaType: $mediaType, media: $media, size: $size, sequence: $sequence, seriesSequence: $seriesSequence, userMediaProgress: $userMediaProgress, collapsedSeries: $collapsedSeries, recentEpisode: $recentEpisode)';
+  final _this = this as LibraryItem;
+  return 'LibraryItem(id: ${_this.id}, libraryId: ${_this.libraryId}, addedAt: ${_this.addedAt}, updatedAt: ${_this.updatedAt}, isMissing: ${_this.isMissing}, mediaType: ${_this.mediaType}, media: ${_this.media}, size: ${_this.size}, sequence: ${_this.sequence}, seriesSequence: ${_this.seriesSequence}, userMediaProgress: ${_this.userMediaProgress}, collapsedSeries: ${_this.collapsedSeries}, recentEpisode: ${_this.recentEpisode})';
 }
 
 
@@ -291,16 +296,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryItem&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isMissing, isMissing) || other.isMissing == isMissing)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.media, media) || other.media == media)&&(identical(other.size, size) || other.size == size)&&(identical(other.sequence, sequence) || other.sequence == sequence)&&(identical(other.seriesSequence, seriesSequence) || other.seriesSequence == seriesSequence)&&(identical(other.userMediaProgress, userMediaProgress) || other.userMediaProgress == userMediaProgress)&&(identical(other.collapsedSeries, collapsedSeries) || other.collapsedSeries == collapsedSeries)&&(identical(other.recentEpisode, recentEpisode) || other.recentEpisode == recentEpisode));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryItem&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.isMissing, isMissing) || other.isMissing == isMissing)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.media, media) || other.media == media)&&(identical(other.size, size) || other.size == size)&&(identical(other.sequence, sequence) || other.sequence == sequence)&&(identical(other.seriesSequence, seriesSequence) || other.seriesSequence == seriesSequence)&&(identical(other.userMediaProgress, userMediaProgress) || other.userMediaProgress == userMediaProgress)&&(identical(other.collapsedSeries, collapsedSeries) || other.collapsedSeries == collapsedSeries)&&(identical(other.recentEpisode, recentEpisode) || other.recentEpisode == recentEpisode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,libraryId,addedAt,updatedAt,isMissing,mediaType,media,size,sequence,seriesSequence,userMediaProgress,collapsedSeries,recentEpisode);
+int get hashCode {
+    return Object.hash(runtimeType,id,libraryId,addedAt,updatedAt,isMissing,mediaType,media,size,sequence,seriesSequence,userMediaProgress,collapsedSeries,recentEpisode);
+}
 
 @override
 String toString() {
-  return 'LibraryItem(id: $id, libraryId: $libraryId, addedAt: $addedAt, updatedAt: $updatedAt, isMissing: $isMissing, mediaType: $mediaType, media: $media, size: $size, sequence: $sequence, seriesSequence: $seriesSequence, userMediaProgress: $userMediaProgress, collapsedSeries: $collapsedSeries, recentEpisode: $recentEpisode)';
+    return 'LibraryItem(id: $id, libraryId: $libraryId, addedAt: $addedAt, updatedAt: $updatedAt, isMissing: $isMissing, mediaType: $mediaType, media: $media, size: $size, sequence: $sequence, seriesSequence: $seriesSequence, userMediaProgress: $userMediaProgress, collapsedSeries: $collapsedSeries, recentEpisode: $recentEpisode)';
 }
 
 

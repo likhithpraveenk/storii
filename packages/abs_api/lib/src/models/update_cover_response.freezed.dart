@@ -29,16 +29,21 @@ $UpdateCoverResponseCopyWith<UpdateCoverResponse> get copyWith => _$UpdateCoverR
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateCoverResponse&&(identical(other.success, success) || other.success == success)&&(identical(other.cover, cover) || other.cover == cover));
+  final _this = this as UpdateCoverResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateCoverResponse&&(identical(other.success, _this.success) || other.success == _this.success)&&(identical(other.cover, _this.cover) || other.cover == _this.cover));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,success,cover);
+int get hashCode {
+  final _this = this as UpdateCoverResponse;
+  return Object.hash(runtimeType,_this.success,_this.cover);
+}
 
 @override
 String toString() {
-  return 'UpdateCoverResponse(success: $success, cover: $cover)';
+  final _this = this as UpdateCoverResponse;
+  return 'UpdateCoverResponse(success: ${_this.success}, cover: ${_this.cover})';
 }
 
 
@@ -224,16 +229,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateCoverResponse&&(identical(other.success, success) || other.success == success)&&(identical(other.cover, cover) || other.cover == cover));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateCoverResponse&&(identical(other.success, success) || other.success == success)&&(identical(other.cover, cover) || other.cover == cover));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,success,cover);
+int get hashCode {
+    return Object.hash(runtimeType,success,cover);
+}
 
 @override
 String toString() {
-  return 'UpdateCoverResponse(success: $success, cover: $cover)';
+    return 'UpdateCoverResponse(success: $success, cover: $cover)';
 }
 
 

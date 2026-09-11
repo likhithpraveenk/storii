@@ -29,16 +29,21 @@ $CreateCollectionRequestParamsCopyWith<CreateCollectionRequestParams> get copyWi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateCollectionRequestParams&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.books, books));
+  final _this = this as CreateCollectionRequestParams;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateCollectionRequestParams&&(identical(other.libraryId, _this.libraryId) || other.libraryId == _this.libraryId)&&(identical(other.name, _this.name) || other.name == _this.name)&&const DeepCollectionEquality().equals(other.books, _this.books));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,libraryId,name,const DeepCollectionEquality().hash(books));
+int get hashCode {
+  final _this = this as CreateCollectionRequestParams;
+  return Object.hash(runtimeType,_this.libraryId,_this.name,const DeepCollectionEquality().hash(_this.books));
+}
 
 @override
 String toString() {
-  return 'CreateCollectionRequestParams(libraryId: $libraryId, name: $name, books: $books)';
+  final _this = this as CreateCollectionRequestParams;
+  return 'CreateCollectionRequestParams(libraryId: ${_this.libraryId}, name: ${_this.name}, books: ${_this.books})';
 }
 
 
@@ -232,16 +237,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateCollectionRequestParams&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other._books, _books));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateCollectionRequestParams&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.books, _books));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,libraryId,name,const DeepCollectionEquality().hash(_books));
+int get hashCode {
+    return Object.hash(runtimeType,libraryId,name,const DeepCollectionEquality().hash(_books));
+}
 
 @override
 String toString() {
-  return 'CreateCollectionRequestParams(libraryId: $libraryId, name: $name, books: $books)';
+    return 'CreateCollectionRequestParams(libraryId: $libraryId, name: $name, books: $books)';
 }
 
 

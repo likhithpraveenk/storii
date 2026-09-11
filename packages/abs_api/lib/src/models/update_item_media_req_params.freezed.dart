@@ -52,16 +52,21 @@ $UpdateItemMediaReqParamsCopyWith<UpdateItemMediaReqParams> get copyWith => _$Up
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateItemMediaReqParams&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.metadata, metadata) || other.metadata == metadata));
+  final _this = this as UpdateItemMediaReqParams;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateItemMediaReqParams&&(identical(other.coverPath, _this.coverPath) || other.coverPath == _this.coverPath)&&const DeepCollectionEquality().equals(other.tags, _this.tags)&&(identical(other.metadata, _this.metadata) || other.metadata == _this.metadata));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,coverPath,const DeepCollectionEquality().hash(tags),metadata);
+int get hashCode {
+  final _this = this as UpdateItemMediaReqParams;
+  return Object.hash(runtimeType,_this.coverPath,const DeepCollectionEquality().hash(_this.tags),_this.metadata);
+}
 
 @override
 String toString() {
-  return 'UpdateItemMediaReqParams(coverPath: $coverPath, tags: $tags, metadata: $metadata)';
+  final _this = this as UpdateItemMediaReqParams;
+  return 'UpdateItemMediaReqParams(coverPath: ${_this.coverPath}, tags: ${_this.tags}, metadata: ${_this.metadata})';
 }
 
 
@@ -288,16 +293,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateBookReqParams&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&const DeepCollectionEquality().equals(other._chapters, _chapters));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateBookReqParams&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&const DeepCollectionEquality().equals(other.tags, _tags)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&const DeepCollectionEquality().equals(other.chapters, _chapters));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,coverPath,const DeepCollectionEquality().hash(_tags),metadata,const DeepCollectionEquality().hash(_chapters));
+int get hashCode {
+    return Object.hash(runtimeType,coverPath,const DeepCollectionEquality().hash(_tags),metadata,const DeepCollectionEquality().hash(_chapters));
+}
 
 @override
 String toString() {
-  return 'UpdateItemMediaReqParams.book(coverPath: $coverPath, tags: $tags, metadata: $metadata, chapters: $chapters)';
+    return 'UpdateItemMediaReqParams.book(coverPath: $coverPath, tags: $tags, metadata: $metadata, chapters: $chapters)';
 }
 
 
@@ -390,16 +397,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdatePodcastReqParams&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.autoDownloadEpisodes, autoDownloadEpisodes) || other.autoDownloadEpisodes == autoDownloadEpisodes)&&(identical(other.lastEpisodeCheck, lastEpisodeCheck) || other.lastEpisodeCheck == lastEpisodeCheck)&&(identical(other.maxEpisodesToKeep, maxEpisodesToKeep) || other.maxEpisodesToKeep == maxEpisodesToKeep)&&(identical(other.maxNewEpisodesToDownload, maxNewEpisodesToDownload) || other.maxNewEpisodesToDownload == maxNewEpisodesToDownload));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdatePodcastReqParams&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&const DeepCollectionEquality().equals(other.tags, _tags)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.autoDownloadEpisodes, autoDownloadEpisodes) || other.autoDownloadEpisodes == autoDownloadEpisodes)&&(identical(other.lastEpisodeCheck, lastEpisodeCheck) || other.lastEpisodeCheck == lastEpisodeCheck)&&(identical(other.maxEpisodesToKeep, maxEpisodesToKeep) || other.maxEpisodesToKeep == maxEpisodesToKeep)&&(identical(other.maxNewEpisodesToDownload, maxNewEpisodesToDownload) || other.maxNewEpisodesToDownload == maxNewEpisodesToDownload));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,coverPath,const DeepCollectionEquality().hash(_tags),metadata,autoDownloadEpisodes,lastEpisodeCheck,maxEpisodesToKeep,maxNewEpisodesToDownload);
+int get hashCode {
+    return Object.hash(runtimeType,coverPath,const DeepCollectionEquality().hash(_tags),metadata,autoDownloadEpisodes,lastEpisodeCheck,maxEpisodesToKeep,maxNewEpisodesToDownload);
+}
 
 @override
 String toString() {
-  return 'UpdateItemMediaReqParams.podcast(coverPath: $coverPath, tags: $tags, metadata: $metadata, autoDownloadEpisodes: $autoDownloadEpisodes, lastEpisodeCheck: $lastEpisodeCheck, maxEpisodesToKeep: $maxEpisodesToKeep, maxNewEpisodesToDownload: $maxNewEpisodesToDownload)';
+    return 'UpdateItemMediaReqParams.podcast(coverPath: $coverPath, tags: $tags, metadata: $metadata, autoDownloadEpisodes: $autoDownloadEpisodes, lastEpisodeCheck: $lastEpisodeCheck, maxEpisodesToKeep: $maxEpisodesToKeep, maxNewEpisodesToDownload: $maxNewEpisodesToDownload)';
 }
 
 
@@ -495,16 +504,21 @@ $UpdateMediaMetadataReqParamsCopyWith<UpdateMediaMetadataReqParams> get copyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateMediaMetadataReqParams&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other.genres, genres)&&(identical(other.description, description) || other.description == description)&&(identical(other.language, language) || other.language == language)&&(identical(other.explicit, explicit) || other.explicit == explicit));
+  final _this = this as UpdateMediaMetadataReqParams;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateMediaMetadataReqParams&&(identical(other.title, _this.title) || other.title == _this.title)&&const DeepCollectionEquality().equals(other.genres, _this.genres)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.language, _this.language) || other.language == _this.language)&&(identical(other.explicit, _this.explicit) || other.explicit == _this.explicit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,const DeepCollectionEquality().hash(genres),description,language,explicit);
+int get hashCode {
+  final _this = this as UpdateMediaMetadataReqParams;
+  return Object.hash(runtimeType,_this.title,const DeepCollectionEquality().hash(_this.genres),_this.description,_this.language,_this.explicit);
+}
 
 @override
 String toString() {
-  return 'UpdateMediaMetadataReqParams(title: $title, genres: $genres, description: $description, language: $language, explicit: $explicit)';
+  final _this = this as UpdateMediaMetadataReqParams;
+  return 'UpdateMediaMetadataReqParams(title: ${_this.title}, genres: ${_this.genres}, description: ${_this.description}, language: ${_this.language}, explicit: ${_this.explicit})';
 }
 
 
@@ -747,16 +761,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateBookMetadataReqParams&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&const DeepCollectionEquality().equals(other._authors, _authors)&&const DeepCollectionEquality().equals(other._narrators, _narrators)&&const DeepCollectionEquality().equals(other._series, _series)&&const DeepCollectionEquality().equals(other._genres, _genres)&&(identical(other.publishedYear, publishedYear) || other.publishedYear == publishedYear)&&(identical(other.publishedDate, publishedDate) || other.publishedDate == publishedDate)&&(identical(other.publisher, publisher) || other.publisher == publisher)&&(identical(other.description, description) || other.description == description)&&(identical(other.isbn, isbn) || other.isbn == isbn)&&(identical(other.asin, asin) || other.asin == asin)&&(identical(other.language, language) || other.language == language)&&(identical(other.explicit, explicit) || other.explicit == explicit));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateBookMetadataReqParams&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&const DeepCollectionEquality().equals(other.authors, _authors)&&const DeepCollectionEquality().equals(other.narrators, _narrators)&&const DeepCollectionEquality().equals(other.series, _series)&&const DeepCollectionEquality().equals(other.genres, _genres)&&(identical(other.publishedYear, publishedYear) || other.publishedYear == publishedYear)&&(identical(other.publishedDate, publishedDate) || other.publishedDate == publishedDate)&&(identical(other.publisher, publisher) || other.publisher == publisher)&&(identical(other.description, description) || other.description == description)&&(identical(other.isbn, isbn) || other.isbn == isbn)&&(identical(other.asin, asin) || other.asin == asin)&&(identical(other.language, language) || other.language == language)&&(identical(other.explicit, explicit) || other.explicit == explicit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,subtitle,const DeepCollectionEquality().hash(_authors),const DeepCollectionEquality().hash(_narrators),const DeepCollectionEquality().hash(_series),const DeepCollectionEquality().hash(_genres),publishedYear,publishedDate,publisher,description,isbn,asin,language,explicit);
+int get hashCode {
+    return Object.hash(runtimeType,title,subtitle,const DeepCollectionEquality().hash(_authors),const DeepCollectionEquality().hash(_narrators),const DeepCollectionEquality().hash(_series),const DeepCollectionEquality().hash(_genres),publishedYear,publishedDate,publisher,description,isbn,asin,language,explicit);
+}
 
 @override
 String toString() {
-  return 'UpdateMediaMetadataReqParams.book(title: $title, subtitle: $subtitle, authors: $authors, narrators: $narrators, series: $series, genres: $genres, publishedYear: $publishedYear, publishedDate: $publishedDate, publisher: $publisher, description: $description, isbn: $isbn, asin: $asin, language: $language, explicit: $explicit)';
+    return 'UpdateMediaMetadataReqParams.book(title: $title, subtitle: $subtitle, authors: $authors, narrators: $narrators, series: $series, genres: $genres, publishedYear: $publishedYear, publishedDate: $publishedDate, publisher: $publisher, description: $description, isbn: $isbn, asin: $asin, language: $language, explicit: $explicit)';
 }
 
 
@@ -852,16 +868,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdatePodcastMetadataReqParams&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&(identical(other.description, description) || other.description == description)&&(identical(other.releaseDate, releaseDate) || other.releaseDate == releaseDate)&&const DeepCollectionEquality().equals(other._genres, _genres)&&(identical(other.feedUrl, feedUrl) || other.feedUrl == feedUrl)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.itunesPageUrl, itunesPageUrl) || other.itunesPageUrl == itunesPageUrl)&&(identical(other.itunesId, itunesId) || other.itunesId == itunesId)&&(identical(other.itunesArtistId, itunesArtistId) || other.itunesArtistId == itunesArtistId)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&(identical(other.language, language) || other.language == language));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdatePodcastMetadataReqParams&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&(identical(other.description, description) || other.description == description)&&(identical(other.releaseDate, releaseDate) || other.releaseDate == releaseDate)&&const DeepCollectionEquality().equals(other.genres, _genres)&&(identical(other.feedUrl, feedUrl) || other.feedUrl == feedUrl)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.itunesPageUrl, itunesPageUrl) || other.itunesPageUrl == itunesPageUrl)&&(identical(other.itunesId, itunesId) || other.itunesId == itunesId)&&(identical(other.itunesArtistId, itunesArtistId) || other.itunesArtistId == itunesArtistId)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&(identical(other.language, language) || other.language == language));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,author,description,releaseDate,const DeepCollectionEquality().hash(_genres),feedUrl,imageUrl,itunesPageUrl,itunesId,itunesArtistId,explicit,language);
+int get hashCode {
+    return Object.hash(runtimeType,title,author,description,releaseDate,const DeepCollectionEquality().hash(_genres),feedUrl,imageUrl,itunesPageUrl,itunesId,itunesArtistId,explicit,language);
+}
 
 @override
 String toString() {
-  return 'UpdateMediaMetadataReqParams.podcast(title: $title, author: $author, description: $description, releaseDate: $releaseDate, genres: $genres, feedUrl: $feedUrl, imageUrl: $imageUrl, itunesPageUrl: $itunesPageUrl, itunesId: $itunesId, itunesArtistId: $itunesArtistId, explicit: $explicit, language: $language)';
+    return 'UpdateMediaMetadataReqParams.podcast(title: $title, author: $author, description: $description, releaseDate: $releaseDate, genres: $genres, feedUrl: $feedUrl, imageUrl: $imageUrl, itunesPageUrl: $itunesPageUrl, itunesId: $itunesId, itunesArtistId: $itunesArtistId, explicit: $explicit, language: $language)';
 }
 
 

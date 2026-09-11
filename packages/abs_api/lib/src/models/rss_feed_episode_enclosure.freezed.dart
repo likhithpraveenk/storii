@@ -29,16 +29,21 @@ $RssFeedEpisodeEnclosureCopyWith<RssFeedEpisodeEnclosure> get copyWith => _$RssF
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RssFeedEpisodeEnclosure&&(identical(other.url, url) || other.url == url)&&(identical(other.type, type) || other.type == type)&&(identical(other.size, size) || other.size == size));
+  final _this = this as RssFeedEpisodeEnclosure;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RssFeedEpisodeEnclosure&&(identical(other.url, _this.url) || other.url == _this.url)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.size, _this.size) || other.size == _this.size));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,url,type,size);
+int get hashCode {
+  final _this = this as RssFeedEpisodeEnclosure;
+  return Object.hash(runtimeType,_this.url,_this.type,_this.size);
+}
 
 @override
 String toString() {
-  return 'RssFeedEpisodeEnclosure(url: $url, type: $type, size: $size)';
+  final _this = this as RssFeedEpisodeEnclosure;
+  return 'RssFeedEpisodeEnclosure(url: ${_this.url}, type: ${_this.type}, size: ${_this.size})';
 }
 
 
@@ -226,16 +231,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RssFeedEpisodeEnclosure&&(identical(other.url, url) || other.url == url)&&(identical(other.type, type) || other.type == type)&&(identical(other.size, size) || other.size == size));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RssFeedEpisodeEnclosure&&(identical(other.url, url) || other.url == url)&&(identical(other.type, type) || other.type == type)&&(identical(other.size, size) || other.size == size));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,url,type,size);
+int get hashCode {
+    return Object.hash(runtimeType,url,type,size);
+}
 
 @override
 String toString() {
-  return 'RssFeedEpisodeEnclosure(url: $url, type: $type, size: $size)';
+    return 'RssFeedEpisodeEnclosure(url: $url, type: $type, size: $size)';
 }
 
 

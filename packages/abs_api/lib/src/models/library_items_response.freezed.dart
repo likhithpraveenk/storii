@@ -29,16 +29,21 @@ $LibraryItemsResponseCopyWith<LibraryItemsResponse> get copyWith => _$LibraryIte
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItemsResponse&&const DeepCollectionEquality().equals(other.results, results)&&(identical(other.total, total) || other.total == total)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.page, page) || other.page == page)&&(identical(other.sortBy, sortBy) || other.sortBy == sortBy)&&(identical(other.sortDesc, sortDesc) || other.sortDesc == sortDesc)&&(identical(other.filterBy, filterBy) || other.filterBy == filterBy)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.minified, minified) || other.minified == minified)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries)&&(identical(other.include, include) || other.include == include));
+  final _this = this as LibraryItemsResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItemsResponse&&const DeepCollectionEquality().equals(other.results, _this.results)&&(identical(other.total, _this.total) || other.total == _this.total)&&(identical(other.limit, _this.limit) || other.limit == _this.limit)&&(identical(other.page, _this.page) || other.page == _this.page)&&(identical(other.sortBy, _this.sortBy) || other.sortBy == _this.sortBy)&&(identical(other.sortDesc, _this.sortDesc) || other.sortDesc == _this.sortDesc)&&(identical(other.filterBy, _this.filterBy) || other.filterBy == _this.filterBy)&&(identical(other.mediaType, _this.mediaType) || other.mediaType == _this.mediaType)&&(identical(other.minified, _this.minified) || other.minified == _this.minified)&&(identical(other.collapseSeries, _this.collapseSeries) || other.collapseSeries == _this.collapseSeries)&&(identical(other.include, _this.include) || other.include == _this.include));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(results),total,limit,page,sortBy,sortDesc,filterBy,mediaType,minified,collapseSeries,include);
+int get hashCode {
+  final _this = this as LibraryItemsResponse;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.results),_this.total,_this.limit,_this.page,_this.sortBy,_this.sortDesc,_this.filterBy,_this.mediaType,_this.minified,_this.collapseSeries,_this.include);
+}
 
 @override
 String toString() {
-  return 'LibraryItemsResponse(results: $results, total: $total, limit: $limit, page: $page, sortBy: $sortBy, sortDesc: $sortDesc, filterBy: $filterBy, mediaType: $mediaType, minified: $minified, collapseSeries: $collapseSeries, include: $include)';
+  final _this = this as LibraryItemsResponse;
+  return 'LibraryItemsResponse(results: ${_this.results}, total: ${_this.total}, limit: ${_this.limit}, page: ${_this.page}, sortBy: ${_this.sortBy}, sortDesc: ${_this.sortDesc}, filterBy: ${_this.filterBy}, mediaType: ${_this.mediaType}, minified: ${_this.minified}, collapseSeries: ${_this.collapseSeries}, include: ${_this.include})';
 }
 
 
@@ -248,16 +253,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryItemsResponse&&const DeepCollectionEquality().equals(other._results, _results)&&(identical(other.total, total) || other.total == total)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.page, page) || other.page == page)&&(identical(other.sortBy, sortBy) || other.sortBy == sortBy)&&(identical(other.sortDesc, sortDesc) || other.sortDesc == sortDesc)&&(identical(other.filterBy, filterBy) || other.filterBy == filterBy)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.minified, minified) || other.minified == minified)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries)&&(identical(other.include, include) || other.include == include));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryItemsResponse&&const DeepCollectionEquality().equals(other.results, _results)&&(identical(other.total, total) || other.total == total)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.page, page) || other.page == page)&&(identical(other.sortBy, sortBy) || other.sortBy == sortBy)&&(identical(other.sortDesc, sortDesc) || other.sortDesc == sortDesc)&&(identical(other.filterBy, filterBy) || other.filterBy == filterBy)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.minified, minified) || other.minified == minified)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries)&&(identical(other.include, include) || other.include == include));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_results),total,limit,page,sortBy,sortDesc,filterBy,mediaType,minified,collapseSeries,include);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_results),total,limit,page,sortBy,sortDesc,filterBy,mediaType,minified,collapseSeries,include);
+}
 
 @override
 String toString() {
-  return 'LibraryItemsResponse(results: $results, total: $total, limit: $limit, page: $page, sortBy: $sortBy, sortDesc: $sortDesc, filterBy: $filterBy, mediaType: $mediaType, minified: $minified, collapseSeries: $collapseSeries, include: $include)';
+    return 'LibraryItemsResponse(results: $results, total: $total, limit: $limit, page: $page, sortBy: $sortBy, sortDesc: $sortDesc, filterBy: $filterBy, mediaType: $mediaType, minified: $minified, collapseSeries: $collapseSeries, include: $include)';
 }
 
 

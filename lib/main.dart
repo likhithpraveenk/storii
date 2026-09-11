@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/config/router.dart';
@@ -52,7 +52,12 @@ class MyApp extends ConsumerWidget {
       darkTheme: darkTheme,
       routerConfig: router,
       title: appName,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      // https://github.com/flutter/flutter/issues/191072
+      // TODO: pending flutter fix
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        ...GlobalMaterialLocalizations.delegates,
+      ],
       supportedLocales: AppLocalizations.supportedLocales,
       localeResolutionCallback: (locale, supported) =>
           supported.findBestMatch(locale),

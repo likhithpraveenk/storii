@@ -29,16 +29,21 @@ $SeriesProgressCopyWith<SeriesProgress> get copyWith => _$SeriesProgressCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeriesProgress&&const DeepCollectionEquality().equals(other.libraryItemIds, libraryItemIds)&&const DeepCollectionEquality().equals(other.libraryItemIdsFinished, libraryItemIdsFinished)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished));
+  final _this = this as SeriesProgress;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeriesProgress&&const DeepCollectionEquality().equals(other.libraryItemIds, _this.libraryItemIds)&&const DeepCollectionEquality().equals(other.libraryItemIdsFinished, _this.libraryItemIdsFinished)&&(identical(other.isFinished, _this.isFinished) || other.isFinished == _this.isFinished));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(libraryItemIds),const DeepCollectionEquality().hash(libraryItemIdsFinished),isFinished);
+int get hashCode {
+  final _this = this as SeriesProgress;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.libraryItemIds),const DeepCollectionEquality().hash(_this.libraryItemIdsFinished),_this.isFinished);
+}
 
 @override
 String toString() {
-  return 'SeriesProgress(libraryItemIds: $libraryItemIds, libraryItemIdsFinished: $libraryItemIdsFinished, isFinished: $isFinished)';
+  final _this = this as SeriesProgress;
+  return 'SeriesProgress(libraryItemIds: ${_this.libraryItemIds}, libraryItemIdsFinished: ${_this.libraryItemIdsFinished}, isFinished: ${_this.isFinished})';
 }
 
 
@@ -238,16 +243,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeriesProgress&&const DeepCollectionEquality().equals(other._libraryItemIds, _libraryItemIds)&&const DeepCollectionEquality().equals(other._libraryItemIdsFinished, _libraryItemIdsFinished)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SeriesProgress&&const DeepCollectionEquality().equals(other.libraryItemIds, _libraryItemIds)&&const DeepCollectionEquality().equals(other.libraryItemIdsFinished, _libraryItemIdsFinished)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_libraryItemIds),const DeepCollectionEquality().hash(_libraryItemIdsFinished),isFinished);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_libraryItemIds),const DeepCollectionEquality().hash(_libraryItemIdsFinished),isFinished);
+}
 
 @override
 String toString() {
-  return 'SeriesProgress(libraryItemIds: $libraryItemIds, libraryItemIdsFinished: $libraryItemIdsFinished, isFinished: $isFinished)';
+    return 'SeriesProgress(libraryItemIds: $libraryItemIds, libraryItemIdsFinished: $libraryItemIdsFinished, isFinished: $isFinished)';
 }
 
 

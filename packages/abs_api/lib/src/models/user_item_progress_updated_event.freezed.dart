@@ -29,16 +29,21 @@ $UserItemProgressUpdatedEventCopyWith<UserItemProgressUpdatedEvent> get copyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserItemProgressUpdatedEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.deviceDescription, deviceDescription) || other.deviceDescription == deviceDescription)&&(identical(other.data, data) || other.data == data));
+  final _this = this as UserItemProgressUpdatedEvent;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserItemProgressUpdatedEvent&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.sessionId, _this.sessionId) || other.sessionId == _this.sessionId)&&(identical(other.deviceDescription, _this.deviceDescription) || other.deviceDescription == _this.deviceDescription)&&(identical(other.data, _this.data) || other.data == _this.data));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,sessionId,deviceDescription,data);
+int get hashCode {
+  final _this = this as UserItemProgressUpdatedEvent;
+  return Object.hash(runtimeType,_this.id,_this.sessionId,_this.deviceDescription,_this.data);
+}
 
 @override
 String toString() {
-  return 'UserItemProgressUpdatedEvent(id: $id, sessionId: $sessionId, deviceDescription: $deviceDescription, data: $data)';
+  final _this = this as UserItemProgressUpdatedEvent;
+  return 'UserItemProgressUpdatedEvent(id: ${_this.id}, sessionId: ${_this.sessionId}, deviceDescription: ${_this.deviceDescription}, data: ${_this.data})';
 }
 
 
@@ -243,16 +248,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserItemProgressUpdatedEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.deviceDescription, deviceDescription) || other.deviceDescription == deviceDescription)&&(identical(other.data, data) || other.data == data));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserItemProgressUpdatedEvent&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.deviceDescription, deviceDescription) || other.deviceDescription == deviceDescription)&&(identical(other.data, data) || other.data == data));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,sessionId,deviceDescription,data);
+int get hashCode {
+    return Object.hash(runtimeType,id,sessionId,deviceDescription,data);
+}
 
 @override
 String toString() {
-  return 'UserItemProgressUpdatedEvent(id: $id, sessionId: $sessionId, deviceDescription: $deviceDescription, data: $data)';
+    return 'UserItemProgressUpdatedEvent(id: $id, sessionId: $sessionId, deviceDescription: $deviceDescription, data: $data)';
 }
 
 

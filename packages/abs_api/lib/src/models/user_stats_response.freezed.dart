@@ -29,16 +29,21 @@ $UserStatsResponseCopyWith<UserStatsResponse> get copyWith => _$UserStatsRespons
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserStatsResponse&&(identical(other.totalTime, totalTime) || other.totalTime == totalTime)&&const DeepCollectionEquality().equals(other.items, items)&&const DeepCollectionEquality().equals(other.days, days)&&const DeepCollectionEquality().equals(other.dayOfWeek, dayOfWeek)&&(identical(other.today, today) || other.today == today)&&const DeepCollectionEquality().equals(other.recentSessions, recentSessions));
+  final _this = this as UserStatsResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserStatsResponse&&(identical(other.totalTime, _this.totalTime) || other.totalTime == _this.totalTime)&&const DeepCollectionEquality().equals(other.items, _this.items)&&const DeepCollectionEquality().equals(other.days, _this.days)&&const DeepCollectionEquality().equals(other.dayOfWeek, _this.dayOfWeek)&&(identical(other.today, _this.today) || other.today == _this.today)&&const DeepCollectionEquality().equals(other.recentSessions, _this.recentSessions));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,totalTime,const DeepCollectionEquality().hash(items),const DeepCollectionEquality().hash(days),const DeepCollectionEquality().hash(dayOfWeek),today,const DeepCollectionEquality().hash(recentSessions));
+int get hashCode {
+  final _this = this as UserStatsResponse;
+  return Object.hash(runtimeType,_this.totalTime,const DeepCollectionEquality().hash(_this.items),const DeepCollectionEquality().hash(_this.days),const DeepCollectionEquality().hash(_this.dayOfWeek),_this.today,const DeepCollectionEquality().hash(_this.recentSessions));
+}
 
 @override
 String toString() {
-  return 'UserStatsResponse(totalTime: $totalTime, items: $items, days: $days, dayOfWeek: $dayOfWeek, today: $today, recentSessions: $recentSessions)';
+  final _this = this as UserStatsResponse;
+  return 'UserStatsResponse(totalTime: ${_this.totalTime}, items: ${_this.items}, days: ${_this.days}, dayOfWeek: ${_this.dayOfWeek}, today: ${_this.today}, recentSessions: ${_this.recentSessions})';
 }
 
 
@@ -262,16 +267,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserStatsResponse&&(identical(other.totalTime, totalTime) || other.totalTime == totalTime)&&const DeepCollectionEquality().equals(other._items, _items)&&const DeepCollectionEquality().equals(other._days, _days)&&const DeepCollectionEquality().equals(other._dayOfWeek, _dayOfWeek)&&(identical(other.today, today) || other.today == today)&&const DeepCollectionEquality().equals(other._recentSessions, _recentSessions));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserStatsResponse&&(identical(other.totalTime, totalTime) || other.totalTime == totalTime)&&const DeepCollectionEquality().equals(other.items, _items)&&const DeepCollectionEquality().equals(other.days, _days)&&const DeepCollectionEquality().equals(other.dayOfWeek, _dayOfWeek)&&(identical(other.today, today) || other.today == today)&&const DeepCollectionEquality().equals(other.recentSessions, _recentSessions));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,totalTime,const DeepCollectionEquality().hash(_items),const DeepCollectionEquality().hash(_days),const DeepCollectionEquality().hash(_dayOfWeek),today,const DeepCollectionEquality().hash(_recentSessions));
+int get hashCode {
+    return Object.hash(runtimeType,totalTime,const DeepCollectionEquality().hash(_items),const DeepCollectionEquality().hash(_days),const DeepCollectionEquality().hash(_dayOfWeek),today,const DeepCollectionEquality().hash(_recentSessions));
+}
 
 @override
 String toString() {
-  return 'UserStatsResponse(totalTime: $totalTime, items: $items, days: $days, dayOfWeek: $dayOfWeek, today: $today, recentSessions: $recentSessions)';
+    return 'UserStatsResponse(totalTime: $totalTime, items: $items, days: $days, dayOfWeek: $dayOfWeek, today: $today, recentSessions: $recentSessions)';
 }
 
 
@@ -331,16 +338,21 @@ $ItemsListenedToResponseCopyWith<ItemsListenedToResponse> get copyWith => _$Item
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ItemsListenedToResponse&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.timeListening, timeListening) || other.timeListening == timeListening)&&(identical(other.mediaMetadata, mediaMetadata) || other.mediaMetadata == mediaMetadata));
+  final _this = this as ItemsListenedToResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ItemsListenedToResponse&&(identical(other.libraryItemId, _this.libraryItemId) || other.libraryItemId == _this.libraryItemId)&&(identical(other.timeListening, _this.timeListening) || other.timeListening == _this.timeListening)&&(identical(other.mediaMetadata, _this.mediaMetadata) || other.mediaMetadata == _this.mediaMetadata));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,libraryItemId,timeListening,mediaMetadata);
+int get hashCode {
+  final _this = this as ItemsListenedToResponse;
+  return Object.hash(runtimeType,_this.libraryItemId,_this.timeListening,_this.mediaMetadata);
+}
 
 @override
 String toString() {
-  return 'ItemsListenedToResponse(libraryItemId: $libraryItemId, timeListening: $timeListening, mediaMetadata: $mediaMetadata)';
+  final _this = this as ItemsListenedToResponse;
+  return 'ItemsListenedToResponse(libraryItemId: ${_this.libraryItemId}, timeListening: ${_this.timeListening}, mediaMetadata: ${_this.mediaMetadata})';
 }
 
 
@@ -543,16 +555,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ItemsListenedToResponse&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.timeListening, timeListening) || other.timeListening == timeListening)&&(identical(other.mediaMetadata, mediaMetadata) || other.mediaMetadata == mediaMetadata));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ItemsListenedToResponse&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.timeListening, timeListening) || other.timeListening == timeListening)&&(identical(other.mediaMetadata, mediaMetadata) || other.mediaMetadata == mediaMetadata));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,libraryItemId,timeListening,mediaMetadata);
+int get hashCode {
+    return Object.hash(runtimeType,libraryItemId,timeListening,mediaMetadata);
+}
 
 @override
 String toString() {
-  return 'ItemsListenedToResponse(libraryItemId: $libraryItemId, timeListening: $timeListening, mediaMetadata: $mediaMetadata)';
+    return 'ItemsListenedToResponse(libraryItemId: $libraryItemId, timeListening: $timeListening, mediaMetadata: $mediaMetadata)';
 }
 
 

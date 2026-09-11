@@ -29,16 +29,21 @@ $AppSettingsCopyWith<AppSettings> get copyWith => _$AppSettingsCopyWithImpl<AppS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.appColor, appColor) || other.appColor == appColor)&&(identical(other.schemeVariant, schemeVariant) || other.schemeVariant == schemeVariant)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval)&&(identical(other.syncIntervalMetered, syncIntervalMetered) || other.syncIntervalMetered == syncIntervalMetered)&&(identical(other.trustAllCertificates, trustAllCertificates) || other.trustAllCertificates == trustAllCertificates)&&const DeepCollectionEquality().equals(other.storageLocations, storageLocations)&&(identical(other.downloadPathsV3Migrated, downloadPathsV3Migrated) || other.downloadPathsV3Migrated == downloadPathsV3Migrated));
+  final _this = this as AppSettings;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.themeMode, _this.themeMode) || other.themeMode == _this.themeMode)&&(identical(other.useDynamicColor, _this.useDynamicColor) || other.useDynamicColor == _this.useDynamicColor)&&(identical(other.appColor, _this.appColor) || other.appColor == _this.appColor)&&(identical(other.schemeVariant, _this.schemeVariant) || other.schemeVariant == _this.schemeVariant)&&(identical(other.usePureBlack, _this.usePureBlack) || other.usePureBlack == _this.usePureBlack)&&(identical(other.currentUser, _this.currentUser) || other.currentUser == _this.currentUser)&&(identical(other.serverUrl, _this.serverUrl) || other.serverUrl == _this.serverUrl)&&(identical(other.maxLogs, _this.maxLogs) || other.maxLogs == _this.maxLogs)&&(identical(other.enableHttpLogs, _this.enableHttpLogs) || other.enableHttpLogs == _this.enableHttpLogs)&&(identical(other.syncInterval, _this.syncInterval) || other.syncInterval == _this.syncInterval)&&(identical(other.syncIntervalMetered, _this.syncIntervalMetered) || other.syncIntervalMetered == _this.syncIntervalMetered)&&(identical(other.trustAllCertificates, _this.trustAllCertificates) || other.trustAllCertificates == _this.trustAllCertificates)&&const DeepCollectionEquality().equals(other.storageLocations, _this.storageLocations)&&(identical(other.downloadPathsV3Migrated, _this.downloadPathsV3Migrated) || other.downloadPathsV3Migrated == _this.downloadPathsV3Migrated));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,appColor,schemeVariant,usePureBlack,currentUser,serverUrl,maxLogs,enableHttpLogs,syncInterval,syncIntervalMetered,trustAllCertificates,const DeepCollectionEquality().hash(storageLocations),downloadPathsV3Migrated);
+int get hashCode {
+  final _this = this as AppSettings;
+  return Object.hash(runtimeType,_this.themeMode,_this.useDynamicColor,_this.appColor,_this.schemeVariant,_this.usePureBlack,_this.currentUser,_this.serverUrl,_this.maxLogs,_this.enableHttpLogs,_this.syncInterval,_this.syncIntervalMetered,_this.trustAllCertificates,const DeepCollectionEquality().hash(_this.storageLocations),_this.downloadPathsV3Migrated);
+}
 
 @override
 String toString() {
-  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, appColor: $appColor, schemeVariant: $schemeVariant, usePureBlack: $usePureBlack, currentUser: $currentUser, serverUrl: $serverUrl, maxLogs: $maxLogs, enableHttpLogs: $enableHttpLogs, syncInterval: $syncInterval, syncIntervalMetered: $syncIntervalMetered, trustAllCertificates: $trustAllCertificates, storageLocations: $storageLocations, downloadPathsV3Migrated: $downloadPathsV3Migrated)';
+  final _this = this as AppSettings;
+  return 'AppSettings(themeMode: ${_this.themeMode}, useDynamicColor: ${_this.useDynamicColor}, appColor: ${_this.appColor}, schemeVariant: ${_this.schemeVariant}, usePureBlack: ${_this.usePureBlack}, currentUser: ${_this.currentUser}, serverUrl: ${_this.serverUrl}, maxLogs: ${_this.maxLogs}, enableHttpLogs: ${_this.enableHttpLogs}, syncInterval: ${_this.syncInterval}, syncIntervalMetered: ${_this.syncIntervalMetered}, trustAllCertificates: ${_this.trustAllCertificates}, storageLocations: ${_this.storageLocations}, downloadPathsV3Migrated: ${_this.downloadPathsV3Migrated})';
 }
 
 
@@ -266,16 +271,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.appColor, appColor) || other.appColor == appColor)&&(identical(other.schemeVariant, schemeVariant) || other.schemeVariant == schemeVariant)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval)&&(identical(other.syncIntervalMetered, syncIntervalMetered) || other.syncIntervalMetered == syncIntervalMetered)&&(identical(other.trustAllCertificates, trustAllCertificates) || other.trustAllCertificates == trustAllCertificates)&&const DeepCollectionEquality().equals(other._storageLocations, _storageLocations)&&(identical(other.downloadPathsV3Migrated, downloadPathsV3Migrated) || other.downloadPathsV3Migrated == downloadPathsV3Migrated));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.appColor, appColor) || other.appColor == appColor)&&(identical(other.schemeVariant, schemeVariant) || other.schemeVariant == schemeVariant)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval)&&(identical(other.syncIntervalMetered, syncIntervalMetered) || other.syncIntervalMetered == syncIntervalMetered)&&(identical(other.trustAllCertificates, trustAllCertificates) || other.trustAllCertificates == trustAllCertificates)&&const DeepCollectionEquality().equals(other.storageLocations, _storageLocations)&&(identical(other.downloadPathsV3Migrated, downloadPathsV3Migrated) || other.downloadPathsV3Migrated == downloadPathsV3Migrated));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,themeMode,useDynamicColor,appColor,schemeVariant,usePureBlack,currentUser,serverUrl,maxLogs,enableHttpLogs,syncInterval,syncIntervalMetered,trustAllCertificates,const DeepCollectionEquality().hash(_storageLocations),downloadPathsV3Migrated);
+int get hashCode {
+    return Object.hash(runtimeType,themeMode,useDynamicColor,appColor,schemeVariant,usePureBlack,currentUser,serverUrl,maxLogs,enableHttpLogs,syncInterval,syncIntervalMetered,trustAllCertificates,const DeepCollectionEquality().hash(_storageLocations),downloadPathsV3Migrated);
+}
 
 @override
 String toString() {
-  return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, appColor: $appColor, schemeVariant: $schemeVariant, usePureBlack: $usePureBlack, currentUser: $currentUser, serverUrl: $serverUrl, maxLogs: $maxLogs, enableHttpLogs: $enableHttpLogs, syncInterval: $syncInterval, syncIntervalMetered: $syncIntervalMetered, trustAllCertificates: $trustAllCertificates, storageLocations: $storageLocations, downloadPathsV3Migrated: $downloadPathsV3Migrated)';
+    return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, appColor: $appColor, schemeVariant: $schemeVariant, usePureBlack: $usePureBlack, currentUser: $currentUser, serverUrl: $serverUrl, maxLogs: $maxLogs, enableHttpLogs: $enableHttpLogs, syncInterval: $syncInterval, syncIntervalMetered: $syncIntervalMetered, trustAllCertificates: $trustAllCertificates, storageLocations: $storageLocations, downloadPathsV3Migrated: $downloadPathsV3Migrated)';
 }
 
 

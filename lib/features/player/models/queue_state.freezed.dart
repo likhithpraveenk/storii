@@ -29,16 +29,21 @@ $QueueItemCopyWith<QueueItem> get copyWith => _$QueueItemCopyWithImpl<QueueItem>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is QueueItem&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.libraryItem, libraryItem) || other.libraryItem == libraryItem)&&(identical(other.episode, episode) || other.episode == episode));
+  final _this = this as QueueItem;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is QueueItem&&(identical(other.itemId, _this.itemId) || other.itemId == _this.itemId)&&(identical(other.episodeId, _this.episodeId) || other.episodeId == _this.episodeId)&&(identical(other.libraryItem, _this.libraryItem) || other.libraryItem == _this.libraryItem)&&(identical(other.episode, _this.episode) || other.episode == _this.episode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,itemId,episodeId,libraryItem,episode);
+int get hashCode {
+  final _this = this as QueueItem;
+  return Object.hash(runtimeType,_this.itemId,_this.episodeId,_this.libraryItem,_this.episode);
+}
 
 @override
 String toString() {
-  return 'QueueItem(itemId: $itemId, episodeId: $episodeId, libraryItem: $libraryItem, episode: $episode)';
+  final _this = this as QueueItem;
+  return 'QueueItem(itemId: ${_this.itemId}, episodeId: ${_this.episodeId}, libraryItem: ${_this.libraryItem}, episode: ${_this.episode})';
 }
 
 
@@ -252,16 +257,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _QueueItem&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.libraryItem, libraryItem) || other.libraryItem == libraryItem)&&(identical(other.episode, episode) || other.episode == episode));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _QueueItem&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.libraryItem, libraryItem) || other.libraryItem == libraryItem)&&(identical(other.episode, episode) || other.episode == episode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,itemId,episodeId,libraryItem,episode);
+int get hashCode {
+    return Object.hash(runtimeType,itemId,episodeId,libraryItem,episode);
+}
 
 @override
 String toString() {
-  return 'QueueItem(itemId: $itemId, episodeId: $episodeId, libraryItem: $libraryItem, episode: $episode)';
+    return 'QueueItem(itemId: $itemId, episodeId: $episodeId, libraryItem: $libraryItem, episode: $episode)';
 }
 
 
@@ -343,16 +350,21 @@ $QueueStateCopyWith<QueueState> get copyWith => _$QueueStateCopyWithImpl<QueueSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is QueueState&&const DeepCollectionEquality().equals(other.items, items)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex));
+  final _this = this as QueueState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is QueueState&&const DeepCollectionEquality().equals(other.items, _this.items)&&(identical(other.currentIndex, _this.currentIndex) || other.currentIndex == _this.currentIndex));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(items),currentIndex);
+int get hashCode {
+  final _this = this as QueueState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.items),_this.currentIndex);
+}
 
 @override
 String toString() {
-  return 'QueueState(items: $items, currentIndex: $currentIndex)';
+  final _this = this as QueueState;
+  return 'QueueState(items: ${_this.items}, currentIndex: ${_this.currentIndex})';
 }
 
 
@@ -544,16 +556,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _QueueState&&const DeepCollectionEquality().equals(other._items, _items)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _QueueState&&const DeepCollectionEquality().equals(other.items, _items)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_items),currentIndex);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_items),currentIndex);
+}
 
 @override
 String toString() {
-  return 'QueueState(items: $items, currentIndex: $currentIndex)';
+    return 'QueueState(items: $items, currentIndex: $currentIndex)';
 }
 
 

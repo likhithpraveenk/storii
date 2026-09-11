@@ -29,16 +29,21 @@ $PlaybackEventCopyWith<PlaybackEvent> get copyWith => _$PlaybackEventCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlaybackEvent&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.position, position) || other.position == position)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.listened, listened) || other.listened == listened)&&(identical(other.syncAttempt, syncAttempt) || other.syncAttempt == syncAttempt)&&(identical(other.syncSuccess, syncSuccess) || other.syncSuccess == syncSuccess)&&(identical(other.playbackError, playbackError) || other.playbackError == playbackError));
+  final _this = this as PlaybackEvent;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlaybackEvent&&(identical(other.timestamp, _this.timestamp) || other.timestamp == _this.timestamp)&&(identical(other.position, _this.position) || other.position == _this.position)&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.listened, _this.listened) || other.listened == _this.listened)&&(identical(other.syncAttempt, _this.syncAttempt) || other.syncAttempt == _this.syncAttempt)&&(identical(other.syncSuccess, _this.syncSuccess) || other.syncSuccess == _this.syncSuccess)&&(identical(other.playbackError, _this.playbackError) || other.playbackError == _this.playbackError));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,timestamp,position,kind,listened,syncAttempt,syncSuccess,playbackError);
+int get hashCode {
+  final _this = this as PlaybackEvent;
+  return Object.hash(runtimeType,_this.timestamp,_this.position,_this.kind,_this.listened,_this.syncAttempt,_this.syncSuccess,_this.playbackError);
+}
 
 @override
 String toString() {
-  return 'PlaybackEvent(timestamp: $timestamp, position: $position, kind: $kind, listened: $listened, syncAttempt: $syncAttempt, syncSuccess: $syncSuccess, playbackError: $playbackError)';
+  final _this = this as PlaybackEvent;
+  return 'PlaybackEvent(timestamp: ${_this.timestamp}, position: ${_this.position}, kind: ${_this.kind}, listened: ${_this.listened}, syncAttempt: ${_this.syncAttempt}, syncSuccess: ${_this.syncSuccess}, playbackError: ${_this.playbackError})';
 }
 
 
@@ -234,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlaybackEvent&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.position, position) || other.position == position)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.listened, listened) || other.listened == listened)&&(identical(other.syncAttempt, syncAttempt) || other.syncAttempt == syncAttempt)&&(identical(other.syncSuccess, syncSuccess) || other.syncSuccess == syncSuccess)&&(identical(other.playbackError, playbackError) || other.playbackError == playbackError));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlaybackEvent&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.position, position) || other.position == position)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.listened, listened) || other.listened == listened)&&(identical(other.syncAttempt, syncAttempt) || other.syncAttempt == syncAttempt)&&(identical(other.syncSuccess, syncSuccess) || other.syncSuccess == syncSuccess)&&(identical(other.playbackError, playbackError) || other.playbackError == playbackError));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,timestamp,position,kind,listened,syncAttempt,syncSuccess,playbackError);
+int get hashCode {
+    return Object.hash(runtimeType,timestamp,position,kind,listened,syncAttempt,syncSuccess,playbackError);
+}
 
 @override
 String toString() {
-  return 'PlaybackEvent(timestamp: $timestamp, position: $position, kind: $kind, listened: $listened, syncAttempt: $syncAttempt, syncSuccess: $syncSuccess, playbackError: $playbackError)';
+    return 'PlaybackEvent(timestamp: $timestamp, position: $position, kind: $kind, listened: $listened, syncAttempt: $syncAttempt, syncSuccess: $syncSuccess, playbackError: $playbackError)';
 }
 
 

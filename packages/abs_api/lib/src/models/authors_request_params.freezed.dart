@@ -29,16 +29,21 @@ $AuthorsRequestParamsCopyWith<AuthorsRequestParams> get copyWith => _$AuthorsReq
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthorsRequestParams&&(identical(other.sort, sort) || other.sort == sort)&&(identical(other.desc, desc) || other.desc == desc)&&(identical(other.filter, filter) || other.filter == filter));
+  final _this = this as AuthorsRequestParams;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthorsRequestParams&&(identical(other.sort, _this.sort) || other.sort == _this.sort)&&(identical(other.desc, _this.desc) || other.desc == _this.desc)&&(identical(other.filter, _this.filter) || other.filter == _this.filter));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,sort,desc,filter);
+int get hashCode {
+  final _this = this as AuthorsRequestParams;
+  return Object.hash(runtimeType,_this.sort,_this.desc,_this.filter);
+}
 
 @override
 String toString() {
-  return 'AuthorsRequestParams(sort: $sort, desc: $desc, filter: $filter)';
+  final _this = this as AuthorsRequestParams;
+  return 'AuthorsRequestParams(sort: ${_this.sort}, desc: ${_this.desc}, filter: ${_this.filter})';
 }
 
 
@@ -232,16 +237,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthorsRequestParams&&(identical(other.sort, sort) || other.sort == sort)&&(identical(other.desc, desc) || other.desc == desc)&&(identical(other.filter, filter) || other.filter == filter));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthorsRequestParams&&(identical(other.sort, sort) || other.sort == sort)&&(identical(other.desc, desc) || other.desc == desc)&&(identical(other.filter, filter) || other.filter == filter));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,sort,desc,filter);
+int get hashCode {
+    return Object.hash(runtimeType,sort,desc,filter);
+}
 
 @override
 String toString() {
-  return 'AuthorsRequestParams(sort: $sort, desc: $desc, filter: $filter)';
+    return 'AuthorsRequestParams(sort: $sort, desc: $desc, filter: $filter)';
 }
 
 

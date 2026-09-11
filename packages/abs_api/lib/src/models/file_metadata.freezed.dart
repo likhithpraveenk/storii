@@ -29,16 +29,21 @@ $FileMetadataCopyWith<FileMetadata> get copyWith => _$FileMetadataCopyWithImpl<F
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FileMetadata&&(identical(other.filename, filename) || other.filename == filename)&&(identical(other.ext, ext) || other.ext == ext)&&(identical(other.path, path) || other.path == path)&&(identical(other.relPath, relPath) || other.relPath == relPath)&&(identical(other.size, size) || other.size == size)&&(identical(other.mtime, mtime) || other.mtime == mtime)&&(identical(other.ctime, ctime) || other.ctime == ctime)&&(identical(other.birthtime, birthtime) || other.birthtime == birthtime));
+  final _this = this as FileMetadata;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FileMetadata&&(identical(other.filename, _this.filename) || other.filename == _this.filename)&&(identical(other.ext, _this.ext) || other.ext == _this.ext)&&(identical(other.path, _this.path) || other.path == _this.path)&&(identical(other.relPath, _this.relPath) || other.relPath == _this.relPath)&&(identical(other.size, _this.size) || other.size == _this.size)&&(identical(other.mtime, _this.mtime) || other.mtime == _this.mtime)&&(identical(other.ctime, _this.ctime) || other.ctime == _this.ctime)&&(identical(other.birthtime, _this.birthtime) || other.birthtime == _this.birthtime));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,filename,ext,path,relPath,size,mtime,ctime,birthtime);
+int get hashCode {
+  final _this = this as FileMetadata;
+  return Object.hash(runtimeType,_this.filename,_this.ext,_this.path,_this.relPath,_this.size,_this.mtime,_this.ctime,_this.birthtime);
+}
 
 @override
 String toString() {
-  return 'FileMetadata(filename: $filename, ext: $ext, path: $path, relPath: $relPath, size: $size, mtime: $mtime, ctime: $ctime, birthtime: $birthtime)';
+  final _this = this as FileMetadata;
+  return 'FileMetadata(filename: ${_this.filename}, ext: ${_this.ext}, path: ${_this.path}, relPath: ${_this.relPath}, size: ${_this.size}, mtime: ${_this.mtime}, ctime: ${_this.ctime}, birthtime: ${_this.birthtime})';
 }
 
 
@@ -236,16 +241,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FileMetadata&&(identical(other.filename, filename) || other.filename == filename)&&(identical(other.ext, ext) || other.ext == ext)&&(identical(other.path, path) || other.path == path)&&(identical(other.relPath, relPath) || other.relPath == relPath)&&(identical(other.size, size) || other.size == size)&&(identical(other.mtime, mtime) || other.mtime == mtime)&&(identical(other.ctime, ctime) || other.ctime == ctime)&&(identical(other.birthtime, birthtime) || other.birthtime == birthtime));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FileMetadata&&(identical(other.filename, filename) || other.filename == filename)&&(identical(other.ext, ext) || other.ext == ext)&&(identical(other.path, path) || other.path == path)&&(identical(other.relPath, relPath) || other.relPath == relPath)&&(identical(other.size, size) || other.size == size)&&(identical(other.mtime, mtime) || other.mtime == mtime)&&(identical(other.ctime, ctime) || other.ctime == ctime)&&(identical(other.birthtime, birthtime) || other.birthtime == birthtime));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,filename,ext,path,relPath,size,mtime,ctime,birthtime);
+int get hashCode {
+    return Object.hash(runtimeType,filename,ext,path,relPath,size,mtime,ctime,birthtime);
+}
 
 @override
 String toString() {
-  return 'FileMetadata(filename: $filename, ext: $ext, path: $path, relPath: $relPath, size: $size, mtime: $mtime, ctime: $ctime, birthtime: $birthtime)';
+    return 'FileMetadata(filename: $filename, ext: $ext, path: $path, relPath: $relPath, size: $size, mtime: $mtime, ctime: $ctime, birthtime: $birthtime)';
 }
 
 

@@ -29,16 +29,21 @@ $StorageLocationCopyWith<StorageLocation> get copyWith => _$StorageLocationCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StorageLocation&&(identical(other.name, name) || other.name == name)&&(identical(other.uri, uri) || other.uri == uri)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.isInternal, isInternal) || other.isInternal == isInternal));
+  final _this = this as StorageLocation;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StorageLocation&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.uri, _this.uri) || other.uri == _this.uri)&&(identical(other.mediaType, _this.mediaType) || other.mediaType == _this.mediaType)&&(identical(other.isInternal, _this.isInternal) || other.isInternal == _this.isInternal));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,uri,mediaType,isInternal);
+int get hashCode {
+  final _this = this as StorageLocation;
+  return Object.hash(runtimeType,_this.name,_this.uri,_this.mediaType,_this.isInternal);
+}
 
 @override
 String toString() {
-  return 'StorageLocation(name: $name, uri: $uri, mediaType: $mediaType, isInternal: $isInternal)';
+  final _this = this as StorageLocation;
+  return 'StorageLocation(name: ${_this.name}, uri: ${_this.uri}, mediaType: ${_this.mediaType}, isInternal: ${_this.isInternal})';
 }
 
 
@@ -228,16 +233,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StorageLocation&&(identical(other.name, name) || other.name == name)&&(identical(other.uri, uri) || other.uri == uri)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.isInternal, isInternal) || other.isInternal == isInternal));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _StorageLocation&&(identical(other.name, name) || other.name == name)&&(identical(other.uri, uri) || other.uri == uri)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.isInternal, isInternal) || other.isInternal == isInternal));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,uri,mediaType,isInternal);
+int get hashCode {
+    return Object.hash(runtimeType,name,uri,mediaType,isInternal);
+}
 
 @override
 String toString() {
-  return 'StorageLocation(name: $name, uri: $uri, mediaType: $mediaType, isInternal: $isInternal)';
+    return 'StorageLocation(name: $name, uri: $uri, mediaType: $mediaType, isInternal: $isInternal)';
 }
 
 

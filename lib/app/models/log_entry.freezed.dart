@@ -29,16 +29,21 @@ $LogEntryCopyWith<LogEntry> get copyWith => _$LogEntryCopyWithImpl<LogEntry>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LogEntry&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.message, message) || other.message == message)&&(identical(other.level, level) || other.level == level)&&(identical(other.source, source) || other.source == source)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+  final _this = this as LogEntry;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LogEntry&&(identical(other.timestamp, _this.timestamp) || other.timestamp == _this.timestamp)&&(identical(other.message, _this.message) || other.message == _this.message)&&(identical(other.level, _this.level) || other.level == _this.level)&&(identical(other.source, _this.source) || other.source == _this.source)&&(identical(other.stackTrace, _this.stackTrace) || other.stackTrace == _this.stackTrace));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,timestamp,message,level,source,stackTrace);
+int get hashCode {
+  final _this = this as LogEntry;
+  return Object.hash(runtimeType,_this.timestamp,_this.message,_this.level,_this.source,_this.stackTrace);
+}
 
 @override
 String toString() {
-  return 'LogEntry(timestamp: $timestamp, message: $message, level: $level, source: $source, stackTrace: $stackTrace)';
+  final _this = this as LogEntry;
+  return 'LogEntry(timestamp: ${_this.timestamp}, message: ${_this.message}, level: ${_this.level}, source: ${_this.source}, stackTrace: ${_this.stackTrace})';
 }
 
 
@@ -230,16 +235,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LogEntry&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.message, message) || other.message == message)&&(identical(other.level, level) || other.level == level)&&(identical(other.source, source) || other.source == source)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LogEntry&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.message, message) || other.message == message)&&(identical(other.level, level) || other.level == level)&&(identical(other.source, source) || other.source == source)&&(identical(other.stackTrace, stackTrace) || other.stackTrace == stackTrace));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,timestamp,message,level,source,stackTrace);
+int get hashCode {
+    return Object.hash(runtimeType,timestamp,message,level,source,stackTrace);
+}
 
 @override
 String toString() {
-  return 'LogEntry(timestamp: $timestamp, message: $message, level: $level, source: $source, stackTrace: $stackTrace)';
+    return 'LogEntry(timestamp: $timestamp, message: $message, level: $level, source: $source, stackTrace: $stackTrace)';
 }
 
 

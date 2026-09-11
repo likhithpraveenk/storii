@@ -29,16 +29,21 @@ $LibraryFilterDataCopyWith<LibraryFilterData> get copyWith => _$LibraryFilterDat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryFilterData&&const DeepCollectionEquality().equals(other.authors, authors)&&const DeepCollectionEquality().equals(other.genres, genres)&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.series, series)&&const DeepCollectionEquality().equals(other.narrators, narrators)&&const DeepCollectionEquality().equals(other.languages, languages)&&const DeepCollectionEquality().equals(other.publishers, publishers)&&const DeepCollectionEquality().equals(other.publishedDecades, publishedDecades));
+  final _this = this as LibraryFilterData;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryFilterData&&const DeepCollectionEquality().equals(other.authors, _this.authors)&&const DeepCollectionEquality().equals(other.genres, _this.genres)&&const DeepCollectionEquality().equals(other.tags, _this.tags)&&const DeepCollectionEquality().equals(other.series, _this.series)&&const DeepCollectionEquality().equals(other.narrators, _this.narrators)&&const DeepCollectionEquality().equals(other.languages, _this.languages)&&const DeepCollectionEquality().equals(other.publishers, _this.publishers)&&const DeepCollectionEquality().equals(other.publishedDecades, _this.publishedDecades));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(authors),const DeepCollectionEquality().hash(genres),const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(series),const DeepCollectionEquality().hash(narrators),const DeepCollectionEquality().hash(languages),const DeepCollectionEquality().hash(publishers),const DeepCollectionEquality().hash(publishedDecades));
+int get hashCode {
+  final _this = this as LibraryFilterData;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.authors),const DeepCollectionEquality().hash(_this.genres),const DeepCollectionEquality().hash(_this.tags),const DeepCollectionEquality().hash(_this.series),const DeepCollectionEquality().hash(_this.narrators),const DeepCollectionEquality().hash(_this.languages),const DeepCollectionEquality().hash(_this.publishers),const DeepCollectionEquality().hash(_this.publishedDecades));
+}
 
 @override
 String toString() {
-  return 'LibraryFilterData(authors: $authors, genres: $genres, tags: $tags, series: $series, narrators: $narrators, languages: $languages, publishers: $publishers, publishedDecades: $publishedDecades)';
+  final _this = this as LibraryFilterData;
+  return 'LibraryFilterData(authors: ${_this.authors}, genres: ${_this.genres}, tags: ${_this.tags}, series: ${_this.series}, narrators: ${_this.narrators}, languages: ${_this.languages}, publishers: ${_this.publishers}, publishedDecades: ${_this.publishedDecades})';
 }
 
 
@@ -290,16 +295,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryFilterData&&const DeepCollectionEquality().equals(other._authors, _authors)&&const DeepCollectionEquality().equals(other._genres, _genres)&&const DeepCollectionEquality().equals(other._tags, _tags)&&const DeepCollectionEquality().equals(other._series, _series)&&const DeepCollectionEquality().equals(other._narrators, _narrators)&&const DeepCollectionEquality().equals(other._languages, _languages)&&const DeepCollectionEquality().equals(other._publishers, _publishers)&&const DeepCollectionEquality().equals(other._publishedDecades, _publishedDecades));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryFilterData&&const DeepCollectionEquality().equals(other.authors, _authors)&&const DeepCollectionEquality().equals(other.genres, _genres)&&const DeepCollectionEquality().equals(other.tags, _tags)&&const DeepCollectionEquality().equals(other.series, _series)&&const DeepCollectionEquality().equals(other.narrators, _narrators)&&const DeepCollectionEquality().equals(other.languages, _languages)&&const DeepCollectionEquality().equals(other.publishers, _publishers)&&const DeepCollectionEquality().equals(other.publishedDecades, _publishedDecades));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_authors),const DeepCollectionEquality().hash(_genres),const DeepCollectionEquality().hash(_tags),const DeepCollectionEquality().hash(_series),const DeepCollectionEquality().hash(_narrators),const DeepCollectionEquality().hash(_languages),const DeepCollectionEquality().hash(_publishers),const DeepCollectionEquality().hash(_publishedDecades));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_authors),const DeepCollectionEquality().hash(_genres),const DeepCollectionEquality().hash(_tags),const DeepCollectionEquality().hash(_series),const DeepCollectionEquality().hash(_narrators),const DeepCollectionEquality().hash(_languages),const DeepCollectionEquality().hash(_publishers),const DeepCollectionEquality().hash(_publishedDecades));
+}
 
 @override
 String toString() {
-  return 'LibraryFilterData(authors: $authors, genres: $genres, tags: $tags, series: $series, narrators: $narrators, languages: $languages, publishers: $publishers, publishedDecades: $publishedDecades)';
+    return 'LibraryFilterData(authors: $authors, genres: $genres, tags: $tags, series: $series, narrators: $narrators, languages: $languages, publishers: $publishers, publishedDecades: $publishedDecades)';
 }
 
 

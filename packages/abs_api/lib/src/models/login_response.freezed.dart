@@ -29,16 +29,21 @@ $LoginResponseCopyWith<LoginResponse> get copyWith => _$LoginResponseCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginResponse&&(identical(other.user, user) || other.user == user)&&(identical(other.userDefaultLibraryId, userDefaultLibraryId) || other.userDefaultLibraryId == userDefaultLibraryId)&&(identical(other.serverSettings, serverSettings) || other.serverSettings == serverSettings)&&(identical(other.source, source) || other.source == source));
+  final _this = this as LoginResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginResponse&&(identical(other.user, _this.user) || other.user == _this.user)&&(identical(other.userDefaultLibraryId, _this.userDefaultLibraryId) || other.userDefaultLibraryId == _this.userDefaultLibraryId)&&(identical(other.serverSettings, _this.serverSettings) || other.serverSettings == _this.serverSettings)&&(identical(other.source, _this.source) || other.source == _this.source));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,user,userDefaultLibraryId,serverSettings,source);
+int get hashCode {
+  final _this = this as LoginResponse;
+  return Object.hash(runtimeType,_this.user,_this.userDefaultLibraryId,_this.serverSettings,_this.source);
+}
 
 @override
 String toString() {
-  return 'LoginResponse(user: $user, userDefaultLibraryId: $userDefaultLibraryId, serverSettings: $serverSettings, source: $source)';
+  final _this = this as LoginResponse;
+  return 'LoginResponse(user: ${_this.user}, userDefaultLibraryId: ${_this.userDefaultLibraryId}, serverSettings: ${_this.serverSettings}, source: ${_this.source})';
 }
 
 
@@ -246,16 +251,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginResponse&&(identical(other.user, user) || other.user == user)&&(identical(other.userDefaultLibraryId, userDefaultLibraryId) || other.userDefaultLibraryId == userDefaultLibraryId)&&(identical(other.serverSettings, serverSettings) || other.serverSettings == serverSettings)&&(identical(other.source, source) || other.source == source));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginResponse&&(identical(other.user, user) || other.user == user)&&(identical(other.userDefaultLibraryId, userDefaultLibraryId) || other.userDefaultLibraryId == userDefaultLibraryId)&&(identical(other.serverSettings, serverSettings) || other.serverSettings == serverSettings)&&(identical(other.source, source) || other.source == source));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,user,userDefaultLibraryId,serverSettings,source);
+int get hashCode {
+    return Object.hash(runtimeType,user,userDefaultLibraryId,serverSettings,source);
+}
 
 @override
 String toString() {
-  return 'LoginResponse(user: $user, userDefaultLibraryId: $userDefaultLibraryId, serverSettings: $serverSettings, source: $source)';
+    return 'LoginResponse(user: $user, userDefaultLibraryId: $userDefaultLibraryId, serverSettings: $serverSettings, source: $source)';
 }
 
 

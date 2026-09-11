@@ -29,16 +29,21 @@ $RssFeedCopyWith<RssFeed> get copyWith => _$RssFeedCopyWithImpl<RssFeed>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RssFeed&&(identical(other.id, id) || other.id == id)&&(identical(other.entityId, entityId) || other.entityId == entityId)&&(identical(other.entityType, entityType) || other.entityType == entityType)&&(identical(other.feedUrl, feedUrl) || other.feedUrl == feedUrl)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&(identical(other.serverAddress, serverAddress) || other.serverAddress == serverAddress)&&(identical(other.meta, meta) || other.meta == meta)&&const DeepCollectionEquality().equals(other.episodes, episodes)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  final _this = this as RssFeed;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RssFeed&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.entityId, _this.entityId) || other.entityId == _this.entityId)&&(identical(other.entityType, _this.entityType) || other.entityType == _this.entityType)&&(identical(other.feedUrl, _this.feedUrl) || other.feedUrl == _this.feedUrl)&&(identical(other.slug, _this.slug) || other.slug == _this.slug)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.coverPath, _this.coverPath) || other.coverPath == _this.coverPath)&&(identical(other.serverAddress, _this.serverAddress) || other.serverAddress == _this.serverAddress)&&(identical(other.meta, _this.meta) || other.meta == _this.meta)&&const DeepCollectionEquality().equals(other.episodes, _this.episodes)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,entityId,entityType,feedUrl,slug,userId,coverPath,serverAddress,meta,const DeepCollectionEquality().hash(episodes),createdAt,updatedAt);
+int get hashCode {
+  final _this = this as RssFeed;
+  return Object.hash(runtimeType,_this.id,_this.entityId,_this.entityType,_this.feedUrl,_this.slug,_this.userId,_this.coverPath,_this.serverAddress,_this.meta,const DeepCollectionEquality().hash(_this.episodes),_this.createdAt,_this.updatedAt);
+}
 
 @override
 String toString() {
-  return 'RssFeed(id: $id, entityId: $entityId, entityType: $entityType, feedUrl: $feedUrl, slug: $slug, userId: $userId, coverPath: $coverPath, serverAddress: $serverAddress, meta: $meta, episodes: $episodes, createdAt: $createdAt, updatedAt: $updatedAt)';
+  final _this = this as RssFeed;
+  return 'RssFeed(id: ${_this.id}, entityId: ${_this.entityId}, entityType: ${_this.entityType}, feedUrl: ${_this.feedUrl}, slug: ${_this.slug}, userId: ${_this.userId}, coverPath: ${_this.coverPath}, serverAddress: ${_this.serverAddress}, meta: ${_this.meta}, episodes: ${_this.episodes}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt})';
 }
 
 
@@ -264,16 +269,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RssFeed&&(identical(other.id, id) || other.id == id)&&(identical(other.entityId, entityId) || other.entityId == entityId)&&(identical(other.entityType, entityType) || other.entityType == entityType)&&(identical(other.feedUrl, feedUrl) || other.feedUrl == feedUrl)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&(identical(other.serverAddress, serverAddress) || other.serverAddress == serverAddress)&&(identical(other.meta, meta) || other.meta == meta)&&const DeepCollectionEquality().equals(other._episodes, _episodes)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RssFeed&&(identical(other.id, id) || other.id == id)&&(identical(other.entityId, entityId) || other.entityId == entityId)&&(identical(other.entityType, entityType) || other.entityType == entityType)&&(identical(other.feedUrl, feedUrl) || other.feedUrl == feedUrl)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&(identical(other.serverAddress, serverAddress) || other.serverAddress == serverAddress)&&(identical(other.meta, meta) || other.meta == meta)&&const DeepCollectionEquality().equals(other.episodes, _episodes)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,entityId,entityType,feedUrl,slug,userId,coverPath,serverAddress,meta,const DeepCollectionEquality().hash(_episodes),createdAt,updatedAt);
+int get hashCode {
+    return Object.hash(runtimeType,id,entityId,entityType,feedUrl,slug,userId,coverPath,serverAddress,meta,const DeepCollectionEquality().hash(_episodes),createdAt,updatedAt);
+}
 
 @override
 String toString() {
-  return 'RssFeed(id: $id, entityId: $entityId, entityType: $entityType, feedUrl: $feedUrl, slug: $slug, userId: $userId, coverPath: $coverPath, serverAddress: $serverAddress, meta: $meta, episodes: $episodes, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'RssFeed(id: $id, entityId: $entityId, entityType: $entityType, feedUrl: $feedUrl, slug: $slug, userId: $userId, coverPath: $coverPath, serverAddress: $serverAddress, meta: $meta, episodes: $episodes, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 

@@ -29,16 +29,21 @@ $PodcastFeedCopyWith<PodcastFeed> get copyWith => _$PodcastFeedCopyWithImpl<Podc
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastFeed&&(identical(other.metadata, metadata) || other.metadata == metadata)&&const DeepCollectionEquality().equals(other.episodes, episodes));
+  final _this = this as PodcastFeed;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastFeed&&(identical(other.metadata, _this.metadata) || other.metadata == _this.metadata)&&const DeepCollectionEquality().equals(other.episodes, _this.episodes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,metadata,const DeepCollectionEquality().hash(episodes));
+int get hashCode {
+  final _this = this as PodcastFeed;
+  return Object.hash(runtimeType,_this.metadata,const DeepCollectionEquality().hash(_this.episodes));
+}
 
 @override
 String toString() {
-  return 'PodcastFeed(metadata: $metadata, episodes: $episodes)';
+  final _this = this as PodcastFeed;
+  return 'PodcastFeed(metadata: ${_this.metadata}, episodes: ${_this.episodes})';
 }
 
 
@@ -241,16 +246,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PodcastFeed&&(identical(other.metadata, metadata) || other.metadata == metadata)&&const DeepCollectionEquality().equals(other._episodes, _episodes));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PodcastFeed&&(identical(other.metadata, metadata) || other.metadata == metadata)&&const DeepCollectionEquality().equals(other.episodes, _episodes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,metadata,const DeepCollectionEquality().hash(_episodes));
+int get hashCode {
+    return Object.hash(runtimeType,metadata,const DeepCollectionEquality().hash(_episodes));
+}
 
 @override
 String toString() {
-  return 'PodcastFeed(metadata: $metadata, episodes: $episodes)';
+    return 'PodcastFeed(metadata: $metadata, episodes: $episodes)';
 }
 
 

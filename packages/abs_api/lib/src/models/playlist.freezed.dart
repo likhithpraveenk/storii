@@ -29,16 +29,21 @@ $PlaylistCopyWith<Playlist> get copyWith => _$PlaylistCopyWithImpl<Playlist>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Playlist&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.description, description) || other.description == description)&&(identical(other.lastUpdate, lastUpdate) || other.lastUpdate == lastUpdate)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.items, items));
+  final _this = this as Playlist;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Playlist&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.libraryId, _this.libraryId) || other.libraryId == _this.libraryId)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.lastUpdate, _this.lastUpdate) || other.lastUpdate == _this.lastUpdate)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&const DeepCollectionEquality().equals(other.items, _this.items));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,libraryId,userId,description,lastUpdate,createdAt,const DeepCollectionEquality().hash(items));
+int get hashCode {
+  final _this = this as Playlist;
+  return Object.hash(runtimeType,_this.id,_this.name,_this.libraryId,_this.userId,_this.description,_this.lastUpdate,_this.createdAt,const DeepCollectionEquality().hash(_this.items));
+}
 
 @override
 String toString() {
-  return 'Playlist(id: $id, name: $name, libraryId: $libraryId, userId: $userId, description: $description, lastUpdate: $lastUpdate, createdAt: $createdAt, items: $items)';
+  final _this = this as Playlist;
+  return 'Playlist(id: ${_this.id}, name: ${_this.name}, libraryId: ${_this.libraryId}, userId: ${_this.userId}, description: ${_this.description}, lastUpdate: ${_this.lastUpdate}, createdAt: ${_this.createdAt}, items: ${_this.items})';
 }
 
 
@@ -248,16 +253,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Playlist&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.description, description) || other.description == description)&&(identical(other.lastUpdate, lastUpdate) || other.lastUpdate == lastUpdate)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other._items, _items));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Playlist&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.description, description) || other.description == description)&&(identical(other.lastUpdate, lastUpdate) || other.lastUpdate == lastUpdate)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.items, _items));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,libraryId,userId,description,lastUpdate,createdAt,const DeepCollectionEquality().hash(_items));
+int get hashCode {
+    return Object.hash(runtimeType,id,name,libraryId,userId,description,lastUpdate,createdAt,const DeepCollectionEquality().hash(_items));
+}
 
 @override
 String toString() {
-  return 'Playlist(id: $id, name: $name, libraryId: $libraryId, userId: $userId, description: $description, lastUpdate: $lastUpdate, createdAt: $createdAt, items: $items)';
+    return 'Playlist(id: $id, name: $name, libraryId: $libraryId, userId: $userId, description: $description, lastUpdate: $lastUpdate, createdAt: $createdAt, items: $items)';
 }
 
 

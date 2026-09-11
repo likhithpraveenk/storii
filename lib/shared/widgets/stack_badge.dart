@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class StackBadge extends StatelessWidget {
   const new(this.value, {super.key});
