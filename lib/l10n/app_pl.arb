@@ -553,5 +553,10 @@
   "shakeSensitivity": "Czułość potrząśnięcia",
   "low": "Niska",
   "medium": "Średnia",
-  "high": "Wysoka"
+  "high": "Wysoka",
+  "internalAppStorage": "Wewnętrzna pamięć aplikacji",
+  "sdCard": "Karta SD",
+  "addFolder": "Dodaj folder",
+  "removeLocationQ": "Usunąć folder?",
+  "removeLocationSubtitle": "Pliki pobrane do tego folderu zostaną usunięte"
 }
