@@ -29,16 +29,21 @@ $ServerCopyWith<Server> get copyWith => _$ServerCopyWithImpl<Server>(this as Ser
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Server&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url)&&const DeepCollectionEquality().equals(other.headers, headers));
+  final _this = this as Server;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Server&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.url, _this.url) || other.url == _this.url)&&const DeepCollectionEquality().equals(other.headers, _this.headers));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,url,const DeepCollectionEquality().hash(headers));
+int get hashCode {
+  final _this = this as Server;
+  return Object.hash(runtimeType,_this.id,_this.url,const DeepCollectionEquality().hash(_this.headers));
+}
 
 @override
 String toString() {
-  return 'Server(id: $id, url: $url, headers: $headers)';
+  final _this = this as Server;
+  return 'Server(id: ${_this.id}, url: ${_this.url}, headers: ${_this.headers})';
 }
 
 
@@ -232,16 +237,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Server&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url)&&const DeepCollectionEquality().equals(other._headers, _headers));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Server&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url)&&const DeepCollectionEquality().equals(other.headers, _headers));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,url,const DeepCollectionEquality().hash(_headers));
+int get hashCode {
+    return Object.hash(runtimeType,id,url,const DeepCollectionEquality().hash(_headers));
+}
 
 @override
 String toString() {
-  return 'Server(id: $id, url: $url, headers: $headers)';
+    return 'Server(id: $id, url: $url, headers: $headers)';
 }
 
 

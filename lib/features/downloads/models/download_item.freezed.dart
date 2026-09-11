@@ -29,16 +29,21 @@ $DownloadTrackCopyWith<DownloadTrack> get copyWith => _$DownloadTrackCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DownloadTrack&&(identical(other.audioTrack, audioTrack) || other.audioTrack == audioTrack)&&(identical(other.ino, ino) || other.ino == ino)&&(identical(other.bytesReceived, bytesReceived) || other.bytesReceived == bytesReceived)&&(identical(other.bytesTotal, bytesTotal) || other.bytesTotal == bytesTotal)&&(identical(other.status, status) || other.status == status));
+  final _this = this as DownloadTrack;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DownloadTrack&&(identical(other.audioTrack, _this.audioTrack) || other.audioTrack == _this.audioTrack)&&(identical(other.ino, _this.ino) || other.ino == _this.ino)&&(identical(other.bytesReceived, _this.bytesReceived) || other.bytesReceived == _this.bytesReceived)&&(identical(other.bytesTotal, _this.bytesTotal) || other.bytesTotal == _this.bytesTotal)&&(identical(other.status, _this.status) || other.status == _this.status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,audioTrack,ino,bytesReceived,bytesTotal,status);
+int get hashCode {
+  final _this = this as DownloadTrack;
+  return Object.hash(runtimeType,_this.audioTrack,_this.ino,_this.bytesReceived,_this.bytesTotal,_this.status);
+}
 
 @override
 String toString() {
-  return 'DownloadTrack(audioTrack: $audioTrack, ino: $ino, bytesReceived: $bytesReceived, bytesTotal: $bytesTotal, status: $status)';
+  final _this = this as DownloadTrack;
+  return 'DownloadTrack(audioTrack: ${_this.audioTrack}, ino: ${_this.ino}, bytesReceived: ${_this.bytesReceived}, bytesTotal: ${_this.bytesTotal}, status: ${_this.status})';
 }
 
 
@@ -239,16 +244,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DownloadTrack&&(identical(other.audioTrack, audioTrack) || other.audioTrack == audioTrack)&&(identical(other.ino, ino) || other.ino == ino)&&(identical(other.bytesReceived, bytesReceived) || other.bytesReceived == bytesReceived)&&(identical(other.bytesTotal, bytesTotal) || other.bytesTotal == bytesTotal)&&(identical(other.status, status) || other.status == status));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DownloadTrack&&(identical(other.audioTrack, audioTrack) || other.audioTrack == audioTrack)&&(identical(other.ino, ino) || other.ino == ino)&&(identical(other.bytesReceived, bytesReceived) || other.bytesReceived == bytesReceived)&&(identical(other.bytesTotal, bytesTotal) || other.bytesTotal == bytesTotal)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,audioTrack,ino,bytesReceived,bytesTotal,status);
+int get hashCode {
+    return Object.hash(runtimeType,audioTrack,ino,bytesReceived,bytesTotal,status);
+}
 
 @override
 String toString() {
-  return 'DownloadTrack(audioTrack: $audioTrack, ino: $ino, bytesReceived: $bytesReceived, bytesTotal: $bytesTotal, status: $status)';
+    return 'DownloadTrack(audioTrack: $audioTrack, ino: $ino, bytesReceived: $bytesReceived, bytesTotal: $bytesTotal, status: $status)';
 }
 
 
@@ -316,16 +323,21 @@ $DownloadItemCopyWith<DownloadItem> get copyWith => _$DownloadItemCopyWithImpl<D
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DownloadItem&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&const DeepCollectionEquality().equals(other.tracks, tracks)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.folderPath, folderPath) || other.folderPath == folderPath));
+  final _this = this as DownloadItem;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DownloadItem&&(identical(other.serverUrl, _this.serverUrl) || other.serverUrl == _this.serverUrl)&&(identical(other.libraryItemId, _this.libraryItemId) || other.libraryItemId == _this.libraryItemId)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.author, _this.author) || other.author == _this.author)&&const DeepCollectionEquality().equals(other.tracks, _this.tracks)&&(identical(other.mediaType, _this.mediaType) || other.mediaType == _this.mediaType)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.startedAt, _this.startedAt) || other.startedAt == _this.startedAt)&&(identical(other.episodeId, _this.episodeId) || other.episodeId == _this.episodeId)&&(identical(other.folderPath, _this.folderPath) || other.folderPath == _this.folderPath));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,serverUrl,libraryItemId,userId,title,author,const DeepCollectionEquality().hash(tracks),mediaType,status,startedAt,episodeId,folderPath);
+int get hashCode {
+  final _this = this as DownloadItem;
+  return Object.hash(runtimeType,_this.serverUrl,_this.libraryItemId,_this.userId,_this.title,_this.author,const DeepCollectionEquality().hash(_this.tracks),_this.mediaType,_this.status,_this.startedAt,_this.episodeId,_this.folderPath);
+}
 
 @override
 String toString() {
-  return 'DownloadItem(serverUrl: $serverUrl, libraryItemId: $libraryItemId, userId: $userId, title: $title, author: $author, tracks: $tracks, mediaType: $mediaType, status: $status, startedAt: $startedAt, episodeId: $episodeId, folderPath: $folderPath)';
+  final _this = this as DownloadItem;
+  return 'DownloadItem(serverUrl: ${_this.serverUrl}, libraryItemId: ${_this.libraryItemId}, userId: ${_this.userId}, title: ${_this.title}, author: ${_this.author}, tracks: ${_this.tracks}, mediaType: ${_this.mediaType}, status: ${_this.status}, startedAt: ${_this.startedAt}, episodeId: ${_this.episodeId}, folderPath: ${_this.folderPath})';
 }
 
 
@@ -535,16 +547,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DownloadItem&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&const DeepCollectionEquality().equals(other._tracks, _tracks)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.folderPath, folderPath) || other.folderPath == folderPath));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DownloadItem&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&const DeepCollectionEquality().equals(other.tracks, _tracks)&&(identical(other.mediaType, mediaType) || other.mediaType == mediaType)&&(identical(other.status, status) || other.status == status)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.folderPath, folderPath) || other.folderPath == folderPath));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,serverUrl,libraryItemId,userId,title,author,const DeepCollectionEquality().hash(_tracks),mediaType,status,startedAt,episodeId,folderPath);
+int get hashCode {
+    return Object.hash(runtimeType,serverUrl,libraryItemId,userId,title,author,const DeepCollectionEquality().hash(_tracks),mediaType,status,startedAt,episodeId,folderPath);
+}
 
 @override
 String toString() {
-  return 'DownloadItem(serverUrl: $serverUrl, libraryItemId: $libraryItemId, userId: $userId, title: $title, author: $author, tracks: $tracks, mediaType: $mediaType, status: $status, startedAt: $startedAt, episodeId: $episodeId, folderPath: $folderPath)';
+    return 'DownloadItem(serverUrl: $serverUrl, libraryItemId: $libraryItemId, userId: $userId, title: $title, author: $author, tracks: $tracks, mediaType: $mediaType, status: $status, startedAt: $startedAt, episodeId: $episodeId, folderPath: $folderPath)';
 }
 
 

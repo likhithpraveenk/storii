@@ -29,16 +29,21 @@ $PodcastFeedEpisodeCopyWith<PodcastFeedEpisode> get copyWith => _$PodcastFeedEpi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastFeedEpisode&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.description, description) || other.description == description)&&(identical(other.descriptionPlain, descriptionPlain) || other.descriptionPlain == descriptionPlain)&&(identical(other.pubDate, pubDate) || other.pubDate == pubDate)&&(identical(other.episodeType, episodeType) || other.episodeType == episodeType)&&(identical(other.season, season) || other.season == season)&&(identical(other.episode, episode) || other.episode == episode)&&(identical(other.author, author) || other.author == author)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt)&&(identical(other.enclosure, enclosure) || other.enclosure == enclosure));
+  final _this = this as PodcastFeedEpisode;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastFeedEpisode&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.subtitle, _this.subtitle) || other.subtitle == _this.subtitle)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.descriptionPlain, _this.descriptionPlain) || other.descriptionPlain == _this.descriptionPlain)&&(identical(other.pubDate, _this.pubDate) || other.pubDate == _this.pubDate)&&(identical(other.episodeType, _this.episodeType) || other.episodeType == _this.episodeType)&&(identical(other.season, _this.season) || other.season == _this.season)&&(identical(other.episode, _this.episode) || other.episode == _this.episode)&&(identical(other.author, _this.author) || other.author == _this.author)&&(identical(other.duration, _this.duration) || other.duration == _this.duration)&&(identical(other.explicit, _this.explicit) || other.explicit == _this.explicit)&&(identical(other.publishedAt, _this.publishedAt) || other.publishedAt == _this.publishedAt)&&(identical(other.enclosure, _this.enclosure) || other.enclosure == _this.enclosure));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,subtitle,description,descriptionPlain,pubDate,episodeType,season,episode,author,duration,explicit,publishedAt,enclosure);
+int get hashCode {
+  final _this = this as PodcastFeedEpisode;
+  return Object.hash(runtimeType,_this.title,_this.subtitle,_this.description,_this.descriptionPlain,_this.pubDate,_this.episodeType,_this.season,_this.episode,_this.author,_this.duration,_this.explicit,_this.publishedAt,_this.enclosure);
+}
 
 @override
 String toString() {
-  return 'PodcastFeedEpisode(title: $title, subtitle: $subtitle, description: $description, descriptionPlain: $descriptionPlain, pubDate: $pubDate, episodeType: $episodeType, season: $season, episode: $episode, author: $author, duration: $duration, explicit: $explicit, publishedAt: $publishedAt, enclosure: $enclosure)';
+  final _this = this as PodcastFeedEpisode;
+  return 'PodcastFeedEpisode(title: ${_this.title}, subtitle: ${_this.subtitle}, description: ${_this.description}, descriptionPlain: ${_this.descriptionPlain}, pubDate: ${_this.pubDate}, episodeType: ${_this.episodeType}, season: ${_this.season}, episode: ${_this.episode}, author: ${_this.author}, duration: ${_this.duration}, explicit: ${_this.explicit}, publishedAt: ${_this.publishedAt}, enclosure: ${_this.enclosure})';
 }
 
 
@@ -255,16 +260,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PodcastFeedEpisode&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.description, description) || other.description == description)&&(identical(other.descriptionPlain, descriptionPlain) || other.descriptionPlain == descriptionPlain)&&(identical(other.pubDate, pubDate) || other.pubDate == pubDate)&&(identical(other.episodeType, episodeType) || other.episodeType == episodeType)&&(identical(other.season, season) || other.season == season)&&(identical(other.episode, episode) || other.episode == episode)&&(identical(other.author, author) || other.author == author)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt)&&(identical(other.enclosure, enclosure) || other.enclosure == enclosure));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PodcastFeedEpisode&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.description, description) || other.description == description)&&(identical(other.descriptionPlain, descriptionPlain) || other.descriptionPlain == descriptionPlain)&&(identical(other.pubDate, pubDate) || other.pubDate == pubDate)&&(identical(other.episodeType, episodeType) || other.episodeType == episodeType)&&(identical(other.season, season) || other.season == season)&&(identical(other.episode, episode) || other.episode == episode)&&(identical(other.author, author) || other.author == author)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt)&&(identical(other.enclosure, enclosure) || other.enclosure == enclosure));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,subtitle,description,descriptionPlain,pubDate,episodeType,season,episode,author,duration,explicit,publishedAt,enclosure);
+int get hashCode {
+    return Object.hash(runtimeType,title,subtitle,description,descriptionPlain,pubDate,episodeType,season,episode,author,duration,explicit,publishedAt,enclosure);
+}
 
 @override
 String toString() {
-  return 'PodcastFeedEpisode(title: $title, subtitle: $subtitle, description: $description, descriptionPlain: $descriptionPlain, pubDate: $pubDate, episodeType: $episodeType, season: $season, episode: $episode, author: $author, duration: $duration, explicit: $explicit, publishedAt: $publishedAt, enclosure: $enclosure)';
+    return 'PodcastFeedEpisode(title: $title, subtitle: $subtitle, description: $description, descriptionPlain: $descriptionPlain, pubDate: $pubDate, episodeType: $episodeType, season: $season, episode: $episode, author: $author, duration: $duration, explicit: $explicit, publishedAt: $publishedAt, enclosure: $enclosure)';
 }
 
 

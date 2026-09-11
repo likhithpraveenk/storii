@@ -29,16 +29,21 @@ $LibraryResponseCopyWith<LibraryResponse> get copyWith => _$LibraryResponseCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryResponse&&(identical(other.filterData, filterData) || other.filterData == filterData)&&(identical(other.issues, issues) || other.issues == issues)&&(identical(other.numUserPlaylists, numUserPlaylists) || other.numUserPlaylists == numUserPlaylists)&&(identical(other.library, library) || other.library == library));
+  final _this = this as LibraryResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryResponse&&(identical(other.filterData, _this.filterData) || other.filterData == _this.filterData)&&(identical(other.issues, _this.issues) || other.issues == _this.issues)&&(identical(other.numUserPlaylists, _this.numUserPlaylists) || other.numUserPlaylists == _this.numUserPlaylists)&&(identical(other.library, _this.library) || other.library == _this.library));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,filterData,issues,numUserPlaylists,library);
+int get hashCode {
+  final _this = this as LibraryResponse;
+  return Object.hash(runtimeType,_this.filterData,_this.issues,_this.numUserPlaylists,_this.library);
+}
 
 @override
 String toString() {
-  return 'LibraryResponse(filterData: $filterData, issues: $issues, numUserPlaylists: $numUserPlaylists, library: $library)';
+  final _this = this as LibraryResponse;
+  return 'LibraryResponse(filterData: ${_this.filterData}, issues: ${_this.issues}, numUserPlaylists: ${_this.numUserPlaylists}, library: ${_this.library})';
 }
 
 
@@ -252,16 +257,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryResponse&&(identical(other.filterData, filterData) || other.filterData == filterData)&&(identical(other.issues, issues) || other.issues == issues)&&(identical(other.numUserPlaylists, numUserPlaylists) || other.numUserPlaylists == numUserPlaylists)&&(identical(other.library, library) || other.library == library));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryResponse&&(identical(other.filterData, filterData) || other.filterData == filterData)&&(identical(other.issues, issues) || other.issues == issues)&&(identical(other.numUserPlaylists, numUserPlaylists) || other.numUserPlaylists == numUserPlaylists)&&(identical(other.library, library) || other.library == library));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,filterData,issues,numUserPlaylists,library);
+int get hashCode {
+    return Object.hash(runtimeType,filterData,issues,numUserPlaylists,library);
+}
 
 @override
 String toString() {
-  return 'LibraryResponse(filterData: $filterData, issues: $issues, numUserPlaylists: $numUserPlaylists, library: $library)';
+    return 'LibraryResponse(filterData: $filterData, issues: $issues, numUserPlaylists: $numUserPlaylists, library: $library)';
 }
 
 

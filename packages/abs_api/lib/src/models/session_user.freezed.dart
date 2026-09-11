@@ -29,16 +29,21 @@ $SessionUserCopyWith<SessionUser> get copyWith => _$SessionUserCopyWithImpl<Sess
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionUser&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username));
+  final _this = this as SessionUser;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionUser&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.username, _this.username) || other.username == _this.username));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,username);
+int get hashCode {
+  final _this = this as SessionUser;
+  return Object.hash(runtimeType,_this.id,_this.username);
+}
 
 @override
 String toString() {
-  return 'SessionUser(id: $id, username: $username)';
+  final _this = this as SessionUser;
+  return 'SessionUser(id: ${_this.id}, username: ${_this.username})';
 }
 
 
@@ -230,16 +235,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionUser&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionUser&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,username);
+int get hashCode {
+    return Object.hash(runtimeType,id,username);
+}
 
 @override
 String toString() {
-  return 'SessionUser(id: $id, username: $username)';
+    return 'SessionUser(id: $id, username: $username)';
 }
 
 

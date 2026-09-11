@@ -29,16 +29,21 @@ $LibraryItemsRequestParamsCopyWith<LibraryItemsRequestParams> get copyWith => _$
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItemsRequestParams&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.page, page) || other.page == page)&&(identical(other.sort, sort) || other.sort == sort)&&(identical(other.desc, desc) || other.desc == desc)&&(identical(other.filter, filter) || other.filter == filter)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries));
+  final _this = this as LibraryItemsRequestParams;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItemsRequestParams&&(identical(other.limit, _this.limit) || other.limit == _this.limit)&&(identical(other.page, _this.page) || other.page == _this.page)&&(identical(other.sort, _this.sort) || other.sort == _this.sort)&&(identical(other.desc, _this.desc) || other.desc == _this.desc)&&(identical(other.filter, _this.filter) || other.filter == _this.filter)&&(identical(other.collapseSeries, _this.collapseSeries) || other.collapseSeries == _this.collapseSeries));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,limit,page,sort,desc,filter,collapseSeries);
+int get hashCode {
+  final _this = this as LibraryItemsRequestParams;
+  return Object.hash(runtimeType,_this.limit,_this.page,_this.sort,_this.desc,_this.filter,_this.collapseSeries);
+}
 
 @override
 String toString() {
-  return 'LibraryItemsRequestParams(limit: $limit, page: $page, sort: $sort, desc: $desc, filter: $filter, collapseSeries: $collapseSeries)';
+  final _this = this as LibraryItemsRequestParams;
+  return 'LibraryItemsRequestParams(limit: ${_this.limit}, page: ${_this.page}, sort: ${_this.sort}, desc: ${_this.desc}, filter: ${_this.filter}, collapseSeries: ${_this.collapseSeries})';
 }
 
 
@@ -238,16 +243,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryItemsRequestParams&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.page, page) || other.page == page)&&(identical(other.sort, sort) || other.sort == sort)&&(identical(other.desc, desc) || other.desc == desc)&&(identical(other.filter, filter) || other.filter == filter)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LibraryItemsRequestParams&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.page, page) || other.page == page)&&(identical(other.sort, sort) || other.sort == sort)&&(identical(other.desc, desc) || other.desc == desc)&&(identical(other.filter, filter) || other.filter == filter)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,limit,page,sort,desc,filter,collapseSeries);
+int get hashCode {
+    return Object.hash(runtimeType,limit,page,sort,desc,filter,collapseSeries);
+}
 
 @override
 String toString() {
-  return 'LibraryItemsRequestParams(limit: $limit, page: $page, sort: $sort, desc: $desc, filter: $filter, collapseSeries: $collapseSeries)';
+    return 'LibraryItemsRequestParams(limit: $limit, page: $page, sort: $sort, desc: $desc, filter: $filter, collapseSeries: $collapseSeries)';
 }
 
 

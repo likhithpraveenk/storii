@@ -29,16 +29,21 @@ $AuthorCopyWith<Author> get copyWith => _$AuthorCopyWithImpl<Author>(this as Aut
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Author&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.lastFirst, lastFirst) || other.lastFirst == lastFirst)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.asin, asin) || other.asin == asin)&&(identical(other.description, description) || other.description == description)&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.numBooks, numBooks) || other.numBooks == numBooks)&&const DeepCollectionEquality().equals(other.libraryItems, libraryItems)&&const DeepCollectionEquality().equals(other.series, series));
+  final _this = this as Author;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Author&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.lastFirst, _this.lastFirst) || other.lastFirst == _this.lastFirst)&&(identical(other.libraryId, _this.libraryId) || other.libraryId == _this.libraryId)&&(identical(other.asin, _this.asin) || other.asin == _this.asin)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.imagePath, _this.imagePath) || other.imagePath == _this.imagePath)&&(identical(other.addedAt, _this.addedAt) || other.addedAt == _this.addedAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&(identical(other.numBooks, _this.numBooks) || other.numBooks == _this.numBooks)&&const DeepCollectionEquality().equals(other.libraryItems, _this.libraryItems)&&const DeepCollectionEquality().equals(other.series, _this.series));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,lastFirst,libraryId,asin,description,imagePath,addedAt,updatedAt,numBooks,const DeepCollectionEquality().hash(libraryItems),const DeepCollectionEquality().hash(series));
+int get hashCode {
+  final _this = this as Author;
+  return Object.hash(runtimeType,_this.id,_this.name,_this.lastFirst,_this.libraryId,_this.asin,_this.description,_this.imagePath,_this.addedAt,_this.updatedAt,_this.numBooks,const DeepCollectionEquality().hash(_this.libraryItems),const DeepCollectionEquality().hash(_this.series));
+}
 
 @override
 String toString() {
-  return 'Author(id: $id, name: $name, lastFirst: $lastFirst, libraryId: $libraryId, asin: $asin, description: $description, imagePath: $imagePath, addedAt: $addedAt, updatedAt: $updatedAt, numBooks: $numBooks, libraryItems: $libraryItems, series: $series)';
+  final _this = this as Author;
+  return 'Author(id: ${_this.id}, name: ${_this.name}, lastFirst: ${_this.lastFirst}, libraryId: ${_this.libraryId}, asin: ${_this.asin}, description: ${_this.description}, imagePath: ${_this.imagePath}, addedAt: ${_this.addedAt}, updatedAt: ${_this.updatedAt}, numBooks: ${_this.numBooks}, libraryItems: ${_this.libraryItems}, series: ${_this.series})';
 }
 
 
@@ -260,16 +265,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Author&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.lastFirst, lastFirst) || other.lastFirst == lastFirst)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.asin, asin) || other.asin == asin)&&(identical(other.description, description) || other.description == description)&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.numBooks, numBooks) || other.numBooks == numBooks)&&const DeepCollectionEquality().equals(other._libraryItems, _libraryItems)&&const DeepCollectionEquality().equals(other._series, _series));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Author&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.lastFirst, lastFirst) || other.lastFirst == lastFirst)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.asin, asin) || other.asin == asin)&&(identical(other.description, description) || other.description == description)&&(identical(other.imagePath, imagePath) || other.imagePath == imagePath)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.numBooks, numBooks) || other.numBooks == numBooks)&&const DeepCollectionEquality().equals(other.libraryItems, _libraryItems)&&const DeepCollectionEquality().equals(other.series, _series));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,lastFirst,libraryId,asin,description,imagePath,addedAt,updatedAt,numBooks,const DeepCollectionEquality().hash(_libraryItems),const DeepCollectionEquality().hash(_series));
+int get hashCode {
+    return Object.hash(runtimeType,id,name,lastFirst,libraryId,asin,description,imagePath,addedAt,updatedAt,numBooks,const DeepCollectionEquality().hash(_libraryItems),const DeepCollectionEquality().hash(_series));
+}
 
 @override
 String toString() {
-  return 'Author(id: $id, name: $name, lastFirst: $lastFirst, libraryId: $libraryId, asin: $asin, description: $description, imagePath: $imagePath, addedAt: $addedAt, updatedAt: $updatedAt, numBooks: $numBooks, libraryItems: $libraryItems, series: $series)';
+    return 'Author(id: $id, name: $name, lastFirst: $lastFirst, libraryId: $libraryId, asin: $asin, description: $description, imagePath: $imagePath, addedAt: $addedAt, updatedAt: $updatedAt, numBooks: $numBooks, libraryItems: $libraryItems, series: $series)';
 }
 
 

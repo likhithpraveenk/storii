@@ -29,16 +29,21 @@ $SessionsResponseCopyWith<SessionsResponse> get copyWith => _$SessionsResponseCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionsResponse&&(identical(other.total, total) || other.total == total)&&(identical(other.numPages, numPages) || other.numPages == numPages)&&(identical(other.itemsPerPage, itemsPerPage) || other.itemsPerPage == itemsPerPage)&&const DeepCollectionEquality().equals(other.sessions, sessions)&&(identical(other.userFilter, userFilter) || other.userFilter == userFilter));
+  final _this = this as SessionsResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionsResponse&&(identical(other.total, _this.total) || other.total == _this.total)&&(identical(other.numPages, _this.numPages) || other.numPages == _this.numPages)&&(identical(other.itemsPerPage, _this.itemsPerPage) || other.itemsPerPage == _this.itemsPerPage)&&const DeepCollectionEquality().equals(other.sessions, _this.sessions)&&(identical(other.userFilter, _this.userFilter) || other.userFilter == _this.userFilter));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,total,numPages,itemsPerPage,const DeepCollectionEquality().hash(sessions),userFilter);
+int get hashCode {
+  final _this = this as SessionsResponse;
+  return Object.hash(runtimeType,_this.total,_this.numPages,_this.itemsPerPage,const DeepCollectionEquality().hash(_this.sessions),_this.userFilter);
+}
 
 @override
 String toString() {
-  return 'SessionsResponse(total: $total, numPages: $numPages, itemsPerPage: $itemsPerPage, sessions: $sessions, userFilter: $userFilter)';
+  final _this = this as SessionsResponse;
+  return 'SessionsResponse(total: ${_this.total}, numPages: ${_this.numPages}, itemsPerPage: ${_this.itemsPerPage}, sessions: ${_this.sessions}, userFilter: ${_this.userFilter})';
 }
 
 
@@ -242,16 +247,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionsResponse&&(identical(other.total, total) || other.total == total)&&(identical(other.numPages, numPages) || other.numPages == numPages)&&(identical(other.itemsPerPage, itemsPerPage) || other.itemsPerPage == itemsPerPage)&&const DeepCollectionEquality().equals(other._sessions, _sessions)&&(identical(other.userFilter, userFilter) || other.userFilter == userFilter));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionsResponse&&(identical(other.total, total) || other.total == total)&&(identical(other.numPages, numPages) || other.numPages == numPages)&&(identical(other.itemsPerPage, itemsPerPage) || other.itemsPerPage == itemsPerPage)&&const DeepCollectionEquality().equals(other.sessions, _sessions)&&(identical(other.userFilter, userFilter) || other.userFilter == userFilter));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,total,numPages,itemsPerPage,const DeepCollectionEquality().hash(_sessions),userFilter);
+int get hashCode {
+    return Object.hash(runtimeType,total,numPages,itemsPerPage,const DeepCollectionEquality().hash(_sessions),userFilter);
+}
 
 @override
 String toString() {
-  return 'SessionsResponse(total: $total, numPages: $numPages, itemsPerPage: $itemsPerPage, sessions: $sessions, userFilter: $userFilter)';
+    return 'SessionsResponse(total: $total, numPages: $numPages, itemsPerPage: $itemsPerPage, sessions: $sessions, userFilter: $userFilter)';
 }
 
 

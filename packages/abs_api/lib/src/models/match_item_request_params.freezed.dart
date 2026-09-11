@@ -29,16 +29,21 @@ $MatchItemRequestParamsCopyWith<MatchItemRequestParams> get copyWith => _$MatchI
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MatchItemRequestParams&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&(identical(other.overrideDefaults, overrideDefaults) || other.overrideDefaults == overrideDefaults)&&(identical(other.isbn, isbn) || other.isbn == isbn)&&(identical(other.asin, asin) || other.asin == asin));
+  final _this = this as MatchItemRequestParams;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MatchItemRequestParams&&(identical(other.provider, _this.provider) || other.provider == _this.provider)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.author, _this.author) || other.author == _this.author)&&(identical(other.overrideDefaults, _this.overrideDefaults) || other.overrideDefaults == _this.overrideDefaults)&&(identical(other.isbn, _this.isbn) || other.isbn == _this.isbn)&&(identical(other.asin, _this.asin) || other.asin == _this.asin));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,provider,title,author,overrideDefaults,isbn,asin);
+int get hashCode {
+  final _this = this as MatchItemRequestParams;
+  return Object.hash(runtimeType,_this.provider,_this.title,_this.author,_this.overrideDefaults,_this.isbn,_this.asin);
+}
 
 @override
 String toString() {
-  return 'MatchItemRequestParams(provider: $provider, title: $title, author: $author, overrideDefaults: $overrideDefaults, isbn: $isbn, asin: $asin)';
+  final _this = this as MatchItemRequestParams;
+  return 'MatchItemRequestParams(provider: ${_this.provider}, title: ${_this.title}, author: ${_this.author}, overrideDefaults: ${_this.overrideDefaults}, isbn: ${_this.isbn}, asin: ${_this.asin})';
 }
 
 
@@ -241,16 +246,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MatchItemRequestParams&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&(identical(other.overrideDefaults, overrideDefaults) || other.overrideDefaults == overrideDefaults)&&(identical(other.isbn, isbn) || other.isbn == isbn)&&(identical(other.asin, asin) || other.asin == asin));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MatchItemRequestParams&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.title, title) || other.title == title)&&(identical(other.author, author) || other.author == author)&&(identical(other.overrideDefaults, overrideDefaults) || other.overrideDefaults == overrideDefaults)&&(identical(other.isbn, isbn) || other.isbn == isbn)&&(identical(other.asin, asin) || other.asin == asin));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,provider,title,author,overrideDefaults,isbn,asin);
+int get hashCode {
+    return Object.hash(runtimeType,provider,title,author,overrideDefaults,isbn,asin);
+}
 
 @override
 String toString() {
-  return 'MatchItemRequestParams(provider: $provider, title: $title, author: $author, overrideDefaults: $overrideDefaults, isbn: $isbn, asin: $asin)';
+    return 'MatchItemRequestParams(provider: $provider, title: $title, author: $author, overrideDefaults: $overrideDefaults, isbn: $isbn, asin: $asin)';
 }
 
 

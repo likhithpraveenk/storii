@@ -29,16 +29,21 @@ $FilesystemDirectoryCopyWith<FilesystemDirectory> get copyWith => _$FilesystemDi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FilesystemDirectory&&(identical(other.path, path) || other.path == path)&&(identical(other.dirname, dirname) || other.dirname == dirname)&&(identical(other.fullPath, fullPath) || other.fullPath == fullPath)&&(identical(other.level, level) || other.level == level)&&const DeepCollectionEquality().equals(other.dirs, dirs));
+  final _this = this as FilesystemDirectory;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FilesystemDirectory&&(identical(other.path, _this.path) || other.path == _this.path)&&(identical(other.dirname, _this.dirname) || other.dirname == _this.dirname)&&(identical(other.fullPath, _this.fullPath) || other.fullPath == _this.fullPath)&&(identical(other.level, _this.level) || other.level == _this.level)&&const DeepCollectionEquality().equals(other.dirs, _this.dirs));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,path,dirname,fullPath,level,const DeepCollectionEquality().hash(dirs));
+int get hashCode {
+  final _this = this as FilesystemDirectory;
+  return Object.hash(runtimeType,_this.path,_this.dirname,_this.fullPath,_this.level,const DeepCollectionEquality().hash(_this.dirs));
+}
 
 @override
 String toString() {
-  return 'FilesystemDirectory(path: $path, dirname: $dirname, fullPath: $fullPath, level: $level, dirs: $dirs)';
+  final _this = this as FilesystemDirectory;
+  return 'FilesystemDirectory(path: ${_this.path}, dirname: ${_this.dirname}, fullPath: ${_this.fullPath}, level: ${_this.level}, dirs: ${_this.dirs})';
 }
 
 
@@ -236,16 +241,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FilesystemDirectory&&(identical(other.path, path) || other.path == path)&&(identical(other.dirname, dirname) || other.dirname == dirname)&&(identical(other.fullPath, fullPath) || other.fullPath == fullPath)&&(identical(other.level, level) || other.level == level)&&const DeepCollectionEquality().equals(other._dirs, _dirs));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FilesystemDirectory&&(identical(other.path, path) || other.path == path)&&(identical(other.dirname, dirname) || other.dirname == dirname)&&(identical(other.fullPath, fullPath) || other.fullPath == fullPath)&&(identical(other.level, level) || other.level == level)&&const DeepCollectionEquality().equals(other.dirs, _dirs));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,path,dirname,fullPath,level,const DeepCollectionEquality().hash(_dirs));
+int get hashCode {
+    return Object.hash(runtimeType,path,dirname,fullPath,level,const DeepCollectionEquality().hash(_dirs));
+}
 
 @override
 String toString() {
-  return 'FilesystemDirectory(path: $path, dirname: $dirname, fullPath: $fullPath, level: $level, dirs: $dirs)';
+    return 'FilesystemDirectory(path: $path, dirname: $dirname, fullPath: $fullPath, level: $level, dirs: $dirs)';
 }
 
 

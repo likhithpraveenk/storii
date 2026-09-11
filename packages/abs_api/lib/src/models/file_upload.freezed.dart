@@ -26,16 +26,21 @@ $FileUploadCopyWith<FileUpload> get copyWith => _$FileUploadCopyWithImpl<FileUpl
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FileUpload&&(identical(other.filename, filename) || other.filename == filename));
+  final _this = this as FileUpload;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FileUpload&&(identical(other.filename, _this.filename) || other.filename == _this.filename));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,filename);
+int get hashCode {
+  final _this = this as FileUpload;
+  return Object.hash(runtimeType,_this.filename);
+}
 
 @override
 String toString() {
-  return 'FileUpload(filename: $filename)';
+  final _this = this as FileUpload;
+  return 'FileUpload(filename: ${_this.filename})';
 }
 
 
@@ -231,16 +236,18 @@ _$FileUploadCopyWith<_FileUpload> get copyWith => __$FileUploadCopyWithImpl<_Fil
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FileUpload&&(identical(other.filename, filename) || other.filename == filename)&&(identical(other.byteStream, byteStream) || other.byteStream == byteStream)&&(identical(other.length, length) || other.length == length));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FileUpload&&(identical(other.filename, filename) || other.filename == filename)&&(identical(other.byteStream, byteStream) || other.byteStream == byteStream)&&(identical(other.length, length) || other.length == length));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,filename,byteStream,length);
+int get hashCode {
+    return Object.hash(runtimeType,filename,byteStream,length);
+}
 
 @override
 String toString() {
-  return 'FileUpload(filename: $filename, byteStream: $byteStream, length: $length)';
+    return 'FileUpload(filename: $filename, byteStream: $byteStream, length: $length)';
 }
 
 
@@ -306,16 +313,18 @@ $FileUploadBytesCopyWith<FileUploadBytes> get copyWith => _$FileUploadBytesCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FileUploadBytes&&(identical(other.filename, filename) || other.filename == filename)&&const DeepCollectionEquality().equals(other._bytes, _bytes));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is FileUploadBytes&&(identical(other.filename, filename) || other.filename == filename)&&const DeepCollectionEquality().equals(other.bytes, _bytes));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,filename,const DeepCollectionEquality().hash(_bytes));
+int get hashCode {
+    return Object.hash(runtimeType,filename,const DeepCollectionEquality().hash(_bytes));
+}
 
 @override
 String toString() {
-  return 'FileUpload.fromBytes(filename: $filename, bytes: $bytes)';
+    return 'FileUpload.fromBytes(filename: $filename, bytes: $bytes)';
 }
 
 
@@ -374,16 +383,18 @@ $FileUploadPathCopyWith<FileUploadPath> get copyWith => _$FileUploadPathCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FileUploadPath&&(identical(other.filename, filename) || other.filename == filename)&&(identical(other.filePath, filePath) || other.filePath == filePath));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is FileUploadPath&&(identical(other.filename, filename) || other.filename == filename)&&(identical(other.filePath, filePath) || other.filePath == filePath));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,filename,filePath);
+int get hashCode {
+    return Object.hash(runtimeType,filename,filePath);
+}
 
 @override
 String toString() {
-  return 'FileUpload.fromPath(filename: $filename, filePath: $filePath)';
+    return 'FileUpload.fromPath(filename: $filename, filePath: $filePath)';
 }
 
 

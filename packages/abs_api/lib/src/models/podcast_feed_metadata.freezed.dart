@@ -29,16 +29,21 @@ $PodcastFeedMetadataCopyWith<PodcastFeedMetadata> get copyWith => _$PodcastFeedM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastFeedMetadata&&(identical(other.image, image) || other.image == image)&&const DeepCollectionEquality().equals(other.categories, categories)&&(identical(other.feedUrl, feedUrl) || other.feedUrl == feedUrl)&&(identical(other.description, description) || other.description == description)&&(identical(other.descriptionPlain, descriptionPlain) || other.descriptionPlain == descriptionPlain)&&(identical(other.title, title) || other.title == title)&&(identical(other.language, language) || other.language == language)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&(identical(other.author, author) || other.author == author)&&(identical(other.pubDate, pubDate) || other.pubDate == pubDate)&&(identical(other.link, link) || other.link == link));
+  final _this = this as PodcastFeedMetadata;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastFeedMetadata&&(identical(other.image, _this.image) || other.image == _this.image)&&const DeepCollectionEquality().equals(other.categories, _this.categories)&&(identical(other.feedUrl, _this.feedUrl) || other.feedUrl == _this.feedUrl)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.descriptionPlain, _this.descriptionPlain) || other.descriptionPlain == _this.descriptionPlain)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.language, _this.language) || other.language == _this.language)&&(identical(other.explicit, _this.explicit) || other.explicit == _this.explicit)&&(identical(other.author, _this.author) || other.author == _this.author)&&(identical(other.pubDate, _this.pubDate) || other.pubDate == _this.pubDate)&&(identical(other.link, _this.link) || other.link == _this.link));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,image,const DeepCollectionEquality().hash(categories),feedUrl,description,descriptionPlain,title,language,explicit,author,pubDate,link);
+int get hashCode {
+  final _this = this as PodcastFeedMetadata;
+  return Object.hash(runtimeType,_this.image,const DeepCollectionEquality().hash(_this.categories),_this.feedUrl,_this.description,_this.descriptionPlain,_this.title,_this.language,_this.explicit,_this.author,_this.pubDate,_this.link);
+}
 
 @override
 String toString() {
-  return 'PodcastFeedMetadata(image: $image, categories: $categories, feedUrl: $feedUrl, description: $description, descriptionPlain: $descriptionPlain, title: $title, language: $language, explicit: $explicit, author: $author, pubDate: $pubDate, link: $link)';
+  final _this = this as PodcastFeedMetadata;
+  return 'PodcastFeedMetadata(image: ${_this.image}, categories: ${_this.categories}, feedUrl: ${_this.feedUrl}, description: ${_this.description}, descriptionPlain: ${_this.descriptionPlain}, title: ${_this.title}, language: ${_this.language}, explicit: ${_this.explicit}, author: ${_this.author}, pubDate: ${_this.pubDate}, link: ${_this.link})';
 }
 
 
@@ -248,16 +253,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PodcastFeedMetadata&&(identical(other.image, image) || other.image == image)&&const DeepCollectionEquality().equals(other._categories, _categories)&&(identical(other.feedUrl, feedUrl) || other.feedUrl == feedUrl)&&(identical(other.description, description) || other.description == description)&&(identical(other.descriptionPlain, descriptionPlain) || other.descriptionPlain == descriptionPlain)&&(identical(other.title, title) || other.title == title)&&(identical(other.language, language) || other.language == language)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&(identical(other.author, author) || other.author == author)&&(identical(other.pubDate, pubDate) || other.pubDate == pubDate)&&(identical(other.link, link) || other.link == link));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PodcastFeedMetadata&&(identical(other.image, image) || other.image == image)&&const DeepCollectionEquality().equals(other.categories, _categories)&&(identical(other.feedUrl, feedUrl) || other.feedUrl == feedUrl)&&(identical(other.description, description) || other.description == description)&&(identical(other.descriptionPlain, descriptionPlain) || other.descriptionPlain == descriptionPlain)&&(identical(other.title, title) || other.title == title)&&(identical(other.language, language) || other.language == language)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&(identical(other.author, author) || other.author == author)&&(identical(other.pubDate, pubDate) || other.pubDate == pubDate)&&(identical(other.link, link) || other.link == link));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,image,const DeepCollectionEquality().hash(_categories),feedUrl,description,descriptionPlain,title,language,explicit,author,pubDate,link);
+int get hashCode {
+    return Object.hash(runtimeType,image,const DeepCollectionEquality().hash(_categories),feedUrl,description,descriptionPlain,title,language,explicit,author,pubDate,link);
+}
 
 @override
 String toString() {
-  return 'PodcastFeedMetadata(image: $image, categories: $categories, feedUrl: $feedUrl, description: $description, descriptionPlain: $descriptionPlain, title: $title, language: $language, explicit: $explicit, author: $author, pubDate: $pubDate, link: $link)';
+    return 'PodcastFeedMetadata(image: $image, categories: $categories, feedUrl: $feedUrl, description: $description, descriptionPlain: $descriptionPlain, title: $title, language: $language, explicit: $explicit, author: $author, pubDate: $pubDate, link: $link)';
 }
 
 

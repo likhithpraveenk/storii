@@ -26,16 +26,21 @@ $FilterStateCopyWith<FilterState> get copyWith => _$FilterStateCopyWithImpl<Filt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is FilterState&&(identical(other.sortType, sortType) || other.sortType == sortType)&&(identical(other.filter, filter) || other.filter == filter)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries));
+  final _this = this as FilterState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FilterState&&(identical(other.sortType, _this.sortType) || other.sortType == _this.sortType)&&(identical(other.filter, _this.filter) || other.filter == _this.filter)&&(identical(other.sortAscending, _this.sortAscending) || other.sortAscending == _this.sortAscending)&&(identical(other.collapseSeries, _this.collapseSeries) || other.collapseSeries == _this.collapseSeries));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sortType,filter,sortAscending,collapseSeries);
+int get hashCode {
+  final _this = this as FilterState;
+  return Object.hash(runtimeType,_this.sortType,_this.filter,_this.sortAscending,_this.collapseSeries);
+}
 
 @override
 String toString() {
-  return 'FilterState(sortType: $sortType, filter: $filter, sortAscending: $sortAscending, collapseSeries: $collapseSeries)';
+  final _this = this as FilterState;
+  return 'FilterState(sortType: ${_this.sortType}, filter: ${_this.filter}, sortAscending: ${_this.sortAscending}, collapseSeries: ${_this.collapseSeries})';
 }
 
 
@@ -222,16 +227,18 @@ _$FilterStateCopyWith<_FilterState> get copyWith => __$FilterStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FilterState&&(identical(other.sortType, sortType) || other.sortType == sortType)&&(identical(other.filter, filter) || other.filter == filter)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _FilterState&&(identical(other.sortType, sortType) || other.sortType == sortType)&&(identical(other.filter, filter) || other.filter == filter)&&(identical(other.sortAscending, sortAscending) || other.sortAscending == sortAscending)&&(identical(other.collapseSeries, collapseSeries) || other.collapseSeries == collapseSeries));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,sortType,filter,sortAscending,collapseSeries);
+int get hashCode {
+    return Object.hash(runtimeType,sortType,filter,sortAscending,collapseSeries);
+}
 
 @override
 String toString() {
-  return 'FilterState(sortType: $sortType, filter: $filter, sortAscending: $sortAscending, collapseSeries: $collapseSeries)';
+    return 'FilterState(sortType: $sortType, filter: $filter, sortAscending: $sortAscending, collapseSeries: $collapseSeries)';
 }
 
 

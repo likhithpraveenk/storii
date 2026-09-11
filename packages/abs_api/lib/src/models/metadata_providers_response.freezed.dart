@@ -29,16 +29,21 @@ $MetadataProvidersResponseCopyWith<MetadataProvidersResponse> get copyWith => _$
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MetadataProvidersResponse&&const DeepCollectionEquality().equals(other.books, books)&&const DeepCollectionEquality().equals(other.booksCovers, booksCovers)&&const DeepCollectionEquality().equals(other.podcasts, podcasts));
+  final _this = this as MetadataProvidersResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MetadataProvidersResponse&&const DeepCollectionEquality().equals(other.books, _this.books)&&const DeepCollectionEquality().equals(other.booksCovers, _this.booksCovers)&&const DeepCollectionEquality().equals(other.podcasts, _this.podcasts));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(books),const DeepCollectionEquality().hash(booksCovers),const DeepCollectionEquality().hash(podcasts));
+int get hashCode {
+  final _this = this as MetadataProvidersResponse;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.books),const DeepCollectionEquality().hash(_this.booksCovers),const DeepCollectionEquality().hash(_this.podcasts));
+}
 
 @override
 String toString() {
-  return 'MetadataProvidersResponse(books: $books, booksCovers: $booksCovers, podcasts: $podcasts)';
+  final _this = this as MetadataProvidersResponse;
+  return 'MetadataProvidersResponse(books: ${_this.books}, booksCovers: ${_this.booksCovers}, podcasts: ${_this.podcasts})';
 }
 
 
@@ -244,16 +249,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MetadataProvidersResponse&&const DeepCollectionEquality().equals(other._books, _books)&&const DeepCollectionEquality().equals(other._booksCovers, _booksCovers)&&const DeepCollectionEquality().equals(other._podcasts, _podcasts));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MetadataProvidersResponse&&const DeepCollectionEquality().equals(other.books, _books)&&const DeepCollectionEquality().equals(other.booksCovers, _booksCovers)&&const DeepCollectionEquality().equals(other.podcasts, _podcasts));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_books),const DeepCollectionEquality().hash(_booksCovers),const DeepCollectionEquality().hash(_podcasts));
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_books),const DeepCollectionEquality().hash(_booksCovers),const DeepCollectionEquality().hash(_podcasts));
+}
 
 @override
 String toString() {
-  return 'MetadataProvidersResponse(books: $books, booksCovers: $booksCovers, podcasts: $podcasts)';
+    return 'MetadataProvidersResponse(books: $books, booksCovers: $booksCovers, podcasts: $podcasts)';
 }
 
 

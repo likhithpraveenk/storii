@@ -29,16 +29,21 @@ $RssFeedEpisodeCopyWith<RssFeedEpisode> get copyWith => _$RssFeedEpisodeCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RssFeedEpisode&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.enclosure, enclosure) || other.enclosure == enclosure)&&(identical(other.pubDate, pubDate) || other.pubDate == pubDate)&&(identical(other.link, link) || other.link == link)&&(identical(other.author, author) || other.author == author)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.trackIndex, trackIndex) || other.trackIndex == trackIndex)&&(identical(other.fullPath, fullPath) || other.fullPath == fullPath));
+  final _this = this as RssFeedEpisode;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RssFeedEpisode&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.enclosure, _this.enclosure) || other.enclosure == _this.enclosure)&&(identical(other.pubDate, _this.pubDate) || other.pubDate == _this.pubDate)&&(identical(other.link, _this.link) || other.link == _this.link)&&(identical(other.author, _this.author) || other.author == _this.author)&&(identical(other.explicit, _this.explicit) || other.explicit == _this.explicit)&&(identical(other.duration, _this.duration) || other.duration == _this.duration)&&(identical(other.libraryItemId, _this.libraryItemId) || other.libraryItemId == _this.libraryItemId)&&(identical(other.episodeId, _this.episodeId) || other.episodeId == _this.episodeId)&&(identical(other.trackIndex, _this.trackIndex) || other.trackIndex == _this.trackIndex)&&(identical(other.fullPath, _this.fullPath) || other.fullPath == _this.fullPath));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,enclosure,pubDate,link,author,explicit,duration,libraryItemId,episodeId,trackIndex,fullPath);
+int get hashCode {
+  final _this = this as RssFeedEpisode;
+  return Object.hash(runtimeType,_this.id,_this.title,_this.description,_this.enclosure,_this.pubDate,_this.link,_this.author,_this.explicit,_this.duration,_this.libraryItemId,_this.episodeId,_this.trackIndex,_this.fullPath);
+}
 
 @override
 String toString() {
-  return 'RssFeedEpisode(id: $id, title: $title, description: $description, enclosure: $enclosure, pubDate: $pubDate, link: $link, author: $author, explicit: $explicit, duration: $duration, libraryItemId: $libraryItemId, episodeId: $episodeId, trackIndex: $trackIndex, fullPath: $fullPath)';
+  final _this = this as RssFeedEpisode;
+  return 'RssFeedEpisode(id: ${_this.id}, title: ${_this.title}, description: ${_this.description}, enclosure: ${_this.enclosure}, pubDate: ${_this.pubDate}, link: ${_this.link}, author: ${_this.author}, explicit: ${_this.explicit}, duration: ${_this.duration}, libraryItemId: ${_this.libraryItemId}, episodeId: ${_this.episodeId}, trackIndex: ${_this.trackIndex}, fullPath: ${_this.fullPath})';
 }
 
 
@@ -255,16 +260,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RssFeedEpisode&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.enclosure, enclosure) || other.enclosure == enclosure)&&(identical(other.pubDate, pubDate) || other.pubDate == pubDate)&&(identical(other.link, link) || other.link == link)&&(identical(other.author, author) || other.author == author)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.trackIndex, trackIndex) || other.trackIndex == trackIndex)&&(identical(other.fullPath, fullPath) || other.fullPath == fullPath));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RssFeedEpisode&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.enclosure, enclosure) || other.enclosure == enclosure)&&(identical(other.pubDate, pubDate) || other.pubDate == pubDate)&&(identical(other.link, link) || other.link == link)&&(identical(other.author, author) || other.author == author)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.trackIndex, trackIndex) || other.trackIndex == trackIndex)&&(identical(other.fullPath, fullPath) || other.fullPath == fullPath));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,enclosure,pubDate,link,author,explicit,duration,libraryItemId,episodeId,trackIndex,fullPath);
+int get hashCode {
+    return Object.hash(runtimeType,id,title,description,enclosure,pubDate,link,author,explicit,duration,libraryItemId,episodeId,trackIndex,fullPath);
+}
 
 @override
 String toString() {
-  return 'RssFeedEpisode(id: $id, title: $title, description: $description, enclosure: $enclosure, pubDate: $pubDate, link: $link, author: $author, explicit: $explicit, duration: $duration, libraryItemId: $libraryItemId, episodeId: $episodeId, trackIndex: $trackIndex, fullPath: $fullPath)';
+    return 'RssFeedEpisode(id: $id, title: $title, description: $description, enclosure: $enclosure, pubDate: $pubDate, link: $link, author: $author, explicit: $explicit, duration: $duration, libraryItemId: $libraryItemId, episodeId: $episodeId, trackIndex: $trackIndex, fullPath: $fullPath)';
 }
 
 

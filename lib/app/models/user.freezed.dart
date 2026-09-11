@@ -36,16 +36,21 @@ $UserDomainCopyWith<UserDomain> get copyWith => _$UserDomainCopyWithImpl<UserDom
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserDomain&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.userType, userType) || other.userType == userType)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl));
+  final _this = this as UserDomain;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserDomain&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.username, _this.username) || other.username == _this.username)&&(identical(other.userType, _this.userType) || other.userType == _this.userType)&&(identical(other.serverUrl, _this.serverUrl) || other.serverUrl == _this.serverUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,username,userType,serverUrl);
+int get hashCode {
+  final _this = this as UserDomain;
+  return Object.hash(runtimeType,_this.id,_this.username,_this.userType,_this.serverUrl);
+}
 
 @override
 String toString() {
-  return 'UserDomain(id: $id, username: $username, userType: $userType, serverUrl: $serverUrl)';
+  final _this = this as UserDomain;
+  return 'UserDomain(id: ${_this.id}, username: ${_this.username}, userType: ${_this.userType}, serverUrl: ${_this.serverUrl})';
 }
 
 
@@ -235,16 +240,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.userType, userType) || other.userType == userType)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.userType, userType) || other.userType == userType)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,username,userType,serverUrl);
+int get hashCode {
+    return Object.hash(runtimeType,id,username,userType,serverUrl);
+}
 
 @override
 String toString() {
-  return 'UserDomain(id: $id, username: $username, userType: $userType, serverUrl: $serverUrl)';
+    return 'UserDomain(id: $id, username: $username, userType: $userType, serverUrl: $serverUrl)';
 }
 
 

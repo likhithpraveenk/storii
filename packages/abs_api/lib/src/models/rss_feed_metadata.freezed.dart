@@ -29,16 +29,21 @@ $RssFeedMetadataCopyWith<RssFeedMetadata> get copyWith => _$RssFeedMetadataCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RssFeedMetadata&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.author, author) || other.author == author)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.feedUrl, feedUrl) || other.feedUrl == feedUrl)&&(identical(other.link, link) || other.link == link)&&(identical(other.explicit, explicit) || other.explicit == explicit));
+  final _this = this as RssFeedMetadata;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RssFeedMetadata&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.author, _this.author) || other.author == _this.author)&&(identical(other.imageUrl, _this.imageUrl) || other.imageUrl == _this.imageUrl)&&(identical(other.feedUrl, _this.feedUrl) || other.feedUrl == _this.feedUrl)&&(identical(other.link, _this.link) || other.link == _this.link)&&(identical(other.explicit, _this.explicit) || other.explicit == _this.explicit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,description,author,imageUrl,feedUrl,link,explicit);
+int get hashCode {
+  final _this = this as RssFeedMetadata;
+  return Object.hash(runtimeType,_this.title,_this.description,_this.author,_this.imageUrl,_this.feedUrl,_this.link,_this.explicit);
+}
 
 @override
 String toString() {
-  return 'RssFeedMetadata(title: $title, description: $description, author: $author, imageUrl: $imageUrl, feedUrl: $feedUrl, link: $link, explicit: $explicit)';
+  final _this = this as RssFeedMetadata;
+  return 'RssFeedMetadata(title: ${_this.title}, description: ${_this.description}, author: ${_this.author}, imageUrl: ${_this.imageUrl}, feedUrl: ${_this.feedUrl}, link: ${_this.link}, explicit: ${_this.explicit})';
 }
 
 
@@ -234,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RssFeedMetadata&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.author, author) || other.author == author)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.feedUrl, feedUrl) || other.feedUrl == feedUrl)&&(identical(other.link, link) || other.link == link)&&(identical(other.explicit, explicit) || other.explicit == explicit));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RssFeedMetadata&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.author, author) || other.author == author)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.feedUrl, feedUrl) || other.feedUrl == feedUrl)&&(identical(other.link, link) || other.link == link)&&(identical(other.explicit, explicit) || other.explicit == explicit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,description,author,imageUrl,feedUrl,link,explicit);
+int get hashCode {
+    return Object.hash(runtimeType,title,description,author,imageUrl,feedUrl,link,explicit);
+}
 
 @override
 String toString() {
-  return 'RssFeedMetadata(title: $title, description: $description, author: $author, imageUrl: $imageUrl, feedUrl: $feedUrl, link: $link, explicit: $explicit)';
+    return 'RssFeedMetadata(title: $title, description: $description, author: $author, imageUrl: $imageUrl, feedUrl: $feedUrl, link: $link, explicit: $explicit)';
 }
 
 

@@ -29,16 +29,21 @@ $MetadataProviderCopyWith<MetadataProvider> get copyWith => _$MetadataProviderCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MetadataProvider&&(identical(other.value, value) || other.value == value)&&(identical(other.text, text) || other.text == text));
+  final _this = this as MetadataProvider;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MetadataProvider&&(identical(other.value, _this.value) || other.value == _this.value)&&(identical(other.text, _this.text) || other.text == _this.text));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,value,text);
+int get hashCode {
+  final _this = this as MetadataProvider;
+  return Object.hash(runtimeType,_this.value,_this.text);
+}
 
 @override
 String toString() {
-  return 'MetadataProvider(value: $value, text: $text)';
+  final _this = this as MetadataProvider;
+  return 'MetadataProvider(value: ${_this.value}, text: ${_this.text})';
 }
 
 
@@ -224,16 +229,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MetadataProvider&&(identical(other.value, value) || other.value == value)&&(identical(other.text, text) || other.text == text));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MetadataProvider&&(identical(other.value, value) || other.value == value)&&(identical(other.text, text) || other.text == text));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,value,text);
+int get hashCode {
+    return Object.hash(runtimeType,value,text);
+}
 
 @override
 String toString() {
-  return 'MetadataProvider(value: $value, text: $text)';
+    return 'MetadataProvider(value: $value, text: $text)';
 }
 
 

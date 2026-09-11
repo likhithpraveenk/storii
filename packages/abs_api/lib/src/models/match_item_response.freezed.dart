@@ -29,16 +29,21 @@ $MatchItemResponseCopyWith<MatchItemResponse> get copyWith => _$MatchItemRespons
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MatchItemResponse&&(identical(other.updated, updated) || other.updated == updated)&&(identical(other.libraryItem, libraryItem) || other.libraryItem == libraryItem));
+  final _this = this as MatchItemResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MatchItemResponse&&(identical(other.updated, _this.updated) || other.updated == _this.updated)&&(identical(other.libraryItem, _this.libraryItem) || other.libraryItem == _this.libraryItem));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,updated,libraryItem);
+int get hashCode {
+  final _this = this as MatchItemResponse;
+  return Object.hash(runtimeType,_this.updated,_this.libraryItem);
+}
 
 @override
 String toString() {
-  return 'MatchItemResponse(updated: $updated, libraryItem: $libraryItem)';
+  final _this = this as MatchItemResponse;
+  return 'MatchItemResponse(updated: ${_this.updated}, libraryItem: ${_this.libraryItem})';
 }
 
 
@@ -233,16 +238,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MatchItemResponse&&(identical(other.updated, updated) || other.updated == updated)&&(identical(other.libraryItem, libraryItem) || other.libraryItem == libraryItem));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MatchItemResponse&&(identical(other.updated, updated) || other.updated == updated)&&(identical(other.libraryItem, libraryItem) || other.libraryItem == libraryItem));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,updated,libraryItem);
+int get hashCode {
+    return Object.hash(runtimeType,updated,libraryItem);
+}
 
 @override
 String toString() {
-  return 'MatchItemResponse(updated: $updated, libraryItem: $libraryItem)';
+    return 'MatchItemResponse(updated: $updated, libraryItem: $libraryItem)';
 }
 
 

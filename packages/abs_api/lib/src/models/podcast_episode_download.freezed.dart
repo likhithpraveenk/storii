@@ -29,16 +29,21 @@ $PodcastEpisodeDownloadCopyWith<PodcastEpisodeDownload> get copyWith => _$Podcas
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastEpisodeDownload&&(identical(other.id, id) || other.id == id)&&(identical(other.episodeDisplayTitle, episodeDisplayTitle) || other.episodeDisplayTitle == episodeDisplayTitle)&&(identical(other.url, url) || other.url == url)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.isDownloading, isDownloading) || other.isDownloading == isDownloading)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&(identical(other.failed, failed) || other.failed == failed)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.finishedAt, finishedAt) || other.finishedAt == finishedAt));
+  final _this = this as PodcastEpisodeDownload;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastEpisodeDownload&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.episodeDisplayTitle, _this.episodeDisplayTitle) || other.episodeDisplayTitle == _this.episodeDisplayTitle)&&(identical(other.url, _this.url) || other.url == _this.url)&&(identical(other.libraryItemId, _this.libraryItemId) || other.libraryItemId == _this.libraryItemId)&&(identical(other.isDownloading, _this.isDownloading) || other.isDownloading == _this.isDownloading)&&(identical(other.isFinished, _this.isFinished) || other.isFinished == _this.isFinished)&&(identical(other.failed, _this.failed) || other.failed == _this.failed)&&(identical(other.startedAt, _this.startedAt) || other.startedAt == _this.startedAt)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.finishedAt, _this.finishedAt) || other.finishedAt == _this.finishedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,episodeDisplayTitle,url,libraryItemId,isDownloading,isFinished,failed,startedAt,createdAt,finishedAt);
+int get hashCode {
+  final _this = this as PodcastEpisodeDownload;
+  return Object.hash(runtimeType,_this.id,_this.episodeDisplayTitle,_this.url,_this.libraryItemId,_this.isDownloading,_this.isFinished,_this.failed,_this.startedAt,_this.createdAt,_this.finishedAt);
+}
 
 @override
 String toString() {
-  return 'PodcastEpisodeDownload(id: $id, episodeDisplayTitle: $episodeDisplayTitle, url: $url, libraryItemId: $libraryItemId, isDownloading: $isDownloading, isFinished: $isFinished, failed: $failed, startedAt: $startedAt, createdAt: $createdAt, finishedAt: $finishedAt)';
+  final _this = this as PodcastEpisodeDownload;
+  return 'PodcastEpisodeDownload(id: ${_this.id}, episodeDisplayTitle: ${_this.episodeDisplayTitle}, url: ${_this.url}, libraryItemId: ${_this.libraryItemId}, isDownloading: ${_this.isDownloading}, isFinished: ${_this.isFinished}, failed: ${_this.failed}, startedAt: ${_this.startedAt}, createdAt: ${_this.createdAt}, finishedAt: ${_this.finishedAt})';
 }
 
 
@@ -240,16 +245,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PodcastEpisodeDownload&&(identical(other.id, id) || other.id == id)&&(identical(other.episodeDisplayTitle, episodeDisplayTitle) || other.episodeDisplayTitle == episodeDisplayTitle)&&(identical(other.url, url) || other.url == url)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.isDownloading, isDownloading) || other.isDownloading == isDownloading)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&(identical(other.failed, failed) || other.failed == failed)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.finishedAt, finishedAt) || other.finishedAt == finishedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PodcastEpisodeDownload&&(identical(other.id, id) || other.id == id)&&(identical(other.episodeDisplayTitle, episodeDisplayTitle) || other.episodeDisplayTitle == episodeDisplayTitle)&&(identical(other.url, url) || other.url == url)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.isDownloading, isDownloading) || other.isDownloading == isDownloading)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&(identical(other.failed, failed) || other.failed == failed)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.finishedAt, finishedAt) || other.finishedAt == finishedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,episodeDisplayTitle,url,libraryItemId,isDownloading,isFinished,failed,startedAt,createdAt,finishedAt);
+int get hashCode {
+    return Object.hash(runtimeType,id,episodeDisplayTitle,url,libraryItemId,isDownloading,isFinished,failed,startedAt,createdAt,finishedAt);
+}
 
 @override
 String toString() {
-  return 'PodcastEpisodeDownload(id: $id, episodeDisplayTitle: $episodeDisplayTitle, url: $url, libraryItemId: $libraryItemId, isDownloading: $isDownloading, isFinished: $isFinished, failed: $failed, startedAt: $startedAt, createdAt: $createdAt, finishedAt: $finishedAt)';
+    return 'PodcastEpisodeDownload(id: $id, episodeDisplayTitle: $episodeDisplayTitle, url: $url, libraryItemId: $libraryItemId, isDownloading: $isDownloading, isFinished: $isFinished, failed: $failed, startedAt: $startedAt, createdAt: $createdAt, finishedAt: $finishedAt)';
 }
 
 

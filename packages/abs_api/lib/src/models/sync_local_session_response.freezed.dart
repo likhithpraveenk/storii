@@ -29,16 +29,21 @@ $SyncLocalSessionResponseCopyWith<SyncLocalSessionResponse> get copyWith => _$Sy
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SyncLocalSessionResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.success, success) || other.success == success)&&(identical(other.error, error) || other.error == error)&&(identical(other.progressSynced, progressSynced) || other.progressSynced == progressSynced));
+  final _this = this as SyncLocalSessionResponse;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SyncLocalSessionResponse&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.success, _this.success) || other.success == _this.success)&&(identical(other.error, _this.error) || other.error == _this.error)&&(identical(other.progressSynced, _this.progressSynced) || other.progressSynced == _this.progressSynced));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,success,error,progressSynced);
+int get hashCode {
+  final _this = this as SyncLocalSessionResponse;
+  return Object.hash(runtimeType,_this.id,_this.success,_this.error,_this.progressSynced);
+}
 
 @override
 String toString() {
-  return 'SyncLocalSessionResponse(id: $id, success: $success, error: $error, progressSynced: $progressSynced)';
+  final _this = this as SyncLocalSessionResponse;
+  return 'SyncLocalSessionResponse(id: ${_this.id}, success: ${_this.success}, error: ${_this.error}, progressSynced: ${_this.progressSynced})';
 }
 
 
@@ -234,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncLocalSessionResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.success, success) || other.success == success)&&(identical(other.error, error) || other.error == error)&&(identical(other.progressSynced, progressSynced) || other.progressSynced == progressSynced));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SyncLocalSessionResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.success, success) || other.success == success)&&(identical(other.error, error) || other.error == error)&&(identical(other.progressSynced, progressSynced) || other.progressSynced == progressSynced));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,success,error,progressSynced);
+int get hashCode {
+    return Object.hash(runtimeType,id,success,error,progressSynced);
+}
 
 @override
 String toString() {
-  return 'SyncLocalSessionResponse(id: $id, success: $success, error: $error, progressSynced: $progressSynced)';
+    return 'SyncLocalSessionResponse(id: $id, success: $success, error: $error, progressSynced: $progressSynced)';
 }
 
 

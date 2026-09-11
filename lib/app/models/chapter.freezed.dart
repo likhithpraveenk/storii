@@ -29,16 +29,21 @@ $ChapterCopyWith<Chapter> get copyWith => _$ChapterCopyWithImpl<Chapter>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Chapter&&(identical(other.start, start) || other.start == start)&&(identical(other.end, end) || other.end == end)&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.fromTracks, fromTracks) || other.fromTracks == fromTracks));
+  final _this = this as Chapter;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Chapter&&(identical(other.start, _this.start) || other.start == _this.start)&&(identical(other.end, _this.end) || other.end == _this.end)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.subtitle, _this.subtitle) || other.subtitle == _this.subtitle)&&(identical(other.fromTracks, _this.fromTracks) || other.fromTracks == _this.fromTracks));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,start,end,title,subtitle,fromTracks);
+int get hashCode {
+  final _this = this as Chapter;
+  return Object.hash(runtimeType,_this.start,_this.end,_this.title,_this.subtitle,_this.fromTracks);
+}
 
 @override
 String toString() {
-  return 'Chapter(start: $start, end: $end, title: $title, subtitle: $subtitle, fromTracks: $fromTracks)';
+  final _this = this as Chapter;
+  return 'Chapter(start: ${_this.start}, end: ${_this.end}, title: ${_this.title}, subtitle: ${_this.subtitle}, fromTracks: ${_this.fromTracks})';
 }
 
 
@@ -230,16 +235,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Chapter&&(identical(other.start, start) || other.start == start)&&(identical(other.end, end) || other.end == end)&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.fromTracks, fromTracks) || other.fromTracks == fromTracks));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Chapter&&(identical(other.start, start) || other.start == start)&&(identical(other.end, end) || other.end == end)&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.fromTracks, fromTracks) || other.fromTracks == fromTracks));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,start,end,title,subtitle,fromTracks);
+int get hashCode {
+    return Object.hash(runtimeType,start,end,title,subtitle,fromTracks);
+}
 
 @override
 String toString() {
-  return 'Chapter(start: $start, end: $end, title: $title, subtitle: $subtitle, fromTracks: $fromTracks)';
+    return 'Chapter(start: $start, end: $end, title: $title, subtitle: $subtitle, fromTracks: $fromTracks)';
 }
 
 

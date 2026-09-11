@@ -29,16 +29,21 @@ $CollectionCopyWith<Collection> get copyWith => _$CollectionCopyWithImpl<Collect
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Collection&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.lastUpdate, lastUpdate) || other.lastUpdate == lastUpdate)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.books, books));
+  final _this = this as Collection;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Collection&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.libraryId, _this.libraryId) || other.libraryId == _this.libraryId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.lastUpdate, _this.lastUpdate) || other.lastUpdate == _this.lastUpdate)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&const DeepCollectionEquality().equals(other.books, _this.books));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,libraryId,name,description,lastUpdate,createdAt,const DeepCollectionEquality().hash(books));
+int get hashCode {
+  final _this = this as Collection;
+  return Object.hash(runtimeType,_this.id,_this.libraryId,_this.name,_this.description,_this.lastUpdate,_this.createdAt,const DeepCollectionEquality().hash(_this.books));
+}
 
 @override
 String toString() {
-  return 'Collection(id: $id, libraryId: $libraryId, name: $name, description: $description, lastUpdate: $lastUpdate, createdAt: $createdAt, books: $books)';
+  final _this = this as Collection;
+  return 'Collection(id: ${_this.id}, libraryId: ${_this.libraryId}, name: ${_this.name}, description: ${_this.description}, lastUpdate: ${_this.lastUpdate}, createdAt: ${_this.createdAt}, books: ${_this.books})';
 }
 
 
@@ -240,16 +245,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Collection&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.lastUpdate, lastUpdate) || other.lastUpdate == lastUpdate)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other._books, _books));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Collection&&(identical(other.id, id) || other.id == id)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.lastUpdate, lastUpdate) || other.lastUpdate == lastUpdate)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&const DeepCollectionEquality().equals(other.books, _books));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,libraryId,name,description,lastUpdate,createdAt,const DeepCollectionEquality().hash(_books));
+int get hashCode {
+    return Object.hash(runtimeType,id,libraryId,name,description,lastUpdate,createdAt,const DeepCollectionEquality().hash(_books));
+}
 
 @override
 String toString() {
-  return 'Collection(id: $id, libraryId: $libraryId, name: $name, description: $description, lastUpdate: $lastUpdate, createdAt: $createdAt, books: $books)';
+    return 'Collection(id: $id, libraryId: $libraryId, name: $name, description: $description, lastUpdate: $lastUpdate, createdAt: $createdAt, books: $books)';
 }
 
 

@@ -29,16 +29,21 @@ $TaskCopyWith<Task> get copyWith => _$TaskCopyWithImpl<Task>(this as Task, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Task&&(identical(other.id, id) || other.id == id)&&(identical(other.action, action) || other.action == action)&&(identical(other.data, data) || other.data == data)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other.titleSubs, titleSubs)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.descriptionSubs, descriptionSubs)&&(identical(other.error, error) || other.error == error)&&const DeepCollectionEquality().equals(other.errorSubs, errorSubs)&&(identical(other.showSuccess, showSuccess) || other.showSuccess == showSuccess)&&(identical(other.isFailed, isFailed) || other.isFailed == isFailed)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.finishedAt, finishedAt) || other.finishedAt == finishedAt));
+  final _this = this as Task;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Task&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.action, _this.action) || other.action == _this.action)&&(identical(other.data, _this.data) || other.data == _this.data)&&(identical(other.title, _this.title) || other.title == _this.title)&&const DeepCollectionEquality().equals(other.titleSubs, _this.titleSubs)&&(identical(other.description, _this.description) || other.description == _this.description)&&const DeepCollectionEquality().equals(other.descriptionSubs, _this.descriptionSubs)&&(identical(other.error, _this.error) || other.error == _this.error)&&const DeepCollectionEquality().equals(other.errorSubs, _this.errorSubs)&&(identical(other.showSuccess, _this.showSuccess) || other.showSuccess == _this.showSuccess)&&(identical(other.isFailed, _this.isFailed) || other.isFailed == _this.isFailed)&&(identical(other.isFinished, _this.isFinished) || other.isFinished == _this.isFinished)&&(identical(other.startedAt, _this.startedAt) || other.startedAt == _this.startedAt)&&(identical(other.finishedAt, _this.finishedAt) || other.finishedAt == _this.finishedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,action,data,title,const DeepCollectionEquality().hash(titleSubs),description,const DeepCollectionEquality().hash(descriptionSubs),error,const DeepCollectionEquality().hash(errorSubs),showSuccess,isFailed,isFinished,startedAt,finishedAt);
+int get hashCode {
+  final _this = this as Task;
+  return Object.hash(runtimeType,_this.id,_this.action,_this.data,_this.title,const DeepCollectionEquality().hash(_this.titleSubs),_this.description,const DeepCollectionEquality().hash(_this.descriptionSubs),_this.error,const DeepCollectionEquality().hash(_this.errorSubs),_this.showSuccess,_this.isFailed,_this.isFinished,_this.startedAt,_this.finishedAt);
+}
 
 @override
 String toString() {
-  return 'Task(id: $id, action: $action, data: $data, title: $title, titleSubs: $titleSubs, description: $description, descriptionSubs: $descriptionSubs, error: $error, errorSubs: $errorSubs, showSuccess: $showSuccess, isFailed: $isFailed, isFinished: $isFinished, startedAt: $startedAt, finishedAt: $finishedAt)';
+  final _this = this as Task;
+  return 'Task(id: ${_this.id}, action: ${_this.action}, data: ${_this.data}, title: ${_this.title}, titleSubs: ${_this.titleSubs}, description: ${_this.description}, descriptionSubs: ${_this.descriptionSubs}, error: ${_this.error}, errorSubs: ${_this.errorSubs}, showSuccess: ${_this.showSuccess}, isFailed: ${_this.isFailed}, isFinished: ${_this.isFinished}, startedAt: ${_this.startedAt}, finishedAt: ${_this.finishedAt})';
 }
 
 
@@ -284,16 +289,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Task&&(identical(other.id, id) || other.id == id)&&(identical(other.action, action) || other.action == action)&&(identical(other.data, data) || other.data == data)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other._titleSubs, _titleSubs)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._descriptionSubs, _descriptionSubs)&&(identical(other.error, error) || other.error == error)&&const DeepCollectionEquality().equals(other._errorSubs, _errorSubs)&&(identical(other.showSuccess, showSuccess) || other.showSuccess == showSuccess)&&(identical(other.isFailed, isFailed) || other.isFailed == isFailed)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.finishedAt, finishedAt) || other.finishedAt == finishedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Task&&(identical(other.id, id) || other.id == id)&&(identical(other.action, action) || other.action == action)&&(identical(other.data, data) || other.data == data)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other.titleSubs, _titleSubs)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.descriptionSubs, _descriptionSubs)&&(identical(other.error, error) || other.error == error)&&const DeepCollectionEquality().equals(other.errorSubs, _errorSubs)&&(identical(other.showSuccess, showSuccess) || other.showSuccess == showSuccess)&&(identical(other.isFailed, isFailed) || other.isFailed == isFailed)&&(identical(other.isFinished, isFinished) || other.isFinished == isFinished)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.finishedAt, finishedAt) || other.finishedAt == finishedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,action,data,title,const DeepCollectionEquality().hash(_titleSubs),description,const DeepCollectionEquality().hash(_descriptionSubs),error,const DeepCollectionEquality().hash(_errorSubs),showSuccess,isFailed,isFinished,startedAt,finishedAt);
+int get hashCode {
+    return Object.hash(runtimeType,id,action,data,title,const DeepCollectionEquality().hash(_titleSubs),description,const DeepCollectionEquality().hash(_descriptionSubs),error,const DeepCollectionEquality().hash(_errorSubs),showSuccess,isFailed,isFinished,startedAt,finishedAt);
+}
 
 @override
 String toString() {
-  return 'Task(id: $id, action: $action, data: $data, title: $title, titleSubs: $titleSubs, description: $description, descriptionSubs: $descriptionSubs, error: $error, errorSubs: $errorSubs, showSuccess: $showSuccess, isFailed: $isFailed, isFinished: $isFinished, startedAt: $startedAt, finishedAt: $finishedAt)';
+    return 'Task(id: $id, action: $action, data: $data, title: $title, titleSubs: $titleSubs, description: $description, descriptionSubs: $descriptionSubs, error: $error, errorSubs: $errorSubs, showSuccess: $showSuccess, isFailed: $isFailed, isFinished: $isFinished, startedAt: $startedAt, finishedAt: $finishedAt)';
 }
 
 
@@ -373,16 +380,21 @@ $TaskDataCopyWith<TaskData> get copyWith => _$TaskDataCopyWithImpl<TaskData>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaskData&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.libraryName, libraryName) || other.libraryName == libraryName)&&(identical(other.libraryMediaType, libraryMediaType) || other.libraryMediaType == libraryMediaType)&&(identical(other.scanResults, scanResults) || other.scanResults == scanResults));
+  final _this = this as TaskData;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaskData&&(identical(other.libraryId, _this.libraryId) || other.libraryId == _this.libraryId)&&(identical(other.libraryName, _this.libraryName) || other.libraryName == _this.libraryName)&&(identical(other.libraryMediaType, _this.libraryMediaType) || other.libraryMediaType == _this.libraryMediaType)&&(identical(other.scanResults, _this.scanResults) || other.scanResults == _this.scanResults));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,libraryId,libraryName,libraryMediaType,scanResults);
+int get hashCode {
+  final _this = this as TaskData;
+  return Object.hash(runtimeType,_this.libraryId,_this.libraryName,_this.libraryMediaType,_this.scanResults);
+}
 
 @override
 String toString() {
-  return 'TaskData(libraryId: $libraryId, libraryName: $libraryName, libraryMediaType: $libraryMediaType, scanResults: $scanResults)';
+  final _this = this as TaskData;
+  return 'TaskData(libraryId: ${_this.libraryId}, libraryName: ${_this.libraryName}, libraryMediaType: ${_this.libraryMediaType}, scanResults: ${_this.scanResults})';
 }
 
 
@@ -584,16 +596,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaskData&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.libraryName, libraryName) || other.libraryName == libraryName)&&(identical(other.libraryMediaType, libraryMediaType) || other.libraryMediaType == libraryMediaType)&&(identical(other.scanResults, scanResults) || other.scanResults == scanResults));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaskData&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.libraryName, libraryName) || other.libraryName == libraryName)&&(identical(other.libraryMediaType, libraryMediaType) || other.libraryMediaType == libraryMediaType)&&(identical(other.scanResults, scanResults) || other.scanResults == scanResults));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,libraryId,libraryName,libraryMediaType,scanResults);
+int get hashCode {
+    return Object.hash(runtimeType,libraryId,libraryName,libraryMediaType,scanResults);
+}
 
 @override
 String toString() {
-  return 'TaskData(libraryId: $libraryId, libraryName: $libraryName, libraryMediaType: $libraryMediaType, scanResults: $scanResults)';
+    return 'TaskData(libraryId: $libraryId, libraryName: $libraryName, libraryMediaType: $libraryMediaType, scanResults: $scanResults)';
 }
 
 
@@ -663,16 +677,21 @@ $TaskScanResultsCopyWith<TaskScanResults> get copyWith => _$TaskScanResultsCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaskScanResults&&(identical(other.added, added) || other.added == added)&&(identical(other.updated, updated) || other.updated == updated)&&(identical(other.missing, missing) || other.missing == missing)&&(identical(other.elapsed, elapsed) || other.elapsed == elapsed)&&(identical(other.text, text) || other.text == text));
+  final _this = this as TaskScanResults;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaskScanResults&&(identical(other.added, _this.added) || other.added == _this.added)&&(identical(other.updated, _this.updated) || other.updated == _this.updated)&&(identical(other.missing, _this.missing) || other.missing == _this.missing)&&(identical(other.elapsed, _this.elapsed) || other.elapsed == _this.elapsed)&&(identical(other.text, _this.text) || other.text == _this.text));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,added,updated,missing,elapsed,text);
+int get hashCode {
+  final _this = this as TaskScanResults;
+  return Object.hash(runtimeType,_this.added,_this.updated,_this.missing,_this.elapsed,_this.text);
+}
 
 @override
 String toString() {
-  return 'TaskScanResults(added: $added, updated: $updated, missing: $missing, elapsed: $elapsed, text: $text)';
+  final _this = this as TaskScanResults;
+  return 'TaskScanResults(added: ${_this.added}, updated: ${_this.updated}, missing: ${_this.missing}, elapsed: ${_this.elapsed}, text: ${_this.text})';
 }
 
 
@@ -864,16 +883,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaskScanResults&&(identical(other.added, added) || other.added == added)&&(identical(other.updated, updated) || other.updated == updated)&&(identical(other.missing, missing) || other.missing == missing)&&(identical(other.elapsed, elapsed) || other.elapsed == elapsed)&&(identical(other.text, text) || other.text == text));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaskScanResults&&(identical(other.added, added) || other.added == added)&&(identical(other.updated, updated) || other.updated == updated)&&(identical(other.missing, missing) || other.missing == missing)&&(identical(other.elapsed, elapsed) || other.elapsed == elapsed)&&(identical(other.text, text) || other.text == text));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,added,updated,missing,elapsed,text);
+int get hashCode {
+    return Object.hash(runtimeType,added,updated,missing,elapsed,text);
+}
 
 @override
 String toString() {
-  return 'TaskScanResults(added: $added, updated: $updated, missing: $missing, elapsed: $elapsed, text: $text)';
+    return 'TaskScanResults(added: $added, updated: $updated, missing: $missing, elapsed: $elapsed, text: $text)';
 }
 
 

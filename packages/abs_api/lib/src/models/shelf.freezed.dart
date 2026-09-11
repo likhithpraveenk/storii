@@ -56,16 +56,21 @@ $ShelfCopyWith<Shelf> get copyWith => _$ShelfCopyWithImpl<Shelf>(this as Shelf, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Shelf&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.labelStringKey, labelStringKey) || other.labelStringKey == labelStringKey)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other.entities, entities)&&(identical(other.total, total) || other.total == total));
+  final _this = this as Shelf;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Shelf&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.label, _this.label) || other.label == _this.label)&&(identical(other.labelStringKey, _this.labelStringKey) || other.labelStringKey == _this.labelStringKey)&&(identical(other.type, _this.type) || other.type == _this.type)&&const DeepCollectionEquality().equals(other.entities, _this.entities)&&(identical(other.total, _this.total) || other.total == _this.total));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,label,labelStringKey,type,const DeepCollectionEquality().hash(entities),total);
+int get hashCode {
+  final _this = this as Shelf;
+  return Object.hash(runtimeType,_this.id,_this.label,_this.labelStringKey,_this.type,const DeepCollectionEquality().hash(_this.entities),_this.total);
+}
 
 @override
 String toString() {
-  return 'Shelf(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities, total: $total)';
+  final _this = this as Shelf;
+  return 'Shelf(id: ${_this.id}, label: ${_this.label}, labelStringKey: ${_this.labelStringKey}, type: ${_this.type}, entities: ${_this.entities}, total: ${_this.total})';
 }
 
 
@@ -280,16 +285,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItemsShelf&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.labelStringKey, labelStringKey) || other.labelStringKey == labelStringKey)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other._entities, _entities)&&(identical(other.total, total) || other.total == total));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is LibraryItemsShelf&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.labelStringKey, labelStringKey) || other.labelStringKey == labelStringKey)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other.entities, _entities)&&(identical(other.total, total) || other.total == total));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,label,labelStringKey,type,const DeepCollectionEquality().hash(_entities),total);
+int get hashCode {
+    return Object.hash(runtimeType,id,label,labelStringKey,type,const DeepCollectionEquality().hash(_entities),total);
+}
 
 @override
 String toString() {
-  return 'Shelf.libraryItems(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities, total: $total)';
+    return 'Shelf.libraryItems(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities, total: $total)';
 }
 
 
@@ -369,16 +376,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SeriesShelf&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.labelStringKey, labelStringKey) || other.labelStringKey == labelStringKey)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other._entities, _entities)&&(identical(other.total, total) || other.total == total));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is SeriesShelf&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.labelStringKey, labelStringKey) || other.labelStringKey == labelStringKey)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other.entities, _entities)&&(identical(other.total, total) || other.total == total));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,label,labelStringKey,type,const DeepCollectionEquality().hash(_entities),total);
+int get hashCode {
+    return Object.hash(runtimeType,id,label,labelStringKey,type,const DeepCollectionEquality().hash(_entities),total);
+}
 
 @override
 String toString() {
-  return 'Shelf.series(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities, total: $total)';
+    return 'Shelf.series(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities, total: $total)';
 }
 
 
@@ -458,16 +467,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthorShelf&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.labelStringKey, labelStringKey) || other.labelStringKey == labelStringKey)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other._entities, _entities)&&(identical(other.total, total) || other.total == total));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthorShelf&&(identical(other.id, id) || other.id == id)&&(identical(other.label, label) || other.label == label)&&(identical(other.labelStringKey, labelStringKey) || other.labelStringKey == labelStringKey)&&(identical(other.type, type) || other.type == type)&&const DeepCollectionEquality().equals(other.entities, _entities)&&(identical(other.total, total) || other.total == total));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,label,labelStringKey,type,const DeepCollectionEquality().hash(_entities),total);
+int get hashCode {
+    return Object.hash(runtimeType,id,label,labelStringKey,type,const DeepCollectionEquality().hash(_entities),total);
+}
 
 @override
 String toString() {
-  return 'Shelf.authors(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities, total: $total)';
+    return 'Shelf.authors(id: $id, label: $label, labelStringKey: $labelStringKey, type: $type, entities: $entities, total: $total)';
 }
 
 
