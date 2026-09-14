@@ -92,8 +92,8 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
           tabs: [
             Tab(
               text: activeCount == 0
-                  ? l10n.active
-                  : '${l10n.active} ($activeCount)',
+                  ? l10n.inProgress
+                  : '${l10n.inProgress} ($activeCount)',
             ),
             Tab(
               text: completedCount == 0

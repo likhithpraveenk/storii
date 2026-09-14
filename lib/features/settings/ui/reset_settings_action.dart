@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
 
 class ResetSettingsAction extends ConsumerWidget {
@@ -15,6 +16,10 @@ class ResetSettingsAction extends ConsumerWidget {
         await AppDialog.show(
           context,
           title: l10n.resetSettingsQ,
+          body: Text(
+            l10n.resetSettingsTxt,
+            style: bottomSheetSubtitleTextStyle(context),
+          ),
           actionLabel: l10n.reset,
           onTap: () async {
             await ref.read(userSettingsProvider.notifier).reset();
