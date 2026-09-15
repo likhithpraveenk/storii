@@ -62,5 +62,14 @@
   "refresh": "Recharger",
   "retry": "Réessayer",
   "description": "Description",
-  "noDescription": "Pas de description disponible"
+  "noDescription": "Pas de description disponible",
+  "continueWord": "Continuer",
+  "shelfContinueListening": "Continuer l'écoute",
+  "shelfContinueSeries": "Continuer la série",
+  "shelfDiscover": "Découvrir",
+  "shelfRecentlyAdded": "Ajouté récemment",
+  "shelfRecentSeries": "Séries récentes",
+  "shelfNewestAuthors": "Auteurs récents",
+  "shelfNewestEpisodes": "Épisodes récents",
+  "shelfListenAgain": "Écouter à nouveau"
 }
