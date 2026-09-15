@@ -42,7 +42,6 @@
   "noSession": "Brak sesji",
   "recentSessions": "Ostatnie sesje",
   "noAuthor": "Brak autora",
-  "noArtist": "Brak twórcy",
   "noTitle": "Brak tytułu",
   "noImage": "Brak obrazu",
   "errorImage": "Błąd ładowania obrazu",
@@ -69,7 +68,6 @@
   "audiobooks": "Audiobooki",
   "podcasts": "Podcasty",
   "episodes": "Odcinki",
-  "playEpisodeConfirm": "Odtworzyć ten odcinek?",
   "search": "Wyszukaj",
   "dateFormat": "Format daty",
   "invalidFormat": "Niepoprawny format daty",
@@ -179,14 +177,6 @@
   },
   "licensedUnder": "Na licencji GNU General Public License v3.0",
   "version": "Wersja",
-  "buildNumber": "Numem build: {text}",
-  "@buildNumber": {
-    "placeholders": {
-      "text": {
-        "type": "String"
-      }
-    }
-  },
   "networkLogs": "Logi komunikacji z serwerem",
   "networkLogsDescription": "Zapisz komunikację HTTP(S)",
   "trustAllCertificates": "Ufaj wszystkim certyfikatom",
@@ -219,7 +209,6 @@
   "removeProgressMessage": "Ta akcja spowoduje wyczyszczenie postępu i nie może zostać cofnięta.",
   "remove": "Usuń",
   "markAsComplete": "Ustaw jako zakończone",
-  "markAsCompleteQ": "Ustawić jako zakończone?",
   "confirm": "Potwierdź",
   "progressMarkedComplete": "Ustawiono zakończone",
   "progressMarkCompleteFailed": "Nie udało się ustawić zakończonego",
@@ -309,8 +298,6 @@
   "transcode": "Transkoduj",
   "downloaded": "Pobrane",
   "connectionStatus": "Status połączenia",
-  "connectionChecking": "Sprawdzanie połączenia …",
-  "connectionPleaseWait": "Proszę czekać",
   "connectionServerConnected": "Połączono z serwerem",
   "connectionServerDisconnected": "Nie połączono z serwerem",
   "connectionTypeMobile": "Dane komórkowe",
@@ -400,7 +387,6 @@
   "backupDescription": "Eksportuj lub importuj swoje konta, ustawienia i historię",
   "backupCreated": "Kopia zapasowa zapisana",
   "backupFailed": "Nie można utworzyć kopii zapasowej",
-  "restoreSuccess": "Przywrócono z kopii zapasowej",
   "restoreRestart": "Przywrócono z kopii zapasowej. Uruchom ponownie aplikację by zmiany były widoczne",
   "restoreFailed": "Nie udało się odtworzyć z kopii zapasowej",
   "marqueeSpeed": "Szybkość przewijania tekstu",

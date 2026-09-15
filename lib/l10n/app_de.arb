@@ -45,7 +45,6 @@
   "noSession": "Keine Sitzung",
   "recentSessions": "Letzte Sitzungen",
   "noAuthor": "Kein Autor",
-  "noArtist": "Kein Künstler",
   "noTitle": "Kein Titel",
   "noImage": "Kein Bild",
   "continueWord": "Fortfahren",
@@ -73,7 +72,6 @@
   "deleteLogsQ": "Alle Protokolle löschen?",
   "audiobooks": "Hörbücher",
   "episodes": "Folgen",
-  "playEpisodeConfirm": "Diese Folge abspielen?",
   "search": "Suche",
   "dateFormat": "Datumsformat",
   "custom": "Benutzerdefiniert",
@@ -194,7 +192,6 @@
   "remove": "Entfernen",
   "markAsComplete": "Als beendet markieren",
   "markAsIncomplete": "Als unbeendet markieren",
-  "markAsCompleteQ": "Als beendet markieren?",
   "confirm": "Bestätigen",
   "progressMarkedComplete": "Als beendet markiert",
   "progressMarkCompleteFailed": "Als beendet markieren – fehlgeschlagen",
@@ -282,8 +279,6 @@
   "local": "Lokal",
   "downloaded": "Heruntergeladen",
   "connectionStatus": "Verbindungsstatus",
-  "connectionChecking": "Verbindung wird geprüft…",
-  "connectionPleaseWait": "Bitte warten",
   "connectionServerConnected": "Mit dem Server verbunden",
   "connectionServerDisconnected": "Keine Verbindung zum Server",
   "connectionTypeWifi": "WLAN",
@@ -370,7 +365,6 @@
   "backupDescription": "Exportieren oder Importieren Ihrer Konten, Einstellungen und Historie",
   "backupCreated": "Backup gespeichert",
   "backupFailed": "Konnte keine Sicherung erstellen",
-  "restoreSuccess": "Backup wiederhergestellt",
   "restoreRestart": "Backup wiederhergestellt. Starten Sie die App neu, um die Änderungen zu übernehmen",
   "restoreFailed": "Konnte nicht Backup Wiederherstellen",
   "marqueeSpeed": "Textlaufgeschwindigkeit",
@@ -470,14 +464,6 @@
   "isbn": "ISBN",
   "rssFeedOpen": "RSS-Feed öffnen",
   "version": "Version",
-  "buildNumber": "Build-Nummer: {text}",
-  "@buildNumber": {
-    "placeholders": {
-      "text": {
-        "type": "String"
-      }
-    }
-  },
   "readableDuration": "{hours, plural, =0{} other{{hours}Std. }}{minutes}Min.",
   "@readableDuration": {
     "placeholders": {
