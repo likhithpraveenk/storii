@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- multi-user media progress is filtered per user
+- minor ui fixes
+
 ## [v0.9.0] - 2026-09-10
 
 ### Added

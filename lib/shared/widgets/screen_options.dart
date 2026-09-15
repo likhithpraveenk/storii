@@ -98,6 +98,10 @@ class _ScreenOptionsSheet extends ConsumerWidget {
       child: Column(
         children: [
           TabBar(
+            splashBorderRadius: const .only(
+              topLeft: .circular(24),
+              topRight: .circular(24),
+            ),
             tabs: [
               if (screen != .authors) Tab(text: l10n.filter),
               Tab(text: l10n.sort),

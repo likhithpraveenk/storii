@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/ui/download_sort_sheet.dart';
@@ -89,11 +90,15 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
         titleSpacing: _searching ? 0 : theme.appBarTheme.titleSpacing,
         bottom: TabBar(
           controller: _tabController,
+          splashBorderRadius: const .only(
+            topLeft: .circular(kRadius),
+            topRight: .circular(kRadius),
+          ),
           tabs: [
             Tab(
               text: activeCount == 0
-                  ? l10n.active
-                  : '${l10n.active} ($activeCount)',
+                  ? l10n.inProgress
+                  : '${l10n.inProgress} ($activeCount)',
             ),
             Tab(
               text: completedCount == 0

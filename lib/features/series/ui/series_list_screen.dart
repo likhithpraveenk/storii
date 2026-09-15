@@ -41,6 +41,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
       appBar: CommonAppBar(
         title: Text(l10n.series, style: Theme.of(context).textTheme.titleLarge),
         actions: const [ScreenOptionsButton(.series)],
+        showLoading: seriesAsync.isLoading,
       ),
       body: RefreshIndicator(
         onRefresh: () async {

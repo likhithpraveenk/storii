@@ -47,6 +47,7 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
                 l10n.collections,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
+        showLoading: collectionsAsync.isLoading,
       ),
       body: RefreshIndicator(
         onRefresh: () async {

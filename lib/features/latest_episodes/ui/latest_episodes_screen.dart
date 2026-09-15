@@ -37,6 +37,7 @@ class _LatestEpisodesScreenState extends ConsumerState<LatestEpisodesScreen> {
           l10n.latestEpisodes,
           style: Theme.of(context).textTheme.titleLarge,
         ),
+        showLoading: episodesAsync.isLoading,
       ),
       body: RefreshIndicator(
         onRefresh: () async {

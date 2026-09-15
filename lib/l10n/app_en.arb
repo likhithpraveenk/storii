@@ -45,7 +45,6 @@
   "noSession": "No session",
   "recentSessions": "Recent Sessions",
   "noAuthor": "No Author",
-  "noArtist": "No Artist",
   "noTitle": "No Title",
   "noImage": "No Image",
   "errorImage": "Error loading image",
@@ -87,7 +86,6 @@
   "audiobooks": "Audiobooks",
   "podcasts": "Podcasts",
   "episodes": "Episodes",
-  "playEpisodeConfirm": "Play this episode?",
   "search": "Search",
   "dateFormat": "Date Format",
   "custom": "Custom",
@@ -211,14 +209,6 @@
   },
   "licensedUnder": "Licensed under the GNU General Public License v3.0",
   "version": "Version",
-  "buildNumber": "Build Number: {text}",
-  "@buildNumber": {
-    "placeholders": {
-      "text": {
-        "type": "String"
-      }
-    }
-  },
   "networkLogs": "Network Logs",
   "networkLogsDescription": "Log HTTP requests and responses",
   "trustAllCertificates": "Trust all certificates",
@@ -266,7 +256,6 @@
   "remove": "Remove",
   "markAsComplete": "Mark as complete",
   "markAsIncomplete": "Mark as incomplete",
-  "markAsCompleteQ": "Mark as complete?",
   "confirm": "Confirm",
   "progressMarkedComplete": "Marked as complete",
   "progressMarkCompleteFailed": "Failed to mark as complete",
@@ -362,8 +351,6 @@
   "local": "Local",
   "downloaded": "Downloaded",
   "connectionStatus": "Connection Status",
-  "connectionChecking": "Checking connection…",
-  "connectionPleaseWait": "Please wait",
   "connectionServerConnected": "Connected to server",
   "connectionServerDisconnected": "Not connected to server",
   "connectionTypeWifi": "Wi-Fi",
@@ -463,7 +450,6 @@
   "backupDescription": "Export or import your accounts, settings and history",
   "backupCreated": "Backup saved",
   "backupFailed": "Could not create backup",
-  "restoreSuccess": "Backup restored",
   "restoreRestart": "Backup restored. Restart the app to apply changes",
   "restoreFailed": "Could not restore backup",
   "marqueeSpeed": "Text Scroll Speed",
