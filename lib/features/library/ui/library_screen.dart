@@ -33,7 +33,10 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
     final itemsAsync = ref.watch(libraryItemsProvider);
 
     return Scaffold(
-      appBar: const CommonAppBar(actions: [ScreenOptionsButton(.library)]),
+      appBar: CommonAppBar(
+        actions: const [ScreenOptionsButton(.library)],
+        showLoading: itemsAsync.isLoading,
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(rawLibraryItemsProvider);

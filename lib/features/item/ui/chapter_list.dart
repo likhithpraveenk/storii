@@ -221,7 +221,6 @@ class _ChapterTile extends ConsumerWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
-        margin: const .symmetric(horizontal: 4, vertical: 2),
         padding: const .symmetric(horizontal: 4, vertical: 8),
         decoration: BoxDecoration(
           color: isActive
@@ -229,9 +228,11 @@ class _ChapterTile extends ConsumerWidget {
               : isCompleted
               ? completedColor
               : null,
-          borderRadius: .circular(kRadius),
           border: isActive
-              ? Border.all(color: scheme.primary.withValues(alpha: 0.3))
+              ? Border.all(
+                  color: scheme.primary.withValues(alpha: 0.5),
+                  width: 2,
+                )
               : null,
         ),
         child: Row(
@@ -250,7 +251,6 @@ class _ChapterTile extends ConsumerWidget {
               ),
             ),
             SizedBox(
-              width: 2,
               height: 48,
               child: VerticalDivider(
                 width: 2,
@@ -298,7 +298,7 @@ class _ChapterTile extends ConsumerWidget {
                 color: isActive
                     ? scheme.primary.withValues(alpha: 0.1)
                     : scheme.surfaceContainerHighest.withValues(alpha: 0.6),
-                borderRadius: .circular(20),
+                borderRadius: .circular(kRadius),
               ),
               child: Text(
                 chapter.start.toTime(),

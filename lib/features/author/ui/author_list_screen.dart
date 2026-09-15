@@ -43,6 +43,7 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         actions: const [ScreenOptionsButton(.authors)],
+        showLoading: authorsAsync.isLoading,
       ),
       body: RefreshIndicator(
         onRefresh: () async {

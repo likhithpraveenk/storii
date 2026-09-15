@@ -25,7 +25,7 @@ class HomeScreen extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: const CommonAppBar(),
+      appBar: CommonAppBar(showLoading: shelvesAsync.isLoading),
       body: RefreshIndicator(
         onRefresh: () async {
           ref

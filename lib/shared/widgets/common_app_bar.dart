@@ -11,12 +11,14 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.leading,
     this.showDefaultActions = true,
+    this.showLoading = false,
   });
 
   final Widget? title;
   final List<Widget>? actions;
   final Widget? leading;
   final bool showDefaultActions;
+  final bool showLoading;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -31,10 +33,21 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
           ]
         : <Widget>[];
 
-    return AppBar(
-      leading: leading,
-      title: title ?? const LibrarySwitcher(),
-      actions: [...defaultActions, ...?actions],
+    return Stack(
+      children: [
+        AppBar(
+          leading: leading,
+          title: title ?? const LibrarySwitcher(),
+          actions: [...defaultActions, ...?actions],
+        ),
+        if (showLoading)
+          const Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: LinearProgressIndicator(minHeight: 3, borderRadius: .zero),
+          ),
+      ],
     );
   }
 }

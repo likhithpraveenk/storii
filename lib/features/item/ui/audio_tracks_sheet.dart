@@ -126,19 +126,16 @@ class _AudioTrackTileState extends State<_AudioTrackTile> {
                     ],
                   ),
                 ),
-                if (size != null)
+                if (size != null) ...[
+                  const SizedBox(width: 4),
                   Text(
                     formatBytes(size, useBinary: widget.useBinaryBytes),
                     style: textTheme.labelSmall?.copyWith(
                       color: scheme.onSurfaceVariant,
                     ),
                   ),
+                ],
                 const SizedBox(width: 4),
-                Icon(
-                  _expanded ? Icons.expand_less : Icons.expand_more,
-                  size: 20,
-                  color: scheme.onSurfaceVariant.withValues(alpha: 0.5),
-                ),
               ],
             ),
             if (_expanded && file != null) ...[

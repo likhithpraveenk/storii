@@ -47,6 +47,7 @@ class _PlaylistsScreenState extends ConsumerState<PlaylistsScreen> {
                 l10n.playlists,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
+        showLoading: playlistsAsync.isLoading,
       ),
       body: RefreshIndicator(
         onRefresh: () async {
