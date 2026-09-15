@@ -1,6 +1,7 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:saf_util/saf_util.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/storage_location.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -153,7 +154,7 @@ class _StorageTileSheetState extends ConsumerState<_StorageTileSheet> {
               icon: const Icon(Icons.folder_open),
               text: l10n.addFolder,
               onPressed: () async {
-                final folder = await safUtil.pickDirectory(
+                final folder = await SafUtil().pickDirectory(
                   writePermission: true,
                   persistablePermission: true,
                 );
