@@ -1,0 +1,4 @@
+Fixed:
+- multi-user media progress is filtered per user
+- minor ui fixes
+- duplicate downloads folder and permission check
