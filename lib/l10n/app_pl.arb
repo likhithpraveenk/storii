@@ -542,6 +542,7 @@
   "internalAppStorage": "Wewnętrzna pamięć aplikacji",
   "sdCard": "Karta SD",
   "addFolder": "Dodaj folder",
+  "permissionRevoked": "Uprawnienie cofnięte",
   "removeLocationQ": "Usunąć folder?",
   "removeLocationSubtitle": "Pliki pobrane do tego folderu zostaną usunięte"
 }
