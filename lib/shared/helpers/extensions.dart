@@ -268,7 +268,7 @@ extension DynamicSchemeVariantX on DynamicSchemeVariant {
       .neutral => l10n.neutral,
       .vibrant => l10n.vibrant,
       .expressive => l10n.expressive,
-      _ => l10n.empty,
+      _ => 'Unused',
     };
   }
 
@@ -280,7 +280,7 @@ extension DynamicSchemeVariantX on DynamicSchemeVariant {
       .neutral => l10n.neutralSubtitle,
       .vibrant => l10n.vibrantSubtitle,
       .expressive => l10n.expressiveSubtitle,
-      _ => l10n.empty,
+      _ => 'Unused',
     };
   }
 }
