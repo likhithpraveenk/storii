@@ -497,6 +497,7 @@
   "sdCard": "SD Card",
   "downloadLocation": "Download Location",
   "addFolder": "Add Folder",
+  "permissionRevoked": "Permission revoked",
   "removeLocationQ": "Remove location?",
   "removeLocationSubtitle": "Downloads at this location, if any, will be unlinked",
   "localSession": "Local Session",
