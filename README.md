@@ -27,6 +27,8 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 
 > **Disclaimer:** This is an unofficial Audiobookshelf client. It is neither affiliated with nor endorsed by the Audiobookshelf project or its maintainers.
 
+[Join on Discord](https://discord.gg/WkmffZQZrU)
+
 ## Features
 
 - Audiobooks & Podcasts streaming with background playback and progress sync
