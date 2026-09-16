@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 - multi-user media progress is filtered per user
 - minor ui fixes
+- duplicate downloads folder and permission check
 
 ## [v0.9.0] - 2026-09-10
 
