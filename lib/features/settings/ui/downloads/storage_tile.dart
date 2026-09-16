@@ -6,6 +6,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/models/storage_location.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/storage_locations_provider.dart';
+import 'package:storii/features/settings/logic/folder_permission.dart';
 import 'package:storii/features/settings/ui/settings_header.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -83,8 +84,6 @@ class _StorageTileSheetState extends ConsumerState<_StorageTileSheet> {
     final locations = ref.watch(
       storageLocationsByTypeProvider(widget.mediaType),
     );
-    final scheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
 
     return Column(
       mainAxisSize: .min,
@@ -100,50 +99,7 @@ class _StorageTileSheetState extends ConsumerState<_StorageTileSheet> {
         Flexible(
           child: ListView(
             shrinkWrap: true,
-            children: locations.map((location) {
-              return ListTile(
-                leading: Icon(
-                  location.isInternal ? Icons.memory : Icons.sd_card_outlined,
-                ),
-                title: Text(
-                  location.isInternal ? l10n.internalAppStorage : location.name,
-                ),
-                subtitle: Text(location.uri.toUiPath(context)),
-                contentPadding: const .symmetric(horizontal: 16),
-                trailing: !location.isInternal
-                    ? IconButton(
-                        icon: Icon(Icons.delete_outline, color: scheme.error),
-                        onPressed: () async {
-                          await AppDialog.show(
-                            context,
-                            title: l10n.removeLocationQ,
-                            body: Text(
-                              l10n.removeLocationSubtitle,
-                              style: textTheme.bodyLarge,
-                            ),
-                            actionLabel: l10n.delete,
-                            actionIcon: Icons.delete,
-                            isDestructive: true,
-                            onTap: () async {
-                              await ref
-                                  .read(downloadsStoreProvider.notifier)
-                                  .removeAllFromLocation(location.uri);
-                              final current = ref.read(
-                                storageLocationsProvider,
-                              );
-                              final updated = current
-                                  .where((l) => l != location)
-                                  .toList();
-                              await ref
-                                  .read(appSettingsProvider.notifier)
-                                  .setStorageLocations(updated);
-                            },
-                          );
-                        },
-                      )
-                    : null,
-              );
-            }).toList(),
+            children: [...locations.map(_StorageLocationWidget.new)],
           ),
         ),
         Padding(
@@ -165,7 +121,12 @@ class _StorageTileSheetState extends ConsumerState<_StorageTileSheet> {
                   mediaType: widget.mediaType == .book ? .audiobook : .podcast,
                 );
                 final current = ref.read(storageLocationsProvider);
-                final updated = [...current, newLocation];
+                final alreadyExists = current.any(
+                  (l) => l.uri == newLocation.uri,
+                );
+                final updated = alreadyExists
+                    ? current
+                    : [...current, newLocation];
                 await ref
                     .read(appSettingsProvider.notifier)
                     .setStorageLocations(updated);
@@ -174,6 +135,91 @@ class _StorageTileSheetState extends ConsumerState<_StorageTileSheet> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _StorageLocationWidget extends ConsumerWidget {
+  const new(this.location);
+
+  final StorageLocation location;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final hasPermission =
+        ref.watch(checkFolderPermissionProvider(location)).value ?? true;
+    return ListTile(
+      onTap: () async {
+        if (hasPermission) return;
+        final folder = await SafUtil().pickDirectory(
+          writePermission: true,
+          persistablePermission: true,
+        );
+        if (folder?.uri == location.uri) {
+          ref.invalidate(checkFolderPermissionProvider(location));
+        } else if (folder != null) {
+          await SafUtil().releasePersistedPermission(folder.uri, write: true);
+        }
+      },
+      leading: location.isInternal
+          ? const Icon(Icons.memory)
+          : Icon(
+              hasPermission ? Icons.sd_card_outlined : Icons.warning_rounded,
+              color: hasPermission ? null : theme.colorScheme.error,
+            ),
+      title: Text(
+        location.isInternal ? l10n.internalAppStorage : location.name,
+      ),
+      subtitle: Column(
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
+        children: [
+          Text(location.uri.toUiPath(context)),
+          if (!hasPermission)
+            Text(
+              l10n.permissionRevoked,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.error,
+              ),
+            ),
+        ],
+      ),
+      contentPadding: const .symmetric(horizontal: 16),
+      trailing: !location.isInternal
+          ? IconButton(
+              icon: Icon(Icons.delete_outline, color: theme.colorScheme.error),
+              onPressed: () async {
+                await AppDialog.show(
+                  context,
+                  title: l10n.removeLocationQ,
+                  body: Text(
+                    l10n.removeLocationSubtitle,
+                    style: theme.textTheme.bodyLarge,
+                  ),
+                  actionLabel: l10n.delete,
+                  actionIcon: Icons.delete,
+                  isDestructive: true,
+                  onTap: () async {
+                    await ref
+                        .read(downloadsStoreProvider.notifier)
+                        .removeAllFromLocation(location.uri);
+                    final current = ref.read(storageLocationsProvider);
+                    final updated = current
+                        .where((l) => l != location)
+                        .toList();
+                    await ref
+                        .read(appSettingsProvider.notifier)
+                        .setStorageLocations(updated);
+                    await SafUtil().releasePersistedPermission(
+                      location.uri,
+                      write: true,
+                    );
+                  },
+                );
+              },
+            )
+          : null,
     );
   }
 }
