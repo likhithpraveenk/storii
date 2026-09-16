@@ -45,7 +45,6 @@
   "noSession": "无会话",
   "recentSessions": "最近会话",
   "noAuthor": "无作者",
-  "noArtist": "无艺术家",
   "noTitle": "无标题",
   "noImage": "无图片",
   "errorImage": "加载图片失败",
@@ -58,7 +57,6 @@
   "logoutConfirm": "退出当前账号？",
   "noLibrary": "无媒体库",
   "libraries": "媒体库",
-  "empty": "空",
   "collapse": "折叠",
   "refresh": "刷新",
   "retry": "重试",
@@ -72,7 +70,6 @@
   "audiobooks": "有声书",
   "podcasts": "播客",
   "episodes": "剧集",
-  "playEpisodeConfirm": "播放此剧集？",
   "search": "搜索",
   "dateFormat": "日期格式",
   "custom": "自定义",
@@ -186,14 +183,6 @@
   },
   "licensedUnder": "基于 GNU 通用公共许可证 v3.0 授权",
   "version": "版本",
-  "buildNumber": "构建号：{text}",
-  "@buildNumber": {
-    "placeholders": {
-      "text": {
-        "type": "String"
-      }
-    }
-  },
   "networkLogs": "网络日志",
   "networkLogsDescription": "记录 HTTP 请求与响应",
   "trustAllCertificates": "信任所有证书",
@@ -238,7 +227,6 @@
   "removeProgressQ": "移除进度？",
   "removeProgressMessage": "这将重置您的收听进度，且无法撤销。",
   "remove": "移除",
-  "markAsCompleteQ": "标记为已完成？",
   "confirm": "确认",
   "progressMarkedComplete": "已标记为完成",
   "progressMarkCompleteFailed": "标记为完成失败",
@@ -317,8 +305,6 @@
   "local": "本地",
   "downloaded": "已下载",
   "connectionStatus": "连接状态",
-  "connectionChecking": "正在检查连接…",
-  "connectionPleaseWait": "请稍候",
   "connectionServerConnected": "已连接到服务器",
   "connectionServerDisconnected": "未连接到服务器",
   "connectionTypeWifi": "Wi-Fi",
@@ -411,7 +397,6 @@
   "backupDescription": "导出或导入账号、设置和历史",
   "backupCreated": "备份已保存",
   "backupFailed": "无法创建备份",
-  "restoreSuccess": "备份已恢复",
   "restoreRestart": "备份已恢复，重启应用以应用更改",
   "restoreFailed": "无法恢复备份",
   "marqueeSpeed": "文字滚动速度",

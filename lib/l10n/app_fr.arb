@@ -45,7 +45,6 @@
   "noSession": "Pas de session",
   "recentSessions": "Sessions récentes",
   "noAuthor": "Pas d'auteur",
-  "noArtist": "Pas d'artiste",
   "noTitle": "Pas de titre",
   "noImage": "Pas d'image",
   "errorImage": "Erreur lors du chargement de l'image",
@@ -58,10 +57,18 @@
   "logoutConfirm": "Se déconnecter de ce compte ?",
   "noLibrary": "Pas de bibliothèque",
   "libraries": "Bibliothèque",
-  "empty": "Vide",
   "collapse": "Réduire",
   "refresh": "Recharger",
   "retry": "Réessayer",
   "description": "Description",
-  "noDescription": "Pas de description disponible"
+  "noDescription": "Pas de description disponible",
+  "continueWord": "Continuer",
+  "shelfContinueListening": "Continuer l'écoute",
+  "shelfContinueSeries": "Continuer la série",
+  "shelfDiscover": "Découvrir",
+  "shelfRecentlyAdded": "Ajouté récemment",
+  "shelfRecentSeries": "Séries récentes",
+  "shelfNewestAuthors": "Auteurs récents",
+  "shelfNewestEpisodes": "Épisodes récents",
+  "shelfListenAgain": "Écouter à nouveau"
 }
