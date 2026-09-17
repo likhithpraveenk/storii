@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 - sleep timer chapter ends now account for seeking and playback speed
 - sleep shake sensitivity adjusted; strong vibration added for feedback
+- progress bar tap, scrub and cancel work as expected
 
 ## [v0.9.1] - 2026-09-16
 
