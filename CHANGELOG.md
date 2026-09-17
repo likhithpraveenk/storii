@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 ### Changed
 
 - sleep timer tracks playback state; ticks only while playing
+- full player: show tracks list when chapter list empty
 
 ### Fixed
 
