@@ -6,26 +6,32 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
+import 'package:storii/features/player/models/sleep_timer_state.dart';
 
 part 'sleep_timer_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class SleepTimer extends _$SleepTimer {
   Timer? _ticker;
-  Duration? _initialDuration;
   static const _tick = Duration(seconds: 1);
-  static const _max = Duration(hours: 12);
 
   Duration get fadeDuration => ref.read(fadeOnSleepDurationProvider);
   double get minVolume => ref.read(fadeOnSleepMinVolumeProvider);
   bool get canFade => ref.read(fadeOnSleepProvider);
 
-  double? _initialVolume;
+  VolumeControl get _volumeController =>
+      ref.read(volumeControlProvider.notifier);
 
   @override
-  Duration? build() {
+  SleepTimerState? build() {
     ref.listen(sessionProvider, (_, next) {
       if (next == null) cancel();
+    });
+
+    ref.listen(isPlayingStreamProvider, (_, isPlayingAsync) {
+      final currentState = state;
+      if (currentState == null) return;
+      state = currentState.copyWith(isPaused: !(isPlayingAsync.value == true));
     });
 
     ref.onDispose(_cancelTicker);
@@ -33,68 +39,90 @@ class SleepTimer extends _$SleepTimer {
   }
 
   Future<void> setEndAtChapter(int numberOfChapters) async {
-    final state = ref.read(playbackStateProvider).value;
+    final chapters = ref.read(chapterListProvider);
+    if (chapters.isEmpty) return;
 
-    if (state == null) return;
+    final currentChapter = ref.read(currentChapterProvider).value;
+    if (currentChapter == null) return;
 
-    final trackIndex = state.index;
-    if (trackIndex == null) return;
-
-    final resolver = audioHandler.resolver;
-    if (resolver.isEmpty) return;
-
-    final globalPosition = audioHandler.currentPosition;
-    final currentIndex = resolver.chapterIndexFromTrack(
-      trackIndex,
-      globalPosition,
-    );
-    final endIndex = (currentIndex + numberOfChapters - 1).clamp(
-      currentIndex,
-      resolver.chapters.length - 1,
+    final endIndex = (currentChapter.index + numberOfChapters - 1).clamp(
+      currentChapter.index,
+      chapters.length - 1,
     );
 
-    final endTime = resolver.chapters[endIndex].end;
-    final duration = endTime - globalPosition;
+    final realTimeRemaining = _remainingUntilChapter(endIndex);
+    if (realTimeRemaining == null) return;
 
-    if (duration <= Duration.zero) return;
-
-    set(duration);
-  }
-
-  void set(Duration duration) {
-    final clamped = Duration(
-      microseconds: duration.inMicroseconds.clamp(0, _max.inMicroseconds),
-    );
-    if (clamped == Duration.zero) {
-      cancel();
-      return;
-    }
-    _initialDuration = clamped;
-    if (_initialVolume != null) {
+    if (state?.originalVolume != null) {
       _restoreVolume();
     }
-    _initialVolume = null;
-    state = clamped;
+
+    final isPlaying = ref.read(isPlayingProvider);
+    state = SleepTimerState(
+      mode: .endOfChapter,
+      remaining: realTimeRemaining,
+      targetChapterIndex: endIndex,
+      isPaused: !isPlaying,
+      originalVolume: ref.read(volumeProvider).value ?? 1.0,
+    );
     _ticker ??= Timer.periodic(_tick, (_) => _onTick());
   }
 
-  void restart() {
-    final initial = _initialDuration;
-    if (initial != null) {
+  void set(Duration duration) {
+    if (duration == Duration.zero) {
       cancel();
-      set(initial);
+      return;
     }
+    _restoreVolume();
+
+    final isPlaying = ref.read(isPlayingProvider);
+    state = SleepTimerState(
+      mode: .duration,
+      remaining: duration,
+      initialDuration: duration,
+      isPaused: !isPlaying,
+      originalVolume: ref.read(volumeProvider).value ?? 1.0,
+    );
+    _ticker ??= Timer.periodic(_tick, (_) => _onTick());
   }
 
-  void add(Duration delta) {
-    final current = state ?? Duration.zero;
-    set(current + delta);
+  bool restart() {
+    final currentState = state;
+    if (currentState == null) return false;
+
+    if (currentState.mode == .duration) {
+      final initial = currentState.initialDuration;
+      if (initial != null) {
+        cancel();
+        set(initial);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool add(Duration delta) {
+    final current = state;
+    if (current == null) return false;
+
+    if (current.mode == .duration) {
+      final newRemaining = current.remaining + delta;
+      if (newRemaining <= Duration.zero) {
+        cancel();
+        return false;
+      }
+      state = current.copyWith(
+        remaining: newRemaining,
+        initialDuration: current.initialDuration ?? newRemaining,
+      );
+      return true;
+    }
+    return false;
   }
 
   void cancel() {
     _restoreVolume();
     _cancelTicker();
-    _initialDuration = null;
     state = null;
   }
 
@@ -107,31 +135,65 @@ class SleepTimer extends _$SleepTimer {
       return;
     }
 
-    final next = current - _tick;
-    if (next <= Duration.zero) {
-      _stopAudio();
-    } else {
-      state = next;
-      if (canFade) _handleFade(next);
+    if (current.isPaused) return;
+
+    switch (current.mode) {
+      case .duration:
+        final next = current.remaining - _tick;
+        if (next <= Duration.zero) {
+          _stopAudio();
+        } else {
+          state = current.copyWith(remaining: next);
+          if (canFade) _handleFade(next);
+        }
+      case .endOfChapter:
+        final realTimeRemaining = _remainingUntilChapter(
+          current.targetChapterIndex,
+        );
+        if (realTimeRemaining == null) {
+          _stopAudio();
+          return;
+        }
+
+        state = current.copyWith(remaining: realTimeRemaining);
+        if (canFade) _handleFade(realTimeRemaining);
     }
+  }
+
+  Duration? _remainingUntilChapter(int? targetChapterIndex) {
+    final chapters = ref.read(chapterListProvider);
+    if (targetChapterIndex == null || targetChapterIndex >= chapters.length) {
+      return null;
+    }
+
+    final audioRemaining =
+        chapters[targetChapterIndex].end - audioHandler.currentPosition;
+    if (audioRemaining <= Duration.zero) return null;
+
+    final speed = ref.read(localSpeedProvider);
+    final scaleTimeBySpeed = ref.read(scaleTimeBySpeedProvider);
+    return Duration(
+      microseconds: scaleTimeBySpeed
+          ? (audioRemaining.inMicroseconds / speed).round()
+          : audioRemaining.inMicroseconds,
+    );
   }
 
   void _handleFade(Duration remaining) {
     if (remaining > fadeDuration) {
-      _initialVolume = null;
       return;
     }
 
-    _initialVolume ??= ref.read(volumeProvider).value ?? 1.0;
+    final startVol = state?.originalVolume;
+    if (startVol == null) return;
 
-    final startVol = _initialVolume!;
     if (startVol <= minVolume) return;
 
     final ratio = remaining.inSeconds / fadeDuration.inSeconds;
     final curveFactor = math.pow(ratio, 4).toDouble(); // quartic curve
     final targetVolume = minVolume + (startVol - minVolume) * curveFactor;
 
-    audioHandler.setVolume(targetVolume.clamp(minVolume, startVol));
+    _volumeController.setVolume(targetVolume.clamp(minVolume, startVol));
   }
 
   Future<void> _stopAudio() async {
@@ -146,9 +208,9 @@ class SleepTimer extends _$SleepTimer {
   }
 
   void _restoreVolume() {
-    if (_initialVolume != null) {
-      audioHandler.setVolume(_initialVolume!);
-      _initialVolume = null;
+    final vol = state?.originalVolume;
+    if (vol != null) {
+      _volumeController.setVolume(vol);
     }
   }
 

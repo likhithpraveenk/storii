@@ -54,6 +54,11 @@ bool isPlaying(Ref ref) {
 }
 
 @riverpod
+Stream<bool> isPlayingStream(Ref ref) {
+  return audioHandler.stateStream.map((s) => s.isPlaying);
+}
+
+@riverpod
 Stream<Duration> globalPosition(Ref ref) {
   final isBackground = ref.watch(isBackgroundProvider);
   if (isBackground) return const Stream.empty();

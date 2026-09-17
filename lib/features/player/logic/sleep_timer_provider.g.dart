@@ -13,7 +13,7 @@ part of 'sleep_timer_provider.dart';
 final sleepTimerProvider = SleepTimerProvider._();
 
 final class SleepTimerProvider
-    extends $NotifierProvider<SleepTimer, Duration?> {
+    extends $NotifierProvider<SleepTimer, SleepTimerState?> {
   SleepTimerProvider._()
     : super(
         from: null,
@@ -33,27 +33,27 @@ final class SleepTimerProvider
   SleepTimer create() => SleepTimer();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(Duration? value) {
+  Override overrideWithValue(SleepTimerState? value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<Duration?>(value),
+      providerOverride: $SyncValueProvider<SleepTimerState?>(value),
     );
   }
 }
 
-String _$sleepTimerHash() => r'c61774d4d4fe89fd97c076777036edbdcaf58a9a';
+String _$sleepTimerHash() => r'468c7713d160c3f33d591885e9d5de559b026c66';
 
-abstract class _$SleepTimer extends $Notifier<Duration?> {
-  Duration? build();
+abstract class _$SleepTimer extends $Notifier<SleepTimerState?> {
+  SleepTimerState? build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<Duration?, Duration?>;
+    final ref = this.ref as $Ref<SleepTimerState?, SleepTimerState?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<Duration?, Duration?>,
-              Duration?,
+              AnyNotifier<SleepTimerState?, SleepTimerState?>,
+              SleepTimerState?,
               Object?,
               Object?
             >;

@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/sleep_timer_provider.dart';
+import 'package:storii/features/player/models/sleep_timer_state.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
@@ -15,9 +16,7 @@ class SleepButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sleepMinutes = ref.watch(
-      sleepTimerProvider.select((t) => t?.inMinutes),
-    );
+    final sleep = ref.watch(sleepTimerProvider);
     Future<void> openSheet() => AppBottomSheet.show(
       context,
       title: l10n.sleepTimer,
@@ -27,9 +26,7 @@ class SleepButton extends ConsumerWidget {
       return ListTile(
         title: Text(l10n.sleepTimer),
         leading: const Icon(Icons.bedtime_outlined),
-        trailing: sleepMinutes != null
-            ? Text(Duration(minutes: sleepMinutes).toReadableDuration())
-            : null,
+        trailing: sleep != null ? Text(_displayLabel(sleep)) : null,
         onTap: openSheet,
       );
     }
@@ -37,14 +34,17 @@ class SleepButton extends ConsumerWidget {
     return IconButton(
       onPressed: openSheet,
       tooltip: l10n.sleepTimer,
-      icon: sleepMinutes == null
+      icon: sleep == null
           ? const Icon(Icons.bedtime_outlined)
           : Text(
-              Duration(minutes: sleepMinutes).toReadableDuration(),
+              _displayLabel(sleep),
               style: Theme.of(context).textTheme.labelLarge,
             ),
     );
   }
+
+  String _displayLabel(SleepTimerState sleep) =>
+      sleep.remaining.toReadableDuration();
 }
 
 class SleepTimerSheet extends ConsumerStatefulWidget {
@@ -62,6 +62,14 @@ class _SleepTimerSheetState extends ConsumerState<SleepTimerSheet> {
     final notifier = ref.read(sleepTimerProvider.notifier);
     final textTheme = Theme.of(context).textTheme;
 
+    final currentChapter = ref.watch(currentChapterProvider).value?.index ?? 0;
+    final targetChapter = sleep?.targetChapterIndex ?? 0;
+    final chaptersRemaining = targetChapter - currentChapter + 1;
+
+    final endChStr = chaptersRemaining == 1
+        ? l10n.endOfChapter
+        : l10n.endOfNChapters(chaptersRemaining);
+
     return Padding(
       padding: const .symmetric(horizontal: 24),
       child: Column(
@@ -69,28 +77,47 @@ class _SleepTimerSheetState extends ConsumerState<SleepTimerSheet> {
         crossAxisAlignment: .stretch,
         children: [
           if (sleep != null) ...[
+            if (sleep.isPaused)
+              const Padding(
+                padding: .only(bottom: 4),
+                child: Icon(Icons.pause_circle_outline),
+              ),
             Center(
-              child: Text(
-                sleep.toReadableDuration(showSeconds: true),
-                style: textTheme.displaySmall,
+              child: Column(
+                mainAxisSize: .min,
+                children: [
+                  if (sleep.mode == .endOfChapter)
+                    Text(
+                      endChStr,
+                      style: textTheme.bodyLarge,
+                      textAlign: .center,
+                    ),
+                  Text(
+                    sleep.remaining.toReadableDuration(showSeconds: true),
+                    style: textTheme.displaySmall,
+                    textAlign: .center,
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: .center,
-              children: [
-                TextButton(
-                  onPressed: () => notifier.add(const Duration(minutes: -5)),
-                  child: Text('-${l10n.timeMinutes(5)}'),
-                ),
-                for (final delta in [5, 15])
+            if (sleep.mode == .duration) ...[
+              Row(
+                mainAxisAlignment: .center,
+                children: [
                   TextButton(
-                    onPressed: () => notifier.add(Duration(minutes: delta)),
-                    child: Text('+${l10n.timeMinutes(delta)}'),
+                    onPressed: () => notifier.add(const Duration(minutes: -5)),
+                    child: Text('-${l10n.timeMinutes(5)}'),
                   ),
-              ],
-            ),
-            const SizedBox(height: 16),
+                  for (final delta in [5, 15])
+                    TextButton(
+                      onPressed: () => notifier.add(Duration(minutes: delta)),
+                      child: Text('+${l10n.timeMinutes(delta)}'),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 16),
+            ],
             AppOutlinedButton(
               isDestructive: true,
               onPressed: notifier.cancel,
@@ -137,7 +164,7 @@ class _ChapterOptionsState extends ConsumerState<_ChapterOptions> {
     final chapters = ref.watch(chapterListProvider);
     if (chapters.isEmpty) return const SizedBox.shrink();
 
-    final maxChapters = chapters.length.clamp(0, 3);
+    final maxChapters = chapters.length;
     final label = _selectedCount == 1
         ? l10n.endOfChapter
         : l10n.endOfNChapters(_selectedCount);

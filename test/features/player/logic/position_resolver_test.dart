@@ -8,10 +8,17 @@ void main() {
       PositionResolver.from(items);
 
   Map<String, dynamic> chapterJson({
+    required int index,
     required Duration start,
     required Duration end,
     required String title,
-  }) => Chapter(start: start, end: end, title: title, subtitle: '').toJson();
+  }) => Chapter(
+    index: index,
+    start: start,
+    end: end,
+    title: title,
+    subtitle: '',
+  ).toJson();
 
   MediaItem makeTrack({
     required Duration startOffset,
@@ -36,11 +43,13 @@ void main() {
     setUp(() {
       final chapters = [
         chapterJson(
+          index: 0,
           start: Duration.zero,
           end: const Duration(seconds: 30),
           title: 'Ch 1',
         ),
         chapterJson(
+          index: 1,
           start: const Duration(seconds: 30),
           end: const Duration(seconds: 60),
           title: 'Ch 2',
@@ -88,16 +97,19 @@ void main() {
       // chapter 0: 0-40s, chapter 1: 40-80s, chapter 2: 80-120s
       final chapters = [
         chapterJson(
+          index: 0,
           start: Duration.zero,
           end: const Duration(seconds: 40),
           title: 'Ch 1',
         ),
         chapterJson(
+          index: 1,
           start: const Duration(seconds: 40),
           end: const Duration(seconds: 80),
           title: 'Ch 2',
         ),
         chapterJson(
+          index: 2,
           start: const Duration(seconds: 80),
           end: const Duration(seconds: 120),
           title: 'Ch 3',
@@ -150,16 +162,19 @@ void main() {
   test('chapterPositionFromGlobal returns correct index and position', () {
     final chapters = [
       chapterJson(
+        index: 0,
         start: Duration.zero,
         end: const Duration(seconds: 40),
         title: 'Ch 1',
       ),
       chapterJson(
+        index: 1,
         start: const Duration(seconds: 40),
         end: const Duration(seconds: 80),
         title: 'Ch 2',
       ),
       chapterJson(
+        index: 2,
         start: const Duration(seconds: 80),
         end: const Duration(seconds: 120),
         title: 'Ch 3',
@@ -192,11 +207,13 @@ void main() {
       // each track is its own chapter, start = accumulated offset
       final track0Chapters = [
         chapterJson(
+          index: 0,
           start: Duration.zero,
           end: const Duration(seconds: 45),
           title: 'Part 1',
         ),
         chapterJson(
+          index: 1,
           start: const Duration(seconds: 45),
           end: const Duration(seconds: 90),
           title: 'Part 2',
@@ -278,6 +295,7 @@ void main() {
   group('gap filling in chapters', () {
     Map<String, dynamic> chapterForTrack(int trackIndex) {
       return chapterJson(
+        index: trackIndex,
         start: Duration(seconds: trackIndex * 60),
         end: Duration(seconds: (trackIndex + 1) * 60),
         title: 'Chapter ${trackIndex + 1}',

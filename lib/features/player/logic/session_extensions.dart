@@ -37,11 +37,14 @@ extension PlaybackSessionX on PlaybackSession {
     List<Map<String, dynamic>> jsonChapters;
     if (chapters.isNotEmpty) {
       jsonChapters = chapters
+          .asMap()
+          .entries
           .map(
-            (c) => Chapter(
-              start: c.start,
-              end: c.end,
-              title: c.title,
+            (entry) => Chapter(
+              index: entry.key,
+              start: entry.value.start,
+              end: entry.value.end,
+              title: entry.value.title,
               subtitle: displayTitle ?? l10n.noTitle,
             ).toJson(),
           )
@@ -49,11 +52,14 @@ extension PlaybackSessionX on PlaybackSession {
     } else {
       jsonChapters =
           audioTracks
-              ?.map(
-                (t) => Chapter(
-                  start: t.startOffset,
-                  end: t.startOffset + t.duration,
-                  title: t.title,
+              ?.asMap()
+              .entries
+              .map(
+                (entry) => Chapter(
+                  index: entry.key,
+                  start: entry.value.startOffset,
+                  end: entry.value.startOffset + entry.value.duration,
+                  title: entry.value.title,
                   subtitle: displayAuthor ?? l10n.noAuthor,
                 ).toJson(),
               )

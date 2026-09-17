@@ -7,44 +7,12 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/queue_providers.dart';
-import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
+import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/pulsing_dot.dart';
-
-class ChaptersActionButton extends ConsumerWidget {
-  const new({super.key, required this.session, required this.inOverflow});
-
-  final PlaybackSession session;
-  final bool inOverflow;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    void openSheet() => showChapterListSheet(
-      context,
-      chapters: session.chapters,
-      itemId: session.libraryItemId,
-      itemTitle: session.displayTitle ?? l10n.noTitle,
-    );
-
-    if (inOverflow) {
-      return ListTile(
-        title: Text(l10n.chapters),
-        leading: const Icon(Icons.list_rounded),
-        trailing: Text('${session.chapters.length}'),
-        onTap: session.isPodcastEpisode ? null : openSheet,
-      );
-    }
-
-    return IconButton(
-      icon: const Icon(Icons.list_rounded),
-      tooltip: l10n.chapters,
-      onPressed: session.isPodcastEpisode ? null : openSheet,
-    );
-  }
-}
 
 void showChapterListSheet(
   BuildContext context, {
@@ -138,6 +106,10 @@ class _ChapterListState extends ConsumerState<ChapterList> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.chapters.isEmpty) {
+      return const EmptyState();
+    }
+
     return ListView.builder(
       padding: const .only(bottom: 36),
       controller: controller,

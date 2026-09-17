@@ -58,7 +58,7 @@ linter:
     - sized_box_shrink_expand
     - use_colored_box
     - use_decorated_box
-    # - migrate_design_widgets
+    - migrate_design_widgets
 
 analyzer:
   errors:

@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- sleep timer tracks playback state; ticks only while playing
+- full player: show tracks list when chapter list empty
+
+### Fixed
+
+- sleep timer chapter ends now account for seeking and playback speed
+- sleep shake sensitivity adjusted; strong vibration added for feedback
+- progress bar tap, scrub and cancel work as expected
+
 ## [v0.9.1] - 2026-09-16
 
 ### Fixed
