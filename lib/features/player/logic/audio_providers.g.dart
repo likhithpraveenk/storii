@@ -210,6 +210,39 @@ final class IsPlayingProvider extends $FunctionalProvider<bool, bool, bool>
 
 String _$isPlayingHash() => r'221a4767ca36d19d18b2b51ce71a9cc216ae4d64';
 
+@ProviderFor(isPlayingStream)
+final isPlayingStreamProvider = IsPlayingStreamProvider._();
+
+final class IsPlayingStreamProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, Stream<bool>>
+    with $FutureModifier<bool>, $StreamProvider<bool> {
+  IsPlayingStreamProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'isPlayingStreamProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$isPlayingStreamHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<bool> create(Ref ref) {
+    return isPlayingStream(ref);
+  }
+}
+
+String _$isPlayingStreamHash() => r'52147e6214802e8f2939a616450cb748bd90e751';
+
 @ProviderFor(globalPosition)
 final globalPositionProvider = GlobalPositionProvider._();
 
