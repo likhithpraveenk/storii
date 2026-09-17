@@ -61,6 +61,7 @@ dependencies:
   ttf_metadata: ^0.0.6
   url_launcher: ^6.3.2
   uuid: ^4.6.0
+  vibration: ^3.2.1
 
 dev_dependencies:
   build_runner: ^2.16.1
