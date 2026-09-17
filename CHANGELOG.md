@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+## [v0.9.2] - 2026-09-17
+
 ### Changed
 
 - sleep timer tracks playback state; ticks only while playing
@@ -670,7 +672,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.9.1...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.9.2...HEAD
+[v0.9.2]: https://github.com/likhithpraveenk/storii/compare/v0.9.1...v0.9.2
 [v0.9.1]: https://github.com/likhithpraveenk/storii/compare/v0.9.0...v0.9.1
 [v0.9.0]: https://github.com/likhithpraveenk/storii/compare/v0.8.1...v0.9.0
 [v0.8.1]: https://github.com/likhithpraveenk/storii/compare/v0.8.0...v0.8.1
