@@ -8,6 +8,7 @@ sealed class Chapter with _$Chapter {
   const new _();
 
   const factory({
+    required int index,
     required Duration start,
     required Duration end,
     required String title,

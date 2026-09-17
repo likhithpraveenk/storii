@@ -32,6 +32,7 @@ class PositionResolver {
 
     final filledChapters = <Chapter>[];
     Duration coveredUntil = Duration.zero;
+    var index = 0;
 
     final titleForFill = items.firstOrNull?.title ?? '';
     final subtitleForFill =
@@ -46,6 +47,7 @@ class PositionResolver {
       if (chapterStart > coveredUntil) {
         filledChapters.add(
           Chapter(
+            index: index++,
             start: coveredUntil,
             end: chapterStart,
             title: titleForFill,
@@ -56,6 +58,7 @@ class PositionResolver {
 
       filledChapters.add(
         Chapter(
+          index: index++,
           start: chapterStart,
           end: chapterEnd,
           title: chapter.title,
@@ -69,6 +72,7 @@ class PositionResolver {
     if (coveredUntil < totalDuration) {
       filledChapters.add(
         Chapter(
+          index: index++,
           start: coveredUntil,
           end: totalDuration,
           title: titleForFill,

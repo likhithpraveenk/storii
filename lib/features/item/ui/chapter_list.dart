@@ -46,6 +46,7 @@ class ChaptersActionButton extends ConsumerWidget {
   }
 }
 
+// TODO: separate chapter list as per resolved chapters to be used in full player actions
 void showChapterListSheet(
   BuildContext context, {
   required List<BookChapter> chapters,
