@@ -215,7 +215,7 @@ final class IsItemFullyDownloadedProvider
 }
 
 String _$isItemFullyDownloadedHash() =>
-    r'c1424052a6ed5eb3166bd14e559b046841796cb7';
+    r'0721669ea4a0632c4cd11f43ba81d0ea6f48e955';
 
 final class IsItemFullyDownloadedFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<bool>, DownloadItem> {
@@ -292,7 +292,7 @@ final class ResolveLocalPathsProvider
   }
 }
 
-String _$resolveLocalPathsHash() => r'df1a1e6f26f8509bb2d0514e42808c8ddc90842f';
+String _$resolveLocalPathsHash() => r'14380332864feb8135b566ac984e37fd9717e7c0';
 
 final class ResolveLocalPathsFamily extends $Family
     with

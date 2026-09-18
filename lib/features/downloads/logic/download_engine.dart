@@ -69,15 +69,14 @@ class DownloadEngine extends _$DownloadEngine {
         final cancelToken = CancelToken();
         trackTokens[i] = cancelToken;
 
-        final existingBytes = await service.existingBytes(
-          libraryItemId: item.libraryItemId,
-          episodeId: item.episodeId,
-          filename: initialTrack.filename ?? '',
+        final existingBytes = await service.getBytes(
+          relativePath: item.relativePath,
+          trackPath: initialTrack.trackPath,
         );
 
-        final sink = await service.openAppendSink(
-          libraryItemId: item.libraryItemId,
-          filename: initialTrack.filename ?? '',
+        final sink = await service.getSink(
+          relativePath: item.relativePath,
+          trackPath: initialTrack.trackPath,
           mimeType: initialTrack.mimeType,
         );
 

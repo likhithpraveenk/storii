@@ -29,9 +29,9 @@ class DownloadQueue extends _$DownloadQueue {
 
   @override
   List<String> build() {
-    Future.microtask(
-      () => ref.read(downloadMigrationV3Provider.notifier).runIfNeeded(),
-    );
+    Future.microtask(() async {
+      await ref.read(downloadMigrationV4Provider.notifier).runIfNeeded();
+    });
 
     final downloads = _store.getAll();
     final active =
@@ -76,6 +76,7 @@ class DownloadQueue extends _$DownloadQueue {
           userId: user.id,
           serverUrl: user.serverUrl,
           service: service,
+          relativePath: item.relPath,
           existing: existing,
         );
       } else {
@@ -232,25 +233,25 @@ class DownloadQueue extends _$DownloadQueue {
     final service = ref.read(storageServiceForItemProvider(item));
     if (item != null && service != null) {
       if (item.episodeId != null) {
-        await service.deleteEpisode(item.libraryItemId, item.episodeId!);
-
-        final otherEpisodes = _store.getAll().values.where(
-          (d) =>
-              d.libraryItemId == item.libraryItemId &&
-              d.episodeId != item.episodeId &&
-              d.isComplete,
-        );
-        if (otherEpisodes.isEmpty) {
-          await service.deleteItem(item.libraryItemId);
-          await ref
-              .read(itemsCacheProvider.notifier)
-              .delete(item.libraryItemId);
+        if (item.isMigratedV4) {
+          await service.deleteTrack(
+            relativePath: item.relativePath,
+            trackPath: item.tracks.first.trackPath,
+          );
+        } else {
+          await service.deleteEpisode(item.libraryItemId, item.episodeId!);
         }
       } else {
-        await service.deleteItem(item.libraryItemId);
+        if (item.isMigratedV4) {
+          await service.deleteFolder(relativePath: item.relativePath);
+        } else {
+          await service.deleteItem(item.libraryItemId);
+        }
+
         await ref.read(itemsCacheProvider.notifier).delete(item.libraryItemId);
       }
     }
+    unawaited(service?.cleanupEmptyFolders.call());
     await _store.remove(key);
 
     await processing?.future;
