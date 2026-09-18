@@ -137,14 +137,16 @@ class SafStorageService extends StorageService {
     required String relativePath,
     String trackPath = '',
   }) async {
+    final relativeTrack = p.dirname(trackPath);
+    final parts = p.split(
+      p.join(relativePath, relativeTrack == '.' ? null : relativeTrack),
+    );
     try {
-      final parts = p.split(p.join(relativePath, p.dirname(trackPath)));
-
       final folder = await _safUtil.mkdirp(location.uri, parts);
       return folder.uri;
     } catch (e) {
       final msg =
-          'Folder doesn\'t exist or permission revoked at ${location.uri}';
+          'Folder doesn\'t exist or permission revoked at ${location.uri} and parts: $parts';
       LogService.log(
         msg,
         originalError: e,
@@ -245,6 +247,33 @@ class SafStorageService extends StorageService {
         source: 'SafStorageService',
       );
     }
+  }
+
+  @override
+  Future<void> cleanupEmptyFolders() async {
+    try {
+      await _removeEmptySafDirs(location.uri, location.uri);
+    } catch (_) {}
+  }
+
+  Future<bool> _removeEmptySafDirs(String uri, String rootUri) async {
+    bool isEmpty = true;
+    final children = await _safUtil.list(uri);
+
+    for (final child in children) {
+      if (child.isDir) {
+        final subDirIsEmpty = await _removeEmptySafDirs(child.uri, rootUri);
+        if (!subDirIsEmpty) isEmpty = false;
+      } else {
+        isEmpty = false;
+      }
+    }
+
+    if (isEmpty && uri != rootUri) {
+      await _safUtil.delete(uri, true);
+      return true;
+    }
+    return isEmpty;
   }
 
   @override

@@ -83,4 +83,6 @@ abstract class StorageService {
     required String relativePath,
     required String trackPath,
   });
+
+  Future<void> cleanupEmptyFolders();
 }

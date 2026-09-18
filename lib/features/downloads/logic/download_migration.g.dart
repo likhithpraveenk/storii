@@ -42,7 +42,7 @@ final class DownloadMigrationV4Provider
 }
 
 String _$downloadMigrationV4Hash() =>
-    r'e975133a5531bf6dfddca2bc7b540756bbe28045';
+    r'44c29149d88c2b84bf2ea7202cdf12184389cc48';
 
 abstract class _$DownloadMigrationV4 extends $Notifier<void> {
   void build();

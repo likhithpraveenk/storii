@@ -255,6 +255,36 @@ class InternalStorageService extends StorageService {
   }
 
   @override
+  Future<void> cleanupEmptyFolders() async {
+    final base = await getApplicationDocumentsDirectory();
+    final root = Directory(p.join(base.path, location.uri));
+    if (!await root.exists()) return;
+    try {
+      await _removeEmptyDirs(root, root);
+    } catch (_) {}
+  }
+
+  Future<bool> _removeEmptyDirs(Directory dir, Directory root) async {
+    bool isEmpty = true;
+    final entries = await dir.list().toList();
+
+    for (final entry in entries) {
+      if (entry is Directory) {
+        final subDirIsEmpty = await _removeEmptyDirs(entry, root);
+        if (!subDirIsEmpty) isEmpty = false;
+      } else {
+        isEmpty = false;
+      }
+    }
+
+    if (isEmpty && dir.path != root.path) {
+      await dir.delete();
+      return true;
+    }
+    return isEmpty;
+  }
+
+  @override
   Future<bool> migrateToV4Path({
     required String libraryItemId,
     String? episodeId,

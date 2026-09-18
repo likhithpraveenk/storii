@@ -241,24 +241,6 @@ class DownloadQueue extends _$DownloadQueue {
         } else {
           await service.deleteEpisode(item.libraryItemId, item.episodeId!);
         }
-
-        final otherEpisodes = _store.getAll().values.where(
-          (d) =>
-              d.libraryItemId == item.libraryItemId &&
-              d.episodeId != item.episodeId &&
-              d.isComplete,
-        );
-        if (otherEpisodes.isEmpty) {
-          if (item.isMigratedV4) {
-            await service.deleteFolder(relativePath: item.relativePath);
-          } else {
-            await service.deleteItem(item.libraryItemId);
-          }
-
-          await ref
-              .read(itemsCacheProvider.notifier)
-              .delete(item.libraryItemId);
-        }
       } else {
         if (item.isMigratedV4) {
           await service.deleteFolder(relativePath: item.relativePath);
@@ -269,6 +251,7 @@ class DownloadQueue extends _$DownloadQueue {
         await ref.read(itemsCacheProvider.notifier).delete(item.libraryItemId);
       }
     }
+    unawaited(service?.cleanupEmptyFolders.call());
     await _store.remove(key);
 
     await processing?.future;

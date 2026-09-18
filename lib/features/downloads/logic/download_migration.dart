@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
@@ -95,6 +97,7 @@ class DownloadMigrationV4 extends _$DownloadMigrationV4 {
     }
 
     await store.save(newItem);
+    unawaited(service.cleanupEmptyFolders());
     return null;
   }
 }
