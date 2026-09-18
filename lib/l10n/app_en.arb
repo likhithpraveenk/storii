@@ -299,6 +299,20 @@
       }
     }
   },
+  "sleepWindowTitle": "Sleep window",
+  "sleepWindowOffSubtitle": "Start a sleep timer for a set duration when playback starts during the set window",
+  "sleepWindowRange": "{start} - {end}",
+  "@sleepWindowRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "sleepDurationTitle": "Sleep timer duration",
   "settingsStartupRouteTitle": "Start on app open",
   "settingsReorderNavTitle": "Navigation tabs",
   "settingsReorderNavSubtitle": "Reorder and enable or disable tabs",

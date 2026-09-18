@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_controller.dart';
+part of 'sleep_window_consumer.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,24 +9,25 @@ part of 'app_controller.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(appController)
-final appControllerProvider = AppControllerProvider._();
+@ProviderFor(sleepWindowConsumer)
+final sleepWindowConsumerProvider = SleepWindowConsumerProvider._();
 
-final class AppControllerProvider extends $FunctionalProvider<void, void, void>
+final class SleepWindowConsumerProvider
+    extends $FunctionalProvider<void, void, void>
     with $Provider<void> {
-  AppControllerProvider._()
+  SleepWindowConsumerProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'appControllerProvider',
+        name: r'sleepWindowConsumerProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$appControllerHash();
+  String debugGetCreateSourceHash() => _$sleepWindowConsumerHash();
 
   @$internal
   @override
@@ -35,7 +36,7 @@ final class AppControllerProvider extends $FunctionalProvider<void, void, void>
 
   @override
   void create(Ref ref) {
-    return appController(ref);
+    return sleepWindowConsumer(ref);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -47,4 +48,5 @@ final class AppControllerProvider extends $FunctionalProvider<void, void, void>
   }
 }
 
-String _$appControllerHash() => r'5abec07b463feefbad4910c11f48f2bc235c7f4b';
+String _$sleepWindowConsumerHash() =>
+    r'fe22d4a1ced83f80aa2ce02df7b7d15503d1ffb2';

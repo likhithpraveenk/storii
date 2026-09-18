@@ -13,6 +13,7 @@ import 'package:storii/features/settings/ui/player_settings/player_background_th
 import 'package:storii/features/settings/ui/player_settings/shake_sleep_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/show_seek_buttons_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/skip_tiles.dart';
+import 'package:storii/features/settings/ui/player_settings/sleep_window_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/speed_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/sync_interval_tile.dart';
 import 'package:storii/features/settings/ui/settings_header.dart';
@@ -96,6 +97,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
               title: l10n.sleepTimer,
               children: const [
                 ShakeSleepTile(),
+                SleepWindowTile(),
                 ShakeSensitivityTile(),
                 FadeOnSleepTile(),
               ],

@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- automatic sleep window timer when playback starts within the configured window
+
 ### Fixed
 
 - internal app storage downloads for subfolder tracks
