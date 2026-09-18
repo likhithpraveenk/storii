@@ -52,7 +52,6 @@ class _PlaylistsScreenState extends ConsumerState<PlaylistsScreen> {
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(playlistsProvider);
-          await ref.read(playlistsProvider.future);
         },
         child: playlistsAsync.when(
           skipLoadingOnReload: true,

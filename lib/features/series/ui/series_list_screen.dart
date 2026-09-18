@@ -46,7 +46,6 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(rawSeriesListProvider);
-          await ref.read(seriesListProvider.future);
         },
         child: seriesAsync.when(
           skipLoadingOnReload: true,

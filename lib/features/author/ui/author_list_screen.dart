@@ -48,7 +48,6 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(authorsListProvider);
-          await ref.read(authorsListProvider.future);
         },
         child: authorsAsync.when(
           skipLoadingOnReload: true,

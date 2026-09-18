@@ -52,7 +52,6 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(collectionsProvider);
-          await ref.read(collectionsProvider.future);
         },
         child: collectionsAsync.when(
           skipLoadingOnReload: true,
