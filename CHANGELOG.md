@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- internal app storage downloads for subfolder tracks
+
 ## [v0.10.0] - 2026-09-18
 
 ### Added

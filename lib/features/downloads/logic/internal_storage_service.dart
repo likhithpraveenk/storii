@@ -138,7 +138,15 @@ class InternalStorageService extends StorageService {
     bool createFolder = false,
   }) async {
     final base = await getApplicationDocumentsDirectory();
-    final dir = Directory(p.join(base.path, relativePath));
+    final relativeTrack = p.dirname(trackPath);
+
+    final dir = Directory(
+      p.join(
+        base.path,
+        relativePath,
+        relativeTrack == '.' ? null : relativeTrack,
+      ),
+    );
     if (createFolder) {
       await dir.create(recursive: true);
     }
@@ -199,7 +207,7 @@ class InternalStorageService extends StorageService {
       trackPath: trackPath,
       createFolder: true,
     );
-    final filePath = p.join(folder, trackPath);
+    final filePath = p.join(folder, p.basename(trackPath));
     final f = File(filePath);
     return f.openWrite(mode: .append);
   }
