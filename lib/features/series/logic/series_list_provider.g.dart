@@ -9,18 +9,12 @@ part of 'series_list_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(seriesList)
-final seriesListProvider = SeriesListProvider._();
+@ProviderFor(SeriesListNotifier)
+final seriesListProvider = SeriesListNotifierProvider._();
 
-final class SeriesListProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<Series>>,
-          List<Series>,
-          FutureOr<List<Series>>
-        >
-    with $FutureModifier<List<Series>>, $FutureProvider<List<Series>> {
-  SeriesListProvider._()
+final class SeriesListNotifierProvider
+    extends $AsyncNotifierProvider<SeriesListNotifier, PaginatedSeriesItems> {
+  SeriesListNotifierProvider._()
     : super(
         from: null,
         argument: null,
@@ -32,57 +26,36 @@ final class SeriesListProvider
       );
 
   @override
-  String debugGetCreateSourceHash() => _$seriesListHash();
+  String debugGetCreateSourceHash() => _$seriesListNotifierHash();
 
   @$internal
   @override
-  $FutureProviderElement<List<Series>> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<List<Series>> create(Ref ref) {
-    return seriesList(ref);
-  }
+  SeriesListNotifier create() => SeriesListNotifier();
 }
 
-String _$seriesListHash() => r'dea658dbeed9e36bb1de55f7ee067d46951c6f0a';
+String _$seriesListNotifierHash() =>
+    r'78b620ad2c6c9d3a43a4951b668c858e16eb72e8';
 
-@ProviderFor(rawSeriesList)
-final rawSeriesListProvider = RawSeriesListProvider._();
-
-final class RawSeriesListProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<Series>>,
-          List<Series>,
-          FutureOr<List<Series>>
-        >
-    with $FutureModifier<List<Series>>, $FutureProvider<List<Series>> {
-  RawSeriesListProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'rawSeriesListProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
+abstract class _$SeriesListNotifier
+    extends $AsyncNotifier<PaginatedSeriesItems> {
+  FutureOr<PaginatedSeriesItems> build();
+  @$mustCallSuper
   @override
-  String debugGetCreateSourceHash() => _$rawSeriesListHash();
-
-  @$internal
-  @override
-  $FutureProviderElement<List<Series>> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<List<Series>> create(Ref ref) {
-    return rawSeriesList(ref);
+  WhenComplete runBuild() {
+    final ref =
+        this.ref
+            as $Ref<AsyncValue<PaginatedSeriesItems>, PaginatedSeriesItems>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                AsyncValue<PaginatedSeriesItems>,
+                PaginatedSeriesItems
+              >,
+              AsyncValue<PaginatedSeriesItems>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
   }
 }
-
-String _$rawSeriesListHash() => r'26c04477a28438877476b15f17db9c8dfbc3e51b';

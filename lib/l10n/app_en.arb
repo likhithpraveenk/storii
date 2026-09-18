@@ -544,5 +544,7 @@
   "osNotificationCanSkipChapter": "Skip chapters",
   "osNotificationCanSkipChapterSubtitle": "Show skip to next/previous chapter buttons in OS notification",
   "osNotificationCanStopSubtitle": "Show stop button in OS notification",
-  "osNotificationCanSpeedSubtitle": "Show playback speed button in OS notification"
+  "osNotificationCanSpeedSubtitle": "Show playback speed button in OS notification",
+  "libraryPageSize": "Library pagination size",
+  "seriesPageSize": "Series pagination size"
 }

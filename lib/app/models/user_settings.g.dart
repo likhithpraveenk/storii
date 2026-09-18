@@ -208,6 +208,12 @@ _UserSettings _$UserSettingsFromJson(
   useNowPlayingTheme:
       json['useNowPlayingTheme'] as bool? ??
       DefaultUserSettings.useNowPlayingTheme,
+  libraryPageSize:
+      (json['libraryPageSize'] as num?)?.toInt() ??
+      DefaultUserSettings.libraryPageSize,
+  seriesPageSize:
+      (json['seriesPageSize'] as num?)?.toInt() ??
+      DefaultUserSettings.seriesPageSize,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -284,6 +290,8 @@ Map<String, dynamic> _$UserSettingsToJson(
   'shakeSleepTimerAddMinutes': instance.shakeSleepTimerAddMinutes,
   'shakeSensitivity': _$ShakeSensitivityEnumMap[instance.shakeSensitivity]!,
   'useNowPlayingTheme': instance.useNowPlayingTheme,
+  'libraryPageSize': instance.libraryPageSize,
+  'seriesPageSize': instance.seriesPageSize,
 };
 
 const _$NavTargetEnumMap = {

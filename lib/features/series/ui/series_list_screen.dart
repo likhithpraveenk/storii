@@ -28,9 +28,24 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
   final _scrollController = ScrollController();
 
   @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
   void dispose() {
+    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+    final pos = _scrollController.position;
+    if (pos.pixels >= pos.maxScrollExtent - 300) {
+      ref.read(seriesListProvider.notifier).fetchNextPage();
+    }
   }
 
   @override
@@ -45,11 +60,12 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          ref.invalidate(rawSeriesListProvider);
+          ref.invalidate(seriesListProvider);
         },
         child: seriesAsync.when(
           skipLoadingOnReload: true,
-          data: (series) {
+          data: (paginated) {
+            final series = paginated.items;
             if (series.isEmpty) {
               return const ScrollableWidget(child: Center(child: EmptyState()));
             }
@@ -64,10 +80,12 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
                     ? SeriesListView(
                         scrollController: _scrollController,
                         series: series,
+                        hasMore: paginated.hasMore,
                       )
                     : SeriesGridView(
                         scrollController: _scrollController,
                         series: series,
+                        hasMore: paginated.hasMore,
                       ),
               ),
             );
@@ -77,7 +95,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
           error: (e, _) => ScrollableWidget(
             child: ErrorRetryWidget(
               e.toString(),
-              onRetry: () => ref.invalidate(rawSeriesListProvider),
+              onRetry: () => ref.invalidate(seriesListProvider),
             ),
           ),
         ),
@@ -87,10 +105,16 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
 }
 
 class SeriesListView extends StatelessWidget {
-  const new({super.key, this.scrollController, required this.series});
+  const new({
+    super.key,
+    this.scrollController,
+    required this.series,
+    this.hasMore = false,
+  });
 
   final ScrollController? scrollController;
   final List<Series> series;
+  final bool hasMore;
 
   @override
   Widget build(BuildContext context) {
@@ -98,9 +122,19 @@ class SeriesListView extends StatelessWidget {
       key: const ValueKey('series_list_view'),
       physics: const AlwaysScrollableScrollPhysics(),
       controller: scrollController,
-      itemCount: series.length,
+      // +1 for loading indicator slot.
+      itemCount: series.length + (hasMore ? 1 : 0),
       padding: const .symmetric(vertical: 16),
       itemBuilder: (context, index) {
+        if (index == series.length) {
+          return const Padding(
+            padding: .symmetric(vertical: 16),
+            child: SizedBox(
+              height: 200,
+              child: Center(child: RandomWaveform()),
+            ),
+          );
+        }
         return SeriesCardListView(
           key: ValueKey(series[index].id),
           series[index],
@@ -111,30 +145,52 @@ class SeriesListView extends StatelessWidget {
 }
 
 class SeriesGridView extends ConsumerWidget {
-  const new({super.key, this.scrollController, required this.series});
+  const new({
+    super.key,
+    this.scrollController,
+    required this.series,
+    this.hasMore = false,
+  });
 
   final ScrollController? scrollController;
   final List<Series> series;
+  final bool hasMore;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final height = ref.watch(seriesGridHeightProvider);
 
-    return GridView.builder(
-      key: const ValueKey('series_grid_view'),
-      physics: const AlwaysScrollableScrollPhysics(),
+    return CustomScrollView(
       controller: scrollController,
-      padding: const .symmetric(horizontal: 16, vertical: 16),
-      itemCount: series.length,
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: maxSeriesCardWidthInGrid,
-        mainAxisExtent: height,
-        mainAxisSpacing: 16,
-        crossAxisSpacing: 16,
-      ),
-      itemBuilder: (context, index) {
-        return SeriesCard(key: ValueKey(series[index].id), series[index]);
-      },
+      physics: const AlwaysScrollableScrollPhysics(),
+      slivers: [
+        SliverPadding(
+          padding: const .symmetric(horizontal: 16, vertical: 16),
+          sliver: SliverGrid(
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: maxSeriesCardWidthInGrid,
+              mainAxisExtent: height,
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 16,
+            ),
+            delegate: SliverChildBuilderDelegate(
+              (context, index) =>
+                  SeriesCard(key: ValueKey(series[index].id), series[index]),
+              childCount: series.length,
+            ),
+          ),
+        ),
+        if (hasMore)
+          const SliverToBoxAdapter(
+            child: Padding(
+              padding: .symmetric(vertical: 16),
+              child: SizedBox(
+                height: 200,
+                child: Center(child: RandomWaveform()),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

@@ -410,6 +410,12 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setUseNowPlayingTheme(bool value) =>
       _save(state?.copyWith(useNowPlayingTheme: value));
+
+  Future<void> setLibraryPageSize(int value) =>
+      _save(state?.copyWith(libraryPageSize: value));
+
+  Future<void> setSeriesPageSize(int value) =>
+      _save(state?.copyWith(seriesPageSize: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -965,4 +971,22 @@ final useNowPlayingThemeProvider = Provider<bool>(
     ),
   ),
   name: 'useNowPlayingThemeProvider',
+);
+
+final libraryPageSizeProvider = Provider<int>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.libraryPageSize ?? DefaultUserSettings.libraryPageSize,
+    ),
+  ),
+  name: 'libraryPageSizeProvider',
+);
+
+final seriesPageSizeProvider = Provider<int>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.seriesPageSize ?? DefaultUserSettings.seriesPageSize,
+    ),
+  ),
+  name: 'seriesPageSizeProvider',
 );

@@ -23,9 +23,24 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
   final _scrollController = ScrollController();
 
   @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
   void dispose() {
+    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+    final pos = _scrollController.position;
+    if (pos.pixels >= pos.maxScrollExtent - 300) {
+      ref.read(libraryItemsProvider.notifier).fetchNextPage();
+    }
   }
 
   @override
@@ -39,11 +54,12 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          ref.invalidate(rawLibraryItemsProvider);
+          ref.invalidate(libraryItemsProvider);
         },
         child: itemsAsync.when(
           skipLoadingOnReload: true,
-          data: (items) {
+          data: (paginated) {
+            final items = paginated.items;
             if (items.isEmpty) {
               return const ScrollableWidget(child: Center(child: EmptyState()));
             }
@@ -60,8 +76,17 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                         physics: const AlwaysScrollableScrollPhysics(),
                         controller: _scrollController,
                         padding: const .symmetric(vertical: 16),
-                        itemCount: items.length,
+                        itemCount: items.length + (paginated.hasMore ? 1 : 0),
                         itemBuilder: (context, index) {
+                          if (index == items.length) {
+                            return const Padding(
+                              padding: .symmetric(vertical: 16),
+                              child: SizedBox(
+                                height: 200,
+                                child: Center(child: RandomWaveform()),
+                              ),
+                            );
+                          }
                           return LibraryItemListTile(
                             key: ValueKey(items[index].id),
                             items[index],
@@ -71,6 +96,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                     : ItemsGridView(
                         items,
                         scrollController: _scrollController,
+                        hasMore: paginated.hasMore,
                         key: const ValueKey('items_grid_view'),
                       ),
               ),
@@ -81,7 +107,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
           error: (e, _) => ScrollableWidget(
             child: ErrorRetryWidget(
               e.toString(),
-              onRetry: () => ref.invalidate(rawLibraryItemsProvider),
+              onRetry: () => ref.invalidate(libraryItemsProvider),
             ),
           ),
         ),
