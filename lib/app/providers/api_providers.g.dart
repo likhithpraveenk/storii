@@ -678,7 +678,7 @@ final class SocketApiProvider
   }
 }
 
-String _$socketApiHash() => r'8f6a6eed37d8301d11ee80a9f0257d9624a0e1b1';
+String _$socketApiHash() => r'5798c7a962b585f9526c40cd30568c85be205186';
 
 final class SocketApiFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<SocketApi>, UserDomain> {

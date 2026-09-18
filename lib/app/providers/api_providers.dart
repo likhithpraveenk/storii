@@ -138,7 +138,7 @@ Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
     token: token,
     tokenUpdates: tokenService.tokenStream(user.id),
     onAuthFailure: () {
-      LogService.log('Socket authentication failed', level: .error);
+      LogService.log('Socket authentication failed');
     },
   );
   ref.onDispose(api.dispose);

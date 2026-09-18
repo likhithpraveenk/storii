@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 
 void showLogEntrySheet(BuildContext context, LogEntry entry) {
@@ -10,80 +11,83 @@ void showLogEntrySheet(BuildContext context, LogEntry entry) {
     context: context,
     isScrollControlled: true,
     useSafeArea: true,
-    builder: (context) => DraggableScrollableSheet(
-      expand: false,
-      builder: (context, scrollController) {
-        return Column(
-          children: [
-            Padding(
-              padding: const .symmetric(horizontal: 8, vertical: 4),
-              child: Stack(
-                alignment: .center,
-                children: [
-                  Container(
-                    width: 32,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(2),
+    builder: (context) => SafeArea(
+      child: DraggableScrollableSheet(
+        expand: false,
+        builder: (context, scrollController) => DecoratedBox(
+          decoration: bottomSheetDecoration(context),
+          child: Column(
+            children: [
+              Padding(
+                padding: const .symmetric(horizontal: 8, vertical: 4),
+                child: Stack(
+                  alignment: .center,
+                  children: [
+                    Container(
+                      width: 32,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: .circular(2),
+                      ),
                     ),
-                  ),
-                  Align(
-                    alignment: .centerRight,
-                    child: IconButton(
-                      icon: const Icon(Icons.copy_rounded),
-                      onPressed: () async {
-                        final fullLog =
-                            '''
+                    Align(
+                      alignment: .centerRight,
+                      child: IconButton(
+                        icon: const Icon(Icons.copy_rounded),
+                        onPressed: () async {
+                          final fullLog =
+                              '''
 Timestamp: ${entry.timestamp.fString(forLogs: true)}
 Level: ${entry.level.name.toUpperCase()}
 Source: ${entry.source ?? 'N/A'}
 Message: ${entry.message}
-${entry.stackTrace != null ? '\nStackTrace:\n${entry.stackTrace}' : ''}
+      ${entry.stackTrace != null ? '\nStackTrace:\n${entry.stackTrace}' : ''}
 ''';
-                        await Clipboard.setData(ClipboardData(text: fullLog));
+                          await Clipboard.setData(ClipboardData(text: fullLog));
 
-                        if (context.mounted) {
-                          globalMessengerKey.currentState?.showAppSnackBar(
-                            'Log copied to clipboard',
-                          );
-                        }
-                      },
+                          if (context.mounted) {
+                            globalMessengerKey.currentState?.showAppSnackBar(
+                              'Log copied to clipboard',
+                            );
+                          }
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: AppScrollbar(
-                controller: scrollController,
-                child: SingleChildScrollView(
+              Expanded(
+                child: AppScrollbar(
                   controller: scrollController,
-                  padding: const .fromLTRB(20, 0, 20, 20),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: .start,
-                      children: [
-                        _LogRow(
-                          'Timestamp',
-                          entry.timestamp.fString(forLogs: true),
-                        ),
-                        _LogRow('Level', entry.level.name.toUpperCase()),
-                        _LogRow('Message', entry.message),
-                        if (entry.source != null)
-                          _LogRow('Source', entry.source!),
-                        if (entry.stackTrace != null)
-                          _LogRow('StackTrace', entry.stackTrace!),
-                      ],
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    padding: const .fromLTRB(20, 0, 20, 20),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: .start,
+                        children: [
+                          _LogRow(
+                            'Timestamp',
+                            entry.timestamp.fString(forLogs: true),
+                          ),
+                          _LogRow('Level', entry.level.name.toUpperCase()),
+                          _LogRow('Message', entry.message),
+                          if (entry.source != null)
+                            _LogRow('Source', entry.source!),
+                          if (entry.stackTrace != null)
+                            _LogRow('StackTrace', entry.stackTrace!),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        );
-      },
+            ],
+          ),
+        ),
+      ),
     ),
   );
 }

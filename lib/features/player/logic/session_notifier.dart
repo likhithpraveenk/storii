@@ -50,7 +50,6 @@ class SessionNotifier extends _$SessionNotifier {
     LogService.log(
       'session created for ${session.displayTitle}',
       source: 'SessionNotifier',
-      level: .info,
     );
     return session;
   }
@@ -68,7 +67,6 @@ class SessionNotifier extends _$SessionNotifier {
       LogService.log(
         'local session resumed for ${existing.displayTitle}',
         source: 'SessionNotifier',
-        level: .info,
       );
       return existing;
     }
@@ -102,7 +100,6 @@ class SessionNotifier extends _$SessionNotifier {
     LogService.log(
       'local session created for ${session.displayTitle}',
       source: 'SessionNotifier',
-      level: .info,
     );
     return session;
   }
@@ -204,7 +201,6 @@ class SessionNotifier extends _$SessionNotifier {
       LogService.log(
         'session closed for ${session.displayTitle}',
         source: 'SessionNotifier',
-        level: .info,
       );
     } on AppError catch (_) {
     } finally {
