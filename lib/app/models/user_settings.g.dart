@@ -214,6 +214,22 @@ _UserSettings _$UserSettingsFromJson(
   seriesPageSize:
       (json['seriesPageSize'] as num?)?.toInt() ??
       DefaultUserSettings.seriesPageSize,
+  isSleepWindowOn:
+      json['isSleepWindowOn'] as bool? ?? DefaultUserSettings.isSleepWindowOn,
+  sleepWindow:
+      _$recordConvert(
+        json['sleepWindow'],
+        ($jsonValue) => (
+          ($jsonValue[r'$1'] as num).toInt(),
+          ($jsonValue[r'$2'] as num).toInt(),
+        ),
+      ) ??
+      DefaultUserSettings.sleepWindow,
+  sleepTimerWindowDuration: json['sleepTimerWindowDuration'] == null
+      ? DefaultUserSettings.sleepTimerWindowDuration
+      : Duration(
+          microseconds: (json['sleepTimerWindowDuration'] as num).toInt(),
+        ),
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -292,6 +308,12 @@ Map<String, dynamic> _$UserSettingsToJson(
   'useNowPlayingTheme': instance.useNowPlayingTheme,
   'libraryPageSize': instance.libraryPageSize,
   'seriesPageSize': instance.seriesPageSize,
+  'isSleepWindowOn': instance.isSleepWindowOn,
+  'sleepWindow': <String, dynamic>{
+    r'$1': instance.sleepWindow.$1,
+    r'$2': instance.sleepWindow.$2,
+  },
+  'sleepTimerWindowDuration': instance.sleepTimerWindowDuration.inMicroseconds,
 };
 
 const _$NavTargetEnumMap = {
@@ -420,3 +442,6 @@ const _$ShakeSensitivityEnumMap = {
   ShakeSensitivity.medium: 'medium',
   ShakeSensitivity.high: 'high',
 };
+
+$Rec _$recordConvert<$Rec>(Object? value, $Rec Function(Map) convert) =>
+    convert(value as Map<String, dynamic>);

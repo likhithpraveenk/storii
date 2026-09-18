@@ -416,6 +416,15 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setSeriesPageSize(int value) =>
       _save(state?.copyWith(seriesPageSize: value));
+
+  Future<void> setIsSleepWindowOn(bool value) =>
+      _save(state?.copyWith(isSleepWindowOn: value));
+
+  Future<void> setSleepWindow((int, int) value) =>
+      _save(state?.copyWith(sleepWindow: value));
+
+  Future<void> setSleepTimerWindowDuration(Duration value) =>
+      _save(state?.copyWith(sleepTimerWindowDuration: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -989,4 +998,33 @@ final seriesPageSizeProvider = Provider<int>(
     ),
   ),
   name: 'seriesPageSizeProvider',
+);
+
+final isSleepWindowOnProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.isSleepWindowOn ?? DefaultUserSettings.isSleepWindowOn,
+    ),
+  ),
+  name: 'isSleepWindowOnProvider',
+);
+
+final sleepWindowProvider = Provider<(int, int)>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.sleepWindow ?? DefaultUserSettings.sleepWindow,
+    ),
+  ),
+  name: 'sleepWindowProvider',
+);
+
+final sleepTimerWindowDurationProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.sleepTimerWindowDuration ??
+          DefaultUserSettings.sleepTimerWindowDuration,
+    ),
+  ),
+  name: 'sleepTimerWindowDurationProvider',
 );

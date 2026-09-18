@@ -70,6 +70,9 @@ class DefaultUserSettings {
   static const useNowPlayingTheme = false;
   static const libraryPageSize = 60;
   static const seriesPageSize = 20;
+  static const isSleepWindowOn = false;
+  static const sleepWindow = (1320, 360);
+  static const sleepTimerWindowDuration = Duration(minutes: 30);
 }
 
 @freezed
@@ -227,6 +230,14 @@ sealed class UserSettings with _$UserSettings {
     @Default(DefaultUserSettings.libraryPageSize) int libraryPageSize,
 
     @Default(DefaultUserSettings.seriesPageSize) int seriesPageSize,
+
+    @Default(DefaultUserSettings.isSleepWindowOn) bool isSleepWindowOn,
+
+    @Default(DefaultUserSettings.sleepWindow)
+    (int startMinutes, int endMinutes) sleepWindow,
+
+    @Default(DefaultUserSettings.sleepTimerWindowDuration)
+    Duration sleepTimerWindowDuration,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);
