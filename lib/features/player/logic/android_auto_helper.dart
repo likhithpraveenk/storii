@@ -215,7 +215,7 @@ class AndroidAutoHelper {
   Future<List<MediaItem>> _loadLibraryItems(
     Map<String, dynamic>? options,
   ) async {
-    final items = await _container.read(libraryItemsProvider.future);
+    final items = await _container.read(allLibraryItemsProvider.future);
     final paged = applyAndroidAutoPaging(
       items,
       androidAutoPagingFromOptions(options),

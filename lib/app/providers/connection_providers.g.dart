@@ -157,7 +157,7 @@ final class ServerConnectionProvider
   }
 }
 
-String _$serverConnectionHash() => r'fda792dbfa7176481fc441b1dbb0964f79d6fb8b';
+String _$serverConnectionHash() => r'47205f5200b7e2204a5738437d4092d7a971f483';
 
 abstract class _$ServerConnection extends $Notifier<bool> {
   bool build();

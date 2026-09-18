@@ -21,6 +21,7 @@ class SocketApi {
   late final Stream<bool> isConnected;
 
   String? _currentToken;
+  bool _isDisposed = false;
 
   new({
     required String baseUrl,
@@ -44,14 +45,17 @@ class SocketApi {
     isConnected = _connController.stream;
 
     socket.onConnect((_) {
+      if (_isDisposed) return;
       _connController.add(true);
       _authenticate();
     });
     socket.onDisconnect((_) {
+      if (_isDisposed) return;
       _connController.add(false);
       _currentToken = null;
     });
     socket.onConnectError((_) {
+      if (_isDisposed) return;
       _connController.add(false);
       _currentToken = null;
     });
@@ -82,6 +86,8 @@ class SocketApi {
   }
 
   void dispose() {
+    if (_isDisposed) return;
+    _isDisposed = true;
     _tokenSub.cancel();
     _connController.close();
     socket.dispose();

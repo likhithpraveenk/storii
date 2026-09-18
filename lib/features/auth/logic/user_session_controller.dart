@@ -63,7 +63,9 @@ class UserSessionController extends _$UserSessionController {
       await audioHandler.stop();
     }
     if (user != null) {
-      ref.invalidate(apiClientProvider(user));
+      ref
+        ..invalidate(apiClientProvider(user))
+        ..invalidate(socketApiProvider(user));
     }
     await ref.read(appSettingsProvider.notifier).setCurrentUser(null);
     await ref.read(appSettingsProvider.notifier).setServerUrl(null);
@@ -82,6 +84,8 @@ class UserSessionController extends _$UserSessionController {
     }
     await ref.read(appSettingsProvider.notifier).setCurrentUser(null);
     await ref.read(appSettingsProvider.notifier).setServerUrl(null);
-    ref.invalidate(apiClientProvider(user));
+    ref
+      ..invalidate(apiClientProvider(user))
+      ..invalidate(socketApiProvider(user));
   }
 }

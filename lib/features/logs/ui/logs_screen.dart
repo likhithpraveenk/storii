@@ -46,7 +46,8 @@ class _LogsScreenState extends ConsumerState<LogsScreen> {
               showModalBottomSheet(
                 context: context,
                 showDragHandle: true,
-                builder: (context) => const _LogFilterBottomSheet(),
+                builder: (context) =>
+                    const SafeArea(child: _LogFilterBottomSheet()),
               );
             },
           ),
@@ -55,53 +56,71 @@ class _LogsScreenState extends ConsumerState<LogsScreen> {
       ),
       body: logs.isEmpty
           ? const EmptyState()
-          : AppScrollbar(
-              controller: _scrollController,
-              child: ListView.builder(
+          : SafeArea(
+              child: AppScrollbar(
                 controller: _scrollController,
-                itemCount: logs.length,
-                itemBuilder: (context, index) {
-                  final entry = logs[index];
-                  final color = entry.level.color(scheme);
-                  final displayMessage = entry.message.length > 36
-                      ? '${entry.message.substring(0, 36)}...'
-                      : entry.message;
-                  return ListTile(
-                    dense: true,
-                    leading: Container(
-                      width: 4,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        color: color,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                    tileColor: color.withValues(alpha: 0.1),
-                    title: Text(
-                      displayMessage,
-                      maxLines: 1,
-                      style: textTheme.bodyLarge,
-                    ),
-                    subtitle: Row(
-                      mainAxisAlignment: .spaceBetween,
-                      children: [
-                        Text(
-                          entry.timestamp.fString(forLogs: true),
-                          overflow: .ellipsis,
-                          style: textTheme.labelSmall,
+                child: ListView.builder(
+                  controller: _scrollController,
+                  itemCount: logs.length,
+                  itemBuilder: (context, index) {
+                    final entry = logs[index];
+                    final color = entry.level.color(scheme);
+                    final displayMessage = entry.message.length > 100
+                        ? '${entry.message.substring(0, 100)}...'
+                        : entry.message;
+                    return InkWell(
+                      onTap: () => showLogEntrySheet(context, entry),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: color.withValues(alpha: 0.1),
                         ),
-                        const SizedBox(width: 8),
-                        if (entry.source != null)
-                          Text(
-                            '${entry.source}',
-                            overflow: .ellipsis,
-                            style: textTheme.labelSmall,
-                          ),
-                      ],
-                    ),
-                    onTap: () => showLogEntrySheet(context, entry),
-                  );
-                },
+                        padding: const .all(16),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 4,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                color: color,
+                                borderRadius: .circular(2),
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: .start,
+                                children: [
+                                  Text(
+                                    displayMessage,
+                                    maxLines: 1,
+                                    style: textTheme.bodyLarge,
+                                    overflow: .ellipsis,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: .spaceBetween,
+                                    children: [
+                                      Text(
+                                        entry.timestamp.fString(forLogs: true),
+                                        overflow: .ellipsis,
+                                        style: textTheme.labelSmall,
+                                      ),
+                                      if (entry.source != null)
+                                        Text(
+                                          '${entry.source}',
+                                          overflow: .ellipsis,
+                                          style: textTheme.labelSmall,
+                                        ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
     );

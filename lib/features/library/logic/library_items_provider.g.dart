@@ -9,20 +9,13 @@ part of 'library_items_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(libraryItems)
-final libraryItemsProvider = LibraryItemsProvider._();
+@ProviderFor(LibraryItemsNotifier)
+final libraryItemsProvider = LibraryItemsNotifierProvider._();
 
-final class LibraryItemsProvider
+final class LibraryItemsNotifierProvider
     extends
-        $FunctionalProvider<
-          AsyncValue<List<LibraryItem>>,
-          List<LibraryItem>,
-          FutureOr<List<LibraryItem>>
-        >
-    with
-        $FutureModifier<List<LibraryItem>>,
-        $FutureProvider<List<LibraryItem>> {
-  LibraryItemsProvider._()
+        $AsyncNotifierProvider<LibraryItemsNotifier, PaginatedLibraryItems> {
+  LibraryItemsNotifierProvider._()
     : super(
         from: null,
         argument: null,
@@ -34,26 +27,44 @@ final class LibraryItemsProvider
       );
 
   @override
-  String debugGetCreateSourceHash() => _$libraryItemsHash();
+  String debugGetCreateSourceHash() => _$libraryItemsNotifierHash();
 
   @$internal
   @override
-  $FutureProviderElement<List<LibraryItem>> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
+  LibraryItemsNotifier create() => LibraryItemsNotifier();
+}
 
+String _$libraryItemsNotifierHash() =>
+    r'00fc7315e057bcded81bcdd7ccbc8c1bd43a2730';
+
+abstract class _$LibraryItemsNotifier
+    extends $AsyncNotifier<PaginatedLibraryItems> {
+  FutureOr<PaginatedLibraryItems> build();
+  @$mustCallSuper
   @override
-  FutureOr<List<LibraryItem>> create(Ref ref) {
-    return libraryItems(ref);
+  WhenComplete runBuild() {
+    final ref =
+        this.ref
+            as $Ref<AsyncValue<PaginatedLibraryItems>, PaginatedLibraryItems>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                AsyncValue<PaginatedLibraryItems>,
+                PaginatedLibraryItems
+              >,
+              AsyncValue<PaginatedLibraryItems>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
   }
 }
 
-String _$libraryItemsHash() => r'35de169c2ded80235c24d2518d9e0e2e1cb97613';
+@ProviderFor(allLibraryItems)
+final allLibraryItemsProvider = AllLibraryItemsProvider._();
 
-@ProviderFor(rawLibraryItems)
-final rawLibraryItemsProvider = RawLibraryItemsProvider._();
-
-final class RawLibraryItemsProvider
+final class AllLibraryItemsProvider
     extends
         $FunctionalProvider<
           AsyncValue<List<LibraryItem>>,
@@ -63,19 +74,19 @@ final class RawLibraryItemsProvider
     with
         $FutureModifier<List<LibraryItem>>,
         $FutureProvider<List<LibraryItem>> {
-  RawLibraryItemsProvider._()
+  AllLibraryItemsProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'rawLibraryItemsProvider',
+        name: r'allLibraryItemsProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$rawLibraryItemsHash();
+  String debugGetCreateSourceHash() => _$allLibraryItemsHash();
 
   @$internal
   @override
@@ -85,8 +96,8 @@ final class RawLibraryItemsProvider
 
   @override
   FutureOr<List<LibraryItem>> create(Ref ref) {
-    return rawLibraryItems(ref);
+    return allLibraryItems(ref);
   }
 }
 
-String _$rawLibraryItemsHash() => r'b3976dea1b20d02fa01af3e5c97ffad5b33544b7';
+String _$allLibraryItemsHash() => r'10460b530ecc85e965928d5455cdca5417cfc7e4';

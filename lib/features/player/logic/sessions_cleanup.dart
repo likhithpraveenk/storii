@@ -26,7 +26,7 @@ class SessionsCleanup extends _$SessionsCleanup {
 
     final user = await ref.read(authenticatedUserProvider.future);
     await syncLocalSessions(user, sessions);
-    LogService.log('session cleanup complete', level: .info, source: _source);
+    LogService.log('session cleanup complete', source: _source);
   }
 
   Future<void> syncLocalSessions(

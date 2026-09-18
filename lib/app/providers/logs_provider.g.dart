@@ -41,7 +41,7 @@ final class LogsNotifierProvider
   }
 }
 
-String _$logsNotifierHash() => r'c5ea59611cede2b4b79a5973591c50d0cced8216';
+String _$logsNotifierHash() => r'32459f1ec119c8d4592adeee29330ee851e5ff69';
 
 abstract class _$LogsNotifier extends $Notifier<List<LogEntry>> {
   List<LogEntry> build();

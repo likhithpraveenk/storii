@@ -200,12 +200,12 @@ class _ChapterTile extends ConsumerWidget {
               : isCompleted
               ? completedColor
               : null,
-          border: isActive
-              ? Border.all(
-                  color: scheme.primary.withValues(alpha: 0.5),
-                  width: 2,
-                )
-              : null,
+          border: .all(
+            color: isActive
+                ? scheme.primary.withValues(alpha: 0.8)
+                : Colors.transparent,
+            width: 2,
+          ),
         ),
         child: Row(
           children: [

@@ -6,9 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- pagination to library and series screens
+
 ### Changed
 
 - downloads migrated to server-like paths
+
+### Fixed
+
+- socket reconnection issue when switching user
+- double loading animations
+- enable android predictive back
 
 ## [v0.9.2] - 2026-09-17
 

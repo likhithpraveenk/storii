@@ -1,38 +1,57 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/models/log_entry.dart';
+import 'package:storii/storage/hive/boxes.dart';
 
 part 'logs_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class LogsNotifier extends _$LogsNotifier {
-  final List<LogEntry> _logs = [];
-  static const int _maxLogs = 1000;
+  static const int _maxLogs = 500;
 
   @override
   List<LogEntry> build() {
-    return [];
+    final entries = <LogEntry>[];
+    for (final value in logsBox.values) {
+      try {
+        entries.add(LogEntry.fromJson(jsonDecode(value)));
+      } catch (_) {}
+    }
+    entries.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+    return entries;
   }
 
   void add(LogEntry entry) {
-    _logs.insert(0, entry);
-
-    if (_logs.length > _maxLogs) {
-      _logs.removeLast();
+    final updated = [entry, ...state];
+    if (updated.length > _maxLogs) {
+      updated.removeRange(_maxLogs, updated.length);
     }
+    state = updated;
+    unawaited(_persist(updated));
+  }
 
-    state = List.from(_logs);
+  Future<void> _persist(List<LogEntry> entries) async {
+    await logsBox.clear();
+    for (final entry in entries) {
+      await logsBox.put(
+        entry.timestamp.millisecondsSinceEpoch.toString(),
+        jsonEncode(entry),
+      );
+    }
   }
 
   void clear() {
-    _logs.clear();
     state = [];
+    unawaited(logsBox.clear());
   }
 }
 
 final logFilterProvider = StateProvider<Set<LogLevel>>((ref) {
-  return LogLevel.values.toSet();
+  return LogLevel.values.toSet()..remove(LogLevel.debug);
 }, name: 'logFilterProvider');
 
 final filteredLogsProvider = Provider<List<LogEntry>>((ref) {

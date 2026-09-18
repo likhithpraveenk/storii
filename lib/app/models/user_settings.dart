@@ -68,6 +68,8 @@ class DefaultUserSettings {
   static const shakeSleepTimerAddMinutes = 5;
   static const shakeSensitivity = ShakeSensitivity.medium;
   static const useNowPlayingTheme = false;
+  static const libraryPageSize = 60;
+  static const seriesPageSize = 20;
 }
 
 @freezed
@@ -221,6 +223,10 @@ sealed class UserSettings with _$UserSettings {
     ShakeSensitivity shakeSensitivity,
 
     @Default(DefaultUserSettings.useNowPlayingTheme) bool useNowPlayingTheme,
+
+    @Default(DefaultUserSettings.libraryPageSize) int libraryPageSize,
+
+    @Default(DefaultUserSettings.seriesPageSize) int seriesPageSize,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);

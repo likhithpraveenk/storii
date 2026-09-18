@@ -29,9 +29,15 @@ class LogService {
   }) {
     final enableHttp = _container.read(enableHttpLogsProvider);
     if (level == .http && !enableHttp) return;
-    if (level == .debug && !kDebugMode) return;
 
     final msg = originalError != null ? '$message\n$originalError' : message;
+    final entry = LogEntry(
+      timestamp: DateTime.now(),
+      message: msg,
+      source: source,
+      level: level,
+      stackTrace: stackTrace?.toString(),
+    );
 
     if (kDebugMode) {
       final label = source != null
@@ -40,17 +46,7 @@ class LogService {
       _outputToConsole(level, '$label $msg', stackTrace);
     }
 
-    _container
-        .read(logsProvider.notifier)
-        .add(
-          LogEntry(
-            timestamp: DateTime.now(),
-            message: msg,
-            source: source,
-            level: level,
-            stackTrace: stackTrace?.toString(),
-          ),
-        );
+    _container.read(logsProvider.notifier).add(entry);
   }
 
   static void _outputToConsole(LogLevel level, String msg, StackTrace? st) {

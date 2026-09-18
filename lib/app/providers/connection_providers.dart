@@ -59,17 +59,14 @@ class ServerConnection extends _$ServerConnection {
     ref.listen(connectivityStreamProvider, (_, next) {
       final list = next.value ?? [];
       if (list.contains(ConnectivityResult.none)) {
-        LogService.log('No connections available', level: .info);
+        LogService.log('No connections available');
         state = false;
       }
     });
 
     ref.listen(socketStatusProvider, (prev, next) {
       final connected = next.value ?? false;
-      LogService.log(
-        'Socket ${connected ? 'connected' : 'disconnected'}',
-        level: .info,
-      );
+      LogService.log('Socket ${connected ? 'connected' : 'disconnected'}');
       state = connected;
     });
 

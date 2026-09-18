@@ -31,7 +31,6 @@ class HomeScreen extends ConsumerWidget {
           ref
             ..invalidate(rawShelvesProvider)
             ..invalidate(serverUserProvider);
-          await ref.read(sortedShelvesProvider.future);
         },
         child: shelvesAsync.when(
           skipLoadingOnReload: true,

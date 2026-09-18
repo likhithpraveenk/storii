@@ -29,7 +29,7 @@ class ShellScaffold extends ConsumerWidget {
     final factor = ref.watch(playerExpandFactorProvider);
 
     return PopScope(
-      canPop: path == AppRoute.home.path,
+      canPop: path == AppRoute.home.path && factor == 0,
       onPopInvokedWithResult: (didPop, _) async {
         if (didPop) return;
 
