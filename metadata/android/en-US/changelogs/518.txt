@@ -1,0 +1,10 @@
+Added:
+- pagination to library and series screens
+
+Changed:
+- downloads migrated to server-like paths
+
+Fixed:
+- socket reconnection issue when switching user
+- double loading animations
+- enable android predictive back
