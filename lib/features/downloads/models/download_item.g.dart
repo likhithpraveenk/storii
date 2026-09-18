@@ -17,6 +17,7 @@ _DownloadTrack _$DownloadTrackFromJson(Map<String, dynamic> json) =>
       status:
           $enumDecodeNullable(_$DownloadStatusEnumMap, json['status']) ??
           DownloadStatus.queued,
+      trackPath: json['trackPath'] as String? ?? kMigrateToV4Sentinel,
     );
 
 Map<String, dynamic> _$DownloadTrackToJson(_DownloadTrack instance) =>
@@ -26,6 +27,7 @@ Map<String, dynamic> _$DownloadTrackToJson(_DownloadTrack instance) =>
       'bytesReceived': instance.bytesReceived,
       'bytesTotal': instance.bytesTotal,
       'status': _$DownloadStatusEnumMap[instance.status]!,
+      'trackPath': instance.trackPath,
     };
 
 const _$DownloadStatusEnumMap = {
@@ -57,6 +59,7 @@ _DownloadItem _$DownloadItemFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['startedAt'] as String),
       episodeId: json['episodeId'] as String?,
       folderPath: json['folderPath'] as String? ?? kMigrateToV3Sentinel,
+      relativePath: json['relativePath'] as String? ?? kMigrateToV4Sentinel,
     );
 
 Map<String, dynamic> _$DownloadItemToJson(_DownloadItem instance) =>
@@ -72,6 +75,7 @@ Map<String, dynamic> _$DownloadItemToJson(_DownloadItem instance) =>
       'startedAt': ?instance.startedAt?.toIso8601String(),
       'episodeId': ?instance.episodeId,
       'folderPath': instance.folderPath,
+      'relativePath': instance.relativePath,
     };
 
 const _$DownloadMediaTypeEnumMap = {

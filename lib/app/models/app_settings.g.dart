@@ -43,7 +43,7 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
           ?.map((e) => StorageLocation.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const [defaultInternalAudiobooks, defaultInternalPodcasts],
-  downloadPathsV3Migrated: json['downloadPathsV3Migrated'] as bool? ?? false,
+  downloadPathsV4Migrated: json['downloadPathsV4Migrated'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$AppSettingsToJson(
@@ -62,7 +62,7 @@ Map<String, dynamic> _$AppSettingsToJson(
   'syncIntervalMetered': instance.syncIntervalMetered.inMicroseconds,
   'trustAllCertificates': instance.trustAllCertificates,
   'storageLocations': instance.storageLocations.map((e) => e.toJson()).toList(),
-  'downloadPathsV3Migrated': instance.downloadPathsV3Migrated,
+  'downloadPathsV4Migrated': instance.downloadPathsV4Migrated,
 };
 
 const _$ThemeModeEnumMap = {

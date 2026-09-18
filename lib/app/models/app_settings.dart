@@ -38,7 +38,7 @@ sealed class AppSettings with _$AppSettings {
     @Default([defaultInternalAudiobooks, defaultInternalPodcasts])
     List<StorageLocation> storageLocations,
 
-    @Default(false) bool downloadPathsV3Migrated,
+    @Default(false) bool downloadPathsV4Migrated,
   }) = _AppSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);

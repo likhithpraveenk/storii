@@ -13,27 +13,27 @@ extension ToDownloadItemX on LibraryItem {
     DownloadItem? existing,
   }) async {
     final downloadTracks = await Future.wait(
-      tracks.map((track) async {
-        final audioFile = audioFiles.firstWhere((f) => f.index == track.index);
-        final filename = track.metadata?.filename;
+      audioFiles.map((file) async {
+        final audioTrack = tracks.firstWhere((t) => t.index == file.index);
 
-        final intact = await service.fileIntact(
-          libraryItemId: id,
-          filename: filename ?? '',
-          expectedBytes: track.metadata?.size ?? 0,
+        final intact = await service.isFileIntact(
+          relativePath: relPath,
+          trackPath: file.metadata.relPath,
+          expectedBytes: file.metadata.size,
         );
 
-        final existingBytes = await service.existingBytes(
-          libraryItemId: id,
-          filename: filename ?? '',
+        final existingBytes = await service.getBytes(
+          relativePath: relPath,
+          trackPath: file.metadata.relPath,
         );
 
         return DownloadTrack(
-          audioTrack: track,
-          ino: audioFile.ino,
+          audioTrack: audioTrack,
+          ino: file.ino,
           status: intact ? .completed : (existingBytes > 0 ? .paused : .queued),
           bytesReceived: existingBytes,
-          bytesTotal: audioFile.metadata.size,
+          bytesTotal: file.metadata.size,
+          trackPath: file.metadata.relPath,
         );
       }),
     );
@@ -53,6 +53,7 @@ extension ToDownloadItemX on LibraryItem {
           serverUrl: serverUrl,
           userId: userId,
           folderPath: service.location.uri,
+          relativePath: relPath,
         );
     return downloadItem;
   }
@@ -63,38 +64,39 @@ extension ToEpisodeDownloadItemX on PodcastEpisode {
     required String userId,
     required Uri serverUrl,
     required StorageService service,
+    required String relativePath,
     DownloadItem? existing,
   }) async {
-    if (audioTrack == null) throw 'No audio track';
+    final track = audioTrack;
+    if (track == null) throw 'No audio track';
 
     final prev = existing?.tracks.firstWhereOrNull(
       (dt) => dt.ino == audioFile.ino,
     );
     final intact =
         prev?.status == .completed &&
-        await service.fileIntact(
-          libraryItemId: libraryItemId,
-          episodeId: id,
-          filename: prev?.filename ?? '',
+        await service.isFileIntact(
+          relativePath: relativePath,
+          trackPath: audioFile.metadata.relPath,
           expectedBytes: audioFile.metadata.size,
         );
 
-    final existingBytes = await service.existingBytes(
-      libraryItemId: libraryItemId,
-      episodeId: id,
-      filename: prev?.filename ?? '',
+    final existingBytes = await service.getBytes(
+      relativePath: relativePath,
+      trackPath: audioFile.metadata.relPath,
     );
 
-    final track = DownloadTrack(
-      audioTrack: audioTrack!,
+    final dTrack = DownloadTrack(
+      audioTrack: track,
       ino: audioFile.ino,
       status: intact ? .completed : (existingBytes > 0 ? .paused : .queued),
       bytesReceived: existingBytes,
       bytesTotal: audioFile.metadata.size,
+      trackPath: audioFile.metadata.relPath,
     );
 
     return existing?.copyWith(
-          tracks: [track],
+          tracks: [dTrack],
           status: .queued,
           startedAt: DateTime.now(),
         ) ??
@@ -103,12 +105,13 @@ extension ToEpisodeDownloadItemX on PodcastEpisode {
           episodeId: id,
           title: title ?? id,
           author: subtitle ?? '',
-          tracks: [track],
+          tracks: [dTrack],
           mediaType: .podcast,
           startedAt: DateTime.now(),
           serverUrl: serverUrl,
           userId: userId,
           folderPath: service.location.uri,
+          relativePath: relativePath,
         );
   }
 }

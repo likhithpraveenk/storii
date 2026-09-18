@@ -59,6 +59,7 @@ linter:
     - use_colored_box
     - use_decorated_box
     - migrate_design_widgets
+    - deprecated_member_use_from_same_package
 
 analyzer:
   errors:

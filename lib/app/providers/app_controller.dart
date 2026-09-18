@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/queue_providers.dart';
@@ -17,5 +18,6 @@ void appController(Ref ref) {
     ..watch(audioSettingsWatcherProvider)
     ..watch(queueControllerProvider)
     ..watch(appStartThemeUpdateProvider)
+    ..watch(downloadQueueProvider)
     ..watch(mediaProgressSyncControllerProvider);
 }

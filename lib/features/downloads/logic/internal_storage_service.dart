@@ -131,4 +131,153 @@ class InternalStorageService extends StorageService {
       }
     }
   }
+
+  Future<String> _rootFolder({
+    required String relativePath,
+    String trackPath = '',
+    bool createFolder = false,
+  }) async {
+    final base = await getApplicationDocumentsDirectory();
+    final dir = Directory(p.join(base.path, relativePath));
+    if (createFolder) {
+      await dir.create(recursive: true);
+    }
+    return dir.path;
+  }
+
+  @override
+  Future<String?> getTrackPath({
+    required String relativePath,
+    required String trackPath,
+  }) async {
+    final dirPath = await _rootFolder(relativePath: relativePath);
+    final path = p.join(dirPath, trackPath);
+    final exists = await File(path).exists();
+    return exists ? path : null;
+  }
+
+  @override
+  Future<int> getBytes({
+    required String relativePath,
+    required String trackPath,
+  }) async {
+    final filePath = await getTrackPath(
+      relativePath: relativePath,
+      trackPath: trackPath,
+    );
+    if (filePath == null) return 0;
+    final f = File(filePath);
+    if (!await f.exists()) return 0;
+    return await f.length();
+  }
+
+  @override
+  Future<bool> isFileIntact({
+    required String relativePath,
+    required String trackPath,
+    required int expectedBytes,
+  }) async {
+    final filePath = await getTrackPath(
+      relativePath: relativePath,
+      trackPath: trackPath,
+    );
+    if (filePath == null) return false;
+    final f = File(filePath);
+    final actual = await f.length();
+    if (actual <= 0) return false;
+    return expectedBytes <= 0 || actual >= expectedBytes;
+  }
+
+  @override
+  Future<StreamSink<List<int>>> getSink({
+    required String relativePath,
+    required String trackPath,
+    required String? mimeType,
+  }) async {
+    final folder = await _rootFolder(
+      relativePath: relativePath,
+      trackPath: trackPath,
+      createFolder: true,
+    );
+    final filePath = p.join(folder, trackPath);
+    final f = File(filePath);
+    return f.openWrite(mode: .append);
+  }
+
+  @override
+  Future<void> deleteFolder({required String relativePath}) async {
+    final path = await _rootFolder(relativePath: relativePath);
+    final dir = Directory(path);
+    if (await dir.exists()) {
+      try {
+        await dir.delete(recursive: true);
+      } catch (e) {
+        LogService.log(
+          'Unable to delete item at $path',
+          originalError: e,
+          level: .error,
+          source: 'InternalStorageService',
+        );
+      }
+    }
+  }
+
+  @override
+  Future<void> deleteTrack({
+    required String relativePath,
+    required String trackPath,
+  }) async {
+    final path = await getTrackPath(
+      relativePath: relativePath,
+      trackPath: trackPath,
+    );
+    if (path == null) {
+      LogService.log(
+        'could not find path for $trackPath',
+        level: .error,
+        source: 'InternalStorageService',
+      );
+      return;
+    }
+    final file = File(path);
+    if (await file.exists()) {
+      try {
+        await file.delete();
+      } catch (e) {
+        LogService.log(
+          'Unable to delete episode at $path',
+          originalError: e,
+          level: .error,
+          source: 'InternalStorageService',
+        );
+      }
+    }
+  }
+
+  @override
+  Future<bool> migrateToV4Path({
+    required String libraryItemId,
+    String? episodeId,
+    required String filename,
+    required String relativePath,
+    required String trackPath,
+  }) async {
+    final oldPath = await trackPathIfExists(
+      libraryItemId: libraryItemId,
+      episodeId: episodeId,
+      filename: filename,
+    );
+    if (oldPath == null) return false;
+
+    final newRoot = await _rootFolder(relativePath: relativePath);
+    final newPath = p.join(newRoot, trackPath);
+    final newFile = File(newPath);
+    try {
+      await Directory(newFile.parent.path).create(recursive: true);
+      await File(oldPath).rename(newPath);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
 }

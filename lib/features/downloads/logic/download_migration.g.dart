@@ -9,28 +9,28 @@ part of 'download_migration.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(DownloadMigrationV3)
-final downloadMigrationV3Provider = DownloadMigrationV3Provider._();
+@ProviderFor(DownloadMigrationV4)
+final downloadMigrationV4Provider = DownloadMigrationV4Provider._();
 
-final class DownloadMigrationV3Provider
-    extends $NotifierProvider<DownloadMigrationV3, void> {
-  DownloadMigrationV3Provider._()
+final class DownloadMigrationV4Provider
+    extends $NotifierProvider<DownloadMigrationV4, void> {
+  DownloadMigrationV4Provider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'downloadMigrationV3Provider',
+        name: r'downloadMigrationV4Provider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$downloadMigrationV3Hash();
+  String debugGetCreateSourceHash() => _$downloadMigrationV4Hash();
 
   @$internal
   @override
-  DownloadMigrationV3 create() => DownloadMigrationV3();
+  DownloadMigrationV4 create() => DownloadMigrationV4();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(void value) {
@@ -41,10 +41,10 @@ final class DownloadMigrationV3Provider
   }
 }
 
-String _$downloadMigrationV3Hash() =>
-    r'c7bed31bbd24c2ac229836cee0d001476832f351';
+String _$downloadMigrationV4Hash() =>
+    r'e975133a5531bf6dfddca2bc7b540756bbe28045';
 
-abstract class _$DownloadMigrationV3 extends $Notifier<void> {
+abstract class _$DownloadMigrationV4 extends $Notifier<void> {
   void build();
   @$mustCallSuper
   @override

@@ -36,14 +36,22 @@ Future<bool> isItemFullyDownloaded(Ref ref, DownloadItem item) async {
   final service = ref.read(storageServiceForItemProvider(item));
   if (service == null) return false;
   final results = await Future.wait(
-    item.tracks.map(
-      (t) => service.fileIntact(
+    item.tracks.map((t) {
+      if (item.isMigratedV4) {
+        return service.isFileIntact(
+          relativePath: item.relativePath,
+          trackPath: t.trackPath,
+          expectedBytes: t.bytesTotal,
+        );
+      }
+
+      return service.fileIntact(
         libraryItemId: item.libraryItemId,
         episodeId: item.episodeId,
         filename: t.filename ?? '',
         expectedBytes: t.bytesTotal,
-      ),
-    ),
+      );
+    }),
   );
   return results.every((intact) => intact);
 }
@@ -70,22 +78,28 @@ Future<(Map<int, String>, String?)> resolveLocalPaths(
         session.libraryItemId,
         isPodcast: session.isPodcastEpisode,
       );
-  if (session.episodeId != null) {
-    final track = tracks.first;
-    final local = await service.trackPathIfExists(
-      libraryItemId: session.libraryItemId,
-      episodeId: session.episodeId!,
-      filename: track.metadata?.filename ?? session.episodeId!,
+
+  for (final track in tracks) {
+    final String? local;
+    final dTrack = downloadItem.tracks.firstWhereOrNull(
+      (t) => t.audioTrack == track,
     );
-    if (local != null) trackPaths[track.index] = local;
-  } else {
-    for (final track in tracks) {
-      final local = await service.trackPathIfExists(
-        libraryItemId: session.libraryItemId,
-        filename: track.metadata?.filename ?? track.index.toString(),
+    if (dTrack == null) return (trackPaths, null);
+
+    if (downloadItem.isMigratedV4) {
+      local = await service.getTrackPath(
+        relativePath: downloadItem.relativePath,
+        trackPath: dTrack.trackPath,
       );
-      if (local != null) trackPaths[track.index] = local;
+    } else {
+      local = await service.trackPathIfExists(
+        libraryItemId: session.libraryItemId,
+        episodeId: session.episodeId,
+        filename: track.metadata?.filename ?? session.episodeId!,
+      );
     }
+
+    if (local != null) trackPaths[track.index] = local;
   }
 
   return (trackPaths, coverPath);
