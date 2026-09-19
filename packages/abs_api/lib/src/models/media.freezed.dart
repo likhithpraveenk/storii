@@ -196,11 +196,11 @@ return podcast(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  Duration? duration,  String? coverPath,  List<AudioFile> audioFiles,  int numAudioFiles,  List<AudioTrack> tracks,  int numTracks,  List<BookChapter> chapters,  int numChapters,  int? size)?  book,TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  bool autoDownloadEpisodes,  List<PodcastEpisode> episodes,  String? coverPath,  DateTime? lastEpisodeCheck,  int? size,  int? numEpisodes)?  podcast,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  Duration? duration,  String? coverPath,  List<AudioFile> audioFiles,  int numAudioFiles,  List<AudioTrack> tracks,  int numTracks,  List<BookChapter> chapters,  int numChapters,  int? size)?  book,TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  bool autoDownloadEpisodes,  List<PodcastEpisode> episodes,  String? coverPath,  DateTime? lastEpisodeCheck,  int? maxNewEpisodesToDownload,  int? maxEpisodesToKeep,  int? size,  int? numEpisodes)?  podcast,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case BookMedia() when book != null:
 return book(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.duration,_that.coverPath,_that.audioFiles,_that.numAudioFiles,_that.tracks,_that.numTracks,_that.chapters,_that.numChapters,_that.size);case PodcastMedia() when podcast != null:
-return podcast(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.autoDownloadEpisodes,_that.episodes,_that.coverPath,_that.lastEpisodeCheck,_that.size,_that.numEpisodes);case _:
+return podcast(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.autoDownloadEpisodes,_that.episodes,_that.coverPath,_that.lastEpisodeCheck,_that.maxNewEpisodesToDownload,_that.maxEpisodesToKeep,_that.size,_that.numEpisodes);case _:
   return orElse();
 
 }
@@ -218,11 +218,11 @@ return podcast(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.auto
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  Duration? duration,  String? coverPath,  List<AudioFile> audioFiles,  int numAudioFiles,  List<AudioTrack> tracks,  int numTracks,  List<BookChapter> chapters,  int numChapters,  int? size)  book,required TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  bool autoDownloadEpisodes,  List<PodcastEpisode> episodes,  String? coverPath,  DateTime? lastEpisodeCheck,  int? size,  int? numEpisodes)  podcast,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  Duration? duration,  String? coverPath,  List<AudioFile> audioFiles,  int numAudioFiles,  List<AudioTrack> tracks,  int numTracks,  List<BookChapter> chapters,  int numChapters,  int? size)  book,required TResult Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  bool autoDownloadEpisodes,  List<PodcastEpisode> episodes,  String? coverPath,  DateTime? lastEpisodeCheck,  int? maxNewEpisodesToDownload,  int? maxEpisodesToKeep,  int? size,  int? numEpisodes)  podcast,}) {final _that = this;
 switch (_that) {
 case BookMedia():
 return book(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.duration,_that.coverPath,_that.audioFiles,_that.numAudioFiles,_that.tracks,_that.numTracks,_that.chapters,_that.numChapters,_that.size);case PodcastMedia():
-return podcast(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.autoDownloadEpisodes,_that.episodes,_that.coverPath,_that.lastEpisodeCheck,_that.size,_that.numEpisodes);}
+return podcast(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.autoDownloadEpisodes,_that.episodes,_that.coverPath,_that.lastEpisodeCheck,_that.maxNewEpisodesToDownload,_that.maxEpisodesToKeep,_that.size,_that.numEpisodes);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -236,11 +236,11 @@ return podcast(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.auto
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  Duration? duration,  String? coverPath,  List<AudioFile> audioFiles,  int numAudioFiles,  List<AudioTrack> tracks,  int numTracks,  List<BookChapter> chapters,  int numChapters,  int? size)?  book,TResult? Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  bool autoDownloadEpisodes,  List<PodcastEpisode> episodes,  String? coverPath,  DateTime? lastEpisodeCheck,  int? size,  int? numEpisodes)?  podcast,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  Duration? duration,  String? coverPath,  List<AudioFile> audioFiles,  int numAudioFiles,  List<AudioTrack> tracks,  int numTracks,  List<BookChapter> chapters,  int numChapters,  int? size)?  book,TResult? Function( String id,  MediaMetadata metadata,  String? libraryItemId,  List<String> tags,  bool autoDownloadEpisodes,  List<PodcastEpisode> episodes,  String? coverPath,  DateTime? lastEpisodeCheck,  int? maxNewEpisodesToDownload,  int? maxEpisodesToKeep,  int? size,  int? numEpisodes)?  podcast,}) {final _that = this;
 switch (_that) {
 case BookMedia() when book != null:
 return book(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.duration,_that.coverPath,_that.audioFiles,_that.numAudioFiles,_that.tracks,_that.numTracks,_that.chapters,_that.numChapters,_that.size);case PodcastMedia() when podcast != null:
-return podcast(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.autoDownloadEpisodes,_that.episodes,_that.coverPath,_that.lastEpisodeCheck,_that.size,_that.numEpisodes);case _:
+return podcast(_that.id,_that.metadata,_that.libraryItemId,_that.tags,_that.autoDownloadEpisodes,_that.episodes,_that.coverPath,_that.lastEpisodeCheck,_that.maxNewEpisodesToDownload,_that.maxEpisodesToKeep,_that.size,_that.numEpisodes);case _:
   return null;
 
 }
@@ -384,7 +384,7 @@ $MediaMetadataCopyWith<$Res> get metadata {
 @JsonSerializable()
 @DateTimeEpochConverter()
 class PodcastMedia implements Media {
-  const PodcastMedia({required this.id, required this.metadata, this.libraryItemId,  List<String> tags = const [], this.autoDownloadEpisodes = false,  List<PodcastEpisode> episodes = const [], this.coverPath, this.lastEpisodeCheck, this.size, this.numEpisodes,  String? $type}): _tags = tags,_episodes = episodes,$type = $type ?? 'podcast';
+  const PodcastMedia({required this.id, required this.metadata, this.libraryItemId,  List<String> tags = const [], this.autoDownloadEpisodes = false,  List<PodcastEpisode> episodes = const [], this.coverPath, this.lastEpisodeCheck, this.maxNewEpisodesToDownload, this.maxEpisodesToKeep, this.size, this.numEpisodes,  String? $type}): _tags = tags,_episodes = episodes,$type = $type ?? 'podcast';
   factory PodcastMedia.fromJson(Map<String, dynamic> json) => _$PodcastMediaFromJson(json);
 
 @override final  String id;
@@ -407,6 +407,8 @@ class PodcastMedia implements Media {
 
 @override final  String? coverPath;
  final  DateTime? lastEpisodeCheck;
+ final  int? maxNewEpisodesToDownload;
+ final  int? maxEpisodesToKeep;
 @override final  int? size;
  final  int? numEpisodes;
 
@@ -427,18 +429,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastMedia&&(identical(other.id, id) || other.id == id)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&const DeepCollectionEquality().equals(other.tags, _tags)&&(identical(other.autoDownloadEpisodes, autoDownloadEpisodes) || other.autoDownloadEpisodes == autoDownloadEpisodes)&&const DeepCollectionEquality().equals(other.episodes, _episodes)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&(identical(other.lastEpisodeCheck, lastEpisodeCheck) || other.lastEpisodeCheck == lastEpisodeCheck)&&(identical(other.size, size) || other.size == size)&&(identical(other.numEpisodes, numEpisodes) || other.numEpisodes == numEpisodes));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastMedia&&(identical(other.id, id) || other.id == id)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&const DeepCollectionEquality().equals(other.tags, _tags)&&(identical(other.autoDownloadEpisodes, autoDownloadEpisodes) || other.autoDownloadEpisodes == autoDownloadEpisodes)&&const DeepCollectionEquality().equals(other.episodes, _episodes)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&(identical(other.lastEpisodeCheck, lastEpisodeCheck) || other.lastEpisodeCheck == lastEpisodeCheck)&&(identical(other.maxNewEpisodesToDownload, maxNewEpisodesToDownload) || other.maxNewEpisodesToDownload == maxNewEpisodesToDownload)&&(identical(other.maxEpisodesToKeep, maxEpisodesToKeep) || other.maxEpisodesToKeep == maxEpisodesToKeep)&&(identical(other.size, size) || other.size == size)&&(identical(other.numEpisodes, numEpisodes) || other.numEpisodes == numEpisodes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,metadata,libraryItemId,const DeepCollectionEquality().hash(_tags),autoDownloadEpisodes,const DeepCollectionEquality().hash(_episodes),coverPath,lastEpisodeCheck,size,numEpisodes);
+    return Object.hash(runtimeType,id,metadata,libraryItemId,const DeepCollectionEquality().hash(_tags),autoDownloadEpisodes,const DeepCollectionEquality().hash(_episodes),coverPath,lastEpisodeCheck,maxNewEpisodesToDownload,maxEpisodesToKeep,size,numEpisodes);
 }
 
 @override
 String toString() {
-    return 'Media.podcast(id: $id, metadata: $metadata, libraryItemId: $libraryItemId, tags: $tags, autoDownloadEpisodes: $autoDownloadEpisodes, episodes: $episodes, coverPath: $coverPath, lastEpisodeCheck: $lastEpisodeCheck, size: $size, numEpisodes: $numEpisodes)';
+    return 'Media.podcast(id: $id, metadata: $metadata, libraryItemId: $libraryItemId, tags: $tags, autoDownloadEpisodes: $autoDownloadEpisodes, episodes: $episodes, coverPath: $coverPath, lastEpisodeCheck: $lastEpisodeCheck, maxNewEpisodesToDownload: $maxNewEpisodesToDownload, maxEpisodesToKeep: $maxEpisodesToKeep, size: $size, numEpisodes: $numEpisodes)';
 }
 
 
@@ -449,7 +451,7 @@ abstract mixin class $PodcastMediaCopyWith<$Res> implements $MediaCopyWith<$Res>
   factory $PodcastMediaCopyWith(PodcastMedia value, $Res Function(PodcastMedia) _then) = _$PodcastMediaCopyWithImpl;
 @override @useResult
 $Res call({
- String id, MediaMetadata metadata, String? libraryItemId, List<String> tags, bool autoDownloadEpisodes, List<PodcastEpisode> episodes, String? coverPath, DateTime? lastEpisodeCheck, int? size, int? numEpisodes
+ String id, MediaMetadata metadata, String? libraryItemId, List<String> tags, bool autoDownloadEpisodes, List<PodcastEpisode> episodes, String? coverPath, DateTime? lastEpisodeCheck, int? maxNewEpisodesToDownload, int? maxEpisodesToKeep, int? size, int? numEpisodes
 });
 
 
@@ -466,7 +468,7 @@ class _$PodcastMediaCopyWithImpl<$Res>
 
 /// Create a copy of Media
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? metadata = null,Object? libraryItemId = freezed,Object? tags = null,Object? autoDownloadEpisodes = null,Object? episodes = null,Object? coverPath = freezed,Object? lastEpisodeCheck = freezed,Object? size = freezed,Object? numEpisodes = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? metadata = null,Object? libraryItemId = freezed,Object? tags = null,Object? autoDownloadEpisodes = null,Object? episodes = null,Object? coverPath = freezed,Object? lastEpisodeCheck = freezed,Object? maxNewEpisodesToDownload = freezed,Object? maxEpisodesToKeep = freezed,Object? size = freezed,Object? numEpisodes = freezed,}) {
   return _then(PodcastMedia(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,metadata: null == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
@@ -476,7 +478,9 @@ as List<String>,autoDownloadEpisodes: null == autoDownloadEpisodes ? _self.autoD
 as bool,episodes: null == episodes ? _self._episodes : episodes // ignore: cast_nullable_to_non_nullable
 as List<PodcastEpisode>,coverPath: freezed == coverPath ? _self.coverPath : coverPath // ignore: cast_nullable_to_non_nullable
 as String?,lastEpisodeCheck: freezed == lastEpisodeCheck ? _self.lastEpisodeCheck : lastEpisodeCheck // ignore: cast_nullable_to_non_nullable
-as DateTime?,size: freezed == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
+as DateTime?,maxNewEpisodesToDownload: freezed == maxNewEpisodesToDownload ? _self.maxNewEpisodesToDownload : maxNewEpisodesToDownload // ignore: cast_nullable_to_non_nullable
+as int?,maxEpisodesToKeep: freezed == maxEpisodesToKeep ? _self.maxEpisodesToKeep : maxEpisodesToKeep // ignore: cast_nullable_to_non_nullable
+as int?,size: freezed == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
 as int?,numEpisodes: freezed == numEpisodes ? _self.numEpisodes : numEpisodes // ignore: cast_nullable_to_non_nullable
 as int?,
   ));

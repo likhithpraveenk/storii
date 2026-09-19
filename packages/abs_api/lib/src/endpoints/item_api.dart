@@ -86,18 +86,6 @@ class ItemApi {
     return fromJson(response.data, UpdateCoverResponse.fromJson);
   }
 
-  Future<UpdateCoverResponse> updateCover({
-    required String libraryItemId,
-    required String coverPath,
-  }) async {
-    final response = await api.request(
-      ApiRoutes.itemCover(libraryItemId),
-      method: .patch,
-      body: {'cover': coverPath},
-    );
-    return fromJson(response.data, UpdateCoverResponse.fromJson);
-  }
-
   Future<void> removeCover({required String libraryItemId}) async {
     await api.request(ApiRoutes.itemCover(libraryItemId), method: .delete);
   }

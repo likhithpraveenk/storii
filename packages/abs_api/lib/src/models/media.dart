@@ -39,6 +39,8 @@ sealed class Media with _$Media {
     @Default([]) List<PodcastEpisode> episodes,
     String? coverPath,
     DateTime? lastEpisodeCheck,
+    int? maxNewEpisodesToDownload,
+    int? maxEpisodesToKeep,
     int? size,
     int? numEpisodes,
   }) = PodcastMedia;

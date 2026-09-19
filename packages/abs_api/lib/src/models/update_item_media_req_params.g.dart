@@ -8,33 +8,26 @@ part of 'update_item_media_req_params.dart';
 
 UpdateBookReqParams _$UpdateBookReqParamsFromJson(Map<String, dynamic> json) =>
     UpdateBookReqParams(
-      coverPath: json['coverPath'] as String?,
       tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
       metadata: json['metadata'] == null
           ? null
           : UpdateMediaMetadataReqParams.fromJson(
               json['metadata'] as Map<String, dynamic>,
             ),
-      chapters: (json['chapters'] as List<dynamic>?)
-          ?.map((e) => BookChapter.fromJson(e as Map<String, dynamic>))
-          .toList(),
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$UpdateBookReqParamsToJson(
   UpdateBookReqParams instance,
 ) => <String, dynamic>{
-  'coverPath': ?instance.coverPath,
   'tags': ?instance.tags,
   'metadata': ?instance.metadata?.toJson(),
-  'chapters': ?instance.chapters?.map((e) => e.toJson()).toList(),
   'runtimeType': instance.$type,
 };
 
 UpdatePodcastReqParams _$UpdatePodcastReqParamsFromJson(
   Map<String, dynamic> json,
 ) => UpdatePodcastReqParams(
-  coverPath: json['coverPath'] as String?,
   tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
   metadata: json['metadata'] == null
       ? null
@@ -53,7 +46,6 @@ UpdatePodcastReqParams _$UpdatePodcastReqParamsFromJson(
 Map<String, dynamic> _$UpdatePodcastReqParamsToJson(
   UpdatePodcastReqParams instance,
 ) => <String, dynamic>{
-  'coverPath': ?instance.coverPath,
   'tags': ?instance.tags,
   'metadata': ?instance.metadata?.toJson(),
   'autoDownloadEpisodes': ?instance.autoDownloadEpisodes,
@@ -86,6 +78,7 @@ UpdateBookMetadataReqParams _$UpdateBookMetadataReqParamsFromJson(
   asin: json['asin'] as String?,
   language: json['language'] as String?,
   explicit: json['explicit'] as bool?,
+  abridged: json['abridged'] as bool?,
   $type: json['runtimeType'] as String?,
 );
 
@@ -106,6 +99,7 @@ Map<String, dynamic> _$UpdateBookMetadataReqParamsToJson(
   'asin': ?instance.asin,
   'language': ?instance.language,
   'explicit': ?instance.explicit,
+  'abridged': ?instance.abridged,
   'runtimeType': instance.$type,
 };
 
@@ -120,10 +114,12 @@ UpdatePodcastMetadataReqParams _$UpdatePodcastMetadataReqParamsFromJson(
   feedUrl: json['feedUrl'] as String?,
   imageUrl: json['imageUrl'] as String?,
   itunesPageUrl: json['itunesPageUrl'] as String?,
-  itunesId: (json['itunesId'] as num?)?.toInt(),
-  itunesArtistId: (json['itunesArtistId'] as num?)?.toInt(),
+  itunesId: json['itunesId'] as String?,
+  itunesArtistId: json['itunesArtistId'] as String?,
+  podcastType: $enumDecodeNullable(_$PodcastTypeEnumMap, json['podcastType']),
   explicit: json['explicit'] as bool?,
   language: json['language'] as String?,
+  type: json['type'] as String?,
   $type: json['runtimeType'] as String?,
 );
 
@@ -140,7 +136,14 @@ Map<String, dynamic> _$UpdatePodcastMetadataReqParamsToJson(
   'itunesPageUrl': ?instance.itunesPageUrl,
   'itunesId': ?instance.itunesId,
   'itunesArtistId': ?instance.itunesArtistId,
+  'podcastType': ?_$PodcastTypeEnumMap[instance.podcastType],
   'explicit': ?instance.explicit,
   'language': ?instance.language,
+  'type': ?instance.type,
   'runtimeType': instance.$type,
+};
+
+const _$PodcastTypeEnumMap = {
+  PodcastType.episodic: 'episodic',
+  PodcastType.serial: 'serial',
 };
