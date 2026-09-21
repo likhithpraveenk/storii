@@ -546,5 +546,19 @@
   "removeLocationQ": "Speicherort entfernen?",
   "removeLocationSubtitle": "Downloads an diesem Speicherort - sofern vorhanden - werden von der Verknüpfung gelöst",
   "sleepWindowOffSubtitle": "Starte einen ausschalt Timer mit festgelegter Dauer wenn die Wiedergabe innerhablb des Zeitfensters startet",
-  "sleepDurationTitle": "Ausschalt Timer Dauer"
+  "sleepDurationTitle": "Ausschalt Timer Dauer",
+  "sleepWindowTitle": "Zeitfenster Automatischer Timer",
+  "sleepWindowRange": "{start} - {end}",
+  "@sleepWindowRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "libraryPageSize": "Anzahl der Einträge, die in der Bibliotheksansicht geladen werden",
+  "seriesPageSize": "Anzahl der Einträge, die in der Serienansicht geladen werden"
 }
