@@ -544,5 +544,7 @@
   "addFolder": "Ordner hinzufügen",
   "permissionRevoked": "Berechtigung widerrufen",
   "removeLocationQ": "Speicherort entfernen?",
-  "removeLocationSubtitle": "Downloads an diesem Speicherort - sofern vorhanden - werden von der Verknüpfung gelöst"
+  "removeLocationSubtitle": "Downloads an diesem Speicherort - sofern vorhanden - werden von der Verknüpfung gelöst",
+  "sleepWindowOffSubtitle": "Starte einen ausschalt Timer mit festgelegter Dauer wenn die Wiedergabe innerhablb des Zeitfensters startet",
+  "sleepDurationTitle": "Ausschalt Timer Dauer"
 }
