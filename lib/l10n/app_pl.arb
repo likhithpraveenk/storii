@@ -544,5 +544,21 @@
   "addFolder": "Dodaj folder",
   "permissionRevoked": "Uprawnienie cofnięte",
   "removeLocationQ": "Usunąć folder?",
-  "removeLocationSubtitle": "Pliki pobrane do tego folderu zostaną usunięte"
+  "removeLocationSubtitle": "Pliki pobrane do tego folderu zostaną usunięte",
+  "sleepWindowTitle": "Okno na sen",
+  "sleepWindowOffSubtitle": "Automatycznie aktywuj wyłącznik czasowy jeżeli odtwarzany jest audiobook w wybranym oknie czasowym",
+  "sleepWindowRange": "{start} - {end}",
+  "@sleepWindowRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "sleepDurationTitle": "Czas wyłącznika czasowego",
+  "libraryPageSize": "Liczba elementów na stronie Biblioteki",
+  "seriesPageSize": "Liczba elementów na stronie Serii"
 }
