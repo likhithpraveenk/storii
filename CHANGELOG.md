@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+## [v0.10.2] - 2026-09-23
+
 ### Added
 
 - Norwegian translations
@@ -712,7 +714,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.10.2-beta.1...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.10.2...HEAD
+[v0.10.2]: https://github.com/likhithpraveenk/storii/compare/v0.10.2-beta.1...v0.10.2
 [v0.10.2-beta.1]: https://github.com/likhithpraveenk/storii/compare/v0.10.1...v0.10.2-beta.1
 [v0.10.1]: https://github.com/likhithpraveenk/storii/compare/v0.10.0...v0.10.1
 [v0.10.0]: https://github.com/likhithpraveenk/storii/compare/v0.9.2...v0.10.0
