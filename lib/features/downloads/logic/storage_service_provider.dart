@@ -1,5 +1,6 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/storage_location.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/cover_helper.dart';
@@ -67,6 +68,12 @@ Future<(Map<int, String>, String?)> resolveLocalPaths(
 
   final trackPaths = <int, String>{};
   if (tracks == null || tracks.isEmpty || downloadItem == null) {
+    if (downloadItem == null && tracks != null && tracks.isNotEmpty) {
+      LogService.log(
+        'no download item found for ${session.displayTitle}',
+        source: 'resolveLocalPaths',
+      );
+    }
     return (trackPaths, null);
   }
   final service = ref.read(storageServiceForItemProvider(downloadItem));
@@ -82,21 +89,42 @@ Future<(Map<int, String>, String?)> resolveLocalPaths(
   for (final track in tracks) {
     final String? local;
     final dTrack = downloadItem.tracks.firstWhereOrNull(
-      (t) => t.audioTrack == track,
+      (t) => t.audioTrack.index == track.index,
     );
-    if (dTrack == null) return (trackPaths, null);
+    if (dTrack == null) {
+      LogService.log(
+        'no download track matched session track index=${track.index} ${track.title}',
+        source: 'resolveLocalPaths',
+      );
+      return (trackPaths, null);
+    }
 
     if (downloadItem.isMigratedV4) {
       local = await service.getTrackPath(
         relativePath: downloadItem.relativePath,
         trackPath: dTrack.trackPath,
       );
+      if (local == null) {
+        LogService.log(
+          'track missing index=${track.index} path=${dTrack.trackPath}',
+          level: .warning,
+          source: 'StorageServiceProvider',
+        );
+      }
     } else {
+      final filename = track.metadata?.filename ?? track.index.toString();
       local = await service.trackPathIfExists(
         libraryItemId: session.libraryItemId,
         episodeId: session.episodeId,
-        filename: track.metadata?.filename ?? session.episodeId!,
+        filename: filename,
       );
+      if (local == null) {
+        LogService.log(
+          'legacy track missing index=${track.index} filename=$filename',
+          level: .warning,
+          source: 'StorageServiceProvider',
+        );
+      }
     }
 
     if (local != null) trackPaths[track.index] = local;

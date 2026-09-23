@@ -172,9 +172,11 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
         resolveLocalPathsProvider(session).future,
       );
 
-      final totalTracks = session.audioTracks?.length ?? 0;
-      if (localPaths.isNotEmpty) {
-        log('local playback has ${localPaths.length}/$totalTracks tracks');
+      if (localPaths.isEmpty && isFullyDownloaded) {
+        LogService.log(
+          'item marked fully downloaded but resolved 0 local tracks for ${session.displayTitle}',
+          source: 'AudioPlayerNotifier',
+        );
       }
 
       final sources = await session.toAudioSources(
