@@ -1,4 +1,5 @@
 {
+  "@@locale": "nb",
   "login": "Logg inn",
   "logout": "Logg ut",
   "addServer": "Legg til server",
