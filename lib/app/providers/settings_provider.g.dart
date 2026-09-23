@@ -378,6 +378,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setOsNotificationCanSpeed(bool value) =>
       _save(state?.copyWith(osNotificationCanSpeed: value));
 
+  Future<void> setHardwareClickToSkipChapters(bool value) =>
+      _save(state?.copyWith(hardwareClickToSkipChapters: value));
+
   Future<void> setInterruptionSkipBackward(Duration value) =>
       _save(state?.copyWith(interruptionSkipBackward: value));
 
@@ -868,6 +871,17 @@ final osNotificationCanSpeedProvider = Provider<bool>(
     ),
   ),
   name: 'osNotificationCanSpeedProvider',
+);
+
+final hardwareClickToSkipChaptersProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.hardwareClickToSkipChapters ??
+          DefaultUserSettings.hardwareClickToSkipChapters,
+    ),
+  ),
+  name: 'hardwareClickToSkipChaptersProvider',
 );
 
 final interruptionSkipBackwardProvider = Provider<Duration>(

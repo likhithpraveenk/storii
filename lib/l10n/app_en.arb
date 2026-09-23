@@ -560,5 +560,7 @@
   "osNotificationCanStopSubtitle": "Show stop button in OS notification",
   "osNotificationCanSpeedSubtitle": "Show playback speed button in OS notification",
   "libraryPageSize": "Library pagination size",
-  "seriesPageSize": "Series pagination size"
+  "seriesPageSize": "Series pagination size",
+  "hardwareClickToSkipChapters": "Hardware buttons skip chapters",
+  "hardwareClickToSkipChaptersSubtitle": "Use next/previous buttons to skip chapters instead of rewind/fast forward"
 }

@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- setting to use hardware next/previous buttons to skip chapters or rewind/fast forward
+
 ## [v0.10.1] - 2026-09-19
 
 ### Added
