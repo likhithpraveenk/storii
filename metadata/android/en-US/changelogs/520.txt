@@ -1,0 +1,5 @@
+Added:
+- setting to use hardware next/previous buttons to skip chapters or rewind/fast forward
+
+Fixed:
+- downloaded items failing to play after path migration
