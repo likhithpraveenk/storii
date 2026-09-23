@@ -110,6 +110,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
                 OsNotificationCanSkipChapterTile(),
                 OsNotificationCanStopTile(),
                 OsNotificationCanSpeedTile(),
+                HardwareClickToSkipChaptersTile(),
               ],
             ),
             const SizedBox(height: 200),

@@ -33,7 +33,7 @@ class OsNotificationCanSkipTile extends ConsumerWidget {
       value: canSkip,
       title: Text(l10n.osNotificationCanSkip),
       subtitle: Text(l10n.osNotificationCanSkipSubtitle),
-      secondary: const Icon(Icons.refresh),
+      secondary: Transform.flip(flipX: true, child: const Icon(Icons.replay)),
       onChanged: (value) {
         ref.read(userSettingsProvider.notifier).setOsNotificationCanSkip(value);
       },
@@ -95,6 +95,27 @@ class OsNotificationCanSpeedTile extends ConsumerWidget {
         ref
             .read(userSettingsProvider.notifier)
             .setOsNotificationCanSpeed(value);
+      },
+    );
+  }
+}
+
+class HardwareClickToSkipChaptersTile extends ConsumerWidget {
+  const new({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final hardwareClick = ref.watch(hardwareClickToSkipChaptersProvider);
+
+    return SwitchListTile(
+      value: hardwareClick,
+      title: Text(l10n.hardwareClickToSkipChapters),
+      subtitle: Text(l10n.hardwareClickToSkipChaptersSubtitle),
+      secondary: Icon(hardwareClick ? Icons.skip_previous : Icons.replay),
+      onChanged: (value) {
+        ref
+            .read(userSettingsProvider.notifier)
+            .setHardwareClickToSkipChapters(value);
       },
     );
   }

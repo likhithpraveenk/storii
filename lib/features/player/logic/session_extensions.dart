@@ -79,11 +79,17 @@ extension PlaybackSessionX on PlaybackSession {
         uri = localPath.startsWith('content:')
             ? Uri.parse(localPath)
             : Uri.file(localPath);
-      } else {
-        uri = serverUrl!.resolve(
+      } else if (serverUrl != null) {
+        uri = serverUrl.resolve(
           ApiRoutes.sessionOpenTrack(id, '${track.index}'),
         );
-      } //! either we get local path or server url
+      } else {
+        throw StateError(
+          'Missing URI for track index=${track.index} title=${track.title}; '
+          '$displayTitle.\n'
+          'serverUrl is null and no local path was resolved',
+        );
+      }
 
       final isEpisode = mediaType == .podcast && episodeId != null;
 

@@ -25,7 +25,7 @@ enum AudioHandlerEvent {
   bufferingComplete,
 }
 
-class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
+class AppAudioHandler extends BaseAudioHandler {
   final AppAudioPlayer _player;
   PositionResolver resolver = PositionResolver.empty;
 
@@ -38,6 +38,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final bool Function() canSkipInOsNotification;
   final bool Function() canSkipChapterInOsNotification;
   final bool Function() canStopInOsNotification;
+  final bool Function() hardwareClickToSkipChapters;
   final bool Function() canSpeedInOsNotification;
   final Duration Function() getInterruptionSkipBackward;
   final Duration Function() getInterruptionLongSkipBackward;
@@ -79,6 +80,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     required this.getInterruptionSkipBackward,
     required this.getInterruptionLongSkipBackward,
     required this.getInterruptionLongSkipThreshold,
+    required this.hardwareClickToSkipChapters,
     required this.loadChildren,
     required this.playItem,
     required this.searchFn,
@@ -185,7 +187,7 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         resolved;
 
     final controls = <MediaControl>[
-      if (canSeekInOsNotification()) rewindMediaControl,
+      if (canSkipInOsNotification()) rewindMediaControl,
       .pause,
       .play,
       if (canSkipInOsNotification()) fastForwardMediaControl,
@@ -197,8 +199,6 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
     final systemActions = <MediaAction>{
       if (canSeekInOsNotification()) .seek,
-      if (canSeekInOsNotification()) .seekForward,
-      if (canSeekInOsNotification()) .seekBackward,
       .playPause,
       if (canSkipInOsNotification()) .rewind,
       if (canSkipInOsNotification()) .fastForward,
@@ -226,7 +226,11 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
         errorMessage: state.error?.name,
         controls: controls,
         systemActions: systemActions,
-        androidCompactActionIndices: const [0, 1, 2],
+        androidCompactActionIndices: [
+          if (canSkipInOsNotification()) 0,
+          if (_player.isPlaying) 1 else 2,
+          if (canSkipInOsNotification()) 3,
+        ],
       ),
     );
   }
@@ -428,6 +432,26 @@ class AppAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     if (target != null) {
       await _player.seek(target.trackPosition, index: target.trackIndex);
       _eventController.add(.seek);
+    }
+  }
+
+  @override
+  Future<void> click([MediaButton button = .media]) async {
+    switch (button) {
+      case .media:
+        await togglePlay();
+      case .next:
+        if (hardwareClickToSkipChapters()) {
+          await skipToNext();
+        } else {
+          await fastForward();
+        }
+      case .previous:
+        if (hardwareClickToSkipChapters()) {
+          await skipToPrevious();
+        } else {
+          await rewind();
+        }
     }
   }
 

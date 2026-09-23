@@ -100,6 +100,8 @@ Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {
           container.read(interruptionLongSkipBackwardProvider),
       getInterruptionLongSkipThreshold: () =>
           container.read(interruptionLongSkipThresholdProvider),
+      hardwareClickToSkipChapters: () =>
+          container.read(hardwareClickToSkipChaptersProvider),
       loadChildren: androidAuto.loadChildren,
       playItem: androidAuto.playItem,
       searchFn: androidAuto.search,
