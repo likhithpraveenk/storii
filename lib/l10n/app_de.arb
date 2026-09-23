@@ -560,5 +560,7 @@
     }
   },
   "libraryPageSize": "Anzahl der Einträge, die in der Bibliotheksansicht geladen werden",
-  "seriesPageSize": "Anzahl der Einträge, die in der Serienansicht geladen werden"
+  "seriesPageSize": "Anzahl der Einträge, die in der Serienansicht geladen werden",
+  "hardwareClickToSkipChapters": "Mit den Hardwaretasten Kapitel überspringen",
+  "hardwareClickToSkipChaptersSubtitle": "Verwende die Tasten „Weiter“ und „Zurück“, um Kapitel zu überspringen, anstatt vor- oder zurückzuspulen"
 }
