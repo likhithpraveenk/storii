@@ -90,7 +90,7 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
     final options = <_Option>[
       (
         title: l10n.addToQueue,
-        icon: Icons.queue_music,
+        icon: Icons.horizontal_split_outlined,
         onTap: () async {
           await ref
               .read(queueProvider.notifier)
