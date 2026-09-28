@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/providers/deep_link_controller.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
@@ -13,6 +14,7 @@ part 'app_controller.g.dart';
 @riverpod
 void appController(Ref ref) {
   ref
+    ..watch(deepLinkControllerProvider)
     ..watch(librarySyncControllerProvider)
     ..watch(playerStateWatcherProvider)
     ..watch(sessionSyncWatcherProvider)

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_controller.dart';
+part of 'deep_link_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,24 +9,25 @@ part of 'app_controller.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(appController)
-final appControllerProvider = AppControllerProvider._();
+@ProviderFor(deepLinkController)
+final deepLinkControllerProvider = DeepLinkControllerProvider._();
 
-final class AppControllerProvider extends $FunctionalProvider<void, void, void>
+final class DeepLinkControllerProvider
+    extends $FunctionalProvider<void, void, void>
     with $Provider<void> {
-  AppControllerProvider._()
+  DeepLinkControllerProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'appControllerProvider',
+        name: r'deepLinkControllerProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$appControllerHash();
+  String debugGetCreateSourceHash() => _$deepLinkControllerHash();
 
   @$internal
   @override
@@ -35,7 +36,7 @@ final class AppControllerProvider extends $FunctionalProvider<void, void, void>
 
   @override
   void create(Ref ref) {
-    return appController(ref);
+    return deepLinkController(ref);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -47,4 +48,5 @@ final class AppControllerProvider extends $FunctionalProvider<void, void, void>
   }
 }
 
-String _$appControllerHash() => r'2f53ca03c926bebf25d564181285847c318c511f';
+String _$deepLinkControllerHash() =>
+    r'709e7aaf9924acf8a0e77d67aa908a4306d82835';
