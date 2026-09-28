@@ -327,3 +327,12 @@ enum ShakeSensitivity {
     .high => l10n.high,
   };
 }
+
+enum SettingsCategory {
+  library,
+  player,
+  appearance,
+  customization,
+  advanced,
+  downloads,
+}

@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 ### Added
 
 - play on startup setting to automatically resume the last played item when the app opens
+- minimal reset for each settings screen
 
 ## [v0.10.2] - 2026-09-23
 

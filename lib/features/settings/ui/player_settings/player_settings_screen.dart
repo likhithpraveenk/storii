@@ -18,6 +18,7 @@ import 'package:storii/features/settings/ui/player_settings/sleep_window_tile.da
 import 'package:storii/features/settings/ui/player_settings/speed_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/sync_interval_tile.dart';
 import 'package:storii/features/settings/ui/settings_header.dart';
+import 'package:storii/features/settings/ui/settings_reset_button.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 
 class PlayerSettingsTile extends ConsumerWidget {
@@ -63,6 +64,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
           icon: const Icon(Icons.arrow_back),
         ),
         title: Text(l10n.playerSettings, style: textTheme.titleLarge),
+        actions: const [SettingsResetButton(category: .player)],
       ),
       body: AppScrollbar(
         controller: _controller,

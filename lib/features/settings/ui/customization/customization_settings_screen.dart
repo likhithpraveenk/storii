@@ -7,6 +7,7 @@ import 'package:storii/features/settings/ui/customization/reorder_nav_tabs.dart'
 import 'package:storii/features/settings/ui/customization/scroll_thumb_tile.dart';
 import 'package:storii/features/settings/ui/customization/startup_nav.dart';
 import 'package:storii/features/settings/ui/settings_header.dart';
+import 'package:storii/features/settings/ui/settings_reset_button.dart';
 
 class CustomizationSettingsTile extends StatelessWidget {
   const new({super.key});
@@ -41,6 +42,7 @@ class CustomizationSettingsScreen extends StatelessWidget {
           l10n.customization,
           style: Theme.of(context).textTheme.titleLarge,
         ),
+        actions: const [SettingsResetButton(category: .customization)],
       ),
       body: ListView(
         children: [
