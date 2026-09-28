@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart' as init;
 import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/features/player/logic/queue_providers.dart';
 
 part 'deep_link_controller.g.dart';
 
@@ -13,6 +14,8 @@ void deepLinkController(Ref ref) {
     switch (url.host) {
       case 'oauth':
         router.go('/oauth${url.path}', extra: url);
+      case 'play-last':
+        await ref.read(queueProvider.notifier).playLastPlayed();
       default:
         LogService.log('Unhandled deep link: $url');
     }

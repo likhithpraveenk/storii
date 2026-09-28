@@ -337,7 +337,7 @@ $PodcastEpisodeCopyWith<$Res>? get episode {
 /// @nodoc
 mixin _$QueueState {
 
- List<QueueItem> get items; int? get currentIndex;
+ List<QueueItem> get items; int? get currentIndex; QueueItem? get current;
 /// Create a copy of QueueState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -351,20 +351,20 @@ $QueueStateCopyWith<QueueState> get copyWith => _$QueueStateCopyWithImpl<QueueSt
 @override
 bool operator ==(Object other) {
   final _this = this as QueueState;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is QueueState&&const DeepCollectionEquality().equals(other.items, _this.items)&&(identical(other.currentIndex, _this.currentIndex) || other.currentIndex == _this.currentIndex));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is QueueState&&const DeepCollectionEquality().equals(other.items, _this.items)&&(identical(other.currentIndex, _this.currentIndex) || other.currentIndex == _this.currentIndex)&&(identical(other.current, _this.current) || other.current == _this.current));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as QueueState;
-  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.items),_this.currentIndex);
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.items),_this.currentIndex,_this.current);
 }
 
 @override
 String toString() {
   final _this = this as QueueState;
-  return 'QueueState(items: ${_this.items}, currentIndex: ${_this.currentIndex})';
+  return 'QueueState(items: ${_this.items}, currentIndex: ${_this.currentIndex}, current: ${_this.current})';
 }
 
 
@@ -375,11 +375,11 @@ abstract mixin class $QueueStateCopyWith<$Res>  {
   factory $QueueStateCopyWith(QueueState value, $Res Function(QueueState) _then) = _$QueueStateCopyWithImpl;
 @useResult
 $Res call({
- List<QueueItem> items, int? currentIndex
+ List<QueueItem> items, int? currentIndex, QueueItem? current
 });
 
 
-
+$QueueItemCopyWith<$Res>? get current;
 
 }
 /// @nodoc
@@ -392,14 +392,27 @@ class _$QueueStateCopyWithImpl<$Res>
 
 /// Create a copy of QueueState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? items = null,Object? currentIndex = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? items = null,Object? currentIndex = freezed,Object? current = freezed,}) {
   return _then(QueueState(
 items: null == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
 as List<QueueItem>,currentIndex: freezed == currentIndex ? _self.currentIndex : currentIndex // ignore: cast_nullable_to_non_nullable
-as int?,
+as int?,current: freezed == current ? _self.current : current // ignore: cast_nullable_to_non_nullable
+as QueueItem?,
   ));
 }
+/// Create a copy of QueueState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$QueueItemCopyWith<$Res>? get current {
+    if (_self.current == null) {
+    return null;
+  }
 
+  return $QueueItemCopyWith<$Res>(_self.current!, (value) {
+    return _then(_self.copyWith(current: value));
+  });
+}
 }
 
 
@@ -478,10 +491,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<QueueItem> items,  int? currentIndex)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<QueueItem> items,  int? currentIndex,  QueueItem? current)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _QueueState() when $default != null:
-return $default(_that.items,_that.currentIndex);case _:
+return $default(_that.items,_that.currentIndex,_that.current);case _:
   return orElse();
 
 }
@@ -499,10 +512,10 @@ return $default(_that.items,_that.currentIndex);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<QueueItem> items,  int? currentIndex)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<QueueItem> items,  int? currentIndex,  QueueItem? current)  $default,) {final _that = this;
 switch (_that) {
 case _QueueState():
-return $default(_that.items,_that.currentIndex);}
+return $default(_that.items,_that.currentIndex,_that.current);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -516,10 +529,10 @@ return $default(_that.items,_that.currentIndex);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<QueueItem> items,  int? currentIndex)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<QueueItem> items,  int? currentIndex,  QueueItem? current)?  $default,) {final _that = this;
 switch (_that) {
 case _QueueState() when $default != null:
-return $default(_that.items,_that.currentIndex);case _:
+return $default(_that.items,_that.currentIndex,_that.current);case _:
   return null;
 
 }
@@ -531,7 +544,7 @@ return $default(_that.items,_that.currentIndex);case _:
 @JsonSerializable()
 
 class _QueueState implements QueueState {
-  const _QueueState({ List<QueueItem> items = const [], this.currentIndex}): _items = items;
+  const _QueueState({ List<QueueItem> items = const [], this.currentIndex, this.current}): _items = items;
   factory _QueueState.fromJson(Map<String, dynamic> json) => _$QueueStateFromJson(json);
 
  final  List<QueueItem> _items;
@@ -542,6 +555,7 @@ class _QueueState implements QueueState {
 }
 
 @override final  int? currentIndex;
+@override final  QueueItem? current;
 
 /// Create a copy of QueueState
 /// with the given fields replaced by the non-null parameter values.
@@ -556,18 +570,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _QueueState&&const DeepCollectionEquality().equals(other.items, _items)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _QueueState&&const DeepCollectionEquality().equals(other.items, _items)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex)&&(identical(other.current, current) || other.current == current));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_items),currentIndex);
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_items),currentIndex,current);
 }
 
 @override
 String toString() {
-    return 'QueueState(items: $items, currentIndex: $currentIndex)';
+    return 'QueueState(items: $items, currentIndex: $currentIndex, current: $current)';
 }
 
 
@@ -578,11 +592,11 @@ abstract mixin class _$QueueStateCopyWith<$Res> implements $QueueStateCopyWith<$
   factory _$QueueStateCopyWith(_QueueState value, $Res Function(_QueueState) _then) = __$QueueStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<QueueItem> items, int? currentIndex
+ List<QueueItem> items, int? currentIndex, QueueItem? current
 });
 
 
-
+@override $QueueItemCopyWith<$Res>? get current;
 
 }
 /// @nodoc
@@ -595,15 +609,28 @@ class __$QueueStateCopyWithImpl<$Res>
 
 /// Create a copy of QueueState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? items = null,Object? currentIndex = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? items = null,Object? currentIndex = freezed,Object? current = freezed,}) {
   return _then(_QueueState(
 items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
 as List<QueueItem>,currentIndex: freezed == currentIndex ? _self.currentIndex : currentIndex // ignore: cast_nullable_to_non_nullable
-as int?,
+as int?,current: freezed == current ? _self.current : current // ignore: cast_nullable_to_non_nullable
+as QueueItem?,
   ));
 }
 
+/// Create a copy of QueueState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$QueueItemCopyWith<$Res>? get current {
+    if (_self.current == null) {
+    return null;
+  }
 
+  return $QueueItemCopyWith<$Res>(_self.current!, (value) {
+    return _then(_self.copyWith(current: value));
+  });
+}
 }
 
 // dart format on

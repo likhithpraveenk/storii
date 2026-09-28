@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/models/queue_state.dart';
@@ -29,10 +30,26 @@ class QueueNotifier extends _$QueueNotifier {
     if (index < 0 || index >= state.items.length) return;
     final items = [...state.items]..removeAt(index);
     final current = state.currentIndex;
-    final newCurrent = current != null && current > index
-        ? current - 1
-        : current;
-    state = state.copyWith(items: items, currentIndex: newCurrent);
+    int? newCurrent;
+    QueueItem? newCurrentItem;
+    if (current == null) {
+      newCurrent = null;
+      newCurrentItem = null;
+    } else if (current == index) {
+      newCurrent = items.isEmpty ? null : index;
+      newCurrentItem = newCurrent != null ? items[newCurrent] : null;
+    } else if (current > index) {
+      newCurrent = current - 1;
+      newCurrentItem = state.current;
+    } else {
+      newCurrent = current;
+      newCurrentItem = state.current;
+    }
+    state = state.copyWith(
+      items: items,
+      currentIndex: newCurrent,
+      current: newCurrentItem,
+    );
     _persist();
   }
 
@@ -108,6 +125,22 @@ class QueueNotifier extends _$QueueNotifier {
     );
   }
 
+  Future<void> playLastPlayed() async {
+    final current = state.current;
+    if (current == null) {
+      LogService.log('No last played found', source: 'QueueNotifier');
+      return;
+    }
+    final index = state.items.indexWhere(
+      (e) => e.itemId == current.itemId && e.episodeId == current.episodeId,
+    );
+    if (index != -1) {
+      await playFromIndex(index);
+    } else {
+      await play(itemId: current.itemId, episodeId: current.episodeId);
+    }
+  }
+
   Future<void> playMany(List<QueueItem> items) async {
     if (items.isEmpty) return;
     state = QueueState(items: items);
@@ -124,7 +157,7 @@ class QueueNotifier extends _$QueueNotifier {
   }) async {
     if (index < 0 || index >= state.items.length) return;
     final item = state.items.elementAt(index);
-    state = state.copyWith(currentIndex: index);
+    state = state.copyWith(currentIndex: index, current: item);
     _persist();
     await ref
         .read(audioPlayerProvider.notifier)
@@ -140,13 +173,17 @@ class QueueNotifier extends _$QueueNotifier {
 
   Future<void> clear({bool removeCurrentPlaying = true}) async {
     if (removeCurrentPlaying) {
-      state = const QueueState();
-      await _store.clear();
+      state = QueueState(current: state.current);
+      await _store.save(state);
     } else {
       final current = state.currentIndex;
       if (current != null && current < state.items.length) {
         final currentItem = state.items[current];
-        state = QueueState(items: [currentItem], currentIndex: 0);
+        state = QueueState(
+          items: [currentItem],
+          currentIndex: 0,
+          current: state.current,
+        );
         _persist();
       }
     }
@@ -154,7 +191,11 @@ class QueueNotifier extends _$QueueNotifier {
 
   Future<void> onPlaybackComplete() async {
     final current = state.currentIndex;
-    if (current == null || current + 1 >= state.items.length) return;
+    if (current == null || current + 1 >= state.items.length) {
+      state = state.copyWith(currentIndex: null, current: null);
+      _persist();
+      return;
+    }
     await playFromIndex(current + 1);
   }
 }
