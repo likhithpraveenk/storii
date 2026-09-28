@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/keys.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -48,7 +49,7 @@ Message: ${entry.message}
 
                           if (context.mounted) {
                             globalMessengerKey.currentState?.showAppSnackBar(
-                              'Log copied to clipboard',
+                              l10n.copiedToClipboard,
                             );
                           }
                         },

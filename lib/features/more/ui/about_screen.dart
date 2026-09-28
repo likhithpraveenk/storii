@@ -83,7 +83,7 @@ class AboutScreen extends ConsumerWidget {
                     await Clipboard.setData(ClipboardData(text: body));
                     if (!context.mounted) return;
                     ScaffoldMessenger.of(context)
-                        .showAppSnackBar('Bug report copied to clipboard');
+                        .showAppSnackBar(l10n.copiedToClipboard);
                     await launchUrlHelper(context, githubIssueLink);
                   },
                 ),

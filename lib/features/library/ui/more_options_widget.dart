@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/keys.dart';
@@ -214,6 +215,18 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
         },
       ));
     }
+
+    options.add((
+      title: l10n.copyPlayLink,
+      icon: Icons.bolt,
+      onTap: () async {
+        final link = 'storii://play?id=${widget.itemId}';
+        await Clipboard.setData(ClipboardData(text: link));
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showAppSnackBar(l10n.copiedToClipboard);
+        }
+      },
+    ));
 
     return Column(
       children: [

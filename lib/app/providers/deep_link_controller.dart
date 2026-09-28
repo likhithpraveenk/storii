@@ -14,6 +14,16 @@ void deepLinkController(Ref ref) {
     switch (url.host) {
       case 'oauth':
         router.go('/oauth${url.path}', extra: url);
+
+      case 'play':
+        final itemId = url.queryParameters['id'];
+        final episodeId = url.queryParameters['episodeId'];
+        if (itemId != null) {
+          await ref
+              .read(queueProvider.notifier)
+              .play(itemId: itemId, episodeId: episodeId);
+        }
+
       case 'play-last':
         await ref.read(queueProvider.notifier).playLastPlayed();
       default:

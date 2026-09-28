@@ -1,4 +1,5 @@
 import 'package:abs_api/abs_api.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/keys.dart';
@@ -154,6 +155,20 @@ class EpisodeActionButtons extends ConsumerWidget {
                             );
                           },
                         ),
+                      ListTile(
+                        title: Text(l10n.copyPlayLink),
+                        leading: const Icon(Icons.bolt),
+                        onTap: () async {
+                          Navigator.of(ctx).pop();
+                          final link =
+                              'storii://play?id=${episode.libraryItemId}&episodeId=${episode.id}';
+                          await Clipboard.setData(ClipboardData(text: link));
+                          if (ctx.mounted) {
+                            ScaffoldMessenger.of(ctx)
+                                .showAppSnackBar(l10n.copiedToClipboard);
+                          }
+                        },
+                      ),
                     ],
                   );
                 },
