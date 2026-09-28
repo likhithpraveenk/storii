@@ -8,6 +8,7 @@ import 'package:storii/features/settings/ui/player_settings/fade_on_sleep_tile.d
 import 'package:storii/features/settings/ui/player_settings/interrupt_skip_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/miniplayer_subtitle_mode_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/os_notification_button_tiles.dart';
+import 'package:storii/features/settings/ui/player_settings/play_on_startup_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/playback_controls_layout_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/player_background_theme_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/shake_sleep_tile.dart';
@@ -77,6 +78,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
                 SyncIntervalTile(),
                 SpeedTile(),
                 AudioBufferTile(),
+                PlayOnStartupTile(),
               ],
             ),
             SettingsHeader(

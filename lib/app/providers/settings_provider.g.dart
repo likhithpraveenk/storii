@@ -428,6 +428,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setSleepTimerWindowDuration(Duration value) =>
       _save(state?.copyWith(sleepTimerWindowDuration: value));
+
+  Future<void> setPlayOnStartup(bool value) =>
+      _save(state?.copyWith(playOnStartup: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -1041,4 +1044,13 @@ final sleepTimerWindowDurationProvider = Provider<Duration>(
     ),
   ),
   name: 'sleepTimerWindowDurationProvider',
+);
+
+final playOnStartupProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.playOnStartup ?? DefaultUserSettings.playOnStartup,
+    ),
+  ),
+  name: 'playOnStartupProvider',
 );

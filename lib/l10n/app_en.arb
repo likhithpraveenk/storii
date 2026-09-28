@@ -278,6 +278,8 @@
   "interruptSkipBackLong": "Skip back on long interruptions",
   "interruptSkipLongThreshold": "Threshold for long interruption",
   "startPlayback": "Start playback",
+  "playOnStartup": "Play on startup",
+  "playOnStartupSubtitle": "Automatically resume the last played media when the app opens",
   "playbackSpeed": "Playback speed",
   "playback": "Playback",
   "sleepTimer": "Sleep timer",

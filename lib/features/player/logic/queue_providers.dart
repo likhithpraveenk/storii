@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/models/queue_state.dart';
@@ -212,6 +213,15 @@ void queueController(Ref ref) {
       unawaited(ref.read(queueProvider.notifier).onPlaybackComplete());
     }
   });
+
+  if (ref.read(playOnStartupProvider)) {
+    final queue = ref.read(queueProvider);
+    if (queue.current != null) {
+      Future.microtask(() {
+        ref.read(queueProvider.notifier).playLastPlayed();
+      });
+    }
+  }
 }
 
 extension QueueItemX1 on Iterable<LibraryItem> {
