@@ -5,6 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/app/providers/widget_controller.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/user_progress_actions.dart';
 import 'package:storii/features/item/ui/episode_metadata_sheet.dart';
@@ -95,8 +96,8 @@ class EpisodeActionButtons extends ConsumerWidget {
                                       ).notifier,
                                     )
                                     .markComplete();
-                                if (ctx.mounted) {
-                                  ScaffoldMessenger.of(ctx).showSnackBar(
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
                                         success
@@ -140,8 +141,8 @@ class EpisodeActionButtons extends ConsumerWidget {
                                       ).notifier,
                                     )
                                     .remove(progress.id);
-                                if (ctx.mounted) {
-                                  ScaffoldMessenger.of(ctx).showSnackBar(
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
                                         success
@@ -163,12 +164,32 @@ class EpisodeActionButtons extends ConsumerWidget {
                           final link =
                               'storii://play?id=${episode.libraryItemId}&episodeId=${episode.id}';
                           await Clipboard.setData(ClipboardData(text: link));
-                          if (ctx.mounted) {
-                            ScaffoldMessenger.of(ctx)
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context)
                                 .showAppSnackBar(l10n.copiedToClipboard);
                           }
                         },
                       ),
+                      if (ref.read(widgetControllerProvider) != null)
+                        ListTile(
+                          title: Text(l10n.bindToWidget),
+                          leading: const Icon(Icons.widgets_outlined),
+                          onTap: () async {
+                            Navigator.of(ctx).pop();
+                            final success = await ref
+                                .read(widgetControllerProvider.notifier)
+                                .bindActiveWidget(
+                                  itemId: episode.libraryItemId,
+                                  episodeId: episode.id,
+                                );
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showAppSnackBar(
+                                success ? l10n.success : l10n.failed,
+                                isError: !success,
+                              );
+                            }
+                          },
+                        ),
                     ],
                   );
                 },

@@ -5,6 +5,7 @@ import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
+import 'package:storii/app/providers/widget_controller.dart';
 import 'package:storii/features/admin/logic/item_actions_provider.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
@@ -227,6 +228,29 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
         }
       },
     ));
+
+    if (ref.read(widgetControllerProvider) != null) {
+      options.add((
+        title: l10n.bindToWidget,
+        icon: Icons.widgets_outlined,
+        onTap: () async {
+          if (_isBusy) return;
+          setState(() => _isBusy = true);
+          final success = await ref
+              .read(widgetControllerProvider.notifier)
+              .bindActiveWidget(
+                itemId: widget.itemId,
+                episodeId: widget.episodeId,
+              );
+          if (!mounted) return;
+          setState(() => _isBusy = false);
+          globalMessengerKey.currentState?.showAppSnackBar(
+            success ? l10n.success : l10n.failed,
+            isError: !success,
+          );
+        },
+      ));
+    }
 
     return Column(
       children: [

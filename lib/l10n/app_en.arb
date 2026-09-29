@@ -281,6 +281,8 @@
   "playOnStartupSubtitle": "Automatically resume the last played media when the app opens",
   "copyPlayLink": "Copy Play Link",
   "copiedToClipboard": "Copied to clipboard",
+  "bindToWidget": "Bind to widget",
+  "success": "Success",
   "playbackSpeed": "Playback speed",
   "playback": "Playback",
   "sleepTimer": "Sleep timer",

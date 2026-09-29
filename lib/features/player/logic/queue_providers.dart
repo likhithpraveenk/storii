@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:abs_api/abs_api.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/models/queue_state.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -116,6 +118,18 @@ class QueueNotifier extends _$QueueNotifier {
     bool forAndroidAuto = false,
     bool autoplay = true,
   }) async {
+    final isActiveSession = ref.read(
+      sessionProvider.select(
+        (s) => s?.libraryItemId == itemId && s?.episodeId == episodeId,
+      ),
+    );
+    if (isActiveSession) {
+      LogService.log(
+        'selected media is currently playing',
+        source: 'QueueNotifier',
+      );
+      return;
+    }
     state = const QueueState();
     await addToQueue(itemId: itemId, episodeId: episodeId);
     await playFromIndex(
