@@ -560,5 +560,7 @@
   },
   "sleepDurationTitle": "Czas wyłącznika czasowego",
   "libraryPageSize": "Liczba elementów na stronie Biblioteki",
-  "seriesPageSize": "Liczba elementów na stronie Serii"
+  "seriesPageSize": "Liczba elementów na stronie Serii",
+  "hardwareClickToSkipChapters": "Pomijanie rozdziałów przyciskami urządzenia",
+  "hardwareClickToSkipChaptersSubtitle": "Użyj przycisków następny/poprzedni do zmiany rozdziału zamiast przewijania"
 }
