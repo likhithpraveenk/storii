@@ -8,6 +8,7 @@ import 'package:storii/features/settings/ui/player_settings/fade_on_sleep_tile.d
 import 'package:storii/features/settings/ui/player_settings/interrupt_skip_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/miniplayer_subtitle_mode_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/os_notification_button_tiles.dart';
+import 'package:storii/features/settings/ui/player_settings/play_on_startup_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/playback_controls_layout_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/player_background_theme_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/shake_sleep_tile.dart';
@@ -17,6 +18,7 @@ import 'package:storii/features/settings/ui/player_settings/sleep_window_tile.da
 import 'package:storii/features/settings/ui/player_settings/speed_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/sync_interval_tile.dart';
 import 'package:storii/features/settings/ui/settings_header.dart';
+import 'package:storii/features/settings/ui/settings_reset_button.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 
 class PlayerSettingsTile extends ConsumerWidget {
@@ -62,6 +64,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
           icon: const Icon(Icons.arrow_back),
         ),
         title: Text(l10n.playerSettings, style: textTheme.titleLarge),
+        actions: const [SettingsResetButton(category: .player)],
       ),
       body: AppScrollbar(
         controller: _controller,
@@ -77,6 +80,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
                 SyncIntervalTile(),
                 SpeedTile(),
                 AudioBufferTile(),
+                PlayOnStartupTile(),
               ],
             ),
             SettingsHeader(

@@ -1,8 +1,10 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/downloads/storage_tile.dart';
+import 'package:storii/features/settings/ui/settings_reset_button.dart';
 
 class DownloadsSettingsTile extends StatelessWidget {
   const new({super.key});
@@ -20,11 +22,11 @@ class DownloadsSettingsTile extends StatelessWidget {
   }
 }
 
-class DownloadsSettingsScreen extends StatelessWidget {
+class DownloadsSettingsScreen extends ConsumerWidget {
   const new({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -37,6 +39,7 @@ class DownloadsSettingsScreen extends StatelessWidget {
           l10n.downloads,
           style: Theme.of(context).textTheme.titleLarge,
         ),
+        actions: const [SettingsResetButton(category: .downloads)],
       ),
       body: ListView(children: const [StorageTile()]),
     );

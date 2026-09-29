@@ -252,7 +252,7 @@ enum FullPlayerActions {
     .speed => Icons.speed,
     .volume => Icons.volume_up,
     .bookmarks => Icons.bookmark,
-    .queue => Icons.queue_music,
+    .queue => Icons.horizontal_split_outlined,
   };
 }
 
@@ -326,4 +326,13 @@ enum ShakeSensitivity {
     .medium => l10n.medium,
     .high => l10n.high,
   };
+}
+
+enum SettingsCategory {
+  library,
+  player,
+  appearance,
+  customization,
+  advanced,
+  downloads,
 }

@@ -46,7 +46,7 @@ class LogService {
       _outputToConsole(level, '$label $msg', stackTrace);
     }
 
-    _container.read(logsProvider.notifier).add(entry);
+    Future.microtask(() => _container.read(logsProvider.notifier).add(entry));
   }
 
   static void _outputToConsole(LogLevel level, String msg, StackTrace? st) {

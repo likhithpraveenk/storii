@@ -6,6 +6,7 @@ import 'package:storii/features/settings/ui/advanced/app_cache_tile.dart';
 import 'package:storii/features/settings/ui/advanced/backup_settings_tile.dart';
 import 'package:storii/features/settings/ui/advanced/http_logs.dart';
 import 'package:storii/features/settings/ui/advanced/trust_all_certificates_tile.dart';
+import 'package:storii/features/settings/ui/settings_reset_button.dart';
 
 class AdvancedSettingsTile extends StatelessWidget {
   const new({super.key});
@@ -40,6 +41,7 @@ class AdvancedSettingsScreen extends StatelessWidget {
           l10n.advanced,
           style: Theme.of(context).textTheme.titleLarge,
         ),
+        actions: const [SettingsResetButton(category: .advanced)],
       ),
       body: ListView(
         children: const [

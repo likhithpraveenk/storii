@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
+import 'package:storii/features/player/ui/queue_sheet.dart';
 import 'package:storii/features/search/ui/search_button.dart';
 import 'package:storii/shared/widgets/connection_status_icon.dart';
 import 'package:storii/shared/widgets/library_switcher.dart';
@@ -30,6 +31,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
             const ConnectionStatusIcon(),
             const SearchButton(),
             const ActiveDownloadsButton(),
+            const ActiveQueueButton(),
           ]
         : <Widget>[];
 

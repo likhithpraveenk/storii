@@ -32,10 +32,14 @@ _QueueState _$QueueStateFromJson(Map<String, dynamic> json) => _QueueState(
           .toList() ??
       const [],
   currentIndex: (json['currentIndex'] as num?)?.toInt(),
+  current: json['current'] == null
+      ? null
+      : QueueItem.fromJson(json['current'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$QueueStateToJson(_QueueState instance) =>
     <String, dynamic>{
       'items': instance.items.map((e) => e.toJson()).toList(),
       'currentIndex': ?instance.currentIndex,
+      'current': ?instance.current?.toJson(),
     };

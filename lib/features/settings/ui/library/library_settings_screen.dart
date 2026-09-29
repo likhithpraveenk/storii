@@ -8,6 +8,7 @@ import 'package:storii/features/settings/ui/library/remember_sort_tile.dart';
 import 'package:storii/features/settings/ui/library/reorder_home_shelves.dart';
 import 'package:storii/features/settings/ui/library/stacked_images_visible_tile.dart';
 import 'package:storii/features/settings/ui/settings_header.dart';
+import 'package:storii/features/settings/ui/settings_reset_button.dart';
 
 class LibrarySettingsTile extends ConsumerWidget {
   const new({super.key});
@@ -39,6 +40,7 @@ class LibrarySettingsScreen extends ConsumerWidget {
           icon: const Icon(Icons.arrow_back),
         ),
         title: Text(l10n.librarySettings, style: textTheme.titleLarge),
+        actions: const [SettingsResetButton(category: .library)],
       ),
       body: ListView(
         children: [

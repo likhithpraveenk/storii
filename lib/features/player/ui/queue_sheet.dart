@@ -2,9 +2,53 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/player/logic/queue_providers.dart';
+import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/queue_tile.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
+
+class ActiveQueueButton extends ConsumerWidget {
+  const new({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final count = ref.watch(queueCountProvider);
+    final session = ref.watch(sessionProvider);
+    if (count == 0 || session != null) {
+      return const SizedBox.shrink();
+    }
+    final theme = Theme.of(context);
+
+    return Stack(
+      children: [
+        IconButton(
+          tooltip: l10n.queue,
+          icon: const Icon(Icons.horizontal_split_outlined),
+          onPressed: () => showQueueSheet(context),
+        ),
+        Positioned(
+          right: 6,
+          top: 6,
+          child: Container(
+            padding: const .all(3),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primary,
+              shape: .circle,
+            ),
+            child: Text(
+              '$count',
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: theme.colorScheme.onPrimary,
+                fontSize: 9,
+                fontWeight: .bold,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 class QueueButton extends ConsumerWidget {
   const new({super.key, this.inOverflow = false});
@@ -22,7 +66,7 @@ class QueueButton extends ConsumerWidget {
         title: Text(l10n.queue),
         leading: Badge.count(
           count: count,
-          child: const Icon(Icons.queue_music),
+          child: const Icon(Icons.horizontal_split_outlined),
         ),
         onTap: () => _openSheet(context),
       );
@@ -32,7 +76,7 @@ class QueueButton extends ConsumerWidget {
       count: count,
       child: IconButton(
         tooltip: l10n.queue,
-        icon: const Icon(Icons.queue_music),
+        icon: const Icon(Icons.horizontal_split_outlined),
         onPressed: () => _openSheet(context),
       ),
     );

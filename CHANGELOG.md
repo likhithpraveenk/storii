@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- play on startup setting to automatically resume the last played item when the app opens
+- minimal reset for each settings screen
+- play link for each media item for autoplay via browser url
+- home screen media widget with cover art
+
 ## [v0.10.2] - 2026-09-23
 
 ### Added

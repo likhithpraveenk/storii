@@ -42,7 +42,7 @@ class _ServerTileState extends ConsumerState<ServerTile> {
             );
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(l10n.urlCopied),
+                content: Text(l10n.copiedToClipboard),
                 duration: const Duration(seconds: 1),
               ),
             );

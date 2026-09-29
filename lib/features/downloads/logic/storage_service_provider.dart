@@ -68,12 +68,6 @@ Future<(Map<int, String>, String?)> resolveLocalPaths(
 
   final trackPaths = <int, String>{};
   if (tracks == null || tracks.isEmpty || downloadItem == null) {
-    if (downloadItem == null && tracks != null && tracks.isNotEmpty) {
-      LogService.log(
-        'no download item found for ${session.displayTitle}',
-        source: 'resolveLocalPaths',
-      );
-    }
     return (trackPaths, null);
   }
   final service = ref.read(storageServiceForItemProvider(downloadItem));

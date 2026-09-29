@@ -42,7 +42,7 @@ final class AppSettingsNotifierProvider
 }
 
 String _$appSettingsNotifierHash() =>
-    r'b56f0a2a1d7442eef60072ad845d54b94208091e';
+    r'95d47d4af63df95898f299e834cb1e24d0ed35de';
 
 abstract class _$AppSettingsNotifier extends $Notifier<AppSettings> {
   AppSettings build();
@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'58ef75ad310c010c97650865890ad7a09b5eafd7';
+    r'9ee05c481475a91468573eebcb8d47e78de18bfe';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -428,6 +428,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setSleepTimerWindowDuration(Duration value) =>
       _save(state?.copyWith(sleepTimerWindowDuration: value));
+
+  Future<void> setPlayOnStartup(bool value) =>
+      _save(state?.copyWith(playOnStartup: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -1041,4 +1044,13 @@ final sleepTimerWindowDurationProvider = Provider<Duration>(
     ),
   ),
   name: 'sleepTimerWindowDurationProvider',
+);
+
+final playOnStartupProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.playOnStartup ?? DefaultUserSettings.playOnStartup,
+    ),
+  ),
+  name: 'playOnStartupProvider',
 );

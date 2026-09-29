@@ -13,6 +13,7 @@ import 'package:storii/features/settings/ui/appearance/marquee_speed_tile.dart';
 import 'package:storii/features/settings/ui/appearance/scheme_variant_tile.dart';
 import 'package:storii/features/settings/ui/appearance/system_theme_tile.dart';
 import 'package:storii/features/settings/ui/settings_header.dart';
+import 'package:storii/features/settings/ui/settings_reset_button.dart';
 
 class AppearanceTile extends ConsumerWidget {
   const new({super.key});
@@ -58,6 +59,7 @@ class AppearanceScreen extends ConsumerWidget {
           l10n.appearance,
           style: Theme.of(context).textTheme.titleLarge,
         ),
+        actions: const [SettingsResetButton(category: .appearance)],
       ),
       body: ListView(
         children: [

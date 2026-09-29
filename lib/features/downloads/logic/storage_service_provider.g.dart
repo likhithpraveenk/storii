@@ -292,7 +292,7 @@ final class ResolveLocalPathsProvider
   }
 }
 
-String _$resolveLocalPathsHash() => r'38e6cfd6a9fa96af38c4646c011f98baf1ee07b3';
+String _$resolveLocalPathsHash() => r'866aaf308fe6a6e05f9f7c2396bced4d764a985d';
 
 final class ResolveLocalPathsFamily extends $Family
     with

@@ -41,7 +41,7 @@ final class QueueNotifierProvider
   }
 }
 
-String _$queueNotifierHash() => r'a0b454ccf670cdc74a2f9e0870bce7278a2db87c';
+String _$queueNotifierHash() => r'5506dd1464a648d85f84c79a33a36f0aa883b558';
 
 abstract class _$QueueNotifier extends $Notifier<QueueState> {
   QueueState build();
@@ -140,4 +140,4 @@ final class QueueControllerProvider
   }
 }
 
-String _$queueControllerHash() => r'616cb9971830a46e92baa3c77d0ffff4be434b65';
+String _$queueControllerHash() => r'449905cd94dc3aa3dfda104c109f4c5b5415a373';

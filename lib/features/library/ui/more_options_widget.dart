@@ -1,9 +1,11 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
+import 'package:storii/app/providers/widget_controller.dart';
 import 'package:storii/features/admin/logic/item_actions_provider.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
@@ -90,7 +92,7 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
     final options = <_Option>[
       (
         title: l10n.addToQueue,
-        icon: Icons.queue_music,
+        icon: Icons.horizontal_split_outlined,
         onTap: () async {
           await ref
               .read(queueProvider.notifier)
@@ -211,6 +213,41 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
           if (message != null) {
             globalMessengerKey.currentState?.showAppSnackBar(message);
           }
+        },
+      ));
+    }
+
+    options.add((
+      title: l10n.copyPlayLink,
+      icon: Icons.bolt,
+      onTap: () async {
+        final link = 'storii://play?id=${widget.itemId}';
+        await Clipboard.setData(ClipboardData(text: link));
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showAppSnackBar(l10n.copiedToClipboard);
+        }
+      },
+    ));
+
+    if (ref.read(widgetControllerProvider) != null) {
+      options.add((
+        title: l10n.bindToWidget,
+        icon: Icons.widgets_outlined,
+        onTap: () async {
+          if (_isBusy) return;
+          setState(() => _isBusy = true);
+          final success = await ref
+              .read(widgetControllerProvider.notifier)
+              .bindActiveWidget(
+                itemId: widget.itemId,
+                episodeId: widget.episodeId,
+              );
+          if (!mounted) return;
+          setState(() => _isBusy = false);
+          globalMessengerKey.currentState?.showAppSnackBar(
+            success ? l10n.success : l10n.failed,
+            isError: !success,
+          );
         },
       ));
     }

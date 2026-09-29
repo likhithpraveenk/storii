@@ -124,12 +124,7 @@ class EpisodeTile extends ConsumerWidget {
                   episodeId: episode.id,
                 ),
               ),
-              Expanded(
-                child: EpisodeActionButtons(
-                  episode: episode,
-                  alignment: .start,
-                ),
-              ),
+              Expanded(child: EpisodeActionButtons(episode: episode)),
             ],
           ),
         ],

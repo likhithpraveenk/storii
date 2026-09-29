@@ -112,7 +112,10 @@ class EpisodeListItem extends ConsumerWidget {
               maxLines: 2,
               overflow: .ellipsis,
             ),
-          EpisodeActionButtons(episode: episode),
+          SizedBox(
+            width: double.infinity,
+            child: EpisodeActionButtons(episode: episode),
+          ),
         ],
       ),
     );

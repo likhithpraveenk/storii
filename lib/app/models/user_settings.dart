@@ -74,6 +74,7 @@ class DefaultUserSettings {
   static const isSleepWindowOn = false;
   static const sleepWindow = (1320, 360);
   static const sleepTimerWindowDuration = Duration(minutes: 30);
+  static const playOnStartup = false;
 }
 
 @freezed
@@ -242,6 +243,8 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.sleepTimerWindowDuration)
     Duration sleepTimerWindowDuration,
+
+    @Default(DefaultUserSettings.playOnStartup) bool playOnStartup,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);

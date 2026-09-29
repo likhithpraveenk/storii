@@ -17,8 +17,11 @@ sealed class QueueItem with _$QueueItem {
 
 @freezed
 sealed class QueueState with _$QueueState {
-  const factory({@Default([]) List<QueueItem> items, int? currentIndex}) =
-      _QueueState;
+  const factory({
+    @Default([]) List<QueueItem> items,
+    int? currentIndex,
+    QueueItem? current,
+  }) = _QueueState;
 
   factory fromJson(Map<String, dynamic> json) => _$QueueStateFromJson(json);
 }

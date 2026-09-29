@@ -1,9 +1,13 @@
 import 'dart:async';
 
 import 'package:abs_api/abs_api.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/models/queue_state.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -29,10 +33,26 @@ class QueueNotifier extends _$QueueNotifier {
     if (index < 0 || index >= state.items.length) return;
     final items = [...state.items]..removeAt(index);
     final current = state.currentIndex;
-    final newCurrent = current != null && current > index
-        ? current - 1
-        : current;
-    state = state.copyWith(items: items, currentIndex: newCurrent);
+    int? newCurrent;
+    QueueItem? newCurrentItem;
+    if (current == null) {
+      newCurrent = null;
+      newCurrentItem = null;
+    } else if (current == index) {
+      newCurrent = items.isEmpty ? null : index;
+      newCurrentItem = newCurrent != null ? items[newCurrent] : null;
+    } else if (current > index) {
+      newCurrent = current - 1;
+      newCurrentItem = state.current;
+    } else {
+      newCurrent = current;
+      newCurrentItem = state.current;
+    }
+    state = state.copyWith(
+      items: items,
+      currentIndex: newCurrent,
+      current: newCurrentItem,
+    );
     _persist();
   }
 
@@ -98,6 +118,18 @@ class QueueNotifier extends _$QueueNotifier {
     bool forAndroidAuto = false,
     bool autoplay = true,
   }) async {
+    final isActiveSession = ref.read(
+      sessionProvider.select(
+        (s) => s?.libraryItemId == itemId && s?.episodeId == episodeId,
+      ),
+    );
+    if (isActiveSession) {
+      LogService.log(
+        'selected media is currently playing',
+        source: 'QueueNotifier',
+      );
+      return;
+    }
     state = const QueueState();
     await addToQueue(itemId: itemId, episodeId: episodeId);
     await playFromIndex(
@@ -106,6 +138,22 @@ class QueueNotifier extends _$QueueNotifier {
       chapter: chapter,
       forAndroidAuto: forAndroidAuto,
     );
+  }
+
+  Future<void> playLastPlayed() async {
+    final current = state.current;
+    if (current == null) {
+      LogService.log('No last played found', source: 'QueueNotifier');
+      return;
+    }
+    final index = state.items.indexWhere(
+      (e) => e.itemId == current.itemId && e.episodeId == current.episodeId,
+    );
+    if (index != -1) {
+      await playFromIndex(index);
+    } else {
+      await play(itemId: current.itemId, episodeId: current.episodeId);
+    }
   }
 
   Future<void> playMany(List<QueueItem> items) async {
@@ -124,7 +172,7 @@ class QueueNotifier extends _$QueueNotifier {
   }) async {
     if (index < 0 || index >= state.items.length) return;
     final item = state.items.elementAt(index);
-    state = state.copyWith(currentIndex: index);
+    state = state.copyWith(currentIndex: index, current: item);
     _persist();
     await ref
         .read(audioPlayerProvider.notifier)
@@ -140,13 +188,17 @@ class QueueNotifier extends _$QueueNotifier {
 
   Future<void> clear({bool removeCurrentPlaying = true}) async {
     if (removeCurrentPlaying) {
-      state = const QueueState();
-      await _store.clear();
+      state = QueueState(current: state.current);
+      await _store.save(state);
     } else {
       final current = state.currentIndex;
       if (current != null && current < state.items.length) {
         final currentItem = state.items[current];
-        state = QueueState(items: [currentItem], currentIndex: 0);
+        state = QueueState(
+          items: [currentItem],
+          currentIndex: 0,
+          current: state.current,
+        );
         _persist();
       }
     }
@@ -154,7 +206,11 @@ class QueueNotifier extends _$QueueNotifier {
 
   Future<void> onPlaybackComplete() async {
     final current = state.currentIndex;
-    if (current == null || current + 1 >= state.items.length) return;
+    if (current == null || current + 1 >= state.items.length) {
+      state = state.copyWith(currentIndex: null, current: null);
+      _persist();
+      return;
+    }
     await playFromIndex(current + 1);
   }
 }
@@ -171,6 +227,15 @@ void queueController(Ref ref) {
       unawaited(ref.read(queueProvider.notifier).onPlaybackComplete());
     }
   });
+
+  if (ref.read(playOnStartupProvider)) {
+    final queue = ref.read(queueProvider);
+    if (queue.current != null) {
+      Future.microtask(() {
+        ref.read(queueProvider.notifier).playLastPlayed();
+      });
+    }
+  }
 }
 
 extension QueueItemX1 on Iterable<LibraryItem> {

@@ -34,13 +34,8 @@ class MyApp extends ConsumerWidget {
     ref.watch(appControllerProvider);
 
     final router = ref.watch(routerProvider);
-    init.appLinks.uriLinkStream.listen((url) {
-      router.go('/${url.host}${url.path}', extra: url);
-    });
-
     final themeMode = ref.watch(themeModeProvider);
     final textScaler = ref.watch(textScalerProvider);
-
     final lightTheme = ref.watch(themeDataProvider(.light));
     final darkTheme = ref.watch(themeDataProvider(.dark));
 
@@ -52,8 +47,7 @@ class MyApp extends ConsumerWidget {
       darkTheme: darkTheme,
       routerConfig: router,
       title: appName,
-      // https://github.com/flutter/flutter/issues/191072
-      // TODO: pending flutter fix
+      // TODO: pending material_ui fix https://github.com/flutter/flutter/issues/191072
       localizationsDelegates: const [
         AppLocalizations.delegate,
         ...GlobalMaterialLocalizations.delegates,

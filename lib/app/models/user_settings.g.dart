@@ -233,6 +233,8 @@ _UserSettings _$UserSettingsFromJson(
       : Duration(
           microseconds: (json['sleepTimerWindowDuration'] as num).toInt(),
         ),
+  playOnStartup:
+      json['playOnStartup'] as bool? ?? DefaultUserSettings.playOnStartup,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -318,6 +320,7 @@ Map<String, dynamic> _$UserSettingsToJson(
     r'$2': instance.sleepWindow.$2,
   },
   'sleepTimerWindowDuration': instance.sleepTimerWindowDuration.inMicroseconds,
+  'playOnStartup': instance.playOnStartup,
 };
 
 const _$NavTargetEnumMap = {
