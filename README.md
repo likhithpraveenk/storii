@@ -32,7 +32,7 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 ## Features
 
 - Audiobooks & Podcasts streaming with background playback and progress sync
-- Offline downloads - fully functional download manager with pause/resume, search, and sort
+- Offline downloads - fully functional download manager with pause/resume, search, sort, and grid view
 - Multi-user, multi-server and OIDC support with persistent sessions
 - Personalized home shelves: continue listening, recent series, newest authors, etc.
 - Advanced library browsing with filters, sorting, and series grouping
@@ -43,6 +43,10 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 - Navigation customization: reorder tabs, choose startup screen, label behavior
 - Server admin tools (admin users): trigger library scans, re-scan/re-match items
 - Android Auto: browse library and play books and episodes
+- Home screen widget with media cover art
+- Local URL per server with automatic local/remote switching
+- Play on startup to auto-resume last played item
+- Play links for media items to autoplay via browser URLs
 
 ## Demo
 
@@ -78,11 +82,31 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 | eBook reader                          |   💡   |        ✅        |
 | Chromecast                            |   💡   |        ✅        |
 | Android Auto                          |   ✅   |        ✅        |
-| Desktop apps                          |   💡   |        ❌        |
+| Local URL (LAN) with auto-switch      |   ✅   |        ❌        |
 
 > ✅ Supported &nbsp; ❌ **Not** supported &nbsp; 🔜 Planned &nbsp; 💡 On Request &nbsp; ⚠️ Partial
 
-## Android Auto
+## FAQ
+
+### How do I use the home screen widget?
+
+Once the widget is on home screen, tap on the ➕ to bind it to a media item
+
+> Books: long tap on any book for more options and tap on `Bind to widget`
+
+> Podcast episodes: In more button on episode item, you will find the `Bind to widget` option
+
+The widget shows just cover art for now.
+
+### What is the "Local URL" setting for?
+
+If your Audiobookshelf server is on your local network (e.g., `http://192.168.1.100:13378`), add that in **Settings > Advanced > Local URL**. Storii will automatically use it when you're on the same Wi-Fi, falling back to the primary URL when away.
+
+### What are "Play Links"?
+
+Each media item has a shareable deep link (e.g., `storii://play?id=...&episodeId=...`). Opening it in a browser or sharing it launches Storii and starts playback immediately. Useful for shortcuts, automation.
+
+### Android Auto
 
 Since Storii is not available on the Play Store, you need to enable unknown sources for it in Android Auto's developer settings:
 

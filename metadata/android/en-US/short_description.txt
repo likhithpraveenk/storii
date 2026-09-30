@@ -1,1 +1,1 @@
-Audiobookshelf client with offline downloads and background playback
+Audiobookshelf client with downloads, accurate playback sync and, customization

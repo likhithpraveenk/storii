@@ -2,15 +2,21 @@ Storii is a modern, feature-rich client for <a href="https://github.com/advplyr/
 
 <b>Features:</b>
 
-- Audiobooks & Podcasts streaming with background playback and progress sync
-- Offline downloads - fully functional download manager with pause/resume, search, sort, and grid view
-- Multi-user, multi-server and OIDC support with persistent sessions
-- Personalized home shelves: continue listening, recent series, newest authors, etc.
-- Advanced library browsing with filters, sorting, and series grouping
-- Search across books, series, authors, narrators, tags, and genres
-- Customizable player: sleep timer, speed control, seek buttons, chapter navigation, listening history, bookmarks, OS notification controls, and configurable skip-back after interruptions
-- Playback queue: supporting collections & playlists
-- Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling
-- Navigation customization: reorder tabs, choose startup screen, label behavior
-- Server admin tools (admin users): trigger library scans, re-scan/re-match items
-- Android Auto: browse library and play books and episodes
+<ul>
+<li>Audiobooks &amp; Podcasts streaming with background playback and progress sync</li>
+<li>Offline downloads - fully functional download manager with pause/resume, search, sort, and grid view</li>
+<li>Multi-user, multi-server and OIDC support with persistent sessions</li>
+<li>Personalized home shelves: continue listening, recent series, newest authors, etc.</li>
+<li>Advanced library browsing with filters, sorting, and series grouping</li>
+<li>Search across books, series, authors, narrators, tags, and genres</li>
+<li>Customizable player: sleep timer, speed control, seek buttons, chapter navigation, listening history, bookmarks, OS notification controls, and configurable skip-back after interruptions</li>
+<li>Playback queue: supporting collections &amp; playlists</li>
+<li>Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling</li>
+<li>Navigation customization: reorder tabs, choose startup screen, label behavior</li>
+<li>Server admin tools (admin users): trigger library scans, re-scan/re-match items</li>
+<li>Android Auto: browse library and play books and episodes</li>
+<li>Home screen widget with media cover art</li>
+<li>Local URL per server with automatic local/remote switching</li>
+<li>Play on startup to auto-resume last played item</li>
+<li>Play links for media items to autoplay via browser URLs</li>
+</ul>
