@@ -125,6 +125,75 @@ final class ConnectionTypeProvider
 
 String _$connectionTypeHash() => r'ac4f22daf36ed3faf6afdf9ab5031fabf818733a';
 
+@ProviderFor(activeServerUrl)
+final activeServerUrlProvider = ActiveServerUrlFamily._();
+
+final class ActiveServerUrlProvider
+    extends $FunctionalProvider<AsyncValue<Uri>, Uri, FutureOr<Uri>>
+    with $FutureModifier<Uri>, $FutureProvider<Uri> {
+  ActiveServerUrlProvider._({
+    required ActiveServerUrlFamily super.from,
+    required UserDomain super.argument,
+  }) : super(
+         retry: null,
+         name: r'activeServerUrlProvider',
+         isAutoDispose: false,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$activeServerUrlHash();
+
+  @override
+  String toString() {
+    return r'activeServerUrlProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<Uri> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Uri> create(Ref ref) {
+    final argument = this.argument as UserDomain;
+    return activeServerUrl(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ActiveServerUrlProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$activeServerUrlHash() => r'077c2a97510482d607fe0f758ffd0c356c4a59f5';
+
+final class ActiveServerUrlFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<Uri>, UserDomain> {
+  ActiveServerUrlFamily._()
+    : super(
+        retry: null,
+        name: r'activeServerUrlProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: false,
+      );
+
+  ActiveServerUrlProvider call(UserDomain user) =>
+      ActiveServerUrlProvider._(argument: user, from: this);
+
+  @override
+  String toString() => r'activeServerUrlProvider';
+}
+
 @ProviderFor(ServerConnection)
 final serverConnectionProvider = ServerConnectionProvider._();
 

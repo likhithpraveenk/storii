@@ -40,4 +40,4 @@ final class BugReportBodyProvider
   }
 }
 
-String _$bugReportBodyHash() => r'4ecf3dbff5694f634f701484977b23c44519ef26';
+String _$bugReportBodyHash() => r'7ca1dc20b1c6d2cb983f0bc814905b11bf4b070b';

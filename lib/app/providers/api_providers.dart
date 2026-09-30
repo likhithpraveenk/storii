@@ -18,10 +18,11 @@ part 'api_providers.g.dart';
 Future<ApiClient> apiClient(Ref ref, UserDomain user) async {
   final tokenService = ref.watch(tokenProvider);
   final cancelToken = CancelToken();
+  final serverUrl = await ref.watch(activeServerUrlProvider(user).future);
 
   final cacheOptions = CacheOptions(
     store: networkCacheStore,
-    policy: CachePolicy.refreshForceCache,
+    policy: .refreshForceCache,
     hitCacheOnNetworkFailure: true,
     maxStale: const Duration(days: 7),
   );
@@ -31,7 +32,7 @@ Future<ApiClient> apiClient(Ref ref, UserDomain user) async {
       .getServerHeaders(user.serverUrl);
 
   final apiClient = ApiClient(
-    baseUrl: user.serverUrl,
+    baseUrl: serverUrl,
     cancelToken: cancelToken,
     headers: headers,
     interceptors: [
@@ -133,8 +134,9 @@ Future<SessionsApi> sessionsApi(Ref ref, UserDomain user) async {
 Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
   final tokenService = ref.read(tokenProvider);
   final token = await tokenService.getAccessToken(user.id);
+  final serverUrl = await ref.watch(activeServerUrlProvider(user).future);
   final api = SocketApi(
-    baseUrl: user.serverUrl.toString(),
+    baseUrl: serverUrl.toString(),
     token: token,
     tokenUpdates: tokenService.tokenStream(user.id),
     onAuthFailure: () {

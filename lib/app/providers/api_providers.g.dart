@@ -63,7 +63,7 @@ final class ApiClientProvider
   }
 }
 
-String _$apiClientHash() => r'7792fc85b953e3ad8c5a352a0e2e9128f2dcd1b0';
+String _$apiClientHash() => r'416901de3bfe8e63d59410fbacccb3766ea0de79';
 
 final class ApiClientFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ApiClient>, UserDomain> {
@@ -649,7 +649,7 @@ final class SocketApiProvider
   }
 }
 
-String _$socketApiHash() => r'184c1f3a79f9b1d1960fec6756cf6ea211d0df8d';
+String _$socketApiHash() => r'95f1387d50571a3b3f86eeed2b6551b0da9503df';
 
 final class SocketApiFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<SocketApi>, UserDomain> {

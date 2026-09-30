@@ -1,9 +1,12 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/auth/logic/servers_provider.dart';
 
 part 'connection_providers.g.dart';
 
@@ -50,6 +53,25 @@ ConnectionType connectionType(Ref ref) {
   if (results.contains(ConnectivityResult.ethernet)) return .ethernet;
   if (results.contains(ConnectivityResult.mobile)) return .mobile;
   return .none;
+}
+
+@Riverpod(keepAlive: true)
+Future<Uri> activeServerUrl(Ref ref, UserDomain user) async {
+  final server = ref.watch(serverStreamProvider(user.serverUrl)).value;
+  final localUrl = server?.localUrl;
+  if (localUrl == null) return user.serverUrl;
+
+  final canCheck = ref.watch(
+    connectionTypeProvider.select((c) => c == .wifi || c == .ethernet),
+  );
+  if (!canCheck) return user.serverUrl;
+
+  final error = await ref
+      .read(pingServerProvider(localUrl).future)
+      .timeout(const Duration(seconds: 2), onTimeout: () => 'error');
+  if (error == null) return localUrl;
+
+  return user.serverUrl;
 }
 
 @Riverpod(keepAlive: true)

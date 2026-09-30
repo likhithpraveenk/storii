@@ -445,6 +445,8 @@
   "playbackErrorSource": "Audio file could not be loaded",
   "playbackErrorDecoder": "File format unsupported",
   "playbackErrorUnknown": "Something went wrong with playback",
+  "localUrl": "Local URL",
+  "localUrlSubtitle": "Used when connected to Wi-Fi and the server is reachable",
   "codec": "Codec",
   "bitrate": "Bitrate",
   "channels": "Channels",

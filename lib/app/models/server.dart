@@ -9,6 +9,7 @@ sealed class Server with _$Server {
     required String id,
     required Uri url,
     @Default({}) Map<String, String> headers,
+    Uri? localUrl,
   }) = _Server;
 
   factory fromJson(Map<String, dynamic> json) => _$ServerFromJson(json);
