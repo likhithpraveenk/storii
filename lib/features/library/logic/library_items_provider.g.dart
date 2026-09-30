@@ -100,4 +100,4 @@ final class AllLibraryItemsProvider
   }
 }
 
-String _$allLibraryItemsHash() => r'42273909d50f477ff5db8243e2c549a4bcb8ee63';
+String _$allLibraryItemsHash() => r'fa7c6d0257f9761634208f451b4714ee05bd3f16';

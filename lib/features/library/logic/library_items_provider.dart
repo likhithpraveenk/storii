@@ -1,4 +1,5 @@
 import 'package:abs_api/abs_api.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -121,13 +122,14 @@ Future<List<LibraryItem>> allLibraryItems(Ref ref) async {
   final params = ref.watch(
     libraryFiltersProvider(.library).select((s) => s.toItemParams()),
   );
-  final user = await ref.read(authenticatedUserProvider.future);
+  final user = await ref.watch(authenticatedUserProvider.future);
   final api = await ref.read(libraryApiProvider(user).future);
 
-  final response = await ref.logApiCall(
-    () => api.getItems(libraryId, params.copyWith(limit: 0)),
+  final data = await ref.logApiCall(
+    () => api.getItemsRaw(libraryId, params),
     logMessage: 'Error fetching all items',
     source: 'allLibraryItems',
   );
+  final response = await compute(LibraryItemsResponse.fromJson, data);
   return response.results;
 }
