@@ -1,0 +1,10 @@
+Added:
+- play on startup setting to automatically resume the last played item when the app opens
+- minimal reset for each settings screen
+- play link for each media item for autoplay via browser url
+- home screen media widget with cover art
+- local URL setting to configure a LAN address per server
+- automatic local/remote URL usage based on network type and reachability
+
+Fixed:
+- android auto library items stuck in loading
