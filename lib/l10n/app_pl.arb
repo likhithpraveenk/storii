@@ -24,7 +24,6 @@
   },
   "noUsersServer": "Brak użytkowników połączonych z tym serwerem.",
   "followingUsers": "Usuniesz następujących użytowników",
-  "urlCopied": "URL skopiowany",
   "addUser": "Dodaj użytkownika",
   "edit": "Edytuj",
   "editServer": "Edytuj serwer",
@@ -560,7 +559,7 @@
   },
   "sleepDurationTitle": "Czas wyłącznika czasowego",
   "libraryPageSize": "Liczba elementów na stronie Biblioteki",
-  "seriesPageSize": "Liczba elementów na stronie Serii",
+  "seriesPageSize": "Liczba elementów na stronie serii",
   "hardwareClickToSkipChapters": "Pomijanie rozdziałów przyciskami urządzenia",
-  "hardwareClickToSkipChaptersSubtitle": "Użyj przycisków następny/poprzedni do zmiany rozdziału zamiast przewijania"
+  "hardwareClickToSkipChaptersSubtitle": "Użyj przycisków urządzenia następny/poprzedni do zmiany rozdziału zamiast do przewijania"
 }
