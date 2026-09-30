@@ -77,7 +77,7 @@ class _LocalUrlSheetState extends ConsumerState<_LocalUrlSheet> {
   Future<void> _validate() async {
     final trimmed = _controller.text.trim();
     if (trimmed.isEmpty) {
-      Navigator.pop(context);
+      Navigator.pop(context, '');
       return;
     }
 
