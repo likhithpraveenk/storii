@@ -25,32 +25,25 @@ class AddServerNotifier extends _$AddServerNotifier {
   ServerState build() => const ServerState();
 
   Future<void> addServer(
-    String url, {
+    String serverUrl, {
     Server? server,
     Map<String, String> headers = const {},
   }) async {
     state = const ServerState(status: .checking);
-
+    final url = serverUrl.normalizedUri;
     try {
-      await ensureLocalNetworkAccess(url.normalizedUri);
+      await ensureLocalNetworkAccess(url);
       await ref.logApiCall(() async {
-        final authApi = ref.read(authApiProvider(url.normalizedUri));
+        final authApi = ref.read(authApiProvider(url));
         await authApi.healthCheck();
-        LogService.log('Server is healthy ${url.normalizedUri}', level: .info);
+        LogService.log('server is reachable at $url', level: .info);
         if (server != null) {
           await ref
               .read(serversProvider.notifier)
-              .edit(
-                server.url,
-                server.copyWith(url: url.normalizedUri, headers: headers),
-              );
+              .edit(server.url, server.copyWith(url: url, headers: headers));
         } else {
           final id = DateTime.now().microsecondsSinceEpoch.toString();
-          final server = Server(
-            id: id,
-            url: url.normalizedUri,
-            headers: headers,
-          );
+          final server = Server(id: id, url: url, headers: headers);
           await ref.read(serversProvider.notifier).add(server);
         }
         state = const ServerState(status: .available);

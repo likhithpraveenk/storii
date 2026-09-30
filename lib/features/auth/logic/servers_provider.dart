@@ -19,6 +19,10 @@ class ServersNotifier extends _$ServersNotifier {
     await ref.read(serversStoreProvider.notifier).add(server);
   }
 
+  Server? get(Uri uri) {
+    return ref.read(serversStoreProvider.notifier).get(uri);
+  }
+
   Future<void> edit(Uri oldUrl, Server server) async {
     await ref.read(serversStoreProvider.notifier).add(server);
     await ref

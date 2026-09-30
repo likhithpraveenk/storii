@@ -438,6 +438,8 @@
   "errorServer": "Server error, please try again",
   "errorUnknown": "Something went wrong",
   "errorType": "Type error",
+  "errorSocket": "Unable to connect to server address",
+  "errorHandshake": "Secure connection failed (SSL error)",
   "changeRestartRequired": "Changes take effect after restart",
   "playbackErrorNetwork": "Connection issue. Audio may be interrupted",
   "playbackErrorSource": "Audio file could not be loaded",

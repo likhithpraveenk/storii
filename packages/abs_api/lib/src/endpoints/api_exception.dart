@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 
 enum ApiExceptionType {
   network,
+  socket,
+  handshake,
   timeout,
   unauthorized,
   forbidden,
@@ -58,7 +60,8 @@ ApiException _apiExceptionFromDio(DioException e, StackTrace stack) {
   final msg = e.message ?? 'Request failed';
 
   final ApiExceptionType type = switch (e.type) {
-    .connectionError => .network,
+    .connectionError => _resolveInnerError(e.error, .network),
+    .badCertificate => .handshake,
     .connectionTimeout || .sendTimeout || .receiveTimeout => .timeout,
     .badResponse => switch (code) {
       400 => .badRequest,
@@ -71,7 +74,7 @@ ApiException _apiExceptionFromDio(DioException e, StackTrace stack) {
       >= 500 => .server,
       _ => .unknown,
     },
-    .unknown when e.error is SocketException => .network,
+    .unknown => _resolveInnerError(e.error, .unknown),
     _ => .unknown,
   };
 
@@ -83,3 +86,12 @@ ApiException _apiExceptionFromDio(DioException e, StackTrace stack) {
     originalError: e,
   );
 }
+
+ApiExceptionType _resolveInnerError(
+  Object? innerError,
+  ApiExceptionType fallback,
+) => switch (innerError) {
+  HandshakeException() || TlsException() => .handshake,
+  SocketException() => .socket,
+  _ => fallback,
+};
