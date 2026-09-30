@@ -1,1 +1,1 @@
-Audiobookshelf client with downloads, accurate playback sync and, customization
+Audiobookshelf client with downloads, accurate playback sync, and Android Auto
