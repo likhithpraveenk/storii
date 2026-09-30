@@ -34,19 +34,22 @@ class ServerAdapter extends TypeAdapter<Server> {
       headers: fields[2] == null
           ? {}
           : (fields[2] as Map).cast<String, String>(),
+      localUrl: fields[3] as Uri?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Server obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.url)
       ..writeByte(2)
-      ..write(obj.headers);
+      ..write(obj.headers)
+      ..writeByte(3)
+      ..write(obj.localUrl);
   }
 
   @override

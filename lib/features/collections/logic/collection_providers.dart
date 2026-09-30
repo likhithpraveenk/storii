@@ -43,7 +43,7 @@ class Collections extends _$Collections {
     });
 
     final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(libraryApiProvider(user));
+    final api = await ref.read(libraryApiProvider(user).future);
 
     return ref.logApiCall(
       () => api.getCollections(libraryId: libraryId),
@@ -71,7 +71,7 @@ class CollectionDetail extends _$CollectionDetail {
     });
 
     final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(collectionsApiProvider(user));
+    final api = await ref.read(collectionsApiProvider(user).future);
     return ref.logApiCall(
       () => api.get(collectionId: id),
       source: 'CollectionDetail',
@@ -88,7 +88,7 @@ class CollectionDetail extends _$CollectionDetail {
     state = AsyncData(current.copyWith(books: books));
     try {
       final user = await ref.read(authenticatedUserProvider.future);
-      final api = ref.read(collectionsApiProvider(user));
+      final api = await ref.read(collectionsApiProvider(user).future);
       await ref.logApiCall(
         () => api.reorder(
           collectionId: current.id,
@@ -121,7 +121,7 @@ class CollectionDetail extends _$CollectionDetail {
   }) async {
     final activeLibrary = await ref.watch(activeLibraryDetailsProvider.future);
     final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(collectionsApiProvider(user));
+    final api = await ref.read(collectionsApiProvider(user).future);
     return ref.logApiCall(
       () => api.create(
         params: CreateCollectionRequestParams(
@@ -141,7 +141,7 @@ class CollectionDetail extends _$CollectionDetail {
     String? description,
   }) async {
     final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(collectionsApiProvider(user));
+    final api = await ref.read(collectionsApiProvider(user).future);
     return ref.logApiCall(
       () => api.updateMetadata(
         collectionId: collectionId,
@@ -155,7 +155,7 @@ class CollectionDetail extends _$CollectionDetail {
 
   Future<void> delete(String collectionId) async {
     final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(collectionsApiProvider(user));
+    final api = await ref.read(collectionsApiProvider(user).future);
     return ref.logApiCall(
       () => api.delete(collectionId: collectionId),
       source: 'CollectionDetail',
@@ -168,7 +168,7 @@ class CollectionDetail extends _$CollectionDetail {
     required String libraryItemId,
   }) async {
     final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(collectionsApiProvider(user));
+    final api = await ref.read(collectionsApiProvider(user).future);
     return ref.logApiCall(
       () => api.batchAdd(
         collectionId: collectionId,
@@ -184,7 +184,7 @@ class CollectionDetail extends _$CollectionDetail {
     required String libraryItemId,
   }) async {
     final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(collectionsApiProvider(user));
+    final api = await ref.read(collectionsApiProvider(user).future);
     return ref.logApiCall(
       () => api.batchRemove(
         collectionId: collectionId,

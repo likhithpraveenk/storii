@@ -35,7 +35,7 @@ class SearchNotifier extends _$SearchNotifier {
     if (libraryId == null) return null;
 
     final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(libraryApiProvider(user));
+    final api = await ref.read(libraryApiProvider(user).future);
 
     return ref.logApiCall(
       () => api.search(libraryId, query: query),

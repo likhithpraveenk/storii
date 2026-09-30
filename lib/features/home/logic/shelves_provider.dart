@@ -150,7 +150,7 @@ Future<List<Shelf>> rawShelves(Ref ref) async {
       .id;
 
   final user = await ref.watch(authenticatedUserProvider.future);
-  final api = ref.watch(libraryApiProvider(user));
+  final api = await ref.watch(libraryApiProvider(user).future);
 
   return ref.logApiCall(
     () => api.getPersonalized(libraryId),

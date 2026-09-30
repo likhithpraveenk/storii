@@ -15,7 +15,7 @@ Future<Author> author(Ref ref, String authorId) async {
       .library
       .id;
 
-  final api = ref.read(authorApiProvider(user));
+  final api = await ref.read(authorApiProvider(user).future);
   final progressMap = await ref.watch(mediaProgressMapProvider.future);
 
   return ref.logApiCall(

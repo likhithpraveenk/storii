@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Server {
 
- String get id; Uri get url; Map<String, String> get headers;
+ String get id; Uri get url; Map<String, String> get headers; Uri? get localUrl;
 /// Create a copy of Server
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $ServerCopyWith<Server> get copyWith => _$ServerCopyWithImpl<Server>(this as Ser
 @override
 bool operator ==(Object other) {
   final _this = this as Server;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Server&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.url, _this.url) || other.url == _this.url)&&const DeepCollectionEquality().equals(other.headers, _this.headers));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Server&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.url, _this.url) || other.url == _this.url)&&const DeepCollectionEquality().equals(other.headers, _this.headers)&&(identical(other.localUrl, _this.localUrl) || other.localUrl == _this.localUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Server;
-  return Object.hash(runtimeType,_this.id,_this.url,const DeepCollectionEquality().hash(_this.headers));
+  return Object.hash(runtimeType,_this.id,_this.url,const DeepCollectionEquality().hash(_this.headers),_this.localUrl);
 }
 
 @override
 String toString() {
   final _this = this as Server;
-  return 'Server(id: ${_this.id}, url: ${_this.url}, headers: ${_this.headers})';
+  return 'Server(id: ${_this.id}, url: ${_this.url}, headers: ${_this.headers}, localUrl: ${_this.localUrl})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $ServerCopyWith<$Res>  {
   factory $ServerCopyWith(Server value, $Res Function(Server) _then) = _$ServerCopyWithImpl;
 @useResult
 $Res call({
- String id, Uri url, Map<String, String> headers
+ String id, Uri url, Map<String, String> headers, Uri? localUrl
 });
 
 
@@ -71,12 +71,13 @@ class _$ServerCopyWithImpl<$Res>
 
 /// Create a copy of Server
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? url = null,Object? headers = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? url = null,Object? headers = null,Object? localUrl = freezed,}) {
   return _then(Server(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as Uri,headers: null == headers ? _self.headers : headers // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,
+as Map<String, String>,localUrl: freezed == localUrl ? _self.localUrl : localUrl // ignore: cast_nullable_to_non_nullable
+as Uri?,
   ));
 }
 
@@ -158,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  Uri url,  Map<String, String> headers)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  Uri url,  Map<String, String> headers,  Uri? localUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Server() when $default != null:
-return $default(_that.id,_that.url,_that.headers);case _:
+return $default(_that.id,_that.url,_that.headers,_that.localUrl);case _:
   return orElse();
 
 }
@@ -179,10 +180,10 @@ return $default(_that.id,_that.url,_that.headers);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  Uri url,  Map<String, String> headers)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  Uri url,  Map<String, String> headers,  Uri? localUrl)  $default,) {final _that = this;
 switch (_that) {
 case _Server():
-return $default(_that.id,_that.url,_that.headers);}
+return $default(_that.id,_that.url,_that.headers,_that.localUrl);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -196,10 +197,10 @@ return $default(_that.id,_that.url,_that.headers);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  Uri url,  Map<String, String> headers)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  Uri url,  Map<String, String> headers,  Uri? localUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _Server() when $default != null:
-return $default(_that.id,_that.url,_that.headers);case _:
+return $default(_that.id,_that.url,_that.headers,_that.localUrl);case _:
   return null;
 
 }
@@ -211,7 +212,7 @@ return $default(_that.id,_that.url,_that.headers);case _:
 @JsonSerializable()
 
 class _Server implements Server {
-  const _Server({required this.id, required this.url,  Map<String, String> headers = const {}}): _headers = headers;
+  const _Server({required this.id, required this.url,  Map<String, String> headers = const {}, this.localUrl}): _headers = headers;
   factory _Server.fromJson(Map<String, dynamic> json) => _$ServerFromJson(json);
 
 @override final  String id;
@@ -223,6 +224,7 @@ class _Server implements Server {
   return EqualUnmodifiableMapView(_headers);
 }
 
+@override final  Uri? localUrl;
 
 /// Create a copy of Server
 /// with the given fields replaced by the non-null parameter values.
@@ -237,18 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Server&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url)&&const DeepCollectionEquality().equals(other.headers, _headers));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Server&&(identical(other.id, id) || other.id == id)&&(identical(other.url, url) || other.url == url)&&const DeepCollectionEquality().equals(other.headers, _headers)&&(identical(other.localUrl, localUrl) || other.localUrl == localUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,url,const DeepCollectionEquality().hash(_headers));
+    return Object.hash(runtimeType,id,url,const DeepCollectionEquality().hash(_headers),localUrl);
 }
 
 @override
 String toString() {
-    return 'Server(id: $id, url: $url, headers: $headers)';
+    return 'Server(id: $id, url: $url, headers: $headers, localUrl: $localUrl)';
 }
 
 
@@ -259,7 +261,7 @@ abstract mixin class _$ServerCopyWith<$Res> implements $ServerCopyWith<$Res> {
   factory _$ServerCopyWith(_Server value, $Res Function(_Server) _then) = __$ServerCopyWithImpl;
 @override @useResult
 $Res call({
- String id, Uri url, Map<String, String> headers
+ String id, Uri url, Map<String, String> headers, Uri? localUrl
 });
 
 
@@ -276,12 +278,13 @@ class __$ServerCopyWithImpl<$Res>
 
 /// Create a copy of Server
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? url = null,Object? headers = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? url = null,Object? headers = null,Object? localUrl = freezed,}) {
   return _then(_Server(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as Uri,headers: null == headers ? _self._headers : headers // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,
+as Map<String, String>,localUrl: freezed == localUrl ? _self.localUrl : localUrl // ignore: cast_nullable_to_non_nullable
+as Uri?,
   ));
 }
 

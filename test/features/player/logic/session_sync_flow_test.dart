@@ -48,7 +48,8 @@ void main() {
         currentUserProvider.overrideWithValue(testUser),
         authenticatedUserProvider.overrideWith((ref) async => testUser),
         socketApiProvider(testUser).overrideWith((ref) async => fakeSocketApi),
-        sessionsApiProvider(testUser).overrideWithValue(fakeSessionsApi),
+        sessionsApiProvider(testUser)
+            .overrideWithValue(AsyncData(fakeSessionsApi)),
       ],
     );
   }

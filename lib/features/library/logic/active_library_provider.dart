@@ -15,7 +15,7 @@ Future<LibraryResponse> activeLibraryDetails(Ref ref) async {
 
   Future<LibraryResponse> fetchFullLibrary(Library lib) async {
     final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(libraryApiProvider(user));
+    final api = await ref.read(libraryApiProvider(user).future);
     return ref.logApiCall(
       () => api.get(lib.id),
       logMessage: 'Error fetching active library details',

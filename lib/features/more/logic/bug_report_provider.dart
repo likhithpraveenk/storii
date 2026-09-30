@@ -1,5 +1,6 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/device_info_provider.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -25,8 +26,9 @@ Future<String> bugReportBody(Ref ref) async {
   final user = ref.read(currentUserProvider);
   if (user != null) {
     try {
+      final activeUrl = await ref.read(activeServerUrlProvider(user).future);
       final serverStatus = await ref.watch(
-        serverStatusProvider(user.serverUrl).future,
+        serverStatusProvider(activeUrl).future,
       );
       serverVersion = serverStatus.serverVersion ?? 'Unknown';
     } catch (_) {}

@@ -112,11 +112,6 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
                 onPressed: () =>
                     setState(() => optionsExpanded = !optionsExpanded),
                 label: Text(l10n.advanced),
-                icon: AnimatedRotation(
-                  turns: optionsExpanded ? 0.25 : 0.0,
-                  duration: const Duration(milliseconds: 200),
-                  child: const Icon(Icons.chevron_right),
-                ),
                 iconAlignment: .end,
               ),
               AnimatedSwitcher(

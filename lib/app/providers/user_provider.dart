@@ -22,7 +22,9 @@ class ServerUser extends _$ServerUser {
     });
     await _userSub?.cancel();
     final userDomain = await ref.watch(authenticatedUserProvider.future);
-    final user = await ref.read(meApiProvider(userDomain)).getUser();
+    final user = await ref
+        .read(meApiProvider(userDomain).future)
+        .then((api) => api.getUser());
 
     final socket = await ref.watch(socketApiProvider(userDomain).future);
     _userSub = socket.user.onUserUpdated.listen((update) {

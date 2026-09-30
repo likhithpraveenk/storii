@@ -7,6 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/chapter.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/is_background_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
@@ -158,7 +159,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
             );
       } else {
         final user = await ref.read(authenticatedUserProvider.future);
-        serverUrl = user.serverUrl;
+        serverUrl = await ref.read(activeServerUrlProvider(user).future);
         session = await ref
             .read(sessionProvider.notifier)
             .create(itemId: itemId, episodeId: episodeId);

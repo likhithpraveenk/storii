@@ -27,4 +27,8 @@ class ServersStore extends _$ServersStore {
   Server? get(Uri url) {
     return serversBox.values.firstWhereOrNull((s) => s.url == url);
   }
+
+  Stream<Server?> watch(Uri url) {
+    return serversBox.watch().map((_) => get(url)).startWith(get(url));
+  }
 }

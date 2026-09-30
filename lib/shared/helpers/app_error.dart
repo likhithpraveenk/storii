@@ -47,6 +47,8 @@ class AppError implements Exception {
 extension AppErrorTypeX on ApiExceptionType {
   String get localizedMessage => switch (this) {
     .network => l10n.errorNetwork,
+    .socket => l10n.errorSocket,
+    .handshake => l10n.errorHandshake,
     .timeout => l10n.errorTimeout,
     .unauthorized => l10n.errorAuth,
     .forbidden => l10n.errorForbidden,

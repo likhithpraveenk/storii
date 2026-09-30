@@ -46,4 +46,4 @@ final class AuthorsListProvider
   }
 }
 
-String _$authorsListHash() => r'1d072b181023e39b3e3f04806bc9a495e3662df7';
+String _$authorsListHash() => r'9c0c3abb6d6010bd5c02a93ea8ac567683b44619';

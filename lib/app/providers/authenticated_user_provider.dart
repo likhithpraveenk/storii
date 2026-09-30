@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/connection_providers.dart';
@@ -21,9 +22,14 @@ Future<UserDomain> authenticatedUser(Ref ref) async {
 
   try {
     final response = await ref.logApiCall(
-      () => ref.read(serverApiProvider(user)).authorize(),
+      () async => (await ref.read(serverApiProvider(user).future)).authorize(),
       source: 'authenticatedUser',
       logMessage: 'Error authenticating user',
+    );
+    LogService.log(
+      'user auth success!',
+      source: 'authenticatedUser',
+      level: .info,
     );
     final serverId = ref
         .read(serversStoreProvider.notifier)

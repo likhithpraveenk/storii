@@ -14,10 +14,14 @@ _Server _$ServerFromJson(Map<String, dynamic> json) => _Server(
         (k, e) => MapEntry(k, e as String),
       ) ??
       const {},
+  localUrl: json['localUrl'] == null
+      ? null
+      : Uri.parse(json['localUrl'] as String),
 );
 
 Map<String, dynamic> _$ServerToJson(_Server instance) => <String, dynamic>{
   'id': instance.id,
   'url': instance.url.toString(),
   'headers': instance.headers,
+  'localUrl': ?instance.localUrl?.toString(),
 };

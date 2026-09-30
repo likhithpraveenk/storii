@@ -15,13 +15,14 @@ import 'package:storii/storage/hive/boxes.dart';
 part 'api_providers.g.dart';
 
 @Riverpod(keepAlive: true)
-ApiClient apiClient(Ref ref, UserDomain user) {
+Future<ApiClient> apiClient(Ref ref, UserDomain user) async {
   final tokenService = ref.watch(tokenProvider);
   final cancelToken = CancelToken();
+  final serverUrl = await ref.watch(activeServerUrlProvider(user).future);
 
   final cacheOptions = CacheOptions(
     store: networkCacheStore,
-    policy: CachePolicy.refreshForceCache,
+    policy: .refreshForceCache,
     hitCacheOnNetworkFailure: true,
     maxStale: const Duration(days: 7),
   );
@@ -31,7 +32,7 @@ ApiClient apiClient(Ref ref, UserDomain user) {
       .getServerHeaders(user.serverUrl);
 
   final apiClient = ApiClient(
-    baseUrl: user.serverUrl,
+    baseUrl: serverUrl,
     cancelToken: cancelToken,
     headers: headers,
     interceptors: [
@@ -94,38 +95,38 @@ AuthApi authApi(Ref ref, Uri baseUrl) {
 }
 
 @riverpod
-ServerApi serverApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<ServerApi> serverApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return ServerApi(apiClient);
 }
 
 @riverpod
-LibraryApi libraryApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<LibraryApi> libraryApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return LibraryApi(apiClient);
 }
 
 @riverpod
-ItemApi itemApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<ItemApi> itemApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return ItemApi(apiClient);
 }
 
 @riverpod
-AuthorApi authorApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<AuthorApi> authorApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return AuthorApi(apiClient);
 }
 
 @riverpod
-MeApi meApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<MeApi> meApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return MeApi(apiClient);
 }
 
 @riverpod
-SessionsApi sessionsApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<SessionsApi> sessionsApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return SessionsApi(apiClient);
 }
 
@@ -133,8 +134,9 @@ SessionsApi sessionsApi(Ref ref, UserDomain user) {
 Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
   final tokenService = ref.read(tokenProvider);
   final token = await tokenService.getAccessToken(user.id);
+  final serverUrl = await ref.watch(activeServerUrlProvider(user).future);
   final api = SocketApi(
-    baseUrl: user.serverUrl.toString(),
+    baseUrl: serverUrl.toString(),
     token: token,
     tokenUpdates: tokenService.tokenStream(user.id),
     onAuthFailure: () {
@@ -146,13 +148,13 @@ Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
 }
 
 @riverpod
-CollectionsApi collectionsApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<CollectionsApi> collectionsApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return CollectionsApi(apiClient);
 }
 
 @riverpod
-PlaylistsApi playlistsApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<PlaylistsApi> playlistsApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return PlaylistsApi(apiClient);
 }

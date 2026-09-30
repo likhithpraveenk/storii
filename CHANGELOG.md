@@ -12,6 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - minimal reset for each settings screen
 - play link for each media item for autoplay via browser url
 - home screen media widget with cover art
+- local URL setting to configure a LAN address per server
+- automatic local/remote URL usage based on network type and reachability
+
+### Fixed
+
+- android auto library items stuck in loading
 
 ## [v0.10.2] - 2026-09-23
 
