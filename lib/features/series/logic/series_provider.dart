@@ -18,7 +18,7 @@ Future<Series> series(Ref ref, String seriesId) async {
   final libraryId = (await ref.watch(activeLibraryDetailsProvider.future))
       .library
       .id;
-  final api = ref.read(libraryApiProvider(user));
+  final api = await ref.read(libraryApiProvider(user).future);
   final progressMap = await ref.watch(mediaProgressMapProvider.future);
 
   return ref.logApiCall(

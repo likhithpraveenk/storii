@@ -10,7 +10,7 @@ part 'user_libraries_provider.g.dart';
 Future<List<Library>> userLibraries(Ref ref) async {
   ref.invalidateOnReconnect();
   final user = await ref.watch(authenticatedUserProvider.future);
-  final api = ref.read(libraryApiProvider(user));
+  final api = await ref.read(libraryApiProvider(user).future);
 
   return ref.logApiCall(
     api.getAll,

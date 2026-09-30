@@ -13,7 +13,7 @@ class ScanItem extends _$ScanItem {
 
   Future<String?> scan(String itemId) async {
     final user = await ref.watch(authenticatedUserProvider.future);
-    final api = ref.read(itemApiProvider(user));
+    final api = await ref.read(itemApiProvider(user).future);
 
     try {
       state = AsyncData({...?state.value}..add(itemId));

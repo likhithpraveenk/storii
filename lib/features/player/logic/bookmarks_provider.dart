@@ -24,7 +24,7 @@ class BookmarksController extends _$BookmarksController {
 
   Future<bool> create({required Duration time, required String title}) async {
     final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(meApiProvider(user));
+    final api = await ref.read(meApiProvider(user).future);
     try {
       await ref.logApiCall(
         () =>
@@ -40,7 +40,7 @@ class BookmarksController extends _$BookmarksController {
 
   Future<bool> modify({required Duration time, required String title}) async {
     final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(meApiProvider(user));
+    final api = await ref.read(meApiProvider(user).future);
     try {
       await ref.logApiCall(
         () =>
@@ -56,7 +56,7 @@ class BookmarksController extends _$BookmarksController {
 
   Future<bool> remove({required Duration time}) async {
     final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(meApiProvider(user));
+    final api = await ref.read(meApiProvider(user).future);
     try {
       await ref.logApiCall(
         () => api.removeBookmark(libraryItemId: itemId, time: time),

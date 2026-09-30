@@ -62,8 +62,7 @@ class WidgetController extends _$WidgetController {
     try {
       final cancelToken = CancelToken();
       final bytes = await ref.logApiCall(
-        () => ref
-            .read(itemApiProvider(user))
+        () async => (await ref.read(itemApiProvider(user).future))
             .getCover(libraryItemId: libraryItemId, cancelToken: cancelToken),
         source: 'WidgetController',
         logMessage: 'Failed to download cover for widget',

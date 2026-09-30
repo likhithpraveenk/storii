@@ -33,13 +33,11 @@ class SessionNotifier extends _$SessionNotifier {
     final params = await ref.read(playRequestParamsProvider.future);
 
     final session = await ref.logApiCall(
-      () => ref
-          .read(itemApiProvider(user))
-          .createSession(
-            libraryItemId: itemId,
-            params: params,
-            episodeId: episodeId,
-          ),
+      () async => (await ref.read(itemApiProvider(user).future)).createSession(
+        libraryItemId: itemId,
+        params: params,
+        episodeId: episodeId,
+      ),
       source: 'SessionNotifier',
       logMessage: 'Failed to create playback session',
     );
@@ -129,9 +127,9 @@ class SessionNotifier extends _$SessionNotifier {
       try {
         final user = await ref.read(authenticatedUserProvider.future);
         await ref.logApiCall(
-          () => ref
-              .read(sessionsApiProvider(user))
-              .syncLocal(localSession: updated.stripped),
+          () async =>
+              (await ref.read(sessionsApiProvider(user).future))
+                  .syncLocal(localSession: updated.stripped),
           source: 'SessionNotifier',
         );
       } catch (e) {
@@ -157,9 +155,8 @@ class SessionNotifier extends _$SessionNotifier {
 
       final user = await ref.read(authenticatedUserProvider.future);
       await ref.logApiCall(
-        () => ref
-            .read(sessionsApiProvider(user))
-            .syncSession(
+        () async =>
+            (await ref.read(sessionsApiProvider(user).future)).syncSession(
               sessionId: session.id,
               params: SyncSessionRequestParams(
                 currentTime: position,
@@ -190,9 +187,9 @@ class SessionNotifier extends _$SessionNotifier {
       final user = await ref.read(authenticatedUserProvider.future);
       if (!isLocal) {
         await ref.logApiCall(
-          () => ref
-              .read(sessionsApiProvider(user))
-              .closeSession(sessionId: session.id),
+          () async =>
+              (await ref.read(sessionsApiProvider(user).future))
+                  .closeSession(sessionId: session.id),
           source: 'SessionNotifier',
           logMessage: 'session close failed for ${session.displayTitle}',
         );

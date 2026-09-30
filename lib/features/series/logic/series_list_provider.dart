@@ -45,7 +45,7 @@ class SeriesListNotifier extends _$SeriesListNotifier {
     );
     final params = baseParams.copyWith(page: page, limit: pageSize);
     final user = await ref.read(authenticatedUserProvider.future);
-    final api = ref.read(libraryApiProvider(user));
+    final api = await ref.read(libraryApiProvider(user).future);
 
     final response = await ref.logApiCall(
       () => api.getSeries(libraryId, params),

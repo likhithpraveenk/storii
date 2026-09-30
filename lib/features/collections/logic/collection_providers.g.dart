@@ -33,7 +33,7 @@ final class CollectionsProvider
   Collections create() => Collections();
 }
 
-String _$collectionsHash() => r'd70fd1dbd050feee3f3d00bf45053a3c14c8f521';
+String _$collectionsHash() => r'4965b7590d0be56c4e64d8fd96a4672468e7e82e';
 
 abstract class _$Collections extends $AsyncNotifier<List<Collection>> {
   FutureOr<List<Collection>> build();
@@ -95,7 +95,7 @@ final class CollectionDetailProvider
   }
 }
 
-String _$collectionDetailHash() => r'fe7c7b25704a72b99cc67c9b41f3f462acaccd03';
+String _$collectionDetailHash() => r'e223f741cf04eff26d14f7b33db8624b7946f196';
 
 final class CollectionDetailFamily extends $Family
     with

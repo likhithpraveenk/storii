@@ -200,8 +200,7 @@ class DownloadEngine extends _$DownloadEngine {
   }) async {
     try {
       final imageBytes = await ref.logApiCall(
-        () => ref
-            .read(itemApiProvider(user))
+        () async => (await ref.read(itemApiProvider(user).future))
             .getCover(libraryItemId: libraryItemId, cancelToken: cancelToken),
         source: 'DownloadEngine',
         logMessage: 'Failed to download cover for $libraryItemId',

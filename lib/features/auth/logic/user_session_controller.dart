@@ -28,7 +28,7 @@ class UserSessionController extends _$UserSessionController {
     }
     await ref
         .logApiCall(
-          ref.read(serverApiProvider(user)).logout,
+          () async => (await ref.read(serverApiProvider(user).future)).logout(),
           source: 'UserSessionController',
         )
         .then(

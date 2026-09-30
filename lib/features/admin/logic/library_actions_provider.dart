@@ -31,7 +31,7 @@ class ScanLibrary extends _$ScanLibrary {
 
   Future<void> scan(String libraryId) async {
     final user = await ref.watch(authenticatedUserProvider.future);
-    final api = ref.read(libraryApiProvider(user));
+    final api = await ref.read(libraryApiProvider(user).future);
 
     return ref.logApiCall(
       () => api.scan(libraryId),

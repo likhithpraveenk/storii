@@ -15,7 +15,7 @@ import 'package:storii/storage/hive/boxes.dart';
 part 'api_providers.g.dart';
 
 @Riverpod(keepAlive: true)
-ApiClient apiClient(Ref ref, UserDomain user) {
+Future<ApiClient> apiClient(Ref ref, UserDomain user) async {
   final tokenService = ref.watch(tokenProvider);
   final cancelToken = CancelToken();
 
@@ -94,38 +94,38 @@ AuthApi authApi(Ref ref, Uri baseUrl) {
 }
 
 @riverpod
-ServerApi serverApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<ServerApi> serverApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return ServerApi(apiClient);
 }
 
 @riverpod
-LibraryApi libraryApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<LibraryApi> libraryApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return LibraryApi(apiClient);
 }
 
 @riverpod
-ItemApi itemApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<ItemApi> itemApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return ItemApi(apiClient);
 }
 
 @riverpod
-AuthorApi authorApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<AuthorApi> authorApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return AuthorApi(apiClient);
 }
 
 @riverpod
-MeApi meApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<MeApi> meApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return MeApi(apiClient);
 }
 
 @riverpod
-SessionsApi sessionsApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<SessionsApi> sessionsApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return SessionsApi(apiClient);
 }
 
@@ -146,13 +146,13 @@ Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
 }
 
 @riverpod
-CollectionsApi collectionsApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<CollectionsApi> collectionsApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return CollectionsApi(apiClient);
 }
 
 @riverpod
-PlaylistsApi playlistsApi(Ref ref, UserDomain user) {
-  final apiClient = ref.watch(apiClientProvider(user));
+Future<PlaylistsApi> playlistsApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
   return PlaylistsApi(apiClient);
 }

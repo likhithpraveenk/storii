@@ -113,7 +113,7 @@ class AndroidAutoHelper {
     final libraryId = _container.read(currentLibraryProvider)?.id;
     if (libraryId == null) return [];
 
-    final api = _container.read(libraryApiProvider(user));
+    final api = await _container.read(libraryApiProvider(user).future);
     final result = await api.search(libraryId, query: query);
     final items = <LibraryItem>[
       ...result.book,

@@ -21,7 +21,7 @@ Future<UserDomain> authenticatedUser(Ref ref) async {
 
   try {
     final response = await ref.logApiCall(
-      () => ref.read(serverApiProvider(user)).authorize(),
+      () async => (await ref.read(serverApiProvider(user).future)).authorize(),
       source: 'authenticatedUser',
       logMessage: 'Error authenticating user',
     );

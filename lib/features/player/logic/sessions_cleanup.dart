@@ -33,7 +33,7 @@ class SessionsCleanup extends _$SessionsCleanup {
     UserDomain user,
     List<PlaybackSession> sessions,
   ) async {
-    final sessionsApi = ref.read(sessionsApiProvider(user));
+    final sessionsApi = await ref.read(sessionsApiProvider(user).future);
 
     for (final session in sessions) {
       try {

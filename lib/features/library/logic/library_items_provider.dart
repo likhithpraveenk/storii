@@ -45,7 +45,7 @@ class LibraryItemsNotifier extends _$LibraryItemsNotifier {
     );
     final params = baseParams.copyWith(page: page, limit: pageSize);
     final user = await ref.watch(authenticatedUserProvider.future);
-    final api = ref.read(libraryApiProvider(user));
+    final api = await ref.read(libraryApiProvider(user).future);
 
     final response = await ref.logApiCall(
       () => api.getItems(libraryId, params),
@@ -122,10 +122,10 @@ Future<List<LibraryItem>> allLibraryItems(Ref ref) async {
     libraryFiltersProvider(.library).select((s) => s.toItemParams()),
   );
   final user = await ref.read(authenticatedUserProvider.future);
-  final api = ref.read(libraryApiProvider(user));
+  final api = await ref.read(libraryApiProvider(user).future);
 
   final response = await ref.logApiCall(
-    () => api.getItems(libraryId, params),
+    () => api.getItems(libraryId, params.copyWith(limit: 0)),
     logMessage: 'Error fetching all items',
     source: 'allLibraryItems',
   );

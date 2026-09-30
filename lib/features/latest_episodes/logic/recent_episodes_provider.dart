@@ -15,7 +15,7 @@ Future<List<PodcastEpisode>> recentEpisodes(Ref ref) async {
       .id;
 
   final user = await ref.watch(authenticatedUserProvider.future);
-  final api = ref.read(libraryApiProvider(user));
+  final api = await ref.read(libraryApiProvider(user).future);
 
   final response = await ref.logApiCall(
     () => api.getRecentEpisodes(libraryId),
