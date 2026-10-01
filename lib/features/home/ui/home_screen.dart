@@ -6,11 +6,13 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
+import 'package:storii/features/author/ui/author_list_tile.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
 import 'package:storii/features/library/ui/collapsible_section.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/features/library/ui/library_item_list_tile.dart';
 import 'package:storii/features/series/ui/series_card.dart';
+import 'package:storii/features/series/ui/series_list_tile.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/common_app_bar.dart';
@@ -50,8 +52,6 @@ class HomeScreen extends ConsumerWidget {
               );
             }
             final screenWidth = MediaQuery.sizeOf(context).width;
-            final displayMode = ref.watch(libraryDisplayModeProvider);
-            final isListView = displayMode == .listView;
 
             return ListView.separated(
               padding: const .only(top: 8, bottom: 16),
@@ -64,7 +64,15 @@ class HomeScreen extends ConsumerWidget {
                     shelf.identity == .listenAgain ||
                     shelf.identity == .continueSeries;
 
-                if (isListView && shelf is LibraryItemsShelf) {
+                final isListView = switch (shelf) {
+                  LibraryItemsShelf() =>
+                    ref.watch(libraryDisplayModeProvider) == .listView,
+                  AuthorShelf() =>
+                    ref.watch(authorDisplayModeProvider) == .listView,
+                  SeriesShelf() =>
+                    ref.watch(seriesDisplayModeProvider) == .listView,
+                };
+                if (isListView) {
                   return CollapsibleSection(
                     title: Text(
                       shelf.localizedLabel,
@@ -74,13 +82,18 @@ class HomeScreen extends ConsumerWidget {
                     ),
                     child: Column(
                       children: shelf.entities.map((entity) {
-                        return LibraryItemListTile(
-                          entity,
-                          showPlay: showPlay,
-                          fromContinueListening:
-                              shelf.identity == .continueListening,
-                          fromContinueSeries: shelf.identity == .continueSeries,
-                        );
+                        return switch (shelf) {
+                          LibraryItemsShelf() => LibraryItemListTile(
+                            entity as LibraryItem,
+                            showPlay: showPlay,
+                            fromContinueListening:
+                                shelf.identity == .continueListening,
+                            fromContinueSeries:
+                                shelf.identity == .continueSeries,
+                          ),
+                          AuthorShelf() => AuthorListTile(entity as Author),
+                          SeriesShelf() => SeriesListTile(entity as Series),
+                        };
                       }).toList(),
                     ),
                   );

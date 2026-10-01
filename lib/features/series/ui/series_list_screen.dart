@@ -7,7 +7,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/features/series/logic/series_list_provider.dart';
 import 'package:storii/features/series/ui/series_card.dart';
-import 'package:storii/features/series/ui/series_list_card.dart';
+import 'package:storii/features/series/ui/series_list_tile.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
@@ -135,10 +135,7 @@ class SeriesListView extends StatelessWidget {
             ),
           );
         }
-        return SeriesCardListView(
-          key: ValueKey(series[index].id),
-          series[index],
-        );
+        return SeriesListTile(key: ValueKey(series[index].id), series[index]);
       },
     );
   }

@@ -6,6 +6,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/author/ui/author_list_screen.dart';
+import 'package:storii/features/author/ui/author_list_tile.dart';
 import 'package:storii/features/library/ui/collapsible_section.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/items_list_view.dart';
@@ -13,6 +14,7 @@ import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/features/library/ui/library_item_list_tile.dart';
 import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/features/series/ui/series_list_screen.dart';
+import 'package:storii/features/series/ui/series_list_tile.dart';
 
 class _Section extends StatelessWidget {
   final String title;
@@ -182,8 +184,34 @@ class AuthorsSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final mode = ref.watch(authorDisplayModeProvider);
+    final isListView = mode == .listView;
     if (isSeparate) {
-      return AuthorsGridView(authors: authors);
+      return isListView
+          ? AuthorsListView(authors: authors)
+          : AuthorsGridView(authors: authors);
+    }
+    if (isListView) {
+      return CollapsibleSection(
+        title: Padding(
+          padding: const .symmetric(horizontal: 16),
+          child: Text(
+            l10n.authors,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ),
+        trailing: TextButton(
+          onPressed: onViewAll.call,
+          style: TextButton.styleFrom(
+            textStyle: Theme.of(context).textTheme.labelSmall,
+          ),
+          child: Text(l10n.viewAll),
+        ),
+        padding: .zero,
+        child: Column(
+          children: authors.take(10).map(AuthorListTile.new).toList(),
+        ),
+      );
     }
     return _Section(
       title: l10n.authors,
@@ -223,8 +251,34 @@ class SeriesSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final mode = ref.watch(seriesDisplayModeProvider);
+    final isListView = mode == .listView;
     if (isSeparate) {
-      return SeriesGridView(series: series);
+      return isListView
+          ? SeriesListView(series: series)
+          : SeriesGridView(series: series);
+    }
+    if (isListView) {
+      return CollapsibleSection(
+        title: Padding(
+          padding: const .symmetric(horizontal: 16),
+          child: Text(
+            l10n.series,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ),
+        trailing: TextButton(
+          onPressed: onViewAll.call,
+          style: TextButton.styleFrom(
+            textStyle: Theme.of(context).textTheme.labelSmall,
+          ),
+          child: Text(l10n.viewAll),
+        ),
+        padding: .zero,
+        child: Column(
+          children: series.take(10).map(SeriesListTile.new).toList(),
+        ),
+      );
     }
     final screenWidth = MediaQuery.sizeOf(context).width;
     final cardWidth = maxSeriesCardWidthInGrid.clamp(0.0, screenWidth - 32.0);
