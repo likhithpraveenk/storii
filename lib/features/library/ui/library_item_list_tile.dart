@@ -2,30 +2,45 @@ import 'package:abs_api/abs_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/shared/widgets/progress_border_painter.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
-class LibraryItemListTile extends StatelessWidget {
+class LibraryItemListTile extends ConsumerWidget {
   const new(this.item, {super.key});
   final LibraryItem item;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final title = item.collapsedSeries != null
+    final isSeries = item.collapsedSeries != null;
+    final title = isSeries
         ? item.collapsedSeries!.name
         : item.title ?? l10n.noTitle;
 
     final seriesNumBooks = item.collapsedSeries?.numBooks;
 
-    return ListTile(
+    final isDownloaded =
+        ref.watch(downloadItemProvider(item.id))?.status == .completed;
+    final mediaProgress = ref
+        .watch(mediaProgressFromMapProvider(item.id, item.recentEpisode?.id))
+        .value;
+    final progress = isSeries
+        ? item.collapsedSeries!.finishRatio
+        : mediaProgress?.progress ?? item.progress;
+    final isFinished =
+        (mediaProgress?.isFinished ?? item.isFinished) || progress == 1.0;
+
+    return InkWell(
       onTap: () {
-        if (item.collapsedSeries != null) {
+        if (isSeries) {
           context.push(
             AppRoute.seriesDetail.path,
             extra: item.collapsedSeries!.id,
@@ -34,80 +49,76 @@ class LibraryItemListTile extends StatelessWidget {
           context.push(AppRoute.itemDetail.path, extra: item.id);
         }
       },
-      contentPadding: const .fromLTRB(16, 8, 16, 8),
-      leading: AspectRatio(
-        aspectRatio: 1,
-        child: ClipRRect(
-          borderRadius: .circular(4),
-          child: ImageWidget(
-            id: item.id,
-            type: .item,
-            updatedAt: item.updatedAt,
-          ),
-        ),
-      ),
-      trailing: seriesNumBooks == null ? null : Text('$seriesNumBooks'),
-      minVerticalPadding: 0,
-      titleAlignment: .center,
-      title: Row(
-        children: [
-          Expanded(
-            child: Column(
-              mainAxisSize: .min,
-              crossAxisAlignment: .start,
-              children: [
-                Text(
-                  title,
-                  maxLines: 2,
-                  overflow: .ellipsis,
-                  style: theme.textTheme.titleSmall,
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  item.authorName ?? l10n.noAuthor,
-                  maxLines: 1,
-                  overflow: .ellipsis,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
+      borderRadius: .circular(kRadius),
+      child: Padding(
+        padding: const .fromLTRB(16, 8, 16, 8),
+        child: Row(
+          spacing: 8,
+          children: [
+            SizedBox.square(
+              dimension: imgSizeInListView,
+              child: Stack(
+                fit: .expand,
+                children: [
+                  Padding(
+                    padding: const .all(3),
+                    child: ClipRRect(
+                      borderRadius: .circular(4),
+                      child: ImageWidget(
+                        id: item.id,
+                        type: .item,
+                        updatedAt: item.updatedAt,
+                        inList: true,
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 2),
-                Consumer(
-                  builder: (context, ref, _) {
-                    final mediaProgress = ref
-                        .watch(
-                          mediaProgressFromMapProvider(
-                            item.id,
-                            item.recentEpisode?.id,
-                          ),
-                        )
-                        .value;
-
-                    final progress = item.collapsedSeries != null
-                        ? item.collapsedSeries!.finishRatio
-                        : mediaProgress?.progress ?? item.progress;
-
-                    return progress > 0
-                        ? Text(
-                            '${(progress * 100).toStringAsFixed(1)}%',
-                            style: theme.textTheme.labelSmall,
-                          )
-                        : const SizedBox.shrink();
-                  },
-                ),
+                  if (progress > 0)
+                    RepaintBoundary(
+                      child: CustomPaint(
+                        painter: ProgressBorderPainter(
+                          progress: progress,
+                          color: isFinished || progress == 1
+                              ? appGreenColor
+                              : appRedColor,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Column(
+                mainAxisSize: .min,
+                crossAxisAlignment: .start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 2,
+                    overflow: .ellipsis,
+                    style: theme.textTheme.titleSmall,
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    item.authorName ?? l10n.noAuthor,
+                    maxLines: 1,
+                    overflow: .ellipsis,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisSize: .min,
+              spacing: 8,
+              children: [
+                if (isDownloaded) const DownloadBadge(fillColor: false),
+                if (seriesNumBooks != null) StackBadge('$seriesNumBooks'),
               ],
             ),
-          ),
-          Consumer(
-            builder: (context, ref, _) {
-              final isDownloaded =
-                  ref.watch(downloadItemProvider(item.id))?.status ==
-                  .completed;
-              if (isDownloaded) const DownloadBadge();
-              return const SizedBox.shrink();
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -34,7 +34,9 @@ class StackBadge extends StatelessWidget {
 }
 
 class DownloadBadge extends StatelessWidget {
-  const new({super.key});
+  const new({this.fillColor = true, super.key});
+
+  final bool fillColor;
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +45,9 @@ class DownloadBadge extends StatelessWidget {
       alignment: .center,
       padding: const .all(4),
       decoration: BoxDecoration(
-        color: scheme.primaryContainer,
+        color: fillColor ? scheme.primaryContainer : Colors.transparent,
         borderRadius: .circular(6),
+        border: fillColor ? null : .all(width: 1, color: scheme.primary),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.5),
@@ -56,7 +59,7 @@ class DownloadBadge extends StatelessWidget {
       child: Icon(
         Icons.download_done,
         size: 12,
-        color: scheme.onPrimaryContainer,
+        color: fillColor ? scheme.onPrimaryContainer : scheme.primary,
       ),
     );
   }
