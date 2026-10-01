@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'9ee05c481475a91468573eebcb8d47e78de18bfe';
+    r'c3ecafd05b6bfe1a212c9a157fcb6d6c211986fe';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -247,6 +247,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setLibraryDisplayMode(DisplayMode value) =>
       _save(state?.copyWith(libraryDisplayMode: value));
 
+  Future<void> setDownloadsDisplayMode(DisplayMode value) =>
+      _save(state?.copyWith(downloadsDisplayMode: value));
+
   Future<void> setCollapseSeries(bool value) =>
       _save(state?.copyWith(collapseSeries: value));
 
@@ -312,6 +315,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setSeriesSortAscending(bool value) =>
       _save(state?.copyWith(seriesSortAscending: value));
 
+  Future<void> setDownloadSortAscending(bool value) =>
+      _save(state?.copyWith(downloadSortAscending: value));
+
   Future<void> setAudiobookSortValue(AudiobookSort value) =>
       _save(state?.copyWith(audiobookSortValue: value));
 
@@ -323,6 +329,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setSeriesSortValue(SeriesSort value) =>
       _save(state?.copyWith(seriesSortValue: value));
+
+  Future<void> setDownloadSortValue(DownloadSort value) =>
+      _save(state?.copyWith(downloadSortValue: value));
 
   Future<void> setFadeOnSleep(bool value) =>
       _save(state?.copyWith(fadeOnSleep: value));
@@ -458,6 +467,16 @@ final libraryDisplayModeProvider = Provider<DisplayMode>(
     ),
   ),
   name: 'libraryDisplayModeProvider',
+);
+
+final downloadsDisplayModeProvider = Provider<DisplayMode>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.downloadsDisplayMode ?? DefaultUserSettings.downloadsDisplayMode,
+    ),
+  ),
+  name: 'downloadsDisplayModeProvider',
 );
 
 final collapseSeriesProvider = Provider<bool>(
@@ -662,6 +681,16 @@ final seriesSortAscendingProvider = Provider<bool>(
   name: 'seriesSortAscendingProvider',
 );
 
+final downloadSortAscendingProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.downloadSortAscending ?? DefaultUserSettings.downloadSortAscending,
+    ),
+  ),
+  name: 'downloadSortAscendingProvider',
+);
+
 final audiobookSortValueProvider = Provider<AudiobookSort>(
   (ref) => ref.watch(
     userSettingsProvider.select(
@@ -696,6 +725,15 @@ final seriesSortValueProvider = Provider<SeriesSort>(
     ),
   ),
   name: 'seriesSortValueProvider',
+);
+
+final downloadSortValueProvider = Provider<DownloadSort>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.downloadSortValue ?? DefaultUserSettings.downloadSortValue,
+    ),
+  ),
+  name: 'downloadSortValueProvider',
 );
 
 final fadeOnSleepProvider = Provider<bool>(

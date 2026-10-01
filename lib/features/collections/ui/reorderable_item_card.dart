@@ -74,8 +74,8 @@ class ReorderableItemCard extends ConsumerWidget {
         child: Row(
           children: [
             SizedBox.square(
-              dimension: 100,
-              child: ImageWidget(id: itemId, type: .item),
+              dimension: imgSizeInListView,
+              child: ImageWidget(id: itemId, type: .item, inList: true),
             ),
             const SizedBox(width: 12),
             Expanded(

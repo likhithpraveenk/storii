@@ -36,6 +36,7 @@ class SeriesCardListView extends StatelessWidget {
                   id: series.books.first.id,
                   type: .item,
                   updatedAt: series.books.first.updatedAt,
+                  inList: true,
                 ),
               ),
       ),

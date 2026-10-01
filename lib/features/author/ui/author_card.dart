@@ -74,6 +74,7 @@ class AuthorCardListView extends ConsumerWidget {
             id: author.id,
             type: .author,
             updatedAt: author.updatedAt,
+            inList: true,
           ),
         ),
       ),

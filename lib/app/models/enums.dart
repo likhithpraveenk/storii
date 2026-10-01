@@ -200,7 +200,19 @@ enum FilterSeries {
   };
 }
 
-enum DisplayMode { listView, compact, comfortable, coverOnly }
+enum DisplayMode {
+  comfortable,
+  compact,
+  coverOnly,
+  listView;
+
+  String get label => switch (this) {
+    .comfortable => l10n.comfortable,
+    .compact => l10n.compact,
+    .coverOnly => l10n.coverOnly,
+    .listView => l10n.listView,
+  };
+}
 
 enum SearchFilter {
   all,
