@@ -1,7 +1,8 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/app/init.dart';
+import 'package:storii/app/models/enums.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
@@ -11,36 +12,45 @@ import 'package:storii/storage/local/session_store.dart';
 
 part 'downloads_provider.g.dart';
 
-enum DownloadSortType {
-  title,
-  author,
-  size,
-  added,
-  lastListened;
+@Riverpod(keepAlive: true)
+class DownloadSortNotifier extends _$DownloadSortNotifier {
+  bool get _rememberSort => ref.read(rememberSortProvider);
 
-  String get label => switch (this) {
-    .title => l10n.title,
-    .author => l10n.author,
-    .size => l10n.size,
-    .added => l10n.added,
-    .lastListened => l10n.lastPlayed,
-  };
+  @override
+  DownloadSort build() {
+    if (_rememberSort) {
+      return ref.read(downloadSortValueProvider);
+    }
+    return .added;
+  }
+
+  void set(DownloadSort value) {
+    state = value;
+    if (!_rememberSort) return;
+    ref.read(userSettingsProvider.notifier).setDownloadSortValue(value);
+  }
 }
 
 @Riverpod(keepAlive: true)
-class DownloadSortTypeNotifier extends _$DownloadSortTypeNotifier {
+class DownloadSortAsc extends _$DownloadSortAsc {
+  bool get _rememberSort => ref.read(rememberSortProvider);
+
   @override
-  DownloadSortType build() => .added;
+  bool build() {
+    if (_rememberSort) {
+      return ref.read(downloadSortAscendingProvider);
+    }
+    return true;
+  }
 
-  void set(DownloadSortType value) => state = value;
-}
-
-@Riverpod(keepAlive: true)
-class DownloadSortAscending extends _$DownloadSortAscending {
-  @override
-  bool build() => true;
-
-  void toggle() => state = !state;
+  void toggle() {
+    final newAscending = !state;
+    state = newAscending;
+    if (!_rememberSort) return;
+    ref
+        .read(userSettingsProvider.notifier)
+        .setDownloadSortAscending(newAscending);
+  }
 }
 
 @Riverpod(keepAlive: true)
@@ -104,8 +114,8 @@ List<DownloadItem> sortedCompletedDownloads(Ref ref) {
   final items = ref.watch(completedDownloadsProvider).value ?? [];
   final query = ref.watch(downloadSearchQueryProvider).trim().toLowerCase();
   final filtered = query.isEmpty ? items : _filterDownloads(ref, items, query);
-  final sort = ref.watch(downloadSortTypeProvider);
-  final ascending = ref.watch(downloadSortAscendingProvider);
+  final sort = ref.watch(downloadSortProvider);
+  final ascending = ref.watch(downloadSortAscProvider);
   return _sortDownloads(ref, filtered, sort, ascending);
 }
 
@@ -133,7 +143,7 @@ List<DownloadItem> _filterDownloads(
 List<DownloadItem> _sortDownloads(
   Ref ref,
   List<DownloadItem> items,
-  DownloadSortType sort,
+  DownloadSort sort,
   bool ascending,
 ) {
   final cache = ref.read(itemsCacheProvider.notifier);

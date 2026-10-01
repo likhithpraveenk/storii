@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cached_network_image_ce/cached_network_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/downloads/logic/cover_helper.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
@@ -18,12 +19,14 @@ class ImageWidget extends ConsumerStatefulWidget {
     required this.type,
     this.updatedAt,
     this.isRaw = false,
+    this.inList = false,
   });
 
   final String id;
   final CoverType type;
   final DateTime? updatedAt;
   final bool isRaw;
+  final bool inList;
 
   @override
   ConsumerState<ImageWidget> createState() => _ImageWidgetState();
@@ -66,12 +69,13 @@ class _ImageWidgetState extends ConsumerState<ImageWidget> {
   @override
   Widget build(BuildContext context) {
     final download = ref.watch(downloadItemProvider(widget.id));
+    final width = widget.inList ? imgQualityInListView : imgQualityInGridView;
     final coverUrl = ref.watch(
       coverUrlProvider(
         widget.id,
         type: widget.type,
         updatedAt: widget.updatedAt,
-        width: 600,
+        width: width,
         raw: widget.isRaw,
       ),
     );

@@ -37,7 +37,11 @@ class _DownloadTileState extends State<DownloadTile> {
             aspectRatio: 1,
             child: ClipRRect(
               borderRadius: .circular(8),
-              child: ImageWidget(id: widget.item.libraryItemId, type: .item),
+              child: ImageWidget(
+                id: widget.item.libraryItemId,
+                type: .item,
+                inList: true,
+              ),
             ),
           ),
           title: Column(

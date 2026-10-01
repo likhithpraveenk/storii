@@ -42,7 +42,11 @@ class EpisodeListItem extends ConsumerWidget {
                 child: SizedBox(
                   width: 40,
                   height: 40,
-                  child: ImageWidget(id: episode.libraryItemId, type: .item),
+                  child: ImageWidget(
+                    id: episode.libraryItemId,
+                    type: .item,
+                    inList: true,
+                  ),
                 ),
               ),
               const SizedBox(width: 12),

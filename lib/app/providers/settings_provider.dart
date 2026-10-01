@@ -105,13 +105,6 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
       s.copyWith(
         homeShelves: DefaultUserSettings.homeShelves,
         rememberSort: DefaultUserSettings.rememberSort,
-        librarySortAscending: DefaultUserSettings.librarySortAscending,
-        authorSortAscending: DefaultUserSettings.authorSortAscending,
-        seriesSortAscending: DefaultUserSettings.seriesSortAscending,
-        audiobookSortValue: DefaultUserSettings.audiobookSortValue,
-        podcastSortValue: DefaultUserSettings.podcastSortValue,
-        authorSortValue: DefaultUserSettings.authorSortValue,
-        seriesSortValue: DefaultUserSettings.seriesSortValue,
         stackedImagesVisible: DefaultUserSettings.stackedImagesVisible,
         libraryPageSize: DefaultUserSettings.libraryPageSize,
         seriesPageSize: DefaultUserSettings.seriesPageSize,
@@ -157,7 +150,6 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
             DefaultUserSettings.interruptionLongSkipThreshold,
         interruptionLongSkipBackward:
             DefaultUserSettings.interruptionLongSkipBackward,
-        scaleTimeBySpeed: DefaultUserSettings.scaleTimeBySpeed,
       ),
     );
   }

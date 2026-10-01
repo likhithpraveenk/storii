@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- list view support for all screens based on display mode for each screen
+
+### Changed
+
+- book, series, and author list tile ui update
+
+### Fixed
+
+- downloads screen remembers sort
+
 ## [v0.11.0] - 2026-09-30
 
 ### Added

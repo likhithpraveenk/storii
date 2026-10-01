@@ -81,6 +81,9 @@ _UserSettings _$UserSettingsFromJson(
   seriesSortAscending:
       json['seriesSortAscending'] as bool? ??
       DefaultUserSettings.seriesSortAscending,
+  downloadSortAscending:
+      json['downloadSortAscending'] as bool? ??
+      DefaultUserSettings.downloadSortAscending,
   audiobookSortValue:
       $enumDecodeNullable(_$AudiobookSortEnumMap, json['audiobookSortValue']) ??
       DefaultUserSettings.audiobookSortValue,
@@ -93,6 +96,9 @@ _UserSettings _$UserSettingsFromJson(
   seriesSortValue:
       $enumDecodeNullable(_$SeriesSortEnumMap, json['seriesSortValue']) ??
       DefaultUserSettings.seriesSortValue,
+  downloadSortValue:
+      $enumDecodeNullable(_$DownloadSortEnumMap, json['downloadSortValue']) ??
+      DefaultUserSettings.downloadSortValue,
   fadeOnSleep: json['fadeOnSleep'] as bool? ?? DefaultUserSettings.fadeOnSleep,
   fadeOnSleepDuration: json['fadeOnSleepDuration'] == null
       ? DefaultUserSettings.fadeOnSleepDuration
@@ -267,10 +273,12 @@ Map<String, dynamic> _$UserSettingsToJson(
   'librarySortAscending': instance.librarySortAscending,
   'authorSortAscending': instance.authorSortAscending,
   'seriesSortAscending': instance.seriesSortAscending,
+  'downloadSortAscending': instance.downloadSortAscending,
   'audiobookSortValue': _$AudiobookSortEnumMap[instance.audiobookSortValue]!,
   'podcastSortValue': _$PodcastSortEnumMap[instance.podcastSortValue]!,
   'authorSortValue': _$AuthorSortEnumMap[instance.authorSortValue]!,
   'seriesSortValue': _$SeriesSortEnumMap[instance.seriesSortValue]!,
+  'downloadSortValue': _$DownloadSortEnumMap[instance.downloadSortValue]!,
   'fadeOnSleep': instance.fadeOnSleep,
   'fadeOnSleepDuration': instance.fadeOnSleepDuration.inMicroseconds,
   'fadeOnSleepMinVolume': instance.fadeOnSleepMinVolume,
@@ -336,10 +344,10 @@ const _$NavTargetEnumMap = {
 };
 
 const _$DisplayModeEnumMap = {
-  DisplayMode.listView: 'listView',
-  DisplayMode.compact: 'compact',
   DisplayMode.comfortable: 'comfortable',
+  DisplayMode.compact: 'compact',
   DisplayMode.coverOnly: 'coverOnly',
+  DisplayMode.listView: 'listView',
 };
 
 const _$NavigationDestinationLabelBehaviorEnumMap = {
@@ -391,6 +399,14 @@ const _$SeriesSortEnumMap = {
   SeriesSort.totalDuration: 'totalDuration',
   SeriesSort.numBooks: 'numBooks',
   SeriesSort.random: 'random',
+};
+
+const _$DownloadSortEnumMap = {
+  DownloadSort.title: 'title',
+  DownloadSort.author: 'author',
+  DownloadSort.size: 'size',
+  DownloadSort.added: 'added',
+  DownloadSort.lastListened: 'lastListened',
 };
 
 const _$FullPlayerActionsEnumMap = {

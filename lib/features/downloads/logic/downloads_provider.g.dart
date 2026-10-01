@@ -9,52 +9,52 @@ part of 'downloads_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(DownloadSortTypeNotifier)
-final downloadSortTypeProvider = DownloadSortTypeNotifierProvider._();
+@ProviderFor(DownloadSortNotifier)
+final downloadSortProvider = DownloadSortNotifierProvider._();
 
-final class DownloadSortTypeNotifierProvider
-    extends $NotifierProvider<DownloadSortTypeNotifier, DownloadSortType> {
-  DownloadSortTypeNotifierProvider._()
+final class DownloadSortNotifierProvider
+    extends $NotifierProvider<DownloadSortNotifier, DownloadSort> {
+  DownloadSortNotifierProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'downloadSortTypeProvider',
+        name: r'downloadSortProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$downloadSortTypeNotifierHash();
+  String debugGetCreateSourceHash() => _$downloadSortNotifierHash();
 
   @$internal
   @override
-  DownloadSortTypeNotifier create() => DownloadSortTypeNotifier();
+  DownloadSortNotifier create() => DownloadSortNotifier();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(DownloadSortType value) {
+  Override overrideWithValue(DownloadSort value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<DownloadSortType>(value),
+      providerOverride: $SyncValueProvider<DownloadSort>(value),
     );
   }
 }
 
-String _$downloadSortTypeNotifierHash() =>
-    r'575726cfdfdf345f7d5afc01e4d86c856981c2cb';
+String _$downloadSortNotifierHash() =>
+    r'ccabd934a5cb249dadc9c62418a07072a43f2a6a';
 
-abstract class _$DownloadSortTypeNotifier extends $Notifier<DownloadSortType> {
-  DownloadSortType build();
+abstract class _$DownloadSortNotifier extends $Notifier<DownloadSort> {
+  DownloadSort build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<DownloadSortType, DownloadSortType>;
+    final ref = this.ref as $Ref<DownloadSort, DownloadSort>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<DownloadSortType, DownloadSortType>,
-              DownloadSortType,
+              AnyNotifier<DownloadSort, DownloadSort>,
+              DownloadSort,
               Object?,
               Object?
             >;
@@ -62,28 +62,28 @@ abstract class _$DownloadSortTypeNotifier extends $Notifier<DownloadSortType> {
   }
 }
 
-@ProviderFor(DownloadSortAscending)
-final downloadSortAscendingProvider = DownloadSortAscendingProvider._();
+@ProviderFor(DownloadSortAsc)
+final downloadSortAscProvider = DownloadSortAscProvider._();
 
-final class DownloadSortAscendingProvider
-    extends $NotifierProvider<DownloadSortAscending, bool> {
-  DownloadSortAscendingProvider._()
+final class DownloadSortAscProvider
+    extends $NotifierProvider<DownloadSortAsc, bool> {
+  DownloadSortAscProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'downloadSortAscendingProvider',
+        name: r'downloadSortAscProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$downloadSortAscendingHash();
+  String debugGetCreateSourceHash() => _$downloadSortAscHash();
 
   @$internal
   @override
-  DownloadSortAscending create() => DownloadSortAscending();
+  DownloadSortAsc create() => DownloadSortAsc();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(bool value) {
@@ -94,10 +94,9 @@ final class DownloadSortAscendingProvider
   }
 }
 
-String _$downloadSortAscendingHash() =>
-    r'8dd255862e907b40a1469e11164b49c4c60b4c80';
+String _$downloadSortAscHash() => r'1147731baddc4777b5046e3531a63e6baf819c86';
 
-abstract class _$DownloadSortAscending extends $Notifier<bool> {
+abstract class _$DownloadSortAsc extends $Notifier<bool> {
   bool build();
   @$mustCallSuper
   @override
@@ -490,7 +489,7 @@ final class SortedCompletedDownloadsProvider
 }
 
 String _$sortedCompletedDownloadsHash() =>
-    r'348d4a5900f7a560d91e5cf97eae1bb35bda4fed';
+    r'a4857287e73af72a8c4a2903c505156fd365fc57';
 
 @ProviderFor(sortedActiveDownloads)
 final sortedActiveDownloadsProvider = SortedActiveDownloadsProvider._();

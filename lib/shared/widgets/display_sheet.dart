@@ -16,7 +16,7 @@ class DisplayBottomSheet extends ConsumerWidget {
     final notifier = ref.read(userSettingsProvider.notifier);
 
     final List<DisplayMode> displayModes = switch (screen) {
-      .library => [.comfortable, .compact, .coverOnly, .listView],
+      .library => DisplayMode.values,
       _ => [.comfortable, .listView],
     };
 
@@ -32,12 +32,7 @@ class DisplayBottomSheet extends ConsumerWidget {
             spacing: 8,
             children: displayModes.map((mode) {
               return ChoiceChip(
-                label: Text(switch (mode) {
-                  .coverOnly => l10n.coverOnly,
-                  .compact => l10n.compact,
-                  .comfortable => l10n.comfortable,
-                  .listView => l10n.listView,
-                }),
+                label: Text(mode.label),
                 selected: currentMode == mode,
                 onSelected: (selected) {
                   if (selected) {

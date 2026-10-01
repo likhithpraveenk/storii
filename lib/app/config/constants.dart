@@ -10,6 +10,11 @@ const imgSizeInMiniPlayer = 64.0;
 const imgLeftPaddingInMiniPlayer = 8.0;
 const maxImgSizeInFullPlayer = 480.0;
 
+const imgSizeInListView = 72.0;
+// TODO: user settings for image size and quality
+const imgQualityInListView = 200;
+const imgQualityInGridView = 600;
+
 const appName = 'Storii';
 const kMediaPlayer = '$appName just_audio';
 const githubLink = 'https://github.com/likhithpraveenk/storii';

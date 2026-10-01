@@ -6,6 +6,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/logic/authors_list_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
+import 'package:storii/features/author/ui/author_list_tile.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/common_app_bar.dart';
@@ -101,12 +102,8 @@ class AuthorsListView extends StatelessWidget {
       physics: const AlwaysScrollableScrollPhysics(),
       controller: scrollController,
       itemCount: authors.length,
-      padding: const .symmetric(vertical: 16),
       itemBuilder: (context, index) {
-        return AuthorCardListView(
-          key: ValueKey(authors[index].id),
-          authors[index],
-        );
+        return AuthorListTile(key: ValueKey(authors[index].id), authors[index]);
       },
     );
   }

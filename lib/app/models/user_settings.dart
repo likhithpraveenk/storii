@@ -35,10 +35,12 @@ class DefaultUserSettings {
   static const librarySortAscending = true;
   static const authorSortAscending = true;
   static const seriesSortAscending = true;
+  static const downloadSortAscending = true;
   static const AudiobookSort audiobookSortValue = .title;
   static const PodcastSort podcastSortValue = .title;
   static const AuthorSort authorSortValue = .name;
   static const SeriesSort seriesSortValue = .name;
+  static const DownloadSort downloadSortValue = .added;
   static const fadeOnSleep = true;
   static const fadeOnSleepDuration = Duration(minutes: 1);
   static const fadeOnSleepMinVolume = 0.2;
@@ -139,6 +141,9 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.seriesSortAscending) bool seriesSortAscending,
 
+    @Default(DefaultUserSettings.downloadSortAscending)
+    bool downloadSortAscending,
+
     @Default(DefaultUserSettings.audiobookSortValue)
     AudiobookSort audiobookSortValue,
 
@@ -147,6 +152,9 @@ sealed class UserSettings with _$UserSettings {
     @Default(DefaultUserSettings.authorSortValue) AuthorSort authorSortValue,
 
     @Default(DefaultUserSettings.seriesSortValue) SeriesSort seriesSortValue,
+
+    @Default(DefaultUserSettings.downloadSortValue)
+    DownloadSort downloadSortValue,
 
     @Default(DefaultUserSettings.fadeOnSleep) bool fadeOnSleep,
 

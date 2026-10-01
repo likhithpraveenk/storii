@@ -1,16 +1,24 @@
 import 'package:material_ui/material_ui.dart';
 
-class SettingsHeader extends StatefulWidget {
-  final String title;
-  final List<Widget> children;
+class CollapsibleSection extends StatefulWidget {
+  final Widget title;
+  final Widget child;
+  final Widget? trailing;
+  final EdgeInsetsGeometry padding;
 
-  const new({super.key, required this.title, this.children = const []});
+  const new({
+    super.key,
+    required this.title,
+    required this.child,
+    this.padding = const .fromLTRB(16, 0, 16, 8),
+    this.trailing,
+  });
 
   @override
-  State<SettingsHeader> createState() => _SettingsHeaderState();
+  State<StatefulWidget> createState() => _CollapsibleSectionState();
 }
 
-class _SettingsHeaderState extends State<SettingsHeader>
+class _CollapsibleSectionState extends State<CollapsibleSection>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   bool _expanded = true;
 
@@ -30,20 +38,13 @@ class _SettingsHeaderState extends State<SettingsHeader>
           highlightColor: Colors.transparent,
           splashFactory: NoSplash.splashFactory,
           child: Padding(
-            padding: const .fromLTRB(16, 16, 16, 8),
+            padding: widget.padding,
             child: Row(
               children: [
-                Expanded(
-                  child: Text(
-                    widget.title,
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      color: theme.colorScheme.primary,
-                      fontWeight: .bold,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ),
-                if (widget.children.isNotEmpty)
+                Expanded(child: widget.title),
+                if (widget.trailing != null)
+                  widget.trailing!
+                else
                   AnimatedRotation(
                     turns: _expanded ? 0.25 : 0,
                     duration: const Duration(milliseconds: 200),
@@ -68,7 +69,7 @@ class _SettingsHeaderState extends State<SettingsHeader>
           child: _expanded
               ? Column(
                   key: const ValueKey('expanded'),
-                  children: widget.children,
+                  children: [widget.child],
                 )
               : const SizedBox.shrink(key: ValueKey('collapsed')),
         ),
