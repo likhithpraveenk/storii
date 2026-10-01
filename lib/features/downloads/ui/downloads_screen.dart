@@ -2,10 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/ui/download_sort_sheet.dart';
 import 'package:storii/features/downloads/ui/download_tile.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
+import 'package:storii/features/library/ui/items_list_view.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 
@@ -156,7 +158,11 @@ class CompletedDownloadsTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final displayMode = ref.watch(libraryDisplayModeProvider);
     final items = ref.watch(downloadedItemsProvider);
-    return ItemsGridView(items);
+
+    return displayMode == .listView
+        ? ItemsListView(items)
+        : ItemsGridView(items);
   }
 }

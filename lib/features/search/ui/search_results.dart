@@ -135,9 +135,12 @@ class SearchResultsView extends ConsumerWidget {
     }
 
     return filter == .all
-        ? ListView(
+        ? SingleChildScrollView(
             padding: const .symmetric(vertical: 8),
-            children: allSections,
+            child: Column(
+              spacing: 16,
+              children: [...allSections, const SizedBox(height: 200)],
+            ),
           )
         : sections[filter]!(isSeparate: true);
   }

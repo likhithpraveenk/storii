@@ -3,7 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/library_items_provider.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
-import 'package:storii/features/library/ui/library_item_list_tile.dart';
+import 'package:storii/features/library/ui/items_list_view.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
@@ -71,27 +71,11 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
               child: AppScrollbar(
                 controller: _scrollController,
                 child: isListView
-                    ? ListView.builder(
+                    ? ItemsListView(
+                        items,
+                        scrollController: _scrollController,
+                        hasMore: paginated.hasMore,
                         key: const ValueKey('items_list_view'),
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        controller: _scrollController,
-                        padding: const .symmetric(vertical: 16),
-                        itemCount: items.length + (paginated.hasMore ? 1 : 0),
-                        itemBuilder: (context, index) {
-                          if (index == items.length) {
-                            return const Padding(
-                              padding: .symmetric(vertical: 16),
-                              child: SizedBox(
-                                height: 200,
-                                child: Center(child: RandomWaveform()),
-                              ),
-                            );
-                          }
-                          return LibraryItemListTile(
-                            key: ValueKey(items[index].id),
-                            items[index],
-                          );
-                        },
                       )
                     : ItemsGridView(
                         items,

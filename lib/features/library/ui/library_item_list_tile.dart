@@ -9,13 +9,24 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
+import 'package:storii/features/library/ui/library_item_card.dart';
+import 'package:storii/features/library/ui/more_options_widget.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/progress_border_painter.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class LibraryItemListTile extends ConsumerWidget {
-  const new(this.item, {super.key});
+  const new(
+    this.item, {
+    super.key,
+    this.showPlay = false,
+    this.fromContinueListening = false,
+    this.fromContinueSeries = false,
+  });
   final LibraryItem item;
+  final bool showPlay;
+  final bool fromContinueListening;
+  final bool fromContinueSeries;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,6 +60,18 @@ class LibraryItemListTile extends ConsumerWidget {
           context.push(AppRoute.itemDetail.path, extra: item.id);
         }
       },
+      onLongPress: () => showMoreItemOptionsSheet(
+        context,
+        itemId: item.id,
+        episodeId: item.recentEpisode?.id,
+        fromContinueListening: fromContinueListening,
+        fromContinueSeries: fromContinueSeries,
+        seriesId:
+            item.collapsedSeries?.id ??
+            item.media.metadata.mapOrNull(
+              book: (m) => m.series?.firstOrNull?.id,
+            ),
+      ),
       borderRadius: .circular(kRadius),
       child: Padding(
         padding: const .fromLTRB(16, 8, 16, 8),
@@ -115,6 +138,11 @@ class LibraryItemListTile extends ConsumerWidget {
               children: [
                 if (isDownloaded) const DownloadBadge(fillColor: false),
                 if (seriesNumBooks != null) StackBadge('$seriesNumBooks'),
+                if (showPlay)
+                  PlayButtonBadge(
+                    itemId: item.id,
+                    episodeId: item.recentEpisode?.id,
+                  ),
               ],
             ),
           ],

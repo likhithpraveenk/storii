@@ -7,7 +7,9 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
+import 'package:storii/features/library/ui/collapsible_section.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
+import 'package:storii/features/library/ui/library_item_list_tile.dart';
 import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
@@ -48,9 +50,11 @@ class HomeScreen extends ConsumerWidget {
               );
             }
             final screenWidth = MediaQuery.sizeOf(context).width;
+            final displayMode = ref.watch(libraryDisplayModeProvider);
+            final isListView = displayMode == .listView;
 
             return ListView.separated(
-              padding: const .symmetric(vertical: 16),
+              padding: const .only(top: 8, bottom: 16),
               itemCount: shelves.length,
               separatorBuilder: (_, _) => const SizedBox(height: 16),
               itemBuilder: (context, index) {
@@ -59,6 +63,28 @@ class HomeScreen extends ConsumerWidget {
                     shelf.identity == .continueListening ||
                     shelf.identity == .listenAgain ||
                     shelf.identity == .continueSeries;
+
+                if (isListView && shelf is LibraryItemsShelf) {
+                  return CollapsibleSection(
+                    title: Text(
+                      shelf.localizedLabel,
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    child: Column(
+                      children: shelf.entities.map((entity) {
+                        return LibraryItemListTile(
+                          entity,
+                          showPlay: showPlay,
+                          fromContinueListening:
+                              shelf.identity == .continueListening,
+                          fromContinueSeries: shelf.identity == .continueSeries,
+                        );
+                      }).toList(),
+                    ),
+                  );
+                }
 
                 final (
                   double maxWidth,

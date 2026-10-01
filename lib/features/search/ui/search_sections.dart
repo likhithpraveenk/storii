@@ -3,10 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
 import 'package:storii/features/author/ui/author_list_screen.dart';
+import 'package:storii/features/library/ui/collapsible_section.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
+import 'package:storii/features/library/ui/items_list_view.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
+import 'package:storii/features/library/ui/library_item_list_tile.dart';
 import 'package:storii/features/series/ui/series_card.dart';
 import 'package:storii/features/series/ui/series_list_screen.dart';
 
@@ -35,6 +39,9 @@ class _Section extends StatelessWidget {
             ),
             if (onViewAll != null)
               TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelSmall,
+                ),
                 onPressed: () {
                   onViewAll?.call();
                 },
@@ -65,8 +72,30 @@ class ItemsSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final mode = ref.watch(libraryDisplayModeProvider);
+    final isListView = mode == .listView;
     if (isSeparate) {
-      return ItemsGridView(items);
+      return isListView ? ItemsListView(items) : ItemsGridView(items);
+    }
+
+    if (isListView) {
+      return CollapsibleSection(
+        title: Padding(
+          padding: const .symmetric(horizontal: 16),
+          child: Text(title, style: Theme.of(context).textTheme.titleMedium),
+        ),
+        trailing: TextButton(
+          onPressed: onViewAll.call,
+          style: TextButton.styleFrom(
+            textStyle: Theme.of(context).textTheme.labelSmall,
+          ),
+          child: Text(l10n.viewAll),
+        ),
+        padding: .zero,
+        child: Column(
+          children: items.take(10).map(LibraryItemListTile.new).toList(),
+        ),
+      );
     }
 
     return _Section(
@@ -115,8 +144,9 @@ class SearchChipsSection<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final child = Padding(
+    final child = Container(
       padding: const .symmetric(horizontal: 16),
+      width: double.infinity,
       child: Wrap(
         spacing: 4,
         children: items

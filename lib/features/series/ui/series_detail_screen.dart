@@ -5,8 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/user_progress_actions.dart';
 import 'package:storii/features/library/ui/items_grid_view.dart';
+import 'package:storii/features/library/ui/items_list_view.dart';
 import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/features/series/logic/series_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
@@ -50,6 +52,7 @@ class SeriesDetailScreen extends ConsumerWidget {
       body: seriesAsync.when(
         data: (series) {
           final books = series.books.sortedBySequence();
+          final mode = ref.watch(libraryDisplayModeProvider);
           return Column(
             children: [
               if (series.description != null)
@@ -57,7 +60,11 @@ class SeriesDetailScreen extends ConsumerWidget {
                   padding: const .all(16),
                   child: ExpandableHtml(data: series.description!),
                 ),
-              Expanded(child: ItemsGridView(books)),
+              Expanded(
+                child: mode == .listView
+                    ? ItemsListView(books)
+                    : ItemsGridView(books),
+              ),
             ],
           );
         },

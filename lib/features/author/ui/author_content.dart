@@ -5,9 +5,12 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/library/ui/collapsible_section.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
+import 'package:storii/features/library/ui/library_item_list_tile.dart';
 
-class AuthorContent extends StatelessWidget {
+class AuthorContent extends ConsumerWidget {
   const new({
     super.key,
     required this.authorId,
@@ -20,39 +23,57 @@ class AuthorContent extends StatelessWidget {
   final String authorId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (books.isEmpty && series.isEmpty) return const SizedBox.shrink();
+
+    final displayMode = ref.watch(libraryDisplayModeProvider);
 
     return Column(
       children: [
         if (books.isNotEmpty) ...[
-          SectionHeader(
-            title: l10n.books,
-            count: books.length,
-            onViewAll: () {
-              context.push(AppRoute.authorBooks.path, extra: authorId);
-            },
-          ),
-          HorizontalBooksCarousel(books: books),
+          if (displayMode == .listView)
+            CollapsibleSection(
+              title: Padding(
+                padding: const .symmetric(horizontal: 16),
+                child: _SectionTitle(title: l10n.books, count: books.length),
+              ),
+              padding: .zero,
+              trailing: TextButton(
+                onPressed: () {
+                  context.push(AppRoute.authorBooks.path, extra: authorId);
+                },
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelSmall,
+                ),
+                child: Text(l10n.viewAll),
+              ),
+              child: Column(
+                children: books.map(LibraryItemListTile.new).toList(),
+              ),
+            )
+          else ...[
+            _SectionHeader(
+              title: l10n.books,
+              count: books.length,
+              onViewAll: () {
+                context.push(AppRoute.authorBooks.path, extra: authorId);
+              },
+            ),
+            _HorizontalBooksCarousel(books: books),
+          ],
         ],
-        ...series.map((s) => SeriesSection(series: s)),
+        ...series.map((s) => _SeriesSection(series: s)),
         const SizedBox(height: 32),
       ],
     );
   }
 }
 
-class SectionHeader extends StatelessWidget {
+class _SectionTitle extends StatelessWidget {
   final String title;
   final int count;
-  final VoidCallback onViewAll;
 
-  const new({
-    super.key,
-    required this.title,
-    required this.count,
-    required this.onViewAll,
-  });
+  const new({required this.title, required this.count});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +83,6 @@ class SectionHeader extends StatelessWidget {
           child: Row(
             mainAxisSize: .min,
             children: [
-              const SizedBox(width: 16),
               Flexible(
                 child: Text(
                   title,
@@ -90,54 +110,95 @@ class SectionHeader extends StatelessWidget {
             ],
           ),
         ),
+      ],
+    );
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  final String title;
+  final int count;
+  final VoidCallback onViewAll;
+
+  const new({
+    required this.title,
+    required this.count,
+    required this.onViewAll,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const SizedBox(width: 16),
+        Expanded(
+          child: _SectionTitle(title: title, count: count),
+        ),
         TextButton(
           onPressed: onViewAll,
           style: TextButton.styleFrom(
             textStyle: Theme.of(context).textTheme.labelSmall,
           ),
-          child: Row(
-            mainAxisSize: .min,
-            children: [
-              Text(l10n.viewAll),
-              const Icon(Icons.arrow_forward_ios, size: 12),
-            ],
-          ),
+          child: Text(l10n.viewAll),
         ),
       ],
     );
   }
 }
 
-class SeriesSection extends StatelessWidget {
+class _SeriesSection extends ConsumerWidget {
   final Series series;
 
-  const new({super.key, required this.series});
+  const new({required this.series});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final books = series.books;
     if (books.isEmpty) return const SizedBox.shrink();
 
+    final displayMode = ref.watch(libraryDisplayModeProvider);
+    final isListView = displayMode == .listView;
+
+    if (isListView) {
+      return CollapsibleSection(
+        title: Padding(
+          padding: const .symmetric(horizontal: 16),
+          child: _SectionTitle(title: series.name, count: books.length),
+        ),
+        padding: .zero,
+        trailing: TextButton(
+          onPressed: () {
+            context.push(AppRoute.seriesDetail.path, extra: series.id);
+          },
+          style: TextButton.styleFrom(
+            textStyle: Theme.of(context).textTheme.labelSmall,
+          ),
+          child: Text(l10n.viewAll),
+        ),
+        child: Column(children: books.map(LibraryItemListTile.new).toList()),
+      );
+    }
+
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
-        SectionHeader(
+        _SectionHeader(
           title: series.name,
           count: books.length,
           onViewAll: () =>
               context.push(AppRoute.seriesDetail.path, extra: series.id),
         ),
-        HorizontalBooksCarousel(books: books),
+        _HorizontalBooksCarousel(books: books),
         const SizedBox(height: 16),
       ],
     );
   }
 }
 
-class HorizontalBooksCarousel extends ConsumerWidget {
+class _HorizontalBooksCarousel extends ConsumerWidget {
   final List<LibraryItem> books;
 
-  const new({super.key, required this.books});
+  const new({required this.books});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
