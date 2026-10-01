@@ -124,6 +124,22 @@ enum PodcastSort implements EnumHasValue {
   };
 }
 
+enum DownloadSort implements Enum {
+  title,
+  author,
+  size,
+  added,
+  lastListened;
+
+  String get label => switch (this) {
+    .title => l10n.title,
+    .author => l10n.author,
+    .size => l10n.size,
+    .added => l10n.added,
+    .lastListened => l10n.lastPlayed,
+  };
+}
+
 enum FilterAudiobooks {
   genre,
   tag,

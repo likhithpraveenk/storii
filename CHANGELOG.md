@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- downloads screen remembers sort
+
 ## [v0.11.0] - 2026-09-30
 
 ### Added
