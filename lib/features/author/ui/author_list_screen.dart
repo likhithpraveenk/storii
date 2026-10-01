@@ -102,7 +102,6 @@ class AuthorsListView extends StatelessWidget {
       physics: const AlwaysScrollableScrollPhysics(),
       controller: scrollController,
       itemCount: authors.length,
-      padding: const .symmetric(vertical: 16),
       itemBuilder: (context, index) {
         return AuthorListTile(key: ValueKey(authors[index].id), authors[index]);
       },

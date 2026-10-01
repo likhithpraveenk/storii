@@ -122,9 +122,7 @@ class SeriesListView extends StatelessWidget {
       key: const ValueKey('series_list_view'),
       physics: const AlwaysScrollableScrollPhysics(),
       controller: scrollController,
-      // +1 for loading indicator slot.
       itemCount: series.length + (hasMore ? 1 : 0),
-      padding: const .symmetric(vertical: 16),
       itemBuilder: (context, index) {
         if (index == series.length) {
           return const Padding(

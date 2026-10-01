@@ -26,7 +26,6 @@ class ItemsListView extends ConsumerWidget {
     return ListView.builder(
       physics: const AlwaysScrollableScrollPhysics(),
       controller: scrollController,
-      padding: const .symmetric(vertical: 16),
       itemCount: items.length + (hasMore ? 1 : 0),
       itemBuilder: (context, index) {
         if (index == items.length) {
