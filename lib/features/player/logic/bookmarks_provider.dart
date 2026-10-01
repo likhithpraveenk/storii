@@ -17,7 +17,7 @@ Future<List<Bookmark>> bookmarks(Ref ref, String itemId) async {
     ..sort((a, b) => a.time.compareTo(b.time));
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class BookmarksController extends _$BookmarksController {
   @override
   void build(String itemId) {}
@@ -32,6 +32,7 @@ class BookmarksController extends _$BookmarksController {
         source: 'BookmarksNotifier',
         logMessage: 'creating bookmark failed',
       );
+      ref.invalidate(serverUserProvider);
       return true;
     } on AppError catch (_) {
       return false;
@@ -48,6 +49,7 @@ class BookmarksController extends _$BookmarksController {
         source: 'BookmarksNotifier',
         logMessage: 'updating bookmark failed',
       );
+      ref.invalidate(serverUserProvider);
       return true;
     } on AppError catch (_) {
       return false;
@@ -63,6 +65,7 @@ class BookmarksController extends _$BookmarksController {
         source: 'BookmarksNotifier',
         logMessage: 'removing bookmark failed',
       );
+      ref.invalidate(serverUserProvider);
       return true;
     } on AppError catch (_) {
       return false;
