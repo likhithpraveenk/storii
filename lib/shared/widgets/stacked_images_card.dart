@@ -13,6 +13,7 @@ class StackedImagesCard extends StatelessWidget {
     required this.itemIds,
     required this.title,
     required this.onTap,
+    this.onLongPress,
     this.subtitle,
     this.progress,
     super.key,
@@ -21,12 +22,14 @@ class StackedImagesCard extends StatelessWidget {
   final String title;
   final String? subtitle;
   final void Function() onTap;
+  final void Function()? onLongPress;
   final double? progress;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      onLongPress: onLongPress,
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       child: Column(

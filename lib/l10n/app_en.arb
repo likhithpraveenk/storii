@@ -350,6 +350,7 @@
   "paused": "Paused",
   "failed": "Failed",
   "download": "Download",
+  "downloadAll": "Download all",
   "completed": "Completed",
   "cancelled": "Cancelled",
   "resumeDownload": "Resume Download",

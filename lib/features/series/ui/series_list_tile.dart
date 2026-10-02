@@ -7,7 +7,9 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
+import 'package:storii/features/series/ui/series_options_widget.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/placeholder_image.dart';
 import 'package:storii/shared/widgets/progress_border_painter.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
@@ -25,6 +27,11 @@ class SeriesListTile extends ConsumerWidget {
 
     return InkWell(
       onTap: () => context.push(AppRoute.seriesDetail.path, extra: series.id),
+      onLongPress: () => AppBottomSheet.show(
+        context,
+        title: l10n.more,
+        body: SeriesOptionsWidget(series: series),
+      ),
       borderRadius: .circular(kRadius),
       child: Padding(
         padding: const .fromLTRB(16, 8, 16, 8),
