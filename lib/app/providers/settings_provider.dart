@@ -110,6 +110,10 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
         seriesPageSize: DefaultUserSettings.seriesPageSize,
         imageResolutionGridView: DefaultUserSettings.imageResolutionGridView,
         imageResolutionListView: DefaultUserSettings.imageResolutionListView,
+        imageMaxSize: DefaultUserSettings.imageMaxSize,
+        stackedImagesCardMaxWidth:
+            DefaultUserSettings.stackedImagesCardMaxWidth,
+        listViewImageSize: DefaultUserSettings.listViewImageSize,
       ),
     );
   }

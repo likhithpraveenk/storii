@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'fd4ab17ce2e5059705e31d9ecc4baca5f25339ad';
+    r'd76cc67ed79201d01cc088cd18c52ad630cf17c9';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -443,6 +443,15 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setImageResolutionListView(int value) =>
       _save(state?.copyWith(imageResolutionListView: value));
+
+  Future<void> setImageMaxSize(double value) =>
+      _save(state?.copyWith(imageMaxSize: value));
+
+  Future<void> setStackedImagesCardMaxWidth(double value) =>
+      _save(state?.copyWith(stackedImagesCardMaxWidth: value));
+
+  Future<void> setListViewImageSize(double value) =>
+      _save(state?.copyWith(listViewImageSize: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -1106,4 +1115,33 @@ final imageResolutionListViewProvider = Provider<int>(
     ),
   ),
   name: 'imageResolutionListViewProvider',
+);
+
+final imageMaxSizeProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.imageMaxSize ?? DefaultUserSettings.imageMaxSize,
+    ),
+  ),
+  name: 'imageMaxSizeProvider',
+);
+
+final stackedImagesCardMaxWidthProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.stackedImagesCardMaxWidth ??
+          DefaultUserSettings.stackedImagesCardMaxWidth,
+    ),
+  ),
+  name: 'stackedImagesCardMaxWidthProvider',
+);
+
+final listViewImageSizeProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.listViewImageSize ?? DefaultUserSettings.listViewImageSize,
+    ),
+  ),
+  name: 'listViewImageSizeProvider',
 );

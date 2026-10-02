@@ -1,7 +1,6 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
@@ -51,7 +50,8 @@ class HomeScreen extends ConsumerWidget {
                 ),
               );
             }
-            final screenWidth = MediaQuery.sizeOf(context).width;
+            final imageSize = ref.watch(imageMaxSizeProvider);
+            final seriesCardSize = ref.watch(stackedImagesCardMaxWidthProvider);
 
             return ListView.separated(
               padding: const .only(top: 8, bottom: 16),
@@ -104,7 +104,7 @@ class HomeScreen extends ConsumerWidget {
                   Widget Function(dynamic) buildCard,
                 ) = switch (shelf) {
                   LibraryItemsShelf() => (
-                    maxCardWidthInGrid,
+                    imageSize,
                     (entity) => LibraryItemCard(
                       entity,
                       showPlay: showPlay,
@@ -113,16 +113,12 @@ class HomeScreen extends ConsumerWidget {
                       fromContinueSeries: shelf.identity == .continueSeries,
                     ),
                   ),
-                  AuthorShelf() => (
-                    maxCardWidthInGrid,
-                    (entity) => AuthorCard(entity),
-                  ),
+                  AuthorShelf() => (imageSize, (entity) => AuthorCard(entity)),
                   SeriesShelf() => (
-                    maxSeriesCardWidthInGrid,
+                    seriesCardSize,
                     (entity) => SeriesCard(entity),
                   ),
                 };
-                final cardWidth = maxWidth.clamp(0.0, screenWidth - 32.0);
 
                 return Column(
                   mainAxisSize: .min,
@@ -146,7 +142,7 @@ class HomeScreen extends ConsumerWidget {
                         children: [
                           ...shelf.entities.map(
                             (entity) => Container(
-                              width: cardWidth,
+                              width: maxWidth,
                               margin: const .symmetric(horizontal: 8),
                               child: buildCard(entity),
                             ),

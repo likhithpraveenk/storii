@@ -573,6 +573,18 @@
   "imageResolution": "Image resolution",
   "imageResolutionListView": "Image resolution in list view",
   "imageResolutionGridView": "Image resolution in grid view",
+  "coverImageSizes": "Cover image sizes",
+  "maxImageSize": "Max image size",
+  "stackedImagesCardMaxWidth": "Stacked images card max width",
+  "imageSizeListTile": "Image size in list tiles",
+  "percentOfScreenWidth": "{percent}% of screen width",
+  "@percentOfScreenWidth": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
   "hardwareClickToSkipChapters": "Hardware buttons skip chapters",
   "hardwareClickToSkipChaptersSubtitle": "Use next/previous buttons to skip chapters instead of rewind/fast forward"
 }

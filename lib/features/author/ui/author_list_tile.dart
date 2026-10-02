@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
@@ -14,6 +15,7 @@ class AuthorListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final cardSize = ref.watch(listViewImageSizeProvider);
 
     return InkWell(
       onTap: () => context.push(AppRoute.authorDetail.path, extra: author.id),
@@ -24,7 +26,7 @@ class AuthorListTile extends ConsumerWidget {
           spacing: 8,
           children: [
             SizedBox.square(
-              dimension: imgSizeInListView,
+              dimension: cardSize,
               child: ClipRRect(
                 borderRadius: .circular(4),
                 child: ImageWidget(

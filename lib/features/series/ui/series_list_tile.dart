@@ -6,6 +6,7 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/series/ui/series_options_widget.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
@@ -21,6 +22,7 @@ class SeriesListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final cardSize = ref.watch(listViewImageSizeProvider);
     final authorName = series.books.firstOrNull?.authorName;
     final progress = series.finishRatio;
     final isFinished = series.progress?.isFinished ?? false;
@@ -39,7 +41,7 @@ class SeriesListTile extends ConsumerWidget {
           spacing: 8,
           children: [
             SizedBox.square(
-              dimension: imgSizeInListView,
+              dimension: cardSize,
               child: Stack(
                 fit: .expand,
                 children: [

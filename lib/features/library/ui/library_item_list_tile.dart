@@ -7,6 +7,7 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
@@ -31,6 +32,7 @@ class LibraryItemListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final cardSize = ref.watch(listViewImageSizeProvider);
     final isSeries = item.collapsedSeries != null;
     final title = isSeries
         ? item.collapsedSeries!.name
@@ -79,7 +81,7 @@ class LibraryItemListTile extends ConsumerWidget {
           spacing: 8,
           children: [
             SizedBox.square(
-              dimension: imgSizeInListView,
+              dimension: cardSize,
               child: Stack(
                 fit: .expand,
                 children: [

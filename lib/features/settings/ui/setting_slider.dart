@@ -9,9 +9,10 @@ class SettingSlider extends StatelessWidget {
     required this.value,
     required this.min,
     required this.max,
-    required this.divisions,
+    this.divisions,
     this.labelBuilder,
     this.onChangeEnd,
+    this.padding,
     super.key,
   });
 
@@ -21,15 +22,16 @@ class SettingSlider extends StatelessWidget {
   final double value;
   final double min;
   final double max;
-  final int divisions;
+  final int? divisions;
   final String Function(double)? labelBuilder;
   final void Function(double)? onChangeEnd;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const .symmetric(horizontal: 16, vertical: 12),
+      padding: padding ?? const .symmetric(horizontal: 16, vertical: 12),
       child: Column(
         children: [
           Row(

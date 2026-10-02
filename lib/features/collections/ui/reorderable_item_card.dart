@@ -5,6 +5,7 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/item/logic/user_progress_actions.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -38,6 +39,7 @@ class ReorderableItemCard extends ConsumerWidget {
         .value;
     final isFinished =
         mediaProgress?.isFinished == true || mediaProgress?.progress == 1.0;
+    final cardSize = ref.watch(listViewImageSizeProvider);
 
     return InkWell(
       borderRadius: .circular(kRadius),
@@ -74,7 +76,7 @@ class ReorderableItemCard extends ConsumerWidget {
         child: Row(
           children: [
             SizedBox.square(
-              dimension: imgSizeInListView,
+              dimension: cardSize,
               child: ImageWidget(id: itemId, type: .item, inList: true),
             ),
             const SizedBox(width: 12),

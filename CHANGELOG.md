@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - list view support for all screens based on display mode for each screen
 - long-press series card or series list tile to open options
 - image resolution (in grid/list view) configurable in library settings
+- image/card sizes configurable in screen display & library settings
 
 ### Changed
 

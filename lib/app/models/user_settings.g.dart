@@ -247,6 +247,15 @@ _UserSettings _$UserSettingsFromJson(
   imageResolutionListView:
       (json['imageResolutionListView'] as num?)?.toInt() ??
       DefaultUserSettings.imageResolutionListView,
+  imageMaxSize:
+      (json['imageMaxSize'] as num?)?.toDouble() ??
+      DefaultUserSettings.imageMaxSize,
+  stackedImagesCardMaxWidth:
+      (json['stackedImagesCardMaxWidth'] as num?)?.toDouble() ??
+      DefaultUserSettings.stackedImagesCardMaxWidth,
+  listViewImageSize:
+      (json['listViewImageSize'] as num?)?.toDouble() ??
+      DefaultUserSettings.listViewImageSize,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -337,6 +346,9 @@ Map<String, dynamic> _$UserSettingsToJson(
   'playOnStartup': instance.playOnStartup,
   'imageResolutionGridView': instance.imageResolutionGridView,
   'imageResolutionListView': instance.imageResolutionListView,
+  'imageMaxSize': instance.imageMaxSize,
+  'stackedImagesCardMaxWidth': instance.stackedImagesCardMaxWidth,
+  'listViewImageSize': instance.listViewImageSize,
 };
 
 const _$NavTargetEnumMap = {
