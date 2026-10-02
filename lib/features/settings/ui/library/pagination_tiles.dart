@@ -2,67 +2,59 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/shared/widgets/wheel_picker.dart';
+import 'package:storii/features/settings/ui/setting_slider.dart';
+import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
-class PaginationTiles extends ConsumerWidget {
+class PaginationListTile extends StatelessWidget {
   const new({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      trailing: const Icon(Icons.chevron_right),
+      leading: const Icon(Icons.pages_outlined),
+      title: Text(l10n.pagination),
+      onTap: () {
+        AppBottomSheet.show(
+          context,
+          title: l10n.pagination,
+          body: const _PaginationTiles(),
+        );
+      },
+    );
+  }
+}
+
+class _PaginationTiles extends ConsumerWidget {
+  const new();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final librarySize = ref.watch(libraryPageSizeProvider);
     final seriesSize = ref.watch(seriesPageSizeProvider);
     final notifier = ref.read(userSettingsProvider.notifier);
-    final textTheme = Theme.of(context).textTheme;
 
     return Column(
       children: [
-        Padding(
-          padding: const .symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  l10n.libraryPageSize,
-                  style: textTheme.bodyLarge,
-                  softWrap: true,
-                ),
-              ),
-              WheelPicker.fromIntRange(
-                initialValue: librarySize,
-                min: 20,
-                max: 200,
-                step: 20,
-                visibleItems: 2,
-                onChangedEnd: notifier.setLibraryPageSize,
-                labelBuilder: (v) => '$v',
-                wheelWidth: 80,
-              ),
-            ],
-          ),
+        SettingSlider(
+          title: l10n.library,
+          trailing: '$librarySize',
+          value: librarySize.toDouble(),
+          min: 20,
+          max: 200,
+          divisions: 9,
+          labelBuilder: (v) => '${v.round()}',
+          onChangeEnd: (value) => notifier.setLibraryPageSize(value.round()),
         ),
-        Padding(
-          padding: const .symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  l10n.seriesPageSize,
-                  style: textTheme.bodyLarge,
-                  softWrap: true,
-                ),
-              ),
-              WheelPicker.fromIntRange(
-                initialValue: seriesSize,
-                min: 10,
-                max: 100,
-                step: 10,
-                visibleItems: 2,
-                onChangedEnd: notifier.setSeriesPageSize,
-                labelBuilder: (v) => '$v',
-                wheelWidth: 80,
-              ),
-            ],
-          ),
+        SettingSlider(
+          title: l10n.series,
+          trailing: '$seriesSize',
+          value: seriesSize.toDouble(),
+          min: 10,
+          max: 100,
+          divisions: 9,
+          labelBuilder: (v) => '${v.round()}',
+          onChangeEnd: (value) => notifier.setSeriesPageSize(value.round()),
         ),
       ],
     );

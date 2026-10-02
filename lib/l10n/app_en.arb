@@ -476,7 +476,7 @@
   "restoreRestart": "Backup restored. Restart the app to apply changes",
   "restoreFailed": "Could not restore backup",
   "marqueeSpeed": "Text Scroll Speed",
-  "stackedImagesVisible": "Number of covers visible in stacked item cards",
+  "stackedImagesVisible": "Number of images visible in series card",
   "schemeVariant": "Theme Style",
   "schemeVariantSubtitle": "Choose how your theme colors are generated",
   "tonalSpot": "Balanced",
@@ -569,8 +569,7 @@
   "osNotificationCanSkipChapterSubtitle": "Show skip to next/previous chapter buttons in OS notification",
   "osNotificationCanStopSubtitle": "Show stop button in OS notification",
   "osNotificationCanSpeedSubtitle": "Show playback speed button in OS notification",
-  "libraryPageSize": "Library pagination size",
-  "seriesPageSize": "Series pagination size",
+  "pagination": "Pagination",
   "hardwareClickToSkipChapters": "Hardware buttons skip chapters",
   "hardwareClickToSkipChaptersSubtitle": "Use next/previous buttons to skip chapters instead of rewind/fast forward"
 }

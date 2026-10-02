@@ -50,7 +50,7 @@ class LibrarySettingsScreen extends ConsumerWidget {
           ),
           SettingsHeader(
             title: l10n.display,
-            children: const [StackedImagesVisibleTile(), PaginationTiles()],
+            children: const [StackedImagesVisibleTile(), PaginationListTile()],
           ),
         ],
       ),
