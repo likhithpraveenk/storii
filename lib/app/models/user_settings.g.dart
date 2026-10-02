@@ -241,6 +241,12 @@ _UserSettings _$UserSettingsFromJson(
         ),
   playOnStartup:
       json['playOnStartup'] as bool? ?? DefaultUserSettings.playOnStartup,
+  imageResolutionGridView:
+      (json['imageResolutionGridView'] as num?)?.toInt() ??
+      DefaultUserSettings.imageResolutionGridView,
+  imageResolutionListView:
+      (json['imageResolutionListView'] as num?)?.toInt() ??
+      DefaultUserSettings.imageResolutionListView,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -329,6 +335,8 @@ Map<String, dynamic> _$UserSettingsToJson(
   },
   'sleepTimerWindowDuration': instance.sleepTimerWindowDuration.inMicroseconds,
   'playOnStartup': instance.playOnStartup,
+  'imageResolutionGridView': instance.imageResolutionGridView,
+  'imageResolutionListView': instance.imageResolutionListView,
 };
 
 const _$NavTargetEnumMap = {

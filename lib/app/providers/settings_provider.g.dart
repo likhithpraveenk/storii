@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'c3ecafd05b6bfe1a212c9a157fcb6d6c211986fe';
+    r'fd4ab17ce2e5059705e31d9ecc4baca5f25339ad';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -437,6 +437,12 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setPlayOnStartup(bool value) =>
       _save(state?.copyWith(playOnStartup: value));
+
+  Future<void> setImageResolutionGridView(int value) =>
+      _save(state?.copyWith(imageResolutionGridView: value));
+
+  Future<void> setImageResolutionListView(int value) =>
+      _save(state?.copyWith(imageResolutionListView: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -1078,4 +1084,26 @@ final playOnStartupProvider = Provider<bool>(
     ),
   ),
   name: 'playOnStartupProvider',
+);
+
+final imageResolutionGridViewProvider = Provider<int>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.imageResolutionGridView ??
+          DefaultUserSettings.imageResolutionGridView,
+    ),
+  ),
+  name: 'imageResolutionGridViewProvider',
+);
+
+final imageResolutionListViewProvider = Provider<int>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.imageResolutionListView ??
+          DefaultUserSettings.imageResolutionListView,
+    ),
+  ),
+  name: 'imageResolutionListViewProvider',
 );

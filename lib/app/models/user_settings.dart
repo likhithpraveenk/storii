@@ -77,6 +77,8 @@ class DefaultUserSettings {
   static const sleepWindow = (1320, 360);
   static const sleepTimerWindowDuration = Duration(minutes: 30);
   static const playOnStartup = false;
+  static const imageResolutionGridView = 600;
+  static const imageResolutionListView = 200;
 }
 
 @freezed
@@ -253,6 +255,12 @@ sealed class UserSettings with _$UserSettings {
     Duration sleepTimerWindowDuration,
 
     @Default(DefaultUserSettings.playOnStartup) bool playOnStartup,
+
+    @Default(DefaultUserSettings.imageResolutionGridView)
+    int imageResolutionGridView,
+
+    @Default(DefaultUserSettings.imageResolutionListView)
+    int imageResolutionListView,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/features/settings/ui/library/image_resolution_tiles.dart';
 import 'package:storii/features/settings/ui/library/pagination_tiles.dart';
 import 'package:storii/features/settings/ui/library/remember_sort_tile.dart';
 import 'package:storii/features/settings/ui/library/reorder_home_shelves.dart';
@@ -50,7 +51,11 @@ class LibrarySettingsScreen extends ConsumerWidget {
           ),
           SettingsHeader(
             title: l10n.display,
-            children: const [StackedImagesVisibleTile(), PaginationListTile()],
+            children: const [
+              StackedImagesVisibleTile(),
+              PaginationListTile(),
+              ImageResolutionListTile(),
+            ],
           ),
         ],
       ),
