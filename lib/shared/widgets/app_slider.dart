@@ -17,6 +17,7 @@ class AppSlider extends StatefulWidget {
     this.showValueIndicator = .onDrag,
     this.trackHeight,
     this.cancelThreshold = -48.0,
+    this.enableCancel = false,
   });
 
   final double value;
@@ -33,6 +34,7 @@ class AppSlider extends StatefulWidget {
   final ShowValueIndicator showValueIndicator;
   final double? trackHeight;
   final double cancelThreshold;
+  final bool enableCancel;
 
   @override
   State<AppSlider> createState() => _AppSliderState();
@@ -43,6 +45,8 @@ class _AppSliderState extends State<AppSlider> {
   double? _initialValue;
   bool _isDragging = false;
   bool _isCanceling = false;
+
+  bool get _canCancel => widget.enableCancel && _isDragging;
 
   double get _value =>
       (_dragValue ?? widget.value).clamp(widget.min, widget.max);
@@ -55,7 +59,7 @@ class _AppSliderState extends State<AppSlider> {
   }
 
   void _onPointerMove(PointerMoveEvent event) {
-    if (!_isDragging) return;
+    if (!_canCancel) return;
     final isCanceling = event.localPosition.dy < widget.cancelThreshold;
     if (isCanceling != _isCanceling) {
       setState(() => _isCanceling = isCanceling);
@@ -88,14 +92,14 @@ class _AppSliderState extends State<AppSlider> {
     }
     setState(() => _dragValue = value);
 
-    if (_isCanceling) return;
+    if (_isCanceling && widget.enableCancel) return;
     widget.onChanged?.call(value);
   }
 
   void _handleChangeEnd(double value) {
     final initial = _initialValue ?? value;
 
-    if (_isCanceling) {
+    if (_isCanceling && widget.enableCancel) {
       if (widget.value != initial) widget.onChanged?.call(initial);
     } else {
       widget.onChangeEnd?.call(value);
@@ -148,7 +152,7 @@ class _AppSliderState extends State<AppSlider> {
               padding: widget.padding ?? .zero,
             ),
           ),
-          if (_isDragging)
+          if (_isDragging && widget.enableCancel)
             Positioned(
               top: widget.cancelThreshold - 24,
               left: 0,
