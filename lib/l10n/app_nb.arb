@@ -558,8 +558,6 @@
   "osNotificationCanSkipChapterSubtitle": "Vis knapper for neste og forrige kapittel i systemvarselet",
   "osNotificationCanStopSubtitle": "Vis stoppknapp i systemvarselet",
   "osNotificationCanSpeedSubtitle": "Vis knapp for avspillingshastighet i systemvarselet",
-  "libraryPageSize": "Antall elementer per bibliotekside",
-  "seriesPageSize": "Antall elementer per serieside",
   "hardwareClickToSkipChapters": "Bruk fysiske knapper til å hoppe mellom kapitler",
   "hardwareClickToSkipChaptersSubtitle": "Bruk neste- og forrige-knappene til å hoppe mellom kapitler i stedet for å spole"
 }
