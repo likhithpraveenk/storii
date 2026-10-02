@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'c3ecafd05b6bfe1a212c9a157fcb6d6c211986fe';
+    r'd76cc67ed79201d01cc088cd18c52ad630cf17c9';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -437,6 +437,21 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setPlayOnStartup(bool value) =>
       _save(state?.copyWith(playOnStartup: value));
+
+  Future<void> setImageResolutionGridView(int value) =>
+      _save(state?.copyWith(imageResolutionGridView: value));
+
+  Future<void> setImageResolutionListView(int value) =>
+      _save(state?.copyWith(imageResolutionListView: value));
+
+  Future<void> setImageMaxSize(double value) =>
+      _save(state?.copyWith(imageMaxSize: value));
+
+  Future<void> setStackedImagesCardMaxWidth(double value) =>
+      _save(state?.copyWith(stackedImagesCardMaxWidth: value));
+
+  Future<void> setListViewImageSize(double value) =>
+      _save(state?.copyWith(listViewImageSize: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -1078,4 +1093,55 @@ final playOnStartupProvider = Provider<bool>(
     ),
   ),
   name: 'playOnStartupProvider',
+);
+
+final imageResolutionGridViewProvider = Provider<int>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.imageResolutionGridView ??
+          DefaultUserSettings.imageResolutionGridView,
+    ),
+  ),
+  name: 'imageResolutionGridViewProvider',
+);
+
+final imageResolutionListViewProvider = Provider<int>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.imageResolutionListView ??
+          DefaultUserSettings.imageResolutionListView,
+    ),
+  ),
+  name: 'imageResolutionListViewProvider',
+);
+
+final imageMaxSizeProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.imageMaxSize ?? DefaultUserSettings.imageMaxSize,
+    ),
+  ),
+  name: 'imageMaxSizeProvider',
+);
+
+final stackedImagesCardMaxWidthProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.stackedImagesCardMaxWidth ??
+          DefaultUserSettings.stackedImagesCardMaxWidth,
+    ),
+  ),
+  name: 'stackedImagesCardMaxWidthProvider',
+);
+
+final listViewImageSizeProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.listViewImageSize ?? DefaultUserSettings.listViewImageSize,
+    ),
+  ),
+  name: 'listViewImageSizeProvider',
 );

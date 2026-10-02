@@ -67,6 +67,7 @@ class _BookSliderState extends ConsumerState<BookSlider> {
         AppSlider(
           value: scaledPositionMs,
           max: scaledDurationMs,
+          enableCancel: true,
           trackHeight: 10,
           labelBuilder: (value) =>
               Duration(milliseconds: value.toInt()).toTime(),

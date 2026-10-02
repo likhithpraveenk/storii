@@ -4,6 +4,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/library_filters_provider.dart';
+import 'package:storii/features/settings/ui/setting_slider.dart';
 
 class DisplayBottomSheet extends ConsumerWidget {
   const new(this.screen, this.controller, {super.key});
@@ -14,6 +15,12 @@ class DisplayBottomSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentMode = ref.watch(screenDisplayModeProvider(screen));
     final notifier = ref.read(userSettingsProvider.notifier);
+
+    final imageMaxSize = ref.watch(imageMaxSizeProvider);
+    final stackedImagesCardMaxWidth = ref.watch(
+      stackedImagesCardMaxWidthProvider,
+    );
+    final listViewImageSize = ref.watch(listViewImageSizeProvider);
 
     final List<DisplayMode> displayModes = switch (screen) {
       .library => DisplayMode.values,
@@ -49,6 +56,40 @@ class DisplayBottomSheet extends ConsumerWidget {
               );
             }).toList(),
           ),
+          const SizedBox(height: 16),
+          if (currentMode == .listView)
+            SettingSlider(
+              title: l10n.imageSizeListTile,
+              trailing: '${listViewImageSize.round()}px',
+              value: listViewImageSize,
+              min: 40,
+              max: 120,
+              labelBuilder: (value) => value.toStringAsFixed(0),
+              onChangeEnd: notifier.setListViewImageSize,
+              padding: .zero,
+            )
+          else if (screen == .series)
+            SettingSlider(
+              title: l10n.stackedImagesCardMaxWidth,
+              trailing: '${stackedImagesCardMaxWidth.round()}px',
+              value: stackedImagesCardMaxWidth,
+              min: 200,
+              max: 600,
+              labelBuilder: (value) => value.toStringAsFixed(0),
+              onChangeEnd: notifier.setStackedImagesCardMaxWidth,
+              padding: .zero,
+            )
+          else
+            SettingSlider(
+              title: l10n.maxImageSize,
+              trailing: '${imageMaxSize.round()}px',
+              value: imageMaxSize,
+              min: 80,
+              max: 400,
+              labelBuilder: (value) => value.toStringAsFixed(0),
+              onChangeEnd: notifier.setImageMaxSize,
+              padding: .zero,
+            ),
         ],
       ),
     );

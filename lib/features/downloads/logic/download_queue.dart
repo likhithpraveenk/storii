@@ -53,9 +53,9 @@ class DownloadQueue extends _$DownloadQueue {
     return keys;
   }
 
-  Future<void> enqueue(
-    String libraryItemId,
-    String? episodeId, {
+  Future<void> enqueue({
+    required String libraryItemId,
+    String? episodeId,
     required StorageLocation location,
   }) async {
     final key = mediaItemIdKey(libraryItemId, episodeId);
@@ -197,7 +197,7 @@ class DownloadQueue extends _$DownloadQueue {
     await DownloadsNotificationService.instance.stopForeground();
     await DownloadsNotificationService.instance.dismiss();
     state = state.where((i) => i != key).toList();
-    await enqueue(id, episodeId, location: location);
+    await enqueue(libraryItemId: id, episodeId: episodeId, location: location);
   }
 
   Future<void> pause(String id) async {

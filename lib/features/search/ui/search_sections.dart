@@ -1,7 +1,6 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/ui/author_card.dart';
@@ -75,6 +74,7 @@ class ItemsSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mode = ref.watch(libraryDisplayModeProvider);
+    final cardWidth = ref.watch(imageMaxSizeProvider);
     final isListView = mode == .listView;
     if (isSeparate) {
       return isListView ? ItemsListView(items) : ItemsGridView(items);
@@ -112,7 +112,7 @@ class ItemsSection extends ConsumerWidget {
                 .take(10)
                 .map(
                   (book) => Container(
-                    width: maxCardWidthInGrid,
+                    width: cardWidth,
                     margin: const .symmetric(horizontal: 8),
                     child: LibraryItemCard(book),
                   ),
@@ -185,6 +185,7 @@ class AuthorsSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mode = ref.watch(authorDisplayModeProvider);
+    final cardWidth = ref.watch(imageMaxSizeProvider);
     final isListView = mode == .listView;
     if (isSeparate) {
       return isListView
@@ -225,7 +226,7 @@ class AuthorsSection extends ConsumerWidget {
                 .take(10)
                 .map(
                   (author) => Container(
-                    width: maxCardWidthInGrid,
+                    width: cardWidth,
                     margin: const .symmetric(horizontal: 8),
                     child: AuthorCard(author),
                   ),
@@ -252,6 +253,7 @@ class SeriesSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mode = ref.watch(seriesDisplayModeProvider);
+    final cardWidth = ref.watch(stackedImagesCardMaxWidthProvider);
     final isListView = mode == .listView;
     if (isSeparate) {
       return isListView
@@ -280,8 +282,6 @@ class SeriesSection extends ConsumerWidget {
         ),
       );
     }
-    final screenWidth = MediaQuery.sizeOf(context).width;
-    final cardWidth = maxSeriesCardWidthInGrid.clamp(0.0, screenWidth - 32.0);
 
     return _Section(
       title: l10n.series,

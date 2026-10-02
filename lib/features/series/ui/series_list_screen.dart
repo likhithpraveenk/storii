@@ -1,7 +1,6 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
@@ -154,6 +153,7 @@ class SeriesGridView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final height = ref.watch(seriesGridHeightProvider);
+    final cardWidth = ref.watch(stackedImagesCardMaxWidthProvider);
 
     return CustomScrollView(
       controller: scrollController,
@@ -163,7 +163,7 @@ class SeriesGridView extends ConsumerWidget {
           padding: const .symmetric(horizontal: 16, vertical: 16),
           sliver: SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: maxSeriesCardWidthInGrid,
+              maxCrossAxisExtent: cardWidth,
               mainAxisExtent: height,
               mainAxisSpacing: 16,
               crossAxisSpacing: 16,

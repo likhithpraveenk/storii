@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:cached_network_image_ce/cached_network_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/cover_helper.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/library/logic/cover_url_provider.dart';
@@ -69,7 +69,9 @@ class _ImageWidgetState extends ConsumerState<ImageWidget> {
   @override
   Widget build(BuildContext context) {
     final download = ref.watch(downloadItemProvider(widget.id));
-    final width = widget.inList ? imgQualityInListView : imgQualityInGridView;
+    final width = widget.inList
+        ? ref.watch(imageResolutionListViewProvider)
+        : ref.watch(imageResolutionGridViewProvider);
     final coverUrl = ref.watch(
       coverUrlProvider(
         widget.id,

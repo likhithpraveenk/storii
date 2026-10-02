@@ -1,7 +1,6 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/author/logic/authors_list_provider.dart';
@@ -118,6 +117,7 @@ class AuthorsGridView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final height = ref.watch(authorsGridHeightProvider);
+    final cardWidth = ref.watch(imageMaxSizeProvider);
 
     return GridView.builder(
       key: const ValueKey('author_grid_view'),
@@ -126,7 +126,7 @@ class AuthorsGridView extends ConsumerWidget {
       itemCount: authors.length,
       padding: const .symmetric(horizontal: 16, vertical: 16),
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: maxCardWidthInGrid,
+        maxCrossAxisExtent: cardWidth,
         mainAxisExtent: height,
         crossAxisSpacing: 16,
       ),

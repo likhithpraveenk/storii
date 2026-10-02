@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/shared/widgets/wheel_picker.dart';
+import 'package:storii/features/settings/ui/setting_slider.dart';
 
 class StackedImagesVisibleTile extends ConsumerWidget {
   const new({super.key});
@@ -12,28 +12,15 @@ class StackedImagesVisibleTile extends ConsumerWidget {
     final count = ref.watch(stackedImagesVisibleProvider);
     final notifier = ref.read(userSettingsProvider.notifier);
 
-    return Padding(
-      padding: const .symmetric(horizontal: 16),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              l10n.stackedImagesVisible,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ),
-          WheelPicker.fromIntRange(
-            initialValue: count,
-            min: 2,
-            max: 8,
-            step: 1,
-            visibleItems: 2,
-            onChangedEnd: notifier.setStackedImagesVisible,
-            labelBuilder: (v) => '$v',
-            wheelWidth: 80,
-          ),
-        ],
-      ),
+    return SettingSlider(
+      title: l10n.stackedImagesVisible,
+      trailing: '$count',
+      value: count.toDouble(),
+      min: 2,
+      max: 8,
+      divisions: 6,
+      labelBuilder: (v) => '${v.round()}',
+      onChangeEnd: (value) => notifier.setStackedImagesVisible(value.round()),
     );
   }
 }

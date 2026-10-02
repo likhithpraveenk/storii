@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/nav_providers.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/collections/logic/collection_providers.dart';
 import 'package:storii/features/library/logic/grid_height_provider.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
@@ -61,6 +61,7 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
             }
 
             final height = ref.watch(collectionsGridHeightProvider);
+            final cardWidth = ref.watch(stackedImagesCardMaxWidthProvider);
 
             return SafeArea(
               child: AppScrollbar(
@@ -72,7 +73,7 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
                   itemCount: collections.length,
                   padding: const .symmetric(horizontal: 16, vertical: 16),
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: maxSeriesCardWidthInGrid,
+                    maxCrossAxisExtent: cardWidth,
                     mainAxisExtent: height,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,

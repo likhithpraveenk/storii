@@ -350,6 +350,7 @@
   "paused": "Paused",
   "failed": "Failed",
   "download": "Download",
+  "downloadAll": "Download all",
   "completed": "Completed",
   "cancelled": "Cancelled",
   "resumeDownload": "Resume Download",
@@ -475,7 +476,7 @@
   "restoreRestart": "Backup restored. Restart the app to apply changes",
   "restoreFailed": "Could not restore backup",
   "marqueeSpeed": "Text Scroll Speed",
-  "stackedImagesVisible": "Number of covers visible in stacked item cards",
+  "stackedImagesVisible": "Number of images visible in series card",
   "schemeVariant": "Theme Style",
   "schemeVariantSubtitle": "Choose how your theme colors are generated",
   "tonalSpot": "Balanced",
@@ -568,8 +569,22 @@
   "osNotificationCanSkipChapterSubtitle": "Show skip to next/previous chapter buttons in OS notification",
   "osNotificationCanStopSubtitle": "Show stop button in OS notification",
   "osNotificationCanSpeedSubtitle": "Show playback speed button in OS notification",
-  "libraryPageSize": "Library pagination size",
-  "seriesPageSize": "Series pagination size",
+  "pagination": "Pagination",
+  "imageResolution": "Image resolution",
+  "imageResolutionListView": "Image resolution in list view",
+  "imageResolutionGridView": "Image resolution in grid view",
+  "coverImageSizes": "Cover image sizes",
+  "maxImageSize": "Max image size",
+  "stackedImagesCardMaxWidth": "Stacked images card max width",
+  "imageSizeListTile": "Image size in list tiles",
+  "percentOfScreenWidth": "{percent}% of screen width",
+  "@percentOfScreenWidth": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
   "hardwareClickToSkipChapters": "Hardware buttons skip chapters",
   "hardwareClickToSkipChaptersSubtitle": "Use next/previous buttons to skip chapters instead of rewind/fast forward"
 }

@@ -1,5 +1,4 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/settings/logic/theme_provider.dart';
 
@@ -8,6 +7,7 @@ part 'grid_height_provider.g.dart';
 @riverpod
 double gridHeight(Ref ref) {
   final mode = ref.watch(libraryDisplayModeProvider);
+  final cardWidth = ref.watch(imageMaxSizeProvider);
 
   return switch (mode) {
     .comfortable => () {
@@ -17,10 +17,10 @@ double gridHeight(Ref ref) {
       const padding = 16.0;
       final metadataHeight = titleSlot + padding + authorSlot;
 
-      return maxCardWidthInGrid + metadataHeight;
+      return cardWidth + metadataHeight;
     }(),
 
-    .compact || .coverOnly => maxCardWidthInGrid,
+    .compact || .coverOnly => cardWidth,
 
     .listView => throw StateError('Do not use grid for list view'),
   };
@@ -31,25 +31,28 @@ double authorsGridHeight(Ref ref) {
   final scaler = ref.watch(textScalerProvider);
   final scaledTitleHeight = scaler.scale(32);
   const padding = 16.0;
+  final cardWidth = ref.watch(imageMaxSizeProvider);
 
-  return maxCardWidthInGrid + scaledTitleHeight + padding;
+  return cardWidth + scaledTitleHeight + padding;
 }
 
 @riverpod
 double seriesGridHeight(Ref ref) {
   final scaler = ref.watch(textScalerProvider);
+  final cardWidth = ref.watch(stackedImagesCardMaxWidthProvider);
 
   final titleSlot = scaler.scale(32);
   final authorSlot = scaler.scale(20);
   final metadataHeight = titleSlot + authorSlot;
 
-  return (maxSeriesCardWidthInGrid * 0.46) + metadataHeight;
+  return (cardWidth * 0.48) + metadataHeight;
 }
 
 @riverpod
 double collectionsGridHeight(Ref ref) {
   final scaler = ref.watch(textScalerProvider);
+  final cardWidth = ref.watch(stackedImagesCardMaxWidthProvider);
   final titleSlot = scaler.scale(32);
 
-  return (maxSeriesCardWidthInGrid * 0.48) + titleSlot;
+  return (cardWidth * 0.48) + titleSlot;
 }

@@ -48,7 +48,7 @@ final class GridHeightProvider
   }
 }
 
-String _$gridHeightHash() => r'a879b78cf80d3c27432f43729a71eda1c8e410b9';
+String _$gridHeightHash() => r'ffb5cf0916f7d4fba6061f1e599743b1d85788ee';
 
 @ProviderFor(authorsGridHeight)
 final authorsGridHeightProvider = AuthorsGridHeightProvider._();
@@ -89,7 +89,7 @@ final class AuthorsGridHeightProvider
   }
 }
 
-String _$authorsGridHeightHash() => r'20fae11f28229e693cf4f221089be9cae7add934';
+String _$authorsGridHeightHash() => r'ccc21f9c6aa26cc875248f79049bff1b08046f60';
 
 @ProviderFor(seriesGridHeight)
 final seriesGridHeightProvider = SeriesGridHeightProvider._();
@@ -130,7 +130,7 @@ final class SeriesGridHeightProvider
   }
 }
 
-String _$seriesGridHeightHash() => r'0dcce70a804b2287f6f9a7e58bff7a4bb921fcae';
+String _$seriesGridHeightHash() => r'fc47a2d6c06c617af61c9c7768e71af9dfca541f';
 
 @ProviderFor(collectionsGridHeight)
 final collectionsGridHeightProvider = CollectionsGridHeightProvider._();
@@ -172,4 +172,4 @@ final class CollectionsGridHeightProvider
 }
 
 String _$collectionsGridHeightHash() =>
-    r'4de1b78ad694e8a8ec1b863e48610629e0927f83';
+    r'61248ef4be60a2e507f06b1758fa9648ec6fee6c';

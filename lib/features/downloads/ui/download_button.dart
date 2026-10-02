@@ -97,17 +97,21 @@ class DownloadButton extends ConsumerWidget {
           );
           if (availableLocations.length == 1) {
             return queue.enqueue(
-              libraryItemId,
-              episodeId,
+              libraryItemId: libraryItemId,
+              episodeId: episodeId,
               location: availableLocations.first,
             );
           }
           final location = await showDialog<StorageLocation?>(
             context: context,
-            builder: (_) => _ChooseLocationDialog(mediaType),
+            builder: (_) => ChooseLocationDialog(mediaType),
           );
           if (location != null) {
-            return queue.enqueue(libraryItemId, episodeId, location: location);
+            return queue.enqueue(
+              libraryItemId: libraryItemId,
+              episodeId: episodeId,
+              location: location,
+            );
           }
         },
       ),
@@ -173,8 +177,8 @@ class _ProgressButton extends StatelessWidget {
   }
 }
 
-class _ChooseLocationDialog extends ConsumerWidget {
-  const new(this.mediaType);
+class ChooseLocationDialog extends ConsumerWidget {
+  const new(this.mediaType, {super.key});
 
   final MediaType mediaType;
 

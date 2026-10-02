@@ -202,6 +202,7 @@ class _HorizontalBooksCarousel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final cardWidth = ref.watch(imageMaxSizeProvider);
     return SingleChildScrollView(
       scrollDirection: .horizontal,
       padding: const .symmetric(horizontal: 8),
@@ -212,7 +213,7 @@ class _HorizontalBooksCarousel extends ConsumerWidget {
               .take(10)
               .map(
                 (book) => Container(
-                  width: maxCardWidthInGrid,
+                  width: cardWidth,
                   margin: const .symmetric(horizontal: 8),
                   child: LibraryItemCard(book),
                 ),

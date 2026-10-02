@@ -1,14 +1,18 @@
+import 'package:abs_api/abs_api.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/models/storage_location.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/app/providers/widget_controller.dart';
 import 'package:storii/features/admin/logic/item_actions_provider.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
+import 'package:storii/features/downloads/logic/storage_locations_provider.dart';
+import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/user_progress_actions.dart';
 import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -88,6 +92,8 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
     final mediaProgress = ref
         .watch(mediaProgressFromMapProvider(widget.itemId, widget.episodeId))
         .value;
+    final canDownload =
+        ref.watch(userPermissionsProvider).value?.download ?? false;
 
     final options = <_Option>[
       (
@@ -193,6 +199,37 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
           await ref
               .read(downloadQueueProvider.notifier)
               .delete(widget.itemId, widget.episodeId);
+        },
+      ));
+    } else if (canDownload) {
+      options.add((
+        icon: Icons.file_download_outlined,
+        title: l10n.download,
+        onTap: () async {
+          final MediaType type = widget.episodeId != null ? .podcast : .book;
+          final availableLocations = ref.read(
+            storageLocationsByTypeProvider(type),
+          );
+          final queue = ref.read(downloadQueueProvider.notifier);
+          if (availableLocations.length == 1) {
+            await queue.enqueue(
+              libraryItemId: widget.itemId,
+              episodeId: widget.episodeId,
+              location: availableLocations.first,
+            );
+          } else {
+            final location = await showDialog<StorageLocation?>(
+              context: context,
+              builder: (_) => ChooseLocationDialog(type),
+            );
+            if (location != null) {
+              await queue.enqueue(
+                libraryItemId: widget.itemId,
+                episodeId: widget.episodeId,
+                location: location,
+              );
+            }
+          }
         },
       ));
     }

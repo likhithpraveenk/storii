@@ -73,10 +73,15 @@ class DefaultUserSettings {
   static const useNowPlayingTheme = false;
   static const libraryPageSize = 60;
   static const seriesPageSize = 20;
+  static const imageMaxSize = 180.0;
+  static const stackedImagesCardMaxWidth = 400.0;
+  static const listViewImageSize = 72.0;
   static const isSleepWindowOn = false;
   static const sleepWindow = (1320, 360);
   static const sleepTimerWindowDuration = Duration(minutes: 30);
   static const playOnStartup = false;
+  static const imageResolutionGridView = 600;
+  static const imageResolutionListView = 200;
 }
 
 @freezed
@@ -253,6 +258,19 @@ sealed class UserSettings with _$UserSettings {
     Duration sleepTimerWindowDuration,
 
     @Default(DefaultUserSettings.playOnStartup) bool playOnStartup,
+
+    @Default(DefaultUserSettings.imageResolutionGridView)
+    int imageResolutionGridView,
+
+    @Default(DefaultUserSettings.imageResolutionListView)
+    int imageResolutionListView,
+
+    @Default(DefaultUserSettings.imageMaxSize) double imageMaxSize,
+
+    @Default(DefaultUserSettings.stackedImagesCardMaxWidth)
+    double stackedImagesCardMaxWidth,
+
+    @Default(DefaultUserSettings.listViewImageSize) double listViewImageSize,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);
