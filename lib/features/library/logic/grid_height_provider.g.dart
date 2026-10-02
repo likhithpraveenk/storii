@@ -130,7 +130,7 @@ final class SeriesGridHeightProvider
   }
 }
 
-String _$seriesGridHeightHash() => r'6d14c8eddb3d756bbd458ef8886224446b0a8bf7';
+String _$seriesGridHeightHash() => r'fc47a2d6c06c617af61c9c7768e71af9dfca541f';
 
 @ProviderFor(collectionsGridHeight)
 final collectionsGridHeightProvider = CollectionsGridHeightProvider._();

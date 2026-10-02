@@ -45,7 +45,7 @@ double seriesGridHeight(Ref ref) {
   final authorSlot = scaler.scale(20);
   final metadataHeight = titleSlot + authorSlot;
 
-  return (cardWidth * 0.46) + metadataHeight;
+  return (cardWidth * 0.48) + metadataHeight;
 }
 
 @riverpod
