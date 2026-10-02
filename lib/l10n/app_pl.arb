@@ -558,8 +558,16 @@
     }
   },
   "sleepDurationTitle": "Czas wyłącznika czasowego",
-  "libraryPageSize": "Liczba elementów na stronie Biblioteki",
-  "seriesPageSize": "Liczba elementów na stronie serii",
   "hardwareClickToSkipChapters": "Pomijanie rozdziałów przyciskami urządzenia",
-  "hardwareClickToSkipChaptersSubtitle": "Użyj przycisków urządzenia następny/poprzedni do zmiany rozdziału zamiast do przewijania"
+  "hardwareClickToSkipChaptersSubtitle": "Użyj przycisków urządzenia następny/poprzedni do zmiany rozdziału zamiast do przewijania",
+  "playOnStartup": "Odtwarzaj po uruchomieniu",
+  "playOnStartupSubtitle": "Automatycznie kontynuuj odtwarzanie ostatniej książki po otwarciu aplikacji",
+  "copyPlayLink": "Kopiuj link do odtworzenia",
+  "copiedToClipboard": "Skopiowano do schowka",
+  "bindToWidget": "Powiąż z widżetem",
+  "success": "Sukces",
+  "errorSocket": "Nie można połączyć z adresem serwerem",
+  "errorHandshake": "Nie można ustanowić połączenia (błąd TLS)",
+  "localUrl": "Lokalny URL",
+  "localUrlSubtitle": "Użyte gdy połączono z Wi-Fi i serwer jest osiągalny"
 }
