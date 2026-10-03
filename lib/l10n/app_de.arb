@@ -366,7 +366,7 @@
   "restoreRestart": "Backup wiederhergestellt. Starten Sie die App neu, um die Änderungen zu übernehmen",
   "restoreFailed": "Konnte nicht Backup Wiederherstellen",
   "marqueeSpeed": "Textlaufgeschwindigkeit",
-  "stackedImagesVisible": "Anzahl der in gestapelten Objektkarten sichtbaren Cover",
+  "stackedImagesVisible": "Anzahl der in der Serienkarte sichtbaren Bilder",
   "schemeVariant": "Design-Stil",
   "schemeVariantSubtitle": "Wählen Sie aus, wie Ihre Theme-Farben generiert werden",
   "tonalSpot": "Ausgewogen",
@@ -559,5 +559,32 @@
     }
   },
   "hardwareClickToSkipChapters": "Mit den Hardwaretasten Kapitel überspringen",
-  "hardwareClickToSkipChaptersSubtitle": "Verwende die Tasten „Weiter“ und „Zurück“, um Kapitel zu überspringen, anstatt vor- oder zurückzuspulen"
+  "hardwareClickToSkipChaptersSubtitle": "Verwende die Tasten „Weiter“ und „Zurück“, um Kapitel zu überspringen, anstatt vor- oder zurückzuspulen",
+  "playOnStartup": "Beim Starten abspielen",
+  "playOnStartupSubtitle": "Die zuletzt abgespielte Mediendatei automatisch fortsetzen, wenn die App geöffnet wird",
+  "copyPlayLink": "Link zum Abspielen kopieren",
+  "copiedToClipboard": "In die Zwischenablage kopiert",
+  "bindToWidget": "An Widget binden",
+  "success": "Erfolgreich",
+  "downloadAll": "Alle herunterladen",
+  "errorSocket": "Verbindung zur Serveradresse konnte nicht hergestellt werden",
+  "errorHandshake": "Sichere Verbindung fehlgeschlagen (SSL-Fehler)",
+  "localUrl": "Lokale Serveradresse",
+  "localUrlSubtitle": "Wird verwendet, wenn eine WLAN-Verbindung besteht und der Server erreichbar ist",
+  "imageResolution": "Bildauflösung",
+  "imageResolutionListView": "Bildauflösung in der Listenansicht",
+  "imageResolutionGridView": "Bildauflösung in der Rasteransicht",
+  "coverImageSizes": "Größen der Titelbilder",
+  "maxImageSize": "Maximale Bildgröße",
+  "stackedImagesCardMaxWidth": "Maximale Breite der Karte mit übereinander angeordneten Bildern",
+  "imageSizeListTile": "Bildgröße in Listenkacheln",
+  "percentOfScreenWidth": "{percent}% der Bildschirmbreite",
+  "@percentOfScreenWidth": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "pagination": "seitenweises Nachladen"
 }
