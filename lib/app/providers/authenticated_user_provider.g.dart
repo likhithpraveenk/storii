@@ -45,4 +45,4 @@ final class AuthenticatedUserProvider
   }
 }
 
-String _$authenticatedUserHash() => r'ef2e4481e632f895a199772fe7577272f509c433';
+String _$authenticatedUserHash() => r'fa8fe6fdf40addb06fe655d1fa412eab0892f2be';
