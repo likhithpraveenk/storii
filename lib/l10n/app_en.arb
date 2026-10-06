@@ -492,6 +492,7 @@
   "neutral": "Subtle",
   "neutralSubtitle": "Muted tones with just a hint of color",
   "appColor": "App Color",
+  "themePreview": "Theme Preview",
   "hexColor": "Hex Color",
   "invalidHex": "Invalid hex",
   "hexFormatHint": "Use RGB, RRGGBB, or AARRGGBB",
