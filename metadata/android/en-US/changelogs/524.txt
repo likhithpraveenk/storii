@@ -1,0 +1,6 @@
+Added:
+- more emojis to show on empty
+
+Fixed:
+- add debug logs for token operations
+- android backup rules (no cloud backup)
