@@ -25,12 +25,9 @@ Future<UserDomain> authenticatedUser(Ref ref) async {
       () async => (await ref.read(serverApiProvider(user).future)).authorize(),
       source: 'authenticatedUser',
       logMessage: 'Error authenticating user',
+      debug: true,
     );
-    LogService.log(
-      'user auth success!',
-      source: 'authenticatedUser',
-      level: .info,
-    );
+    LogService.log('user auth success!', source: 'authenticatedUser');
     final serverId = ref
         .read(serversStoreProvider.notifier)
         .get(user.serverUrl)

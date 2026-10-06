@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- more emojis to show on empty
+
+### Fixed
+
+- add debug logs for token operations
+- android backup rules (no cloud backup)
+
 ## [v0.11.1] - 2026-10-02
 
 ### Added

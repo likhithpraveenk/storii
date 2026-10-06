@@ -66,7 +66,18 @@ Future<ApiClient> apiClient(Ref ref, UserDomain user) async {
       return token;
     },
     onTokensUpdated: (newAccess, newRefresh) async {
-      await tokenService.saveTokens(user.id, newAccess, newRefresh);
+      try {
+        await tokenService.saveTokens(user.id, newAccess, newRefresh);
+      } catch (e, st) {
+        LogService.log(
+          'saving new tokens failed for ${user.username}',
+          source: 'API Client',
+          level: .error,
+          originalError: e,
+          stackTrace: st,
+        );
+        rethrow;
+      }
     },
     onTokensFailure: () async {
       await ref
