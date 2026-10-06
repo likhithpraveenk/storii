@@ -61,7 +61,7 @@ class _ReorderNavTabsState extends ConsumerState<ReorderNavTabs> {
   }
 
   void _disable(NavTarget target) {
-    if (target == .home || target == .more) return;
+    if (target == .more) return;
     setState(() => _activeDraft.remove(target));
   }
 

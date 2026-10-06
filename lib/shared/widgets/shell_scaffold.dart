@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/config/nav_targets.dart';
-import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/nav_providers.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/ui/player_screen.dart';
 import 'package:storii/shared/helpers/extensions.dart';
@@ -27,9 +27,10 @@ class ShellScaffold extends ConsumerWidget {
     );
 
     final factor = ref.watch(playerExpandFactorProvider);
+    final homePath = ref.watch(startupNavProvider).item.route.path;
 
     return PopScope(
-      canPop: path == AppRoute.home.path && factor == 0,
+      canPop: path == homePath && factor == 0,
       onPopInvokedWithResult: (didPop, _) async {
         if (didPop) return;
 
@@ -38,7 +39,7 @@ class ShellScaffold extends ConsumerWidget {
           return;
         }
 
-        context.go(AppRoute.home.path);
+        context.go(homePath);
       },
       child: Scaffold(
         key: shellScaffoldKey,
