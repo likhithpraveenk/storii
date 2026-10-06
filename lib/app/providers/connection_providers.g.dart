@@ -125,12 +125,11 @@ final class ConnectionTypeProvider
 
 String _$connectionTypeHash() => r'ac4f22daf36ed3faf6afdf9ab5031fabf818733a';
 
-@ProviderFor(activeServerUrl)
+@ProviderFor(ActiveServerUrl)
 final activeServerUrlProvider = ActiveServerUrlFamily._();
 
 final class ActiveServerUrlProvider
-    extends $FunctionalProvider<AsyncValue<Uri>, Uri, FutureOr<Uri>>
-    with $FutureModifier<Uri>, $FutureProvider<Uri> {
+    extends $AsyncNotifierProvider<ActiveServerUrl, Uri> {
   ActiveServerUrlProvider._({
     required ActiveServerUrlFamily super.from,
     required UserDomain super.argument,
@@ -154,14 +153,7 @@ final class ActiveServerUrlProvider
 
   @$internal
   @override
-  $FutureProviderElement<Uri> $createElement($ProviderPointer pointer) =>
-      $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<Uri> create(Ref ref) {
-    final argument = this.argument as UserDomain;
-    return activeServerUrl(ref, argument);
-  }
+  ActiveServerUrl create() => ActiveServerUrl();
 
   @override
   bool operator ==(Object other) {
@@ -174,10 +166,17 @@ final class ActiveServerUrlProvider
   }
 }
 
-String _$activeServerUrlHash() => r'077c2a97510482d607fe0f758ffd0c356c4a59f5';
+String _$activeServerUrlHash() => r'455d4f8006120e33d94077826bb2416f904cdd50';
 
 final class ActiveServerUrlFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<Uri>, UserDomain> {
+    with
+        $ClassFamilyOverride<
+          ActiveServerUrl,
+          AsyncValue<Uri>,
+          Uri,
+          FutureOr<Uri>,
+          UserDomain
+        > {
   ActiveServerUrlFamily._()
     : super(
         retry: null,
@@ -192,6 +191,27 @@ final class ActiveServerUrlFamily extends $Family
 
   @override
   String toString() => r'activeServerUrlProvider';
+}
+
+abstract class _$ActiveServerUrl extends $AsyncNotifier<Uri> {
+  late final _$args = ref.$arg as UserDomain;
+  UserDomain get user => _$args;
+
+  FutureOr<Uri> build(UserDomain user);
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<Uri>, Uri>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<Uri>, Uri>,
+              AsyncValue<Uri>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, () => build(_$args));
+  }
 }
 
 @ProviderFor(ServerConnection)
