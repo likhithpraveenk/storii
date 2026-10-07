@@ -29,7 +29,6 @@ sealed class DownloadTrack with _$DownloadTrack {
   factory fromJson(Map<String, dynamic> json) => _$DownloadTrackFromJson(json);
 }
 
-const kMigrateToV3Sentinel = '__v3_migrate__';
 const kMigrateToV4Sentinel = '__v4_migrate__';
 
 @freezed
@@ -47,7 +46,7 @@ sealed class DownloadItem with _$DownloadItem {
     @Default(DownloadStatus.queued) DownloadStatus status,
     DateTime? startedAt,
     String? episodeId,
-    @Default(kMigrateToV3Sentinel) String folderPath,
+    required String folderPath,
     @Default(kMigrateToV4Sentinel) String relativePath,
   }) = _DownloadItem;
 
