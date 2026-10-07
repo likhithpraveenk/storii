@@ -58,7 +58,7 @@ _DownloadItem _$DownloadItemFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['startedAt'] as String),
       episodeId: json['episodeId'] as String?,
-      folderPath: json['folderPath'] as String? ?? kMigrateToV3Sentinel,
+      folderPath: json['folderPath'] as String,
       relativePath: json['relativePath'] as String? ?? kMigrateToV4Sentinel,
     );
 

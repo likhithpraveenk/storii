@@ -517,7 +517,7 @@ return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.title,_th
 @JsonSerializable()
 
 class _DownloadItem extends DownloadItem {
-  const _DownloadItem({required this.serverUrl, required this.libraryItemId, required this.userId, required this.title, required this.author, required  List<DownloadTrack> tracks, this.mediaType = DownloadMediaType.audiobook, this.status = DownloadStatus.queued, this.startedAt, this.episodeId, this.folderPath = kMigrateToV3Sentinel, this.relativePath = kMigrateToV4Sentinel}): _tracks = tracks,super._();
+  const _DownloadItem({required this.serverUrl, required this.libraryItemId, required this.userId, required this.title, required this.author, required  List<DownloadTrack> tracks, this.mediaType = DownloadMediaType.audiobook, this.status = DownloadStatus.queued, this.startedAt, this.episodeId, required this.folderPath, this.relativePath = kMigrateToV4Sentinel}): _tracks = tracks,super._();
   factory _DownloadItem.fromJson(Map<String, dynamic> json) => _$DownloadItemFromJson(json);
 
 @override final  Uri serverUrl;
@@ -536,7 +536,7 @@ class _DownloadItem extends DownloadItem {
 @override@JsonKey() final  DownloadStatus status;
 @override final  DateTime? startedAt;
 @override final  String? episodeId;
-@override@JsonKey() final  String folderPath;
+@override final  String folderPath;
 @override@JsonKey() final  String relativePath;
 
 /// Create a copy of DownloadItem

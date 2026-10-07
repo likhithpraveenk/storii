@@ -20,8 +20,7 @@ class NavBar extends ConsumerWidget {
       removeBottom: true,
       child: NavigationBar(
         selectedIndex: currentIndex,
-        backgroundColor: scheme.surfaceContainer,
-        elevation: 2,
+        backgroundColor: scheme.surface,
         labelBehavior: labelBehavior,
         onDestinationSelected: (index) {
           if (index == currentIndex) return;

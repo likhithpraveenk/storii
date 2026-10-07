@@ -56,22 +56,39 @@ ConnectionType connectionType(Ref ref) {
 }
 
 @Riverpod(keepAlive: true)
-Future<Uri> activeServerUrl(Ref ref, UserDomain user) async {
-  final server = ref.watch(serverStreamProvider(user.serverUrl)).value;
-  final localUrl = server?.localUrl;
-  if (localUrl == null) return user.serverUrl;
+class ActiveServerUrl extends _$ActiveServerUrl {
+  @override
+  Future<Uri> build(UserDomain user) async {
+    final server = await ref.watch(serverStreamProvider(user.serverUrl).future);
+    final localUrl = server?.localUrl;
+    if (localUrl == null) return user.serverUrl;
 
-  final canCheck = ref.watch(
-    connectionTypeProvider.select((c) => c == .wifi || c == .ethernet),
-  );
-  if (!canCheck) return user.serverUrl;
+    ref.listen(connectionTypeProvider, (_, conn) async {
+      final canCheck = conn == .wifi || conn == .ethernet;
+      if (!canCheck) {
+        state = AsyncData(user.serverUrl);
+        return;
+      }
+      final url = await _ping(localUrl);
+      state = AsyncData(url);
+    });
 
-  final error = await ref
-      .read(pingServerProvider(localUrl).future)
-      .timeout(const Duration(seconds: 2), onTimeout: () => 'error');
-  if (error == null) return localUrl;
+    final canCheck = ref.read(
+      connectionTypeProvider.select((c) => c == .wifi || c == .ethernet),
+    );
+    if (!canCheck) return user.serverUrl;
 
-  return user.serverUrl;
+    return _ping(localUrl);
+  }
+
+  Future<Uri> _ping(Uri localUrl) async {
+    final error = await ref
+        .read(pingServerProvider(localUrl).future)
+        .timeout(const Duration(seconds: 2), onTimeout: () => 'error');
+    if (error == null) return localUrl;
+
+    return user.serverUrl;
+  }
 }
 
 @Riverpod(keepAlive: true)

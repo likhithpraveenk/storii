@@ -73,6 +73,7 @@ class _AppColorSheetState extends ConsumerState<_AppColorSheet> {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
+    final textTheme = Theme.of(context).textTheme;
     final scheme = ColorScheme.fromSeed(
       seedColor: _previewColor,
       brightness: brightness,
@@ -96,45 +97,54 @@ class _AppColorSheetState extends ConsumerState<_AppColorSheet> {
                 margin: const .only(right: 12),
                 decoration: BoxDecoration(color: _previewColor, shape: .circle),
               ),
-              suffixIconConstraints: const BoxConstraints(
-                maxWidth: 48,
-                maxHeight: 48,
-              ),
+              suffixIconConstraints: const .new(maxWidth: 48, maxHeight: 48),
             ),
             onChanged: _onChanged,
           ),
         ),
         Container(
           margin: const .symmetric(horizontal: 24),
-          padding: const .all(24),
+          padding: const .all(16),
           decoration: BoxDecoration(
             color: scheme.surface,
             border: .all(width: 2, color: scheme.outline),
             borderRadius: .circular(kRadius),
           ),
-          child: Row(
-            spacing: 12,
-            mainAxisAlignment: .center,
+          child: Column(
+            spacing: 8,
             children: [
-              _PreviewDot(
-                color: scheme.primary,
-                label: l10n.primary,
-                outline: scheme.primaryContainer,
+              Text(
+                l10n.themePreview,
+                style: textTheme.bodyMedium?.copyWith(
+                  color: scheme.onSurfaceVariant,
+                  fontWeight: .bold,
+                ),
               ),
-              _PreviewDot(
-                color: scheme.secondary,
-                label: l10n.secondary,
-                outline: scheme.secondaryContainer,
-              ),
-              _PreviewDot(
-                color: scheme.tertiary,
-                label: l10n.tertiary,
-                outline: scheme.tertiaryContainer,
-              ),
-              _PreviewDot(
-                color: scheme.error,
-                label: l10n.error,
-                outline: scheme.errorContainer,
+              Row(
+                spacing: 12,
+                mainAxisAlignment: .center,
+                children: [
+                  _PreviewDot(
+                    color: scheme.primary,
+                    label: l10n.primary,
+                    outline: scheme.primaryContainer,
+                  ),
+                  _PreviewDot(
+                    color: scheme.secondary,
+                    label: l10n.secondary,
+                    outline: scheme.secondaryContainer,
+                  ),
+                  _PreviewDot(
+                    color: scheme.tertiary,
+                    label: l10n.tertiary,
+                    outline: scheme.tertiaryContainer,
+                  ),
+                  _PreviewDot(
+                    color: scheme.error,
+                    label: l10n.error,
+                    outline: scheme.errorContainer,
+                  ),
+                ],
               ),
             ],
           ),

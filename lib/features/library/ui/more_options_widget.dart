@@ -129,8 +129,6 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
       ));
     }
 
-    // TODO: import existing downloads
-
     if (mediaProgress?.isFinished != true && !widget.inDetailScreen) {
       options.add((
         title: l10n.markAsComplete,

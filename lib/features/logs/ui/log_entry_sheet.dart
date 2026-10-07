@@ -36,6 +36,7 @@ void showLogEntrySheet(BuildContext context, LogEntry entry) {
                       alignment: .centerRight,
                       child: IconButton(
                         icon: const Icon(Icons.copy_rounded),
+                        tooltip: l10n.copy,
                         onPressed: () async {
                           final fullLog =
                               '''

@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/shared/helpers/app_error.dart';
 
 class TokenStorage {
   final FlutterSecureStorage _storage;
@@ -16,16 +18,59 @@ class TokenStorage {
     String? access,
     String? refresh,
   ) async {
-    await _storage.write(key: _access(userId), value: access);
-    await _storage.write(key: _refresh(userId), value: refresh);
-    _tokenStreams[userId]?.add(access);
+    try {
+      await _storage.write(key: _access(userId), value: access);
+      await _storage.write(key: _refresh(userId), value: refresh);
+      _tokenStreams[userId]?.add(access);
+    } catch (e, st) {
+      LogService.log(
+        'saving tokens failed',
+        source: 'TokenStorage',
+        level: .error,
+        originalError: e,
+        stackTrace: st,
+      );
+      throw AppError.from(e, st);
+    }
   }
 
-  Future<String?> getAccessToken(String userId) =>
-      _storage.read(key: _access(userId));
+  Future<String?> getAccessToken(String userId) async {
+    try {
+      final token = await _storage.read(key: _access(userId));
+      if (token == null) {
+        LogService.log('access token NOT FOUND', source: 'TokenStorage');
+      }
+      return token;
+    } catch (e, st) {
+      LogService.log(
+        'access token read error',
+        source: 'TokenStorage',
+        level: .error,
+        originalError: e,
+        stackTrace: st,
+      );
+      return null;
+    }
+  }
 
-  Future<String?> getRefreshToken(String userId) =>
-      _storage.read(key: _refresh(userId));
+  Future<String?> getRefreshToken(String userId) async {
+    try {
+      final token = await _storage.read(key: _refresh(userId));
+      if (token == null) {
+        LogService.log('refresh token NOT FOUND', source: 'TokenStorage');
+      }
+      return token;
+    } catch (e, st) {
+      LogService.log(
+        'refresh token read error',
+        source: 'TokenStorage',
+        level: .error,
+        originalError: e,
+        stackTrace: st,
+      );
+      return null;
+    }
+  }
 
   Future<void> clearTokens(String userId) async {
     await _storage.delete(key: _access(userId));
