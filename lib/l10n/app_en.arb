@@ -81,6 +81,15 @@
   "pause": "Pause",
   "replay": "Replay",
   "deleteLogsQ": "Delete all logs?",
+  "selectedCount": "{count} selected",
+  "@selectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "copy": "Copy",
   "audiobooks": "Audiobooks",
   "podcasts": "Podcasts",
   "episodes": "Episodes",

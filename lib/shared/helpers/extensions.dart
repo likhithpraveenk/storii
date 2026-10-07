@@ -104,7 +104,7 @@ extension StringExtensions on String {
 extension LogLevelX on LogLevel {
   Color color(ColorScheme scheme) {
     return switch (this) {
-      .debug => appWhiteColor,
+      .debug => scheme.onSurfaceVariant,
       .info => scheme.primary,
       .warning => appYellowColor,
       .error => appRedColor,
