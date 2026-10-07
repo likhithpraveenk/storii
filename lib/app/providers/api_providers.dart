@@ -45,39 +45,14 @@ Future<ApiClient> apiClient(Ref ref, UserDomain user) async {
     ],
     getAccessToken: () async {
       final token = await tokenService.getAccessToken(user.id);
-      if (token == null) {
-        LogService.log(
-          'Access token not available for ${user.username}',
-          source: 'API Client',
-          level: .error,
-        );
-      }
       return token;
     },
     getRefreshToken: () async {
       final token = await tokenService.getRefreshToken(user.id);
-      if (token == null) {
-        LogService.log(
-          'Refresh token not available for ${user.username}',
-          source: 'API Client',
-          level: .error,
-        );
-      }
       return token;
     },
     onTokensUpdated: (newAccess, newRefresh) async {
-      try {
-        await tokenService.saveTokens(user.id, newAccess, newRefresh);
-      } catch (e, st) {
-        LogService.log(
-          'saving new tokens failed for ${user.username}',
-          source: 'API Client',
-          level: .error,
-          originalError: e,
-          stackTrace: st,
-        );
-        rethrow;
-      }
+      await tokenService.saveTokens(user.id, newAccess, newRefresh);
     },
     onTokensFailure: () async {
       await ref
