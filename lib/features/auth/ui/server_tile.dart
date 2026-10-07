@@ -133,7 +133,7 @@ class _ServerTileState extends ConsumerState<ServerTile> {
                               width: double.infinity,
                               child: AppOutlinedButton(
                                 icon: const Icon(Icons.edit),
-                                text: l10n.editServer,
+                                text: l10n.edit,
                                 onPressed: () {
                                   showAddServerSheet(context, widget.server);
                                 },

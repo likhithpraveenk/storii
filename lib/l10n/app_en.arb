@@ -29,7 +29,6 @@
   "followingUsers": "You are about to delete the following users",
   "addUser": "Add User",
   "edit": "Edit",
-  "editServer": "Edit Server",
   "errorLoadingUsers": "Error loading users",
   "switchingToUser": "Switching to {user}",
   "@switchingToUser": {
@@ -542,7 +541,6 @@
   "bookmarks": "Bookmarks",
   "bookmarkFailed": "Failed to save bookmark",
   "addBookmark": "Add Bookmark",
-  "editBookmark": "Edit Bookmark",
   "extraControls": "Extra Controls",
   "extraControlsSubtitle": "Add skip forward and rewind buttons in miniplayer",
   "customization": "Customization",
