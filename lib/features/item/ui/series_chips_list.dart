@@ -27,8 +27,7 @@ class SeriesChipsList extends ConsumerWidget {
               avatar: const Icon(Icons.stacked_bar_chart),
               avatarBoxConstraints: const BoxConstraints(),
               label: Text(sLabel, style: textTheme.labelLarge),
-              onPressed: () =>
-                  context.push(AppRoute.seriesDetail.path, extra: s.id),
+              onPressed: () => context.push(AppRoute.seriesDetail.withId(s.id)),
               shape: RoundedRectangleBorder(borderRadius: .circular(kRadius)),
             );
           }),

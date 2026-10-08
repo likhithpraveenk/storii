@@ -59,8 +59,7 @@ class EpisodeListItem extends ConsumerWidget {
                       highlightColor: Colors.transparent,
                       onTap: () {
                         context.push(
-                          AppRoute.itemDetail.path,
-                          extra: episode.libraryItemId,
+                          AppRoute.itemDetail.withId(episode.libraryItemId),
                         );
                       },
                       child: CustomPaint(

@@ -34,6 +34,7 @@ import 'package:storii/features/settings/ui/player_settings/player_settings_scre
 import 'package:storii/features/settings/ui/settings_screen.dart';
 import 'package:storii/features/stats/ui/stats_screen.dart';
 import 'package:storii/shared/splash_screen.dart';
+import 'package:storii/shared/widgets/not_found_screen.dart';
 import 'package:storii/shared/widgets/shell_scaffold.dart';
 
 enum AppRoute {
@@ -44,17 +45,17 @@ enum AppRoute {
   logs('/logs'),
   home('/'),
   library('/library'),
-  itemDetail('/itemDetail'),
+  itemDetail('/item/:id'),
   search('/search'),
   series('/series'),
-  seriesDetail('/series/detail'),
+  seriesDetail('/series/:id'),
   authors('/authors'),
-  authorDetail('/authors/detail'),
-  authorBooks('/authors/detail/books'),
+  authorDetail('/authors/:id'),
+  authorBooks('/authors/:id/books'),
   collections('/collections'),
-  collectionDetail('/collections/detail'),
+  collectionDetail('/collections/:id'),
   playlists('/playlists'),
-  playlistDetail('/playlists/detail'),
+  playlistDetail('/playlists/:id'),
   downloads('/downloads'),
   latest('/latest'),
   admin('/admin'),
@@ -71,6 +72,8 @@ enum AppRoute {
 
   final String path;
   new(this.path);
+
+  String withId(String id) => path.replaceFirst(':id', Uri.encodeComponent(id));
 }
 
 final publicRoutes = [
@@ -100,6 +103,9 @@ final routerProvider = Provider<GoRouter>((ref) {
         return AppRoute.login.path;
       }
       return null;
+    },
+    errorBuilder: (context, state) {
+      return NotFoundScreen(path: state.uri.toString());
     },
     routes: [
       GoRoute(
@@ -159,9 +165,9 @@ final routerProvider = Provider<GoRouter>((ref) {
                     const NoTransitionPage(child: SeriesListScreen()),
                 routes: [
                   GoRoute(
-                    path: 'detail',
+                    path: ':id',
                     builder: (context, state) {
-                      final id = state.extra as String;
+                      final id = state.pathParameters['id']!;
                       return SeriesDetailScreen(id: id);
                     },
                   ),
@@ -192,16 +198,16 @@ final routerProvider = Provider<GoRouter>((ref) {
                     const NoTransitionPage(child: AuthorListScreen()),
                 routes: [
                   GoRoute(
-                    path: 'detail',
+                    path: ':id',
                     builder: (context, state) {
-                      final id = state.extra as String;
+                      final id = state.pathParameters['id']!;
                       return AuthorDetailScreen(id: id);
                     },
                     routes: [
                       GoRoute(
                         path: 'books',
                         builder: (context, state) {
-                          final id = state.extra as String;
+                          final id = state.pathParameters['id']!;
                           return StandaloneBooks(id: id);
                         },
                       ),
@@ -219,9 +225,9 @@ final routerProvider = Provider<GoRouter>((ref) {
                     const NoTransitionPage(child: CollectionsScreen()),
                 routes: [
                   GoRoute(
-                    path: 'detail',
+                    path: ':id',
                     builder: (context, state) {
-                      final id = state.extra as String;
+                      final id = state.pathParameters['id']!;
                       return CollectionDetailScreen(id: id);
                     },
                   ),
@@ -296,9 +302,9 @@ final routerProvider = Provider<GoRouter>((ref) {
                     const NoTransitionPage(child: PlaylistsScreen()),
                 routes: [
                   GoRoute(
-                    path: 'detail',
+                    path: ':id',
                     builder: (context, state) {
-                      final id = state.extra as String;
+                      final id = state.pathParameters['id']!;
                       return PlaylistDetailScreen(id: id);
                     },
                   ),
@@ -317,11 +323,19 @@ final routerProvider = Provider<GoRouter>((ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: AppRoute.itemDetail.path,
+                path: '/item',
                 builder: (context, state) {
-                  final id = state.extra as String;
-                  return ItemDetailScreen(id: id);
+                  return const NotFoundScreen(path: '/item');
                 },
+                routes: [
+                  GoRoute(
+                    path: ':id',
+                    builder: (context, state) {
+                      final id = state.pathParameters['id']!;
+                      return ItemDetailScreen(id: id);
+                    },
+                  ),
+                ],
               ),
             ],
           ),

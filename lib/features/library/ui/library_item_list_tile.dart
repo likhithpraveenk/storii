@@ -54,12 +54,9 @@ class LibraryItemListTile extends ConsumerWidget {
     return InkWell(
       onTap: () {
         if (isSeries) {
-          context.push(
-            AppRoute.seriesDetail.path,
-            extra: item.collapsedSeries!.id,
-          );
+          context.push(AppRoute.seriesDetail.withId(item.collapsedSeries!.id));
         } else {
-          context.push(AppRoute.itemDetail.path, extra: item.id);
+          context.push(AppRoute.itemDetail.withId(item.id));
         }
       },
       onLongPress: () => showMoreItemOptionsSheet(

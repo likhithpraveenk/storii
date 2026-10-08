@@ -341,6 +341,7 @@
   "syncInterval": "Sync Interval",
   "syncIntervalSubtitle": "Controls server sync frequency, overriding the 1-minute mobile data restriction if set higher",
   "emptyMsg": "So empty…",
+  "pageNotFound": "Page not found",
   "history": "History",
   "today": "Today",
   "yesterday": "Yesterday",

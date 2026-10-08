@@ -29,8 +29,7 @@ class _DownloadTileState extends State<DownloadTile> {
           contentPadding: const .fromLTRB(16, 8, 16, 4),
           onTap: widget.item.isComplete
               ? () => context.push(
-                  AppRoute.itemDetail.path,
-                  extra: widget.item.libraryItemId,
+                  AppRoute.itemDetail.withId(widget.item.libraryItemId),
                 )
               : null,
           leading: AspectRatio(

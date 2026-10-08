@@ -28,7 +28,7 @@ class SeriesListTile extends ConsumerWidget {
     final isFinished = series.progress?.isFinished ?? false;
 
     return InkWell(
-      onTap: () => context.push(AppRoute.seriesDetail.path, extra: series.id),
+      onTap: () => context.push(AppRoute.seriesDetail.withId(series.id)),
       onLongPress: () => AppBottomSheet.show(
         context,
         title: l10n.more,
