@@ -15,12 +15,10 @@ class _PodcastMetadataFormState extends ConsumerState<PodcastMetadataForm> {
   final _authorController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _releaseDateController = TextEditingController();
-  final _genresController = TextEditingController();
   final _imageUrlController = TextEditingController();
   final _itunesPageUrlController = TextEditingController();
   final _itunesIdController = TextEditingController();
   final _itunesArtistIdController = TextEditingController();
-  final _podcastTypeController = TextEditingController();
   final _languageController = TextEditingController();
 
   final _scrollController = ScrollController();
@@ -33,12 +31,10 @@ class _PodcastMetadataFormState extends ConsumerState<PodcastMetadataForm> {
     _authorController.dispose();
     _descriptionController.dispose();
     _releaseDateController.dispose();
-    _genresController.dispose();
     _imageUrlController.dispose();
     _itunesPageUrlController.dispose();
     _itunesIdController.dispose();
     _itunesArtistIdController.dispose();
-    _podcastTypeController.dispose();
     _languageController.dispose();
     _scrollController.dispose();
     super.dispose();
@@ -52,12 +48,10 @@ class _PodcastMetadataFormState extends ConsumerState<PodcastMetadataForm> {
     _authorController.text = metadata.author ?? '';
     _descriptionController.text = metadata.description ?? '';
     _releaseDateController.text = metadata.releaseDate ?? '';
-    _genresController.text = _join(metadata.genres);
     _imageUrlController.text = metadata.imageUrl ?? '';
     _itunesPageUrlController.text = metadata.itunesPageUrl ?? '';
     _itunesIdController.text = metadata.itunesId ?? '';
     _itunesArtistIdController.text = metadata.itunesArtistId ?? '';
-    _podcastTypeController.text = metadata.podcastType?.name ?? '';
     _languageController.text = metadata.language ?? '';
   }
 
@@ -88,120 +82,127 @@ class _PodcastMetadataFormState extends ConsumerState<PodcastMetadataForm> {
     if (state == null) return const SizedBox.shrink();
     _seedIfNeeded(state);
     final metadata = state.draft.metadata as PodcastMetadata;
+    final filterData = ref.watch(filterDataProvider);
 
     return AppScrollbar(
       controller: _scrollController,
-      child: ListView(
-        keyboardDismissBehavior: .onDrag,
-        children: [
-          UpdateCoverWidget(widget.id),
-          MetadataTextField(
-            controller: _titleController,
-            label: l10n.title,
-            isRequired: true,
-            onChanged: (v) => _updateDraft(
-              (m) => m.copyWith(title: v.trim().isEmpty ? null : v),
+      child: SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
+          crossAxisAlignment: .stretch,
+          children: [
+            UpdateCoverWidget(widget.id),
+            MetadataTextField(
+              controller: _titleController,
+              label: l10n.title,
+              isRequired: true,
+              onChanged: (v) => _updateDraft(
+                (m) => m.copyWith(title: v.trim().isEmpty ? null : v),
+              ),
             ),
-          ),
-          MetadataTextField(
-            controller: _authorController,
-            label: l10n.author,
-            onChanged: (v) => _updateDraft(
-              (m) => m.copyWith(author: v.trim().isEmpty ? null : v),
+            MetadataTextField(
+              controller: _authorController,
+              label: l10n.author,
+              onChanged: (v) => _updateDraft(
+                (m) => m.copyWith(author: v.trim().isEmpty ? null : v),
+              ),
             ),
-          ),
-          MetadataTextField(
-            controller: _descriptionController,
-            label: l10n.description,
-            onChanged: (v) => _updateDraft(
-              (m) => m.copyWith(description: v.trim().isEmpty ? null : v),
+            MetadataTextField(
+              controller: _descriptionController,
+              label: l10n.description,
+              onChanged: (v) => _updateDraft(
+                (m) => m.copyWith(description: v.trim().isEmpty ? null : v),
+              ),
             ),
-          ),
-          MetadataTextField(
-            controller: _releaseDateController,
-            label: l10n.releaseDate,
-            onChanged: (v) => _updateDraft(
-              (m) => m.copyWith(releaseDate: v.trim().isEmpty ? null : v),
+            MetadataTextField(
+              controller: _releaseDateController,
+              label: l10n.releaseDate,
+              onChanged: (v) => _updateDraft(
+                (m) => m.copyWith(releaseDate: v.trim().isEmpty ? null : v),
+              ),
             ),
-          ),
-          MetadataTextField(
-            controller: _genresController,
-            label: l10n.genres,
-            onChanged: (v) =>
-                _updateDraft((m) => m.copyWith(genres: _split(v) ?? [])),
-          ),
-          MetadataTextField(
-            controller: _imageUrlController,
-            label: l10n.imageUrl,
-            keyboardType: .url,
-            onChanged: (v) => _updateDraft(
-              (m) => m.copyWith(imageUrl: v.trim().isEmpty ? null : v),
+            MetadataChips(
+              label: l10n.genres,
+              values: metadata.genres,
+              options: filterData.genres,
+              displayValue: (g) => g,
+              onChanged: (v) => _updateDraft((m) => m.copyWith(genres: v)),
             ),
-          ),
-          MetadataTextField(
-            controller: _itunesPageUrlController,
-            label: l10n.itunesPageUrl,
-            keyboardType: .url,
-            onChanged: (v) => _updateDraft(
-              (m) => m.copyWith(itunesPageUrl: v.trim().isEmpty ? null : v),
+            MetadataTextField(
+              controller: _imageUrlController,
+              label: l10n.imageUrl,
+              keyboardType: .url,
+              onChanged: (v) => _updateDraft(
+                (m) => m.copyWith(imageUrl: v.trim().isEmpty ? null : v),
+              ),
             ),
-          ),
-          MetadataTextField(
-            controller: _itunesIdController,
-            label: l10n.itunesId,
-            onChanged: (v) => _updateDraft(
-              (m) => m.copyWith(itunesId: v.trim().isEmpty ? null : v),
+            MetadataTextField(
+              controller: _itunesPageUrlController,
+              label: l10n.itunesPageUrl,
+              keyboardType: .url,
+              onChanged: (v) => _updateDraft(
+                (m) => m.copyWith(itunesPageUrl: v.trim().isEmpty ? null : v),
+              ),
             ),
-          ),
-          MetadataTextField(
-            controller: _itunesArtistIdController,
-            label: l10n.itunesArtistId,
-            onChanged: (v) => _updateDraft(
-              (m) => m.copyWith(itunesArtistId: v.trim().isEmpty ? null : v),
+            MetadataTextField(
+              controller: _itunesIdController,
+              label: l10n.itunesId,
+              onChanged: (v) => _updateDraft(
+                (m) => m.copyWith(itunesId: v.trim().isEmpty ? null : v),
+              ),
             ),
-          ),
-          MetadataTextField(
-            // TODO: segmented button?
-            controller: _podcastTypeController,
-            label: l10n.podcastType,
-            onChanged: (v) {
-              final value = v.trim().isEmpty ? null : v;
-              _updateDraft(
-                (m) => m.copyWith(
-                  podcastType: PodcastType.values.firstWhereOrNull(
-                    (t) => t.name == value,
+            MetadataTextField(
+              controller: _itunesArtistIdController,
+              label: l10n.itunesArtistId,
+              onChanged: (v) => _updateDraft(
+                (m) => m.copyWith(itunesArtistId: v.trim().isEmpty ? null : v),
+              ),
+            ),
+            Padding(
+              padding: const .fromLTRB(16, 8, 16, 8),
+              child: Column(
+                crossAxisAlignment: .start,
+                children: [
+                  Text(
+                    l10n.podcastType,
+                    style: Theme.of(context).textTheme.labelLarge,
                   ),
-                ),
-              );
-            },
-          ),
-          MetadataTextField(
-            controller: _languageController,
-            label: l10n.language,
-            onChanged: (v) => _updateDraft(
-              (m) => m.copyWith(language: v.trim().isEmpty ? null : v),
+                  const SizedBox(height: 8),
+                  SegmentedButton<PodcastType?>(
+                    segments: [
+                      ButtonSegment(
+                        value: PodcastType.episodic,
+                        label: Text(l10n.episodic),
+                      ),
+                      ButtonSegment(
+                        value: PodcastType.serial,
+                        label: Text(l10n.serial),
+                      ),
+                    ],
+                    selected: {metadata.podcastType},
+                    onSelectionChanged: (s) => _updateDraft(
+                      (m) => m.copyWith(podcastType: s.firstOrNull),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          MetadataCheckbox(
-            label: l10n.explicit,
-            value: metadata.explicit,
-            onChanged: (v) => _updateDraft((m) => m.copyWith(explicit: v)),
-          ),
-        ],
+            MetadataTextField(
+              controller: _languageController,
+              label: l10n.language,
+              onChanged: (v) => _updateDraft(
+                (m) => m.copyWith(language: v.trim().isEmpty ? null : v),
+              ),
+            ),
+            MetadataCheckbox(
+              label: l10n.explicit,
+              value: metadata.explicit,
+              onChanged: (v) => _updateDraft((m) => m.copyWith(explicit: v)),
+            ),
+            const SizedBox(height: 200),
+          ],
+        ),
       ),
     );
-  }
-
-  String _join(List<String>? values) =>
-      (values == null || values.isEmpty) ? '' : values.join(', ');
-
-  List<String>? _split(String? value) {
-    if (value == null) return null;
-    final parts = value
-        .split(',')
-        .map((e) => e.trim())
-        .where((e) => e.isNotEmpty)
-        .toList();
-    return parts.isEmpty ? null : parts;
   }
 }

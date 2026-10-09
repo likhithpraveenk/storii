@@ -12,9 +12,6 @@ class BookMetadataForm extends ConsumerStatefulWidget {
 class _BookMetadataFormState extends ConsumerState<BookMetadataForm> {
   final _titleController = TextEditingController();
   final _subtitleController = TextEditingController();
-  final _narratorsController = TextEditingController();
-  final _genresController = TextEditingController();
-  final _tagsController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _publishedYearController = TextEditingController();
   final _publisherController = TextEditingController();
@@ -30,9 +27,6 @@ class _BookMetadataFormState extends ConsumerState<BookMetadataForm> {
   void dispose() {
     _titleController.dispose();
     _subtitleController.dispose();
-    _narratorsController.dispose();
-    _genresController.dispose();
-    _tagsController.dispose();
     _publishedYearController.dispose();
     _publisherController.dispose();
     _descriptionController.dispose();
@@ -46,13 +40,9 @@ class _BookMetadataFormState extends ConsumerState<BookMetadataForm> {
   void _seedIfNeeded(EditorState state) {
     if (identical(_seededFrom, state.original)) return;
     _seededFrom = state.original;
-    final media = state.original as BookMedia;
     final metadata = state.original.metadata as BookMetadata;
     _titleController.text = metadata.title ?? '';
     _subtitleController.text = metadata.subtitle ?? '';
-    _narratorsController.text = _join(metadata.narrators);
-    _genresController.text = _join(metadata.genres);
-    _tagsController.text = _join(media.tags);
     _publishedYearController.text = metadata.publishedYear ?? '';
     _publisherController.text = metadata.publisher ?? '';
     _descriptionController.text = metadata.description ?? '';
@@ -87,14 +77,15 @@ class _BookMetadataFormState extends ConsumerState<BookMetadataForm> {
     final state = ref.watch(itemMetadataProvider(widget.id)).value;
     if (state == null) return const SizedBox.shrink();
     _seedIfNeeded(state);
+    final media = state.draft as BookMedia;
     final metadata = state.draft.metadata as BookMetadata;
     final filterData = ref.watch(filterDataProvider);
+    final seriesOptions = filterData.series.map((s) => s.stripped).toList();
 
     return AppScrollbar(
       controller: _scrollController,
       child: SingleChildScrollView(
         controller: _scrollController,
-        keyboardDismissBehavior: .onDrag,
         child: Column(
           crossAxisAlignment: .stretch,
           children: [
@@ -114,21 +105,40 @@ class _BookMetadataFormState extends ConsumerState<BookMetadataForm> {
                 (m) => m.copyWith(subtitle: v.trim().isEmpty ? null : v),
               ),
             ),
-            MetadataMultiSelect<Author>(
+            MetadataChips<Author>(
               label: l10n.authors,
-              selected: metadata.authors ?? [],
-              options: filterData.authors,
-              optionLabel: (author) => author.name,
-              onChanged: (authors) =>
-                  _updateDraft((m) => m.copyWith(authors: authors)),
+              values: metadata.authors?.map((s) => s.stripped).toList() ?? [],
+              options: filterData.authors.map((s) => s.stripped).toList(),
+              displayValue: (a) => a.name,
+              onChanged: (a) => _updateDraft((m) => m.copyWith(authors: a)),
+              createOption: (name, previous) =>
+                  Author(id: previous?.id ?? const Uuid().v4(), name: name),
             ),
-            MetadataMultiSelect<Series>(
+            MetadataChips<Series>(
               label: l10n.series,
-              selected: metadata.series ?? [],
-              options: filterData.series,
-              optionLabel: (series) => series.name,
-              onChanged: (series) =>
-                  _updateDraft((m) => m.copyWith(series: series)),
+              values: metadata.series?.map((s) => s.stripped).toList() ?? [],
+              options: seriesOptions,
+              displayValue: (s) =>
+                  s.sequence != null ? '${s.name} #${s.sequence}' : s.name,
+              compareValue: (s) => s.name,
+              onChanged: (s) => _updateDraft((m) => m.copyWith(series: s)),
+              suffixOnSelect: ' #',
+              createOption: (text, previous) {
+                final i = text.indexOf('#');
+                final name = (i < 0 ? text : text.substring(0, i)).trim();
+                final seq = i < 0 ? '' : text.substring(i + 1).trim();
+                if (name.isEmpty) return null;
+
+                final existing = seriesOptions.firstWhereOrNull(
+                  (o) => o.name == name,
+                );
+
+                return Series(
+                  id: existing?.id ?? previous?.id ?? const Uuid().v4(),
+                  name: existing?.name ?? name,
+                  sequence: seq.isEmpty ? null : seq,
+                );
+              },
             ),
             MetadataTextField(
               controller: _descriptionController,
@@ -138,23 +148,26 @@ class _BookMetadataFormState extends ConsumerState<BookMetadataForm> {
                 (m) => m.copyWith(description: v.trim().isEmpty ? null : v),
               ),
             ),
-            MetadataTextField(
-              controller: _genresController,
+            MetadataChips(
               label: l10n.genres,
-              onChanged: (v) =>
-                  _updateDraft((m) => m.copyWith(genres: _split(v) ?? [])),
+              values: metadata.genres,
+              options: filterData.genres,
+              displayValue: (g) => g,
+              onChanged: (v) => _updateDraft((m) => m.copyWith(genres: v)),
             ),
-            MetadataTextField(
-              controller: _tagsController,
+            MetadataChips(
               label: l10n.tags,
-              onChanged: (v) =>
-                  _updateMedia((m) => m.copyWith(tags: _split(v) ?? [])),
+              values: media.tags,
+              options: filterData.tags,
+              displayValue: (t) => t,
+              onChanged: (v) => _updateMedia((m) => m.copyWith(tags: v)),
             ),
-            MetadataTextField(
-              controller: _narratorsController,
+            MetadataChips(
               label: l10n.narrators,
-              onChanged: (v) =>
-                  _updateDraft((m) => m.copyWith(narrators: _split(v))),
+              values: metadata.narrators ?? <String>[],
+              options: filterData.narrators,
+              displayValue: (n) => n,
+              onChanged: (v) => _updateDraft((m) => m.copyWith(narrators: v)),
             ),
             MetadataTextField(
               controller: _publishedYearController,
@@ -207,19 +220,5 @@ class _BookMetadataFormState extends ConsumerState<BookMetadataForm> {
         ),
       ),
     );
-  }
-
-  String _join(List<String>? values) =>
-      (values == null || values.isEmpty) ? '' : values.join(', ');
-
-  // TODO: WIP: genres, tags, narrator, authors and series
-  List<String>? _split(String? value) {
-    if (value == null) return null;
-    final parts = value
-        .split(',')
-        .map((e) => e.trim())
-        .where((e) => e.isNotEmpty)
-        .toList();
-    return parts.isEmpty ? null : parts;
   }
 }

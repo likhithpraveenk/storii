@@ -295,6 +295,12 @@ extension SeriesX on Series {
     if (count == 0) return 0;
     return finished / count;
   }
+
+  Series get stripped => Series(id: id, name: name, sequence: sequence);
+}
+
+extension AuthorX on Author {
+  Author get stripped => Author(id: id, name: name);
 }
 
 extension SearchX on SearchResponse {

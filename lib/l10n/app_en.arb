@@ -171,6 +171,8 @@
   "itunesPageUrl": "iTunes Page Url",
   "imageUrl": "Image URL",
   "podcastType": "Podcast Type",
+  "episodic": "Episodic",
+  "serial": "Serial",
   "collapseSeries": "Collapse Series",
   "filter": "Filter",
   "sort": "Sort",
