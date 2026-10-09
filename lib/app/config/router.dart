@@ -14,6 +14,7 @@ import 'package:storii/features/collections/ui/collection_detail_screen.dart';
 import 'package:storii/features/collections/ui/collections_screen.dart';
 import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/features/home/ui/home_screen.dart';
+import 'package:storii/features/item/ui/edit_metadata_screen.dart';
 import 'package:storii/features/item/ui/item_detail_screen.dart';
 import 'package:storii/features/latest_episodes/ui/latest_episodes_screen.dart';
 import 'package:storii/features/library/ui/library_screen.dart';
@@ -46,6 +47,7 @@ enum AppRoute {
   home('/'),
   library('/library'),
   itemDetail('/item/:id'),
+  editMetadata('/item/:id/metadata'),
   search('/search'),
   series('/series'),
   seriesDetail('/series/:id'),
@@ -334,6 +336,15 @@ final routerProvider = Provider<GoRouter>((ref) {
                       final id = state.pathParameters['id']!;
                       return ItemDetailScreen(id: id);
                     },
+                    routes: [
+                      GoRoute(
+                        path: 'metadata',
+                        builder: (context, state) {
+                          final id = state.pathParameters['id']!;
+                          return EditMetadataScreen(id: id);
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),

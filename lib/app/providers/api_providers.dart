@@ -144,3 +144,9 @@ Future<PlaylistsApi> playlistsApi(Ref ref, UserDomain user) async {
   final apiClient = await ref.watch(apiClientProvider(user).future);
   return PlaylistsApi(apiClient);
 }
+
+@riverpod
+Future<SearchApi> searchApi(Ref ref, UserDomain user) async {
+  final apiClient = await ref.watch(apiClientProvider(user).future);
+  return SearchApi(apiClient);
+}

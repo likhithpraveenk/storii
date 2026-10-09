@@ -12,6 +12,7 @@ import 'package:storii/shared/helpers/ref_extensions.dart';
 
 part 'widget_controller.g.dart';
 
+// TODO: widget is broken - loses binding regularly or on app update
 @riverpod
 class WidgetController extends _$WidgetController {
   @override

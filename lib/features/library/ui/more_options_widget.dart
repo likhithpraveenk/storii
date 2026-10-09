@@ -1,8 +1,10 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/keys.dart';
+import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/storage_location.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
@@ -233,23 +235,34 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
     }
 
     if (isAdmin) {
-      options.add((
-        title: l10n.reScan,
-        icon: Icons.refresh,
-        onTap: () async {
-          if (_isBusy) return;
-          setState(() => _isBusy = true);
-          final message = await ref
-              .read(scanItemProvider.notifier)
-              .scan(widget.itemId);
-          if (!mounted) return;
-          setState(() => _isBusy = false);
-          globalMessengerKey.currentState?.hideCurrentSnackBar();
-          if (message != null) {
-            globalMessengerKey.currentState?.showAppSnackBar(message);
-          }
-        },
-      ));
+      options
+        ..add((
+          title: l10n.reScan,
+          icon: Icons.refresh,
+          onTap: () async {
+            if (_isBusy) return;
+            setState(() => _isBusy = true);
+            final message = await ref
+                .read(scanItemProvider.notifier)
+                .scan(widget.itemId);
+            if (!mounted) return;
+            setState(() => _isBusy = false);
+            globalMessengerKey.currentState?.hideCurrentSnackBar();
+            if (message != null) {
+              globalMessengerKey.currentState?.showAppSnackBar(message);
+            }
+          },
+        ))
+        ..add((
+          title: l10n.edit,
+          icon: Icons.edit,
+          onTap: () async {
+            Navigator.of(context).pop();
+            if (context.mounted) {
+              await context.push(AppRoute.editMetadata.withId(widget.itemId));
+            }
+          },
+        ));
     }
 
     options.add((
