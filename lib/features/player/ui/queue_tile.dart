@@ -4,26 +4,27 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/player/logic/queue_providers.dart';
+import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/models/queue_state.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
 
 class QueueTile extends ConsumerWidget {
-  const new({
-    required super.key,
-    required this.item,
-    required this.index,
-    required this.isCurrent,
-  });
+  const new({required super.key, required this.item, required this.index});
 
   final QueueItem item;
   final int index;
-  final bool isCurrent;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final isCurrent = ref.watch(
+      sessionProvider.select(
+        (s) =>
+            s?.libraryItemId == item.itemId && s?.episodeId == item.episodeId,
+      ),
+    );
 
     final title =
         (item.episode != null

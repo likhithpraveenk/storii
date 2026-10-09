@@ -102,7 +102,6 @@ class _QueueSheetBody extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final queue = ref.watch(queueProvider);
     final items = queue.items;
-    final currentIndex = queue.currentIndex;
 
     return SafeArea(
       child: DecoratedBox(
@@ -123,11 +122,12 @@ class _QueueSheetBody extends ConsumerWidget {
                   ),
                   Align(
                     alignment: .centerRight,
-                    child: _ClearQueue(
-                      () => ref
+                    child: _ClearQueue(() {
+                      final isPlaying = ref.read(sessionProvider) != null;
+                      ref
                           .read(queueProvider.notifier)
-                          .clear(removeCurrentPlaying: false),
-                    ),
+                          .clear(removeCurrentPlaying: !isPlaying);
+                    }),
                   ),
                 ],
               ),
@@ -149,7 +149,6 @@ class _QueueSheetBody extends ConsumerWidget {
                     key: ValueKey(mediaItemIdKey(item.itemId, item.episodeId)),
                     item: item,
                     index: index,
-                    isCurrent: currentIndex == index,
                   );
                 },
               ),
