@@ -9,10 +9,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 ### Added
 
 - copy multiple logs at once
+- edit metadata of books and podcasts
 
 ### Fixed
 
 - go back to startup nav on final back press
+- can remove/play media on restored queue
 
 ## [v0.11.2-beta.1] - 2026-10-06
 

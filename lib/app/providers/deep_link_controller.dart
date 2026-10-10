@@ -35,6 +35,9 @@ void deepLinkController(Ref ref) {
           ref.read(widgetControllerProvider.notifier).setWidgetId(widgetId);
         }
 
+      case '':
+        router.go(url.path);
+
       default:
         LogService.log(
           'Unhandled deep link: $url',

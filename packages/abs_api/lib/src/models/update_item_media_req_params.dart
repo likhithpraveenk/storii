@@ -1,5 +1,5 @@
 import 'package:abs_api/src/models/author.dart';
-import 'package:abs_api/src/models/book_chapter.dart';
+import 'package:abs_api/src/models/enums.dart';
 import 'package:abs_api/src/models/series.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -9,14 +9,11 @@ part 'update_item_media_req_params.g.dart';
 @freezed
 sealed class UpdateItemMediaReqParams with _$UpdateItemMediaReqParams {
   const factory book({
-    String? coverPath,
     List<String>? tags,
     UpdateMediaMetadataReqParams? metadata,
-    List<BookChapter>? chapters,
   }) = UpdateBookReqParams;
 
   const factory podcast({
-    String? coverPath,
     List<String>? tags,
     UpdateMediaMetadataReqParams? metadata,
     bool? autoDownloadEpisodes,
@@ -46,6 +43,7 @@ sealed class UpdateMediaMetadataReqParams with _$UpdateMediaMetadataReqParams {
     String? asin,
     String? language,
     bool? explicit,
+    bool? abridged,
   }) = UpdateBookMetadataReqParams;
 
   const factory podcast({
@@ -57,10 +55,12 @@ sealed class UpdateMediaMetadataReqParams with _$UpdateMediaMetadataReqParams {
     String? feedUrl,
     String? imageUrl,
     String? itunesPageUrl,
-    int? itunesId,
-    int? itunesArtistId,
+    String? itunesId,
+    String? itunesArtistId,
+    PodcastType? podcastType,
     bool? explicit,
     String? language,
+    String? type,
   }) = UpdatePodcastMetadataReqParams;
 
   factory fromJson(Map<String, dynamic> json) =>

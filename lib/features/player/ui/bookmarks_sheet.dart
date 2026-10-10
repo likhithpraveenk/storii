@@ -146,7 +146,7 @@ class _BookmarkSheetBody extends ConsumerWidget {
                           mainAxisSize: .min,
                           children: [
                             IconButton(
-                              tooltip: l10n.editBookmark,
+                              tooltip: l10n.edit,
                               onPressed: () => showBookmarkDialog(
                                 context,
                                 ref,
@@ -194,7 +194,7 @@ Future<void> showBookmarkDialog(
   );
   return AppDialog.show(
     context,
-    title: isEditing ? l10n.editBookmark : l10n.addBookmark,
+    title: isEditing ? l10n.edit : l10n.addBookmark,
     actionLabel: l10n.save,
     actionIcon: Icons.save_outlined,
     body: Column(

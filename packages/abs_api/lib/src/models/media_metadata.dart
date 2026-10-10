@@ -46,6 +46,7 @@ sealed class MediaMetadata with _$MediaMetadata {
     String? itunesPageUrl,
     String? itunesId,
     String? itunesArtistId,
+    PodcastType? podcastType,
     @Default(false) bool explicit,
     String? language,
   }) = PodcastMetadata;

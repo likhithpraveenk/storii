@@ -81,10 +81,7 @@ class CoverImageTitle extends StatelessWidget {
                         splashFactory: NoSplash.splashFactory,
                         highlightColor: Colors.transparent,
                         onTap: () {
-                          context.push(
-                            AppRoute.authorDetail.path,
-                            extra: author.id,
-                          );
+                          context.push(AppRoute.authorDetail.withId(author.id));
                         },
                         child: CustomPaint(
                           painter: DashedUnderlinePainter(

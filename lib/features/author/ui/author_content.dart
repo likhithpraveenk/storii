@@ -40,7 +40,7 @@ class AuthorContent extends ConsumerWidget {
               padding: .zero,
               trailing: TextButton(
                 onPressed: () {
-                  context.push(AppRoute.authorBooks.path, extra: authorId);
+                  context.push(AppRoute.authorBooks.withId(authorId));
                 },
                 style: TextButton.styleFrom(
                   textStyle: Theme.of(context).textTheme.labelSmall,
@@ -56,7 +56,7 @@ class AuthorContent extends ConsumerWidget {
               title: l10n.books,
               count: books.length,
               onViewAll: () {
-                context.push(AppRoute.authorBooks.path, extra: authorId);
+                context.push(AppRoute.authorBooks.withId(authorId));
               },
             ),
             _HorizontalBooksCarousel(books: books),
@@ -168,7 +168,7 @@ class _SeriesSection extends ConsumerWidget {
         padding: .zero,
         trailing: TextButton(
           onPressed: () {
-            context.push(AppRoute.seriesDetail.path, extra: series.id);
+            context.push(AppRoute.seriesDetail.withId(series.id));
           },
           style: TextButton.styleFrom(
             textStyle: Theme.of(context).textTheme.labelSmall,
@@ -186,7 +186,7 @@ class _SeriesSection extends ConsumerWidget {
           title: series.name,
           count: books.length,
           onViewAll: () =>
-              context.push(AppRoute.seriesDetail.path, extra: series.id),
+              context.push(AppRoute.seriesDetail.withId(series.id)),
         ),
         _HorizontalBooksCarousel(books: books),
         const SizedBox(height: 16),

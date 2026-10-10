@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:abs_api/src/socket/events/collection_events.dart';
+import 'package:abs_api/src/socket/events/item_events.dart';
 import 'package:abs_api/src/socket/events/playlist_events.dart';
 import 'package:abs_api/src/socket/events/task_events.dart';
 import 'package:abs_api/src/socket/events/user_events.dart';
@@ -17,6 +18,7 @@ class SocketApi {
   late final TaskEvents taskEvents;
   late final CollectionEvents collectionEvents;
   late final PlaylistEvents playlistEvents;
+  late final ItemEvents itemEvents;
 
   late final Stream<bool> isConnected;
 
@@ -40,6 +42,7 @@ class SocketApi {
     taskEvents = TaskEvents(socket);
     collectionEvents = CollectionEvents(socket);
     playlistEvents = PlaylistEvents(socket);
+    itemEvents = ItemEvents(socket);
 
     _connController = StreamController<bool>.broadcast();
     isConnected = _connController.stream;

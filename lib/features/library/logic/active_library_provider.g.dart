@@ -89,4 +89,4 @@ final class LibrarySyncControllerProvider
 }
 
 String _$librarySyncControllerHash() =>
-    r'85e4ed5bacb3cfc65d47048658e886875865852d';
+    r'0658969732de01b0ad25eefaaa6d4f7031c00346';

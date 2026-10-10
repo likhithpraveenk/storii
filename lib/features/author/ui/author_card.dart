@@ -14,7 +14,7 @@ class AuthorCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
-      onTap: () => context.push(AppRoute.authorDetail.path, extra: author.id),
+      onTap: () => context.push(AppRoute.authorDetail.withId(author.id)),
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
       child: Column(

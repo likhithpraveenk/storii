@@ -187,11 +187,11 @@ return podcast(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String? title,  String? titleIgnorePrefix,  String? subtitle,  List<Author>? authors,  List<String>? narrators, @JsonKey(readValue: _readSeries)  List<Series>? series,  List<String> genres,  String? publishedYear,  String? publishedDate,  String? publisher,  String? description,  String? isbn,  String? asin,  String? language,  bool explicit,  bool? abridged,  String? authorName,  String? authorNameLF,  String? narratorName,  String? seriesName,  String? descriptionPlain)?  book,TResult Function( String? title,  String? titleIgnorePrefix,  String? author,  String? description,  String? releaseDate,  List<String> genres,  String? feedUrl,  String? imageUrl,  String? itunesPageUrl,  String? itunesId,  String? itunesArtistId,  bool explicit,  String? language)?  podcast,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String? title,  String? titleIgnorePrefix,  String? subtitle,  List<Author>? authors,  List<String>? narrators, @JsonKey(readValue: _readSeries)  List<Series>? series,  List<String> genres,  String? publishedYear,  String? publishedDate,  String? publisher,  String? description,  String? isbn,  String? asin,  String? language,  bool explicit,  bool? abridged,  String? authorName,  String? authorNameLF,  String? narratorName,  String? seriesName,  String? descriptionPlain)?  book,TResult Function( String? title,  String? titleIgnorePrefix,  String? author,  String? description,  String? releaseDate,  List<String> genres,  String? feedUrl,  String? imageUrl,  String? itunesPageUrl,  String? itunesId,  String? itunesArtistId,  PodcastType? podcastType,  bool explicit,  String? language)?  podcast,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case BookMetadata() when book != null:
 return book(_that.title,_that.titleIgnorePrefix,_that.subtitle,_that.authors,_that.narrators,_that.series,_that.genres,_that.publishedYear,_that.publishedDate,_that.publisher,_that.description,_that.isbn,_that.asin,_that.language,_that.explicit,_that.abridged,_that.authorName,_that.authorNameLF,_that.narratorName,_that.seriesName,_that.descriptionPlain);case PodcastMetadata() when podcast != null:
-return podcast(_that.title,_that.titleIgnorePrefix,_that.author,_that.description,_that.releaseDate,_that.genres,_that.feedUrl,_that.imageUrl,_that.itunesPageUrl,_that.itunesId,_that.itunesArtistId,_that.explicit,_that.language);case _:
+return podcast(_that.title,_that.titleIgnorePrefix,_that.author,_that.description,_that.releaseDate,_that.genres,_that.feedUrl,_that.imageUrl,_that.itunesPageUrl,_that.itunesId,_that.itunesArtistId,_that.podcastType,_that.explicit,_that.language);case _:
   return orElse();
 
 }
@@ -209,11 +209,11 @@ return podcast(_that.title,_that.titleIgnorePrefix,_that.author,_that.descriptio
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String? title,  String? titleIgnorePrefix,  String? subtitle,  List<Author>? authors,  List<String>? narrators, @JsonKey(readValue: _readSeries)  List<Series>? series,  List<String> genres,  String? publishedYear,  String? publishedDate,  String? publisher,  String? description,  String? isbn,  String? asin,  String? language,  bool explicit,  bool? abridged,  String? authorName,  String? authorNameLF,  String? narratorName,  String? seriesName,  String? descriptionPlain)  book,required TResult Function( String? title,  String? titleIgnorePrefix,  String? author,  String? description,  String? releaseDate,  List<String> genres,  String? feedUrl,  String? imageUrl,  String? itunesPageUrl,  String? itunesId,  String? itunesArtistId,  bool explicit,  String? language)  podcast,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String? title,  String? titleIgnorePrefix,  String? subtitle,  List<Author>? authors,  List<String>? narrators, @JsonKey(readValue: _readSeries)  List<Series>? series,  List<String> genres,  String? publishedYear,  String? publishedDate,  String? publisher,  String? description,  String? isbn,  String? asin,  String? language,  bool explicit,  bool? abridged,  String? authorName,  String? authorNameLF,  String? narratorName,  String? seriesName,  String? descriptionPlain)  book,required TResult Function( String? title,  String? titleIgnorePrefix,  String? author,  String? description,  String? releaseDate,  List<String> genres,  String? feedUrl,  String? imageUrl,  String? itunesPageUrl,  String? itunesId,  String? itunesArtistId,  PodcastType? podcastType,  bool explicit,  String? language)  podcast,}) {final _that = this;
 switch (_that) {
 case BookMetadata():
 return book(_that.title,_that.titleIgnorePrefix,_that.subtitle,_that.authors,_that.narrators,_that.series,_that.genres,_that.publishedYear,_that.publishedDate,_that.publisher,_that.description,_that.isbn,_that.asin,_that.language,_that.explicit,_that.abridged,_that.authorName,_that.authorNameLF,_that.narratorName,_that.seriesName,_that.descriptionPlain);case PodcastMetadata():
-return podcast(_that.title,_that.titleIgnorePrefix,_that.author,_that.description,_that.releaseDate,_that.genres,_that.feedUrl,_that.imageUrl,_that.itunesPageUrl,_that.itunesId,_that.itunesArtistId,_that.explicit,_that.language);}
+return podcast(_that.title,_that.titleIgnorePrefix,_that.author,_that.description,_that.releaseDate,_that.genres,_that.feedUrl,_that.imageUrl,_that.itunesPageUrl,_that.itunesId,_that.itunesArtistId,_that.podcastType,_that.explicit,_that.language);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -227,11 +227,11 @@ return podcast(_that.title,_that.titleIgnorePrefix,_that.author,_that.descriptio
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String? title,  String? titleIgnorePrefix,  String? subtitle,  List<Author>? authors,  List<String>? narrators, @JsonKey(readValue: _readSeries)  List<Series>? series,  List<String> genres,  String? publishedYear,  String? publishedDate,  String? publisher,  String? description,  String? isbn,  String? asin,  String? language,  bool explicit,  bool? abridged,  String? authorName,  String? authorNameLF,  String? narratorName,  String? seriesName,  String? descriptionPlain)?  book,TResult? Function( String? title,  String? titleIgnorePrefix,  String? author,  String? description,  String? releaseDate,  List<String> genres,  String? feedUrl,  String? imageUrl,  String? itunesPageUrl,  String? itunesId,  String? itunesArtistId,  bool explicit,  String? language)?  podcast,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String? title,  String? titleIgnorePrefix,  String? subtitle,  List<Author>? authors,  List<String>? narrators, @JsonKey(readValue: _readSeries)  List<Series>? series,  List<String> genres,  String? publishedYear,  String? publishedDate,  String? publisher,  String? description,  String? isbn,  String? asin,  String? language,  bool explicit,  bool? abridged,  String? authorName,  String? authorNameLF,  String? narratorName,  String? seriesName,  String? descriptionPlain)?  book,TResult? Function( String? title,  String? titleIgnorePrefix,  String? author,  String? description,  String? releaseDate,  List<String> genres,  String? feedUrl,  String? imageUrl,  String? itunesPageUrl,  String? itunesId,  String? itunesArtistId,  PodcastType? podcastType,  bool explicit,  String? language)?  podcast,}) {final _that = this;
 switch (_that) {
 case BookMetadata() when book != null:
 return book(_that.title,_that.titleIgnorePrefix,_that.subtitle,_that.authors,_that.narrators,_that.series,_that.genres,_that.publishedYear,_that.publishedDate,_that.publisher,_that.description,_that.isbn,_that.asin,_that.language,_that.explicit,_that.abridged,_that.authorName,_that.authorNameLF,_that.narratorName,_that.seriesName,_that.descriptionPlain);case PodcastMetadata() when podcast != null:
-return podcast(_that.title,_that.titleIgnorePrefix,_that.author,_that.description,_that.releaseDate,_that.genres,_that.feedUrl,_that.imageUrl,_that.itunesPageUrl,_that.itunesId,_that.itunesArtistId,_that.explicit,_that.language);case _:
+return podcast(_that.title,_that.titleIgnorePrefix,_that.author,_that.description,_that.releaseDate,_that.genres,_that.feedUrl,_that.imageUrl,_that.itunesPageUrl,_that.itunesId,_that.itunesArtistId,_that.podcastType,_that.explicit,_that.language);case _:
   return null;
 
 }
@@ -388,7 +388,7 @@ as String?,
 @JsonSerializable()
 
 class PodcastMetadata extends MediaMetadata {
-  const PodcastMetadata({this.title, this.titleIgnorePrefix, this.author, this.description, this.releaseDate,  List<String> genres = const [], this.feedUrl, this.imageUrl, this.itunesPageUrl, this.itunesId, this.itunesArtistId, this.explicit = false, this.language,  String? $type}): _genres = genres,$type = $type ?? 'podcast',super._();
+  const PodcastMetadata({this.title, this.titleIgnorePrefix, this.author, this.description, this.releaseDate,  List<String> genres = const [], this.feedUrl, this.imageUrl, this.itunesPageUrl, this.itunesId, this.itunesArtistId, this.podcastType, this.explicit = false, this.language,  String? $type}): _genres = genres,$type = $type ?? 'podcast',super._();
   factory PodcastMetadata.fromJson(Map<String, dynamic> json) => _$PodcastMetadataFromJson(json);
 
 @override final  String? title;
@@ -408,6 +408,7 @@ class PodcastMetadata extends MediaMetadata {
  final  String? itunesPageUrl;
  final  String? itunesId;
  final  String? itunesArtistId;
+ final  PodcastType? podcastType;
 @override@JsonKey() final  bool explicit;
 @override final  String? language;
 
@@ -428,18 +429,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastMetadata&&(identical(other.title, title) || other.title == title)&&(identical(other.titleIgnorePrefix, titleIgnorePrefix) || other.titleIgnorePrefix == titleIgnorePrefix)&&(identical(other.author, author) || other.author == author)&&(identical(other.description, description) || other.description == description)&&(identical(other.releaseDate, releaseDate) || other.releaseDate == releaseDate)&&const DeepCollectionEquality().equals(other.genres, _genres)&&(identical(other.feedUrl, feedUrl) || other.feedUrl == feedUrl)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.itunesPageUrl, itunesPageUrl) || other.itunesPageUrl == itunesPageUrl)&&(identical(other.itunesId, itunesId) || other.itunesId == itunesId)&&(identical(other.itunesArtistId, itunesArtistId) || other.itunesArtistId == itunesArtistId)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&(identical(other.language, language) || other.language == language));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastMetadata&&(identical(other.title, title) || other.title == title)&&(identical(other.titleIgnorePrefix, titleIgnorePrefix) || other.titleIgnorePrefix == titleIgnorePrefix)&&(identical(other.author, author) || other.author == author)&&(identical(other.description, description) || other.description == description)&&(identical(other.releaseDate, releaseDate) || other.releaseDate == releaseDate)&&const DeepCollectionEquality().equals(other.genres, _genres)&&(identical(other.feedUrl, feedUrl) || other.feedUrl == feedUrl)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.itunesPageUrl, itunesPageUrl) || other.itunesPageUrl == itunesPageUrl)&&(identical(other.itunesId, itunesId) || other.itunesId == itunesId)&&(identical(other.itunesArtistId, itunesArtistId) || other.itunesArtistId == itunesArtistId)&&(identical(other.podcastType, podcastType) || other.podcastType == podcastType)&&(identical(other.explicit, explicit) || other.explicit == explicit)&&(identical(other.language, language) || other.language == language));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,title,titleIgnorePrefix,author,description,releaseDate,const DeepCollectionEquality().hash(_genres),feedUrl,imageUrl,itunesPageUrl,itunesId,itunesArtistId,explicit,language);
+    return Object.hash(runtimeType,title,titleIgnorePrefix,author,description,releaseDate,const DeepCollectionEquality().hash(_genres),feedUrl,imageUrl,itunesPageUrl,itunesId,itunesArtistId,podcastType,explicit,language);
 }
 
 @override
 String toString() {
-    return 'MediaMetadata.podcast(title: $title, titleIgnorePrefix: $titleIgnorePrefix, author: $author, description: $description, releaseDate: $releaseDate, genres: $genres, feedUrl: $feedUrl, imageUrl: $imageUrl, itunesPageUrl: $itunesPageUrl, itunesId: $itunesId, itunesArtistId: $itunesArtistId, explicit: $explicit, language: $language)';
+    return 'MediaMetadata.podcast(title: $title, titleIgnorePrefix: $titleIgnorePrefix, author: $author, description: $description, releaseDate: $releaseDate, genres: $genres, feedUrl: $feedUrl, imageUrl: $imageUrl, itunesPageUrl: $itunesPageUrl, itunesId: $itunesId, itunesArtistId: $itunesArtistId, podcastType: $podcastType, explicit: $explicit, language: $language)';
 }
 
 
@@ -450,7 +451,7 @@ abstract mixin class $PodcastMetadataCopyWith<$Res> implements $MediaMetadataCop
   factory $PodcastMetadataCopyWith(PodcastMetadata value, $Res Function(PodcastMetadata) _then) = _$PodcastMetadataCopyWithImpl;
 @override @useResult
 $Res call({
- String? title, String? titleIgnorePrefix, String? author, String? description, String? releaseDate, List<String> genres, String? feedUrl, String? imageUrl, String? itunesPageUrl, String? itunesId, String? itunesArtistId, bool explicit, String? language
+ String? title, String? titleIgnorePrefix, String? author, String? description, String? releaseDate, List<String> genres, String? feedUrl, String? imageUrl, String? itunesPageUrl, String? itunesId, String? itunesArtistId, PodcastType? podcastType, bool explicit, String? language
 });
 
 
@@ -467,7 +468,7 @@ class _$PodcastMetadataCopyWithImpl<$Res>
 
 /// Create a copy of MediaMetadata
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = freezed,Object? titleIgnorePrefix = freezed,Object? author = freezed,Object? description = freezed,Object? releaseDate = freezed,Object? genres = null,Object? feedUrl = freezed,Object? imageUrl = freezed,Object? itunesPageUrl = freezed,Object? itunesId = freezed,Object? itunesArtistId = freezed,Object? explicit = null,Object? language = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = freezed,Object? titleIgnorePrefix = freezed,Object? author = freezed,Object? description = freezed,Object? releaseDate = freezed,Object? genres = null,Object? feedUrl = freezed,Object? imageUrl = freezed,Object? itunesPageUrl = freezed,Object? itunesId = freezed,Object? itunesArtistId = freezed,Object? podcastType = freezed,Object? explicit = null,Object? language = freezed,}) {
   return _then(PodcastMetadata(
 title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String?,titleIgnorePrefix: freezed == titleIgnorePrefix ? _self.titleIgnorePrefix : titleIgnorePrefix // ignore: cast_nullable_to_non_nullable
@@ -480,7 +481,8 @@ as String?,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: 
 as String?,itunesPageUrl: freezed == itunesPageUrl ? _self.itunesPageUrl : itunesPageUrl // ignore: cast_nullable_to_non_nullable
 as String?,itunesId: freezed == itunesId ? _self.itunesId : itunesId // ignore: cast_nullable_to_non_nullable
 as String?,itunesArtistId: freezed == itunesArtistId ? _self.itunesArtistId : itunesArtistId // ignore: cast_nullable_to_non_nullable
-as String?,explicit: null == explicit ? _self.explicit : explicit // ignore: cast_nullable_to_non_nullable
+as String?,podcastType: freezed == podcastType ? _self.podcastType : podcastType // ignore: cast_nullable_to_non_nullable
+as PodcastType?,explicit: null == explicit ? _self.explicit : explicit // ignore: cast_nullable_to_non_nullable
 as bool,language: freezed == language ? _self.language : language // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

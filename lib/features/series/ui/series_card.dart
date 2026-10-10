@@ -18,7 +18,7 @@ class SeriesCard extends StatelessWidget {
     final itemIds = series.books.map((b) => b.id).toList();
 
     return StackedImagesCard(
-      onTap: () => context.push(AppRoute.seriesDetail.path, extra: series.id),
+      onTap: () => context.push(AppRoute.seriesDetail.withId(series.id)),
       onLongPress: () => AppBottomSheet.show(
         context,
         title: l10n.more,

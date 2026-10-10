@@ -88,8 +88,7 @@ class _PlaylistsScreenState extends ConsumerState<PlaylistsScreen> {
                       itemIds: itemIds,
                       title: playlist.name,
                       onTap: () => context.push(
-                        AppRoute.playlistDetail.path,
-                        extra: playlist.id,
+                        AppRoute.playlistDetail.withId(playlist.id),
                       ),
                     );
                   },

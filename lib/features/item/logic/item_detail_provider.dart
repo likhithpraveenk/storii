@@ -13,32 +13,47 @@ import 'package:storii/storage/local/items_cache.dart';
 part 'item_detail_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-Future<LibraryItem> itemDetail(Ref ref, String id) async {
-  final cache = ref.read(itemsCacheProvider.notifier);
+class ItemDetail extends _$ItemDetail {
+  @override
+  Future<LibraryItem> build(String id) async {
+    final cache = ref.read(itemsCacheProvider.notifier);
+    ref.listen(libraryItemUpdatedProvider, (_, next) {
+      final updated = next.value;
+      if (updated == null || updated.id != id || !state.hasValue) return;
+      state = AsyncData(updated);
+      unawaited(cache.put(updated));
+    });
 
-  final isConnected = ref.watch(serverConnectionProvider);
-  if (!isConnected) {
-    final localItem = cache.get(id);
-    if (localItem != null) return localItem;
-    throw l10n.connectionServerDisconnected;
-  }
-
-  final user = await ref.watch(authenticatedUserProvider.future);
-  final api = await ref.read(itemApiProvider(user).future);
-
-  try {
-    final remoteItem = await ref.logApiCall(
-      () => api.get(id, includeProgress: true),
-      source: 'itemDetail',
-      logMessage: 'Error fetching library item details',
-    );
-    unawaited(cache.put(remoteItem));
-    return remoteItem;
-  } on AppError catch (error) {
-    if (error.type == .network || error.type == .timeout) {
+    final isConnected = ref.watch(serverConnectionProvider);
+    if (!isConnected) {
       final localItem = cache.get(id);
       if (localItem != null) return localItem;
+      throw l10n.connectionServerDisconnected;
     }
-    rethrow;
+
+    final user = await ref.watch(authenticatedUserProvider.future);
+    final api = await ref.read(itemApiProvider(user).future);
+    try {
+      final remoteItem = await ref.logApiCall(
+        () => api.get(id, includeProgress: true),
+        source: 'itemDetail',
+        logMessage: 'Error fetching library item details',
+      );
+      unawaited(cache.put(remoteItem));
+      return remoteItem;
+    } on AppError catch (error) {
+      if (error.type == .network || error.type == .timeout) {
+        final localItem = cache.get(id);
+        if (localItem != null) return localItem;
+      }
+      rethrow;
+    }
   }
+}
+
+@riverpod
+Stream<LibraryItem?> libraryItemUpdated(Ref ref) async* {
+  final userDomain = await ref.watch(authenticatedUserProvider.future);
+  final socket = await ref.watch(socketApiProvider(userDomain).future);
+  yield* socket.itemEvents.onItemUpdated;
 }

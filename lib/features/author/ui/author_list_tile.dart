@@ -18,7 +18,7 @@ class AuthorListTile extends ConsumerWidget {
     final cardSize = ref.watch(listViewImageSizeProvider);
 
     return InkWell(
-      onTap: () => context.push(AppRoute.authorDetail.path, extra: author.id),
+      onTap: () => context.push(AppRoute.authorDetail.withId(author.id)),
       borderRadius: .circular(kRadius),
       child: Padding(
         padding: const .fromLTRB(16, 8, 16, 8),

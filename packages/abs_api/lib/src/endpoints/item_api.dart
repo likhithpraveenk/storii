@@ -73,7 +73,7 @@ class ItemApi {
       (coverFile != null) ^ (url != null),
       'Provide coverFile OR url, not both or neither.',
     );
-    final data = dataBuilder(
+    final data = await dataBuilder(
       json: url != null ? {'url': url} : null,
       files: coverFile != null ? {'cover': coverFile} : null,
     );
@@ -82,18 +82,6 @@ class ItemApi {
       ApiRoutes.itemCover(libraryItemId),
       method: .post,
       body: data,
-    );
-    return fromJson(response.data, UpdateCoverResponse.fromJson);
-  }
-
-  Future<UpdateCoverResponse> updateCover({
-    required String libraryItemId,
-    required String coverPath,
-  }) async {
-    final response = await api.request(
-      ApiRoutes.itemCover(libraryItemId),
-      method: .patch,
-      body: {'cover': coverPath},
     );
     return fromJson(response.data, UpdateCoverResponse.fromJson);
   }
@@ -132,6 +120,7 @@ class ItemApi {
       method: .patch,
       body: parameters?.toJson(),
     );
-    return fromJson(response.data, LibraryItem.fromJson);
+    final libraryItem = fromJsonKey(response.data, 'libraryItem');
+    return fromJson(libraryItem, LibraryItem.fromJson);
   }
 }

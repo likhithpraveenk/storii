@@ -45,7 +45,7 @@ class ReorderableItemCard extends ConsumerWidget {
       borderRadius: .circular(kRadius),
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.transparent,
-      onTap: () => context.push(AppRoute.itemDetail.path, extra: itemId),
+      onTap: () => context.push(AppRoute.itemDetail.withId(itemId)),
       onLongPress: () {
         AppBottomSheet.show(
           context,

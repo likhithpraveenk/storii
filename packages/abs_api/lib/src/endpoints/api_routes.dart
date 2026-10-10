@@ -169,4 +169,12 @@ class ApiRoutes {
   // Search Routes
   //
   static const metadataProviders = '/api/search/providers';
+  static const searchBooks = '/api/search/books';
+  static const searchPodcasts = '/api/search/podcasts';
+  static const searchChapters = '/api/search/chapters';
+  static const searchCovers = '/api/search/covers';
+  static const _searchEpisodes = '/api/podcasts/:id/search-episode';
+
+  static String searchEpisodes(String id) =>
+      _build(_searchEpisodes, {'id': id});
 }

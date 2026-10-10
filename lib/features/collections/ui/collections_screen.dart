@@ -86,8 +86,7 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
                       itemIds: itemIds,
                       title: collection.name,
                       onTap: () => context.push(
-                        AppRoute.collectionDetail.path,
-                        extra: collection.id,
+                        AppRoute.collectionDetail.withId(collection.id),
                       ),
                     );
                   },

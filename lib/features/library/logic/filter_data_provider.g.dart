@@ -41,7 +41,7 @@ final class FilterDataProvider
   }
 }
 
-String _$filterDataHash() => r'59abdcc6265b10ff842561d7b6d75790d3643097';
+String _$filterDataHash() => r'2715df5feddbbce5f8b0fed6306f8bdb737609ab';
 
 abstract class _$FilterData extends $Notifier<LibraryFilterData> {
   LibraryFilterData build();

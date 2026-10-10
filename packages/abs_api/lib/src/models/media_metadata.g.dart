@@ -65,27 +65,27 @@ Map<String, dynamic> _$BookMetadataToJson(BookMetadata instance) =>
       'runtimeType': instance.$type,
     };
 
-PodcastMetadata _$PodcastMetadataFromJson(Map<String, dynamic> json) =>
-    PodcastMetadata(
-      title: json['title'] as String?,
-      titleIgnorePrefix: json['titleIgnorePrefix'] as String?,
-      author: json['author'] as String?,
-      description: json['description'] as String?,
-      releaseDate: json['releaseDate'] as String?,
-      genres:
-          (json['genres'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      feedUrl: json['feedUrl'] as String?,
-      imageUrl: json['imageUrl'] as String?,
-      itunesPageUrl: json['itunesPageUrl'] as String?,
-      itunesId: json['itunesId'] as String?,
-      itunesArtistId: json['itunesArtistId'] as String?,
-      explicit: json['explicit'] as bool? ?? false,
-      language: json['language'] as String?,
-      $type: json['runtimeType'] as String?,
-    );
+PodcastMetadata _$PodcastMetadataFromJson(
+  Map<String, dynamic> json,
+) => PodcastMetadata(
+  title: json['title'] as String?,
+  titleIgnorePrefix: json['titleIgnorePrefix'] as String?,
+  author: json['author'] as String?,
+  description: json['description'] as String?,
+  releaseDate: json['releaseDate'] as String?,
+  genres:
+      (json['genres'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const [],
+  feedUrl: json['feedUrl'] as String?,
+  imageUrl: json['imageUrl'] as String?,
+  itunesPageUrl: json['itunesPageUrl'] as String?,
+  itunesId: json['itunesId'] as String?,
+  itunesArtistId: json['itunesArtistId'] as String?,
+  podcastType: $enumDecodeNullable(_$PodcastTypeEnumMap, json['podcastType']),
+  explicit: json['explicit'] as bool? ?? false,
+  language: json['language'] as String?,
+  $type: json['runtimeType'] as String?,
+);
 
 Map<String, dynamic> _$PodcastMetadataToJson(PodcastMetadata instance) =>
     <String, dynamic>{
@@ -100,7 +100,13 @@ Map<String, dynamic> _$PodcastMetadataToJson(PodcastMetadata instance) =>
       'itunesPageUrl': ?instance.itunesPageUrl,
       'itunesId': ?instance.itunesId,
       'itunesArtistId': ?instance.itunesArtistId,
+      'podcastType': ?_$PodcastTypeEnumMap[instance.podcastType],
       'explicit': instance.explicit,
       'language': ?instance.language,
       'runtimeType': instance.$type,
     };
+
+const _$PodcastTypeEnumMap = {
+  PodcastType.episodic: 'episodic',
+  PodcastType.serial: 'serial',
+};

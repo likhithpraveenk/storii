@@ -37,6 +37,16 @@ enum MediaType {
   new(this.type);
 }
 
+@JsonEnum(valueField: 'type')
+enum PodcastType {
+  episodic('episodic'),
+  serial('serial');
+
+  final String type;
+
+  new(this.type);
+}
+
 enum FileType { image, audio, ebook, video, text, metadata, unknown }
 
 enum ShelfIdentity {

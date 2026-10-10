@@ -818,3 +818,77 @@ final class PlaylistsApiFamily extends $Family
   @override
   String toString() => r'playlistsApiProvider';
 }
+
+@ProviderFor(searchApi)
+final searchApiProvider = SearchApiFamily._();
+
+final class SearchApiProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<SearchApi>,
+          SearchApi,
+          FutureOr<SearchApi>
+        >
+    with $FutureModifier<SearchApi>, $FutureProvider<SearchApi> {
+  SearchApiProvider._({
+    required SearchApiFamily super.from,
+    required UserDomain super.argument,
+  }) : super(
+         retry: null,
+         name: r'searchApiProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$searchApiHash();
+
+  @override
+  String toString() {
+    return r'searchApiProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<SearchApi> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<SearchApi> create(Ref ref) {
+    final argument = this.argument as UserDomain;
+    return searchApi(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SearchApiProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$searchApiHash() => r'1e30bbc87b348fbc53bbf08e00faccefc421af68';
+
+final class SearchApiFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<SearchApi>, UserDomain> {
+  SearchApiFamily._()
+    : super(
+        retry: null,
+        name: r'searchApiProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  SearchApiProvider call(UserDomain user) =>
+      SearchApiProvider._(argument: user, from: this);
+
+  @override
+  String toString() => r'searchApiProvider';
+}
