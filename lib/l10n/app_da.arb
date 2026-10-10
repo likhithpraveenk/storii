@@ -29,7 +29,6 @@
   "followingUsers": "Du er ved at slette følgende brugere",
   "addUser": "Tilføj bruger",
   "edit": "Rediger",
-  "editServer": "Rediger server",
   "errorLoadingUsers": "Fejl ved indlæsning af brugere",
   "switchingToUser": "Skifter til {user}",
   "@switchingToUser": {
@@ -418,7 +417,6 @@
   "bookmarks": "Bogmærker",
   "bookmarkFailed": "Kunne ikke gemme bogmærke",
   "addBookmark": "Tilføj bogmærke",
-  "editBookmark": "Rediger bogmærke",
   "extraControls": "Ekstra betjeningselementer",
   "extraControlsSubtitle": "Tilføj knapper til at springe frem og spole tilbage i miniafspilleren",
   "customization": "Tilpasning",

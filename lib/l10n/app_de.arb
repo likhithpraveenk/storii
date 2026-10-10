@@ -29,7 +29,6 @@
   "followingUsers": "Sie sind dabei, die folgenden Benutzer zu löschen",
   "addUser": "Nutzer hinzufügen",
   "edit": "bearbeiten",
-  "editServer": "Server bearbeiten",
   "errorLoadingUsers": "Fehler beim Laden der Benutzer",
   "switchingToUser": "Zu {user} wechseln",
   "@switchingToUser": {
@@ -414,7 +413,6 @@
   "bookmarks": "Lesezeichen",
   "bookmarkFailed": "Das Speichern des Lesezeichens ist fehlgeschlagen",
   "addBookmark": "Lesezeichen hinzufügen",
-  "editBookmark": "Lesezeichen bearbeiten",
   "extraControls": "Zusätzliche Bedienelemente",
   "extraControlsSubtitle": "Schaltflächen zum Vorspulen und Zurückspulen im Mini-Player hinzufügen",
   "customization": "Anpassung",
