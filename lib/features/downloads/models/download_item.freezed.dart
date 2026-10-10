@@ -223,7 +223,7 @@ return $default(_that.audioTrack,_that.ino,_that.bytesReceived,_that.bytesTotal,
 @JsonSerializable()
 
 class _DownloadTrack extends DownloadTrack {
-  const _DownloadTrack({required this.audioTrack, required this.ino, this.bytesReceived = 0, this.bytesTotal = 0, this.status = DownloadStatus.queued, this.trackPath = kMigrateToV4Sentinel}): super._();
+  const _DownloadTrack({required this.audioTrack, required this.ino, this.bytesReceived = 0, this.bytesTotal = 0, this.status = DownloadStatus.queued, required this.trackPath}): super._();
   factory _DownloadTrack.fromJson(Map<String, dynamic> json) => _$DownloadTrackFromJson(json);
 
 @override final  AudioTrack audioTrack;
@@ -231,7 +231,7 @@ class _DownloadTrack extends DownloadTrack {
 @override@JsonKey() final  int bytesReceived;
 @override@JsonKey() final  int bytesTotal;
 @override@JsonKey() final  DownloadStatus status;
-@override@JsonKey() final  String trackPath;
+@override final  String trackPath;
 
 /// Create a copy of DownloadTrack
 /// with the given fields replaced by the non-null parameter values.
@@ -517,7 +517,7 @@ return $default(_that.serverUrl,_that.libraryItemId,_that.userId,_that.title,_th
 @JsonSerializable()
 
 class _DownloadItem extends DownloadItem {
-  const _DownloadItem({required this.serverUrl, required this.libraryItemId, required this.userId, required this.title, required this.author, required  List<DownloadTrack> tracks, this.mediaType = DownloadMediaType.audiobook, this.status = DownloadStatus.queued, this.startedAt, this.episodeId, required this.folderPath, this.relativePath = kMigrateToV4Sentinel}): _tracks = tracks,super._();
+  const _DownloadItem({required this.serverUrl, required this.libraryItemId, required this.userId, required this.title, required this.author, required  List<DownloadTrack> tracks, this.mediaType = DownloadMediaType.audiobook, this.status = DownloadStatus.queued, this.startedAt, this.episodeId, required this.folderPath, required this.relativePath}): _tracks = tracks,super._();
   factory _DownloadItem.fromJson(Map<String, dynamic> json) => _$DownloadItemFromJson(json);
 
 @override final  Uri serverUrl;
@@ -537,7 +537,7 @@ class _DownloadItem extends DownloadItem {
 @override final  DateTime? startedAt;
 @override final  String? episodeId;
 @override final  String folderPath;
-@override@JsonKey() final  String relativePath;
+@override final  String relativePath;
 
 /// Create a copy of DownloadItem
 /// with the given fields replaced by the non-null parameter values.

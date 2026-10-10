@@ -38,18 +38,9 @@ Future<bool> isItemFullyDownloaded(Ref ref, DownloadItem item) async {
   if (service == null) return false;
   final results = await Future.wait(
     item.tracks.map((t) {
-      if (item.isMigratedV4) {
-        return service.isFileIntact(
-          relativePath: item.relativePath,
-          trackPath: t.trackPath,
-          expectedBytes: t.bytesTotal,
-        );
-      }
-
-      return service.fileIntact(
-        libraryItemId: item.libraryItemId,
-        episodeId: item.episodeId,
-        filename: t.filename ?? '',
+      return service.isFileIntact(
+        relativePath: item.relativePath,
+        trackPath: t.trackPath,
         expectedBytes: t.bytesTotal,
       );
     }),
@@ -93,32 +84,16 @@ Future<(Map<int, String>, String?)> resolveLocalPaths(
       return (trackPaths, null);
     }
 
-    if (downloadItem.isMigratedV4) {
-      local = await service.getTrackPath(
-        relativePath: downloadItem.relativePath,
-        trackPath: dTrack.trackPath,
+    local = await service.getTrackPath(
+      relativePath: downloadItem.relativePath,
+      trackPath: dTrack.trackPath,
+    );
+    if (local == null) {
+      LogService.log(
+        'track missing index=${track.index} path=${dTrack.trackPath}',
+        level: .warning,
+        source: 'StorageServiceProvider',
       );
-      if (local == null) {
-        LogService.log(
-          'track missing index=${track.index} path=${dTrack.trackPath}',
-          level: .warning,
-          source: 'StorageServiceProvider',
-        );
-      }
-    } else {
-      final filename = track.metadata?.filename ?? track.index.toString();
-      local = await service.trackPathIfExists(
-        libraryItemId: session.libraryItemId,
-        episodeId: session.episodeId,
-        filename: filename,
-      );
-      if (local == null) {
-        LogService.log(
-          'legacy track missing index=${track.index} filename=$filename',
-          level: .warning,
-          source: 'StorageServiceProvider',
-        );
-      }
     }
 
     if (local != null) trackPaths[track.index] = local;

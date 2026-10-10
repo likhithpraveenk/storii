@@ -7,7 +7,6 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/download_engine.dart';
 import 'package:storii/features/downloads/logic/download_extensions.dart';
-import 'package:storii/features/downloads/logic/download_migration.dart';
 import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
 import 'package:storii/features/downloads/logic/storage_service_provider.dart';
 import 'package:storii/features/downloads/logic/throttled_persister.dart';
@@ -29,10 +28,6 @@ class DownloadQueue extends _$DownloadQueue {
 
   @override
   List<String> build() {
-    Future.microtask(() async {
-      await ref.read(downloadMigrationV4Provider.notifier).runIfNeeded();
-    });
-
     final downloads = _store.getAll();
     final active =
         downloads.values
@@ -233,21 +228,12 @@ class DownloadQueue extends _$DownloadQueue {
     final service = ref.read(storageServiceForItemProvider(item));
     if (item != null && service != null) {
       if (item.episodeId != null) {
-        if (item.isMigratedV4) {
-          await service.deleteTrack(
-            relativePath: item.relativePath,
-            trackPath: item.tracks.first.trackPath,
-          );
-        } else {
-          await service.deleteEpisode(item.libraryItemId, item.episodeId!);
-        }
+        await service.deleteTrack(
+          relativePath: item.relativePath,
+          trackPath: item.tracks.first.trackPath,
+        );
       } else {
-        if (item.isMigratedV4) {
-          await service.deleteFolder(relativePath: item.relativePath);
-        } else {
-          await service.deleteItem(item.libraryItemId);
-        }
-
+        await service.deleteFolder(relativePath: item.relativePath);
         await ref.read(itemsCacheProvider.notifier).delete(item.libraryItemId);
       }
     }
