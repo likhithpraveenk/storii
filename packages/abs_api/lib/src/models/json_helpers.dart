@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:abs_api/src/endpoints/api_exception.dart';
 
 List<T> listFromJson<T>(
@@ -49,7 +51,7 @@ T fromJsonKey<T>(dynamic json, String key) {
     final value = json[key];
     if (value != null) return value;
     throw UnsupportedJsonException(
-      'fromJsonKey: key $key does not exist in given JSON',
+      'fromJsonKey: key "$key" does not exist in given JSON',
     );
   }
   throw UnsupportedJsonException(
@@ -87,4 +89,10 @@ extension JsonRemoveDefaults on Map<String, dynamic> {
   }
 
   Map<String, dynamic>? get nullIfEmpty => isNotEmpty ? this : null;
+}
+
+int getByteSize(dynamic data) {
+  if (data is String) return utf8.encode(data).length;
+  if (data is Map || data is List) return utf8.encode(jsonEncode(data)).length;
+  return 0;
 }

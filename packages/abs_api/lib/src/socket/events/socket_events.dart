@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:abs_api/src/models/json_helpers.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 abstract class SocketEvents {
@@ -25,7 +26,7 @@ abstract class SocketEvents {
 
   Stream<T> onJson<T>(String event, T Function(dynamic json) fromJson) {
     return on(event).map((data) {
-      log('$data', name: 'SocketEvent: $event');
+      log('data: ${getByteSize(data)}Bytes', name: 'SocketEvent: $event');
       return fromJson(data);
     });
   }

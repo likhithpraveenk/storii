@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/library/logic/filter_data_provider.dart';
 import 'package:storii/features/library/logic/user_libraries_provider.dart';
 import 'package:storii/shared/helpers/ref_extensions.dart';
@@ -43,6 +44,13 @@ void librarySyncController(Ref ref) {
       ref
           .read(userSettingsProvider.notifier)
           .setCurrentLibrary(response.library);
+    });
+  });
+
+  ref.listen(libraryItemUpdatedProvider, (_, next) {
+    next.whenData((item) {
+      if (item == null) return;
+      ref.read(filterDataProvider.notifier).updateFiltersWithItem(item);
     });
   });
 }

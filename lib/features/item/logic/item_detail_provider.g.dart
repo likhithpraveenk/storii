@@ -9,17 +9,11 @@ part of 'item_detail_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(itemDetail)
+@ProviderFor(ItemDetail)
 final itemDetailProvider = ItemDetailFamily._();
 
 final class ItemDetailProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<LibraryItem>,
-          LibraryItem,
-          FutureOr<LibraryItem>
-        >
-    with $FutureModifier<LibraryItem>, $FutureProvider<LibraryItem> {
+    extends $AsyncNotifierProvider<ItemDetail, LibraryItem> {
   ItemDetailProvider._({
     required ItemDetailFamily super.from,
     required String super.argument,
@@ -43,15 +37,7 @@ final class ItemDetailProvider
 
   @$internal
   @override
-  $FutureProviderElement<LibraryItem> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<LibraryItem> create(Ref ref) {
-    final argument = this.argument as String;
-    return itemDetail(ref, argument);
-  }
+  ItemDetail create() => ItemDetail();
 
   @override
   bool operator ==(Object other) {
@@ -64,10 +50,17 @@ final class ItemDetailProvider
   }
 }
 
-String _$itemDetailHash() => r'355973306bd7d05a6819cede9b45e3d4d63a742b';
+String _$itemDetailHash() => r'cc0976e4b92f926e9aceeb76f7c692e970aa89a7';
 
 final class ItemDetailFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<LibraryItem>, String> {
+    with
+        $ClassFamilyOverride<
+          ItemDetail,
+          AsyncValue<LibraryItem>,
+          LibraryItem,
+          FutureOr<LibraryItem>,
+          String
+        > {
   ItemDetailFamily._()
     : super(
         retry: null,
@@ -83,3 +76,64 @@ final class ItemDetailFamily extends $Family
   @override
   String toString() => r'itemDetailProvider';
 }
+
+abstract class _$ItemDetail extends $AsyncNotifier<LibraryItem> {
+  late final _$args = ref.$arg as String;
+  String get id => _$args;
+
+  FutureOr<LibraryItem> build(String id);
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<LibraryItem>, LibraryItem>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<LibraryItem>, LibraryItem>,
+              AsyncValue<LibraryItem>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, () => build(_$args));
+  }
+}
+
+@ProviderFor(libraryItemUpdated)
+final libraryItemUpdatedProvider = LibraryItemUpdatedProvider._();
+
+final class LibraryItemUpdatedProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<LibraryItem?>,
+          LibraryItem?,
+          Stream<LibraryItem?>
+        >
+    with $FutureModifier<LibraryItem?>, $StreamProvider<LibraryItem?> {
+  LibraryItemUpdatedProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'libraryItemUpdatedProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$libraryItemUpdatedHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<LibraryItem?> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<LibraryItem?> create(Ref ref) {
+    return libraryItemUpdated(ref);
+  }
+}
+
+String _$libraryItemUpdatedHash() =>
+    r'64b8e9c4f4c0b13efc28d2e23ec57f1f3af9cb87';
