@@ -409,7 +409,7 @@
   "secondary": "Tło",
   "tertiary": "Trzeciorzędny",
   "error": "Błąd",
-  "rememberSort": "Zapamiętaj sortowanie",
+  "rememberSort": "Zapamiętuj sortowanie",
   "rememberSortSubtitle": "Zapamiętuje sortowanie pomiędzy uruchomieniami aplikacji",
   "type": "Typ",
   "pubDate": "Data publikacji",
@@ -569,5 +569,32 @@
   "errorSocket": "Nie można połączyć z adresem serwerem",
   "errorHandshake": "Nie można ustanowić połączenia (błąd TLS)",
   "localUrl": "Lokalny URL",
-  "localUrlSubtitle": "Użyte gdy połączono z Wi-Fi i serwer jest osiągalny"
+  "localUrlSubtitle": "Użyte gdy połączono z Wi-Fi i serwer jest osiągalny",
+  "selectedCount": "{count} zaznaczono",
+  "@selectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "copy": "Kopiuj",
+  "downloadAll": "Pobierz wszystie",
+  "themePreview": "Podgląd motywu",
+  "pagination": "Stronnicowanie",
+  "imageResolution": "Rozdzielczość obrazu",
+  "imageResolutionListView": "Rozdzielczość obrazu w widoku listy",
+  "imageResolutionGridView": "Rozdzielczość obrazu w widoku siatki",
+  "coverImageSizes": "Rozmiar okładek",
+  "maxImageSize": "Maksymalny rozmiar obrazu",
+  "stackedImagesCardMaxWidth": "Maksymalna szerokość karty nakładających się obrazów",
+  "imageSizeListTile": "Rozmiar obrazu w widoku listy kafelków",
+  "percentOfScreenWidth": "{percent}% szerokości ekranu",
+  "@percentOfScreenWidth": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  }
 }
