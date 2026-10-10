@@ -26,7 +26,6 @@
   "followingUsers": "Usuniesz następujących użytowników",
   "addUser": "Dodaj użytkownika",
   "edit": "Edytuj",
-  "editServer": "Edytuj serwer",
   "errorLoadingUsers": "Błąd ładowania użytkowników",
   "switchingToUser": "Przełączam na użytkownika: {user}",
   "@switchingToUser": {
@@ -434,7 +433,6 @@
   "bookmarks": "Zakładki",
   "bookmarkFailed": "Nie udało się zapisac zakładki",
   "addBookmark": "Dodaj zakładkę",
-  "editBookmark": "Udytuj zakładkę",
   "extraControlsSubtitle": "Dodaj przyciski \"naprzód\" i \"wstecz\" do miniplayera",
   "extraControls": "Dodatkowe przyciski - miniplayer",
   "customization": "Personalizacja",

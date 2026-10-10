@@ -29,7 +29,6 @@
   "followingUsers": "您即将删除以下用户",
   "addUser": "添加用户",
   "edit": "编辑",
-  "editServer": "编辑服务器",
   "errorLoadingUsers": "加载用户失败",
   "switchingToUser": "正在切换至 {user}",
   "@switchingToUser": {
@@ -446,7 +445,6 @@
   "bookmarks": "书签",
   "bookmarkFailed": "保存书签失败",
   "addBookmark": "添加书签",
-  "editBookmark": "编辑书签",
   "extraControls": "额外控制",
   "extraControlsSubtitle": "在迷你播放器中添加快进和快退按钮",
   "customization": "个性化",

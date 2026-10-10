@@ -29,7 +29,6 @@
   "followingUsers": "Du er i ferd med å slette følgende brukere",
   "addUser": "Legg til bruker",
   "edit": "Rediger",
-  "editServer": "Rediger server",
   "errorLoadingUsers": "Kunne ikke laste inn brukere",
   "switchingToUser": "Bytter til {user}",
   "@switchingToUser": {
@@ -521,7 +520,6 @@
   "bookmarks": "Bokmerker",
   "bookmarkFailed": "Kunne ikke lagre bokmerket",
   "addBookmark": "Legg til bokmerke",
-  "editBookmark": "Rediger bokmerke",
   "extraControls": "Ekstra kontroller",
   "extraControlsSubtitle": "Legg til knapper for å hoppe fremover og bakover i minispilleren",
   "customization": "Tilpasning",

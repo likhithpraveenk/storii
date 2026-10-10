@@ -29,7 +29,6 @@
   "followingUsers": "Vous êtes sur le point de supprimer les utilisateurs suivants",
   "addUser": "Ajouter un utilisateur",
   "edit": "Modifier",
-  "editServer": "Modifier le serveur",
   "errorLoadingUsers": "Erreur lors du chargement des utilisateurs",
   "switchingToUser": "Échanger avec {user}",
   "@switchingToUser": {
@@ -507,7 +506,6 @@
   "bookmarks": "Signets",
   "bookmarkFailed": "Échec de l'enregistrement du signet",
   "addBookmark": "Ajouter un signet",
-  "editBookmark": "Modifier le signet",
   "extraControls": "Contrôles supplémentaires",
   "extraControlsSubtitle": "Ajoute des boutons d'avance et de retour rapides dans le mini-lecteur",
   "customization": "Personnalisation",
