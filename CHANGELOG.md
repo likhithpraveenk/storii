@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 - go back to startup nav on final back press
 - can remove/play media on restored queue
+- widget binding and progress bar
 
 ## [v0.11.2-beta.1] - 2026-10-06
 

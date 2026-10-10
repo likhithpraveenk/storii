@@ -277,7 +277,7 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
       },
     ));
 
-    if (ref.read(widgetControllerProvider) != null) {
+    if (ref.read(widgetControllerProvider.notifier).isActive) {
       options.add((
         title: l10n.bindToWidget,
         icon: Icons.widgets_outlined,

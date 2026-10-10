@@ -170,7 +170,7 @@ class EpisodeActionButtons extends ConsumerWidget {
                           }
                         },
                       ),
-                      if (ref.read(widgetControllerProvider) != null)
+                      if (ref.read(widgetControllerProvider.notifier).isActive)
                         ListTile(
                           title: Text(l10n.bindToWidget),
                           leading: const Icon(Icons.widgets_outlined),

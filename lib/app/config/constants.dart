@@ -1,5 +1,3 @@
-import 'package:flutter/services.dart';
-
 const kEpsilon = 0.001;
 const kRadius = 12.0;
 
@@ -26,6 +24,3 @@ const kMinus = '\u2212';
 const kMultiple = '\u00D7';
 
 const speedPresets = [1.0, 1.2, 1.5, 1.8, 2.0];
-
-// Method Channels
-const widgetChannel = MethodChannel('com.likhithpraveenk.storii/widget');

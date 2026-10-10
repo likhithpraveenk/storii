@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'widget_controller.dart';
+part of 'widget_store.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,28 +9,27 @@ part of 'widget_controller.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(WidgetController)
-final widgetControllerProvider = WidgetControllerProvider._();
+@ProviderFor(WidgetStore)
+final widgetStoreProvider = WidgetStoreProvider._();
 
-final class WidgetControllerProvider
-    extends $NotifierProvider<WidgetController, void> {
-  WidgetControllerProvider._()
+final class WidgetStoreProvider extends $NotifierProvider<WidgetStore, void> {
+  WidgetStoreProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'widgetControllerProvider',
-        isAutoDispose: true,
+        name: r'widgetStoreProvider',
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$widgetControllerHash();
+  String debugGetCreateSourceHash() => _$widgetStoreHash();
 
   @$internal
   @override
-  WidgetController create() => WidgetController();
+  WidgetStore create() => WidgetStore();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(void value) {
@@ -41,9 +40,9 @@ final class WidgetControllerProvider
   }
 }
 
-String _$widgetControllerHash() => r'34228220977efeb5aa9a8a393b08a0bc6f2671a1';
+String _$widgetStoreHash() => r'53a5e93575663fada15c641fec74d1960651ea70';
 
-abstract class _$WidgetController extends $Notifier<void> {
+abstract class _$WidgetStore extends $Notifier<void> {
   void build();
   @$mustCallSuper
   @override
