@@ -13,7 +13,7 @@ part of 'widget_controller.dart';
 final widgetControllerProvider = WidgetControllerProvider._();
 
 final class WidgetControllerProvider
-    extends $NotifierProvider<WidgetController, int?> {
+    extends $NotifierProvider<WidgetController, void> {
   WidgetControllerProvider._()
     : super(
         from: null,
@@ -33,27 +33,27 @@ final class WidgetControllerProvider
   WidgetController create() => WidgetController();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(int? value) {
+  Override overrideWithValue(void value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<int?>(value),
+      providerOverride: $SyncValueProvider<void>(value),
     );
   }
 }
 
-String _$widgetControllerHash() => r'7f39b3c42ce62be23ffa531a0d84ab1cdbdd2b77';
+String _$widgetControllerHash() => r'34228220977efeb5aa9a8a393b08a0bc6f2671a1';
 
-abstract class _$WidgetController extends $Notifier<int?> {
-  int? build();
+abstract class _$WidgetController extends $Notifier<void> {
+  void build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<int?, int?>;
+    final ref = this.ref as $Ref<void, void>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<int?, int?>,
-              int?,
+              AnyNotifier<void, void>,
+              void,
               Object?,
               Object?
             >;

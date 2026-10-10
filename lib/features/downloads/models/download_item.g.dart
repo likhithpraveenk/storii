@@ -17,7 +17,7 @@ _DownloadTrack _$DownloadTrackFromJson(Map<String, dynamic> json) =>
       status:
           $enumDecodeNullable(_$DownloadStatusEnumMap, json['status']) ??
           DownloadStatus.queued,
-      trackPath: json['trackPath'] as String? ?? kMigrateToV4Sentinel,
+      trackPath: json['trackPath'] as String,
     );
 
 Map<String, dynamic> _$DownloadTrackToJson(_DownloadTrack instance) =>
@@ -59,7 +59,7 @@ _DownloadItem _$DownloadItemFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['startedAt'] as String),
       episodeId: json['episodeId'] as String?,
       folderPath: json['folderPath'] as String,
-      relativePath: json['relativePath'] as String? ?? kMigrateToV4Sentinel,
+      relativePath: json['relativePath'] as String,
     );
 
 Map<String, dynamic> _$DownloadItemToJson(_DownloadItem instance) =>

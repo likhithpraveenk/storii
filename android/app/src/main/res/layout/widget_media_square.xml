@@ -1,15 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center">
 
     <ImageView
         android:id="@+id/widget_cover"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
         android:background="@drawable/widget_background"
         android:contentDescription="@string/app_name"
         android:scaleType="fitCenter"
         android:src="@drawable/add_rounded" />
-</FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/widget_progress_red"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_alignStart="@id/widget_cover"
+        android:layout_alignEnd="@id/widget_cover"
+        android:layout_alignBottom="@id/widget_cover"
+        android:max="10000"
+        android:progressDrawable="@drawable/widget_progress_red"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/widget_progress_green"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_alignStart="@id/widget_cover"
+        android:layout_alignEnd="@id/widget_cover"
+        android:layout_alignBottom="@id/widget_cover"
+        android:max="10000"
+        android:progressDrawable="@drawable/widget_progress_green"
+        android:visibility="gone" />
+</RelativeLayout>

@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.BitmapShader
@@ -12,7 +13,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.Shader
+import android.widget.ProgressBar
 import android.widget.RemoteViews
+import androidx.core.content.edit
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.scale
 import androidx.core.net.toUri
@@ -21,46 +24,28 @@ import java.io.File
 class MediaWidgetProvider : AppWidgetProvider() {
 
     companion object {
-        private const val PREFS_NAME = "widget_prefs"
-
-        fun bindWidget(
-            context: Context,
-            widgetId: Int,
-            itemId: String,
-            episodeId: String?,
-            coverPath: String?,
-        ) {
-            val appWidgetManager = AppWidgetManager.getInstance(context)
-            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            prefs.edit().apply {
-                putString("item_id_$widgetId", itemId)
-                putString("episode_id_$widgetId", episodeId)
-                putString("cover_path_$widgetId", coverPath)
-                apply()
-            }
-
-            renderWidget(
-                context,
-                appWidgetManager,
-                appWidgetId = widgetId,
-                itemId = itemId,
-                episodeId = episodeId,
-                coverPath = coverPath,
-            )
-        }
+        private const val HOME_WIDGET_PREFS = "HomeWidgetPreferences"
 
         private fun renderWidget(
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int,
-            itemId: String?,
-            episodeId: String?,
-            coverPath: String?,
+            widgetData: SharedPreferences,
         ) {
             val views = RemoteViews(context.packageName, R.layout.widget_media_square)
 
-            if (itemId.isNullOrEmpty()) {
+            val dataKey = "widget_$appWidgetId"
+            val jsonString = widgetData.getString(dataKey, null)
+
+            val itemId = jsonString?.let { parseItemId(it) } ?: ""
+            val episodeId = jsonString?.let { parseEpisodeId(it) }
+            val coverPath = jsonString?.let { parseCoverPath(it) }
+            val progress = jsonString?.let { parseProgress(it) }
+
+            if (itemId.isEmpty()) {
                 views.setImageViewResource(R.id.widget_cover, R.drawable.add_rounded)
+                views.setViewVisibility(R.id.widget_progress_red, ProgressBar.GONE)
+                views.setViewVisibility(R.id.widget_progress_green, ProgressBar.GONE)
 
                 val configureUri = "storii://widget?id=$appWidgetId".toUri()
                 val configureIntent = Intent(Intent.ACTION_VIEW, configureUri).apply {
@@ -81,7 +66,28 @@ class MediaWidgetProvider : AppWidgetProvider() {
                     bitmap.recycle()
                     views.setImageViewBitmap(R.id.widget_cover, roundCover)
                 } else {
-                    views.setImageViewResource(R.id.widget_cover, R.mipmap.ic_launcher)
+                    views.setImageViewResource(R.id.widget_cover, R.mipmap.ic_launcher_foreground)
+                }
+
+                if (progress != null && progress > 0) {
+                    val isGreen = progress >= 1.0
+                    views.setViewVisibility(
+                        R.id.widget_progress_green,
+                        if (isGreen) ProgressBar.VISIBLE else ProgressBar.GONE
+                    )
+                    views.setViewVisibility(
+                        R.id.widget_progress_red,
+                        if (isGreen) ProgressBar.GONE else ProgressBar.VISIBLE
+                    )
+                    views.setProgressBar(
+                        if (isGreen) R.id.widget_progress_green else R.id.widget_progress_red,
+                        10000,
+                        (progress * 10000).toInt().coerceAtMost(10000),
+                        false
+                    )
+                } else {
+                    views.setViewVisibility(R.id.widget_progress_red, ProgressBar.GONE)
+                    views.setViewVisibility(R.id.widget_progress_green, ProgressBar.GONE)
                 }
 
                 val deepLinkUri = if (!episodeId.isNullOrEmpty()) {
@@ -105,6 +111,52 @@ class MediaWidgetProvider : AppWidgetProvider() {
             }
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
+        }
+
+        private fun parseItemId(jsonString: String): String {
+            return try {
+                val start = jsonString.indexOf("\"itemId\":\"") + 10
+                val end = jsonString.indexOf("\"", start)
+                if (start in 10..<end) jsonString.substring(start, end) else ""
+            } catch (_: Exception) {
+                ""
+            }
+        }
+
+        private fun parseEpisodeId(jsonString: String): String? {
+            return try {
+                val start = jsonString.indexOf("\"episodeId\":\"") + 13
+                val end = jsonString.indexOf("\"", start)
+                if (start in 13..<end) jsonString.substring(start, end) else null
+            } catch (_: Exception) {
+                null
+            }
+        }
+
+        private fun parseCoverPath(jsonString: String): String? {
+            return try {
+                val start = jsonString.indexOf("\"coverPath\":\"") + 13
+                val end = jsonString.indexOf("\"", start)
+                if (start in 13..<end) jsonString.substring(start, end) else null
+            } catch (_: Exception) {
+                null
+            }
+        }
+
+        private fun parseProgress(jsonString: String): Double? {
+            return try {
+                val start = jsonString.indexOf("\"progress\":") + 11
+                val end = jsonString.indexOf(",", start)
+                if (end == -1) {
+                    val endBrace = jsonString.indexOf("}", start)
+                    if (start in 11..<endBrace) jsonString.substring(start, endBrace)
+                        .toDouble() else null
+                } else if (start in 11..<end) {
+                    jsonString.substring(start, end).toDouble()
+                } else null
+            } catch (_: Exception) {
+                null
+            }
         }
 
         private fun loadDownsampledBitmap(coverPath: String?): Bitmap? {
@@ -160,26 +212,18 @@ class MediaWidgetProvider : AppWidgetProvider() {
     override fun onUpdate(
         context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray
     ) {
+        val widgetData = context.getSharedPreferences(HOME_WIDGET_PREFS, Context.MODE_PRIVATE)
         for (id in appWidgetIds) {
-            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            val itemId = prefs.getString("item_id_$id", null)
-            val coverPath = prefs.getString("cover_path_$id", null)
-            val episodeId = prefs.getString("episode_id_$id", null)
-
-            renderWidget(context, appWidgetManager, id, itemId, coverPath, episodeId)
+            renderWidget(context, appWidgetManager, id, widgetData)
         }
     }
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         super.onDeleted(context, appWidgetIds)
-        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit().apply {
+        context.getSharedPreferences(HOME_WIDGET_PREFS, Context.MODE_PRIVATE).edit {
             for (id in appWidgetIds) {
-                remove("item_id_$id")
-                remove("episode_id_$id")
-                remove("cover_path_$id")
+                remove("widget_$id")
             }
-            apply()
         }
     }
 }

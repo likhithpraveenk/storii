@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'download_migration.dart';
+part of 'widget_store.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,28 +9,27 @@ part of 'download_migration.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(DownloadMigrationV4)
-final downloadMigrationV4Provider = DownloadMigrationV4Provider._();
+@ProviderFor(WidgetStore)
+final widgetStoreProvider = WidgetStoreProvider._();
 
-final class DownloadMigrationV4Provider
-    extends $NotifierProvider<DownloadMigrationV4, void> {
-  DownloadMigrationV4Provider._()
+final class WidgetStoreProvider extends $NotifierProvider<WidgetStore, void> {
+  WidgetStoreProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'downloadMigrationV4Provider',
+        name: r'widgetStoreProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$downloadMigrationV4Hash();
+  String debugGetCreateSourceHash() => _$widgetStoreHash();
 
   @$internal
   @override
-  DownloadMigrationV4 create() => DownloadMigrationV4();
+  WidgetStore create() => WidgetStore();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(void value) {
@@ -41,10 +40,9 @@ final class DownloadMigrationV4Provider
   }
 }
 
-String _$downloadMigrationV4Hash() =>
-    r'44c29149d88c2b84bf2ea7202cdf12184389cc48';
+String _$widgetStoreHash() => r'53a5e93575663fada15c641fec74d1960651ea70';
 
-abstract class _$DownloadMigrationV4 extends $Notifier<void> {
+abstract class _$WidgetStore extends $Notifier<void> {
   void build();
   @$mustCallSuper
   @override
