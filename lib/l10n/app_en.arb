@@ -29,6 +29,7 @@
   "followingUsers": "You are about to delete the following users",
   "addUser": "Add User",
   "edit": "Edit",
+  "editMetadata": "Edit Metadata",
   "errorLoadingUsers": "Error loading users",
   "switchingToUser": "Switching to {user}",
   "@switchingToUser": {
@@ -169,7 +170,6 @@
   "itunesId": "iTunes ID",
   "itunesArtistId": "iTunes Artist ID",
   "itunesPageUrl": "iTunes Page Url",
-  "imageUrl": "Image URL",
   "podcastType": "Podcast Type",
   "episodic": "Episodic",
   "serial": "Serial",

@@ -3,8 +3,8 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/item/logic/item_metadata_notifier.dart';
-import 'package:storii/features/library/logic/cover_url_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
 
 class UpdateCoverWidget extends ConsumerWidget {
@@ -20,6 +20,8 @@ class UpdateCoverWidget extends ConsumerWidget {
     final imageSize = orientation == .portrait
         ? screenWidth * 0.7
         : screenWidth * 0.5;
+    final editorState = ref.watch(itemMetadataProvider(id));
+    final updatedAt = editorState.value?.updatedAt;
     final notifier = ref.read(itemMetadataProvider(id).notifier);
 
     return Stack(
@@ -31,7 +33,12 @@ class UpdateCoverWidget extends ConsumerWidget {
             dimension: imageSize,
             child: ClipRRect(
               borderRadius: .circular(kRadius),
-              child: ImageWidget(id: id, type: .item, isRaw: true),
+              child: ImageWidget(
+                id: id,
+                type: .item,
+                isRaw: true,
+                updatedAt: updatedAt,
+              ),
             ),
           ),
         ),
@@ -46,7 +53,12 @@ class UpdateCoverWidget extends ConsumerWidget {
                 shape: const CircleBorder(),
                 elevation: 2,
                 child: IconButton(
-                  onPressed: notifier.pickAndUploadCover,
+                  onPressed: () async {
+                    final msg = await notifier.pickAndUploadCover();
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showAppSnackBar(msg);
+                    }
+                  },
                   icon: const Icon(Icons.file_upload_outlined, size: 18),
                   tooltip: l10n.upload,
                   visualDensity: .compact,
@@ -65,10 +77,9 @@ class UpdateCoverWidget extends ConsumerWidget {
                     isDestructive: true,
                     onTap: () async {
                       final success = await notifier.removeCover();
-                      if (success && context.mounted) {
-                        ref.invalidate(
-                          coverUrlProvider(id, type: .item, raw: true),
-                        );
+                      if (!success && context.mounted) {
+                        ScaffoldMessenger.of(context)
+                            .showAppSnackBar(l10n.failed, isError: true);
                       }
                     },
                   ),

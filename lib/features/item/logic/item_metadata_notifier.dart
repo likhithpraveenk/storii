@@ -2,6 +2,7 @@ import 'package:abs_api/abs_api.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
@@ -19,10 +20,11 @@ abstract class EditorState with _$EditorState {
     required Media original,
     required Media draft,
     required String libraryId,
+    required DateTime updatedAt,
     @Default(false) bool saving,
   }) = _EditorState;
 
-  bool get isDirty => !identical(original, draft);
+  bool get isDirty => original != draft;
   bool get isValid => draft.metadata.title?.trim().isNotEmpty == true;
   bool get canSave => isDirty && isValid && !saving;
 
@@ -38,6 +40,7 @@ class ItemMetadataNotifier extends _$ItemMetadataNotifier {
       original: item.media,
       draft: item.media,
       libraryId: item.libraryId,
+      updatedAt: item.updatedAt,
     );
   }
 
@@ -71,21 +74,31 @@ class ItemMetadataNotifier extends _$ItemMetadataNotifier {
     }
   }
 
-  Future<bool> pickAndUploadCover() async {
-    final file = await FilePicker.pickFile(type: .image);
-    if (file == null || file.path == null) return false;
+  Future<String> pickAndUploadCover() async {
+    final file = await FilePicker.pickFile(
+      type: .custom,
+      allowedExtensions: ['png', 'jpg', 'jpeg', 'webp'],
+    );
+    if (file == null || file.path == null) {
+      return l10n.cancelled;
+    }
+
     try {
       final user = await ref.read(authenticatedUserProvider.future);
       final api = await ref.read(itemApiProvider(user).future);
-      await api.uploadCover(
+      final response = await api.uploadCover(
         libraryItemId: id,
         coverFile: FileUpload.fromPath(
           filename: file.name,
           filePath: file.path!,
         ),
       );
-      ref.invalidate(itemDetailProvider(id));
-      return true;
+      if (response.success) {
+        state = AsyncData(state.value!.copyWith(updatedAt: DateTime.now()));
+        return l10n.success;
+      } else {
+        return l10n.failed;
+      }
     } catch (e, st) {
       LogService.log(
         'failed to upload cover',
@@ -94,7 +107,7 @@ class ItemMetadataNotifier extends _$ItemMetadataNotifier {
         stackTrace: st,
         source: 'ItemMetadataNotifier',
       );
-      return false;
+      return l10n.failed;
     }
   }
 
@@ -103,7 +116,7 @@ class ItemMetadataNotifier extends _$ItemMetadataNotifier {
       final user = await ref.read(authenticatedUserProvider.future);
       final api = await ref.read(itemApiProvider(user).future);
       await api.removeCover(libraryItemId: id);
-      ref.invalidate(itemDetailProvider(id));
+      state = AsyncData(state.value!.copyWith(updatedAt: DateTime.now()));
       return true;
     } catch (e, st) {
       LogService.log(

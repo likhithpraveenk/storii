@@ -73,7 +73,7 @@ class ItemApi {
       (coverFile != null) ^ (url != null),
       'Provide coverFile OR url, not both or neither.',
     );
-    final data = dataBuilder(
+    final data = await dataBuilder(
       json: url != null ? {'url': url} : null,
       files: coverFile != null ? {'cover': coverFile} : null,
     );
@@ -120,6 +120,7 @@ class ItemApi {
       method: .patch,
       body: parameters?.toJson(),
     );
-    return fromJson(response.data, LibraryItem.fromJson);
+    final libraryItem = fromJsonKey(response.data, 'libraryItem');
+    return fromJson(libraryItem, LibraryItem.fromJson);
   }
 }

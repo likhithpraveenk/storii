@@ -154,6 +154,7 @@ class _BookMetadataFormState extends ConsumerState<BookMetadataForm> {
               options: filterData.genres,
               displayValue: (g) => g,
               onChanged: (v) => _updateDraft((m) => m.copyWith(genres: v)),
+              createOption: (text, _) => text,
             ),
             MetadataChips(
               label: l10n.tags,
@@ -161,6 +162,7 @@ class _BookMetadataFormState extends ConsumerState<BookMetadataForm> {
               options: filterData.tags,
               displayValue: (t) => t,
               onChanged: (v) => _updateMedia((m) => m.copyWith(tags: v)),
+              createOption: (text, _) => text,
             ),
             MetadataChips(
               label: l10n.narrators,
@@ -168,6 +170,7 @@ class _BookMetadataFormState extends ConsumerState<BookMetadataForm> {
               options: filterData.narrators,
               displayValue: (n) => n,
               onChanged: (v) => _updateDraft((m) => m.copyWith(narrators: v)),
+              createOption: (text, _) => text,
             ),
             MetadataTextField(
               controller: _publishedYearController,

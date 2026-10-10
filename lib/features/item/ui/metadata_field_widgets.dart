@@ -19,7 +19,7 @@ class MetadataTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const .fromLTRB(16, 8, 16, 8),
+      padding: const .fromLTRB(16, 12, 16, 12),
       child: TextField(
         controller: controller,
         keyboardType: keyboardType,

@@ -9,7 +9,7 @@ class MetadataChips<T> extends StatefulWidget {
     required this.displayValue,
     this.compareValue,
     required this.onChanged,
-    this.createOption,
+    required this.createOption,
     this.suffixOnSelect,
   });
 
@@ -20,7 +20,7 @@ class MetadataChips<T> extends StatefulWidget {
   final String Function(T option)? compareValue;
   final void Function(List<T> selected) onChanged;
 
-  final T? Function(String text, T? previous)? createOption;
+  final T? Function(String text, T? previous) createOption;
   final String? suffixOnSelect;
   @override
   State<MetadataChips<T>> createState() => _MetadataChipsState<T>();
@@ -63,7 +63,7 @@ class _MetadataChipsState<T> extends State<MetadataChips<T>> {
     final previous = editingExisting && _isNew(list[index])
         ? list[index]
         : null;
-    final value = _matchOption(t) ?? widget.createOption?.call(t, previous);
+    final value = _matchOption(t) ?? widget.createOption.call(t, previous);
     if (value == null) return;
 
     final key = _compareVal(value);
@@ -92,7 +92,7 @@ class _MetadataChipsState<T> extends State<MetadataChips<T>> {
     final theme = Theme.of(context);
 
     return Padding(
-      padding: const .fromLTRB(16, 8, 16, 8),
+      padding: const .fromLTRB(16, 4, 16, 4),
       child: Column(
         crossAxisAlignment: .start,
         mainAxisSize: .min,
@@ -188,28 +188,20 @@ class _InlineEditorState extends State<_InlineEditor> {
   void initState() {
     super.initState();
     _controller = TextEditingController(text: widget.initialText);
-    _focus.addListener(_onFocusChange);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _focus.requestFocus();
-    });
-  }
-
-  void _onFocusChange() {
-    if (_focus.hasFocus) return;
-    Future.delayed(const Duration(milliseconds: 150), () {
-      if (mounted) _finish(_controller.text);
     });
   }
 
   void _finish(String text) {
     if (_done) return;
     _done = true;
+    _focus.unfocus();
     widget.onDone(text);
   }
 
   @override
   void dispose() {
-    _focus.removeListener(_onFocusChange);
     _focus.dispose();
     _controller.dispose();
     super.dispose();
@@ -220,6 +212,7 @@ class _InlineEditorState extends State<_InlineEditor> {
     final theme = Theme.of(context);
     final screenWidth = MediaQuery.sizeOf(context).width;
     final width = (screenWidth - 48).clamp(200.0, 400.0);
+    final groupId = widget.key ?? Object();
 
     return SizedBox(
       width: width,
@@ -241,27 +234,34 @@ class _InlineEditorState extends State<_InlineEditor> {
           _focus.requestFocus();
         },
         fieldViewBuilder: (context, controller, focusNode, onSubmit) {
-          return DecoratedBox(
-            decoration: ShapeDecoration(
-              shape: StadiumBorder(
-                side: BorderSide(color: theme.colorScheme.primary, width: 1.5),
-              ),
-            ),
-            child: Padding(
-              padding: const .symmetric(horizontal: 12),
-              child: TextField(
-                controller: controller,
-                focusNode: focusNode,
-                style: theme.textTheme.labelLarge,
-                textInputAction: .done,
-                decoration: const InputDecoration(
-                  isDense: true,
-                  border: .none,
-                  contentPadding: .symmetric(vertical: 8),
-                  focusedBorder: .none,
-                  errorBorder: .none,
+          return TapRegion(
+            groupId: groupId,
+            onTapOutside: (_) => _finish(controller.text),
+            child: DecoratedBox(
+              decoration: ShapeDecoration(
+                shape: StadiumBorder(
+                  side: BorderSide(
+                    color: theme.colorScheme.primary,
+                    width: 1.5,
+                  ),
                 ),
-                onSubmitted: _finish,
+              ),
+              child: Padding(
+                padding: const .symmetric(horizontal: 12),
+                child: TextField(
+                  controller: controller,
+                  focusNode: focusNode,
+                  style: theme.textTheme.labelLarge,
+                  textInputAction: .done,
+                  decoration: const InputDecoration(
+                    isDense: true,
+                    border: .none,
+                    contentPadding: .symmetric(vertical: 8),
+                    focusedBorder: .none,
+                    errorBorder: .none,
+                  ),
+                  onSubmitted: _finish,
+                ),
               ),
             ),
           );

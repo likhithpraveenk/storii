@@ -15,10 +15,7 @@ class _PodcastMetadataFormState extends ConsumerState<PodcastMetadataForm> {
   final _authorController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _releaseDateController = TextEditingController();
-  final _imageUrlController = TextEditingController();
-  final _itunesPageUrlController = TextEditingController();
   final _itunesIdController = TextEditingController();
-  final _itunesArtistIdController = TextEditingController();
   final _languageController = TextEditingController();
 
   final _scrollController = ScrollController();
@@ -31,10 +28,7 @@ class _PodcastMetadataFormState extends ConsumerState<PodcastMetadataForm> {
     _authorController.dispose();
     _descriptionController.dispose();
     _releaseDateController.dispose();
-    _imageUrlController.dispose();
-    _itunesPageUrlController.dispose();
     _itunesIdController.dispose();
-    _itunesArtistIdController.dispose();
     _languageController.dispose();
     _scrollController.dispose();
     super.dispose();
@@ -48,10 +42,7 @@ class _PodcastMetadataFormState extends ConsumerState<PodcastMetadataForm> {
     _authorController.text = metadata.author ?? '';
     _descriptionController.text = metadata.description ?? '';
     _releaseDateController.text = metadata.releaseDate ?? '';
-    _imageUrlController.text = metadata.imageUrl ?? '';
-    _itunesPageUrlController.text = metadata.itunesPageUrl ?? '';
     _itunesIdController.text = metadata.itunesId ?? '';
-    _itunesArtistIdController.text = metadata.itunesArtistId ?? '';
     _languageController.text = metadata.language ?? '';
   }
 
@@ -67,20 +58,21 @@ class _PodcastMetadataFormState extends ConsumerState<PodcastMetadataForm> {
         );
   }
 
-  // void _updateMedia(PodcastMedia Function(PodcastMedia metadata) update) {
-  //   final state = ref.read(itemMetadataProvider(widget.id)).value;
-  //   if (state == null) return;
-  //   final media = state.draft as PodcastMedia;
-  //   ref
-  //       .read(itemMetadataProvider(widget.id).notifier)
-  //       .updateDraft(update(media));
-  // }
+  void _updateMedia(PodcastMedia Function(PodcastMedia metadata) update) {
+    final state = ref.read(itemMetadataProvider(widget.id)).value;
+    if (state == null) return;
+    final media = state.draft as PodcastMedia;
+    ref
+        .read(itemMetadataProvider(widget.id).notifier)
+        .updateDraft(update(media));
+  }
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(itemMetadataProvider(widget.id)).value;
     if (state == null) return const SizedBox.shrink();
     _seedIfNeeded(state);
+    final media = state.draft as PodcastMedia;
     final metadata = state.draft.metadata as PodcastMetadata;
     final filterData = ref.watch(filterDataProvider);
 
@@ -114,34 +106,27 @@ class _PodcastMetadataFormState extends ConsumerState<PodcastMetadataForm> {
                 (m) => m.copyWith(description: v.trim().isEmpty ? null : v),
               ),
             ),
-            MetadataTextField(
-              controller: _releaseDateController,
-              label: l10n.releaseDate,
-              onChanged: (v) => _updateDraft(
-                (m) => m.copyWith(releaseDate: v.trim().isEmpty ? null : v),
-              ),
-            ),
             MetadataChips(
               label: l10n.genres,
               values: metadata.genres,
               options: filterData.genres,
               displayValue: (g) => g,
               onChanged: (v) => _updateDraft((m) => m.copyWith(genres: v)),
+              createOption: (text, _) => text,
+            ),
+            MetadataChips(
+              label: l10n.tags,
+              values: media.tags,
+              options: filterData.tags,
+              displayValue: (t) => t,
+              onChanged: (v) => _updateMedia((m) => m.copyWith(tags: v)),
+              createOption: (text, _) => text,
             ),
             MetadataTextField(
-              controller: _imageUrlController,
-              label: l10n.imageUrl,
-              keyboardType: .url,
+              controller: _releaseDateController,
+              label: l10n.releaseDate,
               onChanged: (v) => _updateDraft(
-                (m) => m.copyWith(imageUrl: v.trim().isEmpty ? null : v),
-              ),
-            ),
-            MetadataTextField(
-              controller: _itunesPageUrlController,
-              label: l10n.itunesPageUrl,
-              keyboardType: .url,
-              onChanged: (v) => _updateDraft(
-                (m) => m.copyWith(itunesPageUrl: v.trim().isEmpty ? null : v),
+                (m) => m.copyWith(releaseDate: v.trim().isEmpty ? null : v),
               ),
             ),
             MetadataTextField(
@@ -151,33 +136,23 @@ class _PodcastMetadataFormState extends ConsumerState<PodcastMetadataForm> {
                 (m) => m.copyWith(itunesId: v.trim().isEmpty ? null : v),
               ),
             ),
-            MetadataTextField(
-              controller: _itunesArtistIdController,
-              label: l10n.itunesArtistId,
-              onChanged: (v) => _updateDraft(
-                (m) => m.copyWith(itunesArtistId: v.trim().isEmpty ? null : v),
-              ),
-            ),
             Padding(
               padding: const .fromLTRB(16, 8, 16, 8),
               child: Column(
-                crossAxisAlignment: .start,
+                crossAxisAlignment: .stretch,
                 children: [
                   Text(
                     l10n.podcastType,
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 4),
                   SegmentedButton<PodcastType?>(
                     segments: [
                       ButtonSegment(
-                        value: PodcastType.episodic,
+                        value: .episodic,
                         label: Text(l10n.episodic),
                       ),
-                      ButtonSegment(
-                        value: PodcastType.serial,
-                        label: Text(l10n.serial),
-                      ),
+                      ButtonSegment(value: .serial, label: Text(l10n.serial)),
                     ],
                     selected: {metadata.podcastType},
                     onSelectionChanged: (s) => _updateDraft(

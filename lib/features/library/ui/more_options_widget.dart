@@ -254,7 +254,7 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
           },
         ))
         ..add((
-          title: l10n.edit,
+          title: l10n.editMetadata,
           icon: Icons.edit,
           onTap: () async {
             Navigator.of(context).pop();

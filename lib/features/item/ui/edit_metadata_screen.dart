@@ -1,5 +1,6 @@
 import 'package:abs_api/abs_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/theme.dart';
@@ -28,7 +29,10 @@ class EditMetadataScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final metadataAsync = ref.watch(itemMetadataProvider(id));
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.edit), actions: [_SaveButton(id)]),
+      appBar: AppBar(
+        title: Text(l10n.editMetadata),
+        actions: [_SaveButton(id)],
+      ),
       body: metadataAsync.when(
         loading: () => const Center(child: RandomWaveform()),
         error: (e, _) => ErrorRetryWidget(
@@ -80,5 +84,6 @@ class _SaveButton extends ConsumerWidget {
     if (!context.mounted) return;
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(ok ? l10n.success : l10n.failed)));
+    if (ok) context.pop();
   }
 }

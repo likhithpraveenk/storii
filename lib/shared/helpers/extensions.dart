@@ -173,7 +173,10 @@ extension SnackBarShorthand on ScaffoldMessengerState {
   }) {
     showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(
+          message,
+          style: TextStyle(color: isError ? Colors.white : null),
+        ),
         duration: duration ?? const Duration(seconds: 2),
         backgroundColor: isError ? appRedColor : null,
       ),

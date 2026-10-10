@@ -51,7 +51,7 @@ final class ItemMetadataNotifierProvider
 }
 
 String _$itemMetadataNotifierHash() =>
-    r'668cc0b20194f56b95ab2e0ee22712f5f1828bd4';
+    r'5479e47bcd449d32aa98c8eb5a164df3a1049516';
 
 final class ItemMetadataNotifierFamily extends $Family
     with
