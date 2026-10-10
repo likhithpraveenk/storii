@@ -2,7 +2,7 @@ name: storii
 description: An audiobookshelf client
 publish_to: none
 
-version: 0.11.2-beta.1+524
+version: 0.12.0+525
 
 environment:
   sdk: ^3.13.0

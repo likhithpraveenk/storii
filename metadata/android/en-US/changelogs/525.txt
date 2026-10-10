@@ -1,0 +1,8 @@
+Added:
+- copy multiple logs at once
+- edit metadata of books and podcasts
+
+Fixed:
+- go back to startup nav on final back press
+- can remove/play media on restored queue
+- widget binding and progress bar
