@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/deep_link_controller.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
+import 'package:storii/features/more/logic/changelog_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/features/player/logic/session_sync_watcher.dart';
@@ -25,5 +26,6 @@ void appController(Ref ref) {
     ..watch(queueControllerProvider)
     ..watch(appStartThemeUpdateProvider)
     ..watch(mediaProgressSyncControllerProvider)
-    ..watch(sleepWindowConsumerProvider);
+    ..watch(sleepWindowConsumerProvider)
+    ..watch(whatsNewControllerProvider);
 }

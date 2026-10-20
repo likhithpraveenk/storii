@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 - play/pause badge on media widget to toggle playback without opening the app
 - setting to show navbar in most screens
+- show what's new on app update
+- changelog screen
 
 ### Fixed
 

@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppSettings {
 
- ThemeMode get themeMode; bool get useDynamicColor;@ColorConverter() Color get appColor; DynamicSchemeVariant get schemeVariant; bool get usePureBlack; UserDomain? get currentUser; Uri? get serverUrl; int get maxLogs; bool get enableHttpLogs; Duration get syncInterval; Duration get syncIntervalMetered; bool get trustAllCertificates; List<StorageLocation> get storageLocations;
+ ThemeMode get themeMode; bool get useDynamicColor;@ColorConverter() Color get appColor; DynamicSchemeVariant get schemeVariant; bool get usePureBlack; UserDomain? get currentUser; Uri? get serverUrl; int get maxLogs; bool get enableHttpLogs; Duration get syncInterval; Duration get syncIntervalMetered; bool get trustAllCertificates; List<StorageLocation> get storageLocations; String? get lastVersion;
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $AppSettingsCopyWith<AppSettings> get copyWith => _$AppSettingsCopyWithImpl<AppS
 @override
 bool operator ==(Object other) {
   final _this = this as AppSettings;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.themeMode, _this.themeMode) || other.themeMode == _this.themeMode)&&(identical(other.useDynamicColor, _this.useDynamicColor) || other.useDynamicColor == _this.useDynamicColor)&&(identical(other.appColor, _this.appColor) || other.appColor == _this.appColor)&&(identical(other.schemeVariant, _this.schemeVariant) || other.schemeVariant == _this.schemeVariant)&&(identical(other.usePureBlack, _this.usePureBlack) || other.usePureBlack == _this.usePureBlack)&&(identical(other.currentUser, _this.currentUser) || other.currentUser == _this.currentUser)&&(identical(other.serverUrl, _this.serverUrl) || other.serverUrl == _this.serverUrl)&&(identical(other.maxLogs, _this.maxLogs) || other.maxLogs == _this.maxLogs)&&(identical(other.enableHttpLogs, _this.enableHttpLogs) || other.enableHttpLogs == _this.enableHttpLogs)&&(identical(other.syncInterval, _this.syncInterval) || other.syncInterval == _this.syncInterval)&&(identical(other.syncIntervalMetered, _this.syncIntervalMetered) || other.syncIntervalMetered == _this.syncIntervalMetered)&&(identical(other.trustAllCertificates, _this.trustAllCertificates) || other.trustAllCertificates == _this.trustAllCertificates)&&const DeepCollectionEquality().equals(other.storageLocations, _this.storageLocations));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppSettings&&(identical(other.themeMode, _this.themeMode) || other.themeMode == _this.themeMode)&&(identical(other.useDynamicColor, _this.useDynamicColor) || other.useDynamicColor == _this.useDynamicColor)&&(identical(other.appColor, _this.appColor) || other.appColor == _this.appColor)&&(identical(other.schemeVariant, _this.schemeVariant) || other.schemeVariant == _this.schemeVariant)&&(identical(other.usePureBlack, _this.usePureBlack) || other.usePureBlack == _this.usePureBlack)&&(identical(other.currentUser, _this.currentUser) || other.currentUser == _this.currentUser)&&(identical(other.serverUrl, _this.serverUrl) || other.serverUrl == _this.serverUrl)&&(identical(other.maxLogs, _this.maxLogs) || other.maxLogs == _this.maxLogs)&&(identical(other.enableHttpLogs, _this.enableHttpLogs) || other.enableHttpLogs == _this.enableHttpLogs)&&(identical(other.syncInterval, _this.syncInterval) || other.syncInterval == _this.syncInterval)&&(identical(other.syncIntervalMetered, _this.syncIntervalMetered) || other.syncIntervalMetered == _this.syncIntervalMetered)&&(identical(other.trustAllCertificates, _this.trustAllCertificates) || other.trustAllCertificates == _this.trustAllCertificates)&&const DeepCollectionEquality().equals(other.storageLocations, _this.storageLocations)&&(identical(other.lastVersion, _this.lastVersion) || other.lastVersion == _this.lastVersion));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as AppSettings;
-  return Object.hash(runtimeType,_this.themeMode,_this.useDynamicColor,_this.appColor,_this.schemeVariant,_this.usePureBlack,_this.currentUser,_this.serverUrl,_this.maxLogs,_this.enableHttpLogs,_this.syncInterval,_this.syncIntervalMetered,_this.trustAllCertificates,const DeepCollectionEquality().hash(_this.storageLocations));
+  return Object.hash(runtimeType,_this.themeMode,_this.useDynamicColor,_this.appColor,_this.schemeVariant,_this.usePureBlack,_this.currentUser,_this.serverUrl,_this.maxLogs,_this.enableHttpLogs,_this.syncInterval,_this.syncIntervalMetered,_this.trustAllCertificates,const DeepCollectionEquality().hash(_this.storageLocations),_this.lastVersion);
 }
 
 @override
 String toString() {
   final _this = this as AppSettings;
-  return 'AppSettings(themeMode: ${_this.themeMode}, useDynamicColor: ${_this.useDynamicColor}, appColor: ${_this.appColor}, schemeVariant: ${_this.schemeVariant}, usePureBlack: ${_this.usePureBlack}, currentUser: ${_this.currentUser}, serverUrl: ${_this.serverUrl}, maxLogs: ${_this.maxLogs}, enableHttpLogs: ${_this.enableHttpLogs}, syncInterval: ${_this.syncInterval}, syncIntervalMetered: ${_this.syncIntervalMetered}, trustAllCertificates: ${_this.trustAllCertificates}, storageLocations: ${_this.storageLocations})';
+  return 'AppSettings(themeMode: ${_this.themeMode}, useDynamicColor: ${_this.useDynamicColor}, appColor: ${_this.appColor}, schemeVariant: ${_this.schemeVariant}, usePureBlack: ${_this.usePureBlack}, currentUser: ${_this.currentUser}, serverUrl: ${_this.serverUrl}, maxLogs: ${_this.maxLogs}, enableHttpLogs: ${_this.enableHttpLogs}, syncInterval: ${_this.syncInterval}, syncIntervalMetered: ${_this.syncIntervalMetered}, trustAllCertificates: ${_this.trustAllCertificates}, storageLocations: ${_this.storageLocations}, lastVersion: ${_this.lastVersion})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $AppSettingsCopyWith<$Res>  {
   factory $AppSettingsCopyWith(AppSettings value, $Res Function(AppSettings) _then) = _$AppSettingsCopyWithImpl;
 @useResult
 $Res call({
- ThemeMode themeMode, bool useDynamicColor,@ColorConverter() Color appColor, DynamicSchemeVariant schemeVariant, bool usePureBlack, UserDomain? currentUser, Uri? serverUrl, int maxLogs, bool enableHttpLogs, Duration syncInterval, Duration syncIntervalMetered, bool trustAllCertificates, List<StorageLocation> storageLocations
+ ThemeMode themeMode, bool useDynamicColor,@ColorConverter() Color appColor, DynamicSchemeVariant schemeVariant, bool usePureBlack, UserDomain? currentUser, Uri? serverUrl, int maxLogs, bool enableHttpLogs, Duration syncInterval, Duration syncIntervalMetered, bool trustAllCertificates, List<StorageLocation> storageLocations, String? lastVersion
 });
 
 
@@ -71,7 +71,7 @@ class _$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? appColor = null,Object? schemeVariant = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? serverUrl = freezed,Object? maxLogs = null,Object? enableHttpLogs = null,Object? syncInterval = null,Object? syncIntervalMetered = null,Object? trustAllCertificates = null,Object? storageLocations = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? appColor = null,Object? schemeVariant = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? serverUrl = freezed,Object? maxLogs = null,Object? enableHttpLogs = null,Object? syncInterval = null,Object? syncIntervalMetered = null,Object? trustAllCertificates = null,Object? storageLocations = null,Object? lastVersion = freezed,}) {
   return _then(AppSettings(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,useDynamicColor: null == useDynamicColor ? _self.useDynamicColor : useDynamicColor // ignore: cast_nullable_to_non_nullable
@@ -86,7 +86,8 @@ as bool,syncInterval: null == syncInterval ? _self.syncInterval : syncInterval /
 as Duration,syncIntervalMetered: null == syncIntervalMetered ? _self.syncIntervalMetered : syncIntervalMetered // ignore: cast_nullable_to_non_nullable
 as Duration,trustAllCertificates: null == trustAllCertificates ? _self.trustAllCertificates : trustAllCertificates // ignore: cast_nullable_to_non_nullable
 as bool,storageLocations: null == storageLocations ? _self.storageLocations : storageLocations // ignore: cast_nullable_to_non_nullable
-as List<StorageLocation>,
+as List<StorageLocation>,lastVersion: freezed == lastVersion ? _self.lastVersion : lastVersion // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of AppSettings
@@ -180,10 +181,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor, @ColorConverter()  Color appColor,  DynamicSchemeVariant schemeVariant,  bool usePureBlack,  UserDomain? currentUser,  Uri? serverUrl,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval,  Duration syncIntervalMetered,  bool trustAllCertificates,  List<StorageLocation> storageLocations)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor, @ColorConverter()  Color appColor,  DynamicSchemeVariant schemeVariant,  bool usePureBlack,  UserDomain? currentUser,  Uri? serverUrl,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval,  Duration syncIntervalMetered,  bool trustAllCertificates,  List<StorageLocation> storageLocations,  String? lastVersion)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schemeVariant,_that.usePureBlack,_that.currentUser,_that.serverUrl,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval,_that.syncIntervalMetered,_that.trustAllCertificates,_that.storageLocations);case _:
+return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schemeVariant,_that.usePureBlack,_that.currentUser,_that.serverUrl,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval,_that.syncIntervalMetered,_that.trustAllCertificates,_that.storageLocations,_that.lastVersion);case _:
   return orElse();
 
 }
@@ -201,10 +202,10 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schem
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor, @ColorConverter()  Color appColor,  DynamicSchemeVariant schemeVariant,  bool usePureBlack,  UserDomain? currentUser,  Uri? serverUrl,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval,  Duration syncIntervalMetered,  bool trustAllCertificates,  List<StorageLocation> storageLocations)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode,  bool useDynamicColor, @ColorConverter()  Color appColor,  DynamicSchemeVariant schemeVariant,  bool usePureBlack,  UserDomain? currentUser,  Uri? serverUrl,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval,  Duration syncIntervalMetered,  bool trustAllCertificates,  List<StorageLocation> storageLocations,  String? lastVersion)  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings():
-return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schemeVariant,_that.usePureBlack,_that.currentUser,_that.serverUrl,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval,_that.syncIntervalMetered,_that.trustAllCertificates,_that.storageLocations);}
+return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schemeVariant,_that.usePureBlack,_that.currentUser,_that.serverUrl,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval,_that.syncIntervalMetered,_that.trustAllCertificates,_that.storageLocations,_that.lastVersion);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -218,10 +219,10 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schem
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode,  bool useDynamicColor, @ColorConverter()  Color appColor,  DynamicSchemeVariant schemeVariant,  bool usePureBlack,  UserDomain? currentUser,  Uri? serverUrl,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval,  Duration syncIntervalMetered,  bool trustAllCertificates,  List<StorageLocation> storageLocations)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode,  bool useDynamicColor, @ColorConverter()  Color appColor,  DynamicSchemeVariant schemeVariant,  bool usePureBlack,  UserDomain? currentUser,  Uri? serverUrl,  int maxLogs,  bool enableHttpLogs,  Duration syncInterval,  Duration syncIntervalMetered,  bool trustAllCertificates,  List<StorageLocation> storageLocations,  String? lastVersion)?  $default,) {final _that = this;
 switch (_that) {
 case _AppSettings() when $default != null:
-return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schemeVariant,_that.usePureBlack,_that.currentUser,_that.serverUrl,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval,_that.syncIntervalMetered,_that.trustAllCertificates,_that.storageLocations);case _:
+return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schemeVariant,_that.usePureBlack,_that.currentUser,_that.serverUrl,_that.maxLogs,_that.enableHttpLogs,_that.syncInterval,_that.syncIntervalMetered,_that.trustAllCertificates,_that.storageLocations,_that.lastVersion);case _:
   return null;
 
 }
@@ -233,7 +234,7 @@ return $default(_that.themeMode,_that.useDynamicColor,_that.appColor,_that.schem
 @JsonSerializable()
 
 class _AppSettings implements AppSettings {
-  const _AppSettings({this.themeMode = ThemeMode.system, this.useDynamicColor = false, @ColorConverter() this.appColor = appPrimaryColor, this.schemeVariant = DynamicSchemeVariant.fidelity, this.usePureBlack = false, this.currentUser, this.serverUrl, this.maxLogs = 100, this.enableHttpLogs = false, this.syncInterval = const Duration(seconds: 20), this.syncIntervalMetered = const Duration(minutes: 1), this.trustAllCertificates = false,  List<StorageLocation> storageLocations = const [defaultInternalAudiobooks, defaultInternalPodcasts]}): _storageLocations = storageLocations;
+  const _AppSettings({this.themeMode = ThemeMode.system, this.useDynamicColor = false, @ColorConverter() this.appColor = appPrimaryColor, this.schemeVariant = DynamicSchemeVariant.fidelity, this.usePureBlack = false, this.currentUser, this.serverUrl, this.maxLogs = 100, this.enableHttpLogs = false, this.syncInterval = const Duration(seconds: 20), this.syncIntervalMetered = const Duration(minutes: 1), this.trustAllCertificates = false,  List<StorageLocation> storageLocations = const [defaultInternalAudiobooks, defaultInternalPodcasts], this.lastVersion}): _storageLocations = storageLocations;
   factory _AppSettings.fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);
 
 @override@JsonKey() final  ThemeMode themeMode;
@@ -255,6 +256,7 @@ class _AppSettings implements AppSettings {
   return EqualUnmodifiableListView(_storageLocations);
 }
 
+@override final  String? lastVersion;
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
@@ -269,18 +271,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.appColor, appColor) || other.appColor == appColor)&&(identical(other.schemeVariant, schemeVariant) || other.schemeVariant == schemeVariant)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval)&&(identical(other.syncIntervalMetered, syncIntervalMetered) || other.syncIntervalMetered == syncIntervalMetered)&&(identical(other.trustAllCertificates, trustAllCertificates) || other.trustAllCertificates == trustAllCertificates)&&const DeepCollectionEquality().equals(other.storageLocations, _storageLocations));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppSettings&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.useDynamicColor, useDynamicColor) || other.useDynamicColor == useDynamicColor)&&(identical(other.appColor, appColor) || other.appColor == appColor)&&(identical(other.schemeVariant, schemeVariant) || other.schemeVariant == schemeVariant)&&(identical(other.usePureBlack, usePureBlack) || other.usePureBlack == usePureBlack)&&(identical(other.currentUser, currentUser) || other.currentUser == currentUser)&&(identical(other.serverUrl, serverUrl) || other.serverUrl == serverUrl)&&(identical(other.maxLogs, maxLogs) || other.maxLogs == maxLogs)&&(identical(other.enableHttpLogs, enableHttpLogs) || other.enableHttpLogs == enableHttpLogs)&&(identical(other.syncInterval, syncInterval) || other.syncInterval == syncInterval)&&(identical(other.syncIntervalMetered, syncIntervalMetered) || other.syncIntervalMetered == syncIntervalMetered)&&(identical(other.trustAllCertificates, trustAllCertificates) || other.trustAllCertificates == trustAllCertificates)&&const DeepCollectionEquality().equals(other.storageLocations, _storageLocations)&&(identical(other.lastVersion, lastVersion) || other.lastVersion == lastVersion));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,themeMode,useDynamicColor,appColor,schemeVariant,usePureBlack,currentUser,serverUrl,maxLogs,enableHttpLogs,syncInterval,syncIntervalMetered,trustAllCertificates,const DeepCollectionEquality().hash(_storageLocations));
+    return Object.hash(runtimeType,themeMode,useDynamicColor,appColor,schemeVariant,usePureBlack,currentUser,serverUrl,maxLogs,enableHttpLogs,syncInterval,syncIntervalMetered,trustAllCertificates,const DeepCollectionEquality().hash(_storageLocations),lastVersion);
 }
 
 @override
 String toString() {
-    return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, appColor: $appColor, schemeVariant: $schemeVariant, usePureBlack: $usePureBlack, currentUser: $currentUser, serverUrl: $serverUrl, maxLogs: $maxLogs, enableHttpLogs: $enableHttpLogs, syncInterval: $syncInterval, syncIntervalMetered: $syncIntervalMetered, trustAllCertificates: $trustAllCertificates, storageLocations: $storageLocations)';
+    return 'AppSettings(themeMode: $themeMode, useDynamicColor: $useDynamicColor, appColor: $appColor, schemeVariant: $schemeVariant, usePureBlack: $usePureBlack, currentUser: $currentUser, serverUrl: $serverUrl, maxLogs: $maxLogs, enableHttpLogs: $enableHttpLogs, syncInterval: $syncInterval, syncIntervalMetered: $syncIntervalMetered, trustAllCertificates: $trustAllCertificates, storageLocations: $storageLocations, lastVersion: $lastVersion)';
 }
 
 
@@ -291,7 +293,7 @@ abstract mixin class _$AppSettingsCopyWith<$Res> implements $AppSettingsCopyWith
   factory _$AppSettingsCopyWith(_AppSettings value, $Res Function(_AppSettings) _then) = __$AppSettingsCopyWithImpl;
 @override @useResult
 $Res call({
- ThemeMode themeMode, bool useDynamicColor,@ColorConverter() Color appColor, DynamicSchemeVariant schemeVariant, bool usePureBlack, UserDomain? currentUser, Uri? serverUrl, int maxLogs, bool enableHttpLogs, Duration syncInterval, Duration syncIntervalMetered, bool trustAllCertificates, List<StorageLocation> storageLocations
+ ThemeMode themeMode, bool useDynamicColor,@ColorConverter() Color appColor, DynamicSchemeVariant schemeVariant, bool usePureBlack, UserDomain? currentUser, Uri? serverUrl, int maxLogs, bool enableHttpLogs, Duration syncInterval, Duration syncIntervalMetered, bool trustAllCertificates, List<StorageLocation> storageLocations, String? lastVersion
 });
 
 
@@ -308,7 +310,7 @@ class __$AppSettingsCopyWithImpl<$Res>
 
 /// Create a copy of AppSettings
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? appColor = null,Object? schemeVariant = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? serverUrl = freezed,Object? maxLogs = null,Object? enableHttpLogs = null,Object? syncInterval = null,Object? syncIntervalMetered = null,Object? trustAllCertificates = null,Object? storageLocations = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? useDynamicColor = null,Object? appColor = null,Object? schemeVariant = null,Object? usePureBlack = null,Object? currentUser = freezed,Object? serverUrl = freezed,Object? maxLogs = null,Object? enableHttpLogs = null,Object? syncInterval = null,Object? syncIntervalMetered = null,Object? trustAllCertificates = null,Object? storageLocations = null,Object? lastVersion = freezed,}) {
   return _then(_AppSettings(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,useDynamicColor: null == useDynamicColor ? _self.useDynamicColor : useDynamicColor // ignore: cast_nullable_to_non_nullable
@@ -323,7 +325,8 @@ as bool,syncInterval: null == syncInterval ? _self.syncInterval : syncInterval /
 as Duration,syncIntervalMetered: null == syncIntervalMetered ? _self.syncIntervalMetered : syncIntervalMetered // ignore: cast_nullable_to_non_nullable
 as Duration,trustAllCertificates: null == trustAllCertificates ? _self.trustAllCertificates : trustAllCertificates // ignore: cast_nullable_to_non_nullable
 as bool,storageLocations: null == storageLocations ? _self._storageLocations : storageLocations // ignore: cast_nullable_to_non_nullable
-as List<StorageLocation>,
+as List<StorageLocation>,lastVersion: freezed == lastVersion ? _self.lastVersion : lastVersion // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

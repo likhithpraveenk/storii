@@ -29,11 +29,18 @@ class ServerListScreen extends ConsumerWidget {
       appBar: AppBar(
         actions: [
           IconButton(
+            tooltip: l10n.changelog,
+            onPressed: () {
+              context.push(AppRoute.changelog.path);
+            },
+            icon: const Icon(Icons.new_releases_outlined),
+          ),
+          IconButton(
             tooltip: l10n.logs,
             onPressed: () {
               context.push(AppRoute.logs.path);
             },
-            icon: const Icon(Icons.bug_report),
+            icon: const Icon(Icons.bug_report_outlined),
           ),
           const RestoreButton(),
           IconButton(

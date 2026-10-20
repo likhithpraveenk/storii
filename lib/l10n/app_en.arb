@@ -219,6 +219,8 @@
   },
   "licensedUnder": "Licensed under the GNU General Public License v3.0",
   "version": "Version",
+  "changelog": "Changelog",
+  "whatsNew": "What's New",
   "networkLogs": "Network Logs",
   "networkLogsDescription": "Log HTTP requests and responses",
   "trustAllCertificates": "Trust all certificates",
