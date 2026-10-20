@@ -19,7 +19,7 @@ const podcastsSubDir = 'podcasts';
 const coverName = 'cover.jpg';
 
 // special symbols
-const kDot = '•';
+const kDot = '\u2022';
 const kMinus = '\u2212';
 const kMultiple = '\u00D7';
 

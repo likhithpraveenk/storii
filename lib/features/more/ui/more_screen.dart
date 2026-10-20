@@ -6,6 +6,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/features/admin/ui/admin_tile.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
+import 'package:storii/features/more/ui/changelog_screen.dart';
 import 'package:storii/shared/widgets/logo_header.dart';
 
 class MoreScreen extends ConsumerWidget {
@@ -55,12 +56,14 @@ class MoreScreen extends ConsumerWidget {
               leading: const Icon(Icons.query_stats),
               title: Text(l10n.stats),
             ),
+            const AdminTile(),
+            const Divider(),
             ListTile(
               onTap: () => context.push(AppRoute.settings.path),
               leading: const Icon(Icons.settings),
               title: Text(l10n.settings),
             ),
-            const AdminTile(),
+            const ChangelogTile(),
             const AboutTile(),
           ],
         ),

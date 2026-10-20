@@ -39,6 +39,7 @@ sealed class AppSettings with _$AppSettings {
     List<StorageLocation> storageLocations,
 
     // @Default(false) bool downloadPathsV4Migrated,
+    String? lastVersion,
   }) = _AppSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);

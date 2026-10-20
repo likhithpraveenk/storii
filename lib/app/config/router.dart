@@ -20,6 +20,7 @@ import 'package:storii/features/latest_episodes/ui/latest_episodes_screen.dart';
 import 'package:storii/features/library/ui/library_screen.dart';
 import 'package:storii/features/logs/ui/logs_screen.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
+import 'package:storii/features/more/ui/changelog_screen.dart';
 import 'package:storii/features/more/ui/more_screen.dart';
 import 'package:storii/features/playlists/ui/playlist_detail_screen.dart';
 import 'package:storii/features/playlists/ui/playlists_screen.dart';
@@ -44,6 +45,7 @@ enum AppRoute {
   oauth('/oauth'),
   about('/about'),
   logs('/logs'),
+  changelog('/changelog'),
   home('/'),
   library('/library'),
   itemDetail('/item/:id'),
@@ -83,6 +85,7 @@ final publicRoutes = [
   AppRoute.about.path,
   AppRoute.login.path,
   AppRoute.oauth.path,
+  AppRoute.changelog.path,
 ];
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -135,6 +138,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoute.logs.path,
         builder: (context, state) => const LogsScreen(),
+      ),
+      GoRoute(
+        path: AppRoute.changelog.path,
+        builder: (context, state) => const ChangelogScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
