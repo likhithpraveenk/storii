@@ -3,6 +3,7 @@ import 'package:storii/api/abs/models/bookmark.dart';
 import 'package:storii/api/abs/models/enums.dart';
 import 'package:storii/api/abs/models/json_converters.dart';
 import 'package:storii/api/abs/models/media_progress.dart';
+import 'package:storii/api/abs/models/playback_session.dart';
 import 'package:storii/api/abs/models/user_permissions.dart';
 
 part 'user.freezed.dart';
@@ -32,4 +33,19 @@ sealed class User with _$User {
   }) = _User;
 
   factory fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+}
+
+@freezed
+sealed class UserMinimal with _$UserMinimal {
+  @DateTimeEpochConverter()
+  const factory({
+    required String id,
+    required String username,
+    required UserType type,
+    PlaybackSession? session,
+    DateTime? lastSeen,
+    required DateTime createdAt,
+  }) = _UserMinimal;
+
+  factory fromJson(Map<String, dynamic> json) => _$UserMinimalFromJson(json);
 }

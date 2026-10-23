@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -7,6 +9,7 @@ import 'package:storii/app/logs/logs_interceptor.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/network/offline_cache_interceptor.dart';
 import 'package:storii/app/providers/connection_providers.dart';
+import 'package:storii/app/providers/is_background_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/features/auth/logic/user_session_controller.dart';
@@ -37,7 +40,7 @@ ApiClient apiClient(Ref ref, UserDomain user) {
     interceptors: [
       LogsInterceptor(),
       OfflineCacheInterceptor(
-        isConnected: () => ref.read(serverConnectionProvider),
+        isOffline: () => ref.read(isOfflineProvider),
         cacheOptions: cacheOptions,
       ),
       DioCacheInterceptor(options: cacheOptions),
@@ -102,18 +105,37 @@ SessionsApi sessionsApi(Ref ref, UserDomain user) =>
 @riverpod
 Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
   final tokenService = ref.read(tokenProvider);
-  final token = await tokenService.getAccessToken(user.id);
   final serverUrl = ref.watch(activeServerUrlProvider);
+  final headers = ref
+      .watch(serverStreamProvider(user.serverUrl))
+      .value
+      ?.headers;
 
   final api = SocketApi(
     baseUrl: serverUrl.toString(),
-    token: token,
-    tokenUpdates: tokenService.tokenStream(user.id),
-    onAuthFailure: () {
-      LogService.log('Socket authentication failed');
+    headers: headers,
+    getToken: () => tokenService.getAccessToken(user.id),
+    onAuthFailure: (reason) {
+      LogService.log('Socket authentication failed: $reason');
     },
   );
-  ref.onDispose(api.dispose);
+
+  ref
+    ..listen(isBackgroundProvider, (_, isBackground) {
+      if (!isBackground) unawaited(api.refresh());
+    })
+    ..listen(isOfflineProvider, (previous, next) {
+      if (previous == true && !next) unawaited(api.refresh());
+    });
+
+  final sub = tokenService
+      .tokenStream(user.id)
+      .listen((_) => unawaited(api.refresh()));
+
+  ref.onDispose(() {
+    sub.cancel();
+    api.dispose();
+  });
   return api;
 }
 

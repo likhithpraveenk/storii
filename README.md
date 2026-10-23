@@ -41,12 +41,14 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 - Playback queue: supporting collections & playlists
 - Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling
 - Navigation customization: reorder tabs, choose startup screen, label behavior
-- Server admin tools (admin users): trigger library scans, re-scan/re-match items
+- Server admin tools (admin users): trigger library scans, re-scan/re-match items, see online users
 - Android Auto: browse library and play books and episodes
-- Home screen widget with media cover art
+- Home screen widget with cover art, progress and a play/pause badge
 - Local URL per server with automatic local/remote switching
 - Play on startup to auto-resume last played item
 - Play links for media items to autoplay via browser URLs
+- Connection status sheet: socket state, network type, and a manual reconnect
+- In-app changelog and a "What's New" sheet after updates
 
 ## Demo
 
@@ -96,7 +98,7 @@ Once the widget is on home screen, tap on the ➕ to bind it to a media item
 
 > Podcast episodes: In more button on episode item, you will find the `Bind to widget` option
 
-The widget shows just cover art for now.
+The widget shows cover art, listening progress, and a play/pause badge. Use the badge to start or toggle playback without opening the app; tapping elsewhere in the widget opens the media detail screen.
 
 ### What is the "Local URL" setting for?
 

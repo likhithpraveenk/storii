@@ -1,5 +1,7 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
@@ -9,6 +11,7 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/repositories/session_repository.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/logic/sessions_cleanup.dart';
+import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/storage/local/progress_store.dart';
 import 'package:storii/storage/local/session_store.dart';
 
@@ -21,8 +24,8 @@ void main() {
   late FakeSessionStore sessionStore;
   late FakeProgressStore progressStore;
   late FakeSessionsApi fakeSessionsApi;
-  late FakeSocketApi fakeSocketApi;
   late FakeItemApi fakeItemApi;
+  late BehaviorSubject<List<ConnectivityResult>> connectivity;
 
   setUpAll(() async {
     await initGlobals();
@@ -40,12 +43,12 @@ void main() {
     sessionStore = FakeSessionStore();
     progressStore = FakeProgressStore(userId: testUser.id);
     fakeSessionsApi = FakeSessionsApi();
-    fakeSocketApi = FakeSocketApi();
     fakeItemApi = FakeItemApi();
+    connectivity = BehaviorSubject.seeded([ConnectivityResult.wifi]);
   });
 
   tearDown(() {
-    fakeSocketApi.dispose();
+    connectivity.close();
   });
 
   ProviderContainer createContainer() {
@@ -55,7 +58,7 @@ void main() {
         progressStoreProvider(testUser.id).overrideWithValue(progressStore),
         currentUserProvider.overrideWithValue(testUser),
         authenticatedUserProvider.overrideWith((ref) async => testUser),
-        socketApiProvider.overrideWith((ref, _) async => fakeSocketApi),
+        connectivityStreamProvider.overrideWith((ref) => connectivity.stream),
         sessionsApiProvider.overrideWith((ref, _) => fakeSessionsApi),
         sessionRepositoryProvider.overrideWith(
           (ref, _) => SessionRepository(fakeItemApi, fakeSessionsApi),
@@ -64,14 +67,17 @@ void main() {
     );
   }
 
+  Future<void> goOffline(ProviderContainer container) async {
+    container.listen(isOfflineProvider, (_, _) {});
+    connectivity.add([ConnectivityResult.none]);
+    await pumpEventQueue();
+  }
+
   group('Offline Local Playback Flow', () {
     test('N consecutive failed syncs accumulate linearly in Hive', () async {
       final container = createContainer();
       addTearDown(container.dispose);
-
-      container.listen(socketStatusProvider, (_, _) {});
-      fakeSocketApi.emitConnected(connected: false);
-      await pumpEventQueue();
+      await goOffline(container);
 
       sessionStore.sessions[fakeLocalBookSession.id] = fakeLocalBookSession;
       container.read(sessionProvider.notifier).state = fakeLocalBookSession;
@@ -135,10 +141,7 @@ void main() {
     test('Streaming offline disconnect saves position only and preserves delta for reconnect', () async {
       final container = createContainer();
       addTearDown(container.dispose);
-
-      container.listen(socketStatusProvider, (_, _) {});
-      fakeSocketApi.emitConnected(connected: false);
-      await pumpEventQueue();
+      await goOffline(container);
 
       container.read(sessionProvider.notifier).state = fakeBookSession;
 
@@ -147,7 +150,13 @@ void main() {
         container
             .read(sessionProvider.notifier)
             .sync(const Duration(seconds: 20), const Duration(seconds: 20)),
-        throwsA(equals('No Server Connection')),
+        throwsA(
+          isA<AppError>().having(
+            (e) => e.message,
+            'message',
+            'No Server Connection',
+          ),
+        ),
       );
 
       // position saved, timeListening stays 0 -> delta preserved for reconnect
@@ -161,7 +170,7 @@ void main() {
       );
 
       // reconnect -> online sync sends 60s accumulated delta, drop from store
-      fakeSocketApi.emitConnected(connected: true);
+      connectivity.add([ConnectivityResult.wifi]);
       await pumpEventQueue();
 
       await container
@@ -175,5 +184,36 @@ void main() {
       );
       expect(sessionStore.sessions.containsKey(fakeBookSession.id), isFalse);
     });
+
+    test(
+      'network failure while online saves position and preserves delta',
+      () async {
+        final container = createContainer();
+        addTearDown(container.dispose);
+
+        container.listen(isOfflineProvider, (_, _) {});
+        await pumpEventQueue();
+
+        container.read(sessionProvider.notifier).state = fakeBookSession;
+        fakeSessionsApi.syncErrorType = .network;
+
+        await expectLater(
+          container
+              .read(sessionProvider.notifier)
+              .sync(const Duration(seconds: 20), const Duration(seconds: 20)),
+          throwsA(isA<AppError>()),
+        );
+
+        expect(fakeSessionsApi.sessionSyncCalls, isEmpty);
+        expect(
+          sessionStore.sessions[fakeBookSession.id]?.currentTime,
+          const Duration(seconds: 20),
+        );
+        expect(
+          sessionStore.sessions[fakeBookSession.id]?.timeListening,
+          Duration.zero,
+        );
+      },
+    );
   });
 }

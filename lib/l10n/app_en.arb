@@ -410,6 +410,8 @@
       }
     }
   },
+  "connectionAuthenticating": "Connecting to server…",
+  "connectionAuthFailed": "Socket authentication failed",
   "foundBugQ": "Found a bug?",
   "foundBugQSubtitle": "Open a GitHub issue for any bug you encountered",
   "audioBufferDuration": "Audio Buffer Duration",
@@ -567,6 +569,14 @@
   "defaultWord": "Default",
   "big": "Big",
   "admin": "Admin",
+  "usersOnline": "Online users ({noOfUsers})",
+  "@usersOnline": {
+    "placeholders": {
+      "noOfUsers": {
+        "type": "int"
+      }
+    }
+  },
   "loginWithAdmin": "Login with admin/root user to access this screen",
   "scan": "Scan",
   "reScan": "Re-scan",

@@ -1,8 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
@@ -10,16 +10,28 @@ import 'package:storii/storage/local/servers_store.dart';
 
 part 'connection_providers.g.dart';
 
-@Riverpod(keepAlive: true)
-Stream<bool> socketStatus(Ref ref) async* {
+@riverpod
+Stream<SocketStatus> socketStatus(Ref ref) async* {
   final user = ref.watch(currentUserProvider);
   if (user == null) {
-    yield false;
+    yield .disconnected;
     return;
   }
 
   final socketApi = await ref.watch(socketApiProvider(user).future);
-  yield* socketApi.isConnected;
+  yield* socketApi.statusStream;
+}
+
+@riverpod
+Stream<InitEvent?> socketInit(Ref ref) async* {
+  final user = ref.watch(currentUserProvider);
+  if (user == null) {
+    yield null;
+    return;
+  }
+
+  final socketApi = await ref.watch(socketApiProvider(user).future);
+  yield* socketApi.payloadStream;
 }
 
 enum ConnectionType {
@@ -56,6 +68,12 @@ ConnectionType connectionType(Ref ref) {
 }
 
 @Riverpod(keepAlive: true)
+bool isOffline(Ref ref) {
+  final results = ref.watch(connectivityStreamProvider).value;
+  return results?.contains(ConnectivityResult.none) ?? false;
+}
+
+@Riverpod(keepAlive: true)
 class ActiveServerUrl extends _$ActiveServerUrl {
   @override
   Uri build() {
@@ -89,27 +107,5 @@ class ActiveServerUrl extends _$ActiveServerUrl {
         .timeout(const Duration(seconds: 2), onTimeout: () => 'error');
     if (!ref.mounted) return;
     state = error == null ? localUrl : remoteUrl;
-  }
-}
-
-@Riverpod(keepAlive: true)
-class ServerConnection extends _$ServerConnection {
-  @override
-  bool build() {
-    ref.listen(connectivityStreamProvider, (_, next) {
-      final list = next.value ?? [];
-      if (list.contains(ConnectivityResult.none)) {
-        LogService.log('No connections available');
-        state = false;
-      }
-    });
-
-    ref.listen(socketStatusProvider, (prev, next) {
-      final connected = next.value ?? false;
-      LogService.log('Socket ${connected ? 'connected' : 'disconnected'}');
-      state = connected;
-    });
-
-    return true; //! optimistic true
   }
 }

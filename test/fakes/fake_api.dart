@@ -2,12 +2,16 @@ import 'dart:async';
 
 import 'package:storii/api/abs/abs_api.dart';
 
+import 'fake_socket.dart';
+
 class FakeSessionsApi extends SessionsApi {
   new() : super(ApiClient(baseUrl: Uri.parse('http://localhost')));
 
   final List<PlaybackSession> localSyncCalls = [];
   final List<({String sessionId, SyncSessionRequestParams params})>
   sessionSyncCalls = [];
+
+  ApiExceptionType? syncErrorType;
 
   @override
   Future<void> syncLocal({required PlaybackSession localSession}) async {
@@ -19,6 +23,10 @@ class FakeSessionsApi extends SessionsApi {
     required String sessionId,
     required SyncSessionRequestParams params,
   }) async {
+    final errorType = syncErrorType;
+    if (errorType != null) {
+      throw ApiException('sync failed', type: errorType);
+    }
     sessionSyncCalls.add((sessionId: sessionId, params: params));
   }
 }
@@ -28,30 +36,35 @@ class FakeItemApi extends ItemApi {
 }
 
 class FakeSocketApi extends SocketApi {
-  bool _current = false;
-  final StreamController<bool> _controller = StreamController<bool>.broadcast();
+  SocketStatus _status = .connecting;
+  final StreamController<SocketStatus> _controller =
+      StreamController<SocketStatus>.broadcast();
 
   new()
     : super(
         baseUrl: 'http://localhost',
-        token: null,
-        tokenUpdates: const Stream.empty(),
+        socket: FakeSocket(),
+        getToken: () async => null,
       ) {
     _controller.onListen = () {
-      if (!_controller.isClosed) _controller.add(_current);
+      if (!_controller.isClosed) _controller.add(_status);
     };
   }
 
   @override
-  Stream<bool> get isConnected => _controller.stream;
+  Stream<SocketStatus> get statusStream => _controller.stream;
 
-  void emitConnected({required bool connected}) {
-    _current = connected;
-    _controller.add(connected);
+  void emitStatus(SocketStatus status) {
+    _status = status;
+    if (!_controller.isClosed) _controller.add(status);
   }
+
+  void emitConnected({required bool connected}) =>
+      emitStatus(connected ? .ready : .disconnected);
 
   @override
   void dispose() {
     _controller.close();
+    super.dispose();
   }
 }

@@ -372,4 +372,307 @@ $UserPermissionsCopyWith<$Res> get permissions {
 }
 }
 
+
+/// @nodoc
+mixin _$UserMinimal {
+
+ String get id; String get username; UserType get type; PlaybackSession? get session; DateTime? get lastSeen; DateTime get createdAt;
+/// Create a copy of UserMinimal
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UserMinimalCopyWith<UserMinimal> get copyWith => _$UserMinimalCopyWithImpl<UserMinimal>(this as UserMinimal, _$identity);
+
+  /// Serializes this UserMinimal to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  final _this = this as UserMinimal;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserMinimal&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.username, _this.username) || other.username == _this.username)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.session, _this.session) || other.session == _this.session)&&(identical(other.lastSeen, _this.lastSeen) || other.lastSeen == _this.lastSeen)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+  final _this = this as UserMinimal;
+  return Object.hash(runtimeType,_this.id,_this.username,_this.type,_this.session,_this.lastSeen,_this.createdAt);
+}
+
+@override
+String toString() {
+  final _this = this as UserMinimal;
+  return 'UserMinimal(id: ${_this.id}, username: ${_this.username}, type: ${_this.type}, session: ${_this.session}, lastSeen: ${_this.lastSeen}, createdAt: ${_this.createdAt})';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UserMinimalCopyWith<$Res>  {
+  factory $UserMinimalCopyWith(UserMinimal value, $Res Function(UserMinimal) _then) = _$UserMinimalCopyWithImpl;
+@useResult
+$Res call({
+ String id, String username, UserType type, PlaybackSession? session, DateTime? lastSeen, DateTime createdAt
+});
+
+
+$PlaybackSessionCopyWith<$Res>? get session;
+
+}
+/// @nodoc
+class _$UserMinimalCopyWithImpl<$Res>
+    implements $UserMinimalCopyWith<$Res> {
+  _$UserMinimalCopyWithImpl(this._self, this._then);
+
+  final UserMinimal _self;
+  final $Res Function(UserMinimal) _then;
+
+/// Create a copy of UserMinimal
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? type = null,Object? session = freezed,Object? lastSeen = freezed,Object? createdAt = null,}) {
+  return _then(UserMinimal(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as UserType,session: freezed == session ? _self.session : session // ignore: cast_nullable_to_non_nullable
+as PlaybackSession?,lastSeen: freezed == lastSeen ? _self.lastSeen : lastSeen // ignore: cast_nullable_to_non_nullable
+as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
+  ));
+}
+/// Create a copy of UserMinimal
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PlaybackSessionCopyWith<$Res>? get session {
+    if (_self.session == null) {
+    return null;
+  }
+
+  return $PlaybackSessionCopyWith<$Res>(_self.session!, (value) {
+    return _then(_self.copyWith(session: value));
+  });
+}
+}
+
+
+/// Adds pattern-matching-related methods to [UserMinimal].
+extension UserMinimalPatterns on UserMinimal {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _UserMinimal value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _UserMinimal() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _UserMinimal value)  $default,){
+final _that = this;
+switch (_that) {
+case _UserMinimal():
+return $default(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _UserMinimal value)?  $default,){
+final _that = this;
+switch (_that) {
+case _UserMinimal() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String username,  UserType type,  PlaybackSession? session,  DateTime? lastSeen,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _UserMinimal() when $default != null:
+return $default(_that.id,_that.username,_that.type,_that.session,_that.lastSeen,_that.createdAt);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String username,  UserType type,  PlaybackSession? session,  DateTime? lastSeen,  DateTime createdAt)  $default,) {final _that = this;
+switch (_that) {
+case _UserMinimal():
+return $default(_that.id,_that.username,_that.type,_that.session,_that.lastSeen,_that.createdAt);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String username,  UserType type,  PlaybackSession? session,  DateTime? lastSeen,  DateTime createdAt)?  $default,) {final _that = this;
+switch (_that) {
+case _UserMinimal() when $default != null:
+return $default(_that.id,_that.username,_that.type,_that.session,_that.lastSeen,_that.createdAt);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+@DateTimeEpochConverter()
+class _UserMinimal implements UserMinimal {
+  const _UserMinimal({required this.id, required this.username, required this.type, this.session, this.lastSeen, required this.createdAt});
+  factory _UserMinimal.fromJson(Map<String, dynamic> json) => _$UserMinimalFromJson(json);
+
+@override final  String id;
+@override final  String username;
+@override final  UserType type;
+@override final  PlaybackSession? session;
+@override final  DateTime? lastSeen;
+@override final  DateTime createdAt;
+
+/// Create a copy of UserMinimal
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UserMinimalCopyWith<_UserMinimal> get copyWith => __$UserMinimalCopyWithImpl<_UserMinimal>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$UserMinimalToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserMinimal&&(identical(other.id, id) || other.id == id)&&(identical(other.username, username) || other.username == username)&&(identical(other.type, type) || other.type == type)&&(identical(other.session, session) || other.session == session)&&(identical(other.lastSeen, lastSeen) || other.lastSeen == lastSeen)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+    return Object.hash(runtimeType,id,username,type,session,lastSeen,createdAt);
+}
+
+@override
+String toString() {
+    return 'UserMinimal(id: $id, username: $username, type: $type, session: $session, lastSeen: $lastSeen, createdAt: $createdAt)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$UserMinimalCopyWith<$Res> implements $UserMinimalCopyWith<$Res> {
+  factory _$UserMinimalCopyWith(_UserMinimal value, $Res Function(_UserMinimal) _then) = __$UserMinimalCopyWithImpl;
+@override @useResult
+$Res call({
+ String id, String username, UserType type, PlaybackSession? session, DateTime? lastSeen, DateTime createdAt
+});
+
+
+@override $PlaybackSessionCopyWith<$Res>? get session;
+
+}
+/// @nodoc
+class __$UserMinimalCopyWithImpl<$Res>
+    implements _$UserMinimalCopyWith<$Res> {
+  __$UserMinimalCopyWithImpl(this._self, this._then);
+
+  final _UserMinimal _self;
+  final $Res Function(_UserMinimal) _then;
+
+/// Create a copy of UserMinimal
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,Object? type = null,Object? session = freezed,Object? lastSeen = freezed,Object? createdAt = null,}) {
+  return _then(_UserMinimal(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as UserType,session: freezed == session ? _self.session : session // ignore: cast_nullable_to_non_nullable
+as PlaybackSession?,lastSeen: freezed == lastSeen ? _self.lastSeen : lastSeen // ignore: cast_nullable_to_non_nullable
+as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
+  ));
+}
+
+/// Create a copy of UserMinimal
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PlaybackSessionCopyWith<$Res>? get session {
+    if (_self.session == null) {
+    return null;
+  }
+
+  return $PlaybackSessionCopyWith<$Res>(_self.session!, (value) {
+    return _then(_self.copyWith(session: value));
+  });
+}
+}
+
 // dart format on

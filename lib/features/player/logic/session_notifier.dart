@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/api/abs/abs_api.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/connection_providers.dart';
@@ -120,10 +121,7 @@ class SessionNotifier extends _$SessionNotifier {
         state = updated;
       }
 
-      final isConnected = await ref.read(socketStatusProvider.future);
-      if (!isConnected) {
-        return;
-      }
+      if (ref.read(isOfflineProvider)) return;
 
       try {
         final user = await ref.read(authenticatedUserProvider.future);
@@ -139,28 +137,31 @@ class SessionNotifier extends _$SessionNotifier {
         return;
       }
     } else {
-      final isConnected = await ref.read(socketStatusProvider.future);
-      if (!isConnected) {
-        final withPosition = session.copyWith(
-          currentTime: position,
-          updatedAt: DateTime.now(),
+      if (ref.read(isOfflineProvider)) {
+        await _savePosition(session, position, closing: closing);
+        throw AppError(
+          'No Server Connection',
+          localizedMessage: l10n.errorNetwork,
+          stackTrace: StackTrace.current,
+          type: .network,
         );
-        await ref.read(sessionStoreProvider).save(withPosition);
-        if (!closing) {
-          state = withPosition;
-        }
-        throw 'No Server Connection';
       }
 
       final user = await ref.read(authenticatedUserProvider.future);
       final repo = ref.read(sessionRepositoryProvider(user));
-      await repo.syncSession(
-        sessionId: session.id,
-        params: SyncSessionRequestParams(
-          currentTime: position,
-          timeListened: totalListened,
-        ),
-      );
+      try {
+        await repo.syncSession(
+          sessionId: session.id,
+          params: SyncSessionRequestParams(
+            currentTime: position,
+            timeListened: totalListened,
+          ),
+        );
+      } on AppError catch (error) {
+        if (error.type != .network && error.type != .timeout) rethrow;
+        await _savePosition(session, position, closing: closing);
+        rethrow;
+      }
     }
 
     await ref.read(sessionStoreProvider).delete(updated.id);
@@ -172,6 +173,21 @@ class SessionNotifier extends _$SessionNotifier {
       '${position.toTime()}: sync success '
       'listened: ${totalListened.toReadableDuration(showSeconds: true)}',
     );
+  }
+
+  Future<void> _savePosition(
+    PlaybackSession session,
+    Duration position, {
+    required bool closing,
+  }) async {
+    final withPosition = session.copyWith(
+      currentTime: position,
+      updatedAt: DateTime.now(),
+    );
+    await ref.read(sessionStoreProvider).save(withPosition);
+    if (!closing) {
+      state = withPosition;
+    }
   }
 
   Future<void> close() async {

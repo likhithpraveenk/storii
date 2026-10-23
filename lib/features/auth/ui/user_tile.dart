@@ -5,6 +5,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
+import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/user_auth_status.dart';
 import 'package:storii/features/auth/ui/add_user_sheet.dart';
@@ -31,11 +32,18 @@ class UserTile extends ConsumerWidget {
       borderRadius: .circular(kRadius),
       onTap: () async {
         if (isActive) {
+          final previous = ref.read(currentUserProvider);
+          if (previous?.id == user.id) return;
           LogService.log(l10n.switchingToUser(user.username), level: .info);
           await ref.read(appSettingsProvider.notifier).setCurrentUser(user);
           await ref
               .read(appSettingsProvider.notifier)
               .setServerUrl(user.serverUrl);
+          if (previous != null) {
+            ref
+              ..invalidate(apiClientProvider(previous))
+              ..invalidate(socketApiProvider(previous));
+          }
         } else if (loginNeeded) {
           await showAddUserSheet(context, server.url, user.username);
         }

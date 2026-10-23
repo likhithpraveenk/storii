@@ -13,10 +13,12 @@ Storii is a modern, feature-rich client for <a href="https://github.com/advplyr/
 <li>Playback queue: supporting collections &amp; playlists</li>
 <li>Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling</li>
 <li>Navigation customization: reorder tabs, choose startup screen, label behavior</li>
-<li>Server admin tools (admin users): trigger library scans, re-scan/re-match items</li>
+<li>Server admin tools (admin users): trigger library scans, re-scan/re-match items, see online users</li>
 <li>Android Auto: browse library and play books and episodes</li>
-<li>Home screen widget with media cover art</li>
+<li>Home screen widget with cover art, progress and a play/pause badge</li>
 <li>Local URL per server with automatic local/remote switching</li>
 <li>Play on startup to auto-resume last played item</li>
 <li>Play links for media items to autoplay via browser URLs</li>
+<li>Connection status sheet: socket state, network type, and a manual reconnect</li>
+<li>In-app changelog and a "What's New" sheet after updates</li>
 </ul>

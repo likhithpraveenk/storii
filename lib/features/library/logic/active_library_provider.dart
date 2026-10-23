@@ -14,8 +14,8 @@ Future<LibraryResponse> activeLibraryDetails(Ref ref) async {
   final currentLibrary = ref.watch(currentLibraryProvider);
 
   Future<LibraryResponse> fetchFullLibrary(Library lib) async {
-    final user = await ref.watch(authenticatedUserProvider.future);
-    final repo = ref.watch(libraryRepositoryProvider(user));
+    final user = await ref.read(authenticatedUserProvider.future);
+    final repo = ref.read(libraryRepositoryProvider(user));
     return repo.get(lib.id);
   }
 
