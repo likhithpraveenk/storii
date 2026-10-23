@@ -40,7 +40,7 @@ ApiClient apiClient(Ref ref, UserDomain user) {
     interceptors: [
       LogsInterceptor(),
       OfflineCacheInterceptor(
-        isConnected: () => ref.read(serverConnectionProvider),
+        isOffline: () => ref.read(isOfflineProvider),
         cacheOptions: cacheOptions,
       ),
       DioCacheInterceptor(options: cacheOptions),

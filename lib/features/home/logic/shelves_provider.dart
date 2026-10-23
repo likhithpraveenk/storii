@@ -98,8 +98,8 @@ Future<List<Shelf>> sortedShelves(Ref ref) async {
 
 @riverpod
 Future<List<Shelf>> rawShelves(Ref ref) async {
-  final isConnected = ref.watch(serverConnectionProvider);
-  if (!isConnected) {
+  final isOffline = ref.watch(isOfflineProvider);
+  if (isOffline) {
     final downloads = ref.read(downloadsStoreProvider).getAll();
     final cache = ref.read(itemsCacheProvider);
 

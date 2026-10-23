@@ -25,11 +25,11 @@ class ItemDetail extends _$ItemDetail {
       unawaited(cache.put(updated));
     });
 
-    final isConnected = ref.watch(serverConnectionProvider);
-    if (!isConnected) {
+    final isOffline = ref.watch(isOfflineProvider);
+    if (isOffline) {
       final localItem = cache.get(id);
       if (localItem != null) return localItem;
-      throw l10n.connectionServerDisconnected;
+      throw l10n.connectionTypeNone;
     }
 
     final user = await ref.watch(authenticatedUserProvider.future);

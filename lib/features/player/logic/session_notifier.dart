@@ -120,10 +120,7 @@ class SessionNotifier extends _$SessionNotifier {
         state = updated;
       }
 
-      final isConnected = await ref.read(socketStatusProvider.future);
-      if (!isConnected) {
-        return;
-      }
+      if (ref.read(isOfflineProvider)) return;
 
       try {
         final user = await ref.read(authenticatedUserProvider.future);
@@ -139,28 +136,26 @@ class SessionNotifier extends _$SessionNotifier {
         return;
       }
     } else {
-      final isConnected = await ref.read(socketStatusProvider.future);
-      if (!isConnected) {
-        final withPosition = session.copyWith(
-          currentTime: position,
-          updatedAt: DateTime.now(),
-        );
-        await ref.read(sessionStoreProvider).save(withPosition);
-        if (!closing) {
-          state = withPosition;
-        }
+      if (ref.read(isOfflineProvider)) {
+        await _savePosition(session, position, closing: closing);
         throw 'No Server Connection';
       }
 
       final user = await ref.read(authenticatedUserProvider.future);
       final repo = ref.read(sessionRepositoryProvider(user));
-      await repo.syncSession(
-        sessionId: session.id,
-        params: SyncSessionRequestParams(
-          currentTime: position,
-          timeListened: totalListened,
-        ),
-      );
+      try {
+        await repo.syncSession(
+          sessionId: session.id,
+          params: SyncSessionRequestParams(
+            currentTime: position,
+            timeListened: totalListened,
+          ),
+        );
+      } on AppError catch (error) {
+        if (error.type != .network && error.type != .timeout) rethrow;
+        await _savePosition(session, position, closing: closing);
+        rethrow;
+      }
     }
 
     await ref.read(sessionStoreProvider).delete(updated.id);
@@ -172,6 +167,21 @@ class SessionNotifier extends _$SessionNotifier {
       '${position.toTime()}: sync success '
       'listened: ${totalListened.toReadableDuration(showSeconds: true)}',
     );
+  }
+
+  Future<void> _savePosition(
+    PlaybackSession session,
+    Duration position, {
+    required bool closing,
+  }) async {
+    final withPosition = session.copyWith(
+      currentTime: position,
+      updatedAt: DateTime.now(),
+    );
+    await ref.read(sessionStoreProvider).save(withPosition);
+    if (!closing) {
+      state = withPosition;
+    }
   }
 
   Future<void> close() async {

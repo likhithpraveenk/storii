@@ -19,8 +19,8 @@ Future<UserDomain> authenticatedUser(Ref ref) async {
   final user = ref.watch(currentUserProvider);
   if (user == null) throw StateError('No current user');
 
-  final isConnected = ref.watch(serverConnectionProvider);
-  if (!isConnected) return user;
+  final ifOffline = ref.watch(isOfflineProvider);
+  if (ifOffline) return user;
 
   try {
     final response = await ref.logApiCall(
