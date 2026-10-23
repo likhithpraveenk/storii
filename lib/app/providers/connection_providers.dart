@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
@@ -19,7 +20,31 @@ Stream<bool> socketStatus(Ref ref) async* {
   }
 
   final socketApi = await ref.watch(socketApiProvider(user).future);
-  yield* socketApi.isConnected;
+  yield* socketApi.statusStream.map((status) => status != .disconnected);
+}
+
+@riverpod
+Stream<SocketStatus> socketState(Ref ref) async* {
+  final user = ref.watch(currentUserProvider);
+  if (user == null) {
+    yield .disconnected;
+    return;
+  }
+
+  final socketApi = await ref.watch(socketApiProvider(user).future);
+  yield* socketApi.statusStream;
+}
+
+@riverpod
+Stream<InitEvent?> socketInit(Ref ref) async* {
+  final user = ref.watch(currentUserProvider);
+  if (user == null) {
+    yield null;
+    return;
+  }
+
+  final socketApi = await ref.watch(socketApiProvider(user).future);
+  yield* socketApi.payloadStream;
 }
 
 enum ConnectionType {
@@ -53,6 +78,12 @@ ConnectionType connectionType(Ref ref) {
   if (results.contains(ConnectivityResult.ethernet)) return .ethernet;
   if (results.contains(ConnectivityResult.mobile)) return .mobile;
   return .none;
+}
+
+@Riverpod(keepAlive: true)
+bool isOffline(Ref ref) {
+  final results = ref.watch(connectivityStreamProvider).value;
+  return results?.contains(ConnectivityResult.none) ?? false;
 }
 
 @Riverpod(keepAlive: true)
@@ -104,12 +135,13 @@ class ServerConnection extends _$ServerConnection {
       }
     });
 
-    ref.listen(socketStatusProvider, (prev, next) {
-      final connected = next.value ?? false;
+    ref.listen(socketStatusProvider, (_, next) {
+      final connected = next.value;
+      if (connected == null) return;
       LogService.log('Socket ${connected ? 'connected' : 'disconnected'}');
       state = connected;
     });
 
-    return true; //! optimistic true
+    return ref.read(socketStatusProvider).value ?? true;
   }
 }

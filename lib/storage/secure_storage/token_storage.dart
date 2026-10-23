@@ -21,7 +21,8 @@ class TokenStorage {
     try {
       await _storage.write(key: _access(userId), value: access);
       await _storage.write(key: _refresh(userId), value: refresh);
-      _tokenStreams[userId]?.add(access);
+      final controller = _tokenStreams[userId];
+      if (controller != null && !controller.isClosed) controller.add(access);
     } catch (e, st) {
       LogService.log(
         'saving tokens failed',
@@ -85,13 +86,15 @@ class TokenStorage {
   }
 
   Stream<String?> tokenStream(String userId) {
-    return (_tokenStreams[userId] ??= StreamController<String?>.broadcast(
-      onCancel: () {
-        if (_tokenStreams[userId]?.hasListener == false) {
-          _tokenStreams[userId]?.close();
-          _tokenStreams.remove(userId);
-        }
-      },
-    )).stream;
+    final controller = _tokenStreams[userId] ??=
+        StreamController<String?>.broadcast(
+          onCancel: () {
+            if (_tokenStreams[userId]?.hasListener == false) {
+              _tokenStreams[userId]?.close();
+              _tokenStreams.remove(userId);
+            }
+          },
+        );
+    return controller.stream;
   }
 }

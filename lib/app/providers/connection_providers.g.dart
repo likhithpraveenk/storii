@@ -40,7 +40,84 @@ final class SocketStatusProvider
   }
 }
 
-String _$socketStatusHash() => r'c5cd6a92e3767afdf9ed2d07918125accdafcb57';
+String _$socketStatusHash() => r'8b0e96e0f67760fb643a9f8cce4ddd6f79dd5d26';
+
+@ProviderFor(socketState)
+final socketStateProvider = SocketStateProvider._();
+
+final class SocketStateProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<SocketStatus>,
+          SocketStatus,
+          Stream<SocketStatus>
+        >
+    with $FutureModifier<SocketStatus>, $StreamProvider<SocketStatus> {
+  SocketStateProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'socketStateProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$socketStateHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<SocketStatus> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<SocketStatus> create(Ref ref) {
+    return socketState(ref);
+  }
+}
+
+String _$socketStateHash() => r'02ba160b63748409df1c2f67385defdd217cfaf4';
+
+@ProviderFor(socketInit)
+final socketInitProvider = SocketInitProvider._();
+
+final class SocketInitProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<InitEvent?>,
+          InitEvent?,
+          Stream<InitEvent?>
+        >
+    with $FutureModifier<InitEvent?>, $StreamProvider<InitEvent?> {
+  SocketInitProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'socketInitProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$socketInitHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<InitEvent?> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<InitEvent?> create(Ref ref) {
+    return socketInit(ref);
+  }
+}
+
+String _$socketInitHash() => r'f10796d5c2c8b3b59073fd3e7ec41b4ce5c122fb';
 
 @ProviderFor(connectivityStream)
 final connectivityStreamProvider = ConnectivityStreamProvider._();
@@ -124,6 +201,46 @@ final class ConnectionTypeProvider
 }
 
 String _$connectionTypeHash() => r'ac4f22daf36ed3faf6afdf9ab5031fabf818733a';
+
+@ProviderFor(isOffline)
+final isOfflineProvider = IsOfflineProvider._();
+
+final class IsOfflineProvider extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  IsOfflineProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'isOfflineProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$isOfflineHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    return isOffline(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$isOfflineHash() => r'ff81df61788765f475899da3f172edab0a6bae55';
 
 @ProviderFor(ActiveServerUrl)
 final activeServerUrlProvider = ActiveServerUrlProvider._();
@@ -209,7 +326,7 @@ final class ServerConnectionProvider
   }
 }
 
-String _$serverConnectionHash() => r'47205f5200b7e2204a5738437d4092d7a971f483';
+String _$serverConnectionHash() => r'd50523f6be968f4600b8ae3855fc14747bef3f92';
 
 abstract class _$ServerConnection extends $Notifier<bool> {
   bool build();

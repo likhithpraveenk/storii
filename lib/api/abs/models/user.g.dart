@@ -83,3 +83,32 @@ Json? _$JsonConverterToJson<Json, Value>(
   Value? value,
   Json? Function(Value value) toJson,
 ) => value == null ? null : toJson(value);
+
+_UserMinimal _$UserMinimalFromJson(Map<String, dynamic> json) => _UserMinimal(
+  id: json['id'] as String,
+  username: json['username'] as String,
+  type: $enumDecode(_$UserTypeEnumMap, json['type']),
+  session: json['session'] == null
+      ? null
+      : PlaybackSession.fromJson(json['session'] as Map<String, dynamic>),
+  lastSeen: _$JsonConverterFromJson<int, DateTime>(
+    json['lastSeen'],
+    const DateTimeEpochConverter().fromJson,
+  ),
+  createdAt: const DateTimeEpochConverter().fromJson(
+    (json['createdAt'] as num).toInt(),
+  ),
+);
+
+Map<String, dynamic> _$UserMinimalToJson(_UserMinimal instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'username': instance.username,
+      'type': _$UserTypeEnumMap[instance.type]!,
+      'session': ?instance.session?.toJson(),
+      'lastSeen': ?_$JsonConverterToJson<int, DateTime>(
+        instance.lastSeen,
+        const DateTimeEpochConverter().toJson,
+      ),
+      'createdAt': const DateTimeEpochConverter().toJson(instance.createdAt),
+    };
