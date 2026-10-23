@@ -15,7 +15,7 @@ class ConnectionStatusIcon extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final socketState = ref.watch(socketStateProvider).value ?? .disconnected;
+    final socketState = ref.watch(socketStatusProvider).value ?? .disconnected;
     final connectionType = ref.watch(connectionTypeProvider);
     final scheme = Theme.of(context).colorScheme;
 
@@ -64,7 +64,7 @@ class _ConnectionDetailsSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final socketState = ref.watch(socketStateProvider).value ?? .disconnected;
+    final socketState = ref.watch(socketStatusProvider).value ?? .disconnected;
     final connectionType = ref.watch(connectionTypeProvider);
     final user = ref.watch(currentUserProvider);
     final scheme = Theme.of(context).colorScheme;

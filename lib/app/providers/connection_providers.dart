@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/init.dart';
-import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
@@ -11,20 +10,8 @@ import 'package:storii/storage/local/servers_store.dart';
 
 part 'connection_providers.g.dart';
 
-@Riverpod(keepAlive: true)
-Stream<bool> socketStatus(Ref ref) async* {
-  final user = ref.watch(currentUserProvider);
-  if (user == null) {
-    yield false;
-    return;
-  }
-
-  final socketApi = await ref.watch(socketApiProvider(user).future);
-  yield* socketApi.statusStream.map((status) => status != .disconnected);
-}
-
 @riverpod
-Stream<SocketStatus> socketState(Ref ref) async* {
+Stream<SocketStatus> socketStatus(Ref ref) async* {
   final user = ref.watch(currentUserProvider);
   if (user == null) {
     yield .disconnected;
@@ -120,28 +107,5 @@ class ActiveServerUrl extends _$ActiveServerUrl {
         .timeout(const Duration(seconds: 2), onTimeout: () => 'error');
     if (!ref.mounted) return;
     state = error == null ? localUrl : remoteUrl;
-  }
-}
-
-@Riverpod(keepAlive: true)
-class ServerConnection extends _$ServerConnection {
-  @override
-  bool build() {
-    ref.listen(connectivityStreamProvider, (_, next) {
-      final list = next.value ?? [];
-      if (list.contains(ConnectivityResult.none)) {
-        LogService.log('No connections available');
-        state = false;
-      }
-    });
-
-    ref.listen(socketStatusProvider, (_, next) {
-      final connected = next.value;
-      if (connected == null) return;
-      LogService.log('Socket ${connected ? 'connected' : 'disconnected'}');
-      state = connected;
-    });
-
-    return ref.read(socketStatusProvider).value ?? true;
   }
 }

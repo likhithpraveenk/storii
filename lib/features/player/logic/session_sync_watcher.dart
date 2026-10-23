@@ -76,8 +76,9 @@ class SessionSyncWatcher extends _$SessionSyncWatcher {
     });
 
     ref.listen(socketStatusProvider, (prev, next) async {
-      final wasConnected = prev?.value ?? false;
-      final isConnected = next.value ?? false;
+      final wasConnected = prev?.value != null && prev?.value != .disconnected;
+      final status = next.value;
+      final isConnected = status != null && status != .disconnected;
       if (!wasConnected && isConnected) {
         try {
           await ref.read(sessionsCleanupProvider.notifier).cleanup();

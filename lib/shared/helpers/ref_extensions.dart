@@ -16,8 +16,13 @@ extension RefExtensions on Ref {
   );
 
   void invalidateOnReconnect() {
-    listen(serverConnectionProvider, (prev, next) {
-      if (prev == false && next == true) invalidateSelf();
+    listen(socketStatusProvider, (prev, next) {
+      final status = next.value;
+      if (prev?.value == .disconnected &&
+          status != null &&
+          status != .disconnected) {
+        invalidateSelf();
+      }
     });
   }
 }

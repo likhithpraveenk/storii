@@ -13,15 +13,20 @@ part of 'connection_providers.dart';
 final socketStatusProvider = SocketStatusProvider._();
 
 final class SocketStatusProvider
-    extends $FunctionalProvider<AsyncValue<bool>, bool, Stream<bool>>
-    with $FutureModifier<bool>, $StreamProvider<bool> {
+    extends
+        $FunctionalProvider<
+          AsyncValue<SocketStatus>,
+          SocketStatus,
+          Stream<SocketStatus>
+        >
+    with $FutureModifier<SocketStatus>, $StreamProvider<SocketStatus> {
   SocketStatusProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'socketStatusProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -31,55 +36,17 @@ final class SocketStatusProvider
 
   @$internal
   @override
-  $StreamProviderElement<bool> $createElement($ProviderPointer pointer) =>
-      $StreamProviderElement(pointer);
-
-  @override
-  Stream<bool> create(Ref ref) {
-    return socketStatus(ref);
-  }
-}
-
-String _$socketStatusHash() => r'8b0e96e0f67760fb643a9f8cce4ddd6f79dd5d26';
-
-@ProviderFor(socketState)
-final socketStateProvider = SocketStateProvider._();
-
-final class SocketStateProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<SocketStatus>,
-          SocketStatus,
-          Stream<SocketStatus>
-        >
-    with $FutureModifier<SocketStatus>, $StreamProvider<SocketStatus> {
-  SocketStateProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'socketStateProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$socketStateHash();
-
-  @$internal
-  @override
   $StreamProviderElement<SocketStatus> $createElement(
     $ProviderPointer pointer,
   ) => $StreamProviderElement(pointer);
 
   @override
   Stream<SocketStatus> create(Ref ref) {
-    return socketState(ref);
+    return socketStatus(ref);
   }
 }
 
-String _$socketStateHash() => r'02ba160b63748409df1c2f67385defdd217cfaf4';
+String _$socketStatusHash() => r'7dd50afce7e29f9654e8e3b639d3c7fc288223cf';
 
 @ProviderFor(socketInit)
 final socketInitProvider = SocketInitProvider._();
@@ -287,58 +254,6 @@ abstract class _$ActiveServerUrl extends $Notifier<Uri> {
             as $ClassProviderElement<
               AnyNotifier<Uri, Uri>,
               Uri,
-              Object?,
-              Object?
-            >;
-    return element.handleCreate(ref, build);
-  }
-}
-
-@ProviderFor(ServerConnection)
-final serverConnectionProvider = ServerConnectionProvider._();
-
-final class ServerConnectionProvider
-    extends $NotifierProvider<ServerConnection, bool> {
-  ServerConnectionProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'serverConnectionProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$serverConnectionHash();
-
-  @$internal
-  @override
-  ServerConnection create() => ServerConnection();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(bool value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<bool>(value),
-    );
-  }
-}
-
-String _$serverConnectionHash() => r'd50523f6be968f4600b8ae3855fc14747bef3f92';
-
-abstract class _$ServerConnection extends $Notifier<bool> {
-  bool build();
-  @$mustCallSuper
-  @override
-  WhenComplete runBuild() {
-    final ref = this.ref as $Ref<bool, bool>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<bool, bool>,
-              bool,
               Object?,
               Object?
             >;

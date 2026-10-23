@@ -1,20 +1,14 @@
-import 'dart:async';
-
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 
 import '../../fakes/fake_api.dart';
-import '../../helpers/init_globals.dart';
 
 void main() {
-  setUpAll(initGlobals);
-  tearDownAll(disposeGlobals);
-
   final testUser = UserDomain(
     id: 'user-id',
     username: 'test-user',
@@ -23,99 +17,52 @@ void main() {
   );
 
   late FakeSocketApi socket;
-  late StreamController<List<ConnectivityResult>> connectivity;
 
   setUp(() {
     socket = FakeSocketApi();
-    connectivity = StreamController.broadcast();
   });
 
   tearDown(() {
     socket.dispose();
-    connectivity.close();
   });
 
-  ProviderContainer createContainer() => ProviderContainer(
-    overrides: [
-      currentUserProvider.overrideWithValue(testUser),
-      socketApiProvider.overrideWith((ref, _) async => socket),
-      connectivityStreamProvider.overrideWith((ref) => connectivity.stream),
-    ],
-  );
+  ProviderContainer createContainer({bool signedIn = true}) =>
+      ProviderContainer(
+        overrides: [
+          currentUserProvider.overrideWithValue(signedIn ? testUser : null),
+          socketApiProvider.overrideWith((ref, _) async => socket),
+        ],
+      );
 
   group('socketStatus', () {
-    test('only a lost transport reads as offline', () async {
+    test('streams the live socket status', () async {
       final container = createContainer();
       addTearDown(container.dispose);
 
       final sub = container.listen(socketStatusProvider, (_, _) {});
       await pumpEventQueue();
-      expect(sub.read().value, isTrue);
+      expect(sub.read().value, SocketStatus.connecting);
 
-      socket.emitStatus(.authFailed);
+      socket.emitStatus(.ready);
       await pumpEventQueue();
-      expect(sub.read().value, isTrue);
+      expect(sub.read().value, SocketStatus.ready);
 
       socket.emitStatus(.authenticating);
       await pumpEventQueue();
-      expect(sub.read().value, isTrue);
+      expect(sub.read().value, SocketStatus.authenticating);
 
       socket.emitStatus(.disconnected);
       await pumpEventQueue();
-      expect(sub.read().value, isFalse);
-
-      socket.emitStatus(.ready);
-      await pumpEventQueue();
-      expect(sub.read().value, isTrue);
-    });
-  });
-
-  group('serverConnection', () {
-    test('seeds from the current socket value', () async {
-      final container = createContainer();
-      addTearDown(container.dispose);
-
-      container.listen(socketStatusProvider, (_, _) {});
-      await pumpEventQueue();
-
-      socket.emitStatus(.disconnected);
-      await pumpEventQueue();
-
-      expect(container.read(serverConnectionProvider), isFalse);
+      expect(sub.read().value, SocketStatus.disconnected);
     });
 
-    test('auth handshake does not drop the connection', () async {
-      final container = createContainer();
+    test('is disconnected without a current user', () async {
+      final container = createContainer(signedIn: false);
       addTearDown(container.dispose);
 
-      final values = <bool>[];
-      container.listen(serverConnectionProvider, (_, next) => values.add(next));
+      final sub = container.listen(socketStatusProvider, (_, _) {});
       await pumpEventQueue();
-
-      socket.emitStatus(.ready);
-      await pumpEventQueue();
-      socket.emitStatus(.authenticating);
-      await pumpEventQueue();
-      socket.emitStatus(.authFailed);
-      await pumpEventQueue();
-      socket.emitStatus(.ready);
-      await pumpEventQueue();
-
-      expect(values, isNot(contains(false)));
-      expect(container.read(serverConnectionProvider), isTrue);
-    });
-
-    test('losing connectivity reports offline', () async {
-      final container = createContainer();
-      addTearDown(container.dispose);
-
-      container.listen(serverConnectionProvider, (_, _) {});
-      await pumpEventQueue();
-
-      connectivity.add([ConnectivityResult.none]);
-      await pumpEventQueue();
-
-      expect(container.read(serverConnectionProvider), isFalse);
+      expect(sub.read().value, SocketStatus.disconnected);
     });
   });
 }
