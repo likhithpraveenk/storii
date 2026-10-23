@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/api/abs/abs_api.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/connection_providers.dart';
@@ -138,7 +139,12 @@ class SessionNotifier extends _$SessionNotifier {
     } else {
       if (ref.read(isOfflineProvider)) {
         await _savePosition(session, position, closing: closing);
-        throw 'No Server Connection';
+        throw AppError(
+          'No Server Connection',
+          localizedMessage: l10n.errorNetwork,
+          stackTrace: StackTrace.current,
+          type: .network,
+        );
       }
 
       final user = await ref.read(authenticatedUserProvider.future);

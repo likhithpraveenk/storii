@@ -150,7 +150,13 @@ void main() {
         container
             .read(sessionProvider.notifier)
             .sync(const Duration(seconds: 20), const Duration(seconds: 20)),
-        throwsA(equals('No Server Connection')),
+        throwsA(
+          isA<AppError>().having(
+            (e) => e.message,
+            'message',
+            'No Server Connection',
+          ),
+        ),
       );
 
       // position saved, timeListening stays 0 -> delta preserved for reconnect
