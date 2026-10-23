@@ -24,10 +24,14 @@ What actually happened. Include any error messages or logs if available
 
 ## Environment
 
-- Storii version:
-- Device:
+- Storii version (More > About):
+- Device and OS version: (e.g. Pixel 8, Android 17)
 - Audiobookshelf server version:
 
-## Screenshots
+## Logs
 
-If applicable, add screenshots to help explain the problem.
+Attach or paste relevant logs from More > Logs. **Redact sensitive text before posting.**
+
+## Screenshots (Optional)
+
+Add screenshots or a screen recording to help explain the problem.

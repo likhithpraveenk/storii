@@ -59,8 +59,11 @@ dart run build_runner watch
 
 ### Before Committing
 
+Run the same gate as CI (`.github/actions/static-checks`):
+
 ```bash
 dart format .
+dart run build_runner build
 dart fix --apply
 flutter analyze
 flutter test

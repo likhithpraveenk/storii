@@ -18,4 +18,4 @@ Any other approaches you've thought about, if any.
 
 ## Additional Context
 
-Screenshots or links to similar implementations are welcome.
+Screenshots, mockups, or links to similar implementations are welcome.

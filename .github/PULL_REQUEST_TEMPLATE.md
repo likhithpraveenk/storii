@@ -16,7 +16,8 @@ Closes #
 - [ ] `dart format .` - 0 changed
 - [ ] `dart fix --apply` - Nothing to fix
 - [ ] `flutter analyze` - No issues found
-- [ ] `dart run build_runner build` - No outputs
+- [ ] `dart run build_runner build` - No outputs (clean tree)
+- [ ] `flutter test` - All tests pass
 - [ ] Tested against an Audiobookshelf server
 
 ## Screenshots
