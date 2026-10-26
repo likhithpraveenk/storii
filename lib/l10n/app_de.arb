@@ -603,5 +603,17 @@
     }
   },
   "themePreview": "Design Vorschau",
-  "showNavbarAlways": "Zeige Navigationsleiste auf den meisten Seiten"
+  "showNavbarAlways": "Zeige Navigationsleiste auf den meisten Seiten",
+  "changelog": "Änderungsprotokoll",
+  "whatsNew": "Was gibt’s Neues",
+  "connectionAuthenticating": "Verbindung zum Server wird hergestellt…",
+  "connectionAuthFailed": "Die Socket-Authentifizierung ist fehlgeschlagen",
+  "usersOnline": "Benutzer online ({noOfUsers})",
+  "@usersOnline": {
+    "placeholders": {
+      "noOfUsers": {
+        "type": "int"
+      }
+    }
+  }
 }
