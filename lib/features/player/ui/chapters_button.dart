@@ -5,7 +5,6 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/models/chapter.dart';
 import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
-import 'package:storii/features/player/logic/session_extensions.dart';
 
 extension on Chapter {
   BookChapter toBookChapter() =>
@@ -25,6 +24,7 @@ class ChaptersActionButton extends ConsumerWidget {
       context,
       chapters: chapters.map((c) => c.toBookChapter()).toList(),
       itemId: session.libraryItemId,
+      episodeId: session.episodeId,
       itemTitle: session.displayTitle ?? l10n.noTitle,
     );
 
@@ -33,14 +33,14 @@ class ChaptersActionButton extends ConsumerWidget {
         title: Text(l10n.chapters),
         leading: const Icon(Icons.list_rounded),
         trailing: Text('${chapters.length}'),
-        onTap: session.isPodcastEpisode ? null : openSheet,
+        onTap: openSheet,
       );
     }
 
     return IconButton(
       icon: const Icon(Icons.list_rounded),
       tooltip: l10n.chapters,
-      onPressed: session.isPodcastEpisode ? null : openSheet,
+      onPressed: openSheet,
     );
   }
 }

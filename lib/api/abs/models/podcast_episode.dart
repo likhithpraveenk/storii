@@ -22,6 +22,7 @@ sealed class PodcastEpisode with _$PodcastEpisode {
     PodcastEpisodeEnclosure? enclosure,
     String? pubDate,
     required AudioFile audioFile,
+    @Default([]) List<BookChapter> chapters,
     DateTime? publishedAt,
     required DateTime addedAt,
     required DateTime updatedAt,

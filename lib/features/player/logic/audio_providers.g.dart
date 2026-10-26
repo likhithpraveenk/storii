@@ -473,7 +473,7 @@ final class DisplayProgressProvider
   }
 }
 
-String _$displayProgressHash() => r'2768e6c7029f8d78b9ac41297f953bfa73b91394';
+String _$displayProgressHash() => r'6bc024510c4f82743b1e369394197ab70a638f37';
 
 @ProviderFor(AudioPlayerNotifier)
 final audioPlayerProvider = AudioPlayerNotifierProvider._();

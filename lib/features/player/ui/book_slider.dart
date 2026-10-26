@@ -3,7 +3,6 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
-import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_slider.dart';
 
@@ -21,16 +20,10 @@ class _BookSliderState extends ConsumerState<BookSlider> {
 
   @override
   Widget build(BuildContext context) {
-    final isEpisode = ref.watch(
-      sessionProvider.select((s) => s?.episodeId != null),
-    );
-    final showChapterSlider = ref.watch(showChapterProgressSliderProvider);
-
     final (:duration, :position) = ref.watch(displayProgressProvider);
-    final useGlobalSeek = isEpisode || !showChapterSlider;
-
     final speed = ref.watch(localSpeedProvider);
     final scaleTimeBySpeed = ref.watch(scaleTimeBySpeedProvider);
+
     final durationMs = duration.inMilliseconds.toDouble();
     final positionMs = position.inMilliseconds.toDouble().clamp(
       0.0,
@@ -76,7 +69,7 @@ class _BookSliderState extends ConsumerState<BookSlider> {
             setState(() {
               _latestSeekValue = value;
             });
-            if (useGlobalSeek) {
+            if (!ref.read(showChapterProgressSliderProvider)) {
               await audioHandler.seekFromGlobalPosition(
                 Duration(milliseconds: seekMs),
               );

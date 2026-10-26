@@ -18,6 +18,7 @@ void showChapterListSheet(
   BuildContext context, {
   required List<BookChapter> chapters,
   required String itemId,
+  String? episodeId,
   required String itemTitle,
 }) {
   showModalBottomSheet(
@@ -46,6 +47,7 @@ void showChapterListSheet(
                 chapters: chapters,
                 itemId: itemId,
                 itemTitle: itemTitle,
+                episodeId: episodeId,
               ),
             ),
           ],
@@ -60,10 +62,12 @@ class ChapterList extends ConsumerStatefulWidget {
     super.key,
     required this.chapters,
     required this.itemId,
+    this.episodeId,
     required this.itemTitle,
   });
   final List<BookChapter> chapters;
   final String itemId;
+  final String? episodeId;
   final String itemTitle;
 
   @override
@@ -119,6 +123,7 @@ class _ChapterListState extends ConsumerState<ChapterList> {
         chapter: widget.chapters.elementAt(index),
         noOfChapters: widget.chapters.length,
         itemId: widget.itemId,
+        episodeId: widget.episodeId,
         itemTitle: widget.itemTitle,
       ),
     );
@@ -131,6 +136,7 @@ class _ChapterTile extends ConsumerWidget {
     required this.chapter,
     required this.noOfChapters,
     required this.itemId,
+    this.episodeId,
     required this.itemTitle,
   });
 
@@ -138,12 +144,15 @@ class _ChapterTile extends ConsumerWidget {
   final int index;
   final int noOfChapters;
   final String itemId;
+  final String? episodeId;
   final String itemTitle;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isCurrentItemPlaying = ref.watch(
-      sessionProvider.select((s) => s?.libraryItemId == itemId),
+      sessionProvider.select(
+        (s) => s?.libraryItemId == itemId && s?.episodeId == episodeId,
+      ),
     );
     final currentChapter = ref.watch(currentChapterProvider).value;
 
@@ -183,7 +192,11 @@ class _ChapterTile extends ConsumerWidget {
               unawaited(
                 ref
                     .read(queueProvider.notifier)
-                    .play(itemId: itemId, chapter: chapter),
+                    .play(
+                      itemId: itemId,
+                      episodeId: episodeId,
+                      chapter: chapter,
+                    ),
               );
               Navigator.of(context).pop();
             },

@@ -145,6 +145,7 @@ class HistorySheet extends ConsumerWidget {
                 final event = item as PlaybackEvent;
                 return HistoryEventTile(
                   itemId: itemId,
+                  episodeId: episodeId,
                   event: event,
                   onTap: () {
                     if (isCurrentItem) {

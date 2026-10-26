@@ -3,7 +3,6 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
-import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/features/player/ui/button_layout_big.dart';
@@ -43,12 +42,8 @@ class FullPlayer extends ConsumerWidget {
     final currentPosition = scale(globalPosition);
     final totalDuration = scale(session.duration);
 
-    final title = session.isPodcastEpisode
-        ? session.displayTitle ?? l10n.noTitle
-        : currentChapter?.title ?? session.displayTitle ?? l10n.noTitle;
-    final subtitle = session.isPodcastEpisode
-        ? session.mediaMetadata.title ?? session.displayAuthor ?? l10n.noTitle
-        : currentChapter != null
+    final title = currentChapter?.title ?? session.displayTitle ?? l10n.noTitle;
+    final subtitle = currentChapter != null
         ? session.displayTitle ?? l10n.noTitle
         : session.displayAuthor ?? l10n.noAuthor;
 

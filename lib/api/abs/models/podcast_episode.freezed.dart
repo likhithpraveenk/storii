@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PodcastEpisode {
 
- String get libraryItemId; String get podcastId; String get id; int? get index; String? get season; String? get episode; String? get episodeType; String? get title; String? get subtitle; String? get description; PodcastEpisodeEnclosure? get enclosure; String? get pubDate; AudioFile get audioFile; DateTime? get publishedAt; DateTime get addedAt; DateTime get updatedAt; AudioTrack? get audioTrack; Duration? get duration; int? get size; PodcastMedia? get podcast;
+ String get libraryItemId; String get podcastId; String get id; int? get index; String? get season; String? get episode; String? get episodeType; String? get title; String? get subtitle; String? get description; PodcastEpisodeEnclosure? get enclosure; String? get pubDate; AudioFile get audioFile; List<BookChapter> get chapters; DateTime? get publishedAt; DateTime get addedAt; DateTime get updatedAt; AudioTrack? get audioTrack; Duration? get duration; int? get size; PodcastMedia? get podcast;
 /// Create a copy of PodcastEpisode
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $PodcastEpisodeCopyWith<PodcastEpisode> get copyWith => _$PodcastEpisodeCopyWith
 @override
 bool operator ==(Object other) {
   final _this = this as PodcastEpisode;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastEpisode&&(identical(other.libraryItemId, _this.libraryItemId) || other.libraryItemId == _this.libraryItemId)&&(identical(other.podcastId, _this.podcastId) || other.podcastId == _this.podcastId)&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.index, _this.index) || other.index == _this.index)&&(identical(other.season, _this.season) || other.season == _this.season)&&(identical(other.episode, _this.episode) || other.episode == _this.episode)&&(identical(other.episodeType, _this.episodeType) || other.episodeType == _this.episodeType)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.subtitle, _this.subtitle) || other.subtitle == _this.subtitle)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.enclosure, _this.enclosure) || other.enclosure == _this.enclosure)&&(identical(other.pubDate, _this.pubDate) || other.pubDate == _this.pubDate)&&(identical(other.audioFile, _this.audioFile) || other.audioFile == _this.audioFile)&&(identical(other.publishedAt, _this.publishedAt) || other.publishedAt == _this.publishedAt)&&(identical(other.addedAt, _this.addedAt) || other.addedAt == _this.addedAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&(identical(other.audioTrack, _this.audioTrack) || other.audioTrack == _this.audioTrack)&&(identical(other.duration, _this.duration) || other.duration == _this.duration)&&(identical(other.size, _this.size) || other.size == _this.size)&&const DeepCollectionEquality().equals(other.podcast, _this.podcast));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PodcastEpisode&&(identical(other.libraryItemId, _this.libraryItemId) || other.libraryItemId == _this.libraryItemId)&&(identical(other.podcastId, _this.podcastId) || other.podcastId == _this.podcastId)&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.index, _this.index) || other.index == _this.index)&&(identical(other.season, _this.season) || other.season == _this.season)&&(identical(other.episode, _this.episode) || other.episode == _this.episode)&&(identical(other.episodeType, _this.episodeType) || other.episodeType == _this.episodeType)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.subtitle, _this.subtitle) || other.subtitle == _this.subtitle)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.enclosure, _this.enclosure) || other.enclosure == _this.enclosure)&&(identical(other.pubDate, _this.pubDate) || other.pubDate == _this.pubDate)&&(identical(other.audioFile, _this.audioFile) || other.audioFile == _this.audioFile)&&const DeepCollectionEquality().equals(other.chapters, _this.chapters)&&(identical(other.publishedAt, _this.publishedAt) || other.publishedAt == _this.publishedAt)&&(identical(other.addedAt, _this.addedAt) || other.addedAt == _this.addedAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&(identical(other.audioTrack, _this.audioTrack) || other.audioTrack == _this.audioTrack)&&(identical(other.duration, _this.duration) || other.duration == _this.duration)&&(identical(other.size, _this.size) || other.size == _this.size)&&const DeepCollectionEquality().equals(other.podcast, _this.podcast));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as PodcastEpisode;
-  return Object.hashAll([runtimeType,_this.libraryItemId,_this.podcastId,_this.id,_this.index,_this.season,_this.episode,_this.episodeType,_this.title,_this.subtitle,_this.description,_this.enclosure,_this.pubDate,_this.audioFile,_this.publishedAt,_this.addedAt,_this.updatedAt,_this.audioTrack,_this.duration,_this.size,const DeepCollectionEquality().hash(_this.podcast)]);
+  return Object.hashAll([runtimeType,_this.libraryItemId,_this.podcastId,_this.id,_this.index,_this.season,_this.episode,_this.episodeType,_this.title,_this.subtitle,_this.description,_this.enclosure,_this.pubDate,_this.audioFile,const DeepCollectionEquality().hash(_this.chapters),_this.publishedAt,_this.addedAt,_this.updatedAt,_this.audioTrack,_this.duration,_this.size,const DeepCollectionEquality().hash(_this.podcast)]);
 }
 
 @override
 String toString() {
   final _this = this as PodcastEpisode;
-  return 'PodcastEpisode(libraryItemId: ${_this.libraryItemId}, podcastId: ${_this.podcastId}, id: ${_this.id}, index: ${_this.index}, season: ${_this.season}, episode: ${_this.episode}, episodeType: ${_this.episodeType}, title: ${_this.title}, subtitle: ${_this.subtitle}, description: ${_this.description}, enclosure: ${_this.enclosure}, pubDate: ${_this.pubDate}, audioFile: ${_this.audioFile}, publishedAt: ${_this.publishedAt}, addedAt: ${_this.addedAt}, updatedAt: ${_this.updatedAt}, audioTrack: ${_this.audioTrack}, duration: ${_this.duration}, size: ${_this.size}, podcast: ${_this.podcast})';
+  return 'PodcastEpisode(libraryItemId: ${_this.libraryItemId}, podcastId: ${_this.podcastId}, id: ${_this.id}, index: ${_this.index}, season: ${_this.season}, episode: ${_this.episode}, episodeType: ${_this.episodeType}, title: ${_this.title}, subtitle: ${_this.subtitle}, description: ${_this.description}, enclosure: ${_this.enclosure}, pubDate: ${_this.pubDate}, audioFile: ${_this.audioFile}, chapters: ${_this.chapters}, publishedAt: ${_this.publishedAt}, addedAt: ${_this.addedAt}, updatedAt: ${_this.updatedAt}, audioTrack: ${_this.audioTrack}, duration: ${_this.duration}, size: ${_this.size}, podcast: ${_this.podcast})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $PodcastEpisodeCopyWith<$Res>  {
   factory $PodcastEpisodeCopyWith(PodcastEpisode value, $Res Function(PodcastEpisode) _then) = _$PodcastEpisodeCopyWithImpl;
 @useResult
 $Res call({
- String libraryItemId, String podcastId, String id, int? index, String? season, String? episode, String? episodeType, String? title, String? subtitle, String? description, PodcastEpisodeEnclosure? enclosure, String? pubDate, AudioFile audioFile, DateTime? publishedAt, DateTime addedAt, DateTime updatedAt, AudioTrack? audioTrack, Duration? duration, int? size, PodcastMedia? podcast
+ String libraryItemId, String podcastId, String id, int? index, String? season, String? episode, String? episodeType, String? title, String? subtitle, String? description, PodcastEpisodeEnclosure? enclosure, String? pubDate, AudioFile audioFile, List<BookChapter> chapters, DateTime? publishedAt, DateTime addedAt, DateTime updatedAt, AudioTrack? audioTrack, Duration? duration, int? size, PodcastMedia? podcast
 });
 
 
@@ -71,7 +71,7 @@ class _$PodcastEpisodeCopyWithImpl<$Res>
 
 /// Create a copy of PodcastEpisode
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? libraryItemId = null,Object? podcastId = null,Object? id = null,Object? index = freezed,Object? season = freezed,Object? episode = freezed,Object? episodeType = freezed,Object? title = freezed,Object? subtitle = freezed,Object? description = freezed,Object? enclosure = freezed,Object? pubDate = freezed,Object? audioFile = null,Object? publishedAt = freezed,Object? addedAt = null,Object? updatedAt = null,Object? audioTrack = freezed,Object? duration = freezed,Object? size = freezed,Object? podcast = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? libraryItemId = null,Object? podcastId = null,Object? id = null,Object? index = freezed,Object? season = freezed,Object? episode = freezed,Object? episodeType = freezed,Object? title = freezed,Object? subtitle = freezed,Object? description = freezed,Object? enclosure = freezed,Object? pubDate = freezed,Object? audioFile = null,Object? chapters = null,Object? publishedAt = freezed,Object? addedAt = null,Object? updatedAt = null,Object? audioTrack = freezed,Object? duration = freezed,Object? size = freezed,Object? podcast = freezed,}) {
   return _then(PodcastEpisode(
 libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
 as String,podcastId: null == podcastId ? _self.podcastId : podcastId // ignore: cast_nullable_to_non_nullable
@@ -86,7 +86,8 @@ as String?,description: freezed == description ? _self.description : description
 as String?,enclosure: freezed == enclosure ? _self.enclosure : enclosure // ignore: cast_nullable_to_non_nullable
 as PodcastEpisodeEnclosure?,pubDate: freezed == pubDate ? _self.pubDate : pubDate // ignore: cast_nullable_to_non_nullable
 as String?,audioFile: null == audioFile ? _self.audioFile : audioFile // ignore: cast_nullable_to_non_nullable
-as AudioFile,publishedAt: freezed == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
+as AudioFile,chapters: null == chapters ? _self.chapters : chapters // ignore: cast_nullable_to_non_nullable
+as List<BookChapter>,publishedAt: freezed == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,addedAt: null == addedAt ? _self.addedAt : addedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,audioTrack: freezed == audioTrack ? _self.audioTrack : audioTrack // ignore: cast_nullable_to_non_nullable
@@ -208,10 +209,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  PodcastEpisodeEnclosure? enclosure,  String? pubDate,  AudioFile audioFile,  DateTime? publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack? audioTrack,  Duration? duration,  int? size,  PodcastMedia? podcast)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  PodcastEpisodeEnclosure? enclosure,  String? pubDate,  AudioFile audioFile,  List<BookChapter> chapters,  DateTime? publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack? audioTrack,  Duration? duration,  int? size,  PodcastMedia? podcast)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PodcastEpisode() when $default != null:
-return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.season,_that.episode,_that.episodeType,_that.title,_that.subtitle,_that.description,_that.enclosure,_that.pubDate,_that.audioFile,_that.publishedAt,_that.addedAt,_that.updatedAt,_that.audioTrack,_that.duration,_that.size,_that.podcast);case _:
+return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.season,_that.episode,_that.episodeType,_that.title,_that.subtitle,_that.description,_that.enclosure,_that.pubDate,_that.audioFile,_that.chapters,_that.publishedAt,_that.addedAt,_that.updatedAt,_that.audioTrack,_that.duration,_that.size,_that.podcast);case _:
   return orElse();
 
 }
@@ -229,10 +230,10 @@ return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  PodcastEpisodeEnclosure? enclosure,  String? pubDate,  AudioFile audioFile,  DateTime? publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack? audioTrack,  Duration? duration,  int? size,  PodcastMedia? podcast)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  PodcastEpisodeEnclosure? enclosure,  String? pubDate,  AudioFile audioFile,  List<BookChapter> chapters,  DateTime? publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack? audioTrack,  Duration? duration,  int? size,  PodcastMedia? podcast)  $default,) {final _that = this;
 switch (_that) {
 case _PodcastEpisode():
-return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.season,_that.episode,_that.episodeType,_that.title,_that.subtitle,_that.description,_that.enclosure,_that.pubDate,_that.audioFile,_that.publishedAt,_that.addedAt,_that.updatedAt,_that.audioTrack,_that.duration,_that.size,_that.podcast);}
+return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.season,_that.episode,_that.episodeType,_that.title,_that.subtitle,_that.description,_that.enclosure,_that.pubDate,_that.audioFile,_that.chapters,_that.publishedAt,_that.addedAt,_that.updatedAt,_that.audioTrack,_that.duration,_that.size,_that.podcast);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -246,10 +247,10 @@ return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  PodcastEpisodeEnclosure? enclosure,  String? pubDate,  AudioFile audioFile,  DateTime? publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack? audioTrack,  Duration? duration,  int? size,  PodcastMedia? podcast)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String libraryItemId,  String podcastId,  String id,  int? index,  String? season,  String? episode,  String? episodeType,  String? title,  String? subtitle,  String? description,  PodcastEpisodeEnclosure? enclosure,  String? pubDate,  AudioFile audioFile,  List<BookChapter> chapters,  DateTime? publishedAt,  DateTime addedAt,  DateTime updatedAt,  AudioTrack? audioTrack,  Duration? duration,  int? size,  PodcastMedia? podcast)?  $default,) {final _that = this;
 switch (_that) {
 case _PodcastEpisode() when $default != null:
-return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.season,_that.episode,_that.episodeType,_that.title,_that.subtitle,_that.description,_that.enclosure,_that.pubDate,_that.audioFile,_that.publishedAt,_that.addedAt,_that.updatedAt,_that.audioTrack,_that.duration,_that.size,_that.podcast);case _:
+return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.season,_that.episode,_that.episodeType,_that.title,_that.subtitle,_that.description,_that.enclosure,_that.pubDate,_that.audioFile,_that.chapters,_that.publishedAt,_that.addedAt,_that.updatedAt,_that.audioTrack,_that.duration,_that.size,_that.podcast);case _:
   return null;
 
 }
@@ -262,7 +263,7 @@ return $default(_that.libraryItemId,_that.podcastId,_that.id,_that.index,_that.s
 @DateTimeEpochConverter()
 @DurationPreciseSecondsConverter()
 class _PodcastEpisode implements PodcastEpisode {
-  const _PodcastEpisode({required this.libraryItemId, required this.podcastId, required this.id, this.index, this.season, this.episode, this.episodeType, this.title, this.subtitle, this.description, this.enclosure, this.pubDate, required this.audioFile, this.publishedAt, required this.addedAt, required this.updatedAt, this.audioTrack, this.duration, this.size, this.podcast});
+  const _PodcastEpisode({required this.libraryItemId, required this.podcastId, required this.id, this.index, this.season, this.episode, this.episodeType, this.title, this.subtitle, this.description, this.enclosure, this.pubDate, required this.audioFile,  List<BookChapter> chapters = const [], this.publishedAt, required this.addedAt, required this.updatedAt, this.audioTrack, this.duration, this.size, this.podcast}): _chapters = chapters;
   factory _PodcastEpisode.fromJson(Map<String, dynamic> json) => _$PodcastEpisodeFromJson(json);
 
 @override final  String libraryItemId;
@@ -278,6 +279,13 @@ class _PodcastEpisode implements PodcastEpisode {
 @override final  PodcastEpisodeEnclosure? enclosure;
 @override final  String? pubDate;
 @override final  AudioFile audioFile;
+ final  List<BookChapter> _chapters;
+@override@JsonKey() List<BookChapter> get chapters {
+  if (_chapters is EqualUnmodifiableListView) return _chapters;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_chapters);
+}
+
 @override final  DateTime? publishedAt;
 @override final  DateTime addedAt;
 @override final  DateTime updatedAt;
@@ -299,18 +307,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PodcastEpisode&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.podcastId, podcastId) || other.podcastId == podcastId)&&(identical(other.id, id) || other.id == id)&&(identical(other.index, index) || other.index == index)&&(identical(other.season, season) || other.season == season)&&(identical(other.episode, episode) || other.episode == episode)&&(identical(other.episodeType, episodeType) || other.episodeType == episodeType)&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.description, description) || other.description == description)&&(identical(other.enclosure, enclosure) || other.enclosure == enclosure)&&(identical(other.pubDate, pubDate) || other.pubDate == pubDate)&&(identical(other.audioFile, audioFile) || other.audioFile == audioFile)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.audioTrack, audioTrack) || other.audioTrack == audioTrack)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.size, size) || other.size == size)&&const DeepCollectionEquality().equals(other.podcast, podcast));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PodcastEpisode&&(identical(other.libraryItemId, libraryItemId) || other.libraryItemId == libraryItemId)&&(identical(other.podcastId, podcastId) || other.podcastId == podcastId)&&(identical(other.id, id) || other.id == id)&&(identical(other.index, index) || other.index == index)&&(identical(other.season, season) || other.season == season)&&(identical(other.episode, episode) || other.episode == episode)&&(identical(other.episodeType, episodeType) || other.episodeType == episodeType)&&(identical(other.title, title) || other.title == title)&&(identical(other.subtitle, subtitle) || other.subtitle == subtitle)&&(identical(other.description, description) || other.description == description)&&(identical(other.enclosure, enclosure) || other.enclosure == enclosure)&&(identical(other.pubDate, pubDate) || other.pubDate == pubDate)&&(identical(other.audioFile, audioFile) || other.audioFile == audioFile)&&const DeepCollectionEquality().equals(other.chapters, _chapters)&&(identical(other.publishedAt, publishedAt) || other.publishedAt == publishedAt)&&(identical(other.addedAt, addedAt) || other.addedAt == addedAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.audioTrack, audioTrack) || other.audioTrack == audioTrack)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.size, size) || other.size == size)&&const DeepCollectionEquality().equals(other.podcast, podcast));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hashAll([runtimeType,libraryItemId,podcastId,id,index,season,episode,episodeType,title,subtitle,description,enclosure,pubDate,audioFile,publishedAt,addedAt,updatedAt,audioTrack,duration,size,const DeepCollectionEquality().hash(podcast)]);
+    return Object.hashAll([runtimeType,libraryItemId,podcastId,id,index,season,episode,episodeType,title,subtitle,description,enclosure,pubDate,audioFile,const DeepCollectionEquality().hash(_chapters),publishedAt,addedAt,updatedAt,audioTrack,duration,size,const DeepCollectionEquality().hash(podcast)]);
 }
 
 @override
 String toString() {
-    return 'PodcastEpisode(libraryItemId: $libraryItemId, podcastId: $podcastId, id: $id, index: $index, season: $season, episode: $episode, episodeType: $episodeType, title: $title, subtitle: $subtitle, description: $description, enclosure: $enclosure, pubDate: $pubDate, audioFile: $audioFile, publishedAt: $publishedAt, addedAt: $addedAt, updatedAt: $updatedAt, audioTrack: $audioTrack, duration: $duration, size: $size, podcast: $podcast)';
+    return 'PodcastEpisode(libraryItemId: $libraryItemId, podcastId: $podcastId, id: $id, index: $index, season: $season, episode: $episode, episodeType: $episodeType, title: $title, subtitle: $subtitle, description: $description, enclosure: $enclosure, pubDate: $pubDate, audioFile: $audioFile, chapters: $chapters, publishedAt: $publishedAt, addedAt: $addedAt, updatedAt: $updatedAt, audioTrack: $audioTrack, duration: $duration, size: $size, podcast: $podcast)';
 }
 
 
@@ -321,7 +329,7 @@ abstract mixin class _$PodcastEpisodeCopyWith<$Res> implements $PodcastEpisodeCo
   factory _$PodcastEpisodeCopyWith(_PodcastEpisode value, $Res Function(_PodcastEpisode) _then) = __$PodcastEpisodeCopyWithImpl;
 @override @useResult
 $Res call({
- String libraryItemId, String podcastId, String id, int? index, String? season, String? episode, String? episodeType, String? title, String? subtitle, String? description, PodcastEpisodeEnclosure? enclosure, String? pubDate, AudioFile audioFile, DateTime? publishedAt, DateTime addedAt, DateTime updatedAt, AudioTrack? audioTrack, Duration? duration, int? size, PodcastMedia? podcast
+ String libraryItemId, String podcastId, String id, int? index, String? season, String? episode, String? episodeType, String? title, String? subtitle, String? description, PodcastEpisodeEnclosure? enclosure, String? pubDate, AudioFile audioFile, List<BookChapter> chapters, DateTime? publishedAt, DateTime addedAt, DateTime updatedAt, AudioTrack? audioTrack, Duration? duration, int? size, PodcastMedia? podcast
 });
 
 
@@ -338,7 +346,7 @@ class __$PodcastEpisodeCopyWithImpl<$Res>
 
 /// Create a copy of PodcastEpisode
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? libraryItemId = null,Object? podcastId = null,Object? id = null,Object? index = freezed,Object? season = freezed,Object? episode = freezed,Object? episodeType = freezed,Object? title = freezed,Object? subtitle = freezed,Object? description = freezed,Object? enclosure = freezed,Object? pubDate = freezed,Object? audioFile = null,Object? publishedAt = freezed,Object? addedAt = null,Object? updatedAt = null,Object? audioTrack = freezed,Object? duration = freezed,Object? size = freezed,Object? podcast = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? libraryItemId = null,Object? podcastId = null,Object? id = null,Object? index = freezed,Object? season = freezed,Object? episode = freezed,Object? episodeType = freezed,Object? title = freezed,Object? subtitle = freezed,Object? description = freezed,Object? enclosure = freezed,Object? pubDate = freezed,Object? audioFile = null,Object? chapters = null,Object? publishedAt = freezed,Object? addedAt = null,Object? updatedAt = null,Object? audioTrack = freezed,Object? duration = freezed,Object? size = freezed,Object? podcast = freezed,}) {
   return _then(_PodcastEpisode(
 libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
 as String,podcastId: null == podcastId ? _self.podcastId : podcastId // ignore: cast_nullable_to_non_nullable
@@ -353,7 +361,8 @@ as String?,description: freezed == description ? _self.description : description
 as String?,enclosure: freezed == enclosure ? _self.enclosure : enclosure // ignore: cast_nullable_to_non_nullable
 as PodcastEpisodeEnclosure?,pubDate: freezed == pubDate ? _self.pubDate : pubDate // ignore: cast_nullable_to_non_nullable
 as String?,audioFile: null == audioFile ? _self.audioFile : audioFile // ignore: cast_nullable_to_non_nullable
-as AudioFile,publishedAt: freezed == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
+as AudioFile,chapters: null == chapters ? _self._chapters : chapters // ignore: cast_nullable_to_non_nullable
+as List<BookChapter>,publishedAt: freezed == publishedAt ? _self.publishedAt : publishedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,addedAt: null == addedAt ? _self.addedAt : addedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,audioTrack: freezed == audioTrack ? _self.audioTrack : audioTrack // ignore: cast_nullable_to_non_nullable

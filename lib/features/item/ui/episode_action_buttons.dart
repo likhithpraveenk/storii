@@ -7,6 +7,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/user_progress_actions.dart';
+import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/item/ui/episode_metadata_sheet.dart';
 import 'package:storii/features/item/ui/episode_play_button.dart';
 import 'package:storii/features/player/logic/queue_providers.dart';
@@ -71,6 +72,26 @@ class EpisodeActionButtons extends ConsumerWidget {
                 builder: (ctx) {
                   return Column(
                     children: [
+                      if (episode.chapters.isNotEmpty)
+                        ListTile(
+                          leading: const Icon(Icons.list_rounded),
+                          title: Text(l10n.chapters),
+                          trailing: Text(
+                            '${episode.chapters.length}',
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontStyle: .italic,
+                            ),
+                          ),
+                          onTap: () {
+                            showChapterListSheet(
+                              context,
+                              chapters: episode.chapters,
+                              itemId: episode.libraryItemId,
+                              episodeId: episode.id,
+                              itemTitle: episode.title ?? l10n.noTitle,
+                            );
+                          },
+                        ),
                       HistoryButton(
                         itemId: episode.libraryItemId,
                         episodeId: episode.id,
