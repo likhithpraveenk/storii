@@ -22,5 +22,6 @@ const coverName = 'cover.jpg';
 const kDot = '\u2022';
 const kMinus = '\u2212';
 const kMultiple = '\u00D7';
+const kNbsp = '\u00A0'; // non-breaking space
 
 const speedPresets = [1.0, 1.2, 1.5, 1.8, 2.0];

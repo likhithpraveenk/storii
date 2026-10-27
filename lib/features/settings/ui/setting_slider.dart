@@ -23,8 +23,8 @@ class SettingSlider extends StatelessWidget {
   final double min;
   final double max;
   final int? divisions;
-  final String Function(double)? labelBuilder;
-  final void Function(double)? onChangeEnd;
+  final String Function(double v)? labelBuilder;
+  final void Function(double v)? onChangeEnd;
   final EdgeInsetsGeometry? padding;
 
   @override

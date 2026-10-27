@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,11 +24,11 @@ String formatBytes(int? bytes, {bool useBinary = true}) {
 
   for (final (value, label) in units) {
     if (bytes >= value) {
-      return '${formatter.format(bytes / value)} $label';
+      return '${formatter.format(bytes / value)}$kNbsp$label';
     }
   }
 
-  return '$bytes B';
+  return '$bytes${kNbsp}B';
 }
 
 String formatBitrate(int? bitrate) {
@@ -39,11 +40,11 @@ String formatBitrate(int? bitrate) {
 
   for (final (value, label) in units) {
     if (bitrate >= value) {
-      return '${formatter.format(bitrate / value)} $label';
+      return '${formatter.format(bitrate / value)}$kNbsp$label';
     }
   }
 
-  return '$bitrate bps';
+  return '$bitrate${kNbsp}bps';
 }
 
 Future<void> launchUrlHelper(BuildContext context, String url) async {

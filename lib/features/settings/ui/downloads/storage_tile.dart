@@ -9,6 +9,7 @@ import 'package:storii/features/downloads/logic/storage_locations_provider.dart'
 import 'package:storii/features/settings/logic/folder_permission.dart';
 import 'package:storii/features/settings/ui/settings_header.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
@@ -19,6 +20,19 @@ class StorageTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final useBinary = ref.watch(useBinaryBytesProvider);
+    final books = ref.watch(storageSpaceByTypeProvider(.audiobook));
+    final podcasts = ref.watch(storageSpaceByTypeProvider(.podcast));
+
+    final hasBooks = books.count > 0;
+    final hasPodcasts = podcasts.count > 0;
+
+    final bookBytes = formatBytes(books.size, useBinary: useBinary);
+    final podcastBytes = formatBytes(podcasts.size, useBinary: useBinary);
+
+    final bookStr = '$bookBytes (${books.count})';
+    final podcastStr = '$podcastBytes (${podcasts.count})';
+
     return SettingsHeader(
       title: l10n.storage,
       children: [
@@ -26,6 +40,7 @@ class StorageTile extends ConsumerWidget {
           trailing: const Icon(Icons.chevron_right),
           leading: const Icon(Icons.auto_stories_rounded),
           title: Text(l10n.audiobooks),
+          subtitle: hasBooks ? Text(bookStr) : null,
           onTap: () {
             showModalBottomSheet(
               context: context,
@@ -47,6 +62,7 @@ class StorageTile extends ConsumerWidget {
           trailing: const Icon(Icons.chevron_right),
           leading: const Icon(Icons.podcasts_rounded),
           title: Text(l10n.podcasts),
+          subtitle: hasPodcasts ? Text(podcastStr) : null,
           onTap: () {
             showModalBottomSheet(
               context: context,
@@ -149,6 +165,9 @@ class _StorageLocationWidget extends ConsumerWidget {
     final theme = Theme.of(context);
     final hasPermission =
         ref.watch(checkFolderPermissionProvider(location)).value ?? true;
+    final bytes = ref.watch(storageBytesByLocationProvider(location));
+    final useBinary = ref.watch(useBinaryBytesProvider);
+
     return ListTile(
       onTap: () async {
         if (hasPermission) return;
@@ -176,7 +195,26 @@ class _StorageLocationWidget extends ConsumerWidget {
         crossAxisAlignment: .start,
         children: [
           Text(location.uri.toUiPath(context)),
-          if (!hasPermission)
+          const SizedBox(height: 4),
+          if (hasPermission)
+            Row(
+              mainAxisSize: .min,
+              children: [
+                Icon(
+                  Icons.storage_outlined,
+                  size: 14,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  formatBytes(bytes, useBinary: useBinary),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            )
+          else
             Text(
               l10n.permissionRevoked,
               style: theme.textTheme.bodySmall?.copyWith(
