@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/storage_location.dart';
+import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/download_engine.dart';
 import 'package:storii/features/downloads/logic/download_extensions.dart';
@@ -28,22 +29,24 @@ class DownloadQueue extends _$DownloadQueue {
   @override
   List<String> build() {
     final downloads = _store.getAll();
-    final active =
-        downloads.values
-            .where(
-              (item) => item.status == .queued || item.status == .downloading,
-            )
-            .toList()
-          ..sort(
-            (a, b) => (a.startedAt ?? DateTime.now()).compareTo(
-              b.startedAt ?? DateTime.now(),
-            ),
-          );
+    final active = downloads.values.where((item) => item.isActive).toList()
+      ..sort(
+        (a, b) => (a.startedAt ?? DateTime.now()).compareTo(
+          b.startedAt ?? DateTime.now(),
+        ),
+      );
 
     final keys = active.map((item) => item.key).toList();
     if (keys.isNotEmpty) {
       Future.microtask(_processQueue);
     }
+
+    ref.listen(connectionTypeProvider, (_, _) {
+      if (state.isNotEmpty) {
+        _processQueue();
+      }
+    });
+
     return keys;
   }
 
@@ -104,12 +107,39 @@ class DownloadQueue extends _$DownloadQueue {
 
     while (state.isNotEmpty) {
       final key = state.first;
+      if (!await _networkAllows(key)) break;
       await _download(key);
       state = state.where((i) => i != key).toList();
     }
 
     _processing?.complete();
     _processing = null;
+  }
+
+  Future<bool> _networkAllows(String key) async {
+    final item = _store.get(key);
+    if (item == null) return true;
+    if (item.status != .queued && item.status != .waiting) return true;
+
+    final wifiOnly = ref.read(downloadOnUnmeteredOnlyProvider);
+    final connectionType = ref.read(connectionTypeProvider);
+    final isOffline = ref.read(isOfflineProvider);
+
+    final shouldWait =
+        isOffline ||
+        (wifiOnly && connectionType != .wifi && connectionType != .ethernet);
+
+    if (!shouldWait) {
+      if (item.status == .waiting) {
+        await _store.save(item.copyWith(status: .queued));
+      }
+      return true;
+    }
+
+    if (item.status != .waiting) {
+      await _store.save(item.copyWith(status: .waiting));
+    }
+    return false;
   }
 
   Future<void> _download(String mediaItemKey) async {
@@ -202,7 +232,9 @@ class DownloadQueue extends _$DownloadQueue {
     state = state.where((i) => i != id).toList();
     final downloads = _store.getAll();
     final item = downloads[id];
-    if (item != null) await _store.save(item.copyWith(status: .paused));
+    if (item != null) {
+      await _store.save(item.copyWith(status: .paused));
+    }
 
     await processing?.future;
 

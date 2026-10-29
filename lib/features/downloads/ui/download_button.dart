@@ -120,6 +120,11 @@ class DownloadButton extends ConsumerWidget {
         icon: Icon(Icons.schedule, color: scheme.outline),
         onPressed: () => queue.delete(libraryItemId, episodeId),
       ),
+      .waiting => IconButton(
+        tooltip: l10n.waitingForNetwork,
+        icon: Icon(Icons.wifi_off, color: scheme.outline),
+        onPressed: () => queue.delete(libraryItemId, episodeId),
+      ),
       .downloading => _ProgressButton(
         progress: item!.progress,
         onCancel: () => queue.delete(libraryItemId, episodeId),

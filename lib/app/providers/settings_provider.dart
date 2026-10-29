@@ -62,8 +62,6 @@ class AppSettingsNotifier extends _$AppSettingsNotifier {
 
   Future<void> resetAdvanced() =>
       _save(state.copyWith(enableHttpLogs: false, trustAllCertificates: false));
-
-  Future<void> resetDownloads() => _save(state.copyWith());
 }
 
 @riverpod
@@ -188,6 +186,16 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
         scrollThumbDuration: DefaultUserSettings.scrollThumbDuration,
         scrollThumbHeight: DefaultUserSettings.scrollThumbHeight,
         scrollThumbWidth: DefaultUserSettings.scrollThumbWidth,
+      ),
+    );
+  }
+
+  Future<void> resetDownloads() async {
+    final s = state;
+    if (s == null) return;
+    return _save(
+      s.copyWith(
+        downloadOnUnmeteredOnly: DefaultUserSettings.downloadOnUnmeteredOnly,
       ),
     );
   }

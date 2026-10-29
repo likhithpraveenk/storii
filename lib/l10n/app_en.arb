@@ -431,6 +431,7 @@
   "high": "High",
   "avoidMobileData": "Avoid mobile data",
   "avoidMobileDataSubtitle": "Downloads will pause on mobile networks",
+  "waitingForNetwork": "Waiting for network",
   "totalListeningTime": "Total Listening Time",
   "currentStreak": "Current streak",
   "longestStreak": "Longest streak",
