@@ -1,5 +1,8 @@
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/models/playback_event.dart';
+import 'package:storii/features/downloads/models/download_item.dart';
+import 'package:storii/storage/local/downloads_store.dart';
+import 'package:storii/storage/local/items_cache.dart';
 import 'package:storii/storage/local/playback_history_store.dart';
 import 'package:storii/storage/local/progress_store.dart';
 import 'package:storii/storage/local/session_store.dart';
@@ -82,4 +85,33 @@ class FakeProgressStore extends ProgressStore {
     saveCalls++;
     _progress[progress.id] = progress;
   }
+}
+
+class FakeDownloadsStore extends DownloadsStore {
+  new() : super();
+
+  final Map<String, DownloadItem> _data = <String, DownloadItem>{};
+  int saveCalls = 0;
+  final List<DownloadItem> saved = <DownloadItem>[];
+
+  @override
+  DownloadItem? get(String key) => _data[key];
+
+  @override
+  Map<String, DownloadItem> getAll() => Map.unmodifiable(_data);
+
+  @override
+  Future<void> save(DownloadItem item) async {
+    saveCalls++;
+    _data[item.key] = item;
+    saved.add(item);
+  }
+}
+
+class FakeItemsCache extends ItemsCache {
+  new() : super();
+  final List<LibraryItem> puts = <LibraryItem>[];
+
+  @override
+  Future<void> put(LibraryItem item) async => puts.add(item);
 }
