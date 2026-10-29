@@ -1,28 +1,31 @@
 class ListenTimeAccumulator {
+  final DateTime Function() _now;
   DateTime? _playStartedAt;
   Duration _unsynced = Duration.zero;
 
   bool get isRunning => _playStartedAt != null;
 
+  new([DateTime Function()? now]) : _now = now ?? DateTime.now;
+
   void start() {
-    _playStartedAt ??= DateTime.now();
+    _playStartedAt ??= _now();
   }
 
   void resume() {
     if (_playStartedAt != null) {
-      _unsynced += DateTime.now().difference(_playStartedAt!);
+      _unsynced += _now().difference(_playStartedAt!);
     }
-    _playStartedAt = DateTime.now();
+    _playStartedAt = _now();
   }
 
   void pause() {
     if (_playStartedAt == null) return;
-    _unsynced += DateTime.now().difference(_playStartedAt!);
+    _unsynced += _now().difference(_playStartedAt!);
     _playStartedAt = null;
   }
 
   Duration snapshotAndReset({required bool keepRunning}) {
-    final now = DateTime.now();
+    final now = _now();
     final live = _playStartedAt != null
         ? now.difference(_playStartedAt!)
         : Duration.zero;

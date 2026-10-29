@@ -3,8 +3,6 @@ import 'package:storii/api/abs/abs_api.dart';
 
 import '../../../fakes/fake_socket.dart';
 
-/// Mirrors socket_io_client's dispose ordering: `dispose()` emits `disconnect`
-/// synchronously before clearing its listeners.
 class _DisconnectOnDisposeSocket extends FakeSocket {
   @override
   void dispose() {
