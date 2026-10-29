@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - podcast chapters support
 - storage space stats in downloads settings
 
+### Fixed
+
+- downloaded items from other servers will show cached
+
 ## [v0.13.0] - 2026-10-23
 
 ### Added

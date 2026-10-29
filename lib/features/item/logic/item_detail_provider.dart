@@ -8,6 +8,7 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/repository_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/storage/local/items_cache.dart';
 
@@ -30,6 +31,15 @@ class ItemDetail extends _$ItemDetail {
       final localItem = cache.get(id);
       if (localItem != null) return localItem;
       throw l10n.connectionTypeNone;
+    }
+
+    final downloadItem = ref.read(downloadItemProvider(id));
+    final serverUrl = ref.read(serverUrlProvider);
+    if (downloadItem?.serverUrl != null &&
+        downloadItem?.serverUrl != serverUrl) {
+      final localItem = cache.get(id);
+      if (localItem != null) return localItem;
+      throw 'Downloaded media from a different server';
     }
 
     final user = await ref.watch(authenticatedUserProvider.future);
