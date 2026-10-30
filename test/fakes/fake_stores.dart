@@ -93,6 +93,7 @@ class FakeDownloadsStore extends DownloadsStore {
   final Map<String, DownloadItem> _data = <String, DownloadItem>{};
   int saveCalls = 0;
   final List<DownloadItem> saved = <DownloadItem>[];
+  Object? saveError;
 
   @override
   DownloadItem? get(String key) => _data[key];
@@ -103,6 +104,8 @@ class FakeDownloadsStore extends DownloadsStore {
   @override
   Future<void> save(DownloadItem item) async {
     saveCalls++;
+    final error = saveError;
+    if (error != null) throw error;
     _data[item.key] = item;
     saved.add(item);
   }

@@ -121,5 +121,67 @@ void main() {
         expect(store.saved.single.status, DownloadStatus.completed);
       },
     );
+
+    test(
+      'a failing save keeps the snapshot pending for the next flush',
+      () async {
+        final store = FakeDownloadsStore()..saveError = Exception('disk full');
+        final persister = ThrottledPersister(
+          store: store,
+          onPersist: (_) async {},
+        );
+
+        await expectLater(
+          persister.update(_item(status: .completed)),
+          throwsA(isException),
+        );
+
+        store.saveError = null;
+        await persister.flush();
+
+        expect(store.saveCalls, 2);
+        expect(store.saved.single.status, DownloadStatus.completed);
+      },
+    );
+
+    test('a failing save does not block later flushes', () async {
+      final store = FakeDownloadsStore()..saveError = Exception('disk full');
+      final persister = ThrottledPersister(
+        store: store,
+        onPersist: (_) async {},
+      );
+
+      await expectLater(
+        persister.update(_item(status: .completed)),
+        throwsA(isException),
+      );
+
+      store.saveError = null;
+      await persister.update(_item(status: .completed));
+
+      expect(store.saved.single.status, DownloadStatus.completed);
+    });
+
+    test('the injected clock drives the persistence interval', () {
+      fakeAsync((async) async {
+        var now = DateTime(2026);
+        final store = FakeDownloadsStore();
+        final persister = ThrottledPersister(
+          store: store,
+          onPersist: (_) async {},
+          now: () => now,
+        );
+
+        await persister.update(_item());
+        expect(store.saveCalls, 0);
+
+        // The clock jumped past the interval, so the next update is due now.
+        now = now.add(const Duration(seconds: 1));
+        await persister.update(_item(status: .downloading));
+        async.elapse(const Duration(milliseconds: 300));
+
+        expect(store.saveCalls, 1);
+      });
+    });
   });
 }
