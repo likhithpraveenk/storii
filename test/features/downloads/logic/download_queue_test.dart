@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fake_async/fake_async.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:storii/api/abs/abs_api.dart';
@@ -7,7 +8,9 @@ import 'package:storii/app/models/storage_location.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/downloads/logic/download_engine.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
+import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
 import 'package:storii/features/downloads/logic/storage_service.dart';
 import 'package:storii/features/downloads/logic/storage_service_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
@@ -15,6 +18,8 @@ import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/storage/local/downloads_store.dart';
 import 'package:storii/storage/local/items_cache.dart';
 
+import '../../../fakes/fake_download_transport.dart';
+import '../../../fakes/fake_notifications.dart';
 import '../../../fakes/fake_stores.dart';
 
 class _FakeStorageService extends StorageService {
@@ -125,10 +130,66 @@ class _FakeItemDetail extends ItemDetail {
   Future<LibraryItem> build(String id) async => _bookItem();
 }
 
+class _FakeEngine extends DownloadEngine {
+  new({this.hold = false})
+    : super(
+        transport: FakeDownloadTransport(),
+        accessToken: (_) async => 'token',
+        storageService: (_) => null,
+        coverDownloader: ({
+          required libraryItemId,
+          required isPodcast,
+          required cancelToken,
+        }) async {},
+      );
+
+  final bool hold;
+  final List<String> cancelledKeys = <String>[];
+  final Completer<void> started = Completer<void>();
+  final Map<String, Completer<void>> _gates = <String, Completer<void>>{};
+
+  @override
+  Stream<DownloadItem> downloadItem({
+    required DownloadItem item,
+    required UserDomain user,
+  }) async* {
+    yield item.copyWith(status: .downloading);
+    if (!started.isCompleted) started.complete();
+
+    if (hold) {
+      final gate = Completer<void>();
+      _gates[item.key] = gate;
+      await gate.future;
+      _gates.remove(item.key);
+    }
+
+    final cancelled = cancelledKeys.contains(item.key);
+    yield item.copyWith(
+      status: cancelled ? .paused : .completed,
+      tracks: item.tracks
+          .map(
+            (t) => t.copyWith(
+              status: cancelled ? .paused : .completed,
+              bytesReceived: t.bytesTotal,
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  @override
+  void cancel(String key) {
+    cancelledKeys.add(key);
+    _gates.remove(key)?.complete();
+  }
+}
+
 ProviderContainer _container({
   required bool isOffline,
   required ConnectionType connectionType,
   required bool wifiOnly,
+  FakeDownloadsNotifications? notifications,
+  DownloadEngine? engine,
 }) {
   final store = FakeDownloadsStore();
   return ProviderContainer(
@@ -142,12 +203,21 @@ ProviderContainer _container({
       isOfflineProvider.overrideWithValue(isOffline),
       connectionTypeProvider.overrideWithValue(connectionType),
       downloadOnUnmeteredOnlyProvider.overrideWithValue(wifiOnly),
+      useBinaryBytesProvider.overrideWithValue(false),
+      downloadsNotificationsProvider.overrideWithValue(
+        notifications ?? FakeDownloadsNotifications(),
+      ),
+      if (engine != null) downloadEngineProvider.overrideWithValue(engine),
     ],
   );
 }
 
 FakeDownloadsStore storeOf(ProviderContainer container) =>
     container.read(downloadsStoreProvider) as FakeDownloadsStore;
+
+FakeDownloadsNotifications notificationsOf(ProviderContainer container) =>
+    container.read(downloadsNotificationsProvider)
+        as FakeDownloadsNotifications;
 
 void main() {
   group('DownloadQueue network gating', () {
@@ -201,6 +271,122 @@ void main() {
       final store = storeOf(container);
       expect(store.get('item-1')?.status, DownloadStatus.waiting);
       expect(container.read(downloadQueueProvider), equals(['item-1']));
+    });
+  });
+
+  group('DownloadQueue notifications', () {
+    test('waiting items never start the foreground service', () async {
+      final container = _container(
+        isOffline: false,
+        connectionType: .mobile,
+        wifiOnly: true,
+        engine: _FakeEngine(),
+      );
+      addTearDown(container.dispose);
+
+      final queue = container.read(downloadQueueProvider.notifier);
+      await queue.enqueue(libraryItemId: 'item-1', location: _location);
+
+      expect(storeOf(container).get('item-1')?.status, DownloadStatus.waiting);
+      expect(notificationsOf(container).events, isEmpty);
+    });
+
+    test('starts foreground after the gate and stops it on completion', () {
+      fakeAsync((async) async {
+        final container = _container(
+          isOffline: false,
+          connectionType: .wifi,
+          wifiOnly: false,
+          engine: _FakeEngine(),
+        );
+        addTearDown(container.dispose);
+
+        final queue = container.read(downloadQueueProvider.notifier);
+        await queue.enqueue(libraryItemId: 'item-1', location: _location);
+        async.elapse(const Duration(milliseconds: 300));
+
+        final notifications = notificationsOf(container);
+        expect(notifications.countOf('startForeground'), 1);
+        expect(notifications.countOf('stopForeground'), 1);
+        expect(notifications.events, contains('showProgress'));
+        expect(
+          notifications.events.indexOf('startForeground'),
+          lessThan(notifications.events.indexOf('showProgress')),
+        );
+
+        expect(
+          storeOf(container).get('item-1')?.status,
+          DownloadStatus.completed,
+        );
+        expect(container.read(downloadQueueProvider), isEmpty);
+      });
+    });
+
+    test('reports completion through the notification port', () {
+      fakeAsync((async) async {
+        final container = _container(
+          isOffline: false,
+          connectionType: .wifi,
+          wifiOnly: false,
+          engine: _FakeEngine(),
+        );
+        addTearDown(container.dispose);
+
+        final queue = container.read(downloadQueueProvider.notifier);
+        await queue.enqueue(libraryItemId: 'item-1', location: _location);
+        async.elapse(const Duration(milliseconds: 300));
+
+        final progress = notificationsOf(container).progressCalls.last;
+        expect(progress.isComplete, isTrue);
+        expect(progress.isFailed, isFalse);
+        expect(progress.title, 'Test Book');
+      });
+    });
+  });
+
+  group('DownloadQueue drain races', () {
+    test('pausing during a transfer keeps the item paused', () async {
+      final engine = _FakeEngine(hold: true);
+      final container = _container(
+        isOffline: false,
+        connectionType: .wifi,
+        wifiOnly: false,
+        engine: engine,
+      );
+      addTearDown(container.dispose);
+
+      final queue = container.read(downloadQueueProvider.notifier);
+      final enqueue = queue.enqueue(
+        libraryItemId: 'item-1',
+        location: _location,
+      );
+      await engine.started.future;
+
+      await queue.pause('item-1');
+      await enqueue;
+
+      expect(engine.cancelledKeys, ['item-1']);
+      expect(storeOf(container).get('item-1')?.status, DownloadStatus.paused);
+      expect(container.read(downloadQueueProvider), isEmpty);
+    });
+
+    test('a failing download does not block later drains', () async {
+      final container = _container(
+        isOffline: false,
+        connectionType: .wifi,
+        wifiOnly: false,
+        engine: _FakeEngine(),
+      );
+      addTearDown(container.dispose);
+
+      final queue = container.read(downloadQueueProvider.notifier);
+      await queue.enqueue(libraryItemId: 'item-1', location: _location);
+
+      expect(container.read(downloadQueueProvider), isEmpty);
+      expect(
+        storeOf(container).get('item-1')?.status,
+        DownloadStatus.completed,
+      );
     });
   });
 }
