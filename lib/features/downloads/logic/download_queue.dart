@@ -150,7 +150,7 @@ class DownloadQueue extends _$DownloadQueue {
     ).run(key);
   }
 
-  Future<void> continueDownload(String id, String? episodeId) async {
+  Future<void> resumeOrRetry(String id, String? episodeId) async {
     final key = mediaItemIdKey(id, episodeId);
     final item = _store.getAll()[key];
     if (item == null) return;

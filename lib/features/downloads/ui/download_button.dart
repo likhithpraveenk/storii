@@ -141,12 +141,12 @@ class DownloadButton extends ConsumerWidget {
       .failed => IconButton(
         tooltip: l10n.downloadFailed,
         icon: Icon(Icons.refresh, color: scheme.error),
-        onPressed: () => queue.continueDownload(libraryItemId, episodeId),
+        onPressed: () => queue.resumeOrRetry(libraryItemId, episodeId),
       ),
       .paused => IconButton(
         tooltip: l10n.resumeDownload,
         icon: Icon(Icons.play_circle_outline, color: scheme.tertiary),
-        onPressed: () => queue.continueDownload(libraryItemId, episodeId),
+        onPressed: () => queue.resumeOrRetry(libraryItemId, episodeId),
       ),
     };
   }
