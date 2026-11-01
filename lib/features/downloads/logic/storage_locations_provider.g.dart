@@ -158,7 +158,7 @@ final class StorageSpaceByTypeProvider
 }
 
 String _$storageSpaceByTypeHash() =>
-    r'63c721a80afef6ff26fa2011d34332a5955cd352';
+    r'dedbfd88784e4adff211e1f9d3683a4a7ea3cd38';
 
 final class StorageSpaceByTypeFamily extends $Family
     with $FunctionalFamilyOverride<({int count, int size}), DownloadMediaType> {
@@ -237,7 +237,7 @@ final class StorageBytesByLocationProvider
 }
 
 String _$storageBytesByLocationHash() =>
-    r'7a506298e337e9be6e93c8229904cd747803a5be';
+    r'8cb5aae39c1bb79a9315a868a2ac2ce4c9c028fe';
 
 final class StorageBytesByLocationFamily extends $Family
     with $FunctionalFamilyOverride<int, StorageLocation> {

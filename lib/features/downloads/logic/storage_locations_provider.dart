@@ -21,10 +21,7 @@ List<StorageLocation> storageLocationsByType(Ref ref, MediaType mediaType) {
 ) {
   int size = 0;
   int count = 0;
-  final downloads = ref
-      .read(downloadsStoreProvider)
-      .getAll()
-      .values
+  final downloads = (ref.watch(downloadsProvider).value ?? const {}).values
       .where((i) => i.mediaType == mediaType)
       .toList();
   for (final d in downloads) {
@@ -37,10 +34,7 @@ List<StorageLocation> storageLocationsByType(Ref ref, MediaType mediaType) {
 @riverpod
 int storageBytesByLocation(Ref ref, StorageLocation location) {
   int size = 0;
-  final downloads = ref
-      .read(downloadsStoreProvider)
-      .getAll()
-      .values
+  final downloads = (ref.watch(downloadsProvider).value ?? const {}).values
       .where((i) => i.folderPath == location.uri)
       .toList();
   for (final d in downloads) {
