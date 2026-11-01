@@ -602,5 +602,18 @@
   "pageNotFound": "Nie znaleziono strony",
   "upload": "Wyślij",
   "confirmRemoveCoverQ": "Usunąć okładkę?",
-  "imageResolutionSubtitle": "Serwer zmieni rozdzielczość obrazów by zaoszczędzić dane i przyspieszyć ładowanie"
+  "imageResolutionSubtitle": "Serwer zmieni rozdzielczość obrazów by zaoszczędzić dane i przyspieszyć ładowanie",
+  "changelog": "Dziennik zmian",
+  "whatsNew": "Nowości",
+  "showNavbarAlways": "Pokazuj pasek nawigacji na większości ekranów",
+  "connectionAuthenticating": "Łączenie z serwerem …",
+  "connectionAuthFailed": "Błąd uwierzytelniania",
+  "usersOnline": "Użytkownicy online: {noOfUsers}",
+  "@usersOnline": {
+    "placeholders": {
+      "noOfUsers": {
+        "type": "int"
+      }
+    }
+  }
 }
