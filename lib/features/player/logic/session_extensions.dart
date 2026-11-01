@@ -229,7 +229,7 @@ extension ToPlaybackSession on LibraryItem {
       libraryItemId: id,
       mediaType: mediaType,
       mediaMetadata: media.metadata,
-      chapters: chapters,
+      chapters: chapters(episodeId),
       displayTitle: thisTitle,
       displayAuthor: authorName,
       duration: thisDuration,

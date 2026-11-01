@@ -1,19 +1,22 @@
 import 'dart:async';
 
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/storage/local/downloads_store.dart';
 
 const _persistenceInterval = Duration(milliseconds: 250);
 
 class ThrottledPersister {
-  new({required this.store, required this.onPersist});
+  new({required this.store, required this.onPersist, DateTime Function()? now})
+    : _now = now ?? DateTime.now;
 
   final DownloadsStore store;
   final Future<void> Function(DownloadItem) onPersist;
+  final DateTime Function() _now;
 
   DownloadItem? _pending;
   Timer? _timer;
-  DateTime _lastPersist = DateTime.now();
+  DateTime? _lastPersist;
   Completer<void>? _inFlight;
 
   Future<void> update(DownloadItem item) async {
@@ -24,8 +27,12 @@ class ThrottledPersister {
       _timer = null;
       await _flush();
     } else if (_timer == null) {
-      final since = DateTime.now().difference(_lastPersist);
-      _timer = Timer(_persistenceInterval - since, _onTimer);
+      final since = _now().difference(_lastPersist ?? _now());
+      final remaining = _persistenceInterval - since;
+      _timer = Timer(
+        remaining.isNegative ? Duration.zero : remaining,
+        _onTimer,
+      );
     }
   }
 
@@ -37,26 +44,42 @@ class ThrottledPersister {
 
   void _onTimer() {
     _timer = null;
-    unawaited(_flush());
+    unawaited(
+      _flush().catchError((Object e, StackTrace st) {
+        LogService.log(
+          'Could not persist download state: $e',
+          source: 'ThrottledPersister',
+          level: .error,
+          originalError: e,
+          stackTrace: st,
+        );
+      }),
+    );
   }
 
   Future<void> _flush() async {
     final item = _pending;
     if (item == null) return;
+
     final previous = _inFlight;
     final completer = Completer<void>();
     _inFlight = completer;
+
     try {
       await previous?.future;
-    } on Object {
-      // Previous flush failure is non-fatal; continue
+
+      await store.save(item);
+      await onPersist(item);
+
+      if (identical(_pending, item)) {
+        _pending = null;
+      }
+      _lastPersist = _now();
+    } finally {
+      completer.complete();
+      if (identical(_inFlight, completer)) {
+        _inFlight = null;
+      }
     }
-    _pending = null;
-    _timer?.cancel();
-    _timer = null;
-    _lastPersist = DateTime.now();
-    await store.save(item);
-    await onPersist(item);
-    completer.complete();
   }
 }

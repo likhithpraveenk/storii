@@ -110,6 +110,16 @@ class DownloadStatusRow extends ConsumerWidget {
           Text('${l10n.queued}$queuePos', style: textTheme.labelSmall),
         ],
       ),
+      .waiting => Row(
+        children: [
+          Icon(Icons.wifi_off, color: scheme.outline, size: 12),
+          const SizedBox(width: 6),
+          Text(
+            '${l10n.waitingForNetwork}$queuePos',
+            style: textTheme.labelSmall,
+          ),
+        ],
+      ),
       .downloading => Row(
         children: [
           Text(
@@ -150,16 +160,22 @@ class DownloadTileTrailingActions extends ConsumerWidget {
     final queue = ref.read(downloadQueueProvider.notifier);
 
     return switch (item.status) {
-      .downloading || .queued => IconButton(
+      .downloading || .queued || .waiting => IconButton(
         icon: const Icon(Icons.pause_circle_outline),
         tooltip: l10n.pause,
         onPressed: () => queue.pause(item.key),
       ),
-      .paused || .failed => IconButton(
+      .paused => IconButton(
         icon: const Icon(Icons.play_circle_outline),
         tooltip: l10n.resume,
         onPressed: () =>
-            queue.continueDownload(item.libraryItemId, item.episodeId),
+            queue.resumeOrRetry(item.libraryItemId, item.episodeId),
+      ),
+      .failed => IconButton(
+        icon: const Icon(Icons.refresh),
+        tooltip: l10n.retry,
+        onPressed: () =>
+            queue.resumeOrRetry(item.libraryItemId, item.episodeId),
       ),
       .completed => IconButton(
         icon: Icon(

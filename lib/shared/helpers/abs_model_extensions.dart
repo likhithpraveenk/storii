@@ -229,8 +229,11 @@ extension AudiobookX on LibraryItem {
       (total, e) => total + (e.duration ?? Duration.zero),
     ),
   );
-  List<BookChapter> get chapters =>
-      media.map(book: (m) => m.chapters, podcast: (m) => []);
+  List<BookChapter> chapters([String? episodeId]) => media.map(
+    book: (m) => m.chapters,
+    podcast: (m) =>
+        m.episodes.firstWhereOrNull((e) => e.id == episodeId)?.chapters ?? [],
+  );
   List<AudioTrack> get tracks => media.map(
     book: (m) => m.tracks,
     podcast: (m) =>
@@ -254,7 +257,11 @@ extension AudiobookX on LibraryItem {
   bool get hideFromContinue =>
       userMediaProgress?.hideFromContinueListening ?? false;
 
-  ({String? name, String position}) historyPosition(Duration position) {
+  ({String? name, String position}) historyPosition(
+    Duration position, [
+    String? episodeId,
+  ]) {
+    final chapters = this.chapters(episodeId);
     if (chapters.isNotEmpty) {
       final index = chapters.lastIndexWhere((c) => position >= c.start);
       final chapter = chapters[index < 0 ? 0 : index];

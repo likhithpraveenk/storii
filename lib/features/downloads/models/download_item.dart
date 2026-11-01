@@ -6,7 +6,23 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 part 'download_item.freezed.dart';
 part 'download_item.g.dart';
 
-enum DownloadStatus { queued, downloading, completed, failed, paused }
+enum DownloadStatus {
+  queued,
+  waiting,
+  downloading,
+  completed,
+  failed,
+  paused;
+
+  String get label => switch (this) {
+    .queued => l10n.queued,
+    .paused => l10n.paused,
+    .downloading => l10n.downloading,
+    .failed => l10n.failed,
+    .completed => l10n.completed,
+    .waiting => l10n.waitingForNetwork,
+  };
+}
 
 enum DownloadMediaType { audiobook, podcast }
 
@@ -62,7 +78,8 @@ sealed class DownloadItem with _$DownloadItem {
 
   bool get isComplete => status == .completed;
   bool get isFailed => status == .failed;
-  bool get isActive => status == .downloading || status == .queued;
+  bool get isActive =>
+      status == .downloading || status == .queued || status == .waiting;
 
   bool get isStuck =>
       status == .queued &&
@@ -70,16 +87,4 @@ sealed class DownloadItem with _$DownloadItem {
       DateTime.now().difference(startedAt!).inMinutes > 5;
 
   bool get isPodcast => mediaType == .podcast;
-}
-
-extension DownloadStatusX on DownloadStatus {
-  String get label {
-    return switch (this) {
-      .queued => l10n.queued,
-      .paused => l10n.paused,
-      .downloading => l10n.downloading,
-      .failed => l10n.failed,
-      .completed => l10n.completed,
-    };
-  }
 }

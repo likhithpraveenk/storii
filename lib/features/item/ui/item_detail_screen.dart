@@ -101,7 +101,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                               leading: const Icon(Icons.list_rounded),
                               title: Text(l10n.chapters),
                               trailing: Text(
-                                '${item.chapters.length}',
+                                '${item.chapters().length}',
                                 style: textTheme.titleSmall?.copyWith(
                                   fontStyle: .italic,
                                 ),
@@ -109,7 +109,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                               onTap: () {
                                 showChapterListSheet(
                                   context,
-                                  chapters: item.chapters,
+                                  chapters: item.chapters(),
                                   itemId: item.id,
                                   itemTitle: item.title ?? l10n.noTitle,
                                 );

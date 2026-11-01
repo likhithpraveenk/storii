@@ -10,6 +10,7 @@ import 'package:storii/shared/helpers/extensions.dart';
 class HistoryEventTile extends ConsumerWidget {
   const new({
     required this.itemId,
+    required this.episodeId,
     required this.event,
     required this.onTap,
     super.key,
@@ -18,6 +19,7 @@ class HistoryEventTile extends ConsumerWidget {
   final PlaybackEvent event;
   final VoidCallback onTap;
   final String itemId;
+  final String? episodeId;
 
   IconData get _icon => switch (event.kind) {
     .play => Icons.play_circle_outline,

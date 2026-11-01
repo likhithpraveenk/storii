@@ -8,7 +8,6 @@ class UnmeteredOnlyTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // TODO: use unmetered only in downloads
     final unMeteredOnly = ref.watch(downloadOnUnmeteredOnlyProvider);
 
     return SwitchListTile(

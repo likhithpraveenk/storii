@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/downloads/storage_tile.dart';
+import 'package:storii/features/settings/ui/downloads/unmetered_only_tile.dart';
 import 'package:storii/features/settings/ui/settings_reset_button.dart';
 
 class DownloadsSettingsTile extends StatelessWidget {
@@ -41,7 +42,7 @@ class DownloadsSettingsScreen extends ConsumerWidget {
         ),
         actions: const [SettingsResetButton(category: .downloads)],
       ),
-      body: ListView(children: const [StorageTile()]),
+      body: ListView(children: const [UnmeteredOnlyTile(), StorageTile()]),
     );
   }
 }

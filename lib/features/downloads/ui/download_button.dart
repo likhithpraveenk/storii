@@ -120,6 +120,11 @@ class DownloadButton extends ConsumerWidget {
         icon: Icon(Icons.schedule, color: scheme.outline),
         onPressed: () => queue.delete(libraryItemId, episodeId),
       ),
+      .waiting => IconButton(
+        tooltip: l10n.waitingForNetwork,
+        icon: Icon(Icons.wifi_off, color: scheme.outline),
+        onPressed: () => queue.delete(libraryItemId, episodeId),
+      ),
       .downloading => _ProgressButton(
         progress: item!.progress,
         onCancel: () => queue.delete(libraryItemId, episodeId),
@@ -136,12 +141,12 @@ class DownloadButton extends ConsumerWidget {
       .failed => IconButton(
         tooltip: l10n.downloadFailed,
         icon: Icon(Icons.refresh, color: scheme.error),
-        onPressed: () => queue.continueDownload(libraryItemId, episodeId),
+        onPressed: () => queue.resumeOrRetry(libraryItemId, episodeId),
       ),
       .paused => IconButton(
         tooltip: l10n.resumeDownload,
         icon: Icon(Icons.play_circle_outline, color: scheme.tertiary),
-        onPressed: () => queue.continueDownload(libraryItemId, episodeId),
+        onPressed: () => queue.resumeOrRetry(libraryItemId, episodeId),
       ),
     };
   }

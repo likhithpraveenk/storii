@@ -1,11 +1,38 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 
+part 'downloads_notification_service.g.dart';
+
 const isolatePortName = 'downloads_action';
 
-class DownloadsNotificationService {
+abstract class DownloadsNotifications {
+  Future<bool> requestPermission();
+
+  Future<void> startForeground({required String title});
+
+  Future<void> showProgressNotification({
+    required String title,
+    required int progress,
+    required bool isComplete,
+    required bool isFailed,
+    required bool isPaused,
+    int? totalBytes,
+    required bool useBinary,
+  });
+
+  Future<void> stopForeground();
+
+  Future<void> dismiss();
+}
+
+@Riverpod(keepAlive: true)
+DownloadsNotifications downloadsNotifications(Ref ref) =>
+    DownloadsNotificationService.instance;
+
+class DownloadsNotificationService implements DownloadsNotifications {
   new _();
   static final instance = DownloadsNotificationService._();
 
@@ -35,11 +62,13 @@ class DownloadsNotificationService {
     await _plugin.initialize(settings: initSettings);
   }
 
+  @override
   Future<bool> requestPermission() async {
     final status = await Permission.notification.request();
     return status.isGranted;
   }
 
+  @override
   Future<void> startForeground({required String title}) async {
     final androidDetails = AndroidNotificationDetails(
       channelId,
@@ -60,6 +89,7 @@ class DownloadsNotificationService {
     );
   }
 
+  @override
   Future<void> showProgressNotification({
     required String title,
     required int progress,
@@ -71,39 +101,32 @@ class DownloadsNotificationService {
   }) async {
     String body = '$progress%';
     if (isComplete) {
-      body = 'Download complete';
+      body = l10n.completed;
     } else if (isFailed) {
-      body = 'Download failed';
+      body = l10n.failed;
     } else if (isPaused) {
-      body = 'Download paused';
+      body = l10n.paused;
     }
     if (totalBytes != null) {
       body = '$body - ${formatBytes(totalBytes, useBinary: useBinary)}';
     }
 
-    // final actions = <AndroidNotificationAction>[
-    //   if (!isComplete && !isFailed && !isPaused)
-    //     const AndroidNotificationAction(
-    //       actionPause,
-    //       'Pause',
-    //       showsUserInterface: false,
-    //       cancelNotification: false,
-    //     ),
-    //   if (isPaused)
-    //     const AndroidNotificationAction(
-    //       actionResume,
-    //       'Resume',
-    //       showsUserInterface: false,
-    //       cancelNotification: false,
-    //     ),
-    //   if (!isComplete && !isFailed)
-    //     const AndroidNotificationAction(
-    //       actionCancel,
-    //       'Cancel',
-    //       showsUserInterface: false,
-    //       cancelNotification: false,
-    //     ),
-    // ];
+    final actions = <AndroidNotificationAction>[
+      if (!isComplete && !isFailed && !isPaused)
+        AndroidNotificationAction(
+          actionPause,
+          l10n.pause,
+          cancelNotification: false,
+        ),
+      if (isPaused)
+        AndroidNotificationAction(
+          actionResume,
+          l10n.resume,
+          cancelNotification: false,
+        ),
+      if (!isComplete && !isFailed)
+        AndroidNotificationAction(actionCancel, l10n.cancel),
+    ];
 
     final androidDetails = AndroidNotificationDetails(
       channelId,
@@ -116,6 +139,7 @@ class DownloadsNotificationService {
       progress: progress,
       ongoing: !isComplete && !isFailed && !isPaused,
       onlyAlertOnce: true,
+      actions: actions,
     );
 
     await _plugin.show(
@@ -126,10 +150,12 @@ class DownloadsNotificationService {
     );
   }
 
+  @override
   Future<void> stopForeground() async {
     await _androidPlugin?.stopForegroundService();
   }
 
+  @override
   Future<void> dismiss() async {
     await _plugin.cancel(id: notificationId);
   }

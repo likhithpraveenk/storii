@@ -97,9 +97,6 @@ Duration totalDuration(Ref ref) {
 
 @riverpod
 ({Duration duration, Duration position}) displayProgress(Ref ref) {
-  final isEpisode = ref.watch(
-    sessionProvider.select((s) => s?.episodeId != null),
-  );
   final showChapterSlider = ref.watch(showChapterProgressSliderProvider);
   final chapter = ref.watch(currentChapterProvider).value;
   final chapterPosition = ref.watch(chapterPositionProvider).value;
@@ -107,7 +104,7 @@ Duration totalDuration(Ref ref) {
       ref.watch(globalPositionProvider).value ?? Duration.zero;
   final totalDuration = ref.watch(totalDurationProvider);
 
-  if (isEpisode || !showChapterSlider) {
+  if (!showChapterSlider) {
     return (duration: totalDuration, position: globalPosition);
   }
   return (

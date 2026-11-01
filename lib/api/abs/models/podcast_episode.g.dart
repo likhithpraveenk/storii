@@ -25,6 +25,11 @@ _PodcastEpisode _$PodcastEpisodeFromJson(Map<String, dynamic> json) =>
             ),
       pubDate: json['pubDate'] as String?,
       audioFile: AudioFile.fromJson(json['audioFile'] as Map<String, dynamic>),
+      chapters:
+          (json['chapters'] as List<dynamic>?)
+              ?.map((e) => BookChapter.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       publishedAt: _$JsonConverterFromJson<int, DateTime>(
         json['publishedAt'],
         const DateTimeEpochConverter().fromJson,
@@ -63,6 +68,7 @@ Map<String, dynamic> _$PodcastEpisodeToJson(_PodcastEpisode instance) =>
       'enclosure': ?instance.enclosure?.toJson(),
       'pubDate': ?instance.pubDate,
       'audioFile': instance.audioFile.toJson(),
+      'chapters': instance.chapters.map((e) => e.toJson()).toList(),
       'publishedAt': ?_$JsonConverterToJson<int, DateTime>(
         instance.publishedAt,
         const DateTimeEpochConverter().toJson,

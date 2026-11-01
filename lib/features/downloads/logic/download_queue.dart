@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/storage_location.dart';
+import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/download_engine.dart';
 import 'package:storii/features/downloads/logic/download_extensions.dart';
+import 'package:storii/features/downloads/logic/download_queue_processor.dart';
+import 'package:storii/features/downloads/logic/download_task.dart';
 import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
 import 'package:storii/features/downloads/logic/storage_service_provider.dart';
-import 'package:storii/features/downloads/logic/throttled_persister.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
@@ -23,27 +25,40 @@ part 'download_queue.g.dart';
 class DownloadQueue extends _$DownloadQueue {
   DownloadsStore get _store => ref.read(downloadsStoreProvider);
 
-  Completer<void>? _processing;
+  DownloadsNotifications get _notifications =>
+      ref.read(downloadsNotificationsProvider);
+
+  DownloadEngine get _engine => ref.read(downloadEngineProvider);
+
+  late final DownloadQueueProcessor _processor = DownloadQueueProcessor(
+    readKeys: () => state,
+    removeKey: (key) => state = state.where((i) => i != key).toList(),
+    store: _store,
+    canStart: _networkAllows,
+    runItem: _runItem,
+  );
 
   @override
   List<String> build() {
     final downloads = _store.getAll();
-    final active =
-        downloads.values
-            .where(
-              (item) => item.status == .queued || item.status == .downloading,
-            )
-            .toList()
-          ..sort(
-            (a, b) => (a.startedAt ?? DateTime.now()).compareTo(
-              b.startedAt ?? DateTime.now(),
-            ),
-          );
+    final active = downloads.values.where((item) => item.isActive).toList()
+      ..sort(
+        (a, b) => (a.startedAt ?? DateTime.now()).compareTo(
+          b.startedAt ?? DateTime.now(),
+        ),
+      );
 
     final keys = active.map((item) => item.key).toList();
     if (keys.isNotEmpty) {
       Future.microtask(_processQueue);
     }
+
+    ref.listen(connectionTypeProvider, (_, _) {
+      if (state.isNotEmpty) {
+        _processQueue();
+      }
+    });
+
     return keys;
   }
 
@@ -98,88 +113,44 @@ class DownloadQueue extends _$DownloadQueue {
     }
   }
 
-  Future<void> _processQueue() async {
-    if (_processing != null) return;
-    _processing = Completer<void>();
+  Future<void> _processQueue() => _processor.process();
 
-    while (state.isNotEmpty) {
-      final key = state.first;
-      await _download(key);
-      state = state.where((i) => i != key).toList();
-    }
+  Future<bool> _networkAllows(DownloadItem? item) async {
+    if (item == null) return true;
+    if (item.status != .queued && item.status != .waiting) return true;
 
-    _processing?.complete();
-    _processing = null;
-  }
+    final wifiOnly = ref.read(downloadOnUnmeteredOnlyProvider);
+    final connectionType = ref.read(connectionTypeProvider);
+    final isOffline = ref.read(isOfflineProvider);
 
-  Future<void> _download(String mediaItemKey) async {
-    final downloads = _store.getAll();
-    final downloadItem = downloads[mediaItemKey];
-    if (downloadItem == null) return;
+    final shouldWait =
+        isOffline ||
+        (wifiOnly && connectionType != .wifi && connectionType != .ethernet);
 
-    await DownloadsNotificationService.instance.requestPermission();
-    await DownloadsNotificationService.instance.startForeground(
-      title: downloadItem.title,
-    );
-
-    final persister = ThrottledPersister(
-      store: _store,
-      onPersist: (item) =>
-          DownloadsNotificationService.instance.showProgressNotification(
-            title: item.title,
-            progress: (item.progress * 100).toInt(),
-            isComplete: item.isComplete,
-            isFailed: item.isFailed,
-            isPaused: item.status == .paused,
-            totalBytes: item.totalBytes,
-            useBinary: ref.read(useBinaryBytesProvider),
-          ),
-    );
-
-    try {
-      final user = ref.read(currentUserProvider);
-      if (user == null) throw StateError('No current user');
-
-      final stream = ref
-          .read(downloadEngineProvider.notifier)
-          .downloadItem(item: downloadItem, user: user);
-
-      await for (final updated in stream) {
-        final inActive = !updated.isActive;
-        await persister.update(updated);
-        if (inActive) {
-          await DownloadsNotificationService.instance.stopForeground();
-        }
+    if (!shouldWait) {
+      if (item.status == .waiting) {
+        await _store.save(item.copyWith(status: .queued));
       }
-
-      await persister.flush();
-    } catch (e, st) {
-      await persister.flush();
-      final error = AppError.from(e, st);
-      LogService.log(
-        'Download failed for $mediaItemKey: ${error.message}',
-        source: 'DownloadQueue',
-        level: .error,
-        originalError: error.originalError,
-        stackTrace: error.stackTrace,
-      );
-      await _setStatus(mediaItemKey, .failed);
-
-      await DownloadsNotificationService.instance.stopForeground();
-      await DownloadsNotificationService.instance.showProgressNotification(
-        title:
-            ref.read(downloadsStoreProvider).get(mediaItemKey)?.title ??
-            mediaItemKey,
-        progress: 0,
-        isComplete: false,
-        isFailed: true,
-        isPaused: false,
-        useBinary: ref.read(useBinaryBytesProvider),
-      );
+      return true;
     }
+
+    if (item.status != .waiting) {
+      await _store.save(item.copyWith(status: .waiting));
+    }
+    return false;
   }
 
-  Future<void> continueDownload(String id, String? episodeId) async {
+  Future<void> _runItem(String key) {
+    return DownloadTask(
+      store: _store,
+      engine: _engine,
+      notifications: _notifications,
+      currentUser: () => ref.read(currentUserProvider),
+      useBinary: () => ref.read(useBinaryBytesProvider),
+    ).run(key);
+  }
+
+  Future<void> resumeOrRetry(String id, String? episodeId) async {
     final key = mediaItemIdKey(id, episodeId);
     final item = _store.getAll()[key];
     if (item == null) return;
@@ -189,25 +160,29 @@ class DownloadQueue extends _$DownloadQueue {
         .firstWhereOrNull((l) => l.uri == item.folderPath);
     if (location == null) return;
 
-    ref.read(downloadEngineProvider.notifier).cancel(key);
-    await DownloadsNotificationService.instance.stopForeground();
-    await DownloadsNotificationService.instance.dismiss();
+    _engine.cancel(key);
+    await _notifications.stopForeground();
+    await _notifications.dismiss();
     state = state.where((i) => i != key).toList();
+
+    await _processor.waitForIdle();
+
     await enqueue(libraryItemId: id, episodeId: episodeId, location: location);
   }
 
   Future<void> pause(String id) async {
-    ref.read(downloadEngineProvider.notifier).cancel(id);
-    final processing = _processing;
+    _engine.cancel(id);
     state = state.where((i) => i != id).toList();
     final downloads = _store.getAll();
     final item = downloads[id];
-    if (item != null) await _store.save(item.copyWith(status: .paused));
+    if (item != null) {
+      await _store.save(item.copyWith(status: .paused));
+    }
 
-    await processing?.future;
+    await _processor.waitForIdle();
 
-    await DownloadsNotificationService.instance.stopForeground();
-    await DownloadsNotificationService.instance.showProgressNotification(
+    await _notifications.stopForeground();
+    await _notifications.showProgressNotification(
       title: item?.title ?? id,
       progress: ((item?.progress ?? 0) * 100).toInt(),
       isComplete: false,
@@ -219,35 +194,33 @@ class DownloadQueue extends _$DownloadQueue {
 
   Future<void> delete(String id, String? episodeId) async {
     final key = mediaItemIdKey(id, episodeId);
-    ref.read(downloadEngineProvider.notifier).cancel(key);
-    final processing = _processing;
-    await DownloadsNotificationService.instance.stopForeground();
-    await DownloadsNotificationService.instance.dismiss();
+    _engine.cancel(key);
+    await _notifications.stopForeground();
+    await _notifications.dismiss();
     state = state.where((i) => i != key).toList();
-    final downloads = _store.getAll();
-    final item = downloads[key];
-    final service = ref.read(storageServiceForItemProvider(item));
-    if (item != null && service != null) {
-      if (item.episodeId != null) {
-        await service.deleteTrack(
-          relativePath: item.relativePath,
-          trackPath: item.tracks.first.trackPath,
-        );
-      } else {
-        await service.deleteFolder(relativePath: item.relativePath);
-        await ref.read(itemsCacheProvider).delete(item.libraryItemId);
-      }
-    }
-    unawaited(service?.cleanupEmptyFolders.call());
+    final item = _store.getAll()[key];
+    await _deleteFiles(item);
     await _store.remove(key);
 
-    await processing?.future;
+    await _processor.waitForIdle();
   }
 
-  Future<void> _setStatus(String id, DownloadStatus status) async {
-    final downloads = _store.getAll();
-    final item = downloads[id];
+  Future<void> _deleteFiles(DownloadItem? item) async {
     if (item == null) return;
-    await _store.save(item.copyWith(status: status));
+
+    final service = ref.read(storageServiceForItemProvider(item));
+    if (service == null) return;
+
+    if (item.episodeId != null) {
+      await service.deleteTrack(
+        relativePath: item.relativePath,
+        trackPath: item.tracks.first.trackPath,
+      );
+    } else {
+      await service.deleteFolder(relativePath: item.relativePath);
+      await ref.read(itemsCacheProvider).delete(item.libraryItemId);
+    }
+
+    unawaited(service.cleanupEmptyFolders());
   }
 }

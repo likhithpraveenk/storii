@@ -17,7 +17,7 @@ extension SettingsCategoryReset on WidgetRef {
       case .advanced:
         await read(appSettingsProvider.notifier).resetAdvanced();
       case .downloads:
-        await read(appSettingsProvider.notifier).resetDownloads();
+        await read(userSettingsProvider.notifier).resetDownloads();
     }
   }
 }
