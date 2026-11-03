@@ -29,7 +29,8 @@ class ConnectionStatusIcon extends ConsumerWidget {
         switch (socketState) {
           .ready => connectionType.icon,
           .connecting || .authenticating => Icons.cloud_sync,
-          .authFailed || .disconnected => Icons.cloud_off,
+          .authFailed => Icons.warning_amber_outlined,
+          .disconnected => Icons.cloud_off,
         },
         color: hasNetwork && (isConnected || isBusy)
             ? scheme.primary

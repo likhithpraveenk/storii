@@ -121,7 +121,7 @@ class DownloadQueue extends _$DownloadQueue {
 
     final wifiOnly = ref.read(downloadOnUnmeteredOnlyProvider);
     final connectionType = ref.read(connectionTypeProvider);
-    final isOffline = ref.read(isOfflineProvider);
+    final isOffline = ref.read(isServerOfflineProvider);
 
     final shouldWait =
         isOffline ||

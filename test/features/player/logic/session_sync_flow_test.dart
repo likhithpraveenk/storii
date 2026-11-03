@@ -1,7 +1,7 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:storii/api/abs/socket/socket_api.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
@@ -25,7 +25,7 @@ void main() {
   late FakeProgressStore progressStore;
   late FakeSessionsApi fakeSessionsApi;
   late FakeItemApi fakeItemApi;
-  late BehaviorSubject<List<ConnectivityResult>> connectivity;
+  late BehaviorSubject<SocketStatus> socketStatus;
 
   setUpAll(() async {
     await initGlobals();
@@ -44,11 +44,11 @@ void main() {
     progressStore = FakeProgressStore(userId: testUser.id);
     fakeSessionsApi = FakeSessionsApi();
     fakeItemApi = FakeItemApi();
-    connectivity = BehaviorSubject.seeded([ConnectivityResult.wifi]);
+    socketStatus = BehaviorSubject.seeded(.connecting);
   });
 
   tearDown(() {
-    connectivity.close();
+    socketStatus.close();
   });
 
   ProviderContainer createContainer() {
@@ -58,7 +58,7 @@ void main() {
         progressStoreProvider(testUser.id).overrideWithValue(progressStore),
         currentUserProvider.overrideWithValue(testUser),
         authenticatedUserProvider.overrideWith((ref) async => testUser),
-        connectivityStreamProvider.overrideWith((ref) => connectivity.stream),
+        socketStatusProvider.overrideWith((ref) => socketStatus.stream),
         sessionsApiProvider.overrideWith((ref, _) => fakeSessionsApi),
         sessionRepositoryProvider.overrideWith(
           (ref, _) => SessionRepository(fakeItemApi, fakeSessionsApi),
@@ -68,8 +68,8 @@ void main() {
   }
 
   Future<void> goOffline(ProviderContainer container) async {
-    container.listen(isOfflineProvider, (_, _) {});
-    connectivity.add([ConnectivityResult.none]);
+    container.listen(isServerOfflineProvider, (_, _) {});
+    socketStatus.add(.disconnected);
     await pumpEventQueue();
   }
 
@@ -170,7 +170,7 @@ void main() {
       );
 
       // reconnect -> online sync sends 60s accumulated delta, drop from store
-      connectivity.add([ConnectivityResult.wifi]);
+      socketStatus.add(.ready);
       await pumpEventQueue();
 
       await container
@@ -191,7 +191,7 @@ void main() {
         final container = createContainer();
         addTearDown(container.dispose);
 
-        container.listen(isOfflineProvider, (_, _) {});
+        container.listen(isServerOfflineProvider, (_, _) {});
         await pumpEventQueue();
 
         container.read(sessionProvider.notifier).state = fakeBookSession;

@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 ### Fixed
 
 - downloaded items from other servers will show cached
+- socket connection check for offline mode
 
 ## [v0.13.0] - 2026-10-23
 

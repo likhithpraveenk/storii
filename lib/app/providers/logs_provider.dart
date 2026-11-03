@@ -51,7 +51,7 @@ class LogsNotifier extends _$LogsNotifier {
 }
 
 final logFilterProvider = StateProvider<Set<LogLevel>>((ref) {
-  return LogLevel.values.toSet()..remove(LogLevel.debug);
+  return LogLevel.values.toSet();
 }, name: 'logFilterProvider');
 
 final filteredLogsProvider = Provider<List<LogEntry>>((ref) {

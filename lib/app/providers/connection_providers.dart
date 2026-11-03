@@ -74,6 +74,13 @@ bool isOffline(Ref ref) {
 }
 
 @Riverpod(keepAlive: true)
+bool isServerOffline(Ref ref) {
+  return ref.watch(
+    socketStatusProvider.select((s) => s.value == .disconnected),
+  );
+}
+
+@Riverpod(keepAlive: true)
 class ActiveServerUrl extends _$ActiveServerUrl {
   @override
   Uri build() {
