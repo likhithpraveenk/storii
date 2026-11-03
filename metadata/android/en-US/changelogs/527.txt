@@ -1,0 +1,12 @@
+Added:
+- downloads on unmetered networks only setting with waiting state
+- podcast chapters support
+- storage space stats in downloads settings
+- sleep events in playback history
+
+Changed:
+- auto-remove logs older than a day
+
+Fixed:
+- downloaded items from other servers will show cached
+- socket connection check for offline mode
