@@ -250,6 +250,8 @@ extension PlaybackEventKindX on PlaybackEventKind {
       .complete => l10n.complete,
       .stop => l10n.stop,
       .sync => l10n.sync,
+      .sleepStart => l10n.sleepStart,
+      .sleepEnd => l10n.sleepEnd,
     };
   }
 }

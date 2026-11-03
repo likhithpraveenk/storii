@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/models/playback_event.dart';
 import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/features/item/logic/user_progress_actions.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
@@ -7,6 +8,7 @@ import 'package:storii/features/player/logic/playback_history.dart';
 import 'package:storii/features/player/logic/playback_sync_service.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/logic/sessions_cleanup.dart';
+import 'package:storii/features/player/logic/sleep_timer_provider.dart';
 import 'package:storii/features/player/logic/sync_interval_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 
@@ -72,6 +74,35 @@ class SessionSyncWatcher extends _$SessionSyncWatcher {
         case .error:
           _service?.onError();
         default:
+      }
+    });
+
+    ref.listen(sleepTimerProvider, (prev, next) {
+      final session = ref.read(sessionProvider);
+      if (session == null) return;
+
+      if (prev == null && next != null) {
+        final key = mediaItemIdKey(session.libraryItemId, session.episodeId);
+        ref
+            .read(playbackHistoryProvider(key).notifier)
+            .addEvent(
+              PlaybackEvent(
+                timestamp: DateTime.now(),
+                position: audioHandler.currentPosition,
+                kind: .sleepStart,
+              ),
+            );
+      } else if (prev != null && next == null) {
+        final key = mediaItemIdKey(session.libraryItemId, session.episodeId);
+        ref
+            .read(playbackHistoryProvider(key).notifier)
+            .addEvent(
+              PlaybackEvent(
+                timestamp: DateTime.now(),
+                position: audioHandler.currentPosition,
+                kind: .sleepEnd,
+              ),
+            );
       }
     });
 

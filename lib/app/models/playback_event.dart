@@ -3,7 +3,16 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'playback_event.freezed.dart';
 part 'playback_event.g.dart';
 
-enum PlaybackEventKind { play, pause, seek, sync, stop, complete }
+enum PlaybackEventKind {
+  play,
+  pause,
+  seek,
+  sync,
+  stop,
+  complete,
+  sleepStart,
+  sleepEnd,
+}
 
 @freezed
 sealed class PlaybackEvent with _$PlaybackEvent {
