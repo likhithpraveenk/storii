@@ -66,7 +66,7 @@ class DeleteLogsButton extends ConsumerWidget {
         actionLabel: l10n.delete,
         isDestructive: true,
         onTap: () async {
-          ref.read(logsProvider.notifier).clear();
+          await ref.read(logsProvider.notifier).clear();
         },
       ),
       icon: const Icon(Icons.delete_sweep),

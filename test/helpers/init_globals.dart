@@ -17,7 +17,7 @@ class FakeLogs extends LogsNotifier {
   }
 
   @override
-  void clear() {
+  Future<void> clear() async {
     logsAdded = 0;
   }
 }
