@@ -38,7 +38,7 @@ class SocketApi {
   late final PlaylistEvents playlistEvents;
   late final ItemEvents itemEvents;
 
-  final _statusController = BehaviorSubject<SocketStatus>.seeded(.disconnected);
+  final _statusController = BehaviorSubject<SocketStatus>.seeded(.connecting);
   final _initController = BehaviorSubject<InitEvent?>();
 
   // Invalidates a token read that resolves after a reconnect
@@ -87,10 +87,6 @@ class SocketApi {
 
   Stream<InitEvent?> get payloadStream => _initController.stream;
 
-  /// Re-authenticates on a live transport, or reconnects when the transport is
-  /// down (token rotation while offline must not stay queued in the send
-  /// buffer). [force] clears the rejected-token latch so an explicit retry can
-  /// re-send the current token.
   Future<void> refresh({bool force = false}) async {
     if (_isDisposed) return;
     if (force) _failedToken = null;

@@ -11,10 +11,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - downloads on unmetered networks only setting with waiting state
 - podcast chapters support
 - storage space stats in downloads settings
+- sleep events in playback history
+
+### Changed
+
+- auto-remove logs older than a day
 
 ### Fixed
 
 - downloaded items from other servers will show cached
+- socket connection check for offline mode
 
 ## [v0.13.0] - 2026-10-23
 

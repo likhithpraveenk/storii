@@ -21,7 +21,7 @@ const downloadsBoxName = 'downloads_box';
 const speedsBoxName = 'speeds_box';
 const serverSettingsBoxName = 'server_settings_box';
 const playbackQueueBoxName = 'playback_queue_box';
-const logsBoxName = 'logs_box';
+const logsBoxName = 'logs_box_1';
 
 //* any new hive box should be added to this list
 final _knownNames = [

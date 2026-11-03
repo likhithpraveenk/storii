@@ -185,7 +185,7 @@ class _FakeEngine extends DownloadEngine {
 }
 
 ProviderContainer _container({
-  required bool isOffline,
+  bool isOffline = false,
   required ConnectionType connectionType,
   required bool wifiOnly,
   FakeDownloadsNotifications? notifications,
@@ -200,7 +200,7 @@ ProviderContainer _container({
           .overrideWithValue(_FakeStorageService(_location)),
       itemDetailProvider('item-1').overrideWith(_FakeItemDetail.new),
       currentUserProvider.overrideWithValue(_user),
-      isOfflineProvider.overrideWithValue(isOffline),
+      isServerOfflineProvider.overrideWithValue(isOffline),
       connectionTypeProvider.overrideWithValue(connectionType),
       downloadOnUnmeteredOnlyProvider.overrideWithValue(wifiOnly),
       useBinaryBytesProvider.overrideWithValue(false),
@@ -258,11 +258,7 @@ void main() {
     });
 
     test('waits on mobile when unmetered-only is enabled', () async {
-      final container = _container(
-        isOffline: false,
-        connectionType: .mobile,
-        wifiOnly: true,
-      );
+      final container = _container(connectionType: .mobile, wifiOnly: true);
       addTearDown(container.dispose);
 
       final queue = container.read(downloadQueueProvider.notifier);
@@ -277,7 +273,6 @@ void main() {
   group('DownloadQueue notifications', () {
     test('waiting items never start the foreground service', () async {
       final container = _container(
-        isOffline: false,
         connectionType: .mobile,
         wifiOnly: true,
         engine: _FakeEngine(),
@@ -294,7 +289,6 @@ void main() {
     test('starts foreground after the gate and stops it on completion', () {
       fakeAsync((async) async {
         final container = _container(
-          isOffline: false,
           connectionType: .wifi,
           wifiOnly: false,
           engine: _FakeEngine(),
@@ -325,7 +319,6 @@ void main() {
     test('reports completion through the notification port', () {
       fakeAsync((async) async {
         final container = _container(
-          isOffline: false,
           connectionType: .wifi,
           wifiOnly: false,
           engine: _FakeEngine(),
@@ -348,7 +341,6 @@ void main() {
     test('pausing during a transfer keeps the item paused', () async {
       final engine = _FakeEngine(hold: true);
       final container = _container(
-        isOffline: false,
         connectionType: .wifi,
         wifiOnly: false,
         engine: engine,
@@ -372,7 +364,6 @@ void main() {
 
     test('a failing download does not block later drains', () async {
       final container = _container(
-        isOffline: false,
         connectionType: .wifi,
         wifiOnly: false,
         engine: _FakeEngine(),

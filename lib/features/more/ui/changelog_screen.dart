@@ -66,12 +66,18 @@ class _ChangelogScreenState extends ConsumerState<ChangelogScreen> {
         ),
         data: (entries) => AppScrollbar(
           controller: controller,
-          child: ListView.separated(
-            controller: controller,
+          child: SingleChildScrollView(
             padding: const .symmetric(horizontal: 24),
-            itemCount: entries.length,
-            separatorBuilder: (_, _) => const Divider(),
-            itemBuilder: (context, index) => ChangelogEntryView(entries[index]),
+            controller: controller,
+            child: Column(
+              children: [
+                for (final entry in entries) ...[
+                  ChangelogEntryView(entry),
+                  const Divider(),
+                ],
+                const SizedBox(height: 100),
+              ],
+            ),
           ),
         ),
       ),

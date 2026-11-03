@@ -209,6 +209,47 @@ final class IsOfflineProvider extends $FunctionalProvider<bool, bool, bool>
 
 String _$isOfflineHash() => r'ff81df61788765f475899da3f172edab0a6bae55';
 
+@ProviderFor(isServerOffline)
+final isServerOfflineProvider = IsServerOfflineProvider._();
+
+final class IsServerOfflineProvider
+    extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  IsServerOfflineProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'isServerOfflineProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$isServerOfflineHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    return isServerOffline(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$isServerOfflineHash() => r'95fa17ba611909319350b8a011c8ea0f858f2af2';
+
 @ProviderFor(ActiveServerUrl)
 final activeServerUrlProvider = ActiveServerUrlProvider._();
 

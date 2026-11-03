@@ -26,7 +26,7 @@ class ItemDetail extends _$ItemDetail {
       unawaited(cache.put(updated));
     });
 
-    final isOffline = ref.watch(isOfflineProvider);
+    final isOffline = ref.watch(isServerOfflineProvider);
     if (isOffline) {
       final localItem = cache.get(id);
       if (localItem != null) return localItem;

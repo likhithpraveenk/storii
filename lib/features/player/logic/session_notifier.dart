@@ -121,7 +121,7 @@ class SessionNotifier extends _$SessionNotifier {
         state = updated;
       }
 
-      if (ref.read(isOfflineProvider)) return;
+      if (ref.read(isServerOfflineProvider)) return;
 
       try {
         final user = await ref.read(authenticatedUserProvider.future);
@@ -137,7 +137,7 @@ class SessionNotifier extends _$SessionNotifier {
         return;
       }
     } else {
-      if (ref.read(isOfflineProvider)) {
+      if (ref.read(isServerOfflineProvider)) {
         await _savePosition(session, position, closing: closing);
         throw AppError(
           'No Server Connection',

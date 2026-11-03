@@ -11,47 +11,59 @@ part 'logs_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class LogsNotifier extends _$LogsNotifier {
-  static const int _maxLogs = 500;
+  static const _boxKey = 'logs_list';
+  static const _logsCutOff = Duration(days: 1);
 
   @override
   List<LogEntry> build() {
-    final entries = <LogEntry>[];
-    for (final value in logsBox.values) {
-      try {
-        entries.add(LogEntry.fromJson(jsonDecode(value)));
-      } catch (_) {}
+    final raw = logsBox.get(_boxKey);
+    if (raw == null) return [];
+    final cutoff = DateTime.now().subtract(_logsCutOff);
+    try {
+      final decoded = jsonDecode(raw) as List;
+      final list =
+          decoded
+              .map(_parseLog)
+              .whereType<LogEntry>()
+              .where((e) => e.timestamp.isAfter(cutoff))
+              .toList()
+            ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
+
+      if (list.length != decoded.length) {
+        Future.microtask(_persist);
+      }
+      return list;
+    } catch (_) {
+      return [];
     }
-    entries.sort((a, b) => b.timestamp.compareTo(a.timestamp));
-    return entries;
+  }
+
+  LogEntry? _parseLog(dynamic e) {
+    try {
+      return LogEntry.fromJson(e as Map<String, dynamic>);
+    } catch (_) {
+      return null;
+    }
   }
 
   void add(LogEntry entry) {
-    final updated = [entry, ...state];
-    if (updated.length > _maxLogs) {
-      updated.removeRange(_maxLogs, updated.length);
-    }
-    state = updated;
-    unawaited(_persist(updated));
+    state = [entry, ...state];
+    unawaited(_persist());
   }
 
-  Future<void> _persist(List<LogEntry> entries) async {
-    await logsBox.clear();
-    for (final entry in entries) {
-      await logsBox.put(
-        entry.timestamp.millisecondsSinceEpoch.toString(),
-        jsonEncode(entry),
-      );
-    }
+  Future<void> _persist() async {
+    final encoded = jsonEncode(state.map((e) => e.toJson()).toList());
+    await logsBox.put(_boxKey, encoded);
   }
 
-  void clear() {
+  Future<void> clear() async {
     state = [];
-    unawaited(logsBox.clear());
+    await logsBox.delete(_boxKey);
   }
 }
 
 final logFilterProvider = StateProvider<Set<LogLevel>>((ref) {
-  return LogLevel.values.toSet()..remove(LogLevel.debug);
+  return LogLevel.values.toSet();
 }, name: 'logFilterProvider');
 
 final filteredLogsProvider = Provider<List<LogEntry>>((ref) {

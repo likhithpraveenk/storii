@@ -28,6 +28,8 @@ class HistoryEventTile extends ConsumerWidget {
     .sync => Icons.cloud_download_outlined,
     .stop => Icons.stop_circle_outlined,
     .complete => Icons.check_circle_outline,
+    .sleepStart => Icons.bedtime_outlined,
+    .sleepEnd => Icons.bedtime_off_outlined,
   };
 
   Color _color(BuildContext context) {
@@ -39,6 +41,8 @@ class HistoryEventTile extends ConsumerWidget {
       .sync => scheme.tertiary,
       .stop => scheme.error,
       .complete => scheme.primary,
+      .sleepStart => scheme.secondary,
+      .sleepEnd => scheme.outline,
     };
   }
 

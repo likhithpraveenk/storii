@@ -356,6 +356,8 @@
   "stop": "Stop",
   "complete": "Complete",
   "sync": "Sync",
+  "sleepStart": "Sleep Start",
+  "sleepEnd": "Sleep End",
   "playbackError": "playback error",
   "loginOidc": "Login with OpenID",
   "or": "Or",

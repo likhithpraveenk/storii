@@ -61,16 +61,18 @@ class SessionsCleanup extends _$SessionsCleanup {
 
         await ref.read(sessionStoreProvider).delete(session.id);
       } on AppError catch (e) {
-        if (e.type == .notFound) {
+        if (e.type == .notFound || e.type == .server) {
           LogService.log(
-            'session not found for ${session.displayTitle}',
+            'error syncing session for ${session.displayTitle}: ${e.type}',
             level: .warning,
             source: _source,
+            originalError: e.originalError,
+            stackTrace: e.stackTrace,
           );
           await ref.read(sessionStoreProvider).delete(session.id);
         } else {
           LogService.log(
-            'failed to sync session ${session.displayTitle}: ${e.message}',
+            'failed to sync session ${session.displayTitle}: ${e.type}: ${e.message}',
             level: .warning,
             source: _source,
             originalError: e.originalError,

@@ -19,7 +19,7 @@ Future<UserDomain> authenticatedUser(Ref ref) async {
   final user = ref.watch(currentUserProvider);
   if (user == null) throw StateError('No current user');
 
-  final ifOffline = ref.watch(isOfflineProvider);
+  final ifOffline = ref.watch(isServerOfflineProvider);
   if (ifOffline) return user;
 
   try {

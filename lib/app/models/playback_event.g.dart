@@ -37,4 +37,6 @@ const _$PlaybackEventKindEnumMap = {
   PlaybackEventKind.sync: 'sync',
   PlaybackEventKind.stop: 'stop',
   PlaybackEventKind.complete: 'complete',
+  PlaybackEventKind.sleepStart: 'sleepStart',
+  PlaybackEventKind.sleepEnd: 'sleepEnd',
 };
