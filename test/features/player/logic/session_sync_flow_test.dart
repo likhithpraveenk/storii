@@ -125,7 +125,7 @@ void main() {
         currentTime: const Duration(minutes: 400),
       );
       sessionStore.sessions[offlineSession.id] = offlineSession;
-      await container.read(sessionsCleanupProvider.notifier).cleanup();
+      await container.read(sessionsCleanupProvider(testUser)).cleanup();
 
       expect(fakeSessionsApi.localSyncCalls.length, 1);
       expect(

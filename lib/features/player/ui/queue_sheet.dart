@@ -68,7 +68,12 @@ class QueueButton extends ConsumerWidget {
           count: count,
           child: const Icon(Icons.horizontal_split_outlined),
         ),
-        onTap: () => _openSheet(context),
+        onTap: () {
+          final navigator = Navigator.of(context)..pop();
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) => _openSheet(navigator.context),
+          );
+        },
       );
     }
 

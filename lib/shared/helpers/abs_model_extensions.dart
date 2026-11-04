@@ -332,6 +332,16 @@ String userMediaItemIdKey(String userId, String itemId, [String? episodeId]) =>
 String mediaItemIdKey(String id, [String? episodeId]) =>
     episodeId != null ? '$id$episodeId' : id;
 
+({String id, String? episodeId}) fromMediaItemIdKey(String key) {
+  const len = 36;
+
+  if (key.length == len * 2) {
+    return (id: key.substring(0, len), episodeId: key.substring(len));
+  }
+
+  return (id: key, episodeId: null);
+}
+
 extension PlayMethodX on PlayMethod {
   String get label {
     return switch (this) {

@@ -12,8 +12,8 @@ class VolumeButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final volume = ref.watch(volumeProvider).value ?? 1;
-    Future<void> openSheet() => AppBottomSheet.show(
-      context,
+    Future<void> openSheet(BuildContext ctx) => AppBottomSheet.show(
+      ctx,
       title: l10n.volume,
       body: _VolumeSliderSheet(volume),
     );
@@ -22,12 +22,17 @@ class VolumeButton extends ConsumerWidget {
         title: Text(l10n.volume),
         leading: const Icon(Icons.volume_up),
         trailing: Text('${(volume * 100).round()}%'),
-        onTap: openSheet,
+        onTap: () {
+          final navigator = Navigator.of(context)..pop();
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) => openSheet(navigator.context),
+          );
+        },
       );
     }
 
     return IconButton(
-      onPressed: openSheet,
+      onPressed: () => openSheet(context),
       tooltip: l10n.volume,
       icon: Icon(
         volume == 0.0

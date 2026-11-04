@@ -31,6 +31,7 @@ class SocketApi {
 
   final Future<String?> Function() getToken;
   final void Function(String reason)? onAuthFailure;
+  final bool autoConnect;
 
   late final UserSocketEvents user;
   late final TaskEvents taskEvents;
@@ -53,6 +54,7 @@ class SocketApi {
     required this.getToken,
     this.onAuthFailure,
     io.Socket? socket,
+    this.autoConnect = true,
   }) : _socket = socket ?? _buildSocket(baseUrl, headers) {
     user = UserSocketEvents(_socket);
     taskEvents = TaskEvents(_socket);
@@ -74,8 +76,12 @@ class SocketApi {
 
     _socket.on('init', _handleInit);
 
-    _setStatus(.connecting);
-    _socket.connect();
+    if (autoConnect) {
+      _setStatus(.connecting);
+      _socket.connect();
+    } else {
+      _setStatus(.disconnected);
+    }
   }
 
   bool get isReady => status == .ready;

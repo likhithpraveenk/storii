@@ -33,6 +33,17 @@ class FakePlaybackHistoryStore extends PlaybackHistoryStore {
   }
 
   @override
+  Map<String, List<PlaybackEvent>> getAllForUser(String userId) {
+    final result = <String, List<PlaybackEvent>>{};
+    final prefix = '${userId}_';
+    for (final entry in _data.entries) {
+      if (!entry.key.startsWith(prefix)) continue;
+      result[entry.key.substring(prefix.length)] = entry.value;
+    }
+    return result;
+  }
+
+  @override
   Future<void> remove(String userId, String mediaItemId) async {
     removeCalls++;
     _data.remove(_key(userId, mediaItemId));

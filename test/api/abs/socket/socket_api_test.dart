@@ -40,6 +40,7 @@ _SocketApiFixture _createFixture({
   String? token = 'T1',
   void Function(String)? onAuthFailure,
   String baseUrl = 'http://localhost',
+  bool autoConnect = true,
 }) {
   final s = socket ?? FakeSocket();
   final failures = <String>[];
@@ -49,6 +50,7 @@ _SocketApiFixture _createFixture({
     baseUrl: baseUrl,
     getToken: tokens.call,
     onAuthFailure: onAuthFailure ?? failures.add,
+    autoConnect: autoConnect,
   );
   return _SocketApiFixture(
     api: api,
@@ -507,6 +509,24 @@ void main() {
         expect(fixture.api.isReady, isTrue);
         expect(fixture.api.payload, isNull);
         expect(fixture.socket.connected, isTrue);
+      });
+    });
+
+    group('auto connect', () {
+      test('does not connect when autoConnect is false', () {
+        final fixture = _createFixture(autoConnect: false);
+        addTearDown(fixture.dispose);
+
+        expect(fixture.socket.connectCalls, 0);
+        expect(fixture.api.status, SocketStatus.disconnected);
+      });
+
+      test('connects when autoConnect is true (default)', () {
+        final fixture = _createFixture();
+        addTearDown(fixture.dispose);
+
+        expect(fixture.socket.connectCalls, 1);
+        expect(fixture.api.status, SocketStatus.connecting);
       });
     });
   });

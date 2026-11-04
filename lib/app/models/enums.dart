@@ -264,7 +264,7 @@ enum FullPlayerActions {
   queue;
 
   String get label => switch (this) {
-    .history => l10n.history,
+    .history => l10n.playbackHistory,
     .chapters => l10n.chapters,
     .sleep => l10n.sleepTimer,
     .speed => l10n.playbackSpeed,

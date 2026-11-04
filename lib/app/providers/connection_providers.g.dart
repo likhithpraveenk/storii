@@ -207,7 +207,7 @@ final class IsOfflineProvider extends $FunctionalProvider<bool, bool, bool>
   }
 }
 
-String _$isOfflineHash() => r'ff81df61788765f475899da3f172edab0a6bae55';
+String _$isOfflineHash() => r'69a1ccc003ad123d7ea82e90235da0ebad9f24df';
 
 @ProviderFor(isServerOffline)
 final isServerOfflineProvider = IsServerOfflineProvider._();

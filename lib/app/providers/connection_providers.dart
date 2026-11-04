@@ -69,8 +69,9 @@ ConnectionType connectionType(Ref ref) {
 
 @Riverpod(keepAlive: true)
 bool isOffline(Ref ref) {
+  final offlineMode = ref.watch(offlineModeProvider);
   final results = ref.watch(connectivityStreamProvider).value;
-  return results?.contains(ConnectivityResult.none) ?? false;
+  return offlineMode || (results?.contains(ConnectivityResult.none) ?? false);
 }
 
 @Riverpod(keepAlive: true)

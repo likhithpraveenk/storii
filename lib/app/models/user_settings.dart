@@ -83,6 +83,7 @@ class DefaultUserSettings {
   static const imageResolutionGridView = 600;
   static const imageResolutionListView = 200;
   static const showNavbarAlways = false;
+  static const offlineMode = false;
 }
 
 @freezed
@@ -274,6 +275,8 @@ sealed class UserSettings with _$UserSettings {
     @Default(DefaultUserSettings.listViewImageSize) double listViewImageSize,
 
     @Default(DefaultUserSettings.showNavbarAlways) bool showNavbarAlways,
+
+    @Default(DefaultUserSettings.offlineMode) bool offlineMode,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);

@@ -31,6 +31,25 @@ class PlaybackHistoryStore {
   Future<void> remove(String userId, String mediaItemId) =>
       playbackHistoryBox.delete(userMediaItemIdKey(userId, mediaItemId));
 
+  Map<String, List<PlaybackEvent>> getAllForUser(String userId) {
+    final result = <String, List<PlaybackEvent>>{};
+    final prefix = '${userId}_';
+    for (final key in playbackHistoryBox.keys) {
+      if (key is! String || !key.startsWith(prefix)) continue;
+      final mediaItemId = key.substring(prefix.length);
+      final raw = playbackHistoryBox.get(key);
+      final events = raw
+          ?.map(
+            (e) => PlaybackEvent.fromJson(Map<String, dynamic>.from(e as Map)),
+          )
+          .toList();
+      if (events != null) {
+        result[mediaItemId] = collapseLikeEvents(events);
+      }
+    }
+    return result;
+  }
+
   List<PlaybackEvent> collapseLikeEvents(List<PlaybackEvent> events) {
     if (events.isEmpty) return events;
 

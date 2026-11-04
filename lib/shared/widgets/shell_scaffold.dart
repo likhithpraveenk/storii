@@ -35,16 +35,14 @@ class ShellScaffold extends ConsumerWidget {
         if (didPop) return;
 
         if (factor > 0) {
-          ref.read(playerModeProvider.notifier).toMini();
-          return;
+          return ref.read(playerModeProvider.notifier).toMini();
         }
 
         if (context.canPop()) {
-          context.pop();
-          return;
+          return context.pop();
         }
 
-        context.go(homePath);
+        return context.go(homePath);
       },
       child: Scaffold(
         key: shellScaffoldKey,

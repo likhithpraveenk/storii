@@ -22,6 +22,8 @@ import 'package:storii/features/logs/ui/logs_screen.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
 import 'package:storii/features/more/ui/changelog_screen.dart';
 import 'package:storii/features/more/ui/more_screen.dart';
+import 'package:storii/features/more/ui/playback_history_screen.dart';
+import 'package:storii/features/player/ui/local_sessions_screen.dart';
 import 'package:storii/features/playlists/ui/playlist_detail_screen.dart';
 import 'package:storii/features/playlists/ui/playlists_screen.dart';
 import 'package:storii/features/search/ui/search_screen.dart';
@@ -72,7 +74,9 @@ enum AppRoute {
   librarySettings('/more/settings/library'),
   advancedSettings('/more/settings/advanced'),
   customizationSettings('/more/settings/customization'),
-  stats('/more/stats');
+  stats('/more/stats'),
+  playbackHistory('/more/playback-history'),
+  localSessions('/more/local-sessions');
 
   final String path;
   new(this.path);
@@ -152,8 +156,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.home.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: HomeScreen()),
+                builder: (_, _) => const HomeScreen(),
               ),
             ],
           ),
@@ -161,8 +164,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.library.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: LibraryScreen()),
+                builder: (_, _) => const LibraryScreen(),
               ),
             ],
           ),
@@ -170,8 +172,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.series.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: SeriesListScreen()),
+                builder: (_, _) => const SeriesListScreen(),
                 routes: [
                   GoRoute(
                     path: ':id',
@@ -188,12 +189,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.downloads.path,
-                pageBuilder: (context, state) {
+                builder: (_, state) {
                   final tab = state.extra as DownloadsScreenTab?;
-                  return NoTransitionPage(
-                    child: DownloadsScreen(
-                      tab: tab ?? DownloadsScreenTab.completed,
-                    ),
+                  return DownloadsScreen(
+                    tab: tab ?? DownloadsScreenTab.completed,
                   );
                 },
               ),
@@ -203,8 +202,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.authors.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: AuthorListScreen()),
+                builder: (_, _) => const AuthorListScreen(),
                 routes: [
                   GoRoute(
                     path: ':id',
@@ -230,8 +228,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.collections.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: CollectionsScreen()),
+                builder: (_, _) => const CollectionsScreen(),
                 routes: [
                   GoRoute(
                     path: ':id',
@@ -248,8 +245,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.more.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: MoreScreen()),
+                builder: (_, _) => const MoreScreen(),
                 routes: [
                   GoRoute(
                     path: 'settings',
@@ -290,6 +286,14 @@ final routerProvider = Provider<GoRouter>((ref) {
                     path: 'stats',
                     builder: (context, state) => const StatsScreen(),
                   ),
+                  GoRoute(
+                    path: 'playback-history',
+                    builder: (context, state) => const PlaybackHistoryScreen(),
+                  ),
+                  GoRoute(
+                    path: 'local-sessions',
+                    builder: (context, state) => const LocalSessionsScreen(),
+                  ),
                 ],
               ),
             ],
@@ -298,8 +302,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.latest.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: LatestEpisodesScreen()),
+                builder: (_, _) => const LatestEpisodesScreen(),
               ),
             ],
           ),
@@ -307,8 +310,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.playlists.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: PlaylistsScreen()),
+                builder: (_, _) => const PlaylistsScreen(),
                 routes: [
                   GoRoute(
                     path: ':id',

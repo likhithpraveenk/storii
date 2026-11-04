@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- playback history screen
+- unsynced sessions screen
+- manual offline mode toggle
+
+### Changed
+
+- disabled predictive back transition
+
+### Fixed
+
+- close parent bottom sheets before opening sub-sheets
+
 ## [v0.13.1] - 2026-11-03
 
 ### Added

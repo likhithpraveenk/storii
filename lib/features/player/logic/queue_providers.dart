@@ -29,8 +29,8 @@ class QueueNotifier extends _$QueueNotifier {
     _persist();
   }
 
-  void removeAt(int index) {
-    if (index < 0 || index >= state.items.length) return;
+  int removeAt(int index) {
+    if (index < 0 || index >= state.items.length) return state.items.length;
     final items = [...state.items]..removeAt(index);
     final current = state.currentIndex;
     int? newCurrent;
@@ -54,6 +54,7 @@ class QueueNotifier extends _$QueueNotifier {
       current: newCurrentItem,
     );
     _persist();
+    return items.length;
   }
 
   void reorder(int oldIndex, int newIndex) {

@@ -104,9 +104,13 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
         title: l10n.addToQueue,
         icon: Icons.horizontal_split_outlined,
         onTap: () async {
+          if (_isBusy) return;
+          setState(() => _isBusy = true);
           await ref
               .read(queueProvider.notifier)
               .addToQueue(itemId: widget.itemId, episodeId: widget.episodeId);
+          if (!mounted) return;
+          setState(() => _isBusy = false);
           globalMessengerKey.currentState?.showAppSnackBar(l10n.addedToQueue);
         },
       ),
@@ -185,9 +189,13 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
         title: l10n.removeDownloadQ,
         icon: Icons.delete_outline,
         onTap: () async {
+          if (_isBusy) return;
+          setState(() => _isBusy = true);
           await ref
               .read(downloadQueueProvider.notifier)
               .delete(widget.itemId, widget.episodeId);
+          if (!mounted) return;
+          setState(() => _isBusy = false);
         },
       ));
     } else if (canDownload) {
@@ -195,28 +203,35 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
         icon: Icons.file_download_outlined,
         title: l10n.download,
         onTap: () async {
+          if (_isBusy) return;
           final MediaType type = widget.episodeId != null ? .podcast : .book;
           final availableLocations = ref.read(
             storageLocationsByTypeProvider(type),
           );
           final queue = ref.read(downloadQueueProvider.notifier);
           if (availableLocations.length == 1) {
+            setState(() => _isBusy = true);
             await queue.enqueue(
               libraryItemId: widget.itemId,
               episodeId: widget.episodeId,
               location: availableLocations.first,
             );
+            if (!mounted) return;
+            setState(() => _isBusy = false);
           } else {
             final location = await showDialog<StorageLocation?>(
               context: context,
               builder: (_) => ChooseLocationDialog(type),
             );
             if (location != null) {
+              setState(() => _isBusy = true);
               await queue.enqueue(
                 libraryItemId: widget.itemId,
                 episodeId: widget.episodeId,
                 location: location,
               );
+              if (!mounted) return;
+              setState(() => _isBusy = false);
             }
           }
         },
@@ -259,8 +274,12 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
       title: l10n.copyPlayLink,
       icon: Icons.bolt,
       onTap: () async {
+        if (_isBusy) return;
+        setState(() => _isBusy = true);
         final link = 'storii://play?id=${widget.itemId}';
         await Clipboard.setData(ClipboardData(text: link));
+        if (!mounted) return;
+        setState(() => _isBusy = false);
         if (context.mounted) {
           ScaffoldMessenger.of(context).showAppSnackBar(l10n.copiedToClipboard);
         }
