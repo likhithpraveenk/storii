@@ -23,6 +23,7 @@ import 'package:storii/features/more/ui/about_screen.dart';
 import 'package:storii/features/more/ui/changelog_screen.dart';
 import 'package:storii/features/more/ui/more_screen.dart';
 import 'package:storii/features/more/ui/playback_history_screen.dart';
+import 'package:storii/features/player/ui/local_sessions_screen.dart';
 import 'package:storii/features/playlists/ui/playlist_detail_screen.dart';
 import 'package:storii/features/playlists/ui/playlists_screen.dart';
 import 'package:storii/features/search/ui/search_screen.dart';
@@ -74,7 +75,8 @@ enum AppRoute {
   advancedSettings('/more/settings/advanced'),
   customizationSettings('/more/settings/customization'),
   stats('/more/stats'),
-  playbackHistory('/more/playback-history');
+  playbackHistory('/more/playback-history'),
+  localSessions('/more/local-sessions');
 
   final String path;
   new(this.path);
@@ -297,6 +299,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: 'playback-history',
                     builder: (context, state) => const PlaybackHistoryScreen(),
+                  ),
+                  GoRoute(
+                    path: 'local-sessions',
+                    builder: (context, state) => const LocalSessionsScreen(),
                   ),
                 ],
               ),

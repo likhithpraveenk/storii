@@ -8,6 +8,7 @@ import 'package:storii/features/admin/ui/admin_tile.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
 import 'package:storii/features/more/ui/changelog_screen.dart';
 import 'package:storii/shared/widgets/logo_header.dart';
+import 'package:storii/storage/local/session_store.dart';
 
 class MoreScreen extends ConsumerWidget {
   const new({super.key});
@@ -15,6 +16,8 @@ class MoreScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final remainingTargets = ref.watch(remainingNavTargetsProvider);
+    final hasUnsyncedSessions =
+        (ref.watch(localSessionsProvider).value ?? []).isNotEmpty;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -56,7 +59,12 @@ class MoreScreen extends ConsumerWidget {
               leading: const Icon(Icons.history),
               title: Text(l10n.playbackHistory),
             ),
-            // TODO: add local playback session screen
+            if (hasUnsyncedSessions)
+              ListTile(
+                onTap: () => context.push(AppRoute.localSessions.path),
+                leading: const Icon(Icons.sync_disabled),
+                title: Text(l10n.unsyncedSessions),
+              ),
             ListTile(
               onTap: () => context.push(AppRoute.stats.path),
               leading: const Icon(Icons.query_stats),
