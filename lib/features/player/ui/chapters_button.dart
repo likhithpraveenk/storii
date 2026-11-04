@@ -20,8 +20,8 @@ class ChaptersActionButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final chapters = ref.watch(chapterListProvider);
-    void openSheet() => showChapterListSheet(
-      context,
+    void openSheet(BuildContext ctx) => showChapterListSheet(
+      ctx,
       chapters: chapters.map((c) => c.toBookChapter()).toList(),
       itemId: session.libraryItemId,
       episodeId: session.episodeId,
@@ -33,14 +33,19 @@ class ChaptersActionButton extends ConsumerWidget {
         title: Text(l10n.chapters),
         leading: const Icon(Icons.list_rounded),
         trailing: Text('${chapters.length}'),
-        onTap: openSheet,
+        onTap: () {
+          final navigator = Navigator.of(context)..pop();
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) => openSheet(navigator.context),
+          );
+        },
       );
     }
 
     return IconButton(
       icon: const Icon(Icons.list_rounded),
       tooltip: l10n.chapters,
-      onPressed: openSheet,
+      onPressed: () => openSheet(context),
     );
   }
 }

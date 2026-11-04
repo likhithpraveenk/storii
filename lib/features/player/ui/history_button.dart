@@ -29,8 +29,8 @@ class HistoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> openSheet() => showModalBottomSheet(
-      context: context,
+    Future<void> openSheet(BuildContext ctx) => showModalBottomSheet(
+      context: ctx,
       useSafeArea: true,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
@@ -57,14 +57,19 @@ class HistoryButton extends StatelessWidget {
       return ListTile(
         title: Text(l10n.playbackHistory),
         leading: const Icon(Icons.history),
-        onTap: openSheet,
+        onTap: () {
+          final navigator = Navigator.of(context)..pop();
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) => openSheet(navigator.context),
+          );
+        },
       );
     }
 
     return IconButton(
       tooltip: l10n.playbackHistory,
       icon: const Icon(Icons.history),
-      onPressed: openSheet,
+      onPressed: () => openSheet(context),
     );
   }
 }

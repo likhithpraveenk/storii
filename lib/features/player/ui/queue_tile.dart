@@ -113,7 +113,10 @@ class QueueTile extends ConsumerWidget {
         child: Icon(Icons.delete_outline, color: scheme.onError),
       ),
       onDismissed: (_) {
-        ref.read(queueProvider.notifier).removeAt(index);
+        final count = ref.read(queueProvider.notifier).removeAt(index);
+        if (count == 0) {
+          Navigator.of(context).pop();
+        }
       },
       child: tile,
     );

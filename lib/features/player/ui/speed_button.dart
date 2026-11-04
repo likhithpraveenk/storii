@@ -14,8 +14,8 @@ class SpeedButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final speed = ref.watch(localSpeedProvider);
-    Future<void> openSheet() => AppBottomSheet.show(
-      context,
+    Future<void> openSheet(BuildContext ctx) => AppBottomSheet.show(
+      ctx,
       title: l10n.playbackSpeed,
       body: Consumer(
         builder: (context, ref, _) {
@@ -38,12 +38,17 @@ class SpeedButton extends ConsumerWidget {
         title: Text(l10n.playbackSpeed),
         leading: const Icon(Icons.speed_rounded),
         trailing: Text('${speed}x'),
-        onTap: openSheet,
+        onTap: () {
+          final navigator = Navigator.of(context)..pop();
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) => openSheet(navigator.context),
+          );
+        },
       );
     }
 
     return IconButton(
-      onPressed: openSheet,
+      onPressed: () => openSheet(context),
       tooltip: l10n.playbackSpeed,
       icon: Text('${speed}x', style: Theme.of(context).textTheme.labelLarge),
     );

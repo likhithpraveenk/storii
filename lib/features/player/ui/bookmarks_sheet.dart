@@ -27,8 +27,8 @@ class BookmarkButton extends StatelessWidget {
   final bool isPodcast;
   final bool inOverflow;
 
-  void _openSheet(BuildContext context) => showModalBottomSheet(
-    context: context,
+  void _openSheet(BuildContext ctx) => showModalBottomSheet(
+    context: ctx,
     useSafeArea: true,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
@@ -41,9 +41,20 @@ class BookmarkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     if (inOverflow) {
       return ListTile(
-        title: Text(l10n.bookmarks),
+        title: Text(
+          l10n.bookmarks,
+          style: Theme.of(context).textTheme.bodyLarge
+              ?.copyWith(decoration: isPodcast ? .lineThrough : null),
+        ),
         leading: const Icon(Icons.bookmark_outline),
-        onTap: isPodcast ? null : () => _openSheet(context),
+        onTap: isPodcast
+            ? null
+            : () {
+                final navigator = Navigator.of(context)..pop();
+                WidgetsBinding.instance.addPostFrameCallback(
+                  (_) => _openSheet(navigator.context),
+                );
+              },
       );
     }
 

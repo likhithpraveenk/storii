@@ -8,7 +8,6 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/ui/full_player_actions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
-import 'package:storii/shared/widgets/empty_state.dart';
 
 class MoreActionsSheet extends ConsumerStatefulWidget {
   const new({
@@ -94,7 +93,6 @@ class _MoreActionsSheetState extends ConsumerState<MoreActionsSheet> {
             ),
           ),
           if (!_editMode) ...[
-            if (widget.remaining.isEmpty) const EmptyState(),
             ...widget.remaining
                 .map((a) => a.widget(context, widget.session, inOverflow: true))
                 .whereType<Widget>(),

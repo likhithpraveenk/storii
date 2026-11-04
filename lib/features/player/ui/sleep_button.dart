@@ -17,8 +17,8 @@ class SleepButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sleep = ref.watch(sleepTimerProvider);
-    Future<void> openSheet() => AppBottomSheet.show(
-      context,
+    Future<void> openSheet(BuildContext ctx) => AppBottomSheet.show(
+      ctx,
       title: l10n.sleepTimer,
       body: const SleepTimerSheet(),
     );
@@ -27,12 +27,17 @@ class SleepButton extends ConsumerWidget {
         title: Text(l10n.sleepTimer),
         leading: const Icon(Icons.bedtime_outlined),
         trailing: sleep != null ? Text(_displayLabel(sleep)) : null,
-        onTap: openSheet,
+        onTap: () {
+          final navigator = Navigator.of(context)..pop();
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) => openSheet(navigator.context),
+          );
+        },
       );
     }
 
     return IconButton(
-      onPressed: openSheet,
+      onPressed: () => openSheet(context),
       tooltip: l10n.sleepTimer,
       icon: sleep == null
           ? const Icon(Icons.bedtime_outlined)

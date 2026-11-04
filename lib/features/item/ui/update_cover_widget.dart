@@ -88,7 +88,6 @@ class UpdateCoverWidget extends ConsumerWidget {
                   visualDensity: .compact,
                 ),
               ),
-              // TODO: add cover url via provider(all, best, specific) or textfield
             ],
           ),
         ),

@@ -83,6 +83,7 @@ class EpisodeActionButtons extends ConsumerWidget {
                             ),
                           ),
                           onTap: () {
+                            Navigator.of(ctx).pop();
                             showChapterListSheet(
                               context,
                               chapters: episode.chapters,
