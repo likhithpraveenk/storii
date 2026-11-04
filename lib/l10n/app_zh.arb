@@ -267,7 +267,6 @@
   "syncInterval": "同步间隔",
   "syncIntervalSubtitle": "控制服务器同步频率，设置更高将覆盖移动网络下的 1 分钟限制",
   "emptyMsg": "空空如也…",
-  "history": "历史",
   "today": "今天",
   "yesterday": "昨天",
   "seek": "跳转",
