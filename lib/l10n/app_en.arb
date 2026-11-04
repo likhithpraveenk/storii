@@ -426,6 +426,7 @@
   },
   "connectionAuthenticating": "Connecting to server…",
   "connectionAuthFailed": "Socket authentication failed",
+  "offlineMode": "Offline mode",
   "foundBugQ": "Found a bug?",
   "foundBugQSubtitle": "Open a GitHub issue for any bug you encountered",
   "audioBufferDuration": "Audio Buffer Duration",

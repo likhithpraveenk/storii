@@ -258,6 +258,7 @@ _UserSettings _$UserSettingsFromJson(
       DefaultUserSettings.listViewImageSize,
   showNavbarAlways:
       json['showNavbarAlways'] as bool? ?? DefaultUserSettings.showNavbarAlways,
+  offlineMode: json['offlineMode'] as bool? ?? DefaultUserSettings.offlineMode,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -352,6 +353,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'stackedImagesCardMaxWidth': instance.stackedImagesCardMaxWidth,
   'listViewImageSize': instance.listViewImageSize,
   'showNavbarAlways': instance.showNavbarAlways,
+  'offlineMode': instance.offlineMode,
 };
 
 const _$NavTargetEnumMap = {

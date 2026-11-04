@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 - playback history screen
 - unsynced sessions screen
+- manual offline mode toggle
 
 ## [v0.13.1] - 2026-11-03
 

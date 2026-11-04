@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/nav_providers.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/admin/ui/admin_tile.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
 import 'package:storii/features/more/ui/changelog_screen.dart';
@@ -18,6 +19,7 @@ class MoreScreen extends ConsumerWidget {
     final remainingTargets = ref.watch(remainingNavTargetsProvider);
     final hasUnsyncedSessions =
         (ref.watch(localSessionsProvider).value ?? []).isNotEmpty;
+    final offlineMode = ref.watch(offlineModeProvider);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -40,6 +42,13 @@ class MoreScreen extends ConsumerWidget {
                   ),
                 ),
               ],
+            ),
+            SwitchListTile(
+              title: Text(l10n.offlineMode),
+              secondary: const Icon(Icons.wifi_off),
+              value: offlineMode,
+              onChanged: (v) =>
+                  ref.read(userSettingsProvider.notifier).setOfflineMode(v),
             ),
             if (remainingTargets.isNotEmpty) ...[
               const Divider(),

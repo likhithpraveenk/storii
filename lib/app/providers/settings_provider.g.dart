@@ -454,6 +454,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setShowNavbarAlways(bool value) =>
       _save(state?.copyWith(showNavbarAlways: value));
+
+  Future<void> setOfflineMode(bool value) =>
+      _save(state?.copyWith(offlineMode: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -1155,4 +1158,13 @@ final showNavbarAlwaysProvider = Provider<bool>(
     ),
   ),
   name: 'showNavbarAlwaysProvider',
+);
+
+final offlineModeProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.offlineMode ?? DefaultUserSettings.offlineMode,
+    ),
+  ),
+  name: 'offlineModeProvider',
 );

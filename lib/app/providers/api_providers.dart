@@ -10,6 +10,7 @@ import 'package:storii/app/models/user.dart';
 import 'package:storii/app/network/offline_cache_interceptor.dart';
 import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/is_background_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
 import 'package:storii/features/auth/logic/user_session_controller.dart';
@@ -106,6 +107,7 @@ SessionsApi sessionsApi(Ref ref, UserDomain user) =>
 Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
   final tokenService = ref.read(tokenProvider);
   final serverUrl = ref.watch(activeServerUrlProvider);
+  final offlineMode = ref.watch(offlineModeProvider);
   final headers = ref
       .watch(serverStreamProvider(user.serverUrl))
       .value
@@ -118,6 +120,7 @@ Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
     onAuthFailure: (reason) {
       LogService.log('Socket authentication failed: $reason');
     },
+    autoConnect: !offlineMode,
   );
 
   ref
