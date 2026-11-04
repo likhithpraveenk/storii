@@ -357,17 +357,7 @@
   "stop": "Stop",
   "complete": "Complete",
   "sync": "Sync",
-  "synced": "Synced",
-  "inUse": "In use",
   "deleteSessionQ": "Delete session?",
-  "xFailed": "{count} failed",
-  "@xFailed": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "sleepStart": "Sleep Start",
   "sleepEnd": "Sleep End",
   "playbackError": "playback error",
