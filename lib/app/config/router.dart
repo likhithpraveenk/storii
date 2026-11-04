@@ -92,8 +92,6 @@ final publicRoutes = [
   AppRoute.changelog.path,
 ];
 
-// TODO: fix transition animations
-
 final routerProvider = Provider<GoRouter>((ref) {
   final user = ref.watch(currentUserProvider);
   String initialRoute = AppRoute.home.path;
@@ -158,8 +156,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.home.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: HomeScreen()),
+                builder: (_, _) => const HomeScreen(),
               ),
             ],
           ),
@@ -167,8 +164,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.library.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: LibraryScreen()),
+                builder: (_, _) => const LibraryScreen(),
               ),
             ],
           ),
@@ -176,8 +172,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.series.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: SeriesListScreen()),
+                builder: (_, _) => const SeriesListScreen(),
                 routes: [
                   GoRoute(
                     path: ':id',
@@ -194,12 +189,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.downloads.path,
-                pageBuilder: (context, state) {
+                builder: (_, state) {
                   final tab = state.extra as DownloadsScreenTab?;
-                  return NoTransitionPage(
-                    child: DownloadsScreen(
-                      tab: tab ?? DownloadsScreenTab.completed,
-                    ),
+                  return DownloadsScreen(
+                    tab: tab ?? DownloadsScreenTab.completed,
                   );
                 },
               ),
@@ -209,8 +202,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.authors.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: AuthorListScreen()),
+                builder: (_, _) => const AuthorListScreen(),
                 routes: [
                   GoRoute(
                     path: ':id',
@@ -236,8 +228,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.collections.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: CollectionsScreen()),
+                builder: (_, _) => const CollectionsScreen(),
                 routes: [
                   GoRoute(
                     path: ':id',
@@ -254,8 +245,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.more.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: MoreScreen()),
+                builder: (_, _) => const MoreScreen(),
                 routes: [
                   GoRoute(
                     path: 'settings',
@@ -312,8 +302,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.latest.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: LatestEpisodesScreen()),
+                builder: (_, _) => const LatestEpisodesScreen(),
               ),
             ],
           ),
@@ -321,8 +310,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.playlists.path,
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: PlaylistsScreen()),
+                builder: (_, _) => const PlaylistsScreen(),
                 routes: [
                   GoRoute(
                     path: ':id',
