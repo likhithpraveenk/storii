@@ -312,7 +312,6 @@
   "syncInterval": "Intervalle de synchronisation",
   "syncIntervalSubtitle": "Contrôle la fréquence de synchronisation avec le serveur, outrepassant la limite d'1 minute sur données mobiles si réglé plus haut",
   "emptyMsg": "Si vide…",
-  "history": "Historique",
   "today": "Aujourd'hui",
   "yesterday": "Hier",
   "seek": "Rechercher",

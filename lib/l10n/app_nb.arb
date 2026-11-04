@@ -326,7 +326,6 @@
   "syncInterval": "Synkroniseringsintervall",
   "syncIntervalSubtitle": "Angir hvor ofte serveren synkroniseres. Overstyrer grensen på ett minutt for mobildata hvis intervallet settes høyere",
   "emptyMsg": "Her var det tomt …",
-  "history": "Historikk",
   "today": "I dag",
   "yesterday": "I går",
   "seek": "Spol",
