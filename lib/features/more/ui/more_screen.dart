@@ -52,6 +52,12 @@ class MoreScreen extends ConsumerWidget {
             ],
             const Divider(),
             ListTile(
+              onTap: () => context.push(AppRoute.playbackHistory.path),
+              leading: const Icon(Icons.history),
+              title: Text(l10n.playbackHistory),
+            ),
+            // TODO: add local playback session screen
+            ListTile(
               onTap: () => context.push(AppRoute.stats.path),
               leading: const Icon(Icons.query_stats),
               title: Text(l10n.stats),

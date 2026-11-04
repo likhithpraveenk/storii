@@ -349,7 +349,8 @@
   "syncIntervalSubtitle": "Controls server sync frequency, overriding the 1-minute mobile data restriction if set higher",
   "emptyMsg": "So empty…",
   "pageNotFound": "Page not found",
-  "history": "History",
+  "playbackHistory": "Playback history",
+  "clearHistoryQ": "Clear playback history?",
   "today": "Today",
   "yesterday": "Yesterday",
   "seek": "Seek",
@@ -444,6 +445,22 @@
   "@daysAgo": {
     "placeholders": {
       "days": {
+        "type": "int"
+      }
+    }
+  },
+  "minutesAgo": "{minutes, plural, =1{1 minute ago} other{{minutes} minutes ago}}",
+  "@minutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "hoursAgo": "{hours, plural, =1{1 hour ago} other{{hours} hours ago}}",
+  "@hoursAgo": {
+    "placeholders": {
+      "hours": {
         "type": "int"
       }
     }

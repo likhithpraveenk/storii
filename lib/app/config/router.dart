@@ -22,6 +22,7 @@ import 'package:storii/features/logs/ui/logs_screen.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
 import 'package:storii/features/more/ui/changelog_screen.dart';
 import 'package:storii/features/more/ui/more_screen.dart';
+import 'package:storii/features/more/ui/playback_history_screen.dart';
 import 'package:storii/features/playlists/ui/playlist_detail_screen.dart';
 import 'package:storii/features/playlists/ui/playlists_screen.dart';
 import 'package:storii/features/search/ui/search_screen.dart';
@@ -72,7 +73,8 @@ enum AppRoute {
   librarySettings('/more/settings/library'),
   advancedSettings('/more/settings/advanced'),
   customizationSettings('/more/settings/customization'),
-  stats('/more/stats');
+  stats('/more/stats'),
+  playbackHistory('/more/playback-history');
 
   final String path;
   new(this.path);
@@ -87,6 +89,8 @@ final publicRoutes = [
   AppRoute.oauth.path,
   AppRoute.changelog.path,
 ];
+
+// TODO: fix transition animations
 
 final routerProvider = Provider<GoRouter>((ref) {
   final user = ref.watch(currentUserProvider);
@@ -289,6 +293,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: 'stats',
                     builder: (context, state) => const StatsScreen(),
+                  ),
+                  GoRoute(
+                    path: 'playback-history',
+                    builder: (context, state) => const PlaybackHistoryScreen(),
                   ),
                 ],
               ),

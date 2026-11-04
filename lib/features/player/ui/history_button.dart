@@ -13,6 +13,7 @@ import 'package:storii/features/player/ui/history_event_tile.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
+import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 
 class HistoryButton extends StatelessWidget {
@@ -54,14 +55,14 @@ class HistoryButton extends StatelessWidget {
 
     if (inOverflow) {
       return ListTile(
-        title: Text(l10n.history),
+        title: Text(l10n.playbackHistory),
         leading: const Icon(Icons.history),
         onTap: openSheet,
       );
     }
 
     return IconButton(
-      tooltip: l10n.history,
+      tooltip: l10n.playbackHistory,
       icon: const Icon(Icons.history),
       onPressed: openSheet,
     );
@@ -101,7 +102,7 @@ class HistorySheet extends ConsumerWidget {
             children: [
               Align(
                 child: Text(
-                  l10n.history,
+                  l10n.playbackHistory,
                   style: bottomSheetTitleTextStyle(context),
                 ),
               ),
@@ -112,6 +113,14 @@ class HistorySheet extends ConsumerWidget {
                     visualDensity: .compact,
                     padding: .zero,
                     onPressed: () async {
+                      final confirmed = await AppDialog.show<bool>(
+                        context,
+                        title: l10n.clearHistoryQ,
+                        actionLabel: l10n.confirm,
+                        isDestructive: true,
+                        onTap: () async {},
+                      );
+                      if (confirmed != true) return;
                       await historyNotifier.clearHistory();
                     },
                     icon: Icon(Icons.delete, color: theme.colorScheme.error),

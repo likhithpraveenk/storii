@@ -122,6 +122,27 @@ extension LocalFormatterX on DateTime {
     final formatter = _cache.putIfAbsent(pattern, () => DateFormat(pattern));
     return formatter.format(this);
   }
+
+  String toRelativeTime() {
+    final now = DateTime.now();
+    final diff = now.difference(this);
+
+    if (diff.isNegative) return l10n.today;
+
+    final days = DateTime.utc(
+      now.year,
+      now.month,
+      now.day,
+    ).difference(DateTime.utc(year, month, day)).inDays;
+
+    if (days == 0) {
+      return diff.inMinutes < 60
+          ? l10n.minutesAgo(diff.inMinutes)
+          : l10n.hoursAgo(diff.inHours);
+    }
+    if (days == 1) return l10n.yesterday;
+    return l10n.daysAgo(days);
+  }
 }
 
 extension ColorExtensions on Color {

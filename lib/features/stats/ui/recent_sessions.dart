@@ -20,8 +20,6 @@ class RecentSessions extends StatelessWidget {
         children: [
           Text(l10n.recentSessions, style: theme.textTheme.titleMedium),
           ...sorted.map((session) {
-            final now = DateTime.now();
-            final daysAgo = now.difference(session.updatedAt).inDays;
             final isLessThanMin = session.timeListening.inSeconds < 60;
 
             return Column(
@@ -29,13 +27,7 @@ class RecentSessions extends StatelessWidget {
                 ListTile(
                   contentPadding: .zero,
                   title: Text('${session.displayTitle}'),
-                  subtitle: Text(
-                    daysAgo == 0
-                        ? l10n.today
-                        : daysAgo == 1
-                        ? l10n.yesterday
-                        : l10n.daysAgo(daysAgo),
-                  ),
+                  subtitle: Text(session.updatedAt.toRelativeTime()),
                   trailing: Text(
                     session.timeListening.toReadableDuration(
                       showSeconds: isLessThanMin,
