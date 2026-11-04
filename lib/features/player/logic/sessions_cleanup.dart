@@ -2,8 +2,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
-import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/repository_providers.dart';
+import 'package:storii/app/repositories/session_repository.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/storage/local/progress_store.dart';
@@ -13,42 +13,37 @@ part 'sessions_cleanup.g.dart';
 
 const _source = 'SessionsCleanup';
 
-@Riverpod(keepAlive: true)
-class SessionsCleanup extends _$SessionsCleanup {
-  @override
-  void build() {}
+class SessionsCleanup {
+  const new({
+    required this.userId,
+    required this.repo,
+    required this.store,
+    required this.progressStore,
+  });
+
+  final String userId;
+  final SessionRepository repo;
+  final SessionStore store;
+  final ProgressStore progressStore;
 
   Future<void> cleanup() async {
-    final sessions = ref.read(sessionStoreProvider).getAll();
+    final sessions = store.getAll();
     if (sessions.isEmpty) return;
-
-    final user = await ref.read(authenticatedUserProvider.future);
-    await syncLocalSessions(user, sessions);
+    await syncLocalSessions(sessions);
     LogService.log('session cleanup complete', source: _source);
   }
 
-  Future<void> syncLocalSessions(
-    UserDomain user,
-    List<PlaybackSession> sessions,
-  ) async {
-    final repo = ref.read(sessionRepositoryProvider(user));
+  Future<void> syncLocalSessions(List<PlaybackSession> sessions) async {
     for (final session in sessions) {
       try {
-        if (session.userId != user.id) {
-          await ref.read(sessionStoreProvider).delete(session.id);
-          LogService.log(
-            'local session from another user removed',
-            level: .info,
-            source: _source,
-          );
+        if (session.userId != userId) {
+          //! different user's session
           continue;
         }
 
         if (session.playMethod == .local) {
           await repo.syncLocal(localSession: session.stripped);
-          ref
-              .read(progressStoreProvider(user.id))
-              .put(session.toMediaProgress());
+          progressStore.put(session.toMediaProgress());
         } else {
           await repo.syncSession(
             sessionId: session.id,
@@ -59,17 +54,10 @@ class SessionsCleanup extends _$SessionsCleanup {
           );
         }
 
-        await ref.read(sessionStoreProvider).delete(session.id);
+        await store.delete(session.id);
       } on AppError catch (e) {
         if (e.type == .notFound || e.type == .server) {
-          LogService.log(
-            'error syncing session for ${session.displayTitle}: ${e.type}',
-            level: .warning,
-            source: _source,
-            originalError: e.originalError,
-            stackTrace: e.stackTrace,
-          );
-          await ref.read(sessionStoreProvider).delete(session.id);
+          await store.delete(session.id);
         } else {
           LogService.log(
             'failed to sync session ${session.displayTitle}: ${e.type}: ${e.message}',
@@ -91,4 +79,17 @@ class SessionsCleanup extends _$SessionsCleanup {
       }
     }
   }
+}
+
+@riverpod
+SessionsCleanup sessionsCleanup(Ref ref, UserDomain user) {
+  final repo = ref.watch(sessionRepositoryProvider(user));
+  final store = ref.read(sessionStoreProvider);
+  final progressStore = ref.read(progressStoreProvider(user.id));
+  return SessionsCleanup(
+    userId: user.id,
+    repo: repo,
+    store: store,
+    progressStore: progressStore,
+  );
 }

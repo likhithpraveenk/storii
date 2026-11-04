@@ -9,54 +9,80 @@ part of 'sessions_cleanup.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(SessionsCleanup)
-final sessionsCleanupProvider = SessionsCleanupProvider._();
+@ProviderFor(sessionsCleanup)
+final sessionsCleanupProvider = SessionsCleanupFamily._();
 
 final class SessionsCleanupProvider
-    extends $NotifierProvider<SessionsCleanup, void> {
-  SessionsCleanupProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'sessionsCleanupProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
+    extends
+        $FunctionalProvider<SessionsCleanup, SessionsCleanup, SessionsCleanup>
+    with $Provider<SessionsCleanup> {
+  SessionsCleanupProvider._({
+    required SessionsCleanupFamily super.from,
+    required UserDomain super.argument,
+  }) : super(
+         retry: null,
+         name: r'sessionsCleanupProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
   @override
   String debugGetCreateSourceHash() => _$sessionsCleanupHash();
 
+  @override
+  String toString() {
+    return r'sessionsCleanupProvider'
+        ''
+        '($argument)';
+  }
+
   @$internal
   @override
-  SessionsCleanup create() => SessionsCleanup();
+  $ProviderElement<SessionsCleanup> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  SessionsCleanup create(Ref ref) {
+    final argument = this.argument as UserDomain;
+    return sessionsCleanup(ref, argument);
+  }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(void value) {
+  Override overrideWithValue(SessionsCleanup value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<void>(value),
+      providerOverride: $SyncValueProvider<SessionsCleanup>(value),
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SessionsCleanupProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
   }
 }
 
-String _$sessionsCleanupHash() => r'fc68e269e182f6f440711f7c4441682fee64ab93';
+String _$sessionsCleanupHash() => r'f0eff3fac301a989ae0fe5c90bc9ae3bdca22405';
 
-abstract class _$SessionsCleanup extends $Notifier<void> {
-  void build();
-  @$mustCallSuper
+final class SessionsCleanupFamily extends $Family
+    with $FunctionalFamilyOverride<SessionsCleanup, UserDomain> {
+  SessionsCleanupFamily._()
+    : super(
+        retry: null,
+        name: r'sessionsCleanupProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  SessionsCleanupProvider call(UserDomain user) =>
+      SessionsCleanupProvider._(argument: user, from: this);
+
   @override
-  WhenComplete runBuild() {
-    final ref = this.ref as $Ref<void, void>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<void, void>,
-              void,
-              Object?,
-              Object?
-            >;
-    return element.handleCreate(ref, build);
-  }
+  String toString() => r'sessionsCleanupProvider';
 }
