@@ -72,8 +72,8 @@ Future<ProviderContainer> setupProviders() async {
   return container;
 }
 
-Future<void> setupDownloadServices() async {
-  await DownloadsNotificationService.instance.init();
+Future<void> setupDownloadServices(ProviderContainer container) async {
+  await container.read(downloadsNotificationsProvider).init();
 }
 
 Future<AppAudioHandler> setupAudioService(ProviderContainer container) async {

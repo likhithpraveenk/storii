@@ -1,14 +1,17 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 
 part 'downloads_notification_service.g.dart';
 
-const isolatePortName = 'downloads_action';
-
 abstract class DownloadsNotifications {
+  Future<void> init();
+
   Future<bool> requestPermission();
 
   Future<void> startForeground({required String title});
@@ -29,13 +32,16 @@ abstract class DownloadsNotifications {
 }
 
 @Riverpod(keepAlive: true)
-DownloadsNotifications downloadsNotifications(Ref ref) =>
-    DownloadsNotificationService.instance;
+DownloadsNotifications downloadsNotifications(Ref ref) {
+  return DownloadsNotificationService(
+    getRouter: () => ref.read(routerProvider),
+  );
+}
 
 class DownloadsNotificationService implements DownloadsNotifications {
-  new _();
-  static final instance = DownloadsNotificationService._();
+  final GoRouter Function() getRouter;
 
+  new({required this.getRouter});
   final _plugin = FlutterLocalNotificationsPlugin();
 
   AndroidFlutterLocalNotificationsPlugin? get _androidPlugin => _plugin
@@ -45,11 +51,10 @@ class DownloadsNotificationService implements DownloadsNotifications {
 
   static const channelId = 'com.likhithpraveenk.storii.downloads';
   static final channelName = l10n.downloads;
-  static const actionPause = 'action_pause';
-  static const actionResume = 'action_resume';
-  static const actionCancel = 'action_cancel';
   static const notificationId = 888;
+  // TODO: multiple notifications need multiple ids
 
+  @override
   Future<void> init() async {
     const androidInit = AndroidInitializationSettings(
       'drawable/ic_notification',
@@ -59,7 +64,18 @@ class DownloadsNotificationService implements DownloadsNotifications {
       android: androidInit,
       iOS: iosInit,
     );
-    await _plugin.initialize(settings: initSettings);
+    await _plugin.initialize(
+      settings: initSettings,
+      onDidReceiveNotificationResponse: (details) {
+        final payload = details.payload;
+        if (payload != null && payload.startsWith('downloads')) {
+          getRouter().push(
+            AppRoute.downloads.path,
+            extra: DownloadsScreenTab.active,
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -83,7 +99,7 @@ class DownloadsNotificationService implements DownloadsNotifications {
     await _androidPlugin?.startForegroundService(
       id: notificationId,
       title: title,
-      body: 'Starting download...',
+      body: 'Starting download…',
       notificationDetails: androidDetails,
       foregroundServiceTypes: {.foregroundServiceTypeDataSync},
     );
@@ -111,23 +127,6 @@ class DownloadsNotificationService implements DownloadsNotifications {
       body = '$body - ${formatBytes(totalBytes, useBinary: useBinary)}';
     }
 
-    final actions = <AndroidNotificationAction>[
-      if (!isComplete && !isFailed && !isPaused)
-        AndroidNotificationAction(
-          actionPause,
-          l10n.pause,
-          cancelNotification: false,
-        ),
-      if (isPaused)
-        AndroidNotificationAction(
-          actionResume,
-          l10n.resume,
-          cancelNotification: false,
-        ),
-      if (!isComplete && !isFailed)
-        AndroidNotificationAction(actionCancel, l10n.cancel),
-    ];
-
     final androidDetails = AndroidNotificationDetails(
       channelId,
       channelName,
@@ -139,7 +138,6 @@ class DownloadsNotificationService implements DownloadsNotifications {
       progress: progress,
       ongoing: !isComplete && !isFailed && !isPaused,
       onlyAlertOnce: true,
-      actions: actions,
     );
 
     await _plugin.show(
@@ -147,6 +145,7 @@ class DownloadsNotificationService implements DownloadsNotifications {
       title: title,
       body: body,
       notificationDetails: NotificationDetails(android: androidDetails),
+      payload: 'downloads',
     );
   }
 

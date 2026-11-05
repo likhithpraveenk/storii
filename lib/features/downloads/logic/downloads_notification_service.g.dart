@@ -55,4 +55,4 @@ final class DownloadsNotificationsProvider
 }
 
 String _$downloadsNotificationsHash() =>
-    r'2eca888b7f090e48ed1a5b9d43e053c5ab97e849';
+    r'3972a47aa95ea757521e6108d7fa8f64e60e0d94';

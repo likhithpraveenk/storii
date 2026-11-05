@@ -15,6 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 ### Changed
 
 - disabled predictive back transition
+- tapping on download notification for active downloads
+- remove unresponsive actions from notification
 
 ### Fixed
 

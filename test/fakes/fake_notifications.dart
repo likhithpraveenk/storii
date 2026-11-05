@@ -58,4 +58,9 @@ class FakeDownloadsNotifications implements DownloadsNotifications {
   Future<void> dismiss() async {
     events.add('dismiss');
   }
+
+  @override
+  Future<void> init() async {
+    events.add('init');
+  }
 }

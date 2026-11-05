@@ -70,8 +70,9 @@ class DownloadTask {
       await _setStatus(key, .failed);
 
       await notifications.stopForeground();
+      final failedItem = store.get(key);
       await notifications.showProgressNotification(
-        title: store.get(key)?.title ?? key,
+        title: failedItem?.title ?? key,
         progress: 0,
         isComplete: false,
         isFailed: true,
