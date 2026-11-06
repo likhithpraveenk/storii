@@ -259,6 +259,10 @@ _UserSettings _$UserSettingsFromJson(
   showNavbarAlways:
       json['showNavbarAlways'] as bool? ?? DefaultUserSettings.showNavbarAlways,
   offlineMode: json['offlineMode'] as bool? ?? DefaultUserSettings.offlineMode,
+  defaultDownloadsLocationAudiobooks:
+      json['defaultDownloadsLocationAudiobooks'] as String?,
+  defaultDownloadsLocationPodcasts:
+      json['defaultDownloadsLocationPodcasts'] as String?,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -354,6 +358,10 @@ Map<String, dynamic> _$UserSettingsToJson(
   'listViewImageSize': instance.listViewImageSize,
   'showNavbarAlways': instance.showNavbarAlways,
   'offlineMode': instance.offlineMode,
+  'defaultDownloadsLocationAudiobooks':
+      ?instance.defaultDownloadsLocationAudiobooks,
+  'defaultDownloadsLocationPodcasts':
+      ?instance.defaultDownloadsLocationPodcasts,
 };
 
 const _$NavTargetEnumMap = {

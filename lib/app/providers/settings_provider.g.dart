@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'9280a610cbd11cf7dc05b725a2cfbe7d47a465f0';
+    r'463cdff630a2b70bfa181573c3486ea86007c3fd';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -457,6 +457,12 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setOfflineMode(bool value) =>
       _save(state?.copyWith(offlineMode: value));
+
+  Future<void> setDefaultDownloadsLocationAudiobooks(String? value) =>
+      _save(state?.copyWith(defaultDownloadsLocationAudiobooks: value));
+
+  Future<void> setDefaultDownloadsLocationPodcasts(String? value) =>
+      _save(state?.copyWith(defaultDownloadsLocationPodcasts: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -1167,4 +1173,26 @@ final offlineModeProvider = Provider<bool>(
     ),
   ),
   name: 'offlineModeProvider',
+);
+
+final defaultDownloadsLocationAudiobooksProvider = Provider<String?>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.defaultDownloadsLocationAudiobooks ??
+          DefaultUserSettings.defaultDownloadsLocationAudiobooks,
+    ),
+  ),
+  name: 'defaultDownloadsLocationAudiobooksProvider',
+);
+
+final defaultDownloadsLocationPodcastsProvider = Provider<String?>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.defaultDownloadsLocationPodcasts ??
+          DefaultUserSettings.defaultDownloadsLocationPodcasts,
+    ),
+  ),
+  name: 'defaultDownloadsLocationPodcastsProvider',
 );

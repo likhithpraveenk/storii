@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
@@ -127,7 +128,7 @@ class DownloadStatusRow extends ConsumerWidget {
             style: textTheme.labelSmall,
           ),
           if (item.totalBytes > 0) ...[
-            Text(' · ', style: textTheme.labelSmall),
+            Text(' $kSmallDot ', style: textTheme.labelSmall),
             Text(total, style: textTheme.labelSmall),
           ],
         ],
@@ -142,7 +143,7 @@ class DownloadStatusRow extends ConsumerWidget {
       ),
       .paused => Text(
         '${l10n.paused}'
-        ' · '
+        ' $kSmallDot '
         '$received / $total',
         style: textTheme.labelSmall?.copyWith(color: scheme.onSurfaceVariant),
       ),

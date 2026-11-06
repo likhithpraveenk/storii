@@ -82,7 +82,7 @@ class _DownloadTileState extends State<DownloadTile> {
               ),
               DownloadTileTrailingActions(item: widget.item),
               IconButton(
-                icon: const Icon(Icons.more_horiz),
+                icon: Icon(isExpanded ? Icons.expand_less : Icons.expand_more),
                 onPressed: () => setState(() {
                   isExpanded = !isExpanded;
                 }),

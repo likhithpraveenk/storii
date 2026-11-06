@@ -196,6 +196,10 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
     return _save(
       s.copyWith(
         downloadOnUnmeteredOnly: DefaultUserSettings.downloadOnUnmeteredOnly,
+        defaultDownloadsLocationAudiobooks:
+            DefaultUserSettings.defaultDownloadsLocationAudiobooks,
+        defaultDownloadsLocationPodcasts:
+            DefaultUserSettings.defaultDownloadsLocationPodcasts,
       ),
     );
   }

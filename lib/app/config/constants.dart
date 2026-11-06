@@ -20,6 +20,7 @@ const coverName = 'cover.jpg';
 
 // special symbols
 const kDot = '\u2022';
+const kSmallDot = '\u00B7';
 const kMinus = '\u2212';
 const kMultiple = '\u00D7';
 const kNbsp = '\u00A0'; // non-breaking space

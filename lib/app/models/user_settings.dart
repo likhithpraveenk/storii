@@ -84,6 +84,8 @@ class DefaultUserSettings {
   static const imageResolutionListView = 200;
   static const showNavbarAlways = false;
   static const offlineMode = false;
+  static const String? defaultDownloadsLocationAudiobooks = null;
+  static const String? defaultDownloadsLocationPodcasts = null;
 }
 
 @freezed
@@ -277,6 +279,10 @@ sealed class UserSettings with _$UserSettings {
     @Default(DefaultUserSettings.showNavbarAlways) bool showNavbarAlways,
 
     @Default(DefaultUserSettings.offlineMode) bool offlineMode,
+
+    String? defaultDownloadsLocationAudiobooks,
+
+    String? defaultDownloadsLocationPodcasts,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);
