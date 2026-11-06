@@ -228,7 +228,7 @@ class _StorageLocationWidget extends ConsumerWidget {
           ? IconButton(
               icon: Icon(Icons.delete_outline, color: theme.colorScheme.error),
               onPressed: () async {
-                await AppDialog.show(
+                final ok = await AppDialog.show<bool>(
                   context,
                   title: l10n.removeLocationQ,
                   body: Text(
@@ -238,22 +238,20 @@ class _StorageLocationWidget extends ConsumerWidget {
                   actionLabel: l10n.delete,
                   actionIcon: Icons.delete,
                   isDestructive: true,
-                  onTap: () async {
-                    await ref
-                        .read(downloadsStoreProvider)
-                        .removeAllFromLocation(location.uri);
-                    final current = ref.read(storageLocationsProvider);
-                    final updated = current
-                        .where((l) => l != location)
-                        .toList();
-                    await ref
-                        .read(appSettingsProvider.notifier)
-                        .setStorageLocations(updated);
-                    await SafUtil().releasePersistedPermission(
-                      location.uri,
-                      write: true,
-                    );
-                  },
+                  onTap: () async {},
+                );
+                if (ok != true) return;
+                await ref
+                    .read(downloadsStoreProvider)
+                    .removeAllFromLocation(location.uri);
+                final current = ref.read(storageLocationsProvider);
+                final updated = current.where((l) => l != location).toList();
+                await ref
+                    .read(appSettingsProvider.notifier)
+                    .setStorageLocations(updated);
+                await SafUtil().releasePersistedPermission(
+                  location.uri,
+                  write: true,
                 );
               },
             )
