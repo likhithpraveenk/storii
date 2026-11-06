@@ -71,6 +71,7 @@ class DefaultUserSettings {
   static const shakeSleepTimerAddMinutes = 5;
   static const shakeSensitivity = ShakeSensitivity.medium;
   static const useNowPlayingTheme = false;
+  static const parallelDownloads = 1;
   static const libraryPageSize = 60;
   static const seriesPageSize = 20;
   static const imageMaxSize = 180.0;
@@ -248,6 +249,8 @@ sealed class UserSettings with _$UserSettings {
     ShakeSensitivity shakeSensitivity,
 
     @Default(DefaultUserSettings.useNowPlayingTheme) bool useNowPlayingTheme,
+
+    @Default(DefaultUserSettings.parallelDownloads) int parallelDownloads,
 
     @Default(DefaultUserSettings.libraryPageSize) int libraryPageSize,
 

@@ -28,6 +28,7 @@ void main() {
         store: FakeDownloadsStore(),
         canStart: (_) async => true,
         runItem: (key) async => started.add(key),
+        maxConcurrent: () => 1,
       );
 
       await processor.process();
@@ -49,6 +50,7 @@ void main() {
         store: store,
         canStart: (item) async => item?.libraryItemId != 'a',
         runItem: (key) async => started.add(key),
+        maxConcurrent: () => 1,
       );
 
       await processor.process();
@@ -71,6 +73,7 @@ void main() {
         store: store,
         canStart: (_) async => allowed,
         runItem: (key) async => started.add(key),
+        maxConcurrent: () => 1,
       );
 
       await processor.process();
@@ -95,6 +98,7 @@ void main() {
         store: store,
         canStart: (_) async => true,
         runItem: (key) async => gate.future,
+        maxConcurrent: () => 1,
       );
 
       final processing = processor.process();
@@ -115,6 +119,7 @@ void main() {
         store: FakeDownloadsStore(),
         canStart: (_) async => true,
         runItem: (key) async => started.add(key),
+        maxConcurrent: () => 1,
       );
 
       await processor.process();
@@ -139,6 +144,7 @@ void main() {
           started.add(key);
           if (shouldThrow) throw Exception('save failed');
         },
+        maxConcurrent: () => 1,
       );
 
       await expectLater(processor.process(), throwsA(isException));
@@ -166,6 +172,7 @@ void main() {
           started.add(key);
           await gate.future;
         },
+        maxConcurrent: () => 1,
       );
 
       final processing = processor.process();
@@ -191,6 +198,7 @@ void main() {
         store: store,
         canStart: (_) async => true,
         runItem: (key) async => gate.future,
+        maxConcurrent: () => 1,
       );
 
       final processing = processor.process();
@@ -205,6 +213,75 @@ void main() {
       await processing;
       await idleFuture;
       expect(idle, isTrue);
+    });
+
+    test(
+      'starts up to maxConcurrent items concurrently in FIFO order',
+      () async {
+        final keys = ['a', 'b', 'c'];
+        final started = <String>[];
+        final gates = <String, Completer<void>>{
+          'a': Completer<void>(),
+          'b': Completer<void>(),
+          'c': Completer<void>(),
+        };
+        var inFlight = 0;
+        var maxInFlight = 0;
+        final processor = DownloadQueueProcessor(
+          readKeys: () => keys,
+          removeKey: keys.remove,
+          store: FakeDownloadsStore(),
+          canStart: (_) async => true,
+          runItem: (key) async {
+            inFlight++;
+            if (inFlight > maxInFlight) maxInFlight = inFlight;
+            started.add(key);
+            await gates[key]!.future;
+            inFlight--;
+          },
+          maxConcurrent: () => 2,
+        );
+
+        final processing = processor.process();
+        await Future<void>.delayed(Duration.zero);
+
+        // 'a' and 'b' started together, 'c' waits for the concurrency slot.
+        expect(started, ['a', 'b']);
+        expect(maxInFlight, 2);
+
+        gates['a']!.complete();
+        gates['b']!.complete();
+        gates['c']!.complete();
+
+        await processing;
+
+        expect(started, ['a', 'b', 'c']);
+        expect(keys, isEmpty);
+        expect(maxInFlight, 2);
+      },
+    );
+
+    test('a waiting head stops the drain even with concurrency', () async {
+      final store = FakeDownloadsStore();
+      await store.save(_item('a'));
+      await store.save(_item('b'));
+      await store.save(_item('c'));
+
+      final keys = ['a', 'b', 'c'];
+      final started = <String>[];
+      final processor = DownloadQueueProcessor(
+        readKeys: () => keys,
+        removeKey: keys.remove,
+        store: store,
+        canStart: (item) async => item?.libraryItemId != 'a',
+        runItem: (key) async => started.add(key),
+        maxConcurrent: () => 2,
+      );
+
+      await processor.process();
+
+      expect(started, isEmpty);
+      expect(keys, ['a', 'b', 'c']);
     });
   });
 }

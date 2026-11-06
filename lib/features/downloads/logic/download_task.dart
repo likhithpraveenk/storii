@@ -24,14 +24,15 @@ class DownloadTask {
 
   Future<void> run(String key) async {
     final item = store.get(key);
-    if (item == null) return;
+    if (item == null || !item.isActive) return;
 
     await notifications.requestPermission();
-    await notifications.startForeground(title: item.title);
+    await notifications.startNotification(key: key);
 
     final persister = ThrottledPersister(
       store: store,
       onPersist: (item) => notifications.showProgressNotification(
+        key: key,
         title: item.title,
         progress: (item.progress * 100).toInt(),
         isComplete: item.isComplete,
@@ -52,7 +53,7 @@ class DownloadTask {
         final inActive = !updated.isActive;
         await persister.update(updated);
         if (inActive) {
-          await notifications.stopForeground();
+          await notifications.release(key: key);
         }
       }
 
@@ -69,9 +70,10 @@ class DownloadTask {
       );
       await _setStatus(key, .failed);
 
-      await notifications.stopForeground();
+      await notifications.release(key: key);
       final failedItem = store.get(key);
       await notifications.showProgressNotification(
+        key: key,
         title: failedItem?.title ?? key,
         progress: 0,
         isComplete: false,

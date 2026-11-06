@@ -217,6 +217,9 @@ _UserSettings _$UserSettingsFromJson(
   useNowPlayingTheme:
       json['useNowPlayingTheme'] as bool? ??
       DefaultUserSettings.useNowPlayingTheme,
+  parallelDownloads:
+      (json['parallelDownloads'] as num?)?.toInt() ??
+      DefaultUserSettings.parallelDownloads,
   libraryPageSize:
       (json['libraryPageSize'] as num?)?.toInt() ??
       DefaultUserSettings.libraryPageSize,
@@ -342,6 +345,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'shakeSleepTimerAddMinutes': instance.shakeSleepTimerAddMinutes,
   'shakeSensitivity': _$ShakeSensitivityEnumMap[instance.shakeSensitivity]!,
   'useNowPlayingTheme': instance.useNowPlayingTheme,
+  'parallelDownloads': instance.parallelDownloads,
   'libraryPageSize': instance.libraryPageSize,
   'seriesPageSize': instance.seriesPageSize,
   'isSleepWindowOn': instance.isSleepWindowOn,

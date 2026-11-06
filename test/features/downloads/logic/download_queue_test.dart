@@ -21,6 +21,7 @@ import 'package:storii/storage/local/items_cache.dart';
 import '../../../fakes/fake_download_transport.dart';
 import '../../../fakes/fake_notifications.dart';
 import '../../../fakes/fake_stores.dart';
+import '../../../helpers/init_globals.dart';
 
 class _FakeStorageService extends StorageService {
   new(super.location);
@@ -127,7 +128,7 @@ class _FakeItemDetail extends ItemDetail {
   new() : super();
 
   @override
-  Future<LibraryItem> build(String id) async => _bookItem();
+  Future<LibraryItem> build(String id) async => _bookItem(id: id);
 }
 
 class _FakeEngine extends DownloadEngine {
@@ -207,6 +208,7 @@ ProviderContainer _container({
       downloadsNotificationsProvider.overrideWithValue(
         notifications ?? FakeDownloadsNotifications(),
       ),
+      parallelDownloadsProvider.overrideWithValue(1),
       if (engine != null) downloadEngineProvider.overrideWithValue(engine),
     ],
   );
@@ -220,6 +222,9 @@ FakeDownloadsNotifications notificationsOf(ProviderContainer container) =>
         as FakeDownloadsNotifications;
 
 void main() {
+  setUpAll(() async {
+    await initGlobals();
+  });
   group('DownloadQueue network gating', () {
     test(
       'enqueue while offline marks the item waiting and keeps it queued',
@@ -300,11 +305,11 @@ void main() {
         async.elapse(const Duration(milliseconds: 300));
 
         final notifications = notificationsOf(container);
-        expect(notifications.countOf('startForeground'), 1);
-        expect(notifications.countOf('stopForeground'), 1);
+        expect(notifications.countOf('acquire'), 1);
+        expect(notifications.countOf('release'), 1);
         expect(notifications.events, contains('showProgress'));
         expect(
-          notifications.events.indexOf('startForeground'),
+          notifications.events.indexOf('acquire'),
           lessThan(notifications.events.indexOf('showProgress')),
         );
 
@@ -312,6 +317,106 @@ void main() {
           storeOf(container).get('item-1')?.status,
           DownloadStatus.completed,
         );
+        expect(container.read(downloadQueueProvider), isEmpty);
+      });
+    });
+
+    test('downloads multiple items concurrently', () {
+      fakeAsync((async) async {
+        final notifications = FakeDownloadsNotifications();
+        final container = ProviderContainer(
+          overrides: [
+            downloadsStoreProvider.overrideWithValue(FakeDownloadsStore()),
+            itemsCacheProvider.overrideWithValue(FakeItemsCache()),
+            storageServiceProvider(_location)
+                .overrideWithValue(_FakeStorageService(_location)),
+            itemDetailProvider('item-1').overrideWith(_FakeItemDetail.new),
+            itemDetailProvider('item-2').overrideWith(_FakeItemDetail.new),
+            currentUserProvider.overrideWithValue(_user),
+            isServerOfflineProvider.overrideWithValue(false),
+            connectionTypeProvider.overrideWithValue(.wifi),
+            downloadOnUnmeteredOnlyProvider.overrideWithValue(false),
+            useBinaryBytesProvider.overrideWithValue(false),
+            downloadsNotificationsProvider.overrideWithValue(notifications),
+            parallelDownloadsProvider.overrideWithValue(2),
+            downloadEngineProvider.overrideWithValue(_FakeEngine()),
+          ],
+        );
+        addTearDown(container.dispose);
+
+        final queue = container.read(downloadQueueProvider.notifier);
+        await queue.enqueue(libraryItemId: 'item-1', location: _location);
+        await queue.enqueue(libraryItemId: 'item-2', location: _location);
+        async.elapse(const Duration(milliseconds: 300));
+
+        expect(notifications.countOf('acquire'), 2);
+        expect(notifications.countOf('release'), 2);
+        expect(notifications.countOf('showProgress'), greaterThanOrEqualTo(2));
+        expect(
+          storeOf(container).get('item-1')?.status,
+          DownloadStatus.completed,
+        );
+        expect(
+          storeOf(container).get('item-2')?.status,
+          DownloadStatus.completed,
+        );
+        expect(container.read(downloadQueueProvider), isEmpty);
+      });
+    });
+
+    test('respects parallel limit - third item stays queued', () {
+      fakeAsync((async) async {
+        final notifications = FakeDownloadsNotifications();
+        final engine = _FakeEngine(hold: true);
+        final container = ProviderContainer(
+          overrides: [
+            downloadsStoreProvider.overrideWithValue(FakeDownloadsStore()),
+            itemsCacheProvider.overrideWithValue(FakeItemsCache()),
+            storageServiceProvider(_location)
+                .overrideWithValue(_FakeStorageService(_location)),
+            itemDetailProvider('item-1').overrideWith(_FakeItemDetail.new),
+            itemDetailProvider('item-2').overrideWith(_FakeItemDetail.new),
+            itemDetailProvider('item-3').overrideWith(_FakeItemDetail.new),
+            currentUserProvider.overrideWithValue(_user),
+            isServerOfflineProvider.overrideWithValue(false),
+            connectionTypeProvider.overrideWithValue(.wifi),
+            downloadOnUnmeteredOnlyProvider.overrideWithValue(false),
+            useBinaryBytesProvider.overrideWithValue(false),
+            downloadsNotificationsProvider.overrideWithValue(notifications),
+            parallelDownloadsProvider.overrideWithValue(2),
+            downloadEngineProvider.overrideWithValue(engine),
+          ],
+        );
+        addTearDown(container.dispose);
+
+        final queue = container.read(downloadQueueProvider.notifier);
+        await queue.enqueue(libraryItemId: 'item-1', location: _location);
+        await queue.enqueue(libraryItemId: 'item-2', location: _location);
+        await queue.enqueue(libraryItemId: 'item-3', location: _location);
+
+        await engine.started.future;
+        async.elapse(const Duration(milliseconds: 100));
+
+        final store = storeOf(container);
+        expect(store.get('item-1')?.status, DownloadStatus.downloading);
+        expect(store.get('item-2')?.status, DownloadStatus.downloading);
+        expect(store.get('item-3')?.status, DownloadStatus.queued);
+
+        expect(container.read(downloadQueueProvider).length, 3);
+
+        engine.cancelledKeys.clear();
+        engine._gates['item-1']?.complete();
+        engine._gates['item-2']?.complete();
+
+        async.elapse(const Duration(milliseconds: 200));
+        expect(store.get('item-3')?.status, DownloadStatus.downloading);
+
+        engine._gates['item-3']?.complete();
+        async.elapse(const Duration(milliseconds: 200));
+
+        expect(store.get('item-1')?.status, DownloadStatus.completed);
+        expect(store.get('item-2')?.status, DownloadStatus.completed);
+        expect(store.get('item-3')?.status, DownloadStatus.completed);
         expect(container.read(downloadQueueProvider), isEmpty);
       });
     });

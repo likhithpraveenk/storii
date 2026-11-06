@@ -18,18 +18,29 @@ class FakeDownloadsNotifications implements DownloadsNotifications {
   int countOf(String event) => events.where((e) => e == event).length;
 
   @override
+  Future<void> init() async {
+    events.add('init');
+  }
+
+  @override
   Future<bool> requestPermission() async {
     events.add('requestPermission');
     return permissionGranted;
   }
 
   @override
-  Future<void> startForeground({required String title}) async {
-    events.add('startForeground');
+  Future<void> startNotification({required String key}) async {
+    events.add('acquire');
+  }
+
+  @override
+  Future<void> release({required String key}) async {
+    events.add('release');
   }
 
   @override
   Future<void> showProgressNotification({
+    required String key,
     required String title,
     required int progress,
     required bool isComplete,
@@ -50,17 +61,7 @@ class FakeDownloadsNotifications implements DownloadsNotifications {
   }
 
   @override
-  Future<void> stopForeground() async {
-    events.add('stopForeground');
-  }
-
-  @override
-  Future<void> dismiss() async {
+  Future<void> dismiss({String? key}) async {
     events.add('dismiss');
-  }
-
-  @override
-  Future<void> init() async {
-    events.add('init');
   }
 }

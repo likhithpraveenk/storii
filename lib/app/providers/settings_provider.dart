@@ -200,6 +200,7 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
             DefaultUserSettings.defaultDownloadsLocationAudiobooks,
         defaultDownloadsLocationPodcasts:
             DefaultUserSettings.defaultDownloadsLocationPodcasts,
+        parallelDownloads: DefaultUserSettings.parallelDownloads,
       ),
     );
   }

@@ -36,6 +36,7 @@ class DownloadQueue extends _$DownloadQueue {
     store: _store,
     canStart: _networkAllows,
     runItem: _runItem,
+    maxConcurrent: () => ref.read(parallelDownloadsProvider),
   );
 
   @override
@@ -100,7 +101,7 @@ class DownloadQueue extends _$DownloadQueue {
 
       await _store.save(downloadItem);
       state = [...state, key];
-      await _processQueue();
+      _processQueue();
     } catch (e, st) {
       final error = AppError.from(e, st);
       LogService.log(
@@ -113,7 +114,7 @@ class DownloadQueue extends _$DownloadQueue {
     }
   }
 
-  Future<void> _processQueue() => _processor.process();
+  void _processQueue() => _processor.kick();
 
   Future<bool> _networkAllows(DownloadItem? item) async {
     if (item == null) return true;
@@ -161,11 +162,11 @@ class DownloadQueue extends _$DownloadQueue {
     if (location == null) return;
 
     _engine.cancel(key);
-    await _notifications.stopForeground();
-    await _notifications.dismiss();
+    await _notifications.release(key: key);
+    await _notifications.dismiss(key: key);
     state = state.where((i) => i != key).toList();
 
-    await _processor.waitForIdle();
+    await _processor.waitForKey(key);
 
     await enqueue(libraryItemId: id, episodeId: episodeId, location: location);
   }
@@ -179,30 +180,20 @@ class DownloadQueue extends _$DownloadQueue {
       await _store.save(item.copyWith(status: .paused));
     }
 
-    await _processor.waitForIdle();
-
-    await _notifications.stopForeground();
-    await _notifications.showProgressNotification(
-      title: item?.title ?? id,
-      progress: ((item?.progress ?? 0) * 100).toInt(),
-      isComplete: false,
-      isFailed: false,
-      isPaused: true,
-      useBinary: ref.read(useBinaryBytesProvider),
-    );
+    await _processor.waitForKey(id);
   }
 
   Future<void> delete(String id, String? episodeId) async {
     final key = mediaItemIdKey(id, episodeId);
     _engine.cancel(key);
-    await _notifications.stopForeground();
-    await _notifications.dismiss();
+    await _notifications.release(key: key);
+    await _notifications.dismiss(key: key);
     state = state.where((i) => i != key).toList();
     final item = _store.getAll()[key];
     await _deleteFiles(item);
     await _store.remove(key);
 
-    await _processor.waitForIdle();
+    await _processor.waitForKey(key);
   }
 
   Future<void> _deleteFiles(DownloadItem? item) async {

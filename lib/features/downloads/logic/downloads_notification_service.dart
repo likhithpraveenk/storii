@@ -14,9 +14,12 @@ abstract class DownloadsNotifications {
 
   Future<bool> requestPermission();
 
-  Future<void> startForeground({required String title});
+  Future<void> startNotification({required String key});
+
+  Future<void> release({required String key});
 
   Future<void> showProgressNotification({
+    required String key,
     required String title,
     required int progress,
     required bool isComplete,
@@ -26,9 +29,7 @@ abstract class DownloadsNotifications {
     required bool useBinary,
   });
 
-  Future<void> stopForeground();
-
-  Future<void> dismiss();
+  Future<void> dismiss({String? key});
 }
 
 @Riverpod(keepAlive: true)
@@ -44,6 +45,10 @@ class DownloadsNotificationService implements DownloadsNotifications {
   new({required this.getRouter});
   final _plugin = FlutterLocalNotificationsPlugin();
 
+  int _nextId = 1000;
+  final _foreground = <String>{};
+  final _notificationIds = <String, int>{};
+
   AndroidFlutterLocalNotificationsPlugin? get _androidPlugin => _plugin
       .resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin
@@ -51,8 +56,6 @@ class DownloadsNotificationService implements DownloadsNotifications {
 
   static const channelId = 'com.likhithpraveenk.storii.downloads';
   static final channelName = l10n.downloads;
-  static const notificationId = 888;
-  // TODO: multiple notifications need multiple ids
 
   @override
   Future<void> init() async {
@@ -85,28 +88,39 @@ class DownloadsNotificationService implements DownloadsNotifications {
   }
 
   @override
-  Future<void> startForeground({required String title}) async {
-    final androidDetails = AndroidNotificationDetails(
-      channelId,
-      channelName,
-      channelDescription: 'Shows download progress',
-      importance: .low,
-      priority: .low,
-      ongoing: true,
-      onlyAlertOnce: true,
-    );
+  Future<void> startNotification({required String key}) async {
+    if (!_foreground.add(key)) return;
+    if (_foreground.length == 1) {
+      final androidDetails = AndroidNotificationDetails(
+        channelId,
+        channelName,
+        channelDescription: 'Shows download progress',
+        importance: .low,
+        priority: .low,
+        ongoing: true,
+        onlyAlertOnce: true,
+      );
+      await _androidPlugin?.startForegroundService(
+        id: _nextId,
+        title: l10n.downloads,
+        body: l10n.startingDownload,
+        notificationDetails: androidDetails,
+        foregroundServiceTypes: {.foregroundServiceTypeDataSync},
+      );
+    }
+    _notificationIds.putIfAbsent(key, () => _nextId++);
+  }
 
-    await _androidPlugin?.startForegroundService(
-      id: notificationId,
-      title: title,
-      body: 'Starting download…',
-      notificationDetails: androidDetails,
-      foregroundServiceTypes: {.foregroundServiceTypeDataSync},
-    );
+  @override
+  Future<void> release({required String key}) async {
+    if (_foreground.remove(key) && _foreground.isEmpty) {
+      await _androidPlugin?.stopForegroundService();
+    }
   }
 
   @override
   Future<void> showProgressNotification({
+    required String key,
     required String title,
     required int progress,
     required bool isComplete,
@@ -127,6 +141,7 @@ class DownloadsNotificationService implements DownloadsNotifications {
       body = '$body - ${formatBytes(totalBytes, useBinary: useBinary)}';
     }
 
+    final id = _notificationIds.putIfAbsent(key, () => _nextId++);
     final androidDetails = AndroidNotificationDetails(
       channelId,
       channelName,
@@ -141,7 +156,7 @@ class DownloadsNotificationService implements DownloadsNotifications {
     );
 
     await _plugin.show(
-      id: notificationId,
+      id: id,
       title: title,
       body: body,
       notificationDetails: NotificationDetails(android: androidDetails),
@@ -150,12 +165,17 @@ class DownloadsNotificationService implements DownloadsNotifications {
   }
 
   @override
-  Future<void> stopForeground() async {
-    await _androidPlugin?.stopForegroundService();
-  }
-
-  @override
-  Future<void> dismiss() async {
-    await _plugin.cancel(id: notificationId);
+  Future<void> dismiss({String? key}) async {
+    if (key != null) {
+      final id = _notificationIds.remove(key);
+      if (id != null) {
+        await _plugin.cancel(id: id);
+      }
+    } else {
+      for (final id in _notificationIds.values) {
+        await _plugin.cancel(id: id);
+      }
+      _notificationIds.clear();
+    }
   }
 }

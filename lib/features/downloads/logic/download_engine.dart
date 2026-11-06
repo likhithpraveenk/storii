@@ -54,7 +54,7 @@ class DownloadEngine {
 
     final token = await accessToken(user.id);
     if (token == null) {
-      _active.remove(item.key);
+      _finish(item.key, active);
       yield item.copyWith(status: .failed);
       return;
     }
@@ -65,14 +65,14 @@ class DownloadEngine {
     await _downloadCover(item, active);
 
     if (active.cancelled) {
-      _active.remove(item.key);
+      _finish(item.key, active);
       yield current.copyWith(status: .paused);
       return;
     }
 
     final service = storageService(item);
     if (service == null) {
-      _active.remove(item.key);
+      _finish(item.key, active);
       yield current.copyWith(status: .failed);
       return;
     }
@@ -112,7 +112,7 @@ class DownloadEngine {
               bytesReceived: bytesReceived,
             );
             if (status != .completed) {
-              _active.remove(item.key);
+              _finish(item.key, active);
               yield current.copyWith(status: status);
               return;
             }
@@ -121,7 +121,7 @@ class DownloadEngine {
       }
     }
 
-    _active.remove(item.key);
+    _finish(item.key, active);
     if (active.cancelled) {
       yield current.copyWith(status: .paused);
       return;
@@ -135,6 +135,10 @@ class DownloadEngine {
     active.cancelled = true;
     active.trackToken?.cancel();
     _coverTokens[active.libraryItemId]?.cancel();
+  }
+
+  void _finish(String key, _ActiveDownload a) {
+    if (identical(_active[key], a)) _active.remove(key);
   }
 
   Future<void> _downloadCover(DownloadItem item, _ActiveDownload active) async {

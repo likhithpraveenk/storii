@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'463cdff630a2b70bfa181573c3486ea86007c3fd';
+    r'c99421988d0a664b08d76102040a588ea3e73cfb';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -418,6 +418,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setUseNowPlayingTheme(bool value) =>
       _save(state?.copyWith(useNowPlayingTheme: value));
+
+  Future<void> setParallelDownloads(int value) =>
+      _save(state?.copyWith(parallelDownloads: value));
 
   Future<void> setLibraryPageSize(int value) =>
       _save(state?.copyWith(libraryPageSize: value));
@@ -1048,6 +1051,15 @@ final useNowPlayingThemeProvider = Provider<bool>(
     ),
   ),
   name: 'useNowPlayingThemeProvider',
+);
+
+final parallelDownloadsProvider = Provider<int>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.parallelDownloads ?? DefaultUserSettings.parallelDownloads,
+    ),
+  ),
+  name: 'parallelDownloadsProvider',
 );
 
 final libraryPageSizeProvider = Provider<int>(

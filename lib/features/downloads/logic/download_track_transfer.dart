@@ -78,6 +78,7 @@ class TrackTransfer {
         final askedForRange = received > 0;
 
         if (askedForRange && !response.isPartial) {
+          await response.stream.listen((_) {}).cancel();
           await sink.close();
           await service.deleteTrack(
             relativePath: relativePath,

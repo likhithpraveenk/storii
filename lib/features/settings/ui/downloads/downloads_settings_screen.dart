@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/features/settings/ui/downloads/parallel_downloads_tile.dart';
 import 'package:storii/features/settings/ui/downloads/storage_tile.dart';
 import 'package:storii/features/settings/ui/downloads/unmetered_only_tile.dart';
 import 'package:storii/features/settings/ui/settings_reset_button.dart';
@@ -42,7 +43,13 @@ class DownloadsSettingsScreen extends ConsumerWidget {
         ),
         actions: const [SettingsResetButton(category: .downloads)],
       ),
-      body: ListView(children: const [UnmeteredOnlyTile(), StorageTile()]),
+      body: ListView(
+        children: const [
+          UnmeteredOnlyTile(),
+          ParallelDownloadsTile(),
+          StorageTile(),
+        ],
+      ),
     );
   }
 }

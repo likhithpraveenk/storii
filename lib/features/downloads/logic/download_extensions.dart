@@ -42,7 +42,6 @@ extension ToDownloadItemX on LibraryItem {
         existing?.copyWith(
           tracks: downloadTracks,
           status: .queued,
-          startedAt: DateTime.now(),
         ) ??
         DownloadItem(
           libraryItemId: id,
@@ -98,7 +97,6 @@ extension ToEpisodeDownloadItemX on PodcastEpisode {
     return existing?.copyWith(
           tracks: [dTrack],
           status: .queued,
-          startedAt: DateTime.now(),
         ) ??
         DownloadItem(
           libraryItemId: libraryItemId,
