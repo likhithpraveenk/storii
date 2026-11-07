@@ -13,51 +13,36 @@ class DownloadTask {
     required this.engine,
     required this.notifications,
     required this.currentUser,
-    required this.useBinary,
   });
 
   final DownloadsStore store;
   final DownloadEngine engine;
   final DownloadsNotifications notifications;
   final UserDomain? Function() currentUser;
-  final bool Function() useBinary;
 
   Future<void> run(String key) async {
     final item = store.get(key);
     if (item == null || !item.isActive) return;
 
-    await notifications.requestPermission();
-    await notifications.startNotification(key: key);
+    await notifications.start(key);
 
     final persister = ThrottledPersister(
       store: store,
-      onPersist: (item) => notifications.showProgressNotification(
-        key: key,
-        title: item.title,
-        progress: (item.progress * 100).toInt(),
-        isComplete: item.isComplete,
-        isFailed: item.isFailed,
-        isPaused: item.status == .paused,
-        totalBytes: item.totalBytes,
-        useBinary: useBinary(),
-      ),
+      onPersist: (item) => notifications.update(key, item),
     );
 
     try {
       final user = currentUser();
       if (user == null) throw StateError('No current user');
 
-      final stream = engine.downloadItem(item: item, user: user);
-
-      await for (final updated in stream) {
-        final inActive = !updated.isActive;
-        await persister.update(updated);
-        if (inActive) {
-          await notifications.release(key: key);
-        }
-      }
+      await engine.download(
+        item: item,
+        user: user,
+        onProgress: persister.update,
+      );
 
       await persister.flush();
+      await notifications.finish(key);
     } catch (e, st) {
       await _flushQuietly(persister);
       final error = AppError.from(e, st);
@@ -70,17 +55,11 @@ class DownloadTask {
       );
       await _setStatus(key, .failed);
 
-      await notifications.release(key: key);
+      await notifications.finish(key);
       final failedItem = store.get(key);
-      await notifications.showProgressNotification(
-        key: key,
-        title: failedItem?.title ?? key,
-        progress: 0,
-        isComplete: false,
-        isFailed: true,
-        isPaused: false,
-        useBinary: useBinary(),
-      );
+      if (failedItem != null) {
+        await notifications.update(key, failedItem);
+      }
     }
   }
 

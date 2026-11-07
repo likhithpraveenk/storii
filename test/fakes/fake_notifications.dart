@@ -1,4 +1,5 @@
 import 'package:storii/features/downloads/logic/downloads_notification_service.dart';
+import 'package:storii/features/downloads/models/download_item.dart';
 
 typedef RecordedProgressNotification = ({
   String title,
@@ -23,45 +24,30 @@ class FakeDownloadsNotifications implements DownloadsNotifications {
   }
 
   @override
-  Future<bool> requestPermission() async {
-    events.add('requestPermission');
-    return permissionGranted;
-  }
-
-  @override
-  Future<void> startNotification({required String key}) async {
+  Future<void> start(String key) async {
     events.add('acquire');
   }
 
   @override
-  Future<void> release({required String key}) async {
-    events.add('release');
-  }
-
-  @override
-  Future<void> showProgressNotification({
-    required String key,
-    required String title,
-    required int progress,
-    required bool isComplete,
-    required bool isFailed,
-    required bool isPaused,
-    int? totalBytes,
-    required bool useBinary,
-  }) async {
+  Future<void> update(String key, DownloadItem item) async {
     events.add('showProgress');
     progressCalls.add((
-      title: title,
-      progress: progress,
-      isComplete: isComplete,
-      isFailed: isFailed,
-      isPaused: isPaused,
-      totalBytes: totalBytes,
+      title: item.title,
+      progress: (item.progress * 100).toInt(),
+      isComplete: item.status == .completed,
+      isFailed: item.status == .failed,
+      isPaused: item.status == .paused,
+      totalBytes: item.totalBytes,
     ));
   }
 
   @override
-  Future<void> dismiss({String? key}) async {
+  Future<void> finish(String key) async {
+    events.add('release');
+  }
+
+  @override
+  Future<void> dismiss(String key) async {
     events.add('dismiss');
   }
 }

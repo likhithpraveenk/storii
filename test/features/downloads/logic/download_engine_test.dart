@@ -61,6 +61,23 @@ class _FakeCoverDownloader {
   }
 }
 
+Future<List<DownloadItem>> _run(
+  DownloadEngine engine,
+  DownloadItem item, {
+  void Function(DownloadItem)? onSnapshot,
+}) async {
+  final snapshots = <DownloadItem>[];
+  await engine.download(
+    item: item,
+    user: _user,
+    onProgress: (snapshot) async {
+      snapshots.add(snapshot);
+      onSnapshot?.call(snapshot);
+    },
+  );
+  return snapshots;
+}
+
 void main() {
   setUpAll(() async {
     await initGlobals();
@@ -92,9 +109,7 @@ void main() {
         coverDownloader: cover.call,
       );
 
-      final snapshots = await engine
-          .downloadItem(item: _item(), user: _user)
-          .toList();
+      final snapshots = await _run(engine, _item());
 
       expect(snapshots.last.status, DownloadStatus.completed);
       expect(
@@ -122,17 +137,15 @@ void main() {
         coverDownloader: _FakeCoverDownloader().call,
       );
 
-      await engine
-          .downloadItem(
-            item: _item(
-              tracks: [
-                _track(ino: 'ino-1', index: 1, status: .completed),
-                _track(ino: 'ino-2', index: 2),
-              ],
-            ),
-            user: _user,
-          )
-          .toList();
+      await _run(
+        engine,
+        _item(
+          tracks: [
+            _track(ino: 'ino-1', index: 1, status: .completed),
+            _track(ino: 'ino-2', index: 2),
+          ],
+        ),
+      );
 
       expect(transport.calls.length, 1);
       expect(transport.calls.single.url.toString(), contains('ino-2'));
@@ -161,7 +174,7 @@ void main() {
         coverDownloader: _FakeCoverDownloader().call,
       );
 
-      await engine.downloadItem(item: _item(), user: _user).toList();
+      await _run(engine, _item());
 
       expect(transport.calls.first.url.toString(), contains('ino-1'));
       expect(transport.calls.last.url.toString(), contains('ino-2'));
@@ -191,9 +204,7 @@ void main() {
         coverDownloader: cover.call,
       );
 
-      final snapshots = await engine
-          .downloadItem(item: _item(), user: _user)
-          .toList();
+      final snapshots = await _run(engine, _item());
 
       expect(snapshots.last.status, DownloadStatus.completed);
     });
@@ -206,9 +217,7 @@ void main() {
         coverDownloader: _FakeCoverDownloader().call,
       );
 
-      final snapshots = await engine
-          .downloadItem(item: _item(), user: _user)
-          .toList();
+      final snapshots = await _run(engine, _item());
 
       expect(snapshots.single.status, DownloadStatus.failed);
     });
@@ -221,9 +230,7 @@ void main() {
         coverDownloader: _FakeCoverDownloader().call,
       );
 
-      final snapshots = await engine
-          .downloadItem(item: _item(), user: _user)
-          .toList();
+      final snapshots = await _run(engine, _item());
 
       expect(snapshots.last.status, DownloadStatus.failed);
     });
@@ -252,16 +259,15 @@ void main() {
       );
       final item = _item();
 
-      final snapshots = <DownloadItem>[];
-      await for (final snapshot in engine.downloadItem(
-        item: item,
-        user: _user,
-      )) {
-        snapshots.add(snapshot);
-        if (snapshot.tracks.first.status == .completed) {
-          engine.cancel(item.key);
-        }
-      }
+      final snapshots = await _run(
+        engine,
+        item,
+        onSnapshot: (snapshot) {
+          if (snapshot.tracks.first.status == .completed) {
+            engine.cancel(item.key);
+          }
+        },
+      );
 
       expect(snapshots.last.status, DownloadStatus.paused);
       expect(transport.calls.length, 1);
@@ -291,16 +297,15 @@ void main() {
       );
       final item = _item();
 
-      final snapshots = <DownloadItem>[];
-      await for (final snapshot in engine.downloadItem(
-        item: item,
-        user: _user,
-      )) {
-        snapshots.add(snapshot);
-        if (snapshot.tracks.every((t) => t.status == .completed)) {
-          engine.cancel(item.key);
-        }
-      }
+      final snapshots = await _run(
+        engine,
+        item,
+        onSnapshot: (snapshot) {
+          if (snapshot.tracks.every((t) => t.status == .completed)) {
+            engine.cancel(item.key);
+          }
+        },
+      );
 
       expect(snapshots.last.status, DownloadStatus.paused);
     });

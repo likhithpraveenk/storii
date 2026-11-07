@@ -2,8 +2,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 
@@ -12,37 +15,28 @@ part 'downloads_notification_service.g.dart';
 abstract class DownloadsNotifications {
   Future<void> init();
 
-  Future<bool> requestPermission();
+  Future<void> start(String key);
 
-  Future<void> startNotification({required String key});
+  Future<void> update(String key, DownloadItem item);
 
-  Future<void> release({required String key});
+  Future<void> finish(String key);
 
-  Future<void> showProgressNotification({
-    required String key,
-    required String title,
-    required int progress,
-    required bool isComplete,
-    required bool isFailed,
-    required bool isPaused,
-    int? totalBytes,
-    required bool useBinary,
-  });
-
-  Future<void> dismiss({String? key});
+  Future<void> dismiss(String key);
 }
 
 @Riverpod(keepAlive: true)
 DownloadsNotifications downloadsNotifications(Ref ref) {
   return DownloadsNotificationService(
     getRouter: () => ref.read(routerProvider),
+    useBinary: () => ref.read(useBinaryBytesProvider),
   );
 }
 
 class DownloadsNotificationService implements DownloadsNotifications {
   final GoRouter Function() getRouter;
+  final bool Function() useBinary;
 
-  new({required this.getRouter});
+  new({required this.getRouter, required this.useBinary});
   final _plugin = FlutterLocalNotificationsPlugin();
 
   int _nextId = 1000;
@@ -81,14 +75,14 @@ class DownloadsNotificationService implements DownloadsNotifications {
     );
   }
 
-  @override
   Future<bool> requestPermission() async {
     final status = await Permission.notification.request();
     return status.isGranted;
   }
 
   @override
-  Future<void> startNotification({required String key}) async {
+  Future<void> start(String key) async {
+    await requestPermission();
     if (!_foreground.add(key)) return;
     if (_foreground.length == 1) {
       final androidDetails = AndroidNotificationDetails(
@@ -112,24 +106,20 @@ class DownloadsNotificationService implements DownloadsNotifications {
   }
 
   @override
-  Future<void> release({required String key}) async {
+  Future<void> finish(String key) async {
     if (_foreground.remove(key) && _foreground.isEmpty) {
       await _androidPlugin?.stopForegroundService();
     }
   }
 
   @override
-  Future<void> showProgressNotification({
-    required String key,
-    required String title,
-    required int progress,
-    required bool isComplete,
-    required bool isFailed,
-    required bool isPaused,
-    int? totalBytes,
-    required bool useBinary,
-  }) async {
-    String body = '$progress%';
+  Future<void> update(String key, DownloadItem item) async {
+    final isComplete = item.status == .completed;
+    final isFailed = item.status == .failed;
+    final isPaused = item.status == .paused;
+    final isTerminal = isComplete || isFailed || isPaused;
+
+    var body = '${(item.progress * 100).toInt()}%';
     if (isComplete) {
       body = l10n.completed;
     } else if (isFailed) {
@@ -137,9 +127,9 @@ class DownloadsNotificationService implements DownloadsNotifications {
     } else if (isPaused) {
       body = l10n.paused;
     }
-    if (totalBytes != null) {
-      body = '$body - ${formatBytes(totalBytes, useBinary: useBinary)}';
-    }
+    final totalStr = formatBytes(item.totalBytes, useBinary: useBinary());
+    final receivedStr = formatBytes(item.receivedBytes, useBinary: useBinary());
+    body = '$body $kSmallDot $receivedStr / $totalStr';
 
     final id = _notificationIds.putIfAbsent(key, () => _nextId++);
     final androidDetails = AndroidNotificationDetails(
@@ -148,16 +138,16 @@ class DownloadsNotificationService implements DownloadsNotifications {
       channelDescription: 'Shows download progress',
       importance: .low,
       priority: .low,
-      showProgress: !isComplete && !isFailed && !isPaused,
+      showProgress: !isTerminal,
       maxProgress: 100,
-      progress: progress,
-      ongoing: !isComplete && !isFailed && !isPaused,
+      progress: (item.progress * 100).toInt(),
+      ongoing: !isTerminal,
       onlyAlertOnce: true,
     );
 
     await _plugin.show(
       id: id,
-      title: title,
+      title: item.title,
       body: body,
       notificationDetails: NotificationDetails(android: androidDetails),
       payload: 'downloads',
@@ -165,17 +155,11 @@ class DownloadsNotificationService implements DownloadsNotifications {
   }
 
   @override
-  Future<void> dismiss({String? key}) async {
-    if (key != null) {
-      final id = _notificationIds.remove(key);
-      if (id != null) {
-        await _plugin.cancel(id: id);
-      }
-    } else {
-      for (final id in _notificationIds.values) {
-        await _plugin.cancel(id: id);
-      }
-      _notificationIds.clear();
+  Future<void> dismiss(String key) async {
+    await finish(key);
+    final id = _notificationIds.remove(key);
+    if (id != null) {
+      await _plugin.cancel(id: id);
     }
   }
 }

@@ -27,16 +27,10 @@ class _FakeStorageService extends StorageService {
   new(super.location);
 
   @override
-  Future<String?> getTrackPath({
+  Future<TrackFileStat?> stat({
     required String relativePath,
     required String trackPath,
-  }) async => null;
-
-  @override
-  Future<int> getBytes({
-    required String relativePath,
-    required String trackPath,
-  }) async => 0;
+  }) async => (path: trackPath, length: 1024);
 
   @override
   Future<StreamSink<List<int>>> getSink({
@@ -47,13 +41,6 @@ class _FakeStorageService extends StorageService {
     final controller = StreamController<List<int>>();
     return controller.sink;
   }
-
-  @override
-  Future<bool> isFileIntact({
-    required String relativePath,
-    required String trackPath,
-    required int expectedBytes,
-  }) async => true;
 
   @override
   Future<void> deleteFolder({required String relativePath}) async {}
@@ -150,11 +137,12 @@ class _FakeEngine extends DownloadEngine {
   final Map<String, Completer<void>> _gates = <String, Completer<void>>{};
 
   @override
-  Stream<DownloadItem> downloadItem({
+  Future<DownloadItem> download({
     required DownloadItem item,
     required UserDomain user,
-  }) async* {
-    yield item.copyWith(status: .downloading);
+    required Future<void> Function(DownloadItem item) onProgress,
+  }) async {
+    await onProgress(item.copyWith(status: .downloading));
     if (!started.isCompleted) started.complete();
 
     if (hold) {
@@ -165,7 +153,7 @@ class _FakeEngine extends DownloadEngine {
     }
 
     final cancelled = cancelledKeys.contains(item.key);
-    yield item.copyWith(
+    final current = item.copyWith(
       status: cancelled ? .paused : .completed,
       tracks: item.tracks
           .map(
@@ -176,6 +164,8 @@ class _FakeEngine extends DownloadEngine {
           )
           .toList(),
     );
+    await onProgress(current);
+    return current;
   }
 
   @override
@@ -467,22 +457,25 @@ void main() {
       expect(container.read(downloadQueueProvider), isEmpty);
     });
 
-    test('a failing download does not block later drains', () async {
-      final container = _container(
-        connectionType: .wifi,
-        wifiOnly: false,
-        engine: _FakeEngine(),
-      );
-      addTearDown(container.dispose);
+    test('a failing download does not block later drains', () {
+      fakeAsync((async) async {
+        final container = _container(
+          connectionType: .wifi,
+          wifiOnly: false,
+          engine: _FakeEngine(),
+        );
+        addTearDown(container.dispose);
 
-      final queue = container.read(downloadQueueProvider.notifier);
-      await queue.enqueue(libraryItemId: 'item-1', location: _location);
+        final queue = container.read(downloadQueueProvider.notifier);
+        await queue.enqueue(libraryItemId: 'item-1', location: _location);
+        async.elapse(const Duration(milliseconds: 300));
 
-      expect(container.read(downloadQueueProvider), isEmpty);
-      expect(
-        storeOf(container).get('item-1')?.status,
-        DownloadStatus.completed,
-      );
+        expect(container.read(downloadQueueProvider), isEmpty);
+        expect(
+          storeOf(container).get('item-1')?.status,
+          DownloadStatus.completed,
+        );
+      });
     });
   });
 }

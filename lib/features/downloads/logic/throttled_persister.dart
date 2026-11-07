@@ -75,14 +75,6 @@ class ThrottledPersister {
       await store.save(item);
       await onPersist(item);
 
-      final terminal =
-          item.status == .paused || item.isComplete || item.isFailed;
-      final stored = store.get(item.key);
-      if (!terminal && stored != null && stored.status == .paused) {
-        _pending = null;
-        return;
-      }
-
       if (identical(_pending, item)) {
         _pending = null;
       }

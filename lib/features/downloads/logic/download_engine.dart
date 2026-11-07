@@ -41,115 +41,102 @@ class DownloadEngine {
   final CoverDownloader coverDownloader;
   final TrackTransfer _trackTransfer;
 
-  final Map<String, _ActiveDownload> _active = <String, _ActiveDownload>{};
-  final Map<String, DownloadCancelToken> _coverTokens =
-      <String, DownloadCancelToken>{};
+  final _active = <String, DownloadCancelToken>{};
 
-  Stream<DownloadItem> downloadItem({
+  Future<DownloadItem> download({
     required DownloadItem item,
     required UserDomain user,
-  }) async* {
-    final active = _ActiveDownload(libraryItemId: item.libraryItemId);
-    _active[item.key] = active;
+    required Future<void> Function(DownloadItem item) onProgress,
+  }) async {
+    final cancelToken = DownloadCancelToken();
+    _active[item.key] = cancelToken;
+
+    var current = item;
+
+    Future<DownloadItem> terminate(DownloadStatus status) async {
+      _finish(item.key, cancelToken);
+      final terminal = current.copyWith(status: status);
+      await onProgress(terminal);
+      return terminal;
+    }
 
     final token = await accessToken(user.id);
     if (token == null) {
-      _finish(item.key, active);
-      yield item.copyWith(status: .failed);
-      return;
+      return terminate(.failed);
     }
 
-    var current = item.copyWith(status: .downloading);
-    yield current;
+    current = current.copyWith(status: .downloading);
+    await onProgress(current);
 
-    await _downloadCover(item, active);
+    await _downloadCover(item, cancelToken);
 
-    if (active.cancelled) {
-      _finish(item.key, active);
-      yield current.copyWith(status: .paused);
-      return;
+    if (cancelToken.isCancelled) {
+      return terminate(.paused);
     }
 
     final service = storageService(item);
     if (service == null) {
-      _finish(item.key, active);
-      yield current.copyWith(status: .failed);
-      return;
+      return terminate(.failed);
     }
 
     for (var i = 0; i < current.tracks.length; i++) {
-      final initialTrack = current.tracks[i];
-      if (initialTrack.status == .completed) continue;
+      final track = current.tracks[i];
+      if (track.status == .completed) continue;
 
-      final trackToken = DownloadCancelToken();
-      active.trackToken = trackToken;
-
-      await for (final event in _trackTransfer.transfer(
-        track: initialTrack,
+      final result = await _trackTransfer.transfer(
+        track: track,
         url: user.serverUrl.resolve(
-          ApiRoutes.itemAudioFileDownload(item.libraryItemId, initialTrack.ino),
+          ApiRoutes.itemAudioFileDownload(item.libraryItemId, track.ino),
         ),
         accessToken: token,
         service: service,
         relativePath: item.relativePath,
-        cancelToken: trackToken,
-        isCancelled: () => active.cancelled,
-      )) {
-        switch (event) {
-          case TrackProgress(:final bytesReceived):
-            current = _trackSnapshot(
-              current,
-              i,
-              status: .downloading,
-              bytesReceived: bytesReceived,
-            );
-            yield current;
-          case TrackOutcome(:final status, :final bytesReceived):
-            current = _trackSnapshot(
-              current,
-              i,
-              status: status == .completed ? .completed : .downloading,
-              bytesReceived: bytesReceived,
-            );
-            if (status != .completed) {
-              _finish(item.key, active);
-              yield current.copyWith(status: status);
-              return;
-            }
-            yield current;
-        }
+        cancelToken: cancelToken,
+        onProgress: (bytesReceived) async {
+          current = _trackSnapshot(
+            current,
+            i,
+            status: .downloading,
+            bytesReceived: bytesReceived,
+          );
+          await onProgress(current);
+        },
+      );
+
+      current = _trackSnapshot(
+        current,
+        i,
+        status: result.status == .completed ? .completed : .downloading,
+        bytesReceived: result.bytesReceived,
+      );
+
+      if (result.status != .completed) {
+        return terminate(result.status);
       }
+
+      await onProgress(current);
     }
 
-    _finish(item.key, active);
-    if (active.cancelled) {
-      yield current.copyWith(status: .paused);
-      return;
-    }
-    yield current.copyWith(status: .completed);
+    return terminate(cancelToken.isCancelled ? .paused : .completed);
   }
 
   void cancel(String key) {
-    final active = _active[key];
-    if (active == null) return;
-    active.cancelled = true;
-    active.trackToken?.cancel();
-    _coverTokens[active.libraryItemId]?.cancel();
+    _active[key]?.cancel();
   }
 
-  void _finish(String key, _ActiveDownload a) {
-    if (identical(_active[key], a)) _active.remove(key);
+  void _finish(String key, DownloadCancelToken cancelToken) {
+    if (identical(_active[key], cancelToken)) _active.remove(key);
   }
 
-  Future<void> _downloadCover(DownloadItem item, _ActiveDownload active) async {
-    final coverToken = DownloadCancelToken();
-    _coverTokens[item.libraryItemId] = coverToken;
-
+  Future<void> _downloadCover(
+    DownloadItem item,
+    DownloadCancelToken cancelToken,
+  ) async {
     try {
       await coverDownloader(
         libraryItemId: item.libraryItemId,
         isPodcast: item.episodeId != null,
-        cancelToken: coverToken,
+        cancelToken: cancelToken,
       );
     } catch (e, st) {
       final error = AppError.from(e, st);
@@ -160,10 +147,6 @@ class DownloadEngine {
         originalError: error.originalError,
         stackTrace: error.stackTrace,
       );
-    } finally {
-      if (identical(_coverTokens[item.libraryItemId], coverToken)) {
-        _coverTokens.remove(item.libraryItemId);
-      }
     }
   }
 
@@ -180,14 +163,6 @@ class DownloadEngine {
     );
     return item.copyWith(tracks: tracks);
   }
-}
-
-class _ActiveDownload {
-  new({required this.libraryItemId});
-
-  final String libraryItemId;
-  bool cancelled = false;
-  DownloadCancelToken? trackToken;
 }
 
 @Riverpod(keepAlive: true)

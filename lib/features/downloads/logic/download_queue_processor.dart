@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/storage/local/downloads_store.dart';
 
@@ -8,7 +9,6 @@ typedef DownloadStartGate = Future<bool> Function(DownloadItem? item);
 class DownloadQueueProcessor {
   new({
     required this.readKeys,
-    required this.removeKey,
     required this.store,
     required this.canStart,
     required this.runItem,
@@ -16,7 +16,6 @@ class DownloadQueueProcessor {
   });
 
   final List<String> Function() readKeys;
-  final void Function(String key) removeKey;
   final DownloadsStore store;
   final DownloadStartGate canStart;
   final Future<void> Function(String key) runItem;
@@ -25,10 +24,8 @@ class DownloadQueueProcessor {
   final Map<String, Future<void>> _active = {};
   Completer<void>? _processing;
   Completer<void>? _wake;
-  bool _dirty = false;
 
   void kick() {
-    _dirty = true;
     if (_processing == null) {
       unawaited(process());
       return;
@@ -42,15 +39,17 @@ class DownloadQueueProcessor {
     if (f != null) await f;
   }
 
+  bool isRunning(String key) => _active.containsKey(key);
 
   bool get isProcessing => _processing != null;
-Future<void> process() async {
+
+  Future<void> process() async {
     if (_processing != null) return;
     final completer = Completer<void>();
     _processing = completer;
     try {
       while (true) {
-        _dirty = false;
+        final wake = _wake = Completer<void>();
         final keys = List<String>.from(readKeys());
         if (keys.isEmpty && _active.isEmpty) break;
 
@@ -62,10 +61,8 @@ Future<void> process() async {
           _active[key] = _processItem(key);
         }
 
-        if (_dirty) continue; // kick landed during await
         if (_active.isEmpty) break;
 
-        final wake = _wake = Completer<void>();
         await Future.any([..._active.values, wake.future]);
       }
     } finally {
@@ -79,9 +76,21 @@ Future<void> process() async {
     try {
       await runItem(key);
     } finally {
-      removeKey(key);
-      await _active.remove(key);
+      await _ensureTerminal(key);
+      // must not await its own future
+      unawaited(_active.remove(key));
     }
+  }
+
+  Future<void> _ensureTerminal(String key) async {
+    final item = store.get(key);
+    if (item == null || !item.isActive) return;
+    LogService.log(
+      'Download $key ended without a terminal status, marking it failed',
+      source: 'DownloadQueueProcessor',
+      level: .warning,
+    );
+    await store.save(item.copyWith(status: .failed));
   }
 
   Future<void> waitForIdle() async {
