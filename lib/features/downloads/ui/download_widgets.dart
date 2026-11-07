@@ -92,14 +92,13 @@ class DownloadStatusRow extends ConsumerWidget {
     final useBinary = ref.watch(useBinaryBytesProvider);
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final queueIndex = ref
-        .watch(
-          downloadQueuePositionProvider(item.libraryItemId, item.episodeId),
-        )
-        .value;
+    final queueIndex = ref.watch(
+      downloadQueuePositionProvider(item.libraryItemId, item.episodeId),
+    );
 
     final received = formatBytes(item.receivedBytes, useBinary: useBinary);
     final total = formatBytes(item.totalBytes, useBinary: useBinary);
+    final bytesStr = '$received / $total';
 
     final queuePos = queueIndex != null ? ' #$queueIndex' : '';
 
@@ -121,31 +120,35 @@ class DownloadStatusRow extends ConsumerWidget {
           ),
         ],
       ),
-      .downloading => Row(
-        children: [
-          Text(
-            '${(item.progress * 100).toStringAsFixed(0)}%',
-            style: textTheme.labelSmall,
-          ),
-          if (item.totalBytes > 0) ...[
-            Text(' $kSmallDot ', style: textTheme.labelSmall),
-            Text(total, style: textTheme.labelSmall),
+      .downloading || .completed => Text.rich(
+        TextSpan(
+          text: '${(item.progress * 100).toStringAsFixed(0)}%',
+          style: textTheme.labelSmall,
+          children: [
+            const TextSpan(text: '$kSmallDot  '),
+            TextSpan(text: bytesStr),
           ],
-        ],
+        ),
       ),
-      .completed => Text(
-        total,
-        style: textTheme.labelSmall?.copyWith(color: scheme.primary),
+      .failed => Text.rich(
+        TextSpan(
+          text: l10n.failed,
+          style: textTheme.labelSmall?.copyWith(color: scheme.error),
+          children: [
+            TextSpan(text: '$kSmallDot  ', style: textTheme.labelSmall),
+            TextSpan(text: bytesStr, style: textTheme.labelSmall),
+          ],
+        ),
       ),
-      .failed => Text(
-        l10n.failed,
-        style: textTheme.labelSmall?.copyWith(color: scheme.error),
-      ),
-      .paused => Text(
-        '${l10n.paused}'
-        ' $kSmallDot '
-        '$received / $total',
-        style: textTheme.labelSmall?.copyWith(color: scheme.onSurfaceVariant),
+      .paused => Text.rich(
+        TextSpan(
+          text: l10n.paused,
+          style: textTheme.labelSmall?.copyWith(color: scheme.onSurfaceVariant),
+          children: [
+            const TextSpan(text: ' $kSmallDot '),
+            TextSpan(text: bytesStr),
+          ],
+        ),
       ),
     };
   }

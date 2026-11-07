@@ -51,16 +51,8 @@ class DownloadsStore {
   }
 
   Future<void> clear() => downloadsBox.clear();
-}
-
-@riverpod
-DownloadsStore downloadsStore(Ref ref) => const DownloadsStore();
-
-@riverpod
-class Downloads extends _$Downloads {
-  @override
-  Stream<Map<String, DownloadItem>> build() {
-    final map = ref.read(downloadsStoreProvider).getAll();
+  Stream<Map<String, DownloadItem>> watch() {
+    final map = getAll();
     return downloadsBox
         .watch()
         .map((e) {
@@ -75,3 +67,10 @@ class Downloads extends _$Downloads {
         .startWith(Map<String, DownloadItem>.from(map));
   }
 }
+
+@riverpod
+DownloadsStore downloadsStore(Ref ref) => const DownloadsStore();
+
+@riverpod
+Stream<Map<String, DownloadItem>> downloads(Ref ref) =>
+    ref.watch(downloadsStoreProvider).watch();

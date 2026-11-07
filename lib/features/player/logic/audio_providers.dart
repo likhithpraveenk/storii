@@ -16,6 +16,7 @@ import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/logic/storage_service_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/player/logic/audio_handler.dart';
+import 'package:storii/features/player/logic/offline_playback.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
@@ -142,7 +143,10 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
       final isFullyDownloaded =
           download != null &&
           download.isComplete &&
-          await ref.read(isItemFullyDownloadedProvider(download).future);
+          await isItemFullyDownloaded(
+            item: download,
+            service: ref.read(storageServiceForItemProvider(download)),
+          );
 
       final PlaybackSession session;
       ItemRepository? repo;

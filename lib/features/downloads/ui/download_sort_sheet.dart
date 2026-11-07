@@ -8,23 +8,26 @@ class DownloadSortSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sortType = ref.watch(downloadSortProvider);
-    final ascending = ref.watch(downloadSortAscProvider);
+    final sortState = ref.watch(downloadSortProvider);
 
     return SingleChildScrollView(
       child: Column(
         children: [
           ...DownloadSort.values.map((type) {
-            final isSelected = sortType == type;
+            final isSelected = sortState.sort == type;
             return ListTile(
               title: Text(type.label),
               selected: isSelected,
               trailing: isSelected
-                  ? Icon(ascending ? Icons.arrow_upward : Icons.arrow_downward)
+                  ? Icon(
+                      sortState.ascending
+                          ? Icons.arrow_upward
+                          : Icons.arrow_downward,
+                    )
                   : null,
               onTap: () => isSelected
-                  ? ref.read(downloadSortAscProvider.notifier).toggle()
-                  : ref.read(downloadSortProvider.notifier).set(type),
+                  ? ref.read(downloadSortProvider.notifier).toggleAscending()
+                  : ref.read(downloadSortProvider.notifier).setSort(type),
               contentPadding: const .symmetric(horizontal: 24, vertical: 0),
             );
           }),

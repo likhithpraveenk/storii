@@ -50,11 +50,19 @@ final class DownloadsStoreProvider
 
 String _$downloadsStoreHash() => r'bbad505dc26a49547cfd5b5f38d4b3af8059cba0';
 
-@ProviderFor(Downloads)
+@ProviderFor(downloads)
 final downloadsProvider = DownloadsProvider._();
 
 final class DownloadsProvider
-    extends $StreamNotifierProvider<Downloads, Map<String, DownloadItem>> {
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, DownloadItem>>,
+          Map<String, DownloadItem>,
+          Stream<Map<String, DownloadItem>>
+        >
+    with
+        $FutureModifier<Map<String, DownloadItem>>,
+        $StreamProvider<Map<String, DownloadItem>> {
   DownloadsProvider._()
     : super(
         from: null,
@@ -71,33 +79,14 @@ final class DownloadsProvider
 
   @$internal
   @override
-  Downloads create() => Downloads();
-}
+  $StreamProviderElement<Map<String, DownloadItem>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
 
-String _$downloadsHash() => r'6ec2c1f856e7e7e136ec48b3c0ad05865bfc5535';
-
-abstract class _$Downloads extends $StreamNotifier<Map<String, DownloadItem>> {
-  Stream<Map<String, DownloadItem>> build();
-  @$mustCallSuper
   @override
-  WhenComplete runBuild() {
-    final ref =
-        this.ref
-            as $Ref<
-              AsyncValue<Map<String, DownloadItem>>,
-              Map<String, DownloadItem>
-            >;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<
-                AsyncValue<Map<String, DownloadItem>>,
-                Map<String, DownloadItem>
-              >,
-              AsyncValue<Map<String, DownloadItem>>,
-              Object?,
-              Object?
-            >;
-    return element.handleCreate(ref, build);
+  Stream<Map<String, DownloadItem>> create(Ref ref) {
+    return downloads(ref);
   }
 }
+
+String _$downloadsHash() => r'4ddce7893039daa9b359fe13626fbb84a0c2e705';

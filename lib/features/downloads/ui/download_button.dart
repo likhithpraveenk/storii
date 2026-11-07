@@ -21,7 +21,7 @@ class ActiveDownloadsButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activeDownloads = ref.watch(activeDownloadsProvider).value ?? [];
+    final activeDownloads = ref.watch(activeDownloadsProvider);
     final activeCount = activeDownloads.length;
     if (activeDownloads.isEmpty) {
       return const SizedBox.shrink();

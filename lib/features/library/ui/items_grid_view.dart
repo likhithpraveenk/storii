@@ -13,11 +13,13 @@ class ItemsGridView extends ConsumerWidget {
     super.key,
     this.scrollController,
     this.hasMore = false,
+    this.showPlay = false,
   });
 
   final List<LibraryItem> items;
   final ScrollController? scrollController;
   final bool hasMore;
+  final bool showPlay;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,8 +45,11 @@ class ItemsGridView extends ConsumerWidget {
               crossAxisSpacing: 16,
             ),
             delegate: SliverChildBuilderDelegate(
-              (context, index) =>
-                  LibraryItemCard(key: ValueKey(items[index].id), items[index]),
+              (context, index) => LibraryItemCard(
+                key: ValueKey(items[index].id),
+                items[index],
+                showPlay: showPlay,
+              ),
               childCount: items.length,
             ),
           ),

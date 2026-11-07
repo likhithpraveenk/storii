@@ -21,7 +21,7 @@ final class CoverHelperProvider
         argument: null,
         retry: null,
         name: r'coverHelperProvider',
-        isAutoDispose: false,
+        isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -48,4 +48,4 @@ final class CoverHelperProvider
   }
 }
 
-String _$coverHelperHash() => r'9368c81b8e851d07ca2d5f9d138b3bc677ce06bc';
+String _$coverHelperHash() => r'8ed7f8f1ae614fe3ce39ad9d4c8385e5dcd23471';
