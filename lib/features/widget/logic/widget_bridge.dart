@@ -11,28 +11,49 @@ class WidgetBridge {
   final MethodChannel _channel;
 
   Future<List<int>> installedWidgetIds() async {
-    return await _channel.invokeListMethod<int>('getInstalledWidgets') ??
-        const [];
+    try {
+      return await _channel.invokeListMethod<int>('getInstalledWidgets') ??
+          const [];
+    } on PlatformException {
+      return const [];
+    }
   }
 
   Future<String?> readData(String key) async {
-    return await _channel.invokeMethod<String>('getWidgetData', {'key': key});
+    try {
+      return await _channel.invokeMethod<String>('getWidgetData', {'key': key});
+    } on PlatformException {
+      return null;
+    }
   }
 
   Future<void> saveData(String key, String? value) async {
-    await _channel.invokeMethod('saveWidgetData', {'key': key, 'value': value});
+    try {
+      await _channel.invokeMethod('saveWidgetData', {
+        'key': key,
+        'value': value,
+      });
+    } on PlatformException catch (_) {}
   }
 
   Future<void> updateWidgetsUI() async {
-    await _channel.invokeMethod('updateWidget');
+    try {
+      await _channel.invokeMethod('updateWidget');
+    } on PlatformException catch (_) {}
   }
 
   Future<String?> pendingPlay() async {
-    return await _channel.invokeMethod<String>('getPendingPlay');
+    try {
+      return await _channel.invokeMethod<String>('getPendingPlay');
+    } on PlatformException {
+      return null;
+    }
   }
 
   Future<void> clearPendingPlay() async {
-    await _channel.invokeMethod('clearPendingPlay');
+    try {
+      await _channel.invokeMethod('clearPendingPlay');
+    } on PlatformException catch (_) {}
   }
 
   void setPendingPlayListener(Future<void> Function() onQueued) {

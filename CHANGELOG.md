@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 ### Fixed
 
 - close parent bottom sheets before opening sub-sheets
+- android auto library not loading
 
 ## [v0.13.1] - 2026-11-03
 
