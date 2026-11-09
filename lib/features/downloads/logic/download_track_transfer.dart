@@ -1,28 +1,10 @@
-import 'dart:async';
-
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/features/downloads/logic/download_transport.dart';
 import 'package:storii/features/downloads/logic/storage_service.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 
-sealed class TrackTransferEvent {
-  const new();
-}
-
-final class TrackProgress extends TrackTransferEvent {
-  const new(this.bytesReceived);
-
-  final int bytesReceived;
-}
-
-final class TrackOutcome extends TrackTransferEvent {
-  const new({required this.status, required this.bytesReceived, this.error});
-
-  final DownloadStatus status;
-  final int bytesReceived;
-  final String? error;
-}
+class TrackTransferResult(final DownloadStatus status, final int bytesReceived);
 
 class TrackTransfer {
   new({required this.transport, this.delay = _delay});
@@ -39,32 +21,33 @@ class TrackTransfer {
     Duration(milliseconds: 2000),
   ];
 
-  Stream<TrackTransferEvent> transfer({
+  Future<TrackTransferResult> transfer({
     required DownloadTrack track,
     required Uri url,
     required String accessToken,
     required StorageService service,
     required String relativePath,
     required DownloadCancelToken cancelToken,
-    required bool Function() isCancelled,
-  }) async* {
+    required Future<void> Function(int bytesReceived) onProgress,
+  }) async {
     var received = 0;
 
-    for (var attempt = 0; attempt <= retryDelays.length; attempt++) {
-      if (isCancelled() || cancelToken.isCancelled) {
-        yield TrackOutcome(status: .paused, bytesReceived: received);
-        return;
+    for (var attempt = 0; ; attempt++) {
+      if (cancelToken.isCancelled) {
+        return TrackTransferResult(.paused, received);
       }
 
-      received = await service.getBytes(
+      final stat = await service.stat(
         relativePath: relativePath,
         trackPath: track.trackPath,
       );
+      received = stat?.length ?? 0;
 
       final sink = await service.getSink(
         relativePath: relativePath,
         trackPath: track.trackPath,
         mimeType: track.mimeType,
+        resumeOffset: received,
       );
 
       try {
@@ -78,6 +61,7 @@ class TrackTransfer {
         final askedForRange = received > 0;
 
         if (askedForRange && !response.isPartial) {
+          await response.stream.listen((_) {}).cancel();
           await sink.close();
           await service.deleteTrack(
             relativePath: relativePath,
@@ -97,29 +81,26 @@ class TrackTransfer {
           received += chunk.length;
           sink.add(chunk);
 
-          if (isCancelled() || cancelToken.isCancelled) {
+          if (cancelToken.isCancelled) {
             await sink.close();
-            yield TrackOutcome(status: .paused, bytesReceived: received);
-            return;
+            return TrackTransferResult(.paused, received);
           }
 
-          yield TrackProgress(received);
+          await onProgress(received);
         }
 
         await sink.close();
-        yield TrackOutcome(status: .completed, bytesReceived: received);
-        return;
+        return TrackTransferResult(.completed, received);
       } catch (e, st) {
         await sink.close();
 
-        if (isCancelled() || cancelToken.isCancelled) {
-          yield TrackOutcome(status: .paused, bytesReceived: received);
-          return;
+        if (cancelToken.isCancelled) {
+          return TrackTransferResult(.paused, received);
         }
 
         final error = AppError.from(e, st);
 
-        if (attempt == retryDelays.length) {
+        if (attempt >= retryDelays.length) {
           LogService.log(
             error.message,
             source: 'TrackTransfer',
@@ -127,12 +108,7 @@ class TrackTransfer {
             originalError: error.originalError,
             stackTrace: error.stackTrace,
           );
-          yield TrackOutcome(
-            status: .failed,
-            bytesReceived: received,
-            error: error.message,
-          );
-          return;
+          return TrackTransferResult(.failed, received);
         }
 
         LogService.log(

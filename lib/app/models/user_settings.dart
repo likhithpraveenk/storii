@@ -71,6 +71,9 @@ class DefaultUserSettings {
   static const shakeSleepTimerAddMinutes = 5;
   static const shakeSensitivity = ShakeSensitivity.medium;
   static const useNowPlayingTheme = false;
+  static const parallelDownloads = 1;
+  static const autoDeleteListenedDownloads = false;
+  static const autoDeleteListenedDelay = Duration(days: 1);
   static const libraryPageSize = 60;
   static const seriesPageSize = 20;
   static const imageMaxSize = 180.0;
@@ -84,6 +87,9 @@ class DefaultUserSettings {
   static const imageResolutionListView = 200;
   static const showNavbarAlways = false;
   static const offlineMode = false;
+  static const String? defaultDownloadsLocationAudiobooks = null;
+  static const String? defaultDownloadsLocationPodcasts = null;
+  static const bool useWavySlider = false;
 }
 
 @freezed
@@ -247,6 +253,14 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.useNowPlayingTheme) bool useNowPlayingTheme,
 
+    @Default(DefaultUserSettings.parallelDownloads) int parallelDownloads,
+
+    @Default(DefaultUserSettings.autoDeleteListenedDownloads)
+    bool autoDeleteListenedDownloads,
+
+    @Default(DefaultUserSettings.autoDeleteListenedDelay)
+    Duration autoDeleteListenedDelay,
+
     @Default(DefaultUserSettings.libraryPageSize) int libraryPageSize,
 
     @Default(DefaultUserSettings.seriesPageSize) int seriesPageSize,
@@ -277,6 +291,12 @@ sealed class UserSettings with _$UserSettings {
     @Default(DefaultUserSettings.showNavbarAlways) bool showNavbarAlways,
 
     @Default(DefaultUserSettings.offlineMode) bool offlineMode,
+
+    String? defaultDownloadsLocationAudiobooks,
+
+    String? defaultDownloadsLocationPodcasts,
+
+    @Default(DefaultUserSettings.useWavySlider) bool useWavySlider,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);

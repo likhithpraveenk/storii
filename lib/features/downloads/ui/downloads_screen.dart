@@ -67,10 +67,10 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final activeCount = ref.watch(
-      activeDownloadsProvider.select((list) => list.value?.length ?? 0),
+      activeDownloadsProvider.select((list) => list.length),
     );
     final completedCount = ref.watch(
-      completedDownloadsProvider.select((list) => list.value?.length ?? 0),
+      completedDownloadsProvider.select((list) => list.length),
     );
 
     return Scaffold(
@@ -162,7 +162,7 @@ class CompletedDownloadsTab extends ConsumerWidget {
     final items = ref.watch(downloadedItemsProvider);
 
     return displayMode == .listView
-        ? ItemsListView(items)
-        : ItemsGridView(items);
+        ? ItemsListView(items, showPlay: true)
+        : ItemsGridView(items, showPlay: true);
   }
 }

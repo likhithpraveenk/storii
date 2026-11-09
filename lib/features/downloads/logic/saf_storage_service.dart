@@ -38,44 +38,16 @@ class SafStorageService extends StorageService {
   }
 
   @override
-  Future<String?> getTrackPath({
+  Future<TrackFileStat?> stat({
     required String relativePath,
     required String trackPath,
   }) async {
     final parts = p.split(p.join(relativePath, trackPath));
     final file = await _safUtil.child(location.uri, parts);
-    return file?.isDir == true ? null : file?.uri;
-  }
-
-  @override
-  Future<int> getBytes({
-    required String relativePath,
-    required String trackPath,
-  }) async {
-    final filePath = await getTrackPath(
-      relativePath: relativePath,
-      trackPath: trackPath,
-    );
-    if (filePath == null) return 0;
-    final f = await _safUtil.stat(filePath, false);
-    return f?.length ?? 0;
-  }
-
-  @override
-  Future<bool> isFileIntact({
-    required String relativePath,
-    required String trackPath,
-    required int expectedBytes,
-  }) async {
-    final filePath = await getTrackPath(
-      relativePath: relativePath,
-      trackPath: trackPath,
-    );
-    if (filePath == null) return false;
-    final stat = await _safUtil.stat(filePath, false);
-    final actual = stat?.length ?? 0;
-    if (actual <= 0) return false;
-    return expectedBytes <= 0 || actual >= expectedBytes;
+    if (file == null || file.isDir == true) return null;
+    final stat = await _safUtil.stat(file.uri, false);
+    if (stat == null) return null;
+    return (path: file.uri, length: stat.length);
   }
 
   @override
@@ -83,13 +55,14 @@ class SafStorageService extends StorageService {
     required String relativePath,
     required String trackPath,
     required String? mimeType,
+    int resumeOffset = 0,
   }) async {
     final safPath = await _rootFolder(
       relativePath: relativePath,
       trackPath: trackPath,
     );
     final adapter = SafStreamSinkAdapter(safPath);
-    await adapter.init(trackPath, mimeType);
+    await adapter.init(trackPath, mimeType, append: resumeOffset > 0);
     return adapter;
   }
 
@@ -164,11 +137,16 @@ class SafStreamSinkAdapter implements StreamSink<List<int>> {
   late final SafStream _saf;
   late final SafWriteStreamInfo _info;
 
-  Future<void> init(String filename, String? mimeType) async {
+  Future<void> init(
+    String filename,
+    String? mimeType, {
+    bool append = false,
+  }) async {
     _info = await _saf.startWriteStream(
       folderPath,
       filename,
       mimeType ?? 'audio/mpeg',
+      append: append,
     );
   }
 

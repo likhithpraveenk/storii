@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/item/ui/download_info_labels.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 
@@ -61,6 +62,13 @@ class EpisodeMetadataSheet extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: .start,
           children: [
+            SizedBox(
+              width: double.infinity,
+              child: DownloadInfoLabels(
+                libraryItemId: episode.libraryItemId,
+                episodeId: episode.id,
+              ),
+            ),
             ...rows
                 .where((r) => r.value != null && r.value!.isNotEmpty)
                 .map(

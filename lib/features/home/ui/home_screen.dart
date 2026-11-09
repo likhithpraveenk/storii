@@ -63,7 +63,8 @@ class HomeScreen extends ConsumerWidget {
                 final showPlay =
                     shelf.identity == .continueListening ||
                     shelf.identity == .listenAgain ||
-                    shelf.identity == .continueSeries;
+                    shelf.identity == .continueSeries ||
+                    shelf.id == 'offline_downloads';
 
                 final isListView = switch (shelf) {
                   LibraryItemsShelf() =>

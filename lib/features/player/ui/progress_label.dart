@@ -8,11 +8,13 @@ class ProgressLabel extends ConsumerWidget {
   const new({
     required this.currentPosition,
     required this.totalDuration,
+    required this.remaining,
     super.key,
   });
 
   final Duration currentPosition;
   final Duration totalDuration;
+  final Duration remaining;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,7 +28,7 @@ class ProgressLabel extends ConsumerWidget {
 
     final end = switch (label) {
       .total => totalDuration.toTime(),
-      .remaining => '$kMinus${(totalDuration - currentPosition).toTime()}',
+      .remaining => '$kMinus${remaining.toTime()}',
     };
 
     return Padding(

@@ -2,17 +2,19 @@ import 'dart:async';
 
 import 'package:storii/app/models/storage_location.dart';
 
+typedef TrackFileStat = ({String path, int length});
+
+extension TrackFileStatX on TrackFileStat {
+  bool isIntact(int expectedBytes) =>
+      length > 0 && (expectedBytes <= 0 || length >= expectedBytes);
+}
+
 abstract class StorageService {
   final StorageLocation location;
 
   new(this.location);
 
-  Future<String?> getTrackPath({
-    required String relativePath,
-    required String trackPath,
-  });
-
-  Future<int> getBytes({
+  Future<TrackFileStat?> stat({
     required String relativePath,
     required String trackPath,
   });
@@ -21,12 +23,7 @@ abstract class StorageService {
     required String relativePath,
     required String trackPath,
     required String? mimeType,
-  });
-
-  Future<bool> isFileIntact({
-    required String relativePath,
-    required String trackPath,
-    required int expectedBytes,
+    int resumeOffset = 0,
   });
 
   Future<void> deleteFolder({required String relativePath});

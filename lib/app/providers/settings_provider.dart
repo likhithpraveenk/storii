@@ -154,6 +154,7 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
             DefaultUserSettings.interruptionLongSkipThreshold,
         interruptionLongSkipBackward:
             DefaultUserSettings.interruptionLongSkipBackward,
+        useWavySlider: DefaultUserSettings.useWavySlider,
       ),
     );
   }
@@ -196,6 +197,14 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
     return _save(
       s.copyWith(
         downloadOnUnmeteredOnly: DefaultUserSettings.downloadOnUnmeteredOnly,
+        defaultDownloadsLocationAudiobooks:
+            DefaultUserSettings.defaultDownloadsLocationAudiobooks,
+        defaultDownloadsLocationPodcasts:
+            DefaultUserSettings.defaultDownloadsLocationPodcasts,
+        parallelDownloads: DefaultUserSettings.parallelDownloads,
+        autoDeleteListenedDownloads:
+            DefaultUserSettings.autoDeleteListenedDownloads,
+        autoDeleteListenedDelay: DefaultUserSettings.autoDeleteListenedDelay,
       ),
     );
   }

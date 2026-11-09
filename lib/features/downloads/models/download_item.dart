@@ -81,10 +81,5 @@ sealed class DownloadItem with _$DownloadItem {
   bool get isActive =>
       status == .downloading || status == .queued || status == .waiting;
 
-  bool get isStuck =>
-      status == .queued &&
-      startedAt != null &&
-      DateTime.now().difference(startedAt!).inMinutes > 5;
-
   bool get isPodcast => mediaType == .podcast;
 }

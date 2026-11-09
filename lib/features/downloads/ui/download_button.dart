@@ -6,6 +6,7 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/storage_location.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
@@ -20,7 +21,7 @@ class ActiveDownloadsButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activeDownloads = ref.watch(activeDownloadsProvider).value ?? [];
+    final activeDownloads = ref.watch(activeDownloadsProvider);
     final activeCount = activeDownloads.length;
     if (activeDownloads.isEmpty) {
       return const SizedBox.shrink();
@@ -95,6 +96,19 @@ class DownloadButton extends ConsumerWidget {
           final availableLocations = ref.read(
             storageLocationsByTypeProvider(mediaType),
           );
+          final defaultUri = mediaType == .book
+              ? ref.read(defaultDownloadsLocationAudiobooksProvider)
+              : ref.read(defaultDownloadsLocationPodcastsProvider);
+          final defaultLocation = availableLocations.firstWhereOrNull(
+            (l) => l.uri == defaultUri,
+          );
+          if (defaultLocation != null) {
+            return queue.enqueue(
+              libraryItemId: libraryItemId,
+              episodeId: episodeId,
+              location: defaultLocation,
+            );
+          }
           if (availableLocations.length == 1) {
             return queue.enqueue(
               libraryItemId: libraryItemId,
@@ -182,14 +196,24 @@ class _ProgressButton extends StatelessWidget {
   }
 }
 
-class ChooseLocationDialog extends ConsumerWidget {
+class ChooseLocationDialog extends ConsumerStatefulWidget {
   const new(this.mediaType, {super.key});
 
   final MediaType mediaType;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final locations = ref.watch(storageLocationsByTypeProvider(mediaType));
+  ConsumerState<ChooseLocationDialog> createState() =>
+      _ChooseLocationDialogState();
+}
+
+class _ChooseLocationDialogState extends ConsumerState<ChooseLocationDialog> {
+  bool _setAsDefault = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final locations = ref.watch(
+      storageLocationsByTypeProvider(widget.mediaType),
+    );
     final theme = Theme.of(context);
     return Dialog(
       backgroundColor: Colors.transparent,
@@ -225,10 +249,43 @@ class ChooseLocationDialog extends ConsumerWidget {
                   title: Text(l.isInternal ? l10n.internalAppStorage : l.name),
                   subtitle: Text(l.uri.toUiPath(context)),
                   contentPadding: const .symmetric(horizontal: 16),
-                  onTap: () => Navigator.of(context).pop(l),
+                  onTap: () async {
+                    if (_setAsDefault) {
+                      final notifier = ref.read(userSettingsProvider.notifier);
+                      if (widget.mediaType == .book) {
+                        await notifier.setDefaultDownloadsLocationAudiobooks(
+                          l.uri,
+                        );
+                      } else {
+                        await notifier.setDefaultDownloadsLocationPodcasts(
+                          l.uri,
+                        );
+                      }
+                    }
+                    if (context.mounted) {
+                      Navigator.of(context).pop(l);
+                    }
+                  },
                 ),
               ),
               const SizedBox(height: 16),
+              ListTile(
+                leading: Icon(
+                  _setAsDefault
+                      ? Icons.check_box
+                      : Icons.check_box_outline_blank,
+                  size: 20,
+                  color: _setAsDefault
+                      ? Theme.of(context).colorScheme.primary
+                      : null,
+                ),
+                onTap: () => setState(() => _setAsDefault = !_setAsDefault),
+                title: Text(l10n.setAsDefault),
+                subtitle: Text(l10n.removeDefaultLocationNote),
+                visualDensity: .compact,
+                contentPadding: const .symmetric(horizontal: 16),
+              ),
+              const SizedBox(height: 8),
               Padding(
                 padding: const .symmetric(horizontal: 24),
                 child: SizedBox(

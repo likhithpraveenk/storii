@@ -1,42 +1,47 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/config/constants.dart';
+import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/downloads/models/download_item.dart';
+import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 
 part 'downloads_notification_service.g.dart';
 
-const isolatePortName = 'downloads_action';
-
 abstract class DownloadsNotifications {
-  Future<bool> requestPermission();
+  Future<void> init();
 
-  Future<void> startForeground({required String title});
+  Future<void> start(String key);
 
-  Future<void> showProgressNotification({
-    required String title,
-    required int progress,
-    required bool isComplete,
-    required bool isFailed,
-    required bool isPaused,
-    int? totalBytes,
-    required bool useBinary,
-  });
+  Future<void> update(String key, DownloadItem item);
 
-  Future<void> stopForeground();
+  Future<void> finish(String key);
 
-  Future<void> dismiss();
+  Future<void> dismiss(String key);
 }
 
 @Riverpod(keepAlive: true)
-DownloadsNotifications downloadsNotifications(Ref ref) =>
-    DownloadsNotificationService.instance;
+DownloadsNotifications downloadsNotifications(Ref ref) {
+  return DownloadsNotificationService(
+    getRouter: () => ref.read(routerProvider),
+    useBinary: () => ref.read(useBinaryBytesProvider),
+  );
+}
 
 class DownloadsNotificationService implements DownloadsNotifications {
-  new _();
-  static final instance = DownloadsNotificationService._();
+  final GoRouter Function() getRouter;
+  final bool Function() useBinary;
 
+  new({required this.getRouter, required this.useBinary});
   final _plugin = FlutterLocalNotificationsPlugin();
+
+  int _nextId = 1000;
+  final _foreground = <String>{};
+  final _notificationIds = <String, int>{};
 
   AndroidFlutterLocalNotificationsPlugin? get _androidPlugin => _plugin
       .resolvePlatformSpecificImplementation<
@@ -45,11 +50,8 @@ class DownloadsNotificationService implements DownloadsNotifications {
 
   static const channelId = 'com.likhithpraveenk.storii.downloads';
   static final channelName = l10n.downloads;
-  static const actionPause = 'action_pause';
-  static const actionResume = 'action_resume';
-  static const actionCancel = 'action_cancel';
-  static const notificationId = 888;
 
+  @override
   Future<void> init() async {
     const androidInit = AndroidInitializationSettings(
       'drawable/ic_notification',
@@ -59,47 +61,65 @@ class DownloadsNotificationService implements DownloadsNotifications {
       android: androidInit,
       iOS: iosInit,
     );
-    await _plugin.initialize(settings: initSettings);
+    await _plugin.initialize(
+      settings: initSettings,
+      onDidReceiveNotificationResponse: (details) {
+        final payload = details.payload;
+        if (payload != null && payload.startsWith('downloads')) {
+          getRouter().push(
+            AppRoute.downloads.path,
+            extra: DownloadsScreenTab.active,
+          );
+        }
+      },
+    );
   }
 
-  @override
   Future<bool> requestPermission() async {
     final status = await Permission.notification.request();
     return status.isGranted;
   }
 
   @override
-  Future<void> startForeground({required String title}) async {
-    final androidDetails = AndroidNotificationDetails(
-      channelId,
-      channelName,
-      channelDescription: 'Shows download progress',
-      importance: .low,
-      priority: .low,
-      ongoing: true,
-      onlyAlertOnce: true,
-    );
-
-    await _androidPlugin?.startForegroundService(
-      id: notificationId,
-      title: title,
-      body: 'Starting download...',
-      notificationDetails: androidDetails,
-      foregroundServiceTypes: {.foregroundServiceTypeDataSync},
-    );
+  Future<void> start(String key) async {
+    await requestPermission();
+    if (!_foreground.add(key)) return;
+    if (_foreground.length == 1) {
+      final androidDetails = AndroidNotificationDetails(
+        channelId,
+        channelName,
+        channelDescription: 'Shows download progress',
+        importance: .low,
+        priority: .low,
+        ongoing: true,
+        onlyAlertOnce: true,
+      );
+      await _androidPlugin?.startForegroundService(
+        id: _nextId,
+        title: l10n.downloads,
+        body: l10n.startingDownload,
+        notificationDetails: androidDetails,
+        foregroundServiceTypes: {.foregroundServiceTypeDataSync},
+      );
+    }
+    _notificationIds.putIfAbsent(key, () => _nextId++);
   }
 
   @override
-  Future<void> showProgressNotification({
-    required String title,
-    required int progress,
-    required bool isComplete,
-    required bool isFailed,
-    required bool isPaused,
-    int? totalBytes,
-    required bool useBinary,
-  }) async {
-    String body = '$progress%';
+  Future<void> finish(String key) async {
+    if (_foreground.remove(key) && _foreground.isEmpty) {
+      await _androidPlugin?.stopForegroundService();
+    }
+  }
+
+  @override
+  Future<void> update(String key, DownloadItem item) async {
+    final isComplete = item.status == .completed;
+    final isFailed = item.status == .failed;
+    final isPaused = item.status == .paused;
+    final isTerminal = isComplete || isFailed || isPaused;
+
+    var body = '${(item.progress * 100).toInt()}%';
     if (isComplete) {
       body = l10n.completed;
     } else if (isFailed) {
@@ -107,56 +127,39 @@ class DownloadsNotificationService implements DownloadsNotifications {
     } else if (isPaused) {
       body = l10n.paused;
     }
-    if (totalBytes != null) {
-      body = '$body - ${formatBytes(totalBytes, useBinary: useBinary)}';
-    }
+    final totalStr = formatBytes(item.totalBytes, useBinary: useBinary());
+    final receivedStr = formatBytes(item.receivedBytes, useBinary: useBinary());
+    body = '$body $kSmallDot $receivedStr / $totalStr';
 
-    final actions = <AndroidNotificationAction>[
-      if (!isComplete && !isFailed && !isPaused)
-        AndroidNotificationAction(
-          actionPause,
-          l10n.pause,
-          cancelNotification: false,
-        ),
-      if (isPaused)
-        AndroidNotificationAction(
-          actionResume,
-          l10n.resume,
-          cancelNotification: false,
-        ),
-      if (!isComplete && !isFailed)
-        AndroidNotificationAction(actionCancel, l10n.cancel),
-    ];
-
+    final id = _notificationIds.putIfAbsent(key, () => _nextId++);
     final androidDetails = AndroidNotificationDetails(
       channelId,
       channelName,
       channelDescription: 'Shows download progress',
       importance: .low,
       priority: .low,
-      showProgress: !isComplete && !isFailed && !isPaused,
+      showProgress: !isTerminal,
       maxProgress: 100,
-      progress: progress,
-      ongoing: !isComplete && !isFailed && !isPaused,
+      progress: (item.progress * 100).toInt(),
+      ongoing: !isTerminal,
       onlyAlertOnce: true,
-      actions: actions,
     );
 
     await _plugin.show(
-      id: notificationId,
-      title: title,
+      id: id,
+      title: item.title,
       body: body,
       notificationDetails: NotificationDetails(android: androidDetails),
+      payload: 'downloads',
     );
   }
 
   @override
-  Future<void> stopForeground() async {
-    await _androidPlugin?.stopForegroundService();
-  }
-
-  @override
-  Future<void> dismiss() async {
-    await _plugin.cancel(id: notificationId);
+  Future<void> dismiss(String key) async {
+    await finish(key);
+    final id = _notificationIds.remove(key);
+    if (id != null) {
+      await _plugin.cancel(id: id);
+    }
   }
 }

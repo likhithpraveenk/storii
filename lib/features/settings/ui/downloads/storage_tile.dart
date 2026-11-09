@@ -167,6 +167,10 @@ class _StorageLocationWidget extends ConsumerWidget {
         ref.watch(checkFolderPermissionProvider(location)).value ?? true;
     final bytes = ref.watch(storageBytesByLocationProvider(location));
     final useBinary = ref.watch(useBinaryBytesProvider);
+    final defaultUri = location.mediaType == .audiobook
+        ? ref.watch(defaultDownloadsLocationAudiobooksProvider)
+        : ref.watch(defaultDownloadsLocationPodcastsProvider);
+    final isDefault = defaultUri == location.uri;
 
     return ListTile(
       onTap: () async {
@@ -212,6 +216,22 @@ class _StorageLocationWidget extends ConsumerWidget {
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
+                if (isDefault) ...[
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const .symmetric(horizontal: 6),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.primaryContainer,
+                      borderRadius: .circular(4),
+                    ),
+                    child: Text(
+                      l10n.defaultWord,
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: theme.colorScheme.onPrimaryContainer,
+                      ),
+                    ),
+                  ),
+                ],
               ],
             )
           else
@@ -224,11 +244,14 @@ class _StorageLocationWidget extends ConsumerWidget {
         ],
       ),
       contentPadding: const .symmetric(horizontal: 16),
-      trailing: !location.isInternal
-          ? IconButton(
+      trailing: Row(
+        mainAxisSize: .min,
+        children: [
+          if (!location.isInternal)
+            IconButton(
               icon: Icon(Icons.delete_outline, color: theme.colorScheme.error),
               onPressed: () async {
-                await AppDialog.show(
+                final ok = await AppDialog.show<bool>(
                   context,
                   title: l10n.removeLocationQ,
                   body: Text(
@@ -238,26 +261,48 @@ class _StorageLocationWidget extends ConsumerWidget {
                   actionLabel: l10n.delete,
                   actionIcon: Icons.delete,
                   isDestructive: true,
-                  onTap: () async {
-                    await ref
-                        .read(downloadsStoreProvider)
-                        .removeAllFromLocation(location.uri);
-                    final current = ref.read(storageLocationsProvider);
-                    final updated = current
-                        .where((l) => l != location)
-                        .toList();
-                    await ref
-                        .read(appSettingsProvider.notifier)
-                        .setStorageLocations(updated);
-                    await SafUtil().releasePersistedPermission(
-                      location.uri,
-                      write: true,
-                    );
-                  },
+                  onTap: () async {},
+                );
+                if (ok != true) return;
+                await ref
+                    .read(downloadsStoreProvider)
+                    .removeAllFromLocation(location.uri);
+                final current = ref.read(storageLocationsProvider);
+                final updated = current.where((l) => l != location).toList();
+                await ref
+                    .read(appSettingsProvider.notifier)
+                    .setStorageLocations(updated);
+                if (isDefault) {
+                  final notifier = ref.read(userSettingsProvider.notifier);
+                  if (location.mediaType == .audiobook) {
+                    await notifier.setDefaultDownloadsLocationAudiobooks(null);
+                  } else {
+                    await notifier.setDefaultDownloadsLocationPodcasts(null);
+                  }
+                }
+                await SafUtil().releasePersistedPermission(
+                  location.uri,
+                  write: true,
                 );
               },
-            )
-          : null,
+            ),
+          IconButton(
+            icon: const Icon(Icons.star_outline),
+            isSelected: isDefault,
+            selectedIcon: const Icon(Icons.star),
+            tooltip: isDefault ? l10n.removeDefault : l10n.setAsDefault,
+            onPressed: () async {
+              final notifier = ref.read(userSettingsProvider.notifier);
+              final uri = isDefault ? null : location.uri;
+              if (location.mediaType == .audiobook) {
+                await notifier.setDefaultDownloadsLocationAudiobooks(uri);
+              } else {
+                await notifier.setDefaultDownloadsLocationPodcasts(uri);
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }

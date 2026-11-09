@@ -57,6 +57,7 @@
   "shelfNewestEpisodes": "Newest Episodes",
   "shelfListenAgain": "Listen Again",
   "downloads": "Downloads",
+  "startingDownload": "Starting download…",
   "settings": "Settings",
   "logs": "Logs",
   "about": "About",
@@ -436,6 +437,51 @@
   "high": "High",
   "avoidMobileData": "Avoid mobile data",
   "avoidMobileDataSubtitle": "Downloads will pause on mobile networks",
+  "parallelDownloads": "Concurrent downloads",
+  "parallelDownloadsSubtitle": "Number of books or episodes to download at the same time",
+  "autoDeleteListenedDownloads": "Auto-delete listened downloads",
+  "autoDeleteListenedDownloadsSubtitle": "Delete downloads from local storage after you finish listening them. Works only when the app is running",
+  "deleteDelay": "Delete delay",
+  "nDays": "{n, plural, =1{1 day} other {{n} days}}",
+  "@nDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nHours": "{n, plural, =1{1 hour} other {{n} hours}}",
+  "@nHours": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nMinutes": "{n, plural, =1{1 minute} other {{n} minutes}}",
+  "@nMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "downloadedByDifferentUser": "Downloaded by a different user",
+  "downloadedFromDifferentServer": "Downloaded from a different server",
+  "scheduledForDeletion": "Scheduled to be deleted in {hours, plural, =0{} other{{hours}h }}{minutes}m",
+  "@scheduledForDeletion": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "excludedFromAutoDelete": "Excluded from auto-delete",
+  "neverAutoDeleteQ": "Never auto-delete this download?",
+  "includeInAutoDelete": "Include in auto-delete",
   "waitingForNetwork": "Waiting for network",
   "totalListeningTime": "Total Listening Time",
   "currentStreak": "Current streak",
@@ -563,10 +609,13 @@
   "internalStorage": "Internal Storage",
   "sdCard": "SD Card",
   "downloadLocation": "Download Location",
+  "setAsDefault": "Set as default",
+  "removeDefaultLocationNote": "To remove the default, go to Settings > Downloads > Storage",
   "addFolder": "Add Folder",
   "permissionRevoked": "Permission revoked",
   "removeLocationQ": "Remove location?",
   "removeLocationSubtitle": "Downloads at this location, if any, will be unlinked",
+  "removeDefault": "Remove default",
   "localSession": "Local session",
   "unsyncedSessions": "Unsynced sessions",
   "currentPosition": "Current position",
@@ -587,6 +636,8 @@
   "playbackControlsLayout": "Playback Controls Layout",
   "chapterProgressBar": "Chapter progress bar",
   "chapterProgressBarSubtitle": "Off: show total progress",
+  "wavySlider": "Wavy progress bar",
+  "wavySliderSubtitle": "Animated wave effect on the progress bar",
   "speedAdjustedTime": "Speed-adjusted time",
   "speedAdjustedTimeSubtitle": "Show real time based on current speed",
   "defaultWord": "Default",

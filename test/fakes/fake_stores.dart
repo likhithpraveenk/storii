@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/models/playback_event.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
@@ -102,6 +104,8 @@ class FakeDownloadsStore extends DownloadsStore {
   new() : super();
 
   final Map<String, DownloadItem> _data = <String, DownloadItem>{};
+  final StreamController<Map<String, DownloadItem>> _changes =
+      StreamController<Map<String, DownloadItem>>.broadcast();
   int saveCalls = 0;
   final List<DownloadItem> saved = <DownloadItem>[];
   Object? saveError;
@@ -113,12 +117,25 @@ class FakeDownloadsStore extends DownloadsStore {
   Map<String, DownloadItem> getAll() => Map.unmodifiable(_data);
 
   @override
+  Stream<Map<String, DownloadItem>> watch() async* {
+    yield Map.unmodifiable(_data);
+    yield* _changes.stream;
+  }
+
+  @override
   Future<void> save(DownloadItem item) async {
     saveCalls++;
     final error = saveError;
     if (error != null) throw error;
     _data[item.key] = item;
     saved.add(item);
+    _changes.add(Map.unmodifiable(_data));
+  }
+
+  @override
+  Future<void> remove(String id) async {
+    _data.remove(id);
+    _changes.add(Map.unmodifiable(_data));
   }
 }
 

@@ -1,4 +1,5 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/init.dart';
@@ -7,11 +8,12 @@ import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/repository_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/repositories/item_repository.dart';
+import 'package:storii/app/repositories/library_repository.dart';
 import 'package:storii/features/downloads/logic/cover_helper.dart';
 import 'package:storii/features/home/logic/shelves_provider.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
-import 'package:storii/features/library/logic/library_items_provider.dart';
+import 'package:storii/features/library/logic/library_filters_provider.dart';
 import 'package:storii/features/player/logic/android_auto_extensions.dart';
 import 'package:storii/features/player/logic/android_auto_paging.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
@@ -40,9 +42,14 @@ class AndroidAutoHelper {
 
   final ProviderContainer _container;
 
-  Future<ItemRepository?> _itemRepository() async {
+  Future<ItemRepository> _itemRepository() async {
     final user = await _container.read(authenticatedUserProvider.future);
     return _container.read(itemRepositoryProvider(user));
+  }
+
+  Future<LibraryRepository> _libraryRepository() async {
+    final user = await _container.read(authenticatedUserProvider.future);
+    return _container.read(libraryRepositoryProvider(user));
   }
 
   CoverHelper get _helper => _container.read(coverHelperProvider);
@@ -130,27 +137,38 @@ class AndroidAutoHelper {
     String query, [
     Map<String, dynamic>? options,
   ]) async {
-    final libraryId = _container.read(currentLibraryProvider)?.id;
-    if (libraryId == null) return [];
+    try {
+      final libraryId = _container.read(currentLibraryProvider)?.id;
+      if (libraryId == null) return [];
 
-    final user = await _container.read(authenticatedUserProvider.future);
-    final libraryRepo = _container.read(libraryRepositoryProvider(user));
-    final result = await libraryRepo.search(libraryId, query: query);
-    final items = <LibraryItem>[
-      ...result.book,
-      ...result.podcast,
-      ...result.episodes,
-    ];
-    final paged = applyAndroidAutoPaging(
-      items,
-      androidAutoPagingFromOptions(options),
-    );
-    final repo = await _itemRepository();
-    return Future.wait(
-      paged.map(
-        (item) => item.toAndroidAutoMediaItem(repo: repo, helper: _helper),
-      ),
-    );
+      final user = await _container.read(authenticatedUserProvider.future);
+      final libraryRepo = _container.read(libraryRepositoryProvider(user));
+      final result = await libraryRepo.search(libraryId, query: query);
+      final items = <LibraryItem>[
+        ...result.book,
+        ...result.podcast,
+        ...result.episodes,
+      ];
+      final paged = applyAndroidAutoPaging(
+        items,
+        androidAutoPagingFromOptions(options),
+      );
+      final repo = await _itemRepository();
+      return await Future.wait(
+        paged.map(
+          (item) => item.toAndroidAutoMediaItem(repo: repo, helper: _helper),
+        ),
+      );
+    } catch (e, st) {
+      LogService.log(
+        'Android Auto failed to load search',
+        level: .error,
+        source: 'AndroidAutoHelper',
+        originalError: e,
+        stackTrace: st,
+      );
+      return const [];
+    }
   }
 
   Future<List<MediaItem>> _loadNodeChildren(
@@ -165,33 +183,45 @@ class AndroidAutoHelper {
   }
 
   Future<List<MediaItem>> _loadContinue(Map<String, dynamic>? options) async {
-    final shelves = await _container.read(rawShelvesProvider.future);
-    final continueShelves = shelves
-        .whereType<LibraryItemsShelf>()
-        .where(
-          (s) =>
-              s.identity == .continueListening || s.identity == .continueSeries,
-        )
-        .toList();
+    try {
+      final shelves = await _container.read(rawShelvesProvider.future);
+      final continueShelves = shelves
+          .whereType<LibraryItemsShelf>()
+          .where(
+            (s) =>
+                s.identity == .continueListening ||
+                s.identity == .continueSeries,
+          )
+          .toList();
 
-    final seen = <String>{};
-    final items = <LibraryItem>[];
-    for (final shelf in continueShelves) {
-      for (final item in shelf.entities) {
-        if (seen.add(item.id)) items.add(item);
+      final seen = <String>{};
+      final items = <LibraryItem>[];
+      for (final shelf in continueShelves) {
+        for (final item in shelf.entities) {
+          if (seen.add(item.id)) items.add(item);
+        }
       }
-    }
 
-    final paged = applyAndroidAutoPaging(
-      items,
-      androidAutoPagingFromOptions(options),
-    );
-    final repo = await _itemRepository();
-    return Future.wait(
-      paged.map(
-        (item) => item.toAndroidAutoMediaItem(repo: repo, helper: _helper),
-      ),
-    );
+      final paged = applyAndroidAutoPaging(
+        items,
+        androidAutoPagingFromOptions(options),
+      );
+      final repo = await _itemRepository();
+      return await Future.wait(
+        paged.map(
+          (item) => item.toAndroidAutoMediaItem(repo: repo, helper: _helper),
+        ),
+      );
+    } catch (e, st) {
+      LogService.log(
+        'Android Auto failed to load continue media',
+        level: .error,
+        source: 'AndroidAutoHelper',
+        originalError: e,
+        stackTrace: st,
+      );
+      return const [];
+    }
   }
 
   Future<List<MediaItem>> _loadDownloads(Map<String, dynamic>? options) async {
@@ -222,7 +252,7 @@ class AndroidAutoHelper {
       }).toList();
     } catch (e, st) {
       LogService.log(
-        'Android Auto downloads load failed',
+        'Android Auto failed to load downloads',
         level: .error,
         source: 'AndroidAutoHelper',
         originalError: e,
@@ -235,17 +265,35 @@ class AndroidAutoHelper {
   Future<List<MediaItem>> _loadLibraryItems(
     Map<String, dynamic>? options,
   ) async {
-    final items = await _container.read(allLibraryItemsProvider.future);
-    final paged = applyAndroidAutoPaging(
-      items,
-      androidAutoPagingFromOptions(options),
-    );
-    final repo = await _itemRepository();
-    return Future.wait(
-      paged.map(
-        (item) => item.toAndroidAutoMediaItem(repo: repo, helper: _helper),
-      ),
-    );
+    try {
+      final libraryId = _container.read(currentLibraryProvider)?.id;
+      if (libraryId == null) return [];
+
+      final libRepo = await _libraryRepository();
+      final params = _container.read(
+        libraryFiltersProvider(.library).select((s) => s.toItemParams()),
+      );
+      final items = await libRepo.getAllItems(libraryId, params);
+      final paged = applyAndroidAutoPaging(
+        items,
+        androidAutoPagingFromOptions(options),
+      );
+      final repo = await _itemRepository();
+      return await Future.wait(
+        paged.map(
+          (item) => item.toAndroidAutoMediaItem(repo: repo, helper: _helper),
+        ),
+      );
+    } catch (e, st) {
+      LogService.log(
+        'Android Auto failed to load library items',
+        level: .error,
+        source: 'AndroidAutoHelper',
+        originalError: e,
+        stackTrace: st,
+      );
+      return [];
+    }
   }
 
   Future<List<MediaItem>> _loadItemChildren({

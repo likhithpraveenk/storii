@@ -21,6 +21,7 @@ import 'package:storii/features/widget/logic/widget_controller.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
+import 'package:storii/storage/local/auto_delete_exclusion_store.dart';
 
 Future<void> showMoreItemOptionsSheet(
   BuildContext context, {
@@ -185,6 +186,24 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
       downloadItemProvider(widget.itemId, widget.episodeId),
     );
     if (downloaded != null) {
+      final downloadKey = mediaItemIdKey(widget.itemId, widget.episodeId);
+      final excluded = ref.watch(autoDeleteExclusionsProvider).value ?? {};
+      if (excluded.contains(downloadKey)) {
+        options.add((
+          title: l10n.includeInAutoDelete,
+          icon: Icons.autorenew,
+          onTap: () async {
+            if (_isBusy) return;
+            setState(() => _isBusy = true);
+            await ref
+                .read(autoDeleteExclusionStoreProvider)
+                .remove(downloadKey);
+            if (!mounted) return;
+            setState(() => _isBusy = false);
+            globalMessengerKey.currentState?.showAppSnackBar(l10n.success);
+          },
+        ));
+      }
       options.add((
         title: l10n.removeDownloadQ,
         icon: Icons.delete_outline,

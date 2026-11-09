@@ -36,21 +36,15 @@ class FakeStorageService extends StorageService {
   int existingBytes;
   final List<FakeTrackSink> sinks = <FakeTrackSink>[];
   final List<String> deletedTracks = <String>[];
-  int getBytesCalls = 0;
+  int statCalls = 0;
 
   @override
-  Future<String?> getTrackPath({
-    required String relativePath,
-    required String trackPath,
-  }) async => null;
-
-  @override
-  Future<int> getBytes({
+  Future<TrackFileStat?> stat({
     required String relativePath,
     required String trackPath,
   }) async {
-    getBytesCalls++;
-    return existingBytes;
+    statCalls++;
+    return (path: trackPath, length: existingBytes);
   }
 
   @override
@@ -58,18 +52,12 @@ class FakeStorageService extends StorageService {
     required String relativePath,
     required String trackPath,
     required String? mimeType,
+    int resumeOffset = 0,
   }) async {
     final sink = FakeTrackSink();
     sinks.add(sink);
     return sink;
   }
-
-  @override
-  Future<bool> isFileIntact({
-    required String relativePath,
-    required String trackPath,
-    required int expectedBytes,
-  }) async => true;
 
   @override
   Future<void> deleteFolder({required String relativePath}) async {}

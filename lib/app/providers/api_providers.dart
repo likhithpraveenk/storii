@@ -38,6 +38,7 @@ ApiClient apiClient(Ref ref, UserDomain user) {
     baseUrl: serverUrl,
     cancelToken: cancelToken,
     headers: headers,
+    // TODO: user agent to all http requests
     interceptors: [
       LogsInterceptor(),
       OfflineCacheInterceptor(

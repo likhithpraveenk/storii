@@ -10,6 +10,7 @@ import 'package:storii/features/item/ui/audio_tracks_sheet.dart';
 import 'package:storii/features/item/ui/chapter_list.dart';
 import 'package:storii/features/item/ui/cover_image_title.dart';
 import 'package:storii/features/item/ui/description_with_chips.dart';
+import 'package:storii/features/item/ui/download_info_labels.dart';
 import 'package:storii/features/item/ui/episode_list.dart';
 import 'package:storii/features/item/ui/metadata_wrap.dart';
 import 'package:storii/features/item/ui/play_button.dart';
@@ -81,6 +82,8 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
                                 PlayButton(item),
                                 if (item.isBook) ProgressBar(itemId: item.id),
                                 if (item.isBook) ActionButtons(item: item),
+                                if (item.isBook)
+                                  DownloadInfoLabels(libraryItemId: item.id),
                               ],
                             ),
                           ),

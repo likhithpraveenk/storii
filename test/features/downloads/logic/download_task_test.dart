@@ -49,6 +49,7 @@ class _FakeEngine extends DownloadEngine {
         transport: FakeDownloadTransport(),
         accessToken: (_) async => 'token',
         storageService: (_) => null,
+        activeServerUrl: () => Uri.parse('http://localhost'),
         coverDownloader: ({
           required libraryItemId,
           required isPodcast,
@@ -60,15 +61,17 @@ class _FakeEngine extends DownloadEngine {
   final Object? error;
 
   @override
-  Stream<DownloadItem> downloadItem({
+  Future<DownloadItem> download({
     required DownloadItem item,
     required UserDomain user,
-  }) async* {
+    required Future<void> Function(DownloadItem item) onProgress,
+  }) async {
     final failure = error;
     if (failure != null) throw failure;
     for (final snapshot in snapshots) {
-      yield snapshot;
+      await onProgress(snapshot);
     }
+    return snapshots.isEmpty ? item : snapshots.last;
   }
 }
 
@@ -89,14 +92,13 @@ void main() {
         engine: _FakeEngine(snapshots: [_item(status: .completed)]),
         notifications: notifications,
         currentUser: () => _user,
-        useBinary: () => false,
       );
 
       await task.run('item-1');
 
       expect(store.get('item-1')?.status, DownloadStatus.completed);
-      expect(notifications.countOf('startForeground'), 1);
-      expect(notifications.countOf('stopForeground'), 1);
+      expect(notifications.countOf('acquire'), 1);
+      expect(notifications.countOf('release'), 1);
       expect(notifications.progressCalls.last.isComplete, isTrue);
     });
 
@@ -110,14 +112,13 @@ void main() {
         engine: _FakeEngine(error: Exception('boom')),
         notifications: notifications,
         currentUser: () => _user,
-        useBinary: () => false,
       );
 
       await task.run('item-1');
 
       expect(store.get('item-1')?.status, DownloadStatus.failed);
       expect(notifications.progressCalls.last.isFailed, isTrue);
-      expect(notifications.countOf('stopForeground'), 1);
+      expect(notifications.countOf('release'), 1);
     });
 
     test('does nothing when the item is gone', () async {
@@ -127,7 +128,6 @@ void main() {
         engine: _FakeEngine(snapshots: [_item(status: .completed)]),
         notifications: notifications,
         currentUser: () => _user,
-        useBinary: () => false,
       );
 
       await task.run('item-1');
@@ -145,7 +145,6 @@ void main() {
         engine: _FakeEngine(snapshots: [_item(status: .completed)]),
         notifications: notifications,
         currentUser: () => null,
-        useBinary: () => false,
       );
 
       await task.run('item-1');

@@ -283,6 +283,12 @@ extension DurationX on Duration {
     if (this > end) return end;
     return this;
   }
+
+  String toMinimal() {
+    if (inDays >= 1) return l10n.nDays(inDays);
+    if (inHours >= 1) return l10n.nHours(inHours);
+    return l10n.nMinutes(inMinutes);
+  }
 }
 
 extension DynamicSchemeVariantX on DynamicSchemeVariant {

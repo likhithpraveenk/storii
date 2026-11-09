@@ -6,6 +6,7 @@ import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/repository_providers.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/downloads/logic/cover_helper.dart';
@@ -20,6 +21,7 @@ part 'download_engine.g.dart';
 
 typedef AccessTokenResolver = Future<String?> Function(String userId);
 typedef StorageServiceResolver = StorageService? Function(DownloadItem item);
+typedef ServerUrlResolver = Uri Function();
 typedef CoverDownloader = Future<void> Function({
   required String libraryItemId,
   required bool isPodcast,
@@ -32,6 +34,7 @@ class DownloadEngine {
     required this.accessToken,
     required this.storageService,
     required this.coverDownloader,
+    required this.activeServerUrl,
     TrackTransfer? trackTransfer,
   }) : _trackTransfer = trackTransfer ?? TrackTransfer(transport: transport);
 
@@ -39,113 +42,106 @@ class DownloadEngine {
   final AccessTokenResolver accessToken;
   final StorageServiceResolver storageService;
   final CoverDownloader coverDownloader;
+  final ServerUrlResolver activeServerUrl;
   final TrackTransfer _trackTransfer;
 
-  final Map<String, _ActiveDownload> _active = <String, _ActiveDownload>{};
-  final Map<String, DownloadCancelToken> _coverTokens =
-      <String, DownloadCancelToken>{};
+  final _active = <String, DownloadCancelToken>{};
 
-  Stream<DownloadItem> downloadItem({
+  Future<DownloadItem> download({
     required DownloadItem item,
     required UserDomain user,
-  }) async* {
-    final active = _ActiveDownload(libraryItemId: item.libraryItemId);
-    _active[item.key] = active;
+    required Future<void> Function(DownloadItem item) onProgress,
+  }) async {
+    final cancelToken = DownloadCancelToken();
+    _active[item.key] = cancelToken;
+
+    var current = item;
+
+    Future<DownloadItem> terminate(DownloadStatus status) async {
+      _finish(item.key, cancelToken);
+      final terminal = current.copyWith(status: status);
+      await onProgress(terminal);
+      return terminal;
+    }
 
     final token = await accessToken(user.id);
     if (token == null) {
-      _active.remove(item.key);
-      yield item.copyWith(status: .failed);
-      return;
+      return terminate(.failed);
     }
 
-    var current = item.copyWith(status: .downloading);
-    yield current;
+    current = current.copyWith(status: .downloading);
+    await onProgress(current);
 
-    await _downloadCover(item, active);
+    await _downloadCover(item, cancelToken);
 
-    if (active.cancelled) {
-      _active.remove(item.key);
-      yield current.copyWith(status: .paused);
-      return;
+    if (cancelToken.isCancelled) {
+      return terminate(.paused);
     }
 
     final service = storageService(item);
     if (service == null) {
-      _active.remove(item.key);
-      yield current.copyWith(status: .failed);
-      return;
+      return terminate(.failed);
     }
 
+    final serverUrl = activeServerUrl();
     for (var i = 0; i < current.tracks.length; i++) {
-      final initialTrack = current.tracks[i];
-      if (initialTrack.status == .completed) continue;
+      final track = current.tracks[i];
+      if (track.status == .completed) continue;
 
-      final trackToken = DownloadCancelToken();
-      active.trackToken = trackToken;
-
-      await for (final event in _trackTransfer.transfer(
-        track: initialTrack,
-        url: user.serverUrl.resolve(
-          ApiRoutes.itemAudioFileDownload(item.libraryItemId, initialTrack.ino),
+      final result = await _trackTransfer.transfer(
+        track: track,
+        url: serverUrl.resolve(
+          ApiRoutes.itemAudioFileDownload(item.libraryItemId, track.ino),
         ),
         accessToken: token,
         service: service,
         relativePath: item.relativePath,
-        cancelToken: trackToken,
-        isCancelled: () => active.cancelled,
-      )) {
-        switch (event) {
-          case TrackProgress(:final bytesReceived):
-            current = _trackSnapshot(
-              current,
-              i,
-              status: .downloading,
-              bytesReceived: bytesReceived,
-            );
-            yield current;
-          case TrackOutcome(:final status, :final bytesReceived):
-            current = _trackSnapshot(
-              current,
-              i,
-              status: status == .completed ? .completed : .downloading,
-              bytesReceived: bytesReceived,
-            );
-            if (status != .completed) {
-              _active.remove(item.key);
-              yield current.copyWith(status: status);
-              return;
-            }
-            yield current;
-        }
+        cancelToken: cancelToken,
+        onProgress: (bytesReceived) async {
+          current = _trackSnapshot(
+            current,
+            i,
+            status: .downloading,
+            bytesReceived: bytesReceived,
+          );
+          await onProgress(current);
+        },
+      );
+
+      current = _trackSnapshot(
+        current,
+        i,
+        status: result.status == .completed ? .completed : .downloading,
+        bytesReceived: result.bytesReceived,
+      );
+
+      if (result.status != .completed) {
+        return terminate(result.status);
       }
+
+      await onProgress(current);
     }
 
-    _active.remove(item.key);
-    if (active.cancelled) {
-      yield current.copyWith(status: .paused);
-      return;
-    }
-    yield current.copyWith(status: .completed);
+    return terminate(cancelToken.isCancelled ? .paused : .completed);
   }
 
   void cancel(String key) {
-    final active = _active[key];
-    if (active == null) return;
-    active.cancelled = true;
-    active.trackToken?.cancel();
-    _coverTokens[active.libraryItemId]?.cancel();
+    _active[key]?.cancel();
   }
 
-  Future<void> _downloadCover(DownloadItem item, _ActiveDownload active) async {
-    final coverToken = DownloadCancelToken();
-    _coverTokens[item.libraryItemId] = coverToken;
+  void _finish(String key, DownloadCancelToken cancelToken) {
+    if (identical(_active[key], cancelToken)) _active.remove(key);
+  }
 
+  Future<void> _downloadCover(
+    DownloadItem item,
+    DownloadCancelToken cancelToken,
+  ) async {
     try {
       await coverDownloader(
         libraryItemId: item.libraryItemId,
         isPodcast: item.episodeId != null,
-        cancelToken: coverToken,
+        cancelToken: cancelToken,
       );
     } catch (e, st) {
       final error = AppError.from(e, st);
@@ -156,10 +152,6 @@ class DownloadEngine {
         originalError: error.originalError,
         stackTrace: error.stackTrace,
       );
-    } finally {
-      if (identical(_coverTokens[item.libraryItemId], coverToken)) {
-        _coverTokens.remove(item.libraryItemId);
-      }
     }
   }
 
@@ -178,20 +170,13 @@ class DownloadEngine {
   }
 }
 
-class _ActiveDownload {
-  new({required this.libraryItemId});
-
-  final String libraryItemId;
-  bool cancelled = false;
-  DownloadCancelToken? trackToken;
-}
-
 @Riverpod(keepAlive: true)
 DownloadEngine downloadEngine(Ref ref) {
   return DownloadEngine(
     transport: ref.watch(downloadTransportProvider),
     accessToken: (userId) => ref.read(tokenProvider).getAccessToken(userId),
     storageService: (item) => ref.read(storageServiceForItemProvider(item)),
+    activeServerUrl: () => ref.read(activeServerUrlProvider),
     coverDownloader:
         ({required libraryItemId, required isPodcast, required cancelToken}) =>
             _downloadCover(

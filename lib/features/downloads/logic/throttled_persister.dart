@@ -18,11 +18,14 @@ class ThrottledPersister {
   Timer? _timer;
   DateTime? _lastPersist;
   Completer<void>? _inFlight;
+  bool _terminalSeen = false;
 
   Future<void> update(DownloadItem item) async {
-    _pending = item;
     final terminal = item.status == .paused || item.isComplete || item.isFailed;
+    if (_terminalSeen && !terminal) return;
+    _pending = item;
     if (terminal) {
+      _terminalSeen = true;
       _timer?.cancel();
       _timer = null;
       await _flush();
@@ -40,6 +43,7 @@ class ThrottledPersister {
     _timer?.cancel();
     _timer = null;
     await _flush();
+    await _inFlight?.future;
   }
 
   void _onTimer() {
@@ -58,15 +62,15 @@ class ThrottledPersister {
   }
 
   Future<void> _flush() async {
-    final item = _pending;
-    if (item == null) return;
-
     final previous = _inFlight;
     final completer = Completer<void>();
     _inFlight = completer;
 
     try {
       await previous?.future;
+
+      final item = _pending;
+      if (item == null) return;
 
       await store.save(item);
       await onPersist(item);

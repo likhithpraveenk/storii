@@ -18,6 +18,7 @@ class AppSlider extends StatefulWidget {
     this.trackHeight,
     this.cancelThreshold = -48.0,
     this.enableCancel = false,
+    this.trackShape,
   });
 
   final double value;
@@ -35,6 +36,7 @@ class AppSlider extends StatefulWidget {
   final double? trackHeight;
   final double cancelThreshold;
   final bool enableCancel;
+  final SliderTrackShape? trackShape;
 
   @override
   State<AppSlider> createState() => _AppSliderState();
@@ -138,6 +140,7 @@ class _AppSliderState extends State<AppSlider> {
               trackHeight: widget.trackHeight,
               activeTrackColor: activeTrackColor,
               year2023: false,
+              trackShape: widget.trackShape,
             ),
             child: Slider(
               value: _value,

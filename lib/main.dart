@@ -21,7 +21,7 @@ void main() async {
   await init.setupLicenses();
   await FontService.loadFonts();
   final container = await init.setupProviders();
-  await init.setupDownloadServices();
+  await init.setupDownloadServices(container);
 
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
 }

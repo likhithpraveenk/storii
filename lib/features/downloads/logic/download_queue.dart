@@ -30,34 +30,26 @@ class DownloadQueue extends _$DownloadQueue {
 
   DownloadEngine get _engine => ref.read(downloadEngineProvider);
 
+  final Set<String> _transitioning = <String>{};
+
   late final DownloadQueueProcessor _processor = DownloadQueueProcessor(
-    readKeys: () => state,
-    removeKey: (key) => state = state.where((i) => i != key).toList(),
+    readKeys: _pendingKeys,
     store: _store,
     canStart: _networkAllows,
     runItem: _runItem,
+    maxConcurrent: () => ref.read(parallelDownloadsProvider),
   );
 
   @override
   List<String> build() {
-    final downloads = _store.getAll();
-    final active = downloads.values.where((item) => item.isActive).toList()
-      ..sort(
-        (a, b) => (a.startedAt ?? DateTime.now()).compareTo(
-          b.startedAt ?? DateTime.now(),
-        ),
-      );
+    ref.listen(downloadsProvider, (_, _) => _syncState());
 
-    final keys = active.map((item) => item.key).toList();
+    final keys = _activeKeys();
     if (keys.isNotEmpty) {
       Future.microtask(_processQueue);
     }
 
-    ref.listen(connectionTypeProvider, (_, _) {
-      if (state.isNotEmpty) {
-        _processQueue();
-      }
-    });
+    ref.listen(connectionTypeProvider, (_, _) => _processQueue());
 
     return keys;
   }
@@ -68,39 +60,27 @@ class DownloadQueue extends _$DownloadQueue {
     required StorageLocation location,
   }) async {
     final key = mediaItemIdKey(libraryItemId, episodeId);
-    if (state.contains(key)) return;
+    if (_store.get(key)?.isActive ?? false) return;
     try {
       final item = await ref.read(itemDetailProvider(libraryItemId).future);
       await ref.read(itemsCacheProvider).put(item);
 
       final user = ref.read(currentUserProvider);
       if (user == null) throw StateError('No current user');
-      final existing = _store.getAll()[key];
+      final existing = _store.get(key);
       final service = ref.read(storageServiceProvider(location));
 
-      final DownloadItem downloadItem;
-
-      if (item.isPodcast) {
-        final episode = item.episodes.firstWhere((e) => e.id == episodeId);
-        downloadItem = await episode.toDownloadItem(
-          userId: user.id,
-          serverUrl: user.serverUrl,
-          service: service,
-          relativePath: item.relPath,
-          existing: existing,
-        );
-      } else {
-        downloadItem = await item.toDownloadItem(
-          userId: user.id,
-          serverUrl: user.serverUrl,
-          service: service,
-          existing: existing,
-        );
-      }
+      final downloadItem = await item.toDownloadItem(
+        userId: user.id,
+        serverUrl: user.serverUrl,
+        service: service,
+        episodeId: episodeId,
+        existing: existing,
+      );
 
       await _store.save(downloadItem);
-      state = [...state, key];
-      await _processQueue();
+      _syncState();
+      _processQueue();
     } catch (e, st) {
       final error = AppError.from(e, st);
       LogService.log(
@@ -113,7 +93,7 @@ class DownloadQueue extends _$DownloadQueue {
     }
   }
 
-  Future<void> _processQueue() => _processor.process();
+  void _processQueue() => _processor.kick();
 
   Future<bool> _networkAllows(DownloadItem? item) async {
     if (item == null) return true;
@@ -146,13 +126,12 @@ class DownloadQueue extends _$DownloadQueue {
       engine: _engine,
       notifications: _notifications,
       currentUser: () => ref.read(currentUserProvider),
-      useBinary: () => ref.read(useBinaryBytesProvider),
     ).run(key);
   }
 
   Future<void> resumeOrRetry(String id, String? episodeId) async {
     final key = mediaItemIdKey(id, episodeId);
-    final item = _store.getAll()[key];
+    final item = _store.get(key);
     if (item == null) return;
 
     final location = ref
@@ -160,49 +139,52 @@ class DownloadQueue extends _$DownloadQueue {
         .firstWhereOrNull((l) => l.uri == item.folderPath);
     if (location == null) return;
 
-    _engine.cancel(key);
-    await _notifications.stopForeground();
-    await _notifications.dismiss();
-    state = state.where((i) => i != key).toList();
+    _transitioning.add(key);
+    try {
+      _engine.cancel(key);
+      await _processor.waitForKey(key);
+      await _notifications.dismiss(key);
 
-    await _processor.waitForIdle();
-
-    await enqueue(libraryItemId: id, episodeId: episodeId, location: location);
+      await enqueue(
+        libraryItemId: id,
+        episodeId: episodeId,
+        location: location,
+      );
+    } finally {
+      _transitioning.remove(key);
+      _processQueue();
+    }
   }
 
   Future<void> pause(String id) async {
-    _engine.cancel(id);
-    state = state.where((i) => i != id).toList();
-    final downloads = _store.getAll();
-    final item = downloads[id];
-    if (item != null) {
-      await _store.save(item.copyWith(status: .paused));
+    if (_processor.isRunning(id)) {
+      _engine.cancel(id);
+      await _processor.waitForKey(id);
     }
 
-    await _processor.waitForIdle();
-
-    await _notifications.stopForeground();
-    await _notifications.showProgressNotification(
-      title: item?.title ?? id,
-      progress: ((item?.progress ?? 0) * 100).toInt(),
-      isComplete: false,
-      isFailed: false,
-      isPaused: true,
-      useBinary: ref.read(useBinaryBytesProvider),
-    );
+    final item = _store.get(id);
+    if (item != null && item.isActive) {
+      await _store.save(item.copyWith(status: .paused));
+    }
+    _syncState();
   }
 
   Future<void> delete(String id, String? episodeId) async {
     final key = mediaItemIdKey(id, episodeId);
-    _engine.cancel(key);
-    await _notifications.stopForeground();
-    await _notifications.dismiss();
-    state = state.where((i) => i != key).toList();
-    final item = _store.getAll()[key];
-    await _deleteFiles(item);
-    await _store.remove(key);
+    _transitioning.add(key);
+    try {
+      _engine.cancel(key);
+      final item = _store.get(key);
 
-    await _processor.waitForIdle();
+      await _processor.waitForKey(key);
+      await _notifications.dismiss(key);
+
+      await _deleteFiles(item);
+      await _store.remove(key);
+      _syncState();
+    } finally {
+      _transitioning.remove(key);
+    }
   }
 
   Future<void> _deleteFiles(DownloadItem? item) async {
@@ -222,5 +204,36 @@ class DownloadQueue extends _$DownloadQueue {
     }
 
     unawaited(service.cleanupEmptyFolders());
+  }
+
+  List<String> _activeKeys() => _activeKeysFrom(_store.getAll());
+
+  List<String> _pendingKeys() => [
+    for (final key in _activeKeys())
+      if (!_transitioning.contains(key)) key,
+  ];
+
+  List<String> _activeKeysFrom(Map<String, DownloadItem> items) {
+    final zeroEpoch = DateTime.fromMillisecondsSinceEpoch(0);
+    final active = items.values.where((item) => item.isActive).toList()
+      ..sort(
+        (a, b) =>
+            (a.startedAt ?? zeroEpoch).compareTo(b.startedAt ?? zeroEpoch),
+      );
+    return active.map((item) => item.key).toList();
+  }
+
+  void _syncState() {
+    final keys = _activeKeys();
+    if (_sameKeys(keys, state)) return;
+    state = keys;
+  }
+
+  bool _sameKeys(List<String> a, List<String> b) {
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
   }
 }

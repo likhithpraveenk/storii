@@ -11,11 +11,13 @@ class ItemsListView extends ConsumerWidget {
     super.key,
     this.scrollController,
     this.hasMore = false,
+    this.showPlay = false,
   });
 
   final List<LibraryItem> items;
   final ScrollController? scrollController;
   final bool hasMore;
+  final bool showPlay;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,6 +42,7 @@ class ItemsListView extends ConsumerWidget {
         return LibraryItemListTile(
           key: ValueKey(items[index].id),
           items[index],
+          showPlay: showPlay,
         );
       },
     );

@@ -31,46 +31,15 @@ class InternalStorageService extends StorageService {
   }
 
   @override
-  Future<String?> getTrackPath({
+  Future<TrackFileStat?> stat({
     required String relativePath,
     required String trackPath,
   }) async {
     final dirPath = await _rootFolder(relativePath: relativePath);
     final path = p.join(dirPath, trackPath);
-    final exists = await File(path).exists();
-    return exists ? path : null;
-  }
-
-  @override
-  Future<int> getBytes({
-    required String relativePath,
-    required String trackPath,
-  }) async {
-    final filePath = await getTrackPath(
-      relativePath: relativePath,
-      trackPath: trackPath,
-    );
-    if (filePath == null) return 0;
-    final f = File(filePath);
-    if (!await f.exists()) return 0;
-    return await f.length();
-  }
-
-  @override
-  Future<bool> isFileIntact({
-    required String relativePath,
-    required String trackPath,
-    required int expectedBytes,
-  }) async {
-    final filePath = await getTrackPath(
-      relativePath: relativePath,
-      trackPath: trackPath,
-    );
-    if (filePath == null) return false;
-    final f = File(filePath);
-    final actual = await f.length();
-    if (actual <= 0) return false;
-    return expectedBytes <= 0 || actual >= expectedBytes;
+    final file = File(path);
+    if (!await file.exists()) return null;
+    return (path: path, length: await file.length());
   }
 
   @override
@@ -78,11 +47,12 @@ class InternalStorageService extends StorageService {
     required String relativePath,
     required String trackPath,
     required String? mimeType,
+    int resumeOffset = 0,
   }) async {
     final folder = await _rootFolder(
       relativePath: relativePath,
       trackPath: trackPath,
-      createFolder: true,
+      createFolder: resumeOffset == 0,
     );
     final filePath = p.join(folder, p.basename(trackPath));
     final f = File(filePath);
@@ -112,11 +82,8 @@ class InternalStorageService extends StorageService {
     required String relativePath,
     required String trackPath,
   }) async {
-    final path = await getTrackPath(
-      relativePath: relativePath,
-      trackPath: trackPath,
-    );
-    if (path == null) {
+    final result = await stat(relativePath: relativePath, trackPath: trackPath);
+    if (result == null) {
       LogService.log(
         'could not find path for $trackPath',
         level: .error,
@@ -124,18 +91,16 @@ class InternalStorageService extends StorageService {
       );
       return;
     }
-    final file = File(path);
-    if (await file.exists()) {
-      try {
-        await file.delete();
-      } catch (e) {
-        LogService.log(
-          'Unable to delete episode at $path',
-          originalError: e,
-          level: .error,
-          source: 'InternalStorageService',
-        );
-      }
+    final file = File(result.path);
+    try {
+      await file.delete();
+    } catch (e) {
+      LogService.log(
+        'Unable to delete episode at ${result.path}',
+        originalError: e,
+        level: .error,
+        source: 'InternalStorageService',
+      );
     }
   }
 

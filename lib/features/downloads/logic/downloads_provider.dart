@@ -13,48 +13,38 @@ import 'package:storii/storage/local/session_store.dart';
 
 part 'downloads_provider.g.dart';
 
+typedef DownloadSortState = ({DownloadSort sort, bool ascending});
+
 @Riverpod(keepAlive: true)
 class DownloadSortNotifier extends _$DownloadSortNotifier {
-  bool get _rememberSort => ref.read(rememberSortProvider);
-
   @override
-  DownloadSort build() {
-    if (_rememberSort) {
-      return ref.read(downloadSortValueProvider);
-    }
-    return .added;
+  DownloadSortState build() {
+    final remember = ref.watch(rememberSortProvider);
+    return (
+      sort: remember ? ref.read(downloadSortValueProvider) : .added,
+      ascending: remember && ref.read(downloadSortAscendingProvider),
+    );
   }
 
-  void set(DownloadSort value) {
-    state = value;
-    if (!_rememberSort) return;
-    ref.read(userSettingsProvider.notifier).setDownloadSortValue(value);
+  void setSort(DownloadSort value) {
+    state = (sort: value, ascending: state.ascending);
+    _persist();
+  }
+
+  void toggleAscending() {
+    state = (sort: state.sort, ascending: !state.ascending);
+    _persist();
+  }
+
+  void _persist() {
+    if (!ref.read(rememberSortProvider)) return;
+    ref.read(userSettingsProvider.notifier)
+      ..setDownloadSortValue(state.sort)
+      ..setDownloadSortAscending(state.ascending);
   }
 }
 
-@Riverpod(keepAlive: true)
-class DownloadSortAsc extends _$DownloadSortAsc {
-  bool get _rememberSort => ref.read(rememberSortProvider);
-
-  @override
-  bool build() {
-    if (_rememberSort) {
-      return ref.read(downloadSortAscendingProvider);
-    }
-    return true;
-  }
-
-  void toggle() {
-    final newAscending = !state;
-    state = newAscending;
-    if (!_rememberSort) return;
-    ref
-        .read(userSettingsProvider.notifier)
-        .setDownloadSortAscending(newAscending);
-  }
-}
-
-@Riverpod(keepAlive: true)
+@riverpod
 class DownloadSearchQuery extends _$DownloadSearchQuery {
   @override
   String build() => '';
@@ -69,35 +59,31 @@ DownloadItem? downloadItem(Ref ref, String libraryItemId, [String? episodeId]) {
 }
 
 @riverpod
-Stream<List<DownloadItem>> activeDownloads(Ref ref) async* {
-  final downloads = await ref.watch(downloadsProvider.future);
+List<DownloadItem> activeDownloads(Ref ref) {
+  final downloads =
+      ref.watch(downloadsProvider).value ?? const <String, DownloadItem>{};
   final list = downloads.values.where((item) => !item.isComplete).toList()
     ..sort(
-      (a, b) => (a.startedAt ?? DateTime.now()).compareTo(
-        b.startedAt ?? DateTime.now(),
-      ),
+      (a, b) =>
+          (a.startedAt ?? _zeroEpoch).compareTo(b.startedAt ?? _zeroEpoch),
     );
-  yield list;
+  return list;
 }
 
 @riverpod
-Stream<List<DownloadItem>> completedDownloads(Ref ref) async* {
-  final downloads = await ref.watch(downloadsProvider.future);
-  yield downloads.values.where((item) => item.isComplete).toList();
+List<DownloadItem> completedDownloads(Ref ref) {
+  final downloads =
+      ref.watch(downloadsProvider).value ?? const <String, DownloadItem>{};
+  return downloads.values.where((item) => item.isComplete).toList();
 }
 
 @riverpod
-Future<int?> downloadQueuePosition(
-  Ref ref,
-  String libraryItemId, [
-  String? episodeId,
-]) async {
+int? downloadQueuePosition(Ref ref, String libraryItemId, [String? episodeId]) {
   final key = mediaItemIdKey(libraryItemId, episodeId);
-  final queuedItems = (await ref.watch(
-    activeDownloadsProvider.selectAsync(
-      (s) => s.where((i) => i.status == .queued),
-    ),
-  )).toList();
+  final queuedItems = ref
+      .watch(activeDownloadsProvider)
+      .where((item) => item.status == .queued)
+      .toList();
   final index = queuedItems.indexWhere((item) => item.key == key);
   return index != -1 ? index + 1 : null;
 }
@@ -106,17 +92,16 @@ final _zeroEpoch = DateTime.fromMillisecondsSinceEpoch(0);
 
 @riverpod
 List<DownloadItem> sortedCompletedDownloads(Ref ref) {
-  final items = ref.watch(completedDownloadsProvider).value ?? [];
+  final items = ref.watch(completedDownloadsProvider);
   final query = ref.watch(downloadSearchQueryProvider).trim().toLowerCase();
   final filtered = query.isEmpty ? items : _filterDownloads(ref, items, query);
-  final sort = ref.watch(downloadSortProvider);
-  final ascending = ref.watch(downloadSortAscProvider);
-  return _sortDownloads(ref, filtered, sort, ascending);
+  final sortState = ref.watch(downloadSortProvider);
+  return _sortDownloads(ref, filtered, sortState.sort, sortState.ascending);
 }
 
 @riverpod
 List<DownloadItem> sortedActiveDownloads(Ref ref) {
-  final items = ref.watch(activeDownloadsProvider).value ?? [];
+  final items = ref.watch(activeDownloadsProvider);
   final query = ref.watch(downloadSearchQueryProvider).trim().toLowerCase();
   return query.isEmpty ? items : _filterDownloads(ref, items, query);
 }

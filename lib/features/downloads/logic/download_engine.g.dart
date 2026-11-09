@@ -48,4 +48,4 @@ final class DownloadEngineProvider
   }
 }
 
-String _$downloadEngineHash() => r'495d0e781363714a2a787555f2150e83b5cae523';
+String _$downloadEngineHash() => r'1f633a26b788fd6ec72f82d54aeb235a1e0acd72';

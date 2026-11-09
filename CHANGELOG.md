@@ -11,14 +11,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - playback history screen
 - unsynced sessions screen
 - manual offline mode toggle
+- set default download location for audiobooks and podcasts
+- parallel downloads setting
+- auto-delete listened downloads after a configurable delay
+- tap cover image to play/pause in full player
+- wavy progress bar setting with animated wave effect on the player slider
 
 ### Changed
 
 - disabled predictive back transition
+- tapping on download notification for active downloads
+- remove unresponsive actions from notification
+- player timestamps/slider use unscaled durations; only remaining time scales with speed
 
 ### Fixed
 
 - close parent bottom sheets before opening sub-sheets
+- android auto library not loading
+- downloads not using local server URL
+- Download resume in external folder creating duplicate files
 
 ## [v0.13.1] - 2026-11-03
 

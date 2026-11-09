@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'9280a610cbd11cf7dc05b725a2cfbe7d47a465f0';
+    r'7cf96e92c9b673e917c13e018d2a0310ee0ee7b4';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -419,6 +419,15 @@ extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setUseNowPlayingTheme(bool value) =>
       _save(state?.copyWith(useNowPlayingTheme: value));
 
+  Future<void> setParallelDownloads(int value) =>
+      _save(state?.copyWith(parallelDownloads: value));
+
+  Future<void> setAutoDeleteListenedDownloads(bool value) =>
+      _save(state?.copyWith(autoDeleteListenedDownloads: value));
+
+  Future<void> setAutoDeleteListenedDelay(Duration value) =>
+      _save(state?.copyWith(autoDeleteListenedDelay: value));
+
   Future<void> setLibraryPageSize(int value) =>
       _save(state?.copyWith(libraryPageSize: value));
 
@@ -457,6 +466,15 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setOfflineMode(bool value) =>
       _save(state?.copyWith(offlineMode: value));
+
+  Future<void> setDefaultDownloadsLocationAudiobooks(String? value) =>
+      _save(state?.copyWith(defaultDownloadsLocationAudiobooks: value));
+
+  Future<void> setDefaultDownloadsLocationPodcasts(String? value) =>
+      _save(state?.copyWith(defaultDownloadsLocationPodcasts: value));
+
+  Future<void> setUseWavySlider(bool value) =>
+      _save(state?.copyWith(useWavySlider: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -1044,6 +1062,37 @@ final useNowPlayingThemeProvider = Provider<bool>(
   name: 'useNowPlayingThemeProvider',
 );
 
+final parallelDownloadsProvider = Provider<int>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.parallelDownloads ?? DefaultUserSettings.parallelDownloads,
+    ),
+  ),
+  name: 'parallelDownloadsProvider',
+);
+
+final autoDeleteListenedDownloadsProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.autoDeleteListenedDownloads ??
+          DefaultUserSettings.autoDeleteListenedDownloads,
+    ),
+  ),
+  name: 'autoDeleteListenedDownloadsProvider',
+);
+
+final autoDeleteListenedDelayProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.autoDeleteListenedDelay ??
+          DefaultUserSettings.autoDeleteListenedDelay,
+    ),
+  ),
+  name: 'autoDeleteListenedDelayProvider',
+);
+
 final libraryPageSizeProvider = Provider<int>(
   (ref) => ref.watch(
     userSettingsProvider.select(
@@ -1167,4 +1216,35 @@ final offlineModeProvider = Provider<bool>(
     ),
   ),
   name: 'offlineModeProvider',
+);
+
+final defaultDownloadsLocationAudiobooksProvider = Provider<String?>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.defaultDownloadsLocationAudiobooks ??
+          DefaultUserSettings.defaultDownloadsLocationAudiobooks,
+    ),
+  ),
+  name: 'defaultDownloadsLocationAudiobooksProvider',
+);
+
+final defaultDownloadsLocationPodcastsProvider = Provider<String?>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.defaultDownloadsLocationPodcasts ??
+          DefaultUserSettings.defaultDownloadsLocationPodcasts,
+    ),
+  ),
+  name: 'defaultDownloadsLocationPodcastsProvider',
+);
+
+final useWavySliderProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.useWavySlider ?? DefaultUserSettings.useWavySlider,
+    ),
+  ),
+  name: 'useWavySliderProvider',
 );

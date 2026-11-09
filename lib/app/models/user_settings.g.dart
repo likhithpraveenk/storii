@@ -217,6 +217,17 @@ _UserSettings _$UserSettingsFromJson(
   useNowPlayingTheme:
       json['useNowPlayingTheme'] as bool? ??
       DefaultUserSettings.useNowPlayingTheme,
+  parallelDownloads:
+      (json['parallelDownloads'] as num?)?.toInt() ??
+      DefaultUserSettings.parallelDownloads,
+  autoDeleteListenedDownloads:
+      json['autoDeleteListenedDownloads'] as bool? ??
+      DefaultUserSettings.autoDeleteListenedDownloads,
+  autoDeleteListenedDelay: json['autoDeleteListenedDelay'] == null
+      ? DefaultUserSettings.autoDeleteListenedDelay
+      : Duration(
+          microseconds: (json['autoDeleteListenedDelay'] as num).toInt(),
+        ),
   libraryPageSize:
       (json['libraryPageSize'] as num?)?.toInt() ??
       DefaultUserSettings.libraryPageSize,
@@ -259,6 +270,12 @@ _UserSettings _$UserSettingsFromJson(
   showNavbarAlways:
       json['showNavbarAlways'] as bool? ?? DefaultUserSettings.showNavbarAlways,
   offlineMode: json['offlineMode'] as bool? ?? DefaultUserSettings.offlineMode,
+  defaultDownloadsLocationAudiobooks:
+      json['defaultDownloadsLocationAudiobooks'] as String?,
+  defaultDownloadsLocationPodcasts:
+      json['defaultDownloadsLocationPodcasts'] as String?,
+  useWavySlider:
+      json['useWavySlider'] as bool? ?? DefaultUserSettings.useWavySlider,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -338,6 +355,9 @@ Map<String, dynamic> _$UserSettingsToJson(
   'shakeSleepTimerAddMinutes': instance.shakeSleepTimerAddMinutes,
   'shakeSensitivity': _$ShakeSensitivityEnumMap[instance.shakeSensitivity]!,
   'useNowPlayingTheme': instance.useNowPlayingTheme,
+  'parallelDownloads': instance.parallelDownloads,
+  'autoDeleteListenedDownloads': instance.autoDeleteListenedDownloads,
+  'autoDeleteListenedDelay': instance.autoDeleteListenedDelay.inMicroseconds,
   'libraryPageSize': instance.libraryPageSize,
   'seriesPageSize': instance.seriesPageSize,
   'isSleepWindowOn': instance.isSleepWindowOn,
@@ -354,6 +374,11 @@ Map<String, dynamic> _$UserSettingsToJson(
   'listViewImageSize': instance.listViewImageSize,
   'showNavbarAlways': instance.showNavbarAlways,
   'offlineMode': instance.offlineMode,
+  'defaultDownloadsLocationAudiobooks':
+      ?instance.defaultDownloadsLocationAudiobooks,
+  'defaultDownloadsLocationPodcasts':
+      ?instance.defaultDownloadsLocationPodcasts,
+  'useWavySlider': instance.useWavySlider,
 };
 
 const _$NavTargetEnumMap = {

@@ -8,7 +8,7 @@ import 'package:storii/app/models/storage_location.dart';
 
 part 'cover_helper.g.dart';
 
-@Riverpod(keepAlive: true)
+@riverpod
 CoverHelper coverHelper(Ref ref) => const CoverHelper();
 
 class CoverHelper {
