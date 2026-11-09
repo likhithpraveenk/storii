@@ -6,20 +6,13 @@ import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_slider.dart';
 
-class BookSlider extends ConsumerStatefulWidget {
+class BookSlider extends ConsumerWidget {
   const new({super.key});
-
-  @override
-  ConsumerState<BookSlider> createState() => _BookSliderState();
-}
-
-class _BookSliderState extends ConsumerState<BookSlider> {
-  double? _latestSeekValue;
 
   String format(double ms) => Duration(milliseconds: ms.toInt()).toTime();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final (:duration, :position) = ref.watch(displayProgressProvider);
     final speed = ref.watch(localSpeedProvider);
     final scaleTimeBySpeed = ref.watch(scaleTimeBySpeedProvider);
@@ -30,45 +23,31 @@ class _BookSliderState extends ConsumerState<BookSlider> {
       durationMs,
     );
 
-    final scaledDurationMs = scaleTimeBySpeed ? durationMs / speed : durationMs;
-    var scaledPositionMs = scaleTimeBySpeed ? positionMs / speed : positionMs;
-
-    if (_latestSeekValue != null) {
-      if ((scaledPositionMs - _latestSeekValue!).abs() < 1000) {
-        _latestSeekValue = null;
-      } else {
-        scaledPositionMs = _latestSeekValue!;
-      }
-    }
+    final remainingDuration = duration - position;
+    final scaledRemaining = scaleTimeBySpeed
+        ? Duration(
+            microseconds: (remainingDuration.inMicroseconds / speed).round(),
+          )
+        : remainingDuration;
 
     final endLabel = ref.watch(progressEndLabelProvider);
-    final scaledDuration = Duration(
-      microseconds: scaleTimeBySpeed
-          ? (duration.inMicroseconds / speed).round()
-          : duration.inMicroseconds,
-    );
-    final remaining =
-        scaledDuration - Duration(milliseconds: scaledPositionMs.toInt());
     final end = switch (endLabel) {
-      .total => scaledDuration.toTime(),
-      .remaining => '$kMinus${remaining.toTime()}',
+      .total => duration.toTime(),
+      .remaining => '$kMinus${scaledRemaining.toTime()}',
     };
 
     return Column(
       mainAxisSize: .min,
       children: [
         AppSlider(
-          value: scaledPositionMs,
-          max: scaledDurationMs,
+          value: positionMs,
+          max: durationMs,
           enableCancel: true,
           trackHeight: 10,
           labelBuilder: (value) =>
               Duration(milliseconds: value.toInt()).toTime(),
           onChangeEnd: (value) async {
-            final seekMs = (value * speed).toInt();
-            setState(() {
-              _latestSeekValue = value;
-            });
+            final seekMs = value.toInt();
             if (!ref.read(showChapterProgressSliderProvider)) {
               await audioHandler.seekFromGlobalPosition(
                 Duration(milliseconds: seekMs),
@@ -82,7 +61,7 @@ class _BookSliderState extends ConsumerState<BookSlider> {
         Row(
           mainAxisAlignment: .spaceBetween,
           children: [
-            Text(format(scaledPositionMs)),
+            Text(format(positionMs)),
             GestureDetector(
               behavior: .opaque,
               onTap: () => ref

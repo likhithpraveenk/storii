@@ -39,9 +39,6 @@ class MiniPlayer extends ConsumerWidget {
     final (:duration, :position) = ref.watch(displayProgressProvider);
     final scaleTimeBySpeed = ref.watch(scaleTimeBySpeedProvider);
     final remainingDuration = duration - position;
-    final scaledPosition = scaleTimeBySpeed
-        ? Duration(microseconds: (position.inMicroseconds / localSpeed).round())
-        : position;
     final scaledRemaining = scaleTimeBySpeed
         ? Duration(
             microseconds: (remainingDuration.inMicroseconds / localSpeed)
@@ -49,7 +46,7 @@ class MiniPlayer extends ConsumerWidget {
           )
         : remainingDuration;
     final remainingStr = scaledRemaining.toReadableDuration(isLeft: true);
-    final positionStr = scaledPosition.toReadableDuration();
+    final positionStr = position.toReadableDuration();
     final showSeekButtons = ref.watch(showMiniPlayerSeekButtonsProvider);
 
     final miniplayerSubtitleMode = ref.watch(miniplayerSubtitleModeProvider);
@@ -57,7 +54,7 @@ class MiniPlayer extends ConsumerWidget {
       .both => '$positionStr  $kDot  $remainingStr',
       .remaining =>
         '$kMinus${scaledRemaining.toReadableDuration(showSeconds: true)}',
-      .position => scaledPosition.toReadableDuration(showSeconds: true),
+      .position => position.toReadableDuration(showSeconds: true),
     };
 
     return ThemedBackground(

@@ -39,8 +39,8 @@ class FullPlayer extends ConsumerWidget {
         ? Duration(microseconds: (d.inMicroseconds / localSpeed).round())
         : d;
 
-    final currentPosition = scale(globalPosition);
-    final totalDuration = scale(session.duration);
+    final totalDuration = session.duration;
+    final remaining = scale(totalDuration - globalPosition);
 
     final title = currentChapter?.title ?? session.displayTitle ?? l10n.noTitle;
     final subtitle = currentChapter != null
@@ -79,8 +79,9 @@ class FullPlayer extends ConsumerWidget {
                 const SizedBox(height: 8),
                 if (showChapterProgressSlider)
                   ProgressLabel(
-                    currentPosition: currentPosition,
+                    currentPosition: globalPosition,
                     totalDuration: totalDuration,
+                    remaining: remaining,
                   ),
                 const Padding(
                   padding: .symmetric(horizontal: 24),

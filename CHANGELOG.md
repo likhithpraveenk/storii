@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - disabled predictive back transition
 - tapping on download notification for active downloads
 - remove unresponsive actions from notification
+- player timestamps/slider use unscaled durations; only remaining time scales with speed
 
 ### Fixed
 
