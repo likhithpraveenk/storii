@@ -258,7 +258,6 @@
   "syncInterval": "Synkroniseringsinterval",
   "syncIntervalSubtitle": "Styrer hyppigheden af serversynkronisering og tilsidesætter begrænsningen på 1 minut for mobildata, hvis værdien er højere",
   "emptyMsg": "Så tomt…",
-  "history": "Historik",
   "today": "I dag",
   "yesterday": "I går",
   "seek": "Spol",

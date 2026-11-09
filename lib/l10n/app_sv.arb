@@ -159,7 +159,6 @@
   "syncInterval": "Sync interval",
   "syncIntervalSubtitle": "Kontrollerar serverns synkroniseringsfrekvens, överskrider 1-minuters mobildatarestriktionen om det sätts högre",
   "emptyMsg": "Så tom…",
-  "history": "Historik",
   "today": "Idag",
   "yesterday": "Igår",
   "complete": "Klar",

@@ -261,7 +261,6 @@
   "syncInterval": "Częstotliwość synchronizacji z serwerem",
   "syncIntervalSubtitle": "Ustawia częstotliwość synchronizacji z serwerem (nadpisuje 1 minutowe ograniczenie dla danych komórkowych)",
   "emptyMsg": "Brak zawartości …",
-  "history": "Historia",
   "today": "Dziś",
   "yesterday": "Wczoraj",
   "seek": "Skocz",
@@ -427,7 +426,7 @@
   "storage": "Pamięć",
   "internalStorage": "Pamięć wewnętrzna",
   "downloadLocation": "Lokalizacja pobierania",
-  "localSession": "Lokalna sesja",
+  "localSession": "Sesja lokalna",
   "currentPosition": "Aktualna pozycja",
   "localSessionSheetBody": "Postęp zapisany lokalnie. Oczekiwanie na synchronizacje.",
   "bookmarks": "Zakładki",
@@ -615,5 +614,29 @@
         "type": "int"
       }
     }
-  }
+  },
+  "playbackHistory": "Historia odtwarzania",
+  "clearHistoryQ": "Usunąć historię odtwarzania?",
+  "deleteSessionQ": "Usunąć sesję?",
+  "sleepStart": "Początek trybu snu",
+  "sleepEnd": "Koniec trybu snu",
+  "offlineMode": "Tryb offline",
+  "waitingForNetwork": "Oczekiwanie na sieć",
+  "minutesAgo": "{minutes, plural, =1{1 minuta temu} other{{minutes} minut temu}}",
+  "@minutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "hoursAgo": "{hours, plural, =1{1 godzina temu} other{{hours} godzin temu}}",
+  "@hoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "unsyncedSessions": "Sesje niezsynchronizowane"
 }
