@@ -1,0 +1,17 @@
+Added:
+- playback history & unsynced sessions screens
+- manual offline mode toggle
+- set default download location
+- parallel downloads (1-5 concurrent)
+- auto-delete listened downloads (configurable delay)
+- tap cover to play/pause in player
+- wavy progress bar option
+
+Changed:
+- removed unresponsive notification actions
+- player timestamps use unscaled durations
+
+Fixed:
+- Android Auto library not loading
+- downloads using local server URL
+- download resume duplicate files
