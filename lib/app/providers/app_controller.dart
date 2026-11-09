@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/deep_link_controller.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/features/downloads/logic/download_auto_delete.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/more/logic/changelog_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
@@ -27,5 +28,6 @@ void appController(Ref ref) {
     ..watch(appStartThemeUpdateProvider)
     ..watch(mediaProgressSyncControllerProvider)
     ..watch(sleepWindowConsumerProvider)
-    ..watch(whatsNewControllerProvider);
+    ..watch(whatsNewControllerProvider)
+    ..watch(downloadAutoDeleteWatcherProvider);
 }

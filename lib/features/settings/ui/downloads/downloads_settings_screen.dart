@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/features/settings/ui/downloads/auto_delete_tile.dart';
 import 'package:storii/features/settings/ui/downloads/parallel_downloads_tile.dart';
 import 'package:storii/features/settings/ui/downloads/storage_tile.dart';
 import 'package:storii/features/settings/ui/downloads/unmetered_only_tile.dart';
@@ -47,6 +48,8 @@ class DownloadsSettingsScreen extends ConsumerWidget {
         children: const [
           UnmeteredOnlyTile(),
           ParallelDownloadsTile(),
+          AutoDeleteTile(),
+          AutoDeleteDelayTile(),
           StorageTile(),
         ],
       ),

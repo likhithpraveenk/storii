@@ -72,6 +72,8 @@ class DefaultUserSettings {
   static const shakeSensitivity = ShakeSensitivity.medium;
   static const useNowPlayingTheme = false;
   static const parallelDownloads = 1;
+  static const autoDeleteListenedDownloads = false;
+  static const autoDeleteListenedDelay = Duration(days: 1);
   static const libraryPageSize = 60;
   static const seriesPageSize = 20;
   static const imageMaxSize = 180.0;
@@ -251,6 +253,12 @@ sealed class UserSettings with _$UserSettings {
     @Default(DefaultUserSettings.useNowPlayingTheme) bool useNowPlayingTheme,
 
     @Default(DefaultUserSettings.parallelDownloads) int parallelDownloads,
+
+    @Default(DefaultUserSettings.autoDeleteListenedDownloads)
+    bool autoDeleteListenedDownloads,
+
+    @Default(DefaultUserSettings.autoDeleteListenedDelay)
+    Duration autoDeleteListenedDelay,
 
     @Default(DefaultUserSettings.libraryPageSize) int libraryPageSize,
 

@@ -220,6 +220,14 @@ _UserSettings _$UserSettingsFromJson(
   parallelDownloads:
       (json['parallelDownloads'] as num?)?.toInt() ??
       DefaultUserSettings.parallelDownloads,
+  autoDeleteListenedDownloads:
+      json['autoDeleteListenedDownloads'] as bool? ??
+      DefaultUserSettings.autoDeleteListenedDownloads,
+  autoDeleteListenedDelay: json['autoDeleteListenedDelay'] == null
+      ? DefaultUserSettings.autoDeleteListenedDelay
+      : Duration(
+          microseconds: (json['autoDeleteListenedDelay'] as num).toInt(),
+        ),
   libraryPageSize:
       (json['libraryPageSize'] as num?)?.toInt() ??
       DefaultUserSettings.libraryPageSize,
@@ -346,6 +354,8 @@ Map<String, dynamic> _$UserSettingsToJson(
   'shakeSensitivity': _$ShakeSensitivityEnumMap[instance.shakeSensitivity]!,
   'useNowPlayingTheme': instance.useNowPlayingTheme,
   'parallelDownloads': instance.parallelDownloads,
+  'autoDeleteListenedDownloads': instance.autoDeleteListenedDownloads,
+  'autoDeleteListenedDelay': instance.autoDeleteListenedDelay.inMicroseconds,
   'libraryPageSize': instance.libraryPageSize,
   'seriesPageSize': instance.seriesPageSize,
   'isSleepWindowOn': instance.isSleepWindowOn,

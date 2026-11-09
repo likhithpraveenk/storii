@@ -201,6 +201,9 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
         defaultDownloadsLocationPodcasts:
             DefaultUserSettings.defaultDownloadsLocationPodcasts,
         parallelDownloads: DefaultUserSettings.parallelDownloads,
+        autoDeleteListenedDownloads:
+            DefaultUserSettings.autoDeleteListenedDownloads,
+        autoDeleteListenedDelay: DefaultUserSettings.autoDeleteListenedDelay,
       ),
     );
   }

@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'c99421988d0a664b08d76102040a588ea3e73cfb';
+    r'd3652c14aa477c6f7e92be09ff2ecf5e8f8d553b';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -421,6 +421,12 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setParallelDownloads(int value) =>
       _save(state?.copyWith(parallelDownloads: value));
+
+  Future<void> setAutoDeleteListenedDownloads(bool value) =>
+      _save(state?.copyWith(autoDeleteListenedDownloads: value));
+
+  Future<void> setAutoDeleteListenedDelay(Duration value) =>
+      _save(state?.copyWith(autoDeleteListenedDelay: value));
 
   Future<void> setLibraryPageSize(int value) =>
       _save(state?.copyWith(libraryPageSize: value));
@@ -1060,6 +1066,28 @@ final parallelDownloadsProvider = Provider<int>(
     ),
   ),
   name: 'parallelDownloadsProvider',
+);
+
+final autoDeleteListenedDownloadsProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.autoDeleteListenedDownloads ??
+          DefaultUserSettings.autoDeleteListenedDownloads,
+    ),
+  ),
+  name: 'autoDeleteListenedDownloadsProvider',
+);
+
+final autoDeleteListenedDelayProvider = Provider<Duration>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.autoDeleteListenedDelay ??
+          DefaultUserSettings.autoDeleteListenedDelay,
+    ),
+  ),
+  name: 'autoDeleteListenedDelayProvider',
 );
 
 final libraryPageSizeProvider = Provider<int>(
