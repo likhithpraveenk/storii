@@ -23,6 +23,7 @@ abstract class StorageService {
     required String relativePath,
     required String trackPath,
     required String? mimeType,
+    int resumeOffset = 0,
   });
 
   Future<void> deleteFolder({required String relativePath});

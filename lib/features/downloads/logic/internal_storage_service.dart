@@ -47,11 +47,12 @@ class InternalStorageService extends StorageService {
     required String relativePath,
     required String trackPath,
     required String? mimeType,
+    int resumeOffset = 0,
   }) async {
     final folder = await _rootFolder(
       relativePath: relativePath,
       trackPath: trackPath,
-      createFolder: true,
+      createFolder: resumeOffset == 0,
     );
     final filePath = p.join(folder, p.basename(trackPath));
     final f = File(filePath);

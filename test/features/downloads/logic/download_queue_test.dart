@@ -37,6 +37,7 @@ class _FakeStorageService extends StorageService {
     required String relativePath,
     required String trackPath,
     required String? mimeType,
+    int resumeOffset = 0,
   }) async {
     final controller = StreamController<List<int>>();
     return controller.sink;

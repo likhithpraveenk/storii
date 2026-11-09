@@ -47,6 +47,7 @@ class TrackTransfer {
         relativePath: relativePath,
         trackPath: track.trackPath,
         mimeType: track.mimeType,
+        resumeOffset: received,
       );
 
       try {
