@@ -261,7 +261,6 @@
   "syncInterval": "Częstotliwość synchronizacji z serwerem",
   "syncIntervalSubtitle": "Ustawia częstotliwość synchronizacji z serwerem (nadpisuje 1 minutowe ograniczenie dla danych komórkowych)",
   "emptyMsg": "Brak zawartości …",
-  "history": "Historia",
   "today": "Dziś",
   "yesterday": "Wczoraj",
   "seek": "Skocz",
