@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - set default download location for audiobooks and podcasts
 - parallel downloads setting
 - auto-delete listened downloads after a configurable delay
+- tap cover image to play/pause in full player
 
 ### Changed
 
