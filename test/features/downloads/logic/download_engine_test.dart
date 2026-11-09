@@ -3,6 +3,7 @@ import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/features/downloads/logic/download_engine.dart';
 import 'package:storii/features/downloads/logic/download_transport.dart';
+import 'package:storii/features/downloads/logic/storage_service.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 
 import '../../../fakes/fake_download_transport.dart';
@@ -61,6 +62,8 @@ class _FakeCoverDownloader {
   }
 }
 
+Uri _activeServerUrl() => Uri.parse('http://localhost');
+
 Future<List<DownloadItem>> _run(
   DownloadEngine engine,
   DownloadItem item, {
@@ -77,6 +80,21 @@ Future<List<DownloadItem>> _run(
   );
   return snapshots;
 }
+
+DownloadEngine _buildEngine({
+  FakeDownloadTransport? transport,
+  Future<String?> Function(String)? accessToken,
+  StorageService? Function(DownloadItem)? storageService,
+  _FakeCoverDownloader? coverDownloader,
+  Uri Function()? activeServerUrl,
+}) => DownloadEngine(
+  transport: transport ?? FakeDownloadTransport(),
+  accessToken: accessToken ?? ((_) async => 'token'),
+  storageService:
+      storageService ?? ((_) => FakeStorageService(fakeStorageLocation)),
+  coverDownloader: coverDownloader?.call ?? _FakeCoverDownloader().call,
+  activeServerUrl: activeServerUrl ?? _activeServerUrl,
+);
 
 void main() {
   setUpAll(() async {
@@ -100,14 +118,8 @@ void main() {
           ),
         ],
       );
-      final service = FakeStorageService(fakeStorageLocation);
       final cover = _FakeCoverDownloader();
-      final engine = DownloadEngine(
-        transport: transport,
-        accessToken: (_) async => 'token',
-        storageService: (_) => service,
-        coverDownloader: cover.call,
-      );
+      final engine = _buildEngine(transport: transport, coverDownloader: cover);
 
       final snapshots = await _run(engine, _item());
 
@@ -129,13 +141,7 @@ void main() {
           ),
         ],
       );
-      final service = FakeStorageService(fakeStorageLocation);
-      final engine = DownloadEngine(
-        transport: transport,
-        accessToken: (_) async => 'token',
-        storageService: (_) => service,
-        coverDownloader: _FakeCoverDownloader().call,
-      );
+      final engine = _buildEngine(transport: transport);
 
       await _run(
         engine,
@@ -166,13 +172,7 @@ void main() {
           ),
         ],
       );
-      final service = FakeStorageService(fakeStorageLocation);
-      final engine = DownloadEngine(
-        transport: transport,
-        accessToken: (_) async => 'token',
-        storageService: (_) => service,
-        coverDownloader: _FakeCoverDownloader().call,
-      );
+      final engine = _buildEngine(transport: transport);
 
       await _run(engine, _item());
 
@@ -195,14 +195,8 @@ void main() {
           ),
         ],
       );
-      final service = FakeStorageService(fakeStorageLocation);
       final cover = _FakeCoverDownloader()..error = Exception('cover failed');
-      final engine = DownloadEngine(
-        transport: transport,
-        accessToken: (_) async => 'token',
-        storageService: (_) => service,
-        coverDownloader: cover.call,
-      );
+      final engine = _buildEngine(transport: transport, coverDownloader: cover);
 
       final snapshots = await _run(engine, _item());
 
@@ -210,12 +204,7 @@ void main() {
     });
 
     test('fails when the access token is missing', () async {
-      final engine = DownloadEngine(
-        transport: FakeDownloadTransport(),
-        accessToken: (_) async => null,
-        storageService: (_) => FakeStorageService(fakeStorageLocation),
-        coverDownloader: _FakeCoverDownloader().call,
-      );
+      final engine = _buildEngine(accessToken: (_) async => null);
 
       final snapshots = await _run(engine, _item());
 
@@ -223,12 +212,7 @@ void main() {
     });
 
     test('fails when no storage service resolves', () async {
-      final engine = DownloadEngine(
-        transport: FakeDownloadTransport(),
-        accessToken: (_) async => 'token',
-        storageService: (_) => null,
-        coverDownloader: _FakeCoverDownloader().call,
-      );
+      final engine = _buildEngine(storageService: (_) => null);
 
       final snapshots = await _run(engine, _item());
 
@@ -250,13 +234,7 @@ void main() {
           ),
         ],
       );
-      final service = FakeStorageService(fakeStorageLocation);
-      final engine = DownloadEngine(
-        transport: transport,
-        accessToken: (_) async => 'token',
-        storageService: (_) => service,
-        coverDownloader: _FakeCoverDownloader().call,
-      );
+      final engine = _buildEngine(transport: transport);
       final item = _item();
 
       final snapshots = await _run(
@@ -288,13 +266,7 @@ void main() {
           ),
         ],
       );
-      final service = FakeStorageService(fakeStorageLocation);
-      final engine = DownloadEngine(
-        transport: transport,
-        accessToken: (_) async => 'token',
-        storageService: (_) => service,
-        coverDownloader: _FakeCoverDownloader().call,
-      );
+      final engine = _buildEngine(transport: transport);
       final item = _item();
 
       final snapshots = await _run(

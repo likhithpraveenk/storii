@@ -49,6 +49,7 @@ class _FakeEngine extends DownloadEngine {
         transport: FakeDownloadTransport(),
         accessToken: (_) async => 'token',
         storageService: (_) => null,
+        activeServerUrl: () => Uri.parse('http://localhost'),
         coverDownloader: ({
           required libraryItemId,
           required isPodcast,

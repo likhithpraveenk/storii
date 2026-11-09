@@ -6,6 +6,7 @@ import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
+import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/repository_providers.dart';
 import 'package:storii/app/providers/token_provider.dart';
 import 'package:storii/features/downloads/logic/cover_helper.dart';
@@ -20,6 +21,7 @@ part 'download_engine.g.dart';
 
 typedef AccessTokenResolver = Future<String?> Function(String userId);
 typedef StorageServiceResolver = StorageService? Function(DownloadItem item);
+typedef ServerUrlResolver = Uri Function();
 typedef CoverDownloader = Future<void> Function({
   required String libraryItemId,
   required bool isPodcast,
@@ -32,6 +34,7 @@ class DownloadEngine {
     required this.accessToken,
     required this.storageService,
     required this.coverDownloader,
+    required this.activeServerUrl,
     TrackTransfer? trackTransfer,
   }) : _trackTransfer = trackTransfer ?? TrackTransfer(transport: transport);
 
@@ -39,6 +42,7 @@ class DownloadEngine {
   final AccessTokenResolver accessToken;
   final StorageServiceResolver storageService;
   final CoverDownloader coverDownloader;
+  final ServerUrlResolver activeServerUrl;
   final TrackTransfer _trackTransfer;
 
   final _active = <String, DownloadCancelToken>{};
@@ -79,13 +83,14 @@ class DownloadEngine {
       return terminate(.failed);
     }
 
+    final serverUrl = activeServerUrl();
     for (var i = 0; i < current.tracks.length; i++) {
       final track = current.tracks[i];
       if (track.status == .completed) continue;
 
       final result = await _trackTransfer.transfer(
         track: track,
-        url: user.serverUrl.resolve(
+        url: serverUrl.resolve(
           ApiRoutes.itemAudioFileDownload(item.libraryItemId, track.ino),
         ),
         accessToken: token,
@@ -171,6 +176,7 @@ DownloadEngine downloadEngine(Ref ref) {
     transport: ref.watch(downloadTransportProvider),
     accessToken: (userId) => ref.read(tokenProvider).getAccessToken(userId),
     storageService: (item) => ref.read(storageServiceForItemProvider(item)),
+    activeServerUrl: () => ref.read(activeServerUrlProvider),
     coverDownloader:
         ({required libraryItemId, required isPodcast, required cancelToken}) =>
             _downloadCover(
