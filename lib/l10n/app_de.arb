@@ -102,7 +102,7 @@
   "removeFromPlaylist": "Von der Playlist entfernen",
   "deletePlaylistSubtitle": "Sind Sie sicher, dass Sie diese Wiedergabeliste löschen möchten?",
   "latest": "Zuletzt",
-  "latestEpisodes": "Neueste Folgen",
+  "latestEpisodes": "Zuletzt hinzugefügte Folgen",
   "all": "Alle",
   "series": "Serien",
   "authors": "Autoren",
@@ -614,5 +614,29 @@
         "type": "int"
       }
     }
-  }
+  },
+  "playbackHistory": "Wiedergabeverlauf",
+  "clearHistoryQ": "Wiedergabeverlauf löschen?",
+  "deleteSessionQ": "Sitzung löschen?",
+  "sleepStart": "Einschlafphase",
+  "sleepEnd": "Schlafende",
+  "offlineMode": "Offline-Modus",
+  "waitingForNetwork": "Warten auf Netzwerkverbindung",
+  "minutesAgo": "{minutes, plural, =1{vor 1 Minute} other{vor {minutes} Minuten}}",
+  "@minutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "hoursAgo": "{hours, plural, =1{vor 1 Stunde} other{vor {hours} Stunden}}",
+  "@hoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "unsyncedSessions": "Nicht synchronisierte Sitzungen"
 }
