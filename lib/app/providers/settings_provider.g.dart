@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'd3652c14aa477c6f7e92be09ff2ecf5e8f8d553b';
+    r'7cf96e92c9b673e917c13e018d2a0310ee0ee7b4';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -472,6 +472,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setDefaultDownloadsLocationPodcasts(String? value) =>
       _save(state?.copyWith(defaultDownloadsLocationPodcasts: value));
+
+  Future<void> setUseWavySlider(bool value) =>
+      _save(state?.copyWith(useWavySlider: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -1235,4 +1238,13 @@ final defaultDownloadsLocationPodcastsProvider = Provider<String?>(
     ),
   ),
   name: 'defaultDownloadsLocationPodcastsProvider',
+);
+
+final useWavySliderProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.useWavySlider ?? DefaultUserSettings.useWavySlider,
+    ),
+  ),
+  name: 'useWavySliderProvider',
 );

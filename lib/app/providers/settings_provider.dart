@@ -154,6 +154,7 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
             DefaultUserSettings.interruptionLongSkipThreshold,
         interruptionLongSkipBackward:
             DefaultUserSettings.interruptionLongSkipBackward,
+        useWavySlider: DefaultUserSettings.useWavySlider,
       ),
     );
   }

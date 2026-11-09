@@ -97,6 +97,15 @@ class _MoreActionsSheetState extends ConsumerState<MoreActionsSheet> {
                 .map((a) => a.widget(context, widget.session, inOverflow: true))
                 .whereType<Widget>(),
             SwitchListTile(
+              value: ref.watch(useWavySliderProvider),
+              title: Text(l10n.wavySlider),
+              secondary: const Icon(Icons.waves),
+              subtitle: Text(l10n.wavySliderSubtitle),
+              onChanged: (value) => ref
+                  .read(userSettingsProvider.notifier)
+                  .setUseWavySlider(value),
+            ),
+            SwitchListTile(
               value: ref.watch(showChapterProgressSliderProvider),
               title: Text(l10n.chapterProgressBar),
               secondary: const Icon(Icons.segment),

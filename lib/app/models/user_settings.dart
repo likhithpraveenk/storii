@@ -89,6 +89,7 @@ class DefaultUserSettings {
   static const offlineMode = false;
   static const String? defaultDownloadsLocationAudiobooks = null;
   static const String? defaultDownloadsLocationPodcasts = null;
+  static const bool useWavySlider = false;
 }
 
 @freezed
@@ -294,6 +295,8 @@ sealed class UserSettings with _$UserSettings {
     String? defaultDownloadsLocationAudiobooks,
 
     String? defaultDownloadsLocationPodcasts,
+
+    @Default(DefaultUserSettings.useWavySlider) bool useWavySlider,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);

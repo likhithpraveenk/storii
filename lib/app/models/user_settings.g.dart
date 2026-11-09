@@ -274,6 +274,8 @@ _UserSettings _$UserSettingsFromJson(
       json['defaultDownloadsLocationAudiobooks'] as String?,
   defaultDownloadsLocationPodcasts:
       json['defaultDownloadsLocationPodcasts'] as String?,
+  useWavySlider:
+      json['useWavySlider'] as bool? ?? DefaultUserSettings.useWavySlider,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -376,6 +378,7 @@ Map<String, dynamic> _$UserSettingsToJson(
       ?instance.defaultDownloadsLocationAudiobooks,
   'defaultDownloadsLocationPodcasts':
       ?instance.defaultDownloadsLocationPodcasts,
+  'useWavySlider': instance.useWavySlider,
 };
 
 const _$NavTargetEnumMap = {

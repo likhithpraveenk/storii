@@ -636,6 +636,8 @@
   "playbackControlsLayout": "Playback Controls Layout",
   "chapterProgressBar": "Chapter progress bar",
   "chapterProgressBarSubtitle": "Off: show total progress",
+  "wavySlider": "Wavy progress bar",
+  "wavySliderSubtitle": "Animated wave effect on the progress bar",
   "speedAdjustedTime": "Speed-adjusted time",
   "speedAdjustedTimeSubtitle": "Show real time based on current speed",
   "defaultWord": "Default",
