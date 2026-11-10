@@ -1,18 +1,17 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:math' as math;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:storii/app/config/constants.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/player_cover_geometry.dart';
 import 'package:storii/features/player/logic/player_theme.dart';
 import 'package:storii/features/player/logic/sleep_shake_consumer.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/features/player/ui/full_player.dart';
-import 'package:storii/features/player/ui/hero_cover.dart';
 import 'package:storii/features/player/ui/mini_player.dart';
 import 'package:storii/features/player/ui/player_builder.dart';
+import 'package:storii/features/player/ui/player_cover.dart';
 import 'package:storii/features/player/ui/themed_background.dart';
 
 class PlayerScreen extends ConsumerWidget {
@@ -46,33 +45,17 @@ class PlayerScreen extends ConsumerWidget {
       });
     });
 
-    final size = MediaQuery.sizeOf(context);
-    final screenWidth = size.width;
-    final screenHeight = size.height;
-    final isLandscape = screenWidth > screenHeight;
-
-    final maxImgSize = isLandscape
-        ? (screenHeight - 64).clamp(0.0, maxImgSizeInFullPlayer)
-        : (screenWidth - 32).clamp(
-            0.0,
-            math.min(maxImgSizeInFullPlayer, screenHeight * 0.4),
-          );
-    final targetImgLeft = isLandscape
-        ? (screenWidth * 0.25) - (maxImgSize / 2)
-        : (screenWidth - maxImgSize) / 2;
-    final targetImgTop = isLandscape
-        ? (screenHeight - maxImgSize) / 2
-        : screenHeight * 0.08;
-
-    final imgSizeDelta = maxImgSize - imgSizeInMiniPlayer;
-    final imgLeftDelta = targetImgLeft - imgLeftPaddingInMiniPlayer;
-    final imgTopDelta = targetImgTop - imgLeftPaddingInMiniPlayer;
+    final screen = MediaQuery.sizeOf(context);
+    final isLandscape = screen.width > screen.height;
+    final topInset = isLandscape
+        ? statusBarHeight(context)
+        : fullPlayerTopInset(context);
 
     const miniInterval = Interval(0, 0.3);
     const fullInterval = Interval(0.6, 1);
 
     return PlayerBuilder(
-      maxHeight: screenHeight,
+      maxHeight: screen.height,
       onDismiss: () {
         log('player dismissed. audio handler stop');
         unawaited(audioHandler.stop());
@@ -80,10 +63,12 @@ class PlayerScreen extends ConsumerWidget {
       builder: (context, f) {
         final miniOpacity = 1 - miniInterval.transform(f);
         final fullOpacity = fullInterval.transform(f);
-
-        final imgSize = imgSizeInMiniPlayer + (imgSizeDelta * f);
-        final imgLeft = imgLeftPaddingInMiniPlayer + (imgLeftDelta * f);
-        final imgTop = imgLeftPaddingInMiniPlayer + (imgTopDelta * f);
+        final (:size, :left, :top) = playerCoverGeometry(
+          screenWidth: screen.width,
+          screenHeight: screen.height,
+          expandFactor: f,
+          topInset: topInset,
+        );
 
         return Theme(
           data: themeData,
@@ -91,16 +76,12 @@ class PlayerScreen extends ConsumerWidget {
             children: [
               const Positioned.fill(child: ThemedBackground()),
               if (f > 0.5)
-                Positioned(
-                  top: isLandscape ? 48 : imgTop + imgSize + 16,
-                  left: isLandscape ? imgLeft + imgSize : 0,
-                  bottom: 0,
-                  right: 0,
+                Positioned.fill(
                   child: Opacity(
                     opacity: fullOpacity,
                     child: IgnorePointer(
                       ignoring: f < 0.9,
-                      child: const FullPlayer(),
+                      child: FullPlayer(expandFactor: f),
                     ),
                   ),
                 ),
@@ -119,11 +100,11 @@ class PlayerScreen extends ConsumerWidget {
                   ),
                 ),
               Positioned(
-                top: imgTop,
-                left: imgLeft,
-                width: imgSize,
-                height: imgSize,
-                child: HeroCover(expandFactor: f),
+                top: top,
+                left: left,
+                width: size,
+                height: size,
+                child: PlayerCover(expandFactor: f),
               ),
               if (f < 0.2)
                 Positioned(
