@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
@@ -6,6 +7,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/widgets/placeholder_image.dart';
+import 'package:storii/shared/widgets/press_feedback.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class StackedImagesCard extends StatelessWidget {
@@ -27,34 +29,41 @@ class StackedImagesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      onLongPress: onLongPress,
-      splashFactory: NoSplash.splashFactory,
-      highlightColor: Colors.transparent,
-      child: Column(
-        children: [
-          _ImageStack(itemIds: itemIds, progress: progress),
-          const SizedBox(height: 8),
-          Column(
-            children: [
-              Text(
-                title,
-                maxLines: 1,
-                overflow: .ellipsis,
-                style: Theme.of(context).textTheme.titleSmall
-                    ?.copyWith(fontWeight: .bold),
-              ),
-              if (subtitle != null && subtitle!.isNotEmpty)
+    return PressFeedback(
+      child: InkWell(
+        onTap: onTap,
+        onLongPress: onLongPress == null
+            ? null
+            : () {
+                HapticFeedback.lightImpact();
+                onLongPress?.call();
+              },
+        splashFactory: NoSplash.splashFactory,
+        highlightColor: Colors.transparent,
+        child: Column(
+          children: [
+            _ImageStack(itemIds: itemIds, progress: progress),
+            const SizedBox(height: 8),
+            Column(
+              children: [
                 Text(
-                  subtitle!,
+                  title,
                   maxLines: 1,
                   overflow: .ellipsis,
-                  style: Theme.of(context).textTheme.labelSmall,
+                  style: Theme.of(context).textTheme.titleSmall
+                      ?.copyWith(fontWeight: .bold),
                 ),
-            ],
-          ),
-        ],
+                if (subtitle != null && subtitle!.isNotEmpty)
+                  Text(
+                    subtitle!,
+                    maxLines: 1,
+                    overflow: .ellipsis,
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

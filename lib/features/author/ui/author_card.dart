@@ -5,6 +5,7 @@ import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
+import 'package:storii/shared/widgets/press_feedback.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class AuthorCard extends ConsumerWidget {
@@ -13,43 +14,45 @@ class AuthorCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return InkWell(
-      onTap: () => context.push(AppRoute.authorDetail.withId(author.id)),
-      splashFactory: NoSplash.splashFactory,
-      highlightColor: Colors.transparent,
-      child: Column(
-        mainAxisSize: .min,
-        children: [
-          Stack(
-            children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: ClipRRect(
-                  borderRadius: .circular(kRadius),
-                  child: ImageWidget(
-                    id: author.id,
-                    type: .author,
-                    updatedAt: author.updatedAt,
+    return PressFeedback(
+      child: InkWell(
+        onTap: () => context.push(AppRoute.authorDetail.withId(author.id)),
+        splashFactory: NoSplash.splashFactory,
+        highlightColor: Colors.transparent,
+        child: Column(
+          mainAxisSize: .min,
+          children: [
+            Stack(
+              children: [
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: ClipRRect(
+                    borderRadius: .circular(kRadius),
+                    child: ImageWidget(
+                      id: author.id,
+                      type: .author,
+                      updatedAt: author.updatedAt,
+                    ),
                   ),
                 ),
-              ),
-              if (author.numBooks != null)
-                Positioned(
-                  top: 6,
-                  right: 6,
-                  child: StackBadge(author.numBooks!),
-                ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            author.name,
-            maxLines: 2,
-            overflow: .ellipsis,
-            style: Theme.of(context).textTheme.titleSmall,
-            textAlign: .center,
-          ),
-        ],
+                if (author.numBooks != null)
+                  Positioned(
+                    top: 6,
+                    right: 6,
+                    child: StackBadge(author.numBooks!),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              author.name,
+              maxLines: 2,
+              overflow: .ellipsis,
+              style: Theme.of(context).textTheme.titleSmall,
+              textAlign: .center,
+            ),
+          ],
+        ),
       ),
     );
   }
