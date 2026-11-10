@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/features/player/logic/player_providers.dart';
 
 typedef PlayerWidgetBuilder = Widget Function(
@@ -36,10 +37,7 @@ class _PlayerBuilderState extends ConsumerState<PlayerBuilder>
   void initState() {
     super.initState();
     _heightTween = Tween(begin: widget.minHeight, end: widget.maxHeight);
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-    );
+    _controller = AnimationController(vsync: this, duration: kDurationMd);
     _controller.addListener(_animationListener);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref

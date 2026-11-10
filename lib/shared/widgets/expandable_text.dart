@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 
 class ExpandableHtml extends StatefulWidget {
@@ -20,7 +21,7 @@ class _ExpandableHtmlState extends State<ExpandableHtml> {
       onTap: () => setState(() => isExpanded = !isExpanded),
       behavior: .opaque,
       child: AnimatedSize(
-        duration: const Duration(milliseconds: 300),
+        duration: kDurationMd,
         curve: Curves.fastOutSlowIn,
         alignment: .topCenter,
         child: Column(

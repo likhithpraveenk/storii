@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 
 class SpoilerText extends StatefulWidget {
   const new(this.text, {super.key});
@@ -23,7 +24,7 @@ class _SpoilerTextState extends State<SpoilerText> {
           : DecoratedBox(
               decoration: BoxDecoration(
                 color: scheme.inverseSurface,
-                borderRadius: .circular(4),
+                borderRadius: .circular(kRadiusXs),
               ),
               child: ColorFiltered(
                 colorFilter: ColorFilter.mode(scheme.inverseSurface, .srcIn),

@@ -93,7 +93,7 @@ class _SessionRow extends ConsumerWidget {
               child: Padding(
                 padding: const .all(3),
                 child: ClipRRect(
-                  borderRadius: .circular(4),
+                  borderRadius: .circular(kRadiusXs),
                   child: ImageWidget(
                     id: session.libraryItemId,
                     type: .item,

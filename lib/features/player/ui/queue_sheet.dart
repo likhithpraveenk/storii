@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
@@ -94,7 +95,7 @@ void showQueueSheet(BuildContext context) {
     useSafeArea: true,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
-      borderRadius: .vertical(top: .circular(24)),
+      borderRadius: .vertical(top: .circular(kRadiusXl)),
     ),
     builder: (_) => const _QueueSheetBody(),
   );
@@ -208,7 +209,7 @@ class _ClearQueueState extends State<_ClearQueue> {
           ),
           onPressed: _handleTap,
           icon: AnimatedContainer(
-            duration: const Duration(milliseconds: 100),
+            duration: kDurationXs,
             curve: Curves.easeOut,
             child: Row(
               mainAxisSize: .min,
@@ -218,7 +219,7 @@ class _ClearQueueState extends State<_ClearQueue> {
                   color: _confirming ? scheme.onError : scheme.onSurface,
                 ),
                 AnimatedSize(
-                  duration: const Duration(milliseconds: 100),
+                  duration: kDurationXs,
                   child: _confirming
                       ? Padding(
                           padding: const .only(left: 2),

@@ -38,7 +38,7 @@ class EpisodeListItem extends ConsumerWidget {
           Row(
             children: [
               ClipRRect(
-                borderRadius: .circular(4),
+                borderRadius: .circular(kRadiusXs),
                 child: SizedBox(
                   width: 40,
                   height: 40,

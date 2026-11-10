@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/features/auth/logic/add_server_notifier.dart';
@@ -17,7 +18,7 @@ Future<String?> showAddServerSheet(
     isScrollControlled: true,
     isDismissible: false,
     shape: const RoundedRectangleBorder(
-      borderRadius: .vertical(top: .circular(24)),
+      borderRadius: .vertical(top: .circular(kRadiusXl)),
     ),
     useSafeArea: true,
     builder: (context) => AddServerSheet(server: server),
@@ -115,7 +116,7 @@ class _AddServerSheetState extends ConsumerState<AddServerSheet> {
                 iconAlignment: .end,
               ),
               AnimatedSwitcher(
-                duration: const Duration(milliseconds: 250),
+                duration: kDurationMd,
                 switchInCurve: Curves.easeOutBack,
                 switchOutCurve: Curves.easeIn,
                 transitionBuilder: (child, animation) => FadeTransition(

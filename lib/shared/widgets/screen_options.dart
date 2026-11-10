@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/api/abs/abs_api.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
@@ -53,7 +54,7 @@ class ScreenOptionsButton extends StatelessWidget {
           useSafeArea: true,
           isScrollControlled: true,
           shape: const RoundedRectangleBorder(
-            borderRadius: .vertical(top: .circular(24)),
+            borderRadius: .vertical(top: .circular(kRadiusXl)),
           ),
           builder: (_) => DraggableScrollableSheet(
             maxChildSize: 0.95,
@@ -99,8 +100,8 @@ class _ScreenOptionsSheet extends ConsumerWidget {
         children: [
           TabBar(
             splashBorderRadius: const .only(
-              topLeft: .circular(24),
-              topRight: .circular(24),
+              topLeft: .circular(kRadiusXl),
+              topRight: .circular(kRadiusXl),
             ),
             tabs: [
               if (screen != .authors) Tab(text: l10n.filter),

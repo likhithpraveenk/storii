@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/init.dart';
@@ -43,6 +44,7 @@ class DisplayBottomSheet extends ConsumerWidget {
                 selected: currentMode == mode,
                 onSelected: (selected) {
                   if (selected) {
+                    HapticFeedback.selectionClick();
                     switch (screen) {
                       case .library:
                         notifier.setLibraryDisplayMode(mode);

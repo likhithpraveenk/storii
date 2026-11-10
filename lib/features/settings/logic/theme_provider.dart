@@ -46,6 +46,12 @@ ThemeData themeData(Ref ref, Brightness brightness) {
     brightness: brightness,
     colorScheme: colorScheme,
     fontFamily: fontFamily,
+    pageTransitionsTheme: PageTransitionsTheme(
+      builders: {
+        for (final platform in TargetPlatform.values)
+          platform: const FadeForwardsPageTransitionsBuilder(),
+      },
+    ),
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(borderRadius: .circular(kRadius)),
       enabledBorder: OutlineInputBorder(
@@ -99,7 +105,7 @@ ThemeData themeData(Ref ref, Brightness brightness) {
     scrollbarTheme: ScrollbarThemeData(
       thickness: WidgetStateProperty.all(12),
       thumbColor: WidgetStateProperty.all(colorScheme.primaryContainer),
-      radius: const .circular(16),
+      radius: const .circular(kRadiusLg),
       interactive: true,
       mainAxisMargin: 4,
       crossAxisMargin: 2,

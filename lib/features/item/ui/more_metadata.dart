@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/api/abs/abs_api.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -25,7 +26,7 @@ class MoreMetadataButton extends StatelessWidget {
       style: TextButton.styleFrom(
         padding: const .symmetric(horizontal: 8),
         minimumSize: Size.zero,
-        shape: RoundedRectangleBorder(borderRadius: .circular(4)),
+        shape: RoundedRectangleBorder(borderRadius: .circular(kRadiusXs)),
         tapTargetSize: .shrinkWrap,
         foregroundColor: theme.colorScheme.primary,
       ),

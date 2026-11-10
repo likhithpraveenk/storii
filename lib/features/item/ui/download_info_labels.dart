@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -114,7 +115,7 @@ class _Line extends StatelessWidget {
           padding: const .symmetric(horizontal: 4),
           decoration: BoxDecoration(
             color: theme.colorScheme.tertiaryContainer,
-            borderRadius: .circular(6),
+            borderRadius: .circular(kRadiusSm),
           ),
           child: Row(
             mainAxisAlignment: .center,

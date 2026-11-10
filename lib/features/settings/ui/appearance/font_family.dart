@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/settings/logic/user_fonts.dart';
@@ -28,13 +29,11 @@ class FontFamilyTile extends ConsumerWidget {
           useSafeArea: true,
           isScrollControlled: true,
           shape: const RoundedRectangleBorder(
-            borderRadius: .vertical(top: .circular(24)),
+            borderRadius: .vertical(top: .circular(kRadiusXl)),
           ),
-          builder: (_) => SafeArea(
-            child: DecoratedBox(
-              decoration: bottomSheetDecoration(context),
-              child: const _FontFamilySheet(),
-            ),
+          builder: (_) => DecoratedBox(
+            decoration: bottomSheetDecoration(context),
+            child: const _FontFamilySheet(),
           ),
         );
       },

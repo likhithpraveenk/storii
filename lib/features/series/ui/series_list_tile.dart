@@ -48,7 +48,7 @@ class SeriesListTile extends ConsumerWidget {
                   Padding(
                     padding: const .all(3),
                     child: ClipRRect(
-                      borderRadius: .circular(4),
+                      borderRadius: .circular(kRadiusXs),
                       child: series.books.isEmpty
                           ? PlaceholderImage(label: l10n.noImage)
                           : ImageWidget(

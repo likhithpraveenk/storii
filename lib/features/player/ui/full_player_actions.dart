@@ -63,7 +63,7 @@ class FullPlayerActionsWidget extends ConsumerWidget {
             showModalBottomSheet(
               context: context,
               shape: const RoundedRectangleBorder(
-                borderRadius: .vertical(top: .circular(24)),
+                borderRadius: .vertical(top: .circular(kRadiusXl)),
               ),
               isScrollControlled: true,
               builder: (context) => SafeArea(
@@ -99,7 +99,7 @@ class FullPlayerActionsBig extends ConsumerWidget {
           showModalBottomSheet(
             context: context,
             shape: const RoundedRectangleBorder(
-              borderRadius: .vertical(top: .circular(24)),
+              borderRadius: .vertical(top: .circular(kRadiusXl)),
             ),
             isScrollControlled: true,
             builder: (context) => SafeArea(

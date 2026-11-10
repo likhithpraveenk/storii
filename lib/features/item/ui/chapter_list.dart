@@ -26,7 +26,7 @@ void showChapterListSheet(
     useSafeArea: true,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
-      borderRadius: .vertical(top: .circular(24)),
+      borderRadius: .vertical(top: .circular(kRadiusXl)),
     ),
     builder: (_) => SafeArea(
       child: DecoratedBox(
@@ -103,7 +103,7 @@ class _ChapterListState extends ConsumerState<ChapterList> {
 
     controller.animateTo(
       centeredOffset.clamp(0.0, controller.position.maxScrollExtent),
-      duration: const Duration(milliseconds: 300),
+      duration: kDurationMd,
       curve: Curves.easeOutCubic,
     );
   }
@@ -204,7 +204,7 @@ class _ChapterTile extends ConsumerWidget {
         }
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
+        duration: kDurationMd,
         curve: Curves.easeOut,
         padding: const .symmetric(horizontal: 4, vertical: 8),
         decoration: BoxDecoration(

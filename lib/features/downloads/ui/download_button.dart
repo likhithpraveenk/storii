@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/api/abs/abs_api.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
@@ -222,9 +223,9 @@ class _ChooseLocationDialogState extends ConsumerState<ChooseLocationDialog> {
         clipBehavior: .hardEdge,
         color: theme.colorScheme.surface,
         shape: RoundedRectangleBorder(
-          borderRadius: .circular(24),
+          borderRadius: .circular(kRadiusXl),
           side: .new(
-            width: 0.5,
+            width: kBorderHairline,
             strokeAlign: BorderSide.strokeAlignInside,
             color: theme.colorScheme.primary,
           ),

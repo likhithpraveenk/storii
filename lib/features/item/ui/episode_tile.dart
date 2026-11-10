@@ -46,7 +46,7 @@ class EpisodeTile extends ConsumerWidget {
         : null;
 
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
+      duration: kDurationMd,
       curve: Curves.easeOut,
       margin: const .symmetric(horizontal: 4, vertical: 2),
       padding: const .symmetric(horizontal: 4, vertical: 8),

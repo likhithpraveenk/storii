@@ -28,7 +28,7 @@ class AuthorListTile extends ConsumerWidget {
             SizedBox.square(
               dimension: cardSize,
               child: ClipRRect(
-                borderRadius: .circular(4),
+                borderRadius: .circular(kRadiusXs),
                 child: ImageWidget(
                   id: author.id,
                   type: .author,

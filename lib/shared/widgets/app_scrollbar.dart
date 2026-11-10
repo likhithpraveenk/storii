@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 
 class AppScrollbar extends ConsumerStatefulWidget {
@@ -20,7 +21,7 @@ class _AppScrollbarState extends ConsumerState<AppScrollbar>
     with SingleTickerProviderStateMixin {
   late final AnimationController _anim = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 300),
+    duration: kDurationMd,
   );
 
   late final Listenable _scrollAndAnim = Listenable.merge([

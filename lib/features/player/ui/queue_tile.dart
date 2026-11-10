@@ -53,7 +53,7 @@ class QueueTile extends ConsumerWidget {
               SizedBox.square(
                 dimension: imgSizeInMiniPlayer,
                 child: ClipRRect(
-                  borderRadius: .circular(4),
+                  borderRadius: .circular(kRadiusXs),
                   child: ImageWidget(
                     id: item.itemId,
                     type: .item,

@@ -39,17 +39,22 @@ const List<String> emojis = [
   '(╯°□°）╯︵ ┻━┻',
 ];
 
-class EmptyState extends StatelessWidget {
+class EmptyState extends StatefulWidget {
   final String? subtitle;
   final Widget? action;
 
   const new({super.key, this.subtitle, this.action});
 
   @override
+  State<EmptyState> createState() => _EmptyStateState();
+}
+
+class _EmptyStateState extends State<EmptyState> {
+  late final _emoji = emojis[Random().nextInt(emojis.length)];
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final random = Random();
-    final emoji = emojis[random.nextInt(emojis.length)];
 
     return Center(
       child: Padding(
@@ -57,22 +62,27 @@ class EmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: .min,
           children: [
-            Text(emoji, style: theme.textTheme.displaySmall),
+            Text(_emoji, style: theme.textTheme.displaySmall),
             const SizedBox(height: 16),
             Text(
               l10n.emptyMsg,
               textAlign: .center,
               style: theme.textTheme.titleMedium,
             ),
-            if (subtitle != null) ...[
+            if (widget.subtitle != null) ...[
               const SizedBox(height: 8),
               Text(
-                subtitle!,
+                widget.subtitle!,
                 textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
               ),
             ],
-            if (action != null) ...[const SizedBox(height: 24), action!],
+            if (widget.action != null) ...[
+              const SizedBox(height: 24),
+              widget.action!,
+            ],
           ],
         ),
       ),

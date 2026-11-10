@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
@@ -62,7 +63,7 @@ class _MarqueeSpeedSheetState extends ConsumerState<_MarqueeSpeedSheet> {
             width: 200,
             decoration: BoxDecoration(
               border: .all(color: theme.colorScheme.primary),
-              borderRadius: .circular(4),
+              borderRadius: .circular(kRadiusXs),
             ),
             child: MarqueeText(l10n.sampleText, speed: _selected),
           ),

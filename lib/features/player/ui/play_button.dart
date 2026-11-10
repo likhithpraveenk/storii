@@ -27,7 +27,7 @@ class PlayButton extends ConsumerWidget {
         _ => audioHandler.togglePlay,
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
+        duration: kDurationMd,
         curve: Curves.easeIn,
         width: isWide ? 110.0 : 80.0,
         height: 80,
@@ -37,7 +37,7 @@ class PlayButton extends ConsumerWidget {
         ),
         child: Center(
           child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 200),
+            duration: kDurationSm,
             transitionBuilder: (child, animation) {
               return ScaleTransition(scale: animation, child: child);
             },

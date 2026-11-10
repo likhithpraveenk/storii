@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 
 class CollapsibleSection extends StatefulWidget {
   final Widget title;
@@ -47,7 +48,7 @@ class _CollapsibleSectionState extends State<CollapsibleSection>
                 else
                   AnimatedRotation(
                     turns: _expanded ? 0.25 : 0,
-                    duration: const Duration(milliseconds: 200),
+                    duration: kDurationSm,
                     child: Icon(
                       Icons.chevron_right,
                       size: 20,
@@ -61,7 +62,7 @@ class _CollapsibleSectionState extends State<CollapsibleSection>
           ),
         ),
         AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
+          duration: kDurationMd,
           switchInCurve: Curves.easeInOutCubic,
           switchOutCurve: Curves.easeInOutCubic,
           transitionBuilder: (child, animation) =>
