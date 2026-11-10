@@ -25,4 +25,7 @@ const kMinus = '\u2212';
 const kMultiple = '\u00D7';
 const kNbsp = '\u00A0'; // non-breaking space
 
-const speedPresets = [1.0, 1.2, 1.5, 1.8, 2.0];
+const speedMin = 0.5;
+const speedMax = 3.0;
+const speedStep = 0.05;
+const speedPresets = [1.0, 1.25, 1.5, 1.75, 2.0];

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/api/abs/abs_api.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/log_entry.dart';
@@ -257,9 +258,18 @@ int _pow60(int exponent) {
   return result;
 }
 
-extension DoubleToDurationX on double {
+final _trailingZeros = RegExp(r'\.?0+$');
+
+extension DoubleX on double {
   Duration get toDuration =>
       Duration(microseconds: (this * Duration.microsecondsPerSecond).round());
+
+  double get fixed2 => double.parse(toStringAsFixed(2));
+
+  String get speedLabel {
+    final s = toStringAsFixed(2).replaceFirst(_trailingZeros, '');
+    return '$s$kMultiple';
+  }
 }
 
 extension PlaybackEventKindX on PlaybackEventKind {

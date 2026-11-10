@@ -3,69 +3,33 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/player/ui/speed_button.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
-import 'package:storii/shared/widgets/app_buttons.dart';
-import 'package:storii/shared/widgets/wheel_picker.dart';
 
-class SpeedTile extends ConsumerStatefulWidget {
+class SpeedTile extends ConsumerWidget {
   const new({super.key});
 
   @override
-  ConsumerState<SpeedTile> createState() => _SpeedTileState();
-}
-
-class _SpeedTileState extends ConsumerState<SpeedTile> {
-  late double _selected;
-
-  @override
-  void initState() {
-    super.initState();
-    _selected = ref.read(speedProvider);
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final speed = ref.watch(speedProvider);
-    final notifier = ref.read(userSettingsProvider.notifier);
 
     return ListTile(
       leading: const Icon(Icons.speed_rounded),
       title: Text(l10n.playbackSpeed),
-      subtitle: Text('$speed$kMultiple'),
+      subtitle: Text(speed.speedLabel),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
         AppBottomSheet.show(
           context,
           title: l10n.playbackSpeed,
-          body: Builder(
-            builder: (context) {
-              return Padding(
-                padding: const .symmetric(horizontal: 24),
-                child: Column(
-                  mainAxisSize: .min,
-                  crossAxisAlignment: .stretch,
-                  children: [
-                    WheelPicker.fromDoubleRange(
-                      initialValue: _selected,
-                      min: 0.5,
-                      max: 4,
-                      step: 0.1,
-                      onChangedEnd: (v) => _selected = v,
-                      labelBuilder: (v) => '$v$kMultiple',
-                      presets: speedPresets,
-                    ),
-                    const SizedBox(height: 24),
-                    AppFilledButton(
-                      onPressed: () {
-                        notifier.setSpeed(_selected);
-                        Navigator.of(context).pop();
-                      },
-                      text: l10n.save,
-                    ),
-                  ],
-                ),
-              );
-            },
+          body: Consumer(
+            builder: (_, ref, _) => SpeedSheet(
+              speed: ref.watch(speedProvider),
+              onChanged: (value) => ref
+                  .read(userSettingsProvider.notifier)
+                  .setSpeed(value.fixed2.clamp(speedMin, speedMax)),
+            ),
           ),
         );
       },
