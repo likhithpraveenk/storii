@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+## [v0.13.3] - 2026-11-11
+
 ### Added
 
 - collapse button at the top of full player
@@ -852,7 +854,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.13.2...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.13.3...HEAD
+[v0.13.3]: https://github.com/likhithpraveenk/storii/compare/v0.13.2...v0.13.3
 [v0.13.2]: https://github.com/likhithpraveenk/storii/compare/v0.13.1...v0.13.2
 [v0.13.1]: https://github.com/likhithpraveenk/storii/compare/v0.13.0...v0.13.1
 [v0.13.0]: https://github.com/likhithpraveenk/storii/compare/v0.12.0...v0.13.0

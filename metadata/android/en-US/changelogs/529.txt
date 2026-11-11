@@ -1,0 +1,13 @@
+Added:
+- collapse button at top of full player
+- covers scale down on press
+- skeleton loading screens
+- error badge for missing/invalid items
+
+Changed:
+- playback speed UI and presets
+- load only selected font on app start
+
+Fixed:
+- system font setting persisted
+- offline mode not respected
