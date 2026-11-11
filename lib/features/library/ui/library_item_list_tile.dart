@@ -148,7 +148,7 @@ class LibraryItemListTile extends ConsumerWidget {
                 children: [
                   if (isDownloaded) const DownloadBadge(fillColor: false),
                   if (seriesNumBooks != null) StackBadge('$seriesNumBooks'),
-                  if (showPlay)
+                  if (showPlay && !item.hasItemError)
                     PlayButtonBadge(
                       itemId: item.id,
                       episodeId: item.recentEpisode?.id,

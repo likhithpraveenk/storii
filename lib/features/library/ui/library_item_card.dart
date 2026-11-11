@@ -131,7 +131,7 @@ class LibraryItemCard extends ConsumerWidget {
                         return const SizedBox.shrink();
                       },
                     ),
-                    if (showPlay)
+                    if (showPlay && !item.hasItemError)
                       Positioned(
                         bottom: 6,
                         right: 6,
@@ -142,8 +142,8 @@ class LibraryItemCard extends ConsumerWidget {
                       ),
                     if (item.hasItemError)
                       Positioned(
-                        top: 6,
-                        left: 6,
+                        bottom: 6,
+                        right: 6,
                         child: ErrorBadge(message: item.itemErrorText),
                       ),
                   ],
