@@ -126,15 +126,15 @@ Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
 
   ref
     ..listen(isBackgroundProvider, (_, isBackground) {
-      if (!isBackground) unawaited(api.refresh());
+      if (!isBackground && !offlineMode) unawaited(api.refresh());
     })
     ..listen(isOfflineProvider, (previous, next) {
-      if (previous == true && !next) unawaited(api.refresh());
+      if (previous == true && !next && !offlineMode) unawaited(api.refresh());
     });
 
-  final sub = tokenService
-      .tokenStream(user.id)
-      .listen((_) => unawaited(api.refresh()));
+  final sub = tokenService.tokenStream(user.id).listen((_) {
+    if (!offlineMode) unawaited(api.refresh());
+  });
 
   ref.onDispose(() {
     sub.cancel();
