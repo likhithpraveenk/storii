@@ -13,6 +13,7 @@ sealed class LibraryItem with _$LibraryItem {
     required DateTime addedAt,
     required DateTime updatedAt,
     required bool isMissing,
+    @Default(false) bool isInvalid,
     required MediaType mediaType,
     required Media media,
     @Default('') String path,

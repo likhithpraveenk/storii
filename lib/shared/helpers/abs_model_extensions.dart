@@ -257,6 +257,16 @@ extension AudiobookX on LibraryItem {
   bool get hideFromContinue =>
       userMediaProgress?.hideFromContinueListening ?? false;
 
+  String get itemErrorText {
+    if (isMissing) return l10n.itemMissing;
+    if (isInvalid) {
+      return isPodcast ? l10n.itemInvalidPodcast : l10n.itemInvalidBook;
+    }
+    return '';
+  }
+
+  bool get hasItemError => isMissing || isInvalid;
+
   ({String? name, String position}) historyPosition(
     Duration position, [
     String? episodeId,

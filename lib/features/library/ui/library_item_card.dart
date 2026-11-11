@@ -8,6 +8,7 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
+import 'package:storii/features/item/ui/error_badge.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/library/ui/item_card_progress_widget.dart';
 import 'package:storii/features/library/ui/more_options_widget.dart';
@@ -130,7 +131,7 @@ class LibraryItemCard extends ConsumerWidget {
                         return const SizedBox.shrink();
                       },
                     ),
-                    if (showPlay)
+                    if (showPlay && !item.hasItemError)
                       Positioned(
                         bottom: 6,
                         right: 6,
@@ -138,6 +139,12 @@ class LibraryItemCard extends ConsumerWidget {
                           itemId: item.id,
                           episodeId: item.recentEpisode?.id,
                         ),
+                      ),
+                    if (item.hasItemError)
+                      Positioned(
+                        bottom: 6,
+                        right: 6,
+                        child: ErrorBadge(message: item.itemErrorText),
                       ),
                   ],
                 ),
