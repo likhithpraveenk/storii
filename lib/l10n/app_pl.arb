@@ -638,5 +638,56 @@
       }
     }
   },
-  "unsyncedSessions": "Sesje niezsynchronizowane"
+  "unsyncedSessions": "Sesje niezsynchronizowane",
+  "startingDownload": "Rozpoczynam pobieranie …",
+  "parallelDownloads": "Równoległe pobieranie",
+  "parallelDownloadsSubtitle": "Liczba równoległych sesji pobierania",
+  "autoDeleteListenedDownloads": "Automatyczne usuwanie pobranych i zakończonych elementów",
+  "autoDeleteListenedDownloadsSubtitle": "Usuwa pobrane elementy z urządzania po ich zakończeniu. Działa tylko gdy aplikacja jest uruchomiona",
+  "deleteDelay": "Opóźnienie usuwania",
+  "nDays": "{n, plural, =1{1 dzień} other {{n} dni}}",
+  "@nDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nHours": "{n, plural, =1{1 godzina} other {{n} godzin}}",
+  "@nHours": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nMinutes": "{n, plural, =1{1 minuta} other {{n} minut}}",
+  "@nMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "downloadedByDifferentUser": "Pobrane przez innego użytkownika",
+  "downloadedFromDifferentServer": "Pobrane z innego serwera",
+  "scheduledForDeletion": "Zaplanowano usunięcie za {hours, plural, =0{} other{{hours}h }}{minutes}m",
+  "@scheduledForDeletion": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "excludedFromAutoDelete": "Wykluczono z automatycznego usuwania",
+  "neverAutoDeleteQ": "Nie usuwać automatycznie tego elementu z pobranych?",
+  "includeInAutoDelete": "Uwzględnij w auto usuwaniu",
+  "setAsDefault": "Ustaw jako domyślne",
+  "removeDefaultLocationNote": "By usunąć ustawienie domyślne przejdź do Ustawienia > Pobieranie > Pamięć",
+  "removeDefault": "Usuń ustawienie domyślne",
+  "wavySlider": "Falisty pasek postępu",
+  "wavySliderSubtitle": "Animowana fala na pasku postępu"
 }
