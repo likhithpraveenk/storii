@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - collapse button at the top of full player
 - covers now scale down on press
 - skeleton loading screens
+- error badge & message for missing and invalid items
 
 ### Changed
 

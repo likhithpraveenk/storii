@@ -10,6 +10,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
+import 'package:storii/features/item/ui/error_badge.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/library/ui/library_item_card.dart';
 import 'package:storii/features/library/ui/more_options_widget.dart';
@@ -152,6 +153,8 @@ class LibraryItemListTile extends ConsumerWidget {
                       itemId: item.id,
                       episodeId: item.recentEpisode?.id,
                     ),
+                  if (item.hasItemError)
+                    ErrorBadge(message: item.itemErrorText),
                 ],
               ),
             ],
