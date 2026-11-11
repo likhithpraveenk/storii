@@ -8,7 +8,7 @@ import 'package:storii/features/author/ui/author_content.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/expandable_text.dart';
-import 'package:storii/shared/widgets/waveform.dart';
+import 'package:storii/shared/widgets/skeleton.dart';
 
 class AuthorDetailScreen extends ConsumerWidget {
   const new({super.key, required this.id});
@@ -67,7 +67,7 @@ class AuthorDetailScreen extends ConsumerWidget {
             ],
           );
         },
-        loading: () => const Center(child: RandomWaveform()),
+        loading: () => const AuthorDetailSkeleton(),
         error: (e, _) => ErrorRetryWidget(
           e.toString(),
           onRetry: () {

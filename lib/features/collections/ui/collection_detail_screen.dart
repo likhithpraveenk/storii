@@ -16,7 +16,7 @@ import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/expandable_text.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
 import 'package:storii/shared/widgets/scrollable_widget.dart';
-import 'package:storii/shared/widgets/waveform.dart';
+import 'package:storii/shared/widgets/skeleton.dart';
 
 class CollectionDetailScreen extends ConsumerStatefulWidget {
   const new({required this.id, super.key});
@@ -119,7 +119,7 @@ class _CollectionDetailScreenState
               ),
             );
           },
-          loading: () => const Center(child: RandomWaveform()),
+          loading: () => const ItemsListSkeleton(),
           error: (e, s) => ErrorRetryWidget(
             e.toString(),
             onRetry: () {
