@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';
@@ -35,7 +36,7 @@ class _DownloadTileState extends State<DownloadTile> {
           leading: AspectRatio(
             aspectRatio: 1,
             child: ClipRRect(
-              borderRadius: .circular(8),
+              borderRadius: .circular(kRadiusMd),
               child: ImageWidget(
                 id: widget.item.libraryItemId,
                 type: .item,
@@ -91,7 +92,7 @@ class _DownloadTileState extends State<DownloadTile> {
           ),
         ),
         AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
+          duration: kDurationMd,
           child: isExpanded
               ? DownloadTrackProgress(item: widget.item)
               : const SizedBox.shrink(),

@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 
 /// A continuous loading indicator that simulates a random waveform by
 /// smoothly animating vertical bars between randomized heights
@@ -31,7 +32,7 @@ class RandomWaveform extends StatefulWidget {
     this.barWidth = 2.0,
     this.barMaxHeight = 24.0,
     this.color,
-    this.speed = const Duration(milliseconds: 200),
+    this.speed = kDurationSm,
   });
 
   @override
@@ -171,7 +172,7 @@ class SineWaveform extends StatefulWidget {
     this.barWidth = 2.0,
     this.barMaxHeight = 20.0,
     this.color,
-    this.speed = const Duration(milliseconds: 200),
+    this.speed = kDurationSm,
     this.waveLengthFactor = 0.75,
   });
 

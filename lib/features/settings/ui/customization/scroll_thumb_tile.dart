@@ -133,7 +133,7 @@ class _ScrollThumbPreview extends StatelessWidget {
                 height: 12,
                 decoration: BoxDecoration(
                   color: scheme.onSurfaceVariant.withValues(alpha: 0.2),
-                  borderRadius: .circular(6),
+                  borderRadius: .circular(kRadiusSm),
                 ),
               ),
             ),

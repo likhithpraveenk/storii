@@ -7,16 +7,21 @@ import 'package:storii/app/init.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 
-class NotFoundScreen extends StatelessWidget {
+class NotFoundScreen extends StatefulWidget {
   final String path;
 
   const new({super.key, required this.path});
 
   @override
+  State<NotFoundScreen> createState() => _NotFoundScreenState();
+}
+
+class _NotFoundScreenState extends State<NotFoundScreen> {
+  late final _emoji = emojis[Random().nextInt(emojis.length)];
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final random = Random();
-    final emoji = emojis[random.nextInt(emojis.length)];
 
     return Scaffold(
       appBar: AppBar(
@@ -40,13 +45,13 @@ class NotFoundScreen extends StatelessWidget {
             spacing: 16,
             children: [
               Text(
-                path,
+                widget.path,
                 textAlign: .center,
                 style: theme.textTheme.headlineLarge?.copyWith(
                   fontWeight: .bold,
                 ),
               ),
-              Text(emoji, style: theme.textTheme.displaySmall),
+              Text(_emoji, style: theme.textTheme.displaySmall),
               SizedBox(
                 width: double.infinity,
                 child: AppOutlinedButton(

@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/api/abs/abs_api.dart';
@@ -43,9 +44,12 @@ class SortBottomSheet extends ConsumerWidget {
                           : Icons.arrow_downward,
                     )
                   : null,
-              onTap: () => isSelected
-                  ? notifier.toggleSortOrder()
-                  : notifier.setSortType(type),
+              onTap: () {
+                HapticFeedback.selectionClick();
+                isSelected
+                    ? notifier.toggleSortOrder()
+                    : notifier.setSortType(type);
+              },
               contentPadding: const .symmetric(horizontal: 24, vertical: 0),
             );
           }),

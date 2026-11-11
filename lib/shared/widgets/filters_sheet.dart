@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/api/abs/abs_api.dart';
@@ -75,6 +76,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   contentPadding: const .only(left: 24, right: 24),
                   value: isSelected,
                   onChanged: (_) {
+                    HapticFeedback.selectionClick();
                     ref
                         .read(libraryFiltersProvider(widget.screen).notifier)
                         .toggleCollapseSeries();
@@ -88,8 +90,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 contentPadding: const .only(left: 24, right: 24),
                 title: Text(group.label),
                 selected: widget.currentFilter.group == group,
-                onTap: () =>
-                    widget.notifier.setFilter(group.toImmediateFilter()),
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  widget.notifier.setFilter(group.toImmediateFilter());
+                },
               );
             }
             return ExpansionTile(
@@ -152,6 +156,7 @@ class FilterSubOptionsList extends StatelessWidget {
           ),
           trailing: isSelected ? const Icon(Icons.check, size: 18) : null,
           onTap: () {
+            HapticFeedback.selectionClick();
             onSelect(filter);
             Navigator.of(context).pop();
           },
@@ -178,6 +183,7 @@ class ActiveFiltersChips extends ConsumerWidget {
     final valueLabel = filter.label(context, filterData);
 
     void removeFilter() {
+      HapticFeedback.selectionClick();
       ref.read(libraryFiltersProvider(screen).notifier).setFilter(null);
       Navigator.of(context).pop();
     }

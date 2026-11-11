@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
@@ -9,9 +11,9 @@ BoxDecoration dialogDecoration(BuildContext context) {
   final theme = Theme.of(context);
   return BoxDecoration(
     color: theme.colorScheme.surface,
-    borderRadius: .circular(24),
+    borderRadius: .circular(kRadiusXl),
     border: .all(
-      width: 0.5,
+      width: kBorderHairline,
       strokeAlign: BorderSide.strokeAlignInside,
       color: theme.colorScheme.primary,
     ),
@@ -98,6 +100,7 @@ class AppDialog extends StatelessWidget {
                   AppFilledButton(
                     isDestructive: isDestructive,
                     onPressed: () async {
+                      unawaited(HapticFeedback.lightImpact());
                       if (unawaitedOnTap) {
                         unawaited(onTap());
                       } else {

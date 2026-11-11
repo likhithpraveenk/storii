@@ -13,6 +13,7 @@ import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/screen_options.dart';
 import 'package:storii/shared/widgets/scrollable_widget.dart';
+import 'package:storii/shared/widgets/skeleton.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
 class SeriesListScreen extends ConsumerStatefulWidget {
@@ -50,6 +51,7 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
   @override
   Widget build(BuildContext context) {
     final seriesAsync = ref.watch(seriesListProvider);
+    final isListView = ref.watch(seriesDisplayModeProvider) == .listView;
 
     return Scaffold(
       appBar: CommonAppBar(
@@ -69,9 +71,6 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
               return const ScrollableWidget(child: Center(child: EmptyState()));
             }
 
-            final isListView =
-                ref.watch(seriesDisplayModeProvider) == .listView;
-
             return SafeArea(
               child: AppScrollbar(
                 controller: _scrollController,
@@ -89,8 +88,9 @@ class _SeriesListScreenState extends ConsumerState<SeriesListScreen> {
               ),
             );
           },
-          loading: () =>
-              const ScrollableWidget(child: Center(child: RandomWaveform())),
+          loading: () => isListView
+              ? const ItemsListSkeleton()
+              : const StackImagesGridSkeleton(),
           error: (e, _) => ScrollableWidget(
             child: ErrorRetryWidget(
               e.toString(),

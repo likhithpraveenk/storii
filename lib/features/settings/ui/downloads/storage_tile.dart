@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:saf_util/saf_util.dart';
 import 'package:storii/api/abs/abs_api.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/storage_location.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -41,48 +42,33 @@ class StorageTile extends ConsumerWidget {
           leading: const Icon(Icons.auto_stories_rounded),
           title: Text(l10n.audiobooks),
           subtitle: hasBooks ? Text(bookStr) : null,
-          onTap: () {
-            showModalBottomSheet(
-              context: context,
-              useSafeArea: true,
-              isScrollControlled: true,
-              shape: const RoundedRectangleBorder(
-                borderRadius: .vertical(top: .circular(24)),
-              ),
-              builder: (_) => SafeArea(
-                child: DecoratedBox(
-                  decoration: bottomSheetDecoration(context),
-                  child: const _StorageTileSheet(mediaType: .book),
-                ),
-              ),
-            );
-          },
+          onTap: () => _showStorageSheet(context, .book),
         ),
         ListTile(
           trailing: const Icon(Icons.chevron_right),
           leading: const Icon(Icons.podcasts_rounded),
           title: Text(l10n.podcasts),
           subtitle: hasPodcasts ? Text(podcastStr) : null,
-          onTap: () {
-            showModalBottomSheet(
-              context: context,
-              useSafeArea: true,
-              isScrollControlled: true,
-              shape: const RoundedRectangleBorder(
-                borderRadius: .vertical(top: .circular(24)),
-              ),
-              builder: (_) => SafeArea(
-                child: DecoratedBox(
-                  decoration: bottomSheetDecoration(context),
-                  child: const _StorageTileSheet(mediaType: .podcast),
-                ),
-              ),
-            );
-          },
+          onTap: () => _showStorageSheet(context, .podcast),
         ),
       ],
     );
   }
+}
+
+void _showStorageSheet(BuildContext context, MediaType mediaType) {
+  showModalBottomSheet(
+    context: context,
+    useSafeArea: true,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: .vertical(top: .circular(kRadiusXl)),
+    ),
+    builder: (_) => DecoratedBox(
+      decoration: bottomSheetDecoration(context),
+      child: _StorageTileSheet(mediaType: mediaType),
+    ),
+  );
 }
 
 class _StorageTileSheet extends ConsumerStatefulWidget {
@@ -222,7 +208,7 @@ class _StorageLocationWidget extends ConsumerWidget {
                     padding: const .symmetric(horizontal: 6),
                     decoration: BoxDecoration(
                       color: theme.colorScheme.primaryContainer,
-                      borderRadius: .circular(4),
+                      borderRadius: .circular(kRadiusXs),
                     ),
                     child: Text(
                       l10n.defaultWord,

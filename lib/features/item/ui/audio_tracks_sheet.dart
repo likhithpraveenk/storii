@@ -17,7 +17,7 @@ void showAudioTracksSheet(
     useSafeArea: true,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
-      borderRadius: .vertical(top: .circular(24)),
+      borderRadius: .vertical(top: .circular(kRadiusXl)),
     ),
     builder: (_) => SafeArea(
       child: DecoratedBox(

@@ -1,4 +1,6 @@
+import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 
 class AppSlider extends StatefulWidget {
   const new({
@@ -64,6 +66,7 @@ class _AppSliderState extends State<AppSlider> {
     if (!_canCancel) return;
     final isCanceling = event.localPosition.dy < widget.cancelThreshold;
     if (isCanceling != _isCanceling) {
+      HapticFeedback.selectionClick();
       setState(() => _isCanceling = isCanceling);
     }
   }
@@ -99,6 +102,7 @@ class _AppSliderState extends State<AppSlider> {
   }
 
   void _handleChangeEnd(double value) {
+    HapticFeedback.selectionClick();
     final initial = _initialValue ?? value;
 
     if (_isCanceling && widget.enableCancel) {
@@ -163,7 +167,7 @@ class _AppSliderState extends State<AppSlider> {
               child: IgnorePointer(
                 child: Center(
                   child: AnimatedScale(
-                    duration: const Duration(milliseconds: 100),
+                    duration: kDurationXs,
                     scale: _isCanceling ? 1.8 : 1.0,
                     child: Container(
                       padding: const .all(6),

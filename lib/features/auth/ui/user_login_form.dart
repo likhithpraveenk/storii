@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/config/abs_urls.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/auth/logic/add_user_notifier.dart';
 import 'package:storii/shared/helpers/helpers.dart';
@@ -116,7 +117,7 @@ class _UserLoginFormState extends ConsumerState<UserLoginForm> {
                             ),
                             decoration: BoxDecoration(
                               color: scheme.surfaceContainer,
-                              borderRadius: .circular(4),
+                              borderRadius: .circular(kRadiusXs),
                             ),
                             child: SelectableText(
                               'storii://oauth',

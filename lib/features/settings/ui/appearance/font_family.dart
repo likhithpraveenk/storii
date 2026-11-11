@@ -3,11 +3,13 @@ import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/settings/logic/user_fonts.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
+import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 import 'package:storii/storage/local/font_service.dart';
 
@@ -20,7 +22,7 @@ class FontFamilyTile extends ConsumerWidget {
 
     return ListTile(
       title: Text(l10n.fontFamily),
-      subtitle: Text(fontFamily ?? l10n.system),
+      subtitle: Text(fontFamily == systemFont ? l10n.system : fontFamily),
       trailing: const Icon(Icons.chevron_right),
       onTap: () {
         showModalBottomSheet(
@@ -28,13 +30,11 @@ class FontFamilyTile extends ConsumerWidget {
           useSafeArea: true,
           isScrollControlled: true,
           shape: const RoundedRectangleBorder(
-            borderRadius: .vertical(top: .circular(24)),
+            borderRadius: .vertical(top: .circular(kRadiusXl)),
           ),
-          builder: (_) => SafeArea(
-            child: DecoratedBox(
-              decoration: bottomSheetDecoration(context),
-              child: const _FontFamilySheet(),
-            ),
+          builder: (_) => DecoratedBox(
+            decoration: bottomSheetDecoration(context),
+            child: const _FontFamilySheet(),
           ),
         );
       },
@@ -49,17 +49,24 @@ class _FontFamilySheet extends ConsumerStatefulWidget {
 }
 
 class _FontFamilySheetState extends ConsumerState<_FontFamilySheet> {
-  String? _selected;
+  late String _selected = ref.read(fontFamilyProvider);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FontService.loadFonts(loadAll: true);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final currentFont = ref.watch(fontFamilyProvider);
     final userFontsAsync = ref.watch(userFontsProvider);
-    _selected ??= currentFont ?? 'system';
     final theme = Theme.of(context);
 
     return Column(
       mainAxisSize: .min,
+      crossAxisAlignment: .stretch,
       children: [
         Padding(
           padding: const .fromLTRB(24, 24, 24, 16),
@@ -73,7 +80,7 @@ class _FontFamilySheetState extends ConsumerState<_FontFamilySheet> {
               const SizedBox(height: 16),
               Text(
                 l10n.sampleText,
-                style: theme.textTheme.bodyMedium?.copyWith(
+                style: theme.textTheme.bodyLarge?.copyWith(
                   fontFamily: _selected,
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -88,13 +95,13 @@ class _FontFamilySheetState extends ConsumerState<_FontFamilySheet> {
             children: [
               _FontTile(
                 label: l10n.system,
-                value: 'system',
+                value: systemFont,
                 selected: _selected,
                 onTap: (v) => setState(() => _selected = v),
               ),
               _FontTile(
-                label: 'AtkinsonHyperlegibleNext',
-                value: 'AtkinsonHyperlegibleNext',
+                label: DefaultUserSettings.fontFamily,
+                value: DefaultUserSettings.fontFamily,
                 selected: _selected,
                 onTap: (v) => setState(() => _selected = v),
               ),
@@ -107,6 +114,7 @@ class _FontFamilySheetState extends ConsumerState<_FontFamilySheet> {
                           value: font,
                           selected: _selected,
                           onTap: (v) => setState(() => _selected = v),
+                          onDelete: () => _deleteFont(font),
                         ),
                       )
                       .toList(),
@@ -123,14 +131,11 @@ class _FontFamilySheetState extends ConsumerState<_FontFamilySheet> {
             width: double.infinity,
             child: AppFilledButton(
               text: l10n.save,
-              onPressed: () async {
-                final val = _selected;
-                await ref
+              onPressed: () {
+                ref
                     .read(userSettingsProvider.notifier)
-                    .setFontFamily(val == 'system' ? null : val);
-                if (context.mounted) {
-                  Navigator.pop(context);
-                }
+                    .setFontFamily(_selected);
+                Navigator.pop(context);
               },
             ),
           ),
@@ -170,6 +175,27 @@ class _FontFamilySheetState extends ConsumerState<_FontFamilySheet> {
       ],
     );
   }
+
+  Future<void> _deleteFont(String font) async {
+    final confirmed = await AppDialog.show<bool>(
+      context,
+      title: l10n.deleteUserQ(font),
+      isDestructive: true,
+      actionLabel: l10n.delete,
+      onTap: () async {},
+    );
+    if (confirmed != true) return;
+    await FontService.deleteFont(font);
+    ref.invalidate(userFontsProvider);
+    if (_selected == font) {
+      setState(() => _selected = DefaultUserSettings.fontFamily);
+    }
+    if (ref.read(fontFamilyProvider) == font) {
+      await ref
+          .read(userSettingsProvider.notifier)
+          .setFontFamily(DefaultUserSettings.fontFamily);
+    }
+  }
 }
 
 class _FontTile extends StatelessWidget {
@@ -178,12 +204,14 @@ class _FontTile extends StatelessWidget {
     required this.value,
     required this.selected,
     required this.onTap,
+    this.onDelete,
   });
 
   final String label;
   final String value;
   final String? selected;
   final ValueChanged<String> onTap;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +221,18 @@ class _FontTile extends StatelessWidget {
         label,
         style: theme.textTheme.bodyLarge?.copyWith(fontFamily: value),
       ),
-      trailing: selected == value ? const Icon(Icons.check) : null,
+      trailing: Row(
+        mainAxisSize: .min,
+        children: [
+          if (selected == value) const Icon(Icons.check),
+          if (onDelete != null)
+            IconButton(
+              visualDensity: .compact,
+              icon: const Icon(Icons.delete_outline),
+              onPressed: onDelete,
+            ),
+        ],
+      ),
       contentPadding: const .symmetric(horizontal: 24),
       onTap: () => onTap(value),
     );

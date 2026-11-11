@@ -13,7 +13,7 @@ import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/screen_options.dart';
 import 'package:storii/shared/widgets/scrollable_widget.dart';
-import 'package:storii/shared/widgets/waveform.dart';
+import 'package:storii/shared/widgets/skeleton.dart';
 
 class AuthorListScreen extends ConsumerStatefulWidget {
   const new({super.key});
@@ -35,6 +35,7 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
   @override
   Widget build(BuildContext context) {
     final authorsAsync = ref.watch(authorsListProvider);
+    final isListView = ref.watch(authorDisplayModeProvider) == .listView;
 
     return Scaffold(
       appBar: CommonAppBar(
@@ -56,9 +57,6 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
               return const ScrollableWidget(child: Center(child: EmptyState()));
             }
 
-            final isListView =
-                ref.watch(authorDisplayModeProvider) == .listView;
-
             return SafeArea(
               child: AppScrollbar(
                 controller: _scrollController,
@@ -74,8 +72,9 @@ class _AuthorListScreenState extends ConsumerState<AuthorListScreen> {
               ),
             );
           },
-          loading: () =>
-              const ScrollableWidget(child: Center(child: RandomWaveform())),
+          loading: () => isListView
+              ? const ItemsListSkeleton(showSubtitle: false)
+              : const AuthorsGridSkeleton(),
           error: (e, _) => ScrollableWidget(
             child: ErrorRetryWidget(
               e.toString(),

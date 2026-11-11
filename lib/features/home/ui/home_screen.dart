@@ -18,7 +18,7 @@ import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/scrollable_widget.dart';
-import 'package:storii/shared/widgets/waveform.dart';
+import 'package:storii/shared/widgets/skeleton.dart';
 
 class HomeScreen extends ConsumerWidget {
   const new({super.key});
@@ -157,7 +157,7 @@ class HomeScreen extends ConsumerWidget {
               },
             );
           },
-          loading: () => const Center(child: RandomWaveform()),
+          loading: () => const HomeShelvesSkeleton(),
           error: (e, _) => ScrollableWidget(
             child: ErrorRetryWidget(
               e.toString(),

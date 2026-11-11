@@ -69,7 +69,7 @@ class _ServerTileState extends ConsumerState<ServerTile> {
                     ),
                   ),
                 AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
+                  duration: kDurationSm,
                   child: Icon(
                     _expanded ? Icons.unfold_less : Icons.unfold_more,
                   ),
@@ -92,7 +92,7 @@ class _ServerTileState extends ConsumerState<ServerTile> {
                 (user) => UserTile(user: user, server: widget.server),
               ),
               AnimatedSize(
-                duration: const Duration(milliseconds: 200),
+                duration: kDurationSm,
                 curve: Curves.easeInOut,
                 child: !_expanded
                     ? const SizedBox.shrink()

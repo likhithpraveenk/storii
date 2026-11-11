@@ -20,7 +20,7 @@ import 'package:storii/features/library/ui/more_options_widget.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
-import 'package:storii/shared/widgets/waveform.dart';
+import 'package:storii/shared/widgets/skeleton.dart';
 
 class ItemDetailScreen extends ConsumerStatefulWidget {
   final String id;
@@ -50,7 +50,7 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
       body: Stack(
         children: [
           itemAsync.when(
-            loading: () => const Center(child: RandomWaveform()),
+            loading: () => const ItemDetailSkeleton(),
             error: (e, s) => ErrorRetryWidget(
               e.toString(),
               onRetry: () => ref.invalidate(itemDetailProvider(widget.id)),

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cached_network_image_ce/cached_network_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/logic/cover_helper.dart';
@@ -114,6 +115,7 @@ class _ImageWidgetState extends ConsumerState<ImageWidget> {
       cacheManager: AppImageCacheManager.instance,
       imageUrl: coverUrl,
       fit: .cover,
+      fadeInDuration: kDurationMd,
       placeholder: (_, _) => const PlaceholderImage(),
       errorBuilder: (context, error, _) {
         final error404 = error.toString().contains('404');

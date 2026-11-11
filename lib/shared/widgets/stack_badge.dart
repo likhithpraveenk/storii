@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 
 class StackBadge extends StatelessWidget {
   const new(this.value, {super.key});
@@ -13,7 +14,7 @@ class StackBadge extends StatelessWidget {
       padding: const .all(4),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryFixedDim,
-        borderRadius: .circular(6),
+        borderRadius: .circular(kRadiusSm),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.5),
@@ -46,7 +47,7 @@ class DownloadBadge extends StatelessWidget {
       padding: const .all(4),
       decoration: BoxDecoration(
         color: fillColor ? scheme.primaryContainer : Colors.transparent,
-        borderRadius: .circular(6),
+        borderRadius: .circular(kRadiusSm),
         border: fillColor ? null : .all(width: 1, color: scheme.primary),
         boxShadow: [
           BoxShadow(

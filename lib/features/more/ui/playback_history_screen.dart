@@ -135,7 +135,7 @@ class _HistoryRow extends ConsumerWidget {
             child: Padding(
               padding: const .all(3),
               child: ClipRRect(
-                borderRadius: .circular(4),
+                borderRadius: .circular(kRadiusXs),
                 child: ImageWidget(
                   id: entry.itemId,
                   type: .item,

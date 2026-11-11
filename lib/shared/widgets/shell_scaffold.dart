@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/config/nav_targets.dart';
 import 'package:storii/app/providers/nav_providers.dart';
@@ -107,13 +108,11 @@ class _ShellBottomBar extends ConsumerWidget {
     return AnimatedAlign(
       alignment: .topCenter,
       heightFactor: targetHeightFactor,
-      duration: (factor > 0)
-          ? Duration.zero
-          : const Duration(milliseconds: 300),
+      duration: (factor > 0) ? Duration.zero : kDurationMd,
       curve: Curves.easeOutCubic,
       child: AnimatedOpacity(
         opacity: hideNav ? 0.0 : 1.0,
-        duration: const Duration(milliseconds: 200),
+        duration: kDurationSm,
         child: RepaintBoundary(
           child: NavBar(
             currentIndex: displayIndex,

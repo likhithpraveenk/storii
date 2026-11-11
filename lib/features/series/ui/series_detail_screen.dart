@@ -11,7 +11,7 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/expandable_text.dart';
-import 'package:storii/shared/widgets/waveform.dart';
+import 'package:storii/shared/widgets/skeleton.dart';
 
 class SeriesDetailScreen extends ConsumerWidget {
   const new({super.key, required this.id});
@@ -21,6 +21,7 @@ class SeriesDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final seriesAsync = ref.watch(seriesProvider(id));
+    final isListView = ref.watch(libraryDisplayModeProvider) == .listView;
 
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +49,6 @@ class SeriesDetailScreen extends ConsumerWidget {
       body: seriesAsync.when(
         data: (series) {
           final books = series.books.sortedBySequence();
-          final mode = ref.watch(libraryDisplayModeProvider);
           return Column(
             children: [
               if (series.description != null)
@@ -57,14 +57,13 @@ class SeriesDetailScreen extends ConsumerWidget {
                   child: ExpandableHtml(data: series.description!),
                 ),
               Expanded(
-                child: mode == .listView
-                    ? ItemsListView(books)
-                    : ItemsGridView(books),
+                child: isListView ? ItemsListView(books) : ItemsGridView(books),
               ),
             ],
           );
         },
-        loading: () => const Center(child: RandomWaveform()),
+        loading: () =>
+            isListView ? const ItemsListSkeleton() : const ItemsGridSkeleton(),
         error: (e, s) => ErrorRetryWidget(
           e.toString(),
           onRetry: () {

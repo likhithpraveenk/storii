@@ -13,8 +13,8 @@ import 'package:storii/shared/widgets/common_app_bar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/error_retry.dart';
 import 'package:storii/shared/widgets/scrollable_widget.dart';
+import 'package:storii/shared/widgets/skeleton.dart';
 import 'package:storii/shared/widgets/stacked_images_card.dart';
-import 'package:storii/shared/widgets/waveform.dart';
 
 class PlaylistsScreen extends ConsumerStatefulWidget {
   const new({super.key});
@@ -96,8 +96,7 @@ class _PlaylistsScreenState extends ConsumerState<PlaylistsScreen> {
               ),
             );
           },
-          loading: () =>
-              const ScrollableWidget(child: Center(child: RandomWaveform())),
+          loading: () => const CollectionGridSkeleton(),
           error: (e, _) => ScrollableWidget(
             child: ErrorRetryWidget(
               e.toString(),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/api/abs/abs_api.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
@@ -32,7 +33,7 @@ class BookmarkButton extends StatelessWidget {
     useSafeArea: true,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
-      borderRadius: .vertical(top: .circular(24)),
+      borderRadius: .vertical(top: .circular(kRadiusXl)),
     ),
     builder: (_) => _BookmarkSheetBody(itemId: itemId),
   );

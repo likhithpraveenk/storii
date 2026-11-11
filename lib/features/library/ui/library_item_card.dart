@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
@@ -14,6 +15,7 @@ import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/queue_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/shared/widgets/press_feedback.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class LibraryItemCard extends ConsumerWidget {
@@ -39,104 +41,111 @@ class LibraryItemCard extends ConsumerWidget {
     final seriesNumBooks = item.collapsedSeries?.numBooks;
     final episodeNumber = item.recentEpisode?.episodeNumber;
 
-    return InkWell(
-      onTap: () {
-        if (item.collapsedSeries != null) {
-          context.push(AppRoute.seriesDetail.withId(item.collapsedSeries!.id));
-        } else {
-          context.push(AppRoute.itemDetail.withId(item.id));
-        }
-      },
-      onLongPress: () => showMoreItemOptionsSheet(
-        context,
-        itemId: item.id,
-        episodeId: item.recentEpisode?.id,
-        fromContinueListening: fromContinueListening,
-        fromContinueSeries: fromContinueSeries,
-        seriesId:
-            item.collapsedSeries?.id ??
-            item.media.metadata.mapOrNull(
-              book: (m) => m.series?.firstOrNull?.id,
-            ),
-      ),
-      splashFactory: NoSplash.splashFactory,
-      highlightColor: Colors.transparent,
-      child: Column(
-        mainAxisSize: .min,
-        crossAxisAlignment: .start,
-        children: [
-          AspectRatio(
-            aspectRatio: 1,
-            child: ClipRRect(
-              borderRadius: .circular(kRadius),
-              child: Stack(
-                fit: .expand,
-                children: [
-                  ImageWidget(
-                    id: item.id,
-                    type: .item,
-                    updatedAt: item.updatedAt,
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: stackTitle && showTitle
-                        ? TitleWidget(item: item, inStack: true)
-                        : const SizedBox.shrink(),
-                  ),
-                  Align(
-                    alignment: .bottomCenter,
-                    child: ItemCardProgressWidget(item: item),
-                  ),
-                  if (sequence != null)
-                    Positioned(
-                      top: 6,
-                      right: 6,
-                      child: StackBadge('#$sequence'),
+    return PressFeedback(
+      child: InkWell(
+        onTap: () {
+          if (item.collapsedSeries != null) {
+            context.push(
+              AppRoute.seriesDetail.withId(item.collapsedSeries!.id),
+            );
+          } else {
+            context.push(AppRoute.itemDetail.withId(item.id));
+          }
+        },
+        onLongPress: () {
+          HapticFeedback.lightImpact();
+          showMoreItemOptionsSheet(
+            context,
+            itemId: item.id,
+            episodeId: item.recentEpisode?.id,
+            fromContinueListening: fromContinueListening,
+            fromContinueSeries: fromContinueSeries,
+            seriesId:
+                item.collapsedSeries?.id ??
+                item.media.metadata.mapOrNull(
+                  book: (m) => m.series?.firstOrNull?.id,
+                ),
+          );
+        },
+        splashFactory: NoSplash.splashFactory,
+        highlightColor: Colors.transparent,
+        child: Column(
+          mainAxisSize: .min,
+          crossAxisAlignment: .start,
+          children: [
+            AspectRatio(
+              aspectRatio: 1,
+              child: ClipRRect(
+                borderRadius: .circular(kRadius),
+                child: Stack(
+                  fit: .expand,
+                  children: [
+                    ImageWidget(
+                      id: item.id,
+                      type: .item,
+                      updatedAt: item.updatedAt,
                     ),
-                  if (seriesNumBooks != null)
                     Positioned(
-                      top: 6,
-                      right: 6,
-                      child: StackBadge('$seriesNumBooks'),
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: stackTitle && showTitle
+                          ? TitleWidget(item: item, inStack: true)
+                          : const SizedBox.shrink(),
                     ),
-                  if (episodeNumber != null)
-                    Positioned(
-                      top: 6,
-                      right: 6,
-                      child: StackBadge(episodeNumber),
+                    Align(
+                      alignment: .bottomCenter,
+                      child: ItemCardProgressWidget(item: item),
                     ),
-                  Consumer(
-                    builder: (context, ref, _) {
-                      final isDownloaded =
-                          ref.watch(downloadItemProvider(item.id))?.status ==
-                          .completed;
-                      if (isDownloaded) {
-                        return const Positioned(
-                          bottom: 6,
-                          left: 6,
-                          child: DownloadBadge(),
-                        );
-                      }
-                      return const SizedBox.shrink();
-                    },
-                  ),
-                  if (showPlay)
-                    Positioned(
-                      bottom: 6,
-                      right: 6,
-                      child: PlayButtonBadge(
-                        itemId: item.id,
-                        episodeId: item.recentEpisode?.id,
+                    if (sequence != null)
+                      Positioned(
+                        top: 6,
+                        right: 6,
+                        child: StackBadge('#$sequence'),
                       ),
+                    if (seriesNumBooks != null)
+                      Positioned(
+                        top: 6,
+                        right: 6,
+                        child: StackBadge('$seriesNumBooks'),
+                      ),
+                    if (episodeNumber != null)
+                      Positioned(
+                        top: 6,
+                        right: 6,
+                        child: StackBadge(episodeNumber),
+                      ),
+                    Consumer(
+                      builder: (context, ref, _) {
+                        final isDownloaded =
+                            ref.watch(downloadItemProvider(item.id))?.status ==
+                            .completed;
+                        if (isDownloaded) {
+                          return const Positioned(
+                            bottom: 6,
+                            left: 6,
+                            child: DownloadBadge(),
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
                     ),
-                ],
+                    if (showPlay)
+                      Positioned(
+                        bottom: 6,
+                        right: 6,
+                        child: PlayButtonBadge(
+                          itemId: item.id,
+                          episodeId: item.recentEpisode?.id,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
-          ),
-          if (!stackTitle && showTitle) TitleWidget(item: item),
-        ],
+            if (!stackTitle && showTitle) TitleWidget(item: item),
+          ],
+        ),
       ),
     );
   }
@@ -238,7 +247,7 @@ class PlayButtonBadge extends ConsumerWidget {
         padding: const .all(4),
         decoration: BoxDecoration(
           color: scheme.primaryFixedDim,
-          borderRadius: .circular(6),
+          borderRadius: .circular(kRadiusSm),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.5),

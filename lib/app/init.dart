@@ -35,7 +35,7 @@ Future<void> setupGlobals({Locale? locale}) async {
 Future<void> setupLicenses() async {
   LicenseRegistry.addLicense(() async* {
     final ofl = await rootBundle.loadString('assets/fonts/OFL.txt');
-    yield LicenseEntryWithLineBreaks(['AtkinsonHyperlegibleNext'], ofl);
+    yield LicenseEntryWithLineBreaks([DefaultUserSettings.fontFamily], ofl);
   });
 
   LicenseRegistry.addLicense(() async* {

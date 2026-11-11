@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/playback_event.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -34,7 +35,7 @@ class HistoryButton extends StatelessWidget {
       useSafeArea: true,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: .vertical(top: .circular(24)),
+        borderRadius: .vertical(top: .circular(kRadiusXl)),
       ),
       builder: (_) => DraggableScrollableSheet(
         maxChildSize: 0.95,

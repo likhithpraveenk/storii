@@ -1,11 +1,15 @@
+import 'dart:async';
+
+import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 BoxDecoration bottomSheetDecoration(BuildContext context) {
   return BoxDecoration(
-    borderRadius: const .vertical(top: .circular(24)),
+    borderRadius: const .vertical(top: .circular(kRadiusXl)),
     border: Border.all(
-      width: 0.5,
+      width: kBorderHairline,
       color: Theme.of(context).colorScheme.primary,
     ),
   );
@@ -63,7 +67,7 @@ class AppBottomSheet extends StatelessWidget {
       isScrollControlled: true,
       isDismissible: isDismissible,
       shape: const RoundedRectangleBorder(
-        borderRadius: .vertical(top: .circular(24)),
+        borderRadius: .vertical(top: .circular(kRadiusXl)),
       ),
       builder: (_) => SafeArea(
         child: AppBottomSheet(
@@ -116,6 +120,7 @@ class AppBottomSheet extends StatelessWidget {
                 child: AppFilledButton(
                   isDestructive: isDestructive,
                   onPressed: () async {
+                    unawaited(HapticFeedback.lightImpact());
                     await onTap?.call();
                     if (context.mounted) Navigator.of(context).pop();
                   },

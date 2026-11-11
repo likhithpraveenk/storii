@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/theme.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -108,7 +109,7 @@ class _SchemeSwatch extends StatelessWidget {
       height: 40,
       decoration: BoxDecoration(
         color: scheme.surfaceContainerHigh,
-        borderRadius: .circular(8),
+        borderRadius: .circular(kRadiusMd),
         border: .all(
           color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3),
         ),

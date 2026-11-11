@@ -19,8 +19,8 @@ void main() async {
   );
   await setupHive();
   await init.setupLicenses();
-  await FontService.loadFonts();
   final container = await init.setupProviders();
+  await FontService.loadFonts(fontFamily: container.read(fontFamilyProvider));
   await init.setupDownloadServices(container);
 
   runApp(UncontrolledProviderScope(container: container, child: const MyApp()));

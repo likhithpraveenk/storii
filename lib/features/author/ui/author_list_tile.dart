@@ -6,6 +6,7 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
+import 'package:storii/shared/widgets/press_feedback.dart';
 import 'package:storii/shared/widgets/stack_badge.dart';
 
 class AuthorListTile extends ConsumerWidget {
@@ -17,36 +18,40 @@ class AuthorListTile extends ConsumerWidget {
     final theme = Theme.of(context);
     final cardSize = ref.watch(listViewImageSizeProvider);
 
-    return InkWell(
-      onTap: () => context.push(AppRoute.authorDetail.withId(author.id)),
-      borderRadius: .circular(kRadius),
-      child: Padding(
-        padding: const .fromLTRB(16, 8, 16, 8),
-        child: Row(
-          spacing: 8,
-          children: [
-            SizedBox.square(
-              dimension: cardSize,
-              child: ClipRRect(
-                borderRadius: .circular(4),
-                child: ImageWidget(
-                  id: author.id,
-                  type: .author,
-                  updatedAt: author.updatedAt,
-                  inList: true,
+    return PressFeedback(
+      child: InkWell(
+        onTap: () => context.push(AppRoute.authorDetail.withId(author.id)),
+        splashFactory: NoSplash.splashFactory,
+        highlightColor: Colors.transparent,
+        borderRadius: .circular(kRadius),
+        child: Padding(
+          padding: const .fromLTRB(16, 8, 16, 8),
+          child: Row(
+            spacing: 8,
+            children: [
+              SizedBox.square(
+                dimension: cardSize,
+                child: ClipRRect(
+                  borderRadius: .circular(kRadiusXs),
+                  child: ImageWidget(
+                    id: author.id,
+                    type: .author,
+                    updatedAt: author.updatedAt,
+                    inList: true,
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Text(
-                author.name,
-                maxLines: 2,
-                overflow: .ellipsis,
-                style: theme.textTheme.titleSmall,
+              Expanded(
+                child: Text(
+                  author.name,
+                  maxLines: 2,
+                  overflow: .ellipsis,
+                  style: theme.textTheme.titleSmall,
+                ),
               ),
-            ),
-            StackBadge('${author.numBooks ?? 0}'),
-          ],
+              StackBadge('${author.numBooks ?? 0}'),
+            ],
+          ),
         ),
       ),
     );

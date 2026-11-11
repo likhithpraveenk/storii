@@ -1,8 +1,12 @@
+import 'dart:math' as math;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/player_cover_geometry.dart';
+import 'package:storii/features/player/logic/player_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/book_slider.dart';
 import 'package:storii/features/player/ui/button_layout_big.dart';
@@ -14,7 +18,9 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
 
 class FullPlayer extends ConsumerWidget {
-  const new({super.key});
+  const new({super.key, required this.expandFactor});
+
+  final double expandFactor;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,11 +55,23 @@ class FullPlayer extends ConsumerWidget {
 
     final layout = ref.watch(playbackControlsLayoutProvider);
 
+    final screen = MediaQuery.sizeOf(context);
+    final isLandscape = screen.width > screen.height;
+    final topInset = isLandscape
+        ? statusBarHeight(context)
+        : fullPlayerTopInset(context);
+    final (:left, :size, :top) = playerCoverGeometry(
+      screenWidth: screen.width,
+      screenHeight: screen.height,
+      expandFactor: expandFactor,
+      topInset: topInset,
+    );
+
     return LayoutBuilder(
       builder: (context, constraints) {
-        return SingleChildScrollView(
+        Widget scroll(double minHeight) => SingleChildScrollView(
           child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight - 32),
+            constraints: BoxConstraints(minHeight: math.max(0, minHeight)),
             child: Column(
               mainAxisAlignment: .center,
               children: [
@@ -110,7 +128,77 @@ class FullPlayer extends ConsumerWidget {
             ),
           ),
         );
+
+        if (isLandscape) {
+          final statusBar = statusBarHeight(context);
+          return Row(
+            children: [
+              const _PlayerHeader(isVertical: true),
+              Expanded(
+                child: Padding(
+                  padding: .only(left: size, top: statusBar),
+                  child: scroll(
+                    constraints.maxHeight - statusBar - fullPlayerBottomPadding,
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
+
+        return Column(
+          children: [
+            const _PlayerHeader(),
+            SizedBox(height: size + playerCoverContentGap),
+            Expanded(
+              child: scroll(
+                constraints.maxHeight -
+                    topInset -
+                    size -
+                    playerCoverContentGap -
+                    fullPlayerBottomPadding,
+              ),
+            ),
+          ],
+        );
       },
+    );
+  }
+}
+
+double fullPlayerTopInset(BuildContext context) =>
+    fullPlayerHeaderHeight + statusBarHeight(context);
+
+double statusBarHeight(BuildContext context) =>
+    MediaQueryData.fromView(View.of(context)).padding.top;
+
+class _PlayerHeader extends ConsumerWidget {
+  const new({this.isVertical = false});
+
+  final bool isVertical;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final collapseButton = IconButton(
+      tooltip: l10n.collapse,
+      onPressed: () => ref.read(playerModeProvider.notifier).toMini(),
+      icon: const Icon(Icons.keyboard_arrow_down),
+    );
+
+    return SizedBox(
+      width: isVertical ? fullPlayerHeaderHeight : null,
+      height: isVertical ? null : fullPlayerTopInset(context),
+      child: Padding(
+        padding: .only(top: statusBarHeight(context)),
+        child: isVertical
+            ? Column(children: [collapseButton])
+            : Row(
+                children: [
+                  collapseButton,
+                  const Expanded(child: SizedBox.shrink()),
+                ],
+              ),
+      ),
     );
   }
 }

@@ -155,7 +155,7 @@ class _WheelPickerState<T> extends State<WheelPicker<T>> {
                       final selected = index == _selectedIndex;
                       return Center(
                         child: AnimatedDefaultTextStyle(
-                          duration: const Duration(milliseconds: 200),
+                          duration: kDurationSm,
                           style: theme.textTheme.titleLarge!.copyWith(
                             fontWeight: selected ? .w700 : .w400,
                             color: selected

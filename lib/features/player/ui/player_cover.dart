@@ -9,7 +9,7 @@ import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/widgets/placeholder_image.dart';
 
-class HeroCover extends ConsumerWidget {
+class PlayerCover extends ConsumerWidget {
   const new({super.key, required this.expandFactor});
 
   final double expandFactor;

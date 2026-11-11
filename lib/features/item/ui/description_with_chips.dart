@@ -70,7 +70,7 @@ class _ExpandableDescriptionWithChipsState
       onTap: _toggle,
       behavior: HitTestBehavior.opaque,
       child: AnimatedSize(
-        duration: const Duration(milliseconds: 300),
+        duration: kDurationMd,
         curve: Curves.fastOutSlowIn,
         alignment: .topCenter,
         child: Column(

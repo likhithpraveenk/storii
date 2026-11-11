@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 
 class ProgressBorderPainter extends CustomPainter {
   const new({required this.progress, required this.color});
@@ -22,7 +23,10 @@ class ProgressBorderPainter extends CustomPainter {
         stops: [0, progress, progress, 1],
       ).createShader(rect);
 
-    canvas.drawRRect(RRect.fromRectAndRadius(rect, const .circular(4)), paint);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(rect, const .circular(kRadiusXs)),
+      paint,
+    );
   }
 
   @override

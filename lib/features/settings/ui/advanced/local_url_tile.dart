@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
@@ -32,7 +33,7 @@ class LocalUrlTile extends ConsumerWidget {
           context: context,
           isScrollControlled: true,
           shape: const RoundedRectangleBorder(
-            borderRadius: .vertical(top: .circular(24)),
+            borderRadius: .vertical(top: .circular(kRadiusXl)),
           ),
           useSafeArea: true,
           builder: (context) =>

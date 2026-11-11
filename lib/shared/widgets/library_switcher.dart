@@ -1,5 +1,7 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -21,7 +23,7 @@ class LibrarySwitcher extends ConsumerWidget {
         onPressed: () => _showPicker(details.library.id),
         style: TextButton.styleFrom(
           padding: const .all(8),
-          shape: RoundedRectangleBorder(borderRadius: .circular(24)),
+          shape: RoundedRectangleBorder(borderRadius: .circular(kRadiusXl)),
           textStyle: Theme.of(context).textTheme.titleLarge,
         ),
         child: Row(
@@ -72,6 +74,7 @@ class LibrarySwitcher extends ConsumerWidget {
                         ? const Icon(Icons.check)
                         : null,
                     onTap: () {
+                      HapticFeedback.selectionClick();
                       ref
                           .read(userSettingsProvider.notifier)
                           .setCurrentLibrary(lib);
