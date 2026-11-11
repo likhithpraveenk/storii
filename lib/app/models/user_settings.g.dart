@@ -40,7 +40,7 @@ _UserSettings _$UserSettingsFromJson(
       DefaultUserSettings.navLabelBehavior,
   dateTimeFormat:
       json['dateTimeFormat'] as String? ?? DefaultUserSettings.dateTimeFormat,
-  fontFamily: json['fontFamily'] as String? ?? 'AtkinsonHyperlegibleNext',
+  fontFamily: json['fontFamily'] as String? ?? DefaultUserSettings.fontFamily,
   fontScale:
       (json['fontScale'] as num?)?.toDouble() ?? DefaultUserSettings.fontScale,
   skipForward: json['skipForward'] == null
@@ -292,7 +292,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'navLabelBehavior':
       _$NavigationDestinationLabelBehaviorEnumMap[instance.navLabelBehavior]!,
   'dateTimeFormat': instance.dateTimeFormat,
-  'fontFamily': ?instance.fontFamily,
+  'fontFamily': instance.fontFamily,
   'fontScale': instance.fontScale,
   'skipForward': instance.skipForward.inMicroseconds,
   'skipBackward': instance.skipBackward.inMicroseconds,

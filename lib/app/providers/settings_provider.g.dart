@@ -264,7 +264,7 @@ extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setDateTimeFormat(String value) =>
       _save(state?.copyWith(dateTimeFormat: value));
 
-  Future<void> setFontFamily(String? value) =>
+  Future<void> setFontFamily(String value) =>
       _save(state?.copyWith(fontFamily: value));
 
   Future<void> setFontScale(double value) =>
@@ -558,7 +558,7 @@ final dateTimeFormatProvider = Provider<String>(
   name: 'dateTimeFormatProvider',
 );
 
-final fontFamilyProvider = Provider<String?>(
+final fontFamilyProvider = Provider<String>(
   (ref) => ref.watch(
     userSettingsProvider.select(
       (s) => s?.fontFamily ?? DefaultUserSettings.fontFamily,

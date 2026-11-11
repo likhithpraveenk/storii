@@ -19,7 +19,7 @@ class DefaultUserSettings {
   static const NavigationDestinationLabelBehavior navLabelBehavior =
       .alwaysShow;
   static const dateTimeFormat = 'dd MMM y';
-  static const String? fontFamily = null;
+  static const fontFamily = 'AtkinsonHyperlegibleNext';
   static const fontScale = 1.0;
   static const skipForward = Duration(seconds: 30);
   static const skipBackward = Duration(seconds: 10);
@@ -119,7 +119,7 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.dateTimeFormat) String dateTimeFormat,
 
-    @Default('AtkinsonHyperlegibleNext') String? fontFamily,
+    @Default(DefaultUserSettings.fontFamily) String fontFamily,
 
     @Default(DefaultUserSettings.fontScale) double fontScale,
 

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:storii/app/logs/log_service.dart';
+import 'package:storii/app/models/user_settings.dart';
 import 'package:ttf_metadata/ttf_metadata.dart';
 
 class FontService {
@@ -31,7 +32,7 @@ class FontService {
     final fontsDir = await _getFontsDirectory();
     final existing = await _listFontFiles();
     final existingNames = existing.map((f) => _fontFamily(f.path)).toSet()
-      ..add('AtkinsonHyperlegibleNext');
+      ..add(DefaultUserSettings.fontFamily);
 
     for (final picked in files) {
       if (picked.path == null) continue;
@@ -47,7 +48,7 @@ class FontService {
       existingNames.add(fontName);
     }
 
-    await loadFonts();
+    await loadFonts(loadAll: true);
   }
 
   static Future<List<File>> _listFontFiles() async {
@@ -80,30 +81,43 @@ class FontService {
     return families;
   }
 
-  static Future<void> loadFonts() async {
+  static Future<void> loadFonts({
+    String? fontFamily,
+    bool loadAll = false,
+  }) async {
+    if (fontFamily == null && !loadAll) return;
     final families = await groupByFamily();
+    final entries = loadAll
+        ? families.entries
+        : families.entries.where((e) => e.key == fontFamily);
+    for (final entry in entries) {
+      try {
+        final loader = FontLoader(entry.key);
 
-    await Future.wait(
-      families.entries.map((entry) async {
-        try {
-          final loader = FontLoader(entry.key);
-
-          for (final file in entry.value) {
-            loader.addFont(
-              file.readAsBytes().then((b) => ByteData.view(b.buffer)),
-            );
-          }
-
-          await loader.load();
-        } catch (e, st) {
-          LogService.log(
-            'Failed to load font: ${entry.key}: $e',
-            source: 'FontService',
-            stackTrace: st,
-          );
+        for (final file in entry.value) {
+          final bytes = await file.readAsBytes();
+          loader.addFont(Future.value(ByteData.view(bytes.buffer)));
         }
-      }),
-    );
+
+        await loader.load();
+      } catch (e, st) {
+        LogService.log(
+          'Failed to load font: ${entry.key}: $e',
+          source: 'FontService',
+          level: .warning,
+          stackTrace: st,
+        );
+      }
+    }
+  }
+
+  static Future<void> deleteFont(String fontName) async {
+    final files = await _listFontFiles();
+    for (final file in files) {
+      if (_fontFamily(file.path) == fontName) {
+        await file.delete();
+      }
+    }
   }
 
   static Future<void> clearFonts() async {

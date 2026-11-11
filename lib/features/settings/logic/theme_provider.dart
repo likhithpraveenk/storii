@@ -45,7 +45,7 @@ ThemeData themeData(Ref ref, Brightness brightness) {
     useMaterial3: true,
     brightness: brightness,
     colorScheme: colorScheme,
-    fontFamily: fontFamily,
+    fontFamily: fontFamily == systemFont ? null : fontFamily,
     pageTransitionsTheme: PageTransitionsTheme(
       builders: {
         for (final platform in TargetPlatform.values)
