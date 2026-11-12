@@ -1,0 +1,2 @@
+Fixed:
+- app startup out-of-memory crash

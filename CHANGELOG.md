@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+## [v0.13.4-beta.1] - 2026-11-12
+
 ### Fixed
 
 - app startup out-of-memory crash
@@ -858,7 +860,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.13.3...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.13.4-beta.1...HEAD
+[v0.13.4-beta.1]: https://github.com/likhithpraveenk/storii/compare/v0.13.3...v0.13.4-beta.1
 [v0.13.3]: https://github.com/likhithpraveenk/storii/compare/v0.13.2...v0.13.3
 [v0.13.2]: https://github.com/likhithpraveenk/storii/compare/v0.13.1...v0.13.2
 [v0.13.1]: https://github.com/likhithpraveenk/storii/compare/v0.13.0...v0.13.1
