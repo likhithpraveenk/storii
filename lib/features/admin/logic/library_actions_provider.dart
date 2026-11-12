@@ -9,19 +9,19 @@ part 'library_actions_provider.g.dart';
 class ScanLibrary extends _$ScanLibrary {
   @override
   Future<Set<String>> build() async {
-    ref.listen(taskStartProvider, (_, next) {
+    ref.listen(taskStartProvider, (_, next) async {
       final start = next.value;
       if (start?.data?.libraryId != null) {
-        state = AsyncData({...?state.value}..add(start!.data!.libraryId!));
+        final current = await future;
+        state = AsyncData({...current}..add(start!.data!.libraryId!));
       }
     });
 
-    ref.listen(taskCompleteProvider, (_, next) {
+    ref.listen(taskCompleteProvider, (_, next) async {
       final complete = next.value;
       if (complete?.data?.libraryId != null) {
-        state = AsyncData(
-          {...?state.value}..remove(complete!.data!.libraryId!),
-        );
+        final current = await future;
+        state = AsyncData({...current}..remove(complete!.data!.libraryId!));
       }
     });
 

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/storage/hive/boxes.dart';
@@ -14,9 +14,11 @@ class LogsNotifier extends _$LogsNotifier {
   static const _boxKey = 'logs_list';
   static const _logsCutOff = Duration(days: 1);
 
+  LazyBox<String> get _box => Hive.lazyBox(logsBoxName);
+
   @override
-  List<LogEntry> build() {
-    final raw = logsBox.get(_boxKey);
+  Future<List<LogEntry>> build() async {
+    final raw = await _box.get(_boxKey);
     if (raw == null) return [];
     final cutoff = DateTime.now().subtract(_logsCutOff);
     try {
@@ -30,7 +32,7 @@ class LogsNotifier extends _$LogsNotifier {
             ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
       if (list.length != decoded.length) {
-        Future.microtask(_persist);
+        unawaited(_persist(list));
       }
       return list;
     } catch (_) {
@@ -46,19 +48,21 @@ class LogsNotifier extends _$LogsNotifier {
     }
   }
 
-  void add(LogEntry entry) {
-    state = [entry, ...state];
-    unawaited(_persist());
+  Future<void> add(LogEntry entry) async {
+    final current = await future;
+    final next = [entry, ...current];
+    state = AsyncData(next);
+    unawaited(_persist(next));
   }
 
-  Future<void> _persist() async {
-    final encoded = jsonEncode(state.map((e) => e.toJson()).toList());
-    await logsBox.put(_boxKey, encoded);
+  Future<void> _persist(List<LogEntry> logs) {
+    final encoded = jsonEncode(logs.map((e) => e.toJson()).toList());
+    return _box.put(_boxKey, encoded);
   }
 
   Future<void> clear() async {
-    state = [];
-    await logsBox.delete(_boxKey);
+    state = const AsyncData([]);
+    await _box.delete(_boxKey);
   }
 }
 
@@ -66,14 +70,10 @@ final logFilterProvider = StateProvider<Set<LogLevel>>((ref) {
   return LogLevel.values.toSet();
 }, name: 'logFilterProvider');
 
-final filteredLogsProvider = Provider<List<LogEntry>>((ref) {
-  final allLogs = ref.watch(logsProvider);
+@riverpod
+Future<List<LogEntry>> filteredLogs(Ref ref) async {
+  final allLogs = await ref.watch(logsProvider.future);
   final activeFilters = ref.watch(logFilterProvider);
 
   return allLogs.where((entry) => activeFilters.contains(entry.level)).toList();
-}, name: 'filteredLogsProvider');
-
-final errorLogsProvider = Provider<List<LogEntry>>((ref) {
-  final allLogs = ref.watch(logsProvider);
-  return allLogs.where((entry) => entry.level == .error).toList();
-}, name: 'errorLogsProvider');
+}

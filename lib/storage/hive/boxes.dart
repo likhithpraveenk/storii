@@ -55,7 +55,6 @@ late final Box<String> downloadsBox;
 late final Box<double> speedsBox;
 late final Box<String> userMediaProgressBox;
 late final Box<String> serverSettingsBox;
-late final Box<String> logsBox;
 late final Box<bool> autoDeleteExclusionBox;
 
 Future<void> setupHive() async {
@@ -79,7 +78,7 @@ Future<void> setupHive() async {
   userMediaProgressBox = await Hive.openBox<String>(userMediaProgressBoxName);
   serverSettingsBox = await Hive.openBox<String>(serverSettingsBoxName);
   await Hive.openBox<String>(playbackQueueBoxName);
-  logsBox = await Hive.openBox<String>(logsBoxName);
+  await Hive.openLazyBox<String>(logsBoxName);
   autoDeleteExclusionBox = await Hive.openBox<bool>(autoDeleteExclusionBoxName);
 
   // dio cache
