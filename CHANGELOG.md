@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- app startup out-of-memory crash
+
 ## [v0.13.3] - 2026-11-11
 
 ### Added
