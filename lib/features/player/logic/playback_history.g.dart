@@ -13,7 +13,8 @@ part of 'playback_history.dart';
 final playbackHistoryProvider = PlaybackHistoryNotifierFamily._();
 
 final class PlaybackHistoryNotifierProvider
-    extends $NotifierProvider<PlaybackHistoryNotifier, List<PlaybackEvent>> {
+    extends
+        $AsyncNotifierProvider<PlaybackHistoryNotifier, List<PlaybackEvent>> {
   PlaybackHistoryNotifierProvider._({
     required PlaybackHistoryNotifierFamily super.from,
     required String super.argument,
@@ -39,14 +40,6 @@ final class PlaybackHistoryNotifierProvider
   @override
   PlaybackHistoryNotifier create() => PlaybackHistoryNotifier();
 
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<PlaybackEvent> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<List<PlaybackEvent>>(value),
-    );
-  }
-
   @override
   bool operator ==(Object other) {
     return other is PlaybackHistoryNotifierProvider &&
@@ -60,15 +53,15 @@ final class PlaybackHistoryNotifierProvider
 }
 
 String _$playbackHistoryNotifierHash() =>
-    r'b6662128e0b834c51526f2c328a4a79e63532f88';
+    r'9abe2d463f89c66f093dc3e2f158ade5c98e22f3';
 
 final class PlaybackHistoryNotifierFamily extends $Family
     with
         $ClassFamilyOverride<
           PlaybackHistoryNotifier,
+          AsyncValue<List<PlaybackEvent>>,
           List<PlaybackEvent>,
-          List<PlaybackEvent>,
-          List<PlaybackEvent>,
+          FutureOr<List<PlaybackEvent>>,
           String
         > {
   PlaybackHistoryNotifierFamily._()
@@ -88,20 +81,21 @@ final class PlaybackHistoryNotifierFamily extends $Family
 }
 
 abstract class _$PlaybackHistoryNotifier
-    extends $Notifier<List<PlaybackEvent>> {
+    extends $AsyncNotifier<List<PlaybackEvent>> {
   late final _$args = ref.$arg as String;
   String get mediaItemId => _$args;
 
-  List<PlaybackEvent> build(String mediaItemId);
+  FutureOr<List<PlaybackEvent>> build(String mediaItemId);
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<List<PlaybackEvent>, List<PlaybackEvent>>;
+    final ref =
+        this.ref as $Ref<AsyncValue<List<PlaybackEvent>>, List<PlaybackEvent>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<List<PlaybackEvent>, List<PlaybackEvent>>,
-              List<PlaybackEvent>,
+              AnyNotifier<AsyncValue<List<PlaybackEvent>>, List<PlaybackEvent>>,
+              AsyncValue<List<PlaybackEvent>>,
               Object?,
               Object?
             >;

@@ -56,8 +56,8 @@ void main() {
   PlaybackHistoryNotifier notifier() =>
       container.read(playbackHistoryProvider(mediaItemId).notifier);
 
-  List<PlaybackEvent> state() =>
-      container.read(playbackHistoryProvider(mediaItemId));
+  Future<List<PlaybackEvent>> state() =>
+      container.read(playbackHistoryProvider(mediaItemId).future);
 
   group('build', () {
     test('returns empty list when there is no current user', () async {
@@ -69,8 +69,8 @@ void main() {
         ],
       );
       addTearDown(container.dispose);
-
-      expect(container.read(playbackHistoryProvider(mediaItemId)), isEmpty);
+      final events = await state();
+      expect(events, isEmpty);
     });
 
     test('hydrates from the store when a user is present', () async {
@@ -86,10 +86,8 @@ void main() {
       );
       addTearDown(container.dispose);
 
-      expect(
-        container.read(playbackHistoryProvider(mediaItemId)),
-        equals(seeded),
-      );
+      final events = await state();
+      expect(events, equals(seeded));
     });
   });
 
@@ -101,7 +99,8 @@ void main() {
       await notifier().addEvent(e1);
       await notifier().addEvent(e2);
 
-      expect(state(), equals([e1, e2]));
+      final events = await state();
+      expect(events, equals([e1, e2]));
       expect(store.putCalls, 2);
     });
 
@@ -126,7 +125,9 @@ void main() {
             .addEvent(e);
       }
 
-      final result = container.read(playbackHistoryProvider(mediaItemId));
+      final result = await container.read(
+        playbackHistoryProvider(mediaItemId).future,
+      );
       expect(result.length, 2);
       expect(result, equals(events.sublist(1)));
     });
@@ -140,7 +141,8 @@ void main() {
       final updated = original.copyWith(playbackError: true);
       await notifier().updateEvent(updated);
 
-      expect(state(), equals([updated]));
+      final events = await state();
+      expect(events, equals([updated]));
     });
 
     test(
@@ -163,8 +165,9 @@ void main() {
         await notifier().updateEvent(pending1.copyWith(syncSuccess: true));
         await notifier().updateEvent(pending2.copyWith(syncSuccess: true));
 
-        expect(state().length, 1);
-        expect(state().single.syncSuccess, isTrue);
+        final events = await state();
+        expect(events.length, 1);
+        expect(events.single.syncSuccess, isTrue);
       },
     );
 
@@ -185,8 +188,9 @@ void main() {
 
       await notifier().updateEvent(e2.copyWith(playbackError: false));
 
-      expect(state().single.listened, const Duration(seconds: 25));
-      expect(state().length, 1);
+      final events = await state();
+      expect(events.single.listened, const Duration(seconds: 25));
+      expect(events.length, 1);
     });
 
     test('does not collapse across a non-like event in between', () async {
@@ -210,7 +214,8 @@ void main() {
       await notifier().addEvent(syncB);
       await notifier().updateEvent(syncB);
 
-      expect(state().length, 3);
+      final events = await state();
+      expect(events.length, 3);
     });
   });
 
@@ -220,7 +225,8 @@ void main() {
 
       await notifier().clearHistory();
 
-      expect(state(), isEmpty);
+      final events = await state();
+      expect(events, isEmpty);
       expect(store.removeCalls, 1);
     });
   });

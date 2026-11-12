@@ -45,8 +45,6 @@ final _knownNames = [
 const networkCacheDir = 'dio_cache';
 late final HiveCacheStore networkCacheStore;
 
-late final Box<List<dynamic>> playbackHistoryBox;
-
 Future<void> setupHive() async {
   await Hive.initFlutter();
   Hive
@@ -60,9 +58,7 @@ Future<void> setupHive() async {
   await Hive.openBox<Server>(serversBoxName);
   await Hive.openLazyBox<String>(itemsBoxName);
   await Hive.openBox<String>(localSessionsBoxName);
-  playbackHistoryBox = await Hive.openBox<List<dynamic>>(
-    playbackHistoryBoxName,
-  );
+  await Hive.openLazyBox<List<dynamic>>(playbackHistoryBoxName);
   await Hive.openBox<String>(downloadsBoxName);
   await Hive.openBox<double>(speedsBoxName);
   await Hive.openBox<String>(userMediaProgressBoxName);

@@ -18,12 +18,12 @@ class PlaybackHistoryEntry {
 }
 
 @riverpod
-List<PlaybackHistoryEntry> playbackHistoryEntries(Ref ref) {
+Future<List<PlaybackHistoryEntry>> playbackHistoryEntries(Ref ref) async {
   final user = ref.watch(currentUserProvider);
   if (user == null) return const [];
 
   final store = ref.read(playbackHistoryStoreProvider);
-  final map = store.getAllForUser(user.id);
+  final map = await store.getAllForUser(user.id);
 
   final entries = map.entries.map<PlaybackHistoryEntry>((e) {
     final (id: itemId, :episodeId) = fromMediaItemIdKey(e.key);

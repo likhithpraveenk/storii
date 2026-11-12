@@ -29,7 +29,7 @@ class _PlaybackHistoryScreenState extends ConsumerState<PlaybackHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final entries = ref.watch(playbackHistoryEntriesProvider);
+    final entries = ref.watch(playbackHistoryEntriesProvider).value ?? const [];
 
     final hasBooks = entries.any((e) => e.episodeId == null);
     final hasEpisodes = entries.any((e) => e.episodeId != null);
