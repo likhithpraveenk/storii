@@ -87,7 +87,7 @@ final class UsersProvider
   }
 }
 
-String _$usersHash() => r'6d26486f10b6cfc3337a6a3114a4499866a3082f';
+String _$usersHash() => r'1b12c131191bf256590d13992b6a1ca4a6a3657f';
 
 @ProviderFor(usersOfServer)
 final usersOfServerProvider = UsersOfServerFamily._();

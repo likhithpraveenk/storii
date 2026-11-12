@@ -2,10 +2,8 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/device_info_provider.dart';
-import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/add_server_notifier.dart';
-import 'package:storii/shared/helpers/extensions.dart';
 
 part 'bug_report_provider.g.dart';
 
@@ -34,19 +32,6 @@ Future<String> bugReportBody(Ref ref) async {
     } catch (_) {}
   }
 
-  final logs = ref
-      .read(errorLogsProvider)
-      .take(5)
-      .map((e) {
-        final header =
-            '[${e.timestamp.fString(forLogs: true)}] '
-            '${e.level.name.toUpperCase()} '
-            '${e.source != null ? '${e.source}: ' : ''}${e.message}';
-        final trace = e.stackTrace;
-        return trace != null ? '$header\n$trace' : header;
-      })
-      .join('\n');
-
   return '''
 ## Description
 
@@ -69,14 +54,6 @@ Future<String> bugReportBody(Ref ref) async {
 - Storii version: ${package.version} (${package.buildNumber})
 - Device: $os
 - Audiobookshelf server version: $serverVersion
-
-## Recent Logs
-
-> **Before submitting, review the logs below and remove any personal data or delete this block entirely if it is unrelated to the bug.**
-
-```text
-$logs
-```
 
 ## Screenshots
 

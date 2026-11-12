@@ -78,7 +78,7 @@ class _SessionRow extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     final scheme = Theme.of(context).colorScheme;
     final activeSessionId = ref.watch(sessionProvider)?.id;
-    final item = ref.read(itemsCacheProvider).get(session.libraryItemId);
+    final item = ref.watch(cachedItemProvider(session.libraryItemId)).value;
 
     final isActive = activeSessionId != null && activeSessionId == session.id;
     final isLessThanMin = session.timeListening.inSeconds < 60;

@@ -10,44 +10,46 @@ class PlaybackHistoryNotifier extends _$PlaybackHistoryNotifier {
   PlaybackHistoryStore get _store => ref.read(playbackHistoryStoreProvider);
 
   @override
-  List<PlaybackEvent> build(String mediaItemId) {
+  Future<List<PlaybackEvent>> build(String mediaItemId) async {
     final user = ref.read(currentUserProvider);
-    if (user == null) return [];
-    return _store.get(user.id, mediaItemId) ?? [];
+    if (user == null) return const [];
+    final events = await _store.get(user.id, mediaItemId);
+    return events ?? const [];
   }
 
   Future<void> addEvent(PlaybackEvent event) async {
     final user = ref.read(currentUserProvider);
     if (user == null) return;
 
-    final current = [...state, event];
+    final stateEvents = await future;
+    final current = [...stateEvents, event];
 
     final historyLimit = ref.read(historyLimitProvider);
-    state = current.length > historyLimit
+    final events = current.length > historyLimit
         ? current.sublist(current.length - historyLimit)
         : current;
+    state = AsyncData(events);
 
-    await _store.put(user.id, mediaItemId, state);
+    await _store.put(user.id, mediaItemId, state.value ?? const []);
   }
 
   Future<void> updateEvent(PlaybackEvent event) async {
     final user = ref.read(currentUserProvider);
     if (user == null) return;
 
-    final current = [...state];
+    final stateEvents = await future;
+    final current = [...stateEvents];
     final index = current.indexWhere((e) => e.timestamp == event.timestamp);
     if (index == -1) return;
-
     current[index] = event;
-    state = _store.collapseLikeEvents(current);
-    await _store.put(user.id, mediaItemId, state);
+    state = AsyncData(_store.collapseLikeEvents(current));
+    await _store.put(user.id, mediaItemId, state.value ?? const []);
   }
 
   Future<void> clearHistory() async {
     final user = ref.read(currentUserProvider);
     if (user == null) return;
-
-    state = [];
+    state = const AsyncData([]);
     await _store.remove(user.id, mediaItemId);
   }
 }

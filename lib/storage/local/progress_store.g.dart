@@ -127,7 +127,7 @@ final class ProgressMapProvider
   }
 }
 
-String _$progressMapHash() => r'0fad36e3b5d531f2a19355eade26da244c8c213f';
+String _$progressMapHash() => r'a98b3d52ca0b884236147bfed1c7c4ab67ea33e3';
 
 final class ProgressMapFamily extends $Family
     with

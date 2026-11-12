@@ -376,11 +376,13 @@ final sortedCompletedDownloadsProvider = SortedCompletedDownloadsProvider._();
 final class SortedCompletedDownloadsProvider
     extends
         $FunctionalProvider<
+          AsyncValue<List<DownloadItem>>,
           List<DownloadItem>,
-          List<DownloadItem>,
-          List<DownloadItem>
+          FutureOr<List<DownloadItem>>
         >
-    with $Provider<List<DownloadItem>> {
+    with
+        $FutureModifier<List<DownloadItem>>,
+        $FutureProvider<List<DownloadItem>> {
   SortedCompletedDownloadsProvider._()
     : super(
         from: null,
@@ -397,26 +399,18 @@ final class SortedCompletedDownloadsProvider
 
   @$internal
   @override
-  $ProviderElement<List<DownloadItem>> $createElement(
+  $FutureProviderElement<List<DownloadItem>> $createElement(
     $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
+  ) => $FutureProviderElement(pointer);
 
   @override
-  List<DownloadItem> create(Ref ref) {
+  FutureOr<List<DownloadItem>> create(Ref ref) {
     return sortedCompletedDownloads(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<DownloadItem> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<List<DownloadItem>>(value),
-    );
   }
 }
 
 String _$sortedCompletedDownloadsHash() =>
-    r'95465f4d6b5d3297d18b957c36099bb41863ab28';
+    r'4890be0f52021ea0f13581e7a83c697d9db602aa';
 
 @ProviderFor(sortedActiveDownloads)
 final sortedActiveDownloadsProvider = SortedActiveDownloadsProvider._();
@@ -424,11 +418,13 @@ final sortedActiveDownloadsProvider = SortedActiveDownloadsProvider._();
 final class SortedActiveDownloadsProvider
     extends
         $FunctionalProvider<
+          AsyncValue<List<DownloadItem>>,
           List<DownloadItem>,
-          List<DownloadItem>,
-          List<DownloadItem>
+          FutureOr<List<DownloadItem>>
         >
-    with $Provider<List<DownloadItem>> {
+    with
+        $FutureModifier<List<DownloadItem>>,
+        $FutureProvider<List<DownloadItem>> {
   SortedActiveDownloadsProvider._()
     : super(
         from: null,
@@ -445,26 +441,18 @@ final class SortedActiveDownloadsProvider
 
   @$internal
   @override
-  $ProviderElement<List<DownloadItem>> $createElement(
+  $FutureProviderElement<List<DownloadItem>> $createElement(
     $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
+  ) => $FutureProviderElement(pointer);
 
   @override
-  List<DownloadItem> create(Ref ref) {
+  FutureOr<List<DownloadItem>> create(Ref ref) {
     return sortedActiveDownloads(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<DownloadItem> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<List<DownloadItem>>(value),
-    );
   }
 }
 
 String _$sortedActiveDownloadsHash() =>
-    r'959159aee2965d95464e32fec86a704091b02cdf';
+    r'fa96b7d3538e6fe917bce46d02393cf390ddadae';
 
 @ProviderFor(downloadedItems)
 final downloadedItemsProvider = DownloadedItemsProvider._();
@@ -472,11 +460,13 @@ final downloadedItemsProvider = DownloadedItemsProvider._();
 final class DownloadedItemsProvider
     extends
         $FunctionalProvider<
+          AsyncValue<List<LibraryItem>>,
           List<LibraryItem>,
-          List<LibraryItem>,
-          List<LibraryItem>
+          FutureOr<List<LibraryItem>>
         >
-    with $Provider<List<LibraryItem>> {
+    with
+        $FutureModifier<List<LibraryItem>>,
+        $FutureProvider<List<LibraryItem>> {
   DownloadedItemsProvider._()
     : super(
         from: null,
@@ -493,22 +483,14 @@ final class DownloadedItemsProvider
 
   @$internal
   @override
-  $ProviderElement<List<LibraryItem>> $createElement(
+  $FutureProviderElement<List<LibraryItem>> $createElement(
     $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
+  ) => $FutureProviderElement(pointer);
 
   @override
-  List<LibraryItem> create(Ref ref) {
+  FutureOr<List<LibraryItem>> create(Ref ref) {
     return downloadedItems(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<LibraryItem> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<List<LibraryItem>>(value),
-    );
   }
 }
 
-String _$downloadedItemsHash() => r'403a398c13dca78616dacc01a3d84795379192e9';
+String _$downloadedItemsHash() => r'082e3b8529b6e347e0a46b3b762f7de10254c939';

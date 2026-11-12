@@ -89,7 +89,7 @@ class HistorySheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final key = mediaItemIdKey(itemId, episodeId);
-    final history = ref.watch(playbackHistoryProvider(key));
+    final history = ref.watch(playbackHistoryProvider(key)).value ?? const [];
     final historyNotifier = ref.read(playbackHistoryProvider(key).notifier);
     final theme = Theme.of(context);
 

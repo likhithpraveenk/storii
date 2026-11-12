@@ -20,7 +20,7 @@ const playbackHistoryBoxName = 'playback_history_box';
 const downloadsBoxName = 'downloads_box';
 const speedsBoxName = 'speeds_box';
 const serverSettingsBoxName = 'server_settings_box';
-const playbackQueueBoxName = 'playback_queue_box';
+const playbackQueueBoxName = 'playback_queue_box_1';
 const logsBoxName = 'logs_box_1';
 const autoDeleteExclusionBoxName = 'auto_delete_exclusion_box';
 
@@ -45,21 +45,6 @@ final _knownNames = [
 const networkCacheDir = 'dio_cache';
 late final HiveCacheStore networkCacheStore;
 
-late final Box<String> appSettingsBox;
-late final Box<String> userSettingsBox;
-late final Box<UserDomain> usersBox;
-late final Box<Server> serversBox;
-late final Box<String> itemsBox;
-late final Box<String> localSessionsBox;
-late final Box<List<dynamic>> playbackHistoryBox;
-late final Box<String> downloadsBox;
-late final Box<double> speedsBox;
-late final Box<String> userMediaProgressBox;
-late final Box<String> serverSettingsBox;
-late final Box<String> playbackQueueBox;
-late final Box<String> logsBox;
-late final Box<bool> autoDeleteExclusionBox;
-
 Future<void> setupHive() async {
   await Hive.initFlutter();
   Hive
@@ -67,56 +52,20 @@ Future<void> setupHive() async {
     ..registerAdapter(UserDomainAdapter())
     ..registerAdapter(UriAdapter());
 
-  final (
-    appSettings,
-    userSettings,
-    users,
-    servers,
-    items,
-    localSessions,
-    playbackHistory,
-    downloads,
-    speeds,
-  ) = await (
-    Hive.openBox<String>(appSettingsBoxName),
-    Hive.openBox<String>(userSettingsBoxName),
-    Hive.openBox<UserDomain>(usersBoxName),
-    Hive.openBox<Server>(serversBoxName),
-    Hive.openBox<String>(itemsBoxName),
-    Hive.openBox<String>(localSessionsBoxName),
-    Hive.openBox<List<dynamic>>(playbackHistoryBoxName),
-    Hive.openBox<String>(downloadsBoxName),
-    Hive.openBox<double>(speedsBoxName),
-  ).wait;
-
-  final (
-    userMediaProgress,
-    serverSettings,
-    playbackQueue,
-    logs,
-    autoDeleteExclusion,
-  ) = await (
-    Hive.openBox<String>(userMediaProgressBoxName),
-    Hive.openBox<String>(serverSettingsBoxName),
-    Hive.openBox<String>(playbackQueueBoxName),
-    Hive.openBox<String>(logsBoxName),
-    Hive.openBox<bool>(autoDeleteExclusionBoxName),
-  ).wait;
-
-  appSettingsBox = appSettings;
-  userSettingsBox = userSettings;
-  usersBox = users;
-  serversBox = servers;
-  itemsBox = items;
-  localSessionsBox = localSessions;
-  playbackHistoryBox = playbackHistory;
-  downloadsBox = downloads;
-  speedsBox = speeds;
-  userMediaProgressBox = userMediaProgress;
-  serverSettingsBox = serverSettings;
-  playbackQueueBox = playbackQueue;
-  logsBox = logs;
-  autoDeleteExclusionBox = autoDeleteExclusion;
+  await Hive.openBox<String>(appSettingsBoxName);
+  await Hive.openBox<String>(userSettingsBoxName);
+  await Hive.openBox<UserDomain>(usersBoxName);
+  await Hive.openBox<Server>(serversBoxName);
+  await Hive.openLazyBox<String>(itemsBoxName);
+  await Hive.openBox<String>(localSessionsBoxName);
+  await Hive.openLazyBox<List<dynamic>>(playbackHistoryBoxName);
+  await Hive.openBox<String>(downloadsBoxName);
+  await Hive.openBox<double>(speedsBoxName);
+  await Hive.openBox<String>(userMediaProgressBoxName);
+  await Hive.openBox<String>(serverSettingsBoxName);
+  await Hive.openBox<String>(playbackQueueBoxName);
+  await Hive.openLazyBox<String>(logsBoxName);
+  await Hive.openBox<bool>(autoDeleteExclusionBoxName);
 
   // dio cache
   final dir = await getApplicationDocumentsDirectory();

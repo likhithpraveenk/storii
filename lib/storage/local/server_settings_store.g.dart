@@ -112,7 +112,7 @@ final class ServerSettingsProvider
   }
 }
 
-String _$serverSettingsHash() => r'df3413fe473db22199524f8c21eb24806d1498d2';
+String _$serverSettingsHash() => r'1e568baa8f06c73bc99751893d4122abf05f4a11';
 
 final class ServerSettingsFamily extends $Family
     with $FunctionalFamilyOverride<Stream<ServerSettings?>, String> {

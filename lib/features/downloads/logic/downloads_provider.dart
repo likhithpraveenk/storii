@@ -91,41 +91,48 @@ int? downloadQueuePosition(Ref ref, String libraryItemId, [String? episodeId]) {
 final _zeroEpoch = DateTime.fromMillisecondsSinceEpoch(0);
 
 @riverpod
-List<DownloadItem> sortedCompletedDownloads(Ref ref) {
+Future<List<DownloadItem>> sortedCompletedDownloads(Ref ref) async {
   final items = ref.watch(completedDownloadsProvider);
   final query = ref.watch(downloadSearchQueryProvider).trim().toLowerCase();
-  final filtered = query.isEmpty ? items : _filterDownloads(ref, items, query);
+  final filtered = query.isEmpty
+      ? items
+      : await _filterDownloads(ref, items, query);
   final sortState = ref.watch(downloadSortProvider);
   return _sortDownloads(ref, filtered, sortState.sort, sortState.ascending);
 }
 
 @riverpod
-List<DownloadItem> sortedActiveDownloads(Ref ref) {
+Future<List<DownloadItem>> sortedActiveDownloads(Ref ref) async {
   final items = ref.watch(activeDownloadsProvider);
   final query = ref.watch(downloadSearchQueryProvider).trim().toLowerCase();
-  return query.isEmpty ? items : _filterDownloads(ref, items, query);
+  return query.isEmpty ? items : await _filterDownloads(ref, items, query);
 }
 
-List<DownloadItem> _filterDownloads(
+Future<List<DownloadItem>> _filterDownloads(
   Ref ref,
   List<DownloadItem> items,
   String query,
-) {
+) async {
   final cache = ref.read(itemsCacheProvider);
-  return items.where((item) {
-    final title = cache.get(item.libraryItemId)?.title ?? item.title;
-    final author = cache.get(item.libraryItemId)?.authorName ?? item.author;
-    return title.toLowerCase().contains(query) ||
-        author.toLowerCase().contains(query);
-  }).toList();
+  final result = <DownloadItem>[];
+  for (final item in items) {
+    final cached = await cache.get(item.libraryItemId);
+    final title = cached?.title ?? item.title;
+    final author = cached?.authorName ?? item.author;
+    if (title.toLowerCase().contains(query) ||
+        author.toLowerCase().contains(query)) {
+      result.add(item);
+    }
+  }
+  return result;
 }
 
-List<DownloadItem> _sortDownloads(
+Future<List<DownloadItem>> _sortDownloads(
   Ref ref,
   List<DownloadItem> items,
   DownloadSort sort,
   bool ascending,
-) {
+) async {
   final cache = ref.read(itemsCacheProvider);
   final settings = ref.watch(currentServerSettingsProvider);
   final prefixes = settings?.sortingIgnorePrefix == true
@@ -135,12 +142,22 @@ List<DownloadItem> _sortDownloads(
   final authors = <String, String>{};
   final listenedAt = <String, DateTime>{};
 
-  String title(DownloadItem item) => titles[item.libraryItemId] ??=
-      cache.get(item.libraryItemId)?.title ?? item.title;
-  String author(DownloadItem item) => authors[item.libraryItemId] ??=
-      cache.get(item.libraryItemId)?.authorName ?? item.author;
+  for (final item in items) {
+    if (!titles.containsKey(item.libraryItemId)) {
+      final cached = await cache.get(item.libraryItemId);
+      titles[item.libraryItemId] = cached?.title ?? item.title;
+      authors[item.libraryItemId] = cached?.authorName ?? item.author;
+    }
+    listenedAt[item.key] ??= _lastListenedTime(ref, item);
+  }
+
+  String title(DownloadItem item) => titles[item.libraryItemId] ?? item.title;
+
+  String author(DownloadItem item) =>
+      authors[item.libraryItemId] ?? item.author;
+
   DateTime lastListened(DownloadItem item) =>
-      listenedAt[item.key] ??= _lastListenedTime(ref, item);
+      listenedAt[item.key] ?? _zeroEpoch;
 
   final list = List<DownloadItem>.from(items);
   final dir = ascending ? 1 : -1;
@@ -192,15 +209,15 @@ DateTime _lastListenedTime(Ref ref, DownloadItem item) {
 }
 
 @riverpod
-List<LibraryItem> downloadedItems(Ref ref) {
-  final items = ref.watch(sortedCompletedDownloadsProvider);
+Future<List<LibraryItem>> downloadedItems(Ref ref) async {
+  final items = await ref.watch(sortedCompletedDownloadsProvider.future);
   final cache = ref.watch(itemsCacheProvider);
 
   final libraryItems = <LibraryItem>[];
   final seen = <String>{};
   for (final item in items) {
     if (!seen.add(item.libraryItemId)) continue;
-    final libraryItem = cache.get(item.libraryItemId);
+    final libraryItem = await cache.get(item.libraryItemId);
     if (libraryItem == null) continue;
     libraryItems.add(libraryItem);
   }

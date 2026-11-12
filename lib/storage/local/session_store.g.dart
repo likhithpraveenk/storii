@@ -89,7 +89,7 @@ final class LocalSessionsProvider
   }
 }
 
-String _$localSessionsHash() => r'373cb035d496abc0c9909643ab78e726c2b1ccdc';
+String _$localSessionsHash() => r'c4521918a448feaae8eb71a5a97348c893488525';
 
 @ProviderFor(localSessionById)
 final localSessionByIdProvider = LocalSessionByIdFamily._();
@@ -146,7 +146,7 @@ final class LocalSessionByIdProvider
   }
 }
 
-String _$localSessionByIdHash() => r'db1f342ea5736963db0f65f1b59e27ae539c496e';
+String _$localSessionByIdHash() => r'7487ff86e8902a45853f16f5bd2c5c570ef2e87e';
 
 final class LocalSessionByIdFamily extends $Family
     with

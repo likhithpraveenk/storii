@@ -87,7 +87,7 @@ final class ServersProvider
   }
 }
 
-String _$serversHash() => r'83e95efa15c995d0e359389c100e5da46db5cf20';
+String _$serversHash() => r'd450a23e967145dda8c1aab0e621dc4090562e25';
 
 @ProviderFor(serverStream)
 final serverStreamProvider = ServerStreamFamily._();
@@ -138,7 +138,7 @@ final class ServerStreamProvider
   }
 }
 
-String _$serverStreamHash() => r'9767e1bad6fb2b9e8493ab8d3bb7984c4ad99997';
+String _$serverStreamHash() => r'5339006096a1286d95dad174408c6c1c31fd6053';
 
 final class ServerStreamFamily extends $Family
     with $FunctionalFamilyOverride<Stream<Server?>, Uri> {

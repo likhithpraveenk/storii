@@ -1,3 +1,4 @@
+import 'package:hive_ce/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/storage/hive/boxes.dart';
 
@@ -6,14 +7,16 @@ part 'speed_store.g.dart';
 class SpeedStore {
   const new();
 
-  double? getSpeed(String libraryItemId) => speedsBox.get(libraryItemId);
+  Box<double> get _box => Hive.box(speedsBoxName);
+
+  double? getSpeed(String libraryItemId) => _box.get(libraryItemId);
 
   Future<void> saveSpeed(String libraryItemId, double speed) async {
-    await speedsBox.put(libraryItemId, speed);
+    await _box.put(libraryItemId, speed);
   }
 
   Future<void> clear() async {
-    await speedsBox.clear();
+    await _box.clear();
   }
 }
 

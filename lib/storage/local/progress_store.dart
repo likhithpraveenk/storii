@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:hive_ce/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storii/api/abs/abs_api.dart';
@@ -34,6 +35,8 @@ String? _splitKey(dynamic key, String userId) {
   return key.substring(index + 1);
 }
 
+Box<String> get _box => Hive.box(userMediaProgressBoxName);
+
 class ProgressStore {
   const new({required this.userId});
 
@@ -43,7 +46,7 @@ class ProgressStore {
       '$userId:${mediaItemIdKey(id, episodeId)}';
 
   Map<String, MediaProgress> getAll() {
-    final entries = userMediaProgressBox.toMap().entries;
+    final entries = _box.toMap().entries;
     final items = <String, MediaProgress>{};
     for (final entry in entries) {
       final mapKey = _splitKey(entry.key, userId);
@@ -57,7 +60,7 @@ class ProgressStore {
   }
 
   void put(MediaProgress progress) {
-    userMediaProgressBox.put(
+    _box.put(
       _key(progress.libraryItemId, progress.episodeId),
       jsonEncode(progress),
     );
@@ -68,12 +71,12 @@ class ProgressStore {
       for (final p in list) _key(p.libraryItemId, p.episodeId): jsonEncode(p),
     };
 
-    final keysToDelete = userMediaProgressBox.keys
+    final keysToDelete = _box.keys
         .where((k) => _splitKey(k, userId) != null && !entries.containsKey(k))
         .toList();
 
     try {
-      userMediaProgressBox
+      _box
         ..deleteAll(keysToDelete)
         ..putAll(entries);
     } catch (e) {
@@ -95,7 +98,7 @@ class ProgressMap extends _$ProgressMap {
   @override
   Stream<Map<String, MediaProgress>> build(String userId) {
     final map = ref.read(progressStoreProvider(userId)).getAll();
-    return userMediaProgressBox
+    return _box
         .watch()
         .map((e) {
           final mapKey = _splitKey(e.key, userId);

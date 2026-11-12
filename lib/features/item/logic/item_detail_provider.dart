@@ -28,7 +28,7 @@ class ItemDetail extends _$ItemDetail {
 
     final isOffline = ref.watch(isServerOfflineProvider);
     if (isOffline) {
-      final localItem = cache.get(id);
+      final localItem = await cache.get(id);
       if (localItem != null) return localItem;
       throw l10n.connectionTypeNone;
     }
@@ -37,7 +37,7 @@ class ItemDetail extends _$ItemDetail {
     final serverUrl = ref.read(serverUrlProvider);
     if (downloadItem?.serverUrl != null &&
         downloadItem?.serverUrl != serverUrl) {
-      final localItem = cache.get(id);
+      final localItem = await cache.get(id);
       if (localItem != null) return localItem;
       throw 'Downloaded media from a different server';
     }
@@ -50,7 +50,7 @@ class ItemDetail extends _$ItemDetail {
       return remoteItem;
     } on AppError catch (error) {
       if (error.type == .network || error.type == .timeout) {
-        final localItem = cache.get(id);
+        final localItem = await cache.get(id);
         if (localItem != null) return localItem;
       }
       rethrow;

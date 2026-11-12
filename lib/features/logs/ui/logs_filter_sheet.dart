@@ -55,7 +55,7 @@ class DeleteLogsButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final logs = ref.watch(logsProvider);
+    final logs = ref.watch(logsProvider).value ?? const [];
     if (logs.isEmpty) {
       return const SizedBox.shrink();
     }

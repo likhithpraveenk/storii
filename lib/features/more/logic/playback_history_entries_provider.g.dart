@@ -15,11 +15,13 @@ final playbackHistoryEntriesProvider = PlaybackHistoryEntriesProvider._();
 final class PlaybackHistoryEntriesProvider
     extends
         $FunctionalProvider<
+          AsyncValue<List<PlaybackHistoryEntry>>,
           List<PlaybackHistoryEntry>,
-          List<PlaybackHistoryEntry>,
-          List<PlaybackHistoryEntry>
+          FutureOr<List<PlaybackHistoryEntry>>
         >
-    with $Provider<List<PlaybackHistoryEntry>> {
+    with
+        $FutureModifier<List<PlaybackHistoryEntry>>,
+        $FutureProvider<List<PlaybackHistoryEntry>> {
   PlaybackHistoryEntriesProvider._()
     : super(
         from: null,
@@ -36,23 +38,15 @@ final class PlaybackHistoryEntriesProvider
 
   @$internal
   @override
-  $ProviderElement<List<PlaybackHistoryEntry>> $createElement(
+  $FutureProviderElement<List<PlaybackHistoryEntry>> $createElement(
     $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
+  ) => $FutureProviderElement(pointer);
 
   @override
-  List<PlaybackHistoryEntry> create(Ref ref) {
+  FutureOr<List<PlaybackHistoryEntry>> create(Ref ref) {
     return playbackHistoryEntries(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<PlaybackHistoryEntry> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<List<PlaybackHistoryEntry>>(value),
-    );
   }
 }
 
 String _$playbackHistoryEntriesHash() =>
-    r'5c2319ac57f9bebd295e83e2e0a10f0867d4a4e3';
+    r'0dbaccc998f14babb8fcf96bfdc34a51a25ee327';

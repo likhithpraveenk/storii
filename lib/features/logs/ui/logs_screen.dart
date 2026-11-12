@@ -11,6 +11,7 @@ import 'package:storii/features/logs/ui/logs_filter_sheet.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_scrollbar.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
+import 'package:storii/shared/widgets/waveform.dart';
 
 class LogsScreen extends ConsumerStatefulWidget {
   const new({super.key});
@@ -76,7 +77,8 @@ Message: ${entry.message}${entry.stackTrace != null ? '\nStackTrace:\n${entry.st
 
   @override
   Widget build(BuildContext context) {
-    final logs = ref.watch(filteredLogsProvider);
+    final logsAsync = ref.watch(filteredLogsProvider);
+    final logs = logsAsync.value ?? const [];
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -115,97 +117,105 @@ Message: ${entry.message}${entry.stackTrace != null ? '\nStackTrace:\n${entry.st
           ],
         ],
       ),
-      body: logs.isEmpty
-          ? const EmptyState()
-          : SafeArea(
-              child: AppScrollbar(
+      body: logsAsync.when(
+        data: (logs) {
+          if (logs.isEmpty) {
+            return const EmptyState();
+          }
+
+          return SafeArea(
+            child: AppScrollbar(
+              controller: _scrollController,
+              child: ListView.builder(
                 controller: _scrollController,
-                child: ListView.builder(
-                  controller: _scrollController,
-                  itemCount: logs.length,
-                  itemBuilder: (context, index) {
-                    final entry = logs[index];
-                    final color = entry.level.color(scheme);
-                    final displayMessage = entry.message.length > 100
-                        ? '${entry.message.substring(0, 100)}...'
-                        : entry.message;
-                    final id = _entryId(entry);
-                    final isSelected = _selectedIds.contains(id);
-                    return InkWell(
-                      onTap: () {
-                        if (_isSelectMode) {
-                          _toggleSelect(entry);
-                        } else {
-                          showLogEntrySheet(context, entry);
-                        }
-                      },
-                      onLongPress: () {
-                        if (!_isSelectMode) {
-                          setState(() => _selectedIds.add(id));
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: color.withValues(alpha: 0.1),
-                        ),
-                        padding: .fromLTRB(_isSelectMode ? 0 : 16, 16, 16, 16),
-                        child: Row(
-                          children: [
-                            if (_isSelectMode)
-                              Checkbox(
-                                value: isSelected,
-                                onChanged: (_) => _toggleSelect(entry),
-                                visualDensity: .compact,
-                              )
-                            else ...[
-                              Container(
-                                width: 4,
-                                height: 24,
-                                padding: const .symmetric(horizontal: 16),
-                                decoration: BoxDecoration(
-                                  color: color,
-                                  borderRadius: .circular(2),
-                                ),
+                itemCount: logs.length,
+                itemBuilder: (context, index) {
+                  final entry = logs[index];
+                  final color = entry.level.color(scheme);
+                  final displayMessage = entry.message.length > 100
+                      ? '${entry.message.substring(0, 100)}...'
+                      : entry.message;
+                  final id = _entryId(entry);
+                  final isSelected = _selectedIds.contains(id);
+                  return InkWell(
+                    onTap: () {
+                      if (_isSelectMode) {
+                        _toggleSelect(entry);
+                      } else {
+                        showLogEntrySheet(context, entry);
+                      }
+                    },
+                    onLongPress: () {
+                      if (!_isSelectMode) {
+                        setState(() => _selectedIds.add(id));
+                      }
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: color.withValues(alpha: 0.1),
+                      ),
+                      padding: .fromLTRB(_isSelectMode ? 0 : 16, 16, 16, 16),
+                      child: Row(
+                        children: [
+                          if (_isSelectMode)
+                            Checkbox(
+                              value: isSelected,
+                              onChanged: (_) => _toggleSelect(entry),
+                              visualDensity: .compact,
+                            )
+                          else ...[
+                            Container(
+                              width: 4,
+                              height: 24,
+                              padding: const .symmetric(horizontal: 16),
+                              decoration: BoxDecoration(
+                                color: color,
+                                borderRadius: .circular(2),
                               ),
-                              const SizedBox(width: 16),
-                            ],
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: .start,
-                                children: [
-                                  Text(
-                                    displayMessage,
-                                    maxLines: 1,
-                                    style: textTheme.bodyLarge,
-                                    overflow: .ellipsis,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: .spaceBetween,
-                                    children: [
+                            ),
+                            const SizedBox(width: 16),
+                          ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: .start,
+                              children: [
+                                Text(
+                                  displayMessage,
+                                  maxLines: 1,
+                                  style: textTheme.bodyLarge,
+                                  overflow: .ellipsis,
+                                ),
+                                Row(
+                                  mainAxisAlignment: .spaceBetween,
+                                  children: [
+                                    Text(
+                                      entry.timestamp.fString(forLogs: true),
+                                      overflow: .ellipsis,
+                                      style: textTheme.labelSmall,
+                                    ),
+                                    if (entry.source != null)
                                       Text(
-                                        entry.timestamp.fString(forLogs: true),
+                                        '${entry.source}',
                                         overflow: .ellipsis,
                                         style: textTheme.labelSmall,
                                       ),
-                                      if (entry.source != null)
-                                        Text(
-                                          '${entry.source}',
-                                          overflow: .ellipsis,
-                                          style: textTheme.labelSmall,
-                                        ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ),
+          );
+        },
+        loading: () => const Center(child: RandomWaveform()),
+        error: (_, _) => const EmptyState(),
+      ),
     );
   }
 }

@@ -107,7 +107,7 @@ Future<List<Shelf>> rawShelves(Ref ref) async {
     final dPodcasts = <LibraryItem>[];
 
     for (final d in downloads.values.where((d) => d.isComplete)) {
-      final item = cache.get(d.libraryItemId);
+      final item = await cache.get(d.libraryItemId);
       if (item != null) {
         switch (item.mediaType) {
           case .book:

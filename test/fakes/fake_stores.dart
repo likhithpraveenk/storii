@@ -21,7 +21,7 @@ class FakePlaybackHistoryStore extends PlaybackHistoryStore {
   }
 
   @override
-  List<PlaybackEvent>? get(String userId, String mediaItemId) =>
+  Future<List<PlaybackEvent>?> get(String userId, String mediaItemId) async =>
       _data[_key(userId, mediaItemId)];
 
   @override
@@ -35,7 +35,7 @@ class FakePlaybackHistoryStore extends PlaybackHistoryStore {
   }
 
   @override
-  Map<String, List<PlaybackEvent>> getAllForUser(String userId) {
+  Future<Map<String, List<PlaybackEvent>>> getAllForUser(String userId) async {
     final result = <String, List<PlaybackEvent>>{};
     final prefix = '${userId}_';
     for (final entry in _data.entries) {

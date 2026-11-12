@@ -12,13 +12,13 @@ class BackupService {
   static const _format = 'storii-backup';
   static const _version = 1;
 
-  static final List<Box> _boxes = [
-    usersBox,
-    serversBox,
-    appSettingsBox,
-    userSettingsBox,
-    speedsBox,
-    playbackHistoryBox,
+  static final List<BoxBase> _boxes = [
+    Hive.box(usersBoxName),
+    Hive.box(serversBoxName),
+    Hive.box(appSettingsBoxName),
+    Hive.box(userSettingsBoxName),
+    Hive.box(speedsBoxName),
+    Hive.lazyBox(playbackHistoryBoxName),
   ];
 
   static dynamic _withoutCurrentUser(dynamic value) {
@@ -54,7 +54,12 @@ class BackupService {
     for (final box in _boxes) {
       final entries = <String, dynamic>{};
       for (final key in box.keys) {
-        final value = box.get(key);
+        Object? value;
+        if (box is Box) {
+          value = box.get(key);
+        } else if (box is LazyBox) {
+          value = await box.get(key);
+        }
         if (value != null) {
           entries[key.toString()] = _encodeValue(box.name, value);
         }
