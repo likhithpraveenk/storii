@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/models/queue_state.dart';
@@ -14,12 +15,18 @@ class QueueStore {
 
   String get _queueKey => '$_userId:current_queue';
 
+  Box<String> get _box => Hive.box(playbackQueueBoxName);
+
   Future<void> save(QueueState queue) async {
-    await playbackQueueBox.put(_queueKey, jsonEncode(queue.toJson()));
+    if (queue.items.isEmpty && queue.current == null) {
+      await _box.clear();
+    } else {
+      await _box.put(_queueKey, jsonEncode(queue.toJson()));
+    }
   }
 
   QueueState get() {
-    final raw = playbackQueueBox.get(_queueKey);
+    final raw = _box.get(_queueKey);
     if (raw == null) return const QueueState();
     try {
       return QueueState.fromJson(jsonDecode(raw));
@@ -29,7 +36,7 @@ class QueueStore {
   }
 
   Future<void> clear() async {
-    await playbackQueueBox.delete(_queueKey);
+    await _box.delete(_queueKey);
   }
 }
 

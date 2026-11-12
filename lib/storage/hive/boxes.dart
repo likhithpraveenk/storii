@@ -20,7 +20,7 @@ const playbackHistoryBoxName = 'playback_history_box';
 const downloadsBoxName = 'downloads_box';
 const speedsBoxName = 'speeds_box';
 const serverSettingsBoxName = 'server_settings_box';
-const playbackQueueBoxName = 'playback_queue_box';
+const playbackQueueBoxName = 'playback_queue_box_1';
 const logsBoxName = 'logs_box_1';
 const autoDeleteExclusionBoxName = 'auto_delete_exclusion_box';
 
@@ -56,7 +56,6 @@ late final Box<String> downloadsBox;
 late final Box<double> speedsBox;
 late final Box<String> userMediaProgressBox;
 late final Box<String> serverSettingsBox;
-late final Box<String> playbackQueueBox;
 late final Box<String> logsBox;
 late final Box<bool> autoDeleteExclusionBox;
 
@@ -80,7 +79,7 @@ Future<void> setupHive() async {
   speedsBox = await Hive.openBox<double>(speedsBoxName);
   userMediaProgressBox = await Hive.openBox<String>(userMediaProgressBoxName);
   serverSettingsBox = await Hive.openBox<String>(serverSettingsBoxName);
-  playbackQueueBox = await Hive.openBox<String>(playbackQueueBoxName);
+  await Hive.openBox<String>(playbackQueueBoxName);
   logsBox = await Hive.openBox<String>(logsBoxName);
   autoDeleteExclusionBox = await Hive.openBox<bool>(autoDeleteExclusionBoxName);
 
