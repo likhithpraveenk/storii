@@ -232,7 +232,7 @@ class AndroidAutoHelper {
       final items = <LibraryItem>[];
       for (final d in downloads.values) {
         if (!seen.add(d.libraryItemId) || !d.isComplete) continue;
-        final libraryItem = _itemsCache.get(d.libraryItemId);
+        final libraryItem = await _itemsCache.get(d.libraryItemId);
         if (libraryItem == null) continue;
         items.add(libraryItem);
       }

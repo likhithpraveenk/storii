@@ -49,7 +49,6 @@ late final Box<String> appSettingsBox;
 late final Box<String> userSettingsBox;
 late final Box<UserDomain> usersBox;
 late final Box<Server> serversBox;
-late final Box<String> itemsBox;
 late final Box<String> localSessionsBox;
 late final Box<List<dynamic>> playbackHistoryBox;
 late final Box<String> downloadsBox;
@@ -70,7 +69,7 @@ Future<void> setupHive() async {
   userSettingsBox = await Hive.openBox<String>(userSettingsBoxName);
   usersBox = await Hive.openBox<UserDomain>(usersBoxName);
   serversBox = await Hive.openBox<Server>(serversBoxName);
-  itemsBox = await Hive.openBox<String>(itemsBoxName);
+  await Hive.openLazyBox<String>(itemsBoxName);
   localSessionsBox = await Hive.openBox<String>(localSessionsBoxName);
   playbackHistoryBox = await Hive.openBox<List<dynamic>>(
     playbackHistoryBoxName,

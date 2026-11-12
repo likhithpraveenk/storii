@@ -10,6 +10,7 @@ import 'package:storii/features/library/ui/items_grid_view.dart';
 import 'package:storii/features/library/ui/items_list_view.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
+import 'package:storii/shared/widgets/waveform.dart';
 
 enum DownloadsScreenTab { active, completed }
 
@@ -139,16 +140,21 @@ class ActiveDownloadsTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final items = ref.watch(sortedActiveDownloadsProvider);
+    final itemsAsync = ref.watch(sortedActiveDownloadsProvider);
 
-    if (items.isEmpty) {
-      return const EmptyState();
-    }
-
-    return ListView.builder(
-      padding: const .only(bottom: 16, top: 4),
-      itemCount: items.length,
-      itemBuilder: (context, index) => DownloadTile(item: items[index]),
+    return itemsAsync.when(
+      data: (items) {
+        if (items.isEmpty) {
+          return const EmptyState();
+        }
+        return ListView.builder(
+          padding: const .only(bottom: 16, top: 4),
+          itemCount: items.length,
+          itemBuilder: (context, index) => DownloadTile(item: items[index]),
+        );
+      },
+      loading: () => const Center(child: RandomWaveform()),
+      error: (_, _) => const EmptyState(),
     );
   }
 }
@@ -159,10 +165,14 @@ class CompletedDownloadsTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final displayMode = ref.watch(libraryDisplayModeProvider);
-    final items = ref.watch(downloadedItemsProvider);
+    final itemsAsync = ref.watch(downloadedItemsProvider);
 
-    return displayMode == .listView
-        ? ItemsListView(items, showPlay: true)
-        : ItemsGridView(items, showPlay: true);
+    return itemsAsync.when(
+      data: (items) => displayMode == .listView
+          ? ItemsListView(items, showPlay: true)
+          : ItemsGridView(items, showPlay: true),
+      loading: () => const Center(child: RandomWaveform()),
+      error: (_, _) => const EmptyState(),
+    );
   }
 }

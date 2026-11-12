@@ -109,7 +109,7 @@ class _HistoryRow extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
 
     final String? title;
-    final item = ref.read(itemsCacheProvider).get(entry.itemId);
+    final item = ref.watch(cachedItemProvider(entry.itemId)).value;
     if (entry.episodeId != null) {
       final episode = item?.episodes.firstWhereOrNull(
         (e) => e.id == entry.episodeId,
