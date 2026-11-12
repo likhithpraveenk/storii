@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:hive_ce/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/logs/log_service.dart';
@@ -24,20 +25,21 @@ DownloadItem? _decode(String? value) {
   }
 }
 
+Box<String> get _box => Hive.box(downloadsBoxName);
+
 class DownloadsStore {
   const new();
 
   Future<void> save(DownloadItem item) async {
-    await downloadsBox.put(item.key, jsonEncode(item));
+    await _box.put(item.key, jsonEncode(item));
   }
 
-  Future<void> remove(String id) => downloadsBox.delete(id);
+  Future<void> remove(String id) => _box.delete(id);
 
-  DownloadItem? get(String mediaItemIdKey) =>
-      _decode(downloadsBox.get(mediaItemIdKey));
+  DownloadItem? get(String mediaItemIdKey) => _decode(_box.get(mediaItemIdKey));
 
   Map<String, DownloadItem> getAll() => Map.fromEntries(
-    downloadsBox.values
+    _box.values
         .map(_decode)
         .whereType<DownloadItem>()
         .map((item) => MapEntry(item.key, item)),
@@ -47,13 +49,14 @@ class DownloadsStore {
     final keys = getAll().values
         .where((i) => i.folderPath == uri)
         .map((d) => d.key);
-    await downloadsBox.deleteAll(keys);
+    await _box.deleteAll(keys);
   }
 
-  Future<void> clear() => downloadsBox.clear();
+  Future<void> clear() => _box.clear();
+
   Stream<Map<String, DownloadItem>> watch() {
     final map = getAll();
-    return downloadsBox
+    return _box
         .watch()
         .map((e) {
           final item = e.deleted ? null : _decode(e.value);

@@ -13,11 +13,11 @@ class BackupService {
   static const _version = 1;
 
   static final List<Box> _boxes = [
-    usersBox,
-    serversBox,
-    appSettingsBox,
-    userSettingsBox,
-    speedsBox,
+    Hive.box(usersBoxName),
+    Hive.box(serversBoxName),
+    Hive.box(appSettingsBoxName),
+    Hive.box(userSettingsBoxName),
+    Hive.box(speedsBoxName),
     playbackHistoryBox,
   ];
 

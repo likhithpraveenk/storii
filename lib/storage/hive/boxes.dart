@@ -45,17 +45,7 @@ final _knownNames = [
 const networkCacheDir = 'dio_cache';
 late final HiveCacheStore networkCacheStore;
 
-late final Box<String> appSettingsBox;
-late final Box<String> userSettingsBox;
-late final Box<UserDomain> usersBox;
-late final Box<Server> serversBox;
-late final Box<String> localSessionsBox;
 late final Box<List<dynamic>> playbackHistoryBox;
-late final Box<String> downloadsBox;
-late final Box<double> speedsBox;
-late final Box<String> userMediaProgressBox;
-late final Box<String> serverSettingsBox;
-late final Box<bool> autoDeleteExclusionBox;
 
 Future<void> setupHive() async {
   await Hive.initFlutter();
@@ -64,22 +54,22 @@ Future<void> setupHive() async {
     ..registerAdapter(UserDomainAdapter())
     ..registerAdapter(UriAdapter());
 
-  appSettingsBox = await Hive.openBox<String>(appSettingsBoxName);
-  userSettingsBox = await Hive.openBox<String>(userSettingsBoxName);
-  usersBox = await Hive.openBox<UserDomain>(usersBoxName);
-  serversBox = await Hive.openBox<Server>(serversBoxName);
+  await Hive.openBox<String>(appSettingsBoxName);
+  await Hive.openBox<String>(userSettingsBoxName);
+  await Hive.openBox<UserDomain>(usersBoxName);
+  await Hive.openBox<Server>(serversBoxName);
   await Hive.openLazyBox<String>(itemsBoxName);
-  localSessionsBox = await Hive.openBox<String>(localSessionsBoxName);
+  await Hive.openBox<String>(localSessionsBoxName);
   playbackHistoryBox = await Hive.openBox<List<dynamic>>(
     playbackHistoryBoxName,
   );
-  downloadsBox = await Hive.openBox<String>(downloadsBoxName);
-  speedsBox = await Hive.openBox<double>(speedsBoxName);
-  userMediaProgressBox = await Hive.openBox<String>(userMediaProgressBoxName);
-  serverSettingsBox = await Hive.openBox<String>(serverSettingsBoxName);
+  await Hive.openBox<String>(downloadsBoxName);
+  await Hive.openBox<double>(speedsBoxName);
+  await Hive.openBox<String>(userMediaProgressBoxName);
+  await Hive.openBox<String>(serverSettingsBoxName);
   await Hive.openBox<String>(playbackQueueBoxName);
   await Hive.openLazyBox<String>(logsBoxName);
-  autoDeleteExclusionBox = await Hive.openBox<bool>(autoDeleteExclusionBoxName);
+  await Hive.openBox<bool>(autoDeleteExclusionBoxName);
 
   // dio cache
   final dir = await getApplicationDocumentsDirectory();

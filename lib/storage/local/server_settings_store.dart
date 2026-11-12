@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:hive_ce/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storii/api/abs/abs_api.dart';
@@ -24,16 +25,17 @@ ServerSettings? _decode(String? value) {
   }
 }
 
+Box<String> get _box => Hive.box(serverSettingsBoxName);
+
 class ServerSettingsStore {
   const new();
 
   Future<void> save(String serverId, ServerSettings settings) =>
-      serverSettingsBox.put(serverId, jsonEncode(settings.toJson()));
+      _box.put(serverId, jsonEncode(settings.toJson()));
 
-  Future<void> remove(String serverId) => serverSettingsBox.delete(serverId);
+  Future<void> remove(String serverId) => _box.delete(serverId);
 
-  ServerSettings? get(String serverId) =>
-      _decode(serverSettingsBox.get(serverId));
+  ServerSettings? get(String serverId) => _decode(_box.get(serverId));
 }
 
 @riverpod
@@ -42,8 +44,5 @@ ServerSettingsStore serverSettingsStore(Ref ref) => const ServerSettingsStore();
 @riverpod
 Stream<ServerSettings?> serverSettings(Ref ref, String id) {
   final store = ref.read(serverSettingsStoreProvider);
-  return serverSettingsBox
-      .watch()
-      .map((_) => store.get(id))
-      .startWith(store.get(id));
+  return _box.watch().map((_) => store.get(id)).startWith(store.get(id));
 }

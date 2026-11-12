@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:hive_ce/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/models/app_settings.dart';
 import 'package:storii/app/models/user_settings.dart';
@@ -13,16 +14,20 @@ const _appSettingsKey = 'app_settings_key';
 class SettingsStore {
   const new();
 
+  Box<String> get _appBox => Hive.box(appSettingsBoxName);
+
+  Box<String> get _userBox => Hive.box(userSettingsBoxName);
+
   Future<void> updateAppSettings(AppSettings settings) async {
-    await appSettingsBox.put(_appSettingsKey, jsonEncode(settings));
+    await _appBox.put(_appSettingsKey, jsonEncode(settings));
   }
 
   Future<void> updateUserSettings(String userId, UserSettings settings) async {
-    await userSettingsBox.put(userId, jsonEncode(settings));
+    await _userBox.put(userId, jsonEncode(settings));
   }
 
   AppSettings? getAppSettings() {
-    final json = appSettingsBox.get(_appSettingsKey);
+    final json = _appBox.get(_appSettingsKey);
     if (json != null) {
       try {
         return AppSettings.fromJson(jsonDecode(json));
@@ -34,7 +39,7 @@ class SettingsStore {
   }
 
   UserSettings? getUserSettings(String userId) {
-    final json = userSettingsBox.get(userId);
+    final json = _userBox.get(userId);
     if (json != null) {
       try {
         return UserSettings.fromJson(jsonDecode(json));
@@ -45,13 +50,11 @@ class SettingsStore {
     return null;
   }
 
-  Future<void> deleteAppSettings() => appSettingsBox.delete(_appSettingsKey);
+  Future<void> deleteAppSettings() => _appBox.delete(_appSettingsKey);
 
-  Future<void> deleteUserSettings(String userId) =>
-      userSettingsBox.delete(userId);
+  Future<void> deleteUserSettings(String userId) => _userBox.delete(userId);
 
-  Future<void> deleteUsers(List<String> userIds) =>
-      userSettingsBox.deleteAll(userIds);
+  Future<void> deleteUsers(List<String> userIds) => _userBox.deleteAll(userIds);
 }
 
 @riverpod
