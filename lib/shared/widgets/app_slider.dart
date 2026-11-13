@@ -18,6 +18,8 @@ class AppSlider extends StatefulWidget {
     this.activeTrackColor,
     this.showValueIndicator = .onDrag,
     this.trackHeight,
+    this.thumbWidth = 4,
+    this.thumbHeight = 44,
     this.cancelThreshold = -48.0,
     this.enableCancel = false,
     this.trackShape,
@@ -36,6 +38,8 @@ class AppSlider extends StatefulWidget {
   final Color? activeTrackColor;
   final ShowValueIndicator showValueIndicator;
   final double? trackHeight;
+  final double thumbWidth;
+  final double thumbHeight;
   final double cancelThreshold;
   final bool enableCancel;
   final SliderTrackShape? trackShape;
@@ -145,6 +149,13 @@ class _AppSliderState extends State<AppSlider> {
               activeTrackColor: activeTrackColor,
               year2023: false,
               trackShape: widget.trackShape,
+              thumbShape: _PillSliderThumbShape(
+                width: widget.thumbWidth,
+                height: widget.thumbHeight,
+              ),
+              thumbSize: WidgetStatePropertyAll<Size?>(
+                Size(widget.thumbWidth, widget.thumbHeight),
+              ),
             ),
             child: Slider(
               value: _value,
@@ -193,6 +204,45 @@ class _AppSliderState extends State<AppSlider> {
             ),
         ],
       ),
+    );
+  }
+}
+
+class _PillSliderThumbShape extends SliderComponentShape {
+  const new({required this.width, required this.height});
+
+  final double width;
+  final double height;
+
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) => Size(width, height);
+
+  @override
+  void paint(
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    required bool isDiscrete,
+    required TextPainter labelPainter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required TextDirection textDirection,
+    required double value,
+    required double textScaleFactor,
+    required Size sizeWithOverflow,
+  }) {
+    final color = ColorTween(
+      begin: sliderTheme.disabledThumbColor,
+      end: sliderTheme.thumbColor,
+    ).evaluate(enableAnimation)!;
+
+    context.canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromCenter(center: center, width: width, height: height),
+        .circular(width / 2),
+      ),
+      Paint()..color = color,
     );
   }
 }
