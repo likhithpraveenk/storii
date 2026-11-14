@@ -638,5 +638,59 @@
       }
     }
   },
-  "unsyncedSessions": "Nicht synchronisierte Sitzungen"
+  "unsyncedSessions": "Nicht synchronisierte Sitzungen",
+  "startingDownload": "Download gestartet…",
+  "itemMissing": "Objektverzeichnis fehlt!",
+  "itemInvalidBook": "Element enthält keine Audiospuren",
+  "itemInvalidPodcast": "Der Podcast enthält keine Episoden",
+  "parallelDownloads": "Gleichzeitige Downloads",
+  "parallelDownloadsSubtitle": "Anzahl der gleichzeitig herunterzuladenden Bücher oder Episoden",
+  "autoDeleteListenedDownloads": "Angehörte Downloads automatisch löschen",
+  "autoDeleteListenedDownloadsSubtitle": "Lösche Downloads aus dem lokalen Speicher, nachdem du sie angehört hast. Funktioniert nur, während die App läuft",
+  "deleteDelay": "Löschverzögerung",
+  "nDays": "{n, plural, =1{1 Tag} other {{n} Tage}}",
+  "@nDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nHours": "{n, plural, =1{1 Stunde} other {{n} Stunden}}",
+  "@nHours": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "nMinutes": "{n, plural, =1{1 Minute} other {{n} Minuten}}",
+  "@nMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "downloadedByDifferentUser": "Von einem anderen Benutzer heruntergeladen",
+  "downloadedFromDifferentServer": "Von einem anderen Server heruntergeladen",
+  "scheduledForDeletion": "Wird gelöscht in {hours, plural, =0{} other{{hours} Std. }}{minutes} Min.",
+  "@scheduledForDeletion": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "excludedFromAutoDelete": "Von der automatischen Löschung ausgenommen",
+  "neverAutoDeleteQ": "Diesen Download niemals automatisch löschen?",
+  "includeInAutoDelete": "In die automatische Löschung einbeziehen",
+  "setAsDefault": "Als Standard festlegen",
+  "removeDefaultLocationNote": "Um die Standardeinstellung zu entfernen, gehen Sie zu Einstellungen > Downloads > Speicher",
+  "removeDefault": "Standard entfernen",
+  "wavySlider": "Wellenförmiger Fortschrittsbalken",
+  "wavySliderSubtitle": "Animierter Welleneffekt auf der Fortschrittsanzeige"
 }
