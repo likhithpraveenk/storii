@@ -711,7 +711,7 @@
       }
     }
   },
-  "shrink": "Shrink",
+  "freeUpSpace": "Free up space",
   "appSettings": "App settings",
   "appSettingsDescription": "Global app preferences",
   "userSettings": "User settings",

@@ -45,6 +45,12 @@ class AppDataManagerScreen extends ConsumerWidget {
         ),
         actions: [
           IconButton(
+            tooltip: l10n.freeUpSpace,
+            onPressed: () =>
+                ref.read(hiveStorageProvider.notifier).compactAll(),
+            icon: const Icon(Icons.compress),
+          ),
+          IconButton(
             tooltip: l10n.refresh,
             onPressed: () => ref.read(hiveStorageProvider.notifier).refresh(),
             icon: const Icon(Icons.refresh),
@@ -183,16 +189,11 @@ class _BoxTile extends ConsumerWidget {
           child: Row(
             mainAxisAlignment: .end,
             children: [
-              if (spec.canReset) ...[
+              if (spec.canReset)
                 AppTextButton(
-                  onPressed: () => _handleAction(context, ref, spec, .reset),
+                  onPressed: () => _handleReset(context, ref, spec),
                   text: l10n.delete,
                 ),
-              ],
-              AppTextButton(
-                onPressed: () => _handleAction(context, ref, spec, .compact),
-                text: l10n.shrink,
-              ),
             ],
           ),
         ),
@@ -202,31 +203,20 @@ class _BoxTile extends ConsumerWidget {
   }
 }
 
-enum _BoxAction { compact, reset }
-
-Future<void> _handleAction(
+Future<void> _handleReset(
   BuildContext context,
   WidgetRef ref,
   HiveBoxSpec spec,
-  _BoxAction action,
 ) async {
-  switch (action) {
-    case .compact:
-      await ref.read(hiveStorageProvider.notifier).compact(spec);
-    case .reset:
-      final confirmed = await AppDialog.show<bool>(
-        context,
-        title: spec.label,
-        body: Text(
-          spec.description,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        actionLabel: l10n.delete,
-        actionIcon: Icons.delete_sweep_outlined,
-        isDestructive: true,
-        onTap: () async {},
-      );
-      if (confirmed != true || !context.mounted) return;
-      await ref.read(hiveStorageProvider.notifier).reset(spec);
-  }
+  final confirmed = await AppDialog.show<bool?>(
+    context,
+    title: spec.label,
+    body: Text(spec.description, style: Theme.of(context).textTheme.bodyMedium),
+    actionLabel: l10n.delete,
+    actionIcon: Icons.delete_sweep_outlined,
+    isDestructive: true,
+    onTap: () async {},
+  );
+  if (confirmed != true || !context.mounted) return;
+  await ref.read(hiveStorageProvider.notifier).reset(spec);
 }

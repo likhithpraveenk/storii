@@ -29,8 +29,11 @@ class HiveStorage extends _$HiveStorage {
 
   void refresh() => state = _snapshot();
 
-  Future<void> compact(HiveBoxSpec spec) async {
-    await ref.read(hiveStorageServiceProvider).compact(spec.name);
+  Future<void> compactAll() async {
+    final service = ref.read(hiveStorageServiceProvider);
+    for (final spec in hiveBoxSpecs) {
+      await service.compact(spec.name);
+    }
     refresh();
   }
 

@@ -89,7 +89,7 @@ final class HiveStorageProvider
   }
 }
 
-String _$hiveStorageHash() => r'eac576fa7f8c6c5cf3470a9ddc3f80b25d4943f0';
+String _$hiveStorageHash() => r'676d343e885df29d487b1166261d2f257160bccf';
 
 abstract class _$HiveStorage extends $Notifier<List<HiveBoxEntry>> {
   List<HiveBoxEntry> build();
