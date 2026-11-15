@@ -100,7 +100,7 @@ Future<List<Shelf>> sortedShelves(Ref ref) async {
 Future<List<Shelf>> rawShelves(Ref ref) async {
   final isOffline = ref.watch(isServerOfflineProvider);
   if (isOffline) {
-    final downloads = ref.read(downloadsStoreProvider).getAll();
+    final downloads = await ref.read(downloadsStoreProvider).getAll();
     final cache = ref.read(itemsCacheProvider);
 
     final dAudiobooks = <LibraryItem>[];

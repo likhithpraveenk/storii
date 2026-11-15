@@ -96,7 +96,7 @@ void main() {
 
       await task.run('item-1');
 
-      expect(store.get('item-1')?.status, DownloadStatus.completed);
+      expect((await store.get('item-1'))?.status, DownloadStatus.completed);
       expect(notifications.countOf('acquire'), 1);
       expect(notifications.countOf('release'), 1);
       expect(notifications.progressCalls.last.isComplete, isTrue);
@@ -116,7 +116,7 @@ void main() {
 
       await task.run('item-1');
 
-      expect(store.get('item-1')?.status, DownloadStatus.failed);
+      expect((await store.get('item-1'))?.status, DownloadStatus.failed);
       expect(notifications.progressCalls.last.isFailed, isTrue);
       expect(notifications.countOf('release'), 1);
     });
@@ -149,7 +149,7 @@ void main() {
 
       await task.run('item-1');
 
-      expect(store.get('item-1')?.status, DownloadStatus.failed);
+      expect((await store.get('item-1'))?.status, DownloadStatus.failed);
       expect(notifications.progressCalls.last.isFailed, isTrue);
     });
   });

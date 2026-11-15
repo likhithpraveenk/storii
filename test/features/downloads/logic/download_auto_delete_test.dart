@@ -204,6 +204,7 @@ void main() {
       final first = sweeper.sweep();
       await Future<void>.delayed(Duration.zero);
       final second = sweeper.sweep();
+      await Future<void>.delayed(Duration.zero);
       gate.complete();
       await Future.wait([first, second]);
 

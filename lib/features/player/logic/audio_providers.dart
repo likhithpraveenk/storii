@@ -174,7 +174,7 @@ class AudioPlayerNotifier extends _$AudioPlayerNotifier {
           ? session.chapterToTrackOffset(chapter)
           : session.getIndexAndOffset(initialPosition);
 
-      final downloadItem = ref
+      final downloadItem = await ref
           .read(downloadsStoreProvider)
           .get(mediaItemIdKey(session.libraryItemId, session.episodeId));
       final Map<int, String> localPaths;

@@ -230,11 +230,15 @@ void main() {
 
         final queue = container.read(downloadQueueProvider.notifier);
         await queue.enqueue(libraryItemId: 'item-1', location: _location);
+        await Future.delayed(Duration.zero);
 
         final store = storeOf(container);
         expect(store.saveCalls, 2);
-        expect(store.get('item-1')?.status, DownloadStatus.waiting);
-        expect(container.read(downloadQueueProvider), equals(['item-1']));
+        expect((await store.get('item-1'))?.status, DownloadStatus.waiting);
+        expect(
+          await container.read(downloadQueueProvider.future),
+          equals(['item-1']),
+        );
       },
     );
 
@@ -249,9 +253,13 @@ void main() {
       final queue = container.read(downloadQueueProvider.notifier);
       await queue.enqueue(libraryItemId: 'item-1', location: _location);
       await queue.enqueue(libraryItemId: 'item-1', location: _location);
+      await Future.delayed(Duration.zero);
 
       expect(storeOf(container).saveCalls, 2);
-      expect(container.read(downloadQueueProvider), equals(['item-1']));
+      expect(
+        await container.read(downloadQueueProvider.future),
+        equals(['item-1']),
+      );
     });
 
     test('waits on mobile when unmetered-only is enabled', () async {
@@ -260,10 +268,14 @@ void main() {
 
       final queue = container.read(downloadQueueProvider.notifier);
       await queue.enqueue(libraryItemId: 'item-1', location: _location);
+      await Future.delayed(Duration.zero);
 
       final store = storeOf(container);
-      expect(store.get('item-1')?.status, DownloadStatus.waiting);
-      expect(container.read(downloadQueueProvider), equals(['item-1']));
+      expect((await store.get('item-1'))?.status, DownloadStatus.waiting);
+      expect(
+        await container.read(downloadQueueProvider.future),
+        equals(['item-1']),
+      );
     });
   });
 
@@ -278,8 +290,10 @@ void main() {
 
       final queue = container.read(downloadQueueProvider.notifier);
       await queue.enqueue(libraryItemId: 'item-1', location: _location);
+      await Future.delayed(Duration.zero);
 
-      expect(storeOf(container).get('item-1')?.status, DownloadStatus.waiting);
+      final store = storeOf(container);
+      expect((await store.get('item-1'))?.status, DownloadStatus.waiting);
       expect(notificationsOf(container).events, isEmpty);
     });
 
@@ -305,10 +319,8 @@ void main() {
           lessThan(notifications.events.indexOf('showProgress')),
         );
 
-        expect(
-          storeOf(container).get('item-1')?.status,
-          DownloadStatus.completed,
-        );
+        final store = storeOf(container);
+        expect((await store.get('item-1'))?.status, DownloadStatus.completed);
         expect(container.read(downloadQueueProvider), isEmpty);
       });
     });
@@ -344,14 +356,10 @@ void main() {
         expect(notifications.countOf('acquire'), 2);
         expect(notifications.countOf('release'), 2);
         expect(notifications.countOf('showProgress'), greaterThanOrEqualTo(2));
-        expect(
-          storeOf(container).get('item-1')?.status,
-          DownloadStatus.completed,
-        );
-        expect(
-          storeOf(container).get('item-2')?.status,
-          DownloadStatus.completed,
-        );
+
+        final store = storeOf(container);
+        expect((await store.get('item-1'))?.status, DownloadStatus.completed);
+        expect((await store.get('item-2'))?.status, DownloadStatus.completed);
         expect(container.read(downloadQueueProvider), isEmpty);
       });
     });
@@ -390,25 +398,25 @@ void main() {
         async.elapse(const Duration(milliseconds: 100));
 
         final store = storeOf(container);
-        expect(store.get('item-1')?.status, DownloadStatus.downloading);
-        expect(store.get('item-2')?.status, DownloadStatus.downloading);
-        expect(store.get('item-3')?.status, DownloadStatus.queued);
+        expect((await store.get('item-1'))?.status, DownloadStatus.downloading);
+        expect((await store.get('item-2'))?.status, DownloadStatus.downloading);
+        expect((await store.get('item-3'))?.status, DownloadStatus.queued);
 
-        expect(container.read(downloadQueueProvider).length, 3);
+        expect((await container.read(downloadQueueProvider.future)).length, 3);
 
         engine.cancelledKeys.clear();
         engine._gates['item-1']?.complete();
         engine._gates['item-2']?.complete();
 
         async.elapse(const Duration(milliseconds: 200));
-        expect(store.get('item-3')?.status, DownloadStatus.downloading);
+        expect((await store.get('item-3'))?.status, DownloadStatus.downloading);
 
         engine._gates['item-3']?.complete();
         async.elapse(const Duration(milliseconds: 200));
 
-        expect(store.get('item-1')?.status, DownloadStatus.completed);
-        expect(store.get('item-2')?.status, DownloadStatus.completed);
-        expect(store.get('item-3')?.status, DownloadStatus.completed);
+        expect((await store.get('item-1'))?.status, DownloadStatus.completed);
+        expect((await store.get('item-2'))?.status, DownloadStatus.completed);
+        expect((await store.get('item-3'))?.status, DownloadStatus.completed);
         expect(container.read(downloadQueueProvider), isEmpty);
       });
     });
@@ -455,8 +463,9 @@ void main() {
       await enqueue;
 
       expect(engine.cancelledKeys, ['item-1']);
-      expect(storeOf(container).get('item-1')?.status, DownloadStatus.paused);
-      expect(container.read(downloadQueueProvider), isEmpty);
+      final store = storeOf(container);
+      expect((await store.get('item-1'))?.status, DownloadStatus.paused);
+      expect(await container.read(downloadQueueProvider.future), isEmpty);
     });
 
     test('a failing download does not block later drains', () {
@@ -473,10 +482,8 @@ void main() {
         async.elapse(const Duration(milliseconds: 300));
 
         expect(container.read(downloadQueueProvider), isEmpty);
-        expect(
-          storeOf(container).get('item-1')?.status,
-          DownloadStatus.completed,
-        );
+        final store = storeOf(container);
+        expect((await store.get('item-1'))?.status, DownloadStatus.completed);
       });
     });
   });

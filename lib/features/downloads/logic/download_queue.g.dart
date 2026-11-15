@@ -13,7 +13,7 @@ part of 'download_queue.dart';
 final downloadQueueProvider = DownloadQueueProvider._();
 
 final class DownloadQueueProvider
-    extends $NotifierProvider<DownloadQueue, List<String>> {
+    extends $AsyncNotifierProvider<DownloadQueue, List<String>> {
   DownloadQueueProvider._()
     : super(
         from: null,
@@ -31,29 +31,21 @@ final class DownloadQueueProvider
   @$internal
   @override
   DownloadQueue create() => DownloadQueue();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<String> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<List<String>>(value),
-    );
-  }
 }
 
-String _$downloadQueueHash() => r'a98441f8760042d65bffb96609612a86bae6f489';
+String _$downloadQueueHash() => r'ad6c582e2dc503c7e802f87316a7a2d75cbcacc0';
 
-abstract class _$DownloadQueue extends $Notifier<List<String>> {
-  List<String> build();
+abstract class _$DownloadQueue extends $AsyncNotifier<List<String>> {
+  FutureOr<List<String>> build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<List<String>, List<String>>;
+    final ref = this.ref as $Ref<AsyncValue<List<String>>, List<String>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<List<String>, List<String>>,
-              List<String>,
+              AnyNotifier<AsyncValue<List<String>>, List<String>>,
+              AsyncValue<List<String>>,
               Object?,
               Object?
             >;

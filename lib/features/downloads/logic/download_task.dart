@@ -21,7 +21,7 @@ class DownloadTask {
   final UserDomain? Function() currentUser;
 
   Future<void> run(String key) async {
-    final item = store.get(key);
+    final item = await store.get(key);
     if (item == null || !item.isActive) return;
 
     await notifications.start(key);
@@ -56,7 +56,7 @@ class DownloadTask {
       await _setStatus(key, .failed);
 
       await notifications.finish(key);
-      final failedItem = store.get(key);
+      final failedItem = await store.get(key);
       if (failedItem != null) {
         await notifications.update(key, failedItem);
       }
@@ -79,7 +79,7 @@ class DownloadTask {
   }
 
   Future<void> _setStatus(String key, DownloadStatus status) async {
-    final item = store.get(key);
+    final item = await store.get(key);
     if (item == null) return;
     await store.save(item.copyWith(status: status));
   }

@@ -25,7 +25,7 @@ DownloadItem? _decode(String? value) {
   }
 }
 
-Box<String> get _box => Hive.box(downloadsBoxName);
+LazyBox<String> get _box => Hive.lazyBox(downloadsBoxName);
 
 class DownloadsStore {
   const new();
@@ -36,27 +36,30 @@ class DownloadsStore {
 
   Future<void> remove(String id) => _box.delete(id);
 
-  DownloadItem? get(String mediaItemIdKey) => _decode(_box.get(mediaItemIdKey));
+  Future<DownloadItem?> get(String mediaItemIdKey) async {
+    return _decode(await _box.get(mediaItemIdKey));
+  }
 
-  Map<String, DownloadItem> getAll() => Map.fromEntries(
-    _box.values
-        .map(_decode)
-        .whereType<DownloadItem>()
-        .map((item) => MapEntry(item.key, item)),
-  );
+  Future<Map<String, DownloadItem>> getAll() async {
+    final map = <String, DownloadItem>{};
+    for (final key in _box.keys) {
+      final item = _decode(await _box.get(key));
+      if (item != null) map[item.key] = item;
+    }
+    return map;
+  }
 
   Future<void> removeAllFromLocation(String uri) async {
-    final keys = getAll().values
-        .where((i) => i.folderPath == uri)
-        .map((d) => d.key);
+    final map = await getAll();
+    final keys = map.values.where((i) => i.folderPath == uri).map((d) => d.key);
     await _box.deleteAll(keys);
   }
 
   Future<void> clear() => _box.clear();
 
-  Stream<Map<String, DownloadItem>> watch() {
-    final map = getAll();
-    return _box
+  Stream<Map<String, DownloadItem>> watch() async* {
+    final map = await getAll();
+    yield* _box
         .watch()
         .map((e) {
           final item = e.deleted ? null : _decode(e.value);

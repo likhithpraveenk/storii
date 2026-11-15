@@ -41,16 +41,12 @@ class DownloadQueue extends _$DownloadQueue {
   );
 
   @override
-  List<String> build() {
+  Future<List<String>> build() async {
     ref.listen(downloadsProvider, (_, _) => _syncState());
-
-    final keys = _activeKeys();
-    if (keys.isNotEmpty) {
-      Future.microtask(_processQueue);
-    }
-
     ref.listen(connectionTypeProvider, (_, _) => _processQueue());
 
+    final keys = await _activeKeys();
+    if (keys.isNotEmpty) _processQueue();
     return keys;
   }
 
@@ -60,14 +56,14 @@ class DownloadQueue extends _$DownloadQueue {
     required StorageLocation location,
   }) async {
     final key = mediaItemIdKey(libraryItemId, episodeId);
-    if (_store.get(key)?.isActive ?? false) return;
+    final existing = await _store.get(key);
+    if (existing != null && existing.isActive) return;
     try {
       final item = await ref.read(itemDetailProvider(libraryItemId).future);
       await ref.read(itemsCacheProvider).put(item);
 
       final user = ref.read(currentUserProvider);
       if (user == null) throw StateError('No current user');
-      final existing = _store.get(key);
       final service = ref.read(storageServiceProvider(location));
 
       final downloadItem = await item.toDownloadItem(
@@ -79,7 +75,7 @@ class DownloadQueue extends _$DownloadQueue {
       );
 
       await _store.save(downloadItem);
-      _syncState();
+      await _syncState();
       _processQueue();
     } catch (e, st) {
       final error = AppError.from(e, st);
@@ -131,7 +127,7 @@ class DownloadQueue extends _$DownloadQueue {
 
   Future<void> resumeOrRetry(String id, String? episodeId) async {
     final key = mediaItemIdKey(id, episodeId);
-    final item = _store.get(key);
+    final item = await _store.get(key);
     if (item == null) return;
 
     final location = ref
@@ -162,11 +158,11 @@ class DownloadQueue extends _$DownloadQueue {
       await _processor.waitForKey(id);
     }
 
-    final item = _store.get(id);
+    final item = await _store.get(id);
     if (item != null && item.isActive) {
       await _store.save(item.copyWith(status: .paused));
     }
-    _syncState();
+    await _syncState();
   }
 
   Future<void> delete(String id, String? episodeId) async {
@@ -174,14 +170,14 @@ class DownloadQueue extends _$DownloadQueue {
     _transitioning.add(key);
     try {
       _engine.cancel(key);
-      final item = _store.get(key);
+      final item = await _store.get(key);
 
       await _processor.waitForKey(key);
       await _notifications.dismiss(key);
 
       await _deleteFiles(item);
       await _store.remove(key);
-      _syncState();
+      await _syncState();
     } finally {
       _transitioning.remove(key);
     }
@@ -206,12 +202,15 @@ class DownloadQueue extends _$DownloadQueue {
     unawaited(service.cleanupEmptyFolders());
   }
 
-  List<String> _activeKeys() => _activeKeysFrom(_store.getAll());
+  Future<List<String>> _activeKeys() async {
+    final map = await _store.getAll();
+    return _activeKeysFrom(map);
+  }
 
-  List<String> _pendingKeys() => [
-    for (final key in _activeKeys())
-      if (!_transitioning.contains(key)) key,
-  ];
+  Future<List<String>> _pendingKeys() async {
+    final keys = await _activeKeys();
+    return keys.where((key) => !_transitioning.contains(key)).toList();
+  }
 
   List<String> _activeKeysFrom(Map<String, DownloadItem> items) {
     final zeroEpoch = DateTime.fromMillisecondsSinceEpoch(0);
@@ -223,10 +222,10 @@ class DownloadQueue extends _$DownloadQueue {
     return active.map((item) => item.key).toList();
   }
 
-  void _syncState() {
-    final keys = _activeKeys();
-    if (_sameKeys(keys, state)) return;
-    state = keys;
+  Future<void> _syncState() async {
+    final keys = await _activeKeys();
+    if (_sameKeys(keys, state.value ?? const [])) return;
+    state = AsyncData(keys);
   }
 
   bool _sameKeys(List<String> a, List<String> b) {

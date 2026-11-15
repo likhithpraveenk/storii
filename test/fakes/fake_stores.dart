@@ -111,10 +111,10 @@ class FakeDownloadsStore extends DownloadsStore {
   Object? saveError;
 
   @override
-  DownloadItem? get(String key) => _data[key];
+  Future<DownloadItem?> get(String key) async => _data[key];
 
   @override
-  Map<String, DownloadItem> getAll() => Map.unmodifiable(_data);
+  Future<Map<String, DownloadItem>> getAll() async => Map.unmodifiable(_data);
 
   @override
   Stream<Map<String, DownloadItem>> watch() async* {

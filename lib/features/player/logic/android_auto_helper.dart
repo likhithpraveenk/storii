@@ -226,7 +226,7 @@ class AndroidAutoHelper {
 
   Future<List<MediaItem>> _loadDownloads(Map<String, dynamic>? options) async {
     try {
-      final downloads = _container.read(downloadsStoreProvider).getAll();
+      final downloads = await _container.read(downloadsStoreProvider).getAll();
 
       final seen = <String>{};
       final items = <LibraryItem>[];
@@ -312,7 +312,9 @@ class AndroidAutoHelper {
 
       var episodes = item.episodes;
       if (fromDownloads) {
-        final downloads = _container.read(downloadsStoreProvider).getAll();
+        final downloads = await _container
+            .read(downloadsStoreProvider)
+            .getAll();
         final downloadedIds = <String>{};
         for (final d in downloads.values) {
           if (d.libraryItemId == itemId &&

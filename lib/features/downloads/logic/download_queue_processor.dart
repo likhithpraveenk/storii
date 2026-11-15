@@ -15,7 +15,7 @@ class DownloadQueueProcessor {
     required this.maxConcurrent,
   });
 
-  final List<String> Function() readKeys;
+  final Future<List<String>> Function() readKeys;
   final DownloadsStore store;
   final DownloadStartGate canStart;
   final Future<void> Function(String key) runItem;
@@ -50,14 +50,19 @@ class DownloadQueueProcessor {
     try {
       while (true) {
         final wake = _wake = Completer<void>();
-        final keys = List<String>.from(readKeys());
+        final keys = await readKeys();
         if (keys.isEmpty && _active.isEmpty) break;
 
         for (final key in keys) {
           if (_active.length >= maxConcurrent()) break;
           if (_active.containsKey(key)) continue;
-          if (!await canStart(store.get(key))) break;
-          if (!readKeys().contains(key)) continue;
+
+          final item = await store.get(key);
+          if (!await canStart(item)) break;
+
+          final newKeys = await readKeys();
+          if (!newKeys.contains(key)) continue;
+
           _active[key] = _processItem(key);
         }
 
@@ -83,7 +88,7 @@ class DownloadQueueProcessor {
   }
 
   Future<void> _ensureTerminal(String key) async {
-    final item = store.get(key);
+    final item = await store.get(key);
     if (item == null || !item.isActive) return;
     LogService.log(
       'Download $key ended without a terminal status, marking it failed',

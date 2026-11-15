@@ -18,15 +18,13 @@ DownloadItem _item(String key) => DownloadItem(
   relativePath: 'book',
 );
 
-List<String> _activeKeys(FakeDownloadsStore store) => store
-    .getAll()
-    .values
-    .where((item) => item.isActive)
-    .map((item) => item.key)
-    .toList();
+Future<List<String>> _activeKeys(FakeDownloadsStore store) async {
+  final map = await store.getAll();
+  return map.values.where((i) => i.isActive).map((i) => i.key).toList();
+}
 
 Future<void> _complete(FakeDownloadsStore store, String key) async {
-  final item = store.get(key);
+  final item = await store.get(key);
   if (item == null) return;
   await store.save(item.copyWith(status: .completed));
 }
@@ -59,7 +57,7 @@ void main() {
       await processor.process();
 
       expect(started, ['a', 'b', 'c']);
-      expect(_activeKeys(store), isEmpty);
+      expect(await _activeKeys(store), isEmpty);
     });
 
     test('a waiting head stops the drain', () async {
@@ -79,7 +77,7 @@ void main() {
       await processor.process();
 
       expect(started, isEmpty);
-      expect(_activeKeys(store), ['a', 'b']);
+      expect(await _activeKeys(store), ['a', 'b']);
     });
 
     test('drains the rest once the gate opens again', () async {
@@ -107,7 +105,7 @@ void main() {
       await processor.process();
 
       expect(started, ['a', 'b']);
-      expect(_activeKeys(store), isEmpty);
+      expect(await _activeKeys(store), isEmpty);
     });
 
     test('a key removed while the gate awaits is not started', () async {
@@ -154,7 +152,7 @@ void main() {
 
       await expectLater(processor.process(), throwsA(isException));
       expect(processor.isProcessing, isFalse);
-      expect(store.get('a')?.status, DownloadStatus.failed);
+      expect((await store.get('a'))?.status, DownloadStatus.failed);
 
       shouldThrow = false;
       await processor.process();
@@ -178,8 +176,8 @@ void main() {
 
         await processor.process();
 
-        expect(store.get('a')?.status, DownloadStatus.failed);
-        expect(_activeKeys(store), isEmpty);
+        expect((await store.get('a'))?.status, DownloadStatus.failed);
+        expect(await _activeKeys(store), isEmpty);
       },
     );
 
@@ -286,7 +284,7 @@ void main() {
         await processing;
 
         expect(started, ['a', 'b', 'c']);
-        expect(_activeKeys(store), isEmpty);
+        expect(await _activeKeys(store), isEmpty);
         expect(maxInFlight, 2);
       },
     );
@@ -309,7 +307,7 @@ void main() {
       await processor.process();
 
       expect(started, isEmpty);
-      expect(_activeKeys(store), ['a', 'b', 'c']);
+      expect(await _activeKeys(store), ['a', 'b', 'c']);
     });
   });
 }
