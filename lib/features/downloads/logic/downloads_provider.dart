@@ -59,32 +59,33 @@ DownloadItem? downloadItem(Ref ref, String libraryItemId, [String? episodeId]) {
 }
 
 @riverpod
-List<DownloadItem> activeDownloads(Ref ref) {
-  final downloads =
-      ref.watch(downloadsProvider).value ?? const <String, DownloadItem>{};
-  final list = downloads.values.where((item) => !item.isComplete).toList()
-    ..sort(
-      (a, b) =>
-          (a.startedAt ?? _zeroEpoch).compareTo(b.startedAt ?? _zeroEpoch),
-    );
-  return list;
+Future<List<DownloadItem>> activeDownloads(Ref ref) async {
+  final active = await ref.watch(
+    downloadsProvider.selectAsync(
+      (m) => m.values.where((i) => !i.isComplete).toList(),
+    ),
+  );
+  active.sort(
+    (a, b) => (a.startedAt ?? _zeroEpoch).compareTo(b.startedAt ?? _zeroEpoch),
+  );
+  return active;
 }
 
 @riverpod
-List<DownloadItem> completedDownloads(Ref ref) {
-  final downloads =
-      ref.watch(downloadsProvider).value ?? const <String, DownloadItem>{};
-  return downloads.values.where((item) => item.isComplete).toList();
+Future<List<DownloadItem>> completedDownloads(Ref ref) {
+  return ref.watch(
+    downloadsProvider.selectAsync(
+      (m) => m.values.where((i) => i.isComplete).toList(),
+    ),
+  );
 }
 
 @riverpod
 int? downloadQueuePosition(Ref ref, String libraryItemId, [String? episodeId]) {
   final key = mediaItemIdKey(libraryItemId, episodeId);
-  final queuedItems = ref
-      .watch(activeDownloadsProvider)
-      .where((item) => item.status == .queued)
-      .toList();
-  final index = queuedItems.indexWhere((item) => item.key == key);
+  final active = ref.watch(activeDownloadsProvider).value ?? [];
+  final queuedItems = active.where((i) => i.status == .queued).toList();
+  final index = queuedItems.indexWhere((i) => i.key == key);
   return index != -1 ? index + 1 : null;
 }
 
@@ -92,7 +93,7 @@ final _zeroEpoch = DateTime.fromMillisecondsSinceEpoch(0);
 
 @riverpod
 Future<List<DownloadItem>> sortedCompletedDownloads(Ref ref) async {
-  final items = ref.watch(completedDownloadsProvider);
+  final items = await ref.watch(completedDownloadsProvider.future);
   final query = ref.watch(downloadSearchQueryProvider).trim().toLowerCase();
   final filtered = query.isEmpty
       ? items
@@ -103,7 +104,7 @@ Future<List<DownloadItem>> sortedCompletedDownloads(Ref ref) async {
 
 @riverpod
 Future<List<DownloadItem>> sortedActiveDownloads(Ref ref) async {
-  final items = ref.watch(activeDownloadsProvider);
+  final items = await ref.watch(activeDownloadsProvider.future);
   final query = ref.watch(downloadSearchQueryProvider).trim().toLowerCase();
   return query.isEmpty ? items : await _filterDownloads(ref, items, query);
 }
