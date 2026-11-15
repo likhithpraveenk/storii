@@ -30,6 +30,7 @@ import 'package:storii/features/search/ui/search_screen.dart';
 import 'package:storii/features/series/ui/series_detail_screen.dart';
 import 'package:storii/features/series/ui/series_list_screen.dart';
 import 'package:storii/features/settings/ui/advanced/advanced_settings_screen.dart';
+import 'package:storii/features/settings/ui/advanced/app_data_manager_screen.dart';
 import 'package:storii/features/settings/ui/appearance/appearance_screen.dart';
 import 'package:storii/features/settings/ui/customization/customization_settings_screen.dart';
 import 'package:storii/features/settings/ui/downloads/downloads_settings_screen.dart';
@@ -73,6 +74,7 @@ enum AppRoute {
   downloadsSettings('/more/settings/downloads'),
   librarySettings('/more/settings/library'),
   advancedSettings('/more/settings/advanced'),
+  storage('/more/settings/advanced/storage'),
   customizationSettings('/more/settings/customization'),
   stats('/more/stats'),
   playbackHistory('/more/playback-history'),
@@ -272,8 +274,13 @@ final routerProvider = Provider<GoRouter>((ref) {
                       ),
                       GoRoute(
                         path: 'advanced',
-                        builder: (context, state) =>
-                            const AdvancedSettingsScreen(),
+                        builder: (_, _) => const AdvancedSettingsScreen(),
+                        routes: [
+                          GoRoute(
+                            path: 'storage',
+                            builder: (_, _) => const AppDataManagerScreen(),
+                          ),
+                        ],
                       ),
                       GoRoute(
                         path: 'customization',

@@ -699,5 +699,41 @@
     }
   },
   "hardwareClickToSkipChapters": "Hardware buttons skip chapters",
-  "hardwareClickToSkipChaptersSubtitle": "Use next/previous buttons to skip chapters instead of rewind/fast forward"
+  "hardwareClickToSkipChaptersSubtitle": "Use next/previous buttons to skip chapters instead of rewind/fast forward",
+  "appDataManager": "App Data Manager",
+  "entries": "{count} entries",
+  "@entries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "shrink": "Shrink",
+  "appSettings": "App settings",
+  "appSettingsDescription": "Global app preferences",
+  "userSettings": "User settings",
+  "userSettingsDescription": "Per-user preferences",
+  "userAccounts": "User accounts",
+  "userAccountsDescription": "Saved accounts for quick switching",
+  "servers": "Servers",
+  "serversDescription": "Saved server URLs and headers",
+  "localSessions": "Offline playback sessions",
+  "localSessionsDescription": "Awaiting sync. Delete loses unsynced progress",
+  "mediaProgress": "Media progress",
+  "mediaProgressDescription": "Cached listening progress",
+  "playbackHistoryDescription": "Per-media playback history",
+  "downloadsDescription": "Download records",
+  "downloadedItems": "Downloaded media",
+  "downloadedItemsDescription": "Metadata for each download record",
+  "playbackSpeedsDescription": "Speed saved per media",
+  "serverConfig": "Server config",
+  "serverConfigDescription": "Cached server settings",
+  "playbackQueue": "Playback queue",
+  "playbackQueueDescription": "Saved queue for the player",
+  "logsDescription": "Errors and events, used in bug reports",
+  "autoDeleteExclusion": "Auto-Delete exclusions",
+  "autoDeleteExclusionDescription": "Downloads kept from auto-delete",
+  "equalizerPresets": "Equalizer presets",
+  "equalizerPresetsDescription": "Your custom equalizer presets"
 }
