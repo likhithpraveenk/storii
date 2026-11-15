@@ -18,11 +18,11 @@ PlayerCoverGeometry playerCoverGeometry({
   final fullSize = isLandscape
       ? (screenHeight - topInset - imgSizeInMiniPlayer).clamp(
           0.0,
-          maxImgSizeInFullPlayer,
+          math.min(maxImgSizeInFullPlayer, screenWidth * 0.45),
         )
       : (screenWidth - 32).clamp(
           0.0,
-          math.min(maxImgSizeInFullPlayer, screenHeight * 0.4),
+          math.min(maxImgSizeInFullPlayer, screenHeight * 0.45),
         );
   final fullLeft = isLandscape
       ? fullPlayerHeaderHeight

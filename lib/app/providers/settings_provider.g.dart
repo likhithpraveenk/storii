@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'33be4872d8d4c6a84953e54a6bbc751c8ec407b7';
+    r'5a02ce723f0a68f0ceb4934fbbe42722d6c2f11e';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -373,6 +373,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setShowChapterProgressSlider(bool value) =>
       _save(state?.copyWith(showChapterProgressSlider: value));
+
+  Future<void> setShowCoverInFullPlayer(bool value) =>
+      _save(state?.copyWith(showCoverInFullPlayer: value));
 
   Future<void> setScaleTimeBySpeed(bool value) =>
       _save(state?.copyWith(scaleTimeBySpeed: value));
@@ -894,6 +897,16 @@ final showChapterProgressSliderProvider = Provider<bool>(
     ),
   ),
   name: 'showChapterProgressSliderProvider',
+);
+
+final showCoverInFullPlayerProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.showCoverInFullPlayer ?? DefaultUserSettings.showCoverInFullPlayer,
+    ),
+  ),
+  name: 'showCoverInFullPlayerProvider',
 );
 
 final scaleTimeBySpeedProvider = Provider<bool>(

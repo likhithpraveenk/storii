@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/player_cover_geometry.dart';
 import 'package:storii/features/player/logic/player_theme.dart';
@@ -50,6 +51,7 @@ class PlayerScreen extends ConsumerWidget {
     final topInset = isLandscape
         ? statusBarHeight(context)
         : fullPlayerTopInset(context);
+    final showCoverInFullPlayer = ref.watch(showCoverInFullPlayerProvider);
 
     const miniInterval = Interval(0, 0.3);
     const fullInterval = Interval(0.6, 1);
@@ -99,13 +101,14 @@ class PlayerScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-              Positioned(
-                top: top,
-                left: left,
-                width: size,
-                height: size,
-                child: PlayerCover(expandFactor: f),
-              ),
+              if (f < 0.5 || showCoverInFullPlayer)
+                Positioned(
+                  top: top,
+                  left: left,
+                  width: size,
+                  height: size,
+                  child: PlayerCover(expandFactor: f),
+                ),
               if (f < 0.2)
                 Positioned(
                   bottom: 0,

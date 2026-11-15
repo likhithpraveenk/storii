@@ -53,6 +53,7 @@ class DefaultUserSettings {
   static const PlayerBackgroundTheme playerBackgroundTheme = .none;
   static const PlaybackControlsLayout playbackControlsLayout = .defaultLayout;
   static const showChapterProgressSlider = true;
+  static const showCoverInFullPlayer = true;
   static const scaleTimeBySpeed = true;
   static const osNotificationCanSeek = true;
   static const osNotificationCanSkip = true;
@@ -204,6 +205,9 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.showChapterProgressSlider)
     bool showChapterProgressSlider,
+
+    @Default(DefaultUserSettings.showCoverInFullPlayer)
+    bool showCoverInFullPlayer,
 
     @Default(DefaultUserSettings.scaleTimeBySpeed) bool scaleTimeBySpeed,
 

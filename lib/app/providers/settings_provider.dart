@@ -131,6 +131,7 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
         miniplayerSubtitleMode: DefaultUserSettings.miniplayerSubtitleMode,
         playerBackgroundTheme: DefaultUserSettings.playerBackgroundTheme,
         playbackControlsLayout: DefaultUserSettings.playbackControlsLayout,
+        showCoverInFullPlayer: DefaultUserSettings.showCoverInFullPlayer,
         shakeDuringSleepTimer: DefaultUserSettings.shakeDuringSleepTimer,
         shakeSleepTimerAddMinutes:
             DefaultUserSettings.shakeSleepTimerAddMinutes,

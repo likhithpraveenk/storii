@@ -40,6 +40,7 @@ class FullPlayer extends ConsumerWidget {
     final showChapterProgressSlider = ref.watch(
       showChapterProgressSliderProvider,
     );
+    final showCoverInFullPlayer = ref.watch(showCoverInFullPlayerProvider);
 
     Duration scale(Duration d) => scaleTimeBySpeed
         ? Duration(microseconds: (d.inMicroseconds / localSpeed).round())
@@ -136,7 +137,10 @@ class FullPlayer extends ConsumerWidget {
               const _PlayerHeader(isVertical: true),
               Expanded(
                 child: Padding(
-                  padding: .only(left: size, top: statusBar),
+                  padding: .only(
+                    left: showCoverInFullPlayer ? size : 0,
+                    top: statusBar,
+                  ),
                   child: scroll(
                     constraints.maxHeight - statusBar - fullPlayerBottomPadding,
                   ),
@@ -147,9 +151,13 @@ class FullPlayer extends ConsumerWidget {
         }
 
         return Column(
+          mainAxisAlignment: showCoverInFullPlayer ? .start : .center,
+          mainAxisSize: .min,
           children: [
             const _PlayerHeader(),
-            SizedBox(height: size + playerCoverContentGap),
+            SizedBox(
+              height: showCoverInFullPlayer ? size + playerCoverContentGap : 0,
+            ),
             Expanded(
               child: scroll(
                 constraints.maxHeight -

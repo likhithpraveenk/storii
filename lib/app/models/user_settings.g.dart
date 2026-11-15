@@ -141,6 +141,9 @@ _UserSettings _$UserSettingsFromJson(
   showChapterProgressSlider:
       json['showChapterProgressSlider'] as bool? ??
       DefaultUserSettings.showChapterProgressSlider,
+  showCoverInFullPlayer:
+      json['showCoverInFullPlayer'] as bool? ??
+      DefaultUserSettings.showCoverInFullPlayer,
   scaleTimeBySpeed:
       json['scaleTimeBySpeed'] as bool? ?? DefaultUserSettings.scaleTimeBySpeed,
   osNotificationCanSeek:
@@ -339,6 +342,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'playbackControlsLayout':
       _$PlaybackControlsLayoutEnumMap[instance.playbackControlsLayout]!,
   'showChapterProgressSlider': instance.showChapterProgressSlider,
+  'showCoverInFullPlayer': instance.showCoverInFullPlayer,
   'scaleTimeBySpeed': instance.scaleTimeBySpeed,
   'osNotificationCanSeek': instance.osNotificationCanSeek,
   'osNotificationCanSkip': instance.osNotificationCanSkip,
