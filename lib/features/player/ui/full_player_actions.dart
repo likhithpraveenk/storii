@@ -5,6 +5,7 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/equalizer/ui/equalizer_sheet.dart';
 import 'package:storii/features/player/logic/session_extensions.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/player/ui/bookmarks_sheet.dart';
@@ -36,6 +37,7 @@ extension WidgetX on FullPlayerActions {
       isPodcast: session.isPodcastEpisode,
       inOverflow: inOverflow,
     ),
+    .equalizer => EqualizerButton(inOverflow: inOverflow),
     .queue => QueueButton(inOverflow: inOverflow),
   };
 }

@@ -13,16 +13,19 @@ const appSettingsBoxName = 'app_settings_box';
 const userSettingsBoxName = 'user_settings_box';
 const usersBoxName = 'users_box';
 const serversBoxName = 'servers_box';
+// TODO: deprecated item cache, remove after downloaded items migration
 const itemsBoxName = 'items_box';
 const localSessionsBoxName = 'local_sessions_box';
 const userMediaProgressBoxName = 'user_media_progress_box_v2';
 const playbackHistoryBoxName = 'playback_history_box';
 const downloadsBoxName = 'downloads_box';
+const downloadedItemsBoxName = 'downloaded_items_box';
 const speedsBoxName = 'speeds_box';
 const serverSettingsBoxName = 'server_settings_box';
 const playbackQueueBoxName = 'playback_queue_box_1';
 const logsBoxName = 'logs_box_1';
 const autoDeleteExclusionBoxName = 'auto_delete_exclusion_box';
+const equalizerBoxName = 'equalizer_box';
 
 //* any new hive box should be added to this list
 final _knownNames = [
@@ -35,11 +38,13 @@ final _knownNames = [
   userMediaProgressBoxName,
   playbackHistoryBoxName,
   downloadsBoxName,
+  downloadedItemsBoxName,
   speedsBoxName,
   serverSettingsBoxName,
   playbackQueueBoxName,
   logsBoxName,
   autoDeleteExclusionBoxName,
+  equalizerBoxName,
 ];
 
 const networkCacheDir = 'dio_cache';
@@ -59,13 +64,15 @@ Future<void> setupHive() async {
   await Hive.openLazyBox<String>(itemsBoxName);
   await Hive.openBox<String>(localSessionsBoxName);
   await Hive.openLazyBox<List<dynamic>>(playbackHistoryBoxName);
-  await Hive.openBox<String>(downloadsBoxName);
+  await Hive.openLazyBox<String>(downloadsBoxName);
+  await Hive.openLazyBox<String>(downloadedItemsBoxName);
   await Hive.openBox<double>(speedsBoxName);
-  await Hive.openBox<String>(userMediaProgressBoxName);
+  await Hive.openLazyBox<String>(userMediaProgressBoxName);
   await Hive.openBox<String>(serverSettingsBoxName);
   await Hive.openBox<String>(playbackQueueBoxName);
   await Hive.openLazyBox<String>(logsBoxName);
   await Hive.openBox<bool>(autoDeleteExclusionBoxName);
+  await Hive.openBox<String>(equalizerBoxName);
 
   // dio cache
   final dir = await getApplicationDocumentsDirectory();

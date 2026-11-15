@@ -198,11 +198,13 @@ final activeDownloadsProvider = ActiveDownloadsProvider._();
 final class ActiveDownloadsProvider
     extends
         $FunctionalProvider<
+          AsyncValue<List<DownloadItem>>,
           List<DownloadItem>,
-          List<DownloadItem>,
-          List<DownloadItem>
+          FutureOr<List<DownloadItem>>
         >
-    with $Provider<List<DownloadItem>> {
+    with
+        $FutureModifier<List<DownloadItem>>,
+        $FutureProvider<List<DownloadItem>> {
   ActiveDownloadsProvider._()
     : super(
         from: null,
@@ -219,25 +221,17 @@ final class ActiveDownloadsProvider
 
   @$internal
   @override
-  $ProviderElement<List<DownloadItem>> $createElement(
+  $FutureProviderElement<List<DownloadItem>> $createElement(
     $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
+  ) => $FutureProviderElement(pointer);
 
   @override
-  List<DownloadItem> create(Ref ref) {
+  FutureOr<List<DownloadItem>> create(Ref ref) {
     return activeDownloads(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<DownloadItem> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<List<DownloadItem>>(value),
-    );
   }
 }
 
-String _$activeDownloadsHash() => r'8dd9ac101c60fecf83c2aa4c0b747e8cf9fc7c10';
+String _$activeDownloadsHash() => r'e701897929a66c6ffebc28fbe17ddef7f6d61d9d';
 
 @ProviderFor(completedDownloads)
 final completedDownloadsProvider = CompletedDownloadsProvider._();
@@ -245,11 +239,13 @@ final completedDownloadsProvider = CompletedDownloadsProvider._();
 final class CompletedDownloadsProvider
     extends
         $FunctionalProvider<
+          AsyncValue<List<DownloadItem>>,
           List<DownloadItem>,
-          List<DownloadItem>,
-          List<DownloadItem>
+          FutureOr<List<DownloadItem>>
         >
-    with $Provider<List<DownloadItem>> {
+    with
+        $FutureModifier<List<DownloadItem>>,
+        $FutureProvider<List<DownloadItem>> {
   CompletedDownloadsProvider._()
     : super(
         from: null,
@@ -266,26 +262,18 @@ final class CompletedDownloadsProvider
 
   @$internal
   @override
-  $ProviderElement<List<DownloadItem>> $createElement(
+  $FutureProviderElement<List<DownloadItem>> $createElement(
     $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
+  ) => $FutureProviderElement(pointer);
 
   @override
-  List<DownloadItem> create(Ref ref) {
+  FutureOr<List<DownloadItem>> create(Ref ref) {
     return completedDownloads(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<DownloadItem> value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<List<DownloadItem>>(value),
-    );
   }
 }
 
 String _$completedDownloadsHash() =>
-    r'2ec828809ae06a54580966e7388dcd2cddbc2d8c';
+    r'492fb2642e50d44fe8a6547b1e864addcc4eb253';
 
 @ProviderFor(downloadQueuePosition)
 final downloadQueuePositionProvider = DownloadQueuePositionFamily._();
@@ -345,7 +333,7 @@ final class DownloadQueuePositionProvider
 }
 
 String _$downloadQueuePositionHash() =>
-    r'ad1a28b69d241b4053238471160d8e113172ba6e';
+    r'68568d4259493f04f4bbd90876196e6aa7f2f6a2';
 
 final class DownloadQueuePositionFamily extends $Family
     with $FunctionalFamilyOverride<int?, (String, String?)> {
@@ -410,7 +398,7 @@ final class SortedCompletedDownloadsProvider
 }
 
 String _$sortedCompletedDownloadsHash() =>
-    r'4890be0f52021ea0f13581e7a83c697d9db602aa';
+    r'22d8cf3091b3361670b6915d024f295ddedd233b';
 
 @ProviderFor(sortedActiveDownloads)
 final sortedActiveDownloadsProvider = SortedActiveDownloadsProvider._();
@@ -452,7 +440,7 @@ final class SortedActiveDownloadsProvider
 }
 
 String _$sortedActiveDownloadsHash() =>
-    r'fa96b7d3538e6fe917bce46d02393cf390ddadae';
+    r'8290300e6fbbb27477b168e80d425f39ff90fd5e';
 
 @ProviderFor(downloadedItems)
 final downloadedItemsProvider = DownloadedItemsProvider._();
@@ -493,4 +481,4 @@ final class DownloadedItemsProvider
   }
 }
 
-String _$downloadedItemsHash() => r'082e3b8529b6e347e0a46b3b762f7de10254c939';
+String _$downloadedItemsHash() => r'cc8faab7d52f44d690a2eceaef72d90dfd593aee';

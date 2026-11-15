@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'7cf96e92c9b673e917c13e018d2a0310ee0ee7b4';
+    r'5a02ce723f0a68f0ceb4934fbbe42722d6c2f11e';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -157,6 +157,9 @@ extension AppSettingsSetters on AppSettingsNotifier {
 
   Future<void> setStorageLocations(List<StorageLocation> value) =>
       _save(state.copyWith(storageLocations: value));
+
+  Future<void> setDownloadedItemsMigrated(bool value) =>
+      _save(state.copyWith(downloadedItemsMigrated: value));
 
   Future<void> setLastVersion(String? value) =>
       _save(state.copyWith(lastVersion: value));
@@ -225,6 +228,12 @@ final trustAllCertificatesProvider = Provider<bool>(
 final storageLocationsProvider = Provider<List<StorageLocation>>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.storageLocations)),
   name: 'storageLocationsProvider',
+);
+
+final downloadedItemsMigratedProvider = Provider<bool>(
+  (ref) =>
+      ref.watch(appSettingsProvider.select((s) => s.downloadedItemsMigrated)),
+  name: 'downloadedItemsMigratedProvider',
 );
 
 final lastVersionProvider = Provider<String?>(
@@ -365,6 +374,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
   Future<void> setShowChapterProgressSlider(bool value) =>
       _save(state?.copyWith(showChapterProgressSlider: value));
 
+  Future<void> setShowCoverInFullPlayer(bool value) =>
+      _save(state?.copyWith(showCoverInFullPlayer: value));
+
   Future<void> setScaleTimeBySpeed(bool value) =>
       _save(state?.copyWith(scaleTimeBySpeed: value));
 
@@ -475,6 +487,15 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setUseWavySlider(bool value) =>
       _save(state?.copyWith(useWavySlider: value));
+
+  Future<void> setIsEqualizerEnabled(bool value) =>
+      _save(state?.copyWith(isEqualizerEnabled: value));
+
+  Future<void> setEqualizerPresetId(String value) =>
+      _save(state?.copyWith(equalizerPresetId: value));
+
+  Future<void> setLoudnessGainDb(double value) =>
+      _save(state?.copyWith(loudnessGainDb: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -878,6 +899,16 @@ final showChapterProgressSliderProvider = Provider<bool>(
   name: 'showChapterProgressSliderProvider',
 );
 
+final showCoverInFullPlayerProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) =>
+          s?.showCoverInFullPlayer ?? DefaultUserSettings.showCoverInFullPlayer,
+    ),
+  ),
+  name: 'showCoverInFullPlayerProvider',
+);
+
 final scaleTimeBySpeedProvider = Provider<bool>(
   (ref) => ref.watch(
     userSettingsProvider.select(
@@ -1247,4 +1278,31 @@ final useWavySliderProvider = Provider<bool>(
     ),
   ),
   name: 'useWavySliderProvider',
+);
+
+final isEqualizerEnabledProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.isEqualizerEnabled ?? DefaultUserSettings.isEqualizerEnabled,
+    ),
+  ),
+  name: 'isEqualizerEnabledProvider',
+);
+
+final equalizerPresetIdProvider = Provider<String>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.equalizerPresetId ?? DefaultUserSettings.equalizerPresetId,
+    ),
+  ),
+  name: 'equalizerPresetIdProvider',
+);
+
+final loudnessGainDbProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.loudnessGainDb ?? DefaultUserSettings.loudnessGainDb,
+    ),
+  ),
+  name: 'loudnessGainDbProvider',
 );

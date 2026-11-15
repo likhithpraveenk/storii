@@ -18,6 +18,7 @@ class BookSlider extends ConsumerStatefulWidget {
 
 class _BookSliderState extends ConsumerState<BookSlider>
     with SingleTickerProviderStateMixin {
+  double? _latestSeekValue;
   late final AnimationController _wave;
 
   @override
@@ -65,7 +66,18 @@ class _BookSliderState extends ConsumerState<BookSlider>
       durationMs,
     );
 
-    final remainingDuration = duration - position;
+    final latestSeek = _latestSeekValue;
+    var displayPositionMs = positionMs;
+    if (latestSeek != null) {
+      if ((positionMs - latestSeek).abs() < 1000) {
+        _latestSeekValue = null;
+      } else {
+        displayPositionMs = latestSeek;
+      }
+    }
+
+    final remainingDuration =
+        duration - Duration(milliseconds: displayPositionMs.round());
     final scaledRemaining = scaleTimeBySpeed
         ? Duration(
             microseconds: (remainingDuration.inMicroseconds / speed).round(),
@@ -78,8 +90,8 @@ class _BookSliderState extends ConsumerState<BookSlider>
       .remaining => '$kMinus${scaledRemaining.toTime()}',
     };
 
-    Widget buildSlider(SliderTrackShape? shape) => AppSlider(
-      value: positionMs,
+    Widget buildSlider(SliderTrackShape? shape) => AppSliderWithCancel(
+      value: displayPositionMs,
       max: durationMs,
       enableCancel: true,
       trackHeight: 4,
@@ -87,6 +99,7 @@ class _BookSliderState extends ConsumerState<BookSlider>
       labelBuilder: format,
       onChangeEnd: (value) async {
         final seekMs = value.toInt();
+        setState(() => _latestSeekValue = value);
         if (!ref.read(showChapterProgressSliderProvider)) {
           await audioHandler.seekFromGlobalPosition(
             Duration(milliseconds: seekMs),
@@ -95,7 +108,8 @@ class _BookSliderState extends ConsumerState<BookSlider>
           await audioHandler.seek(Duration(milliseconds: seekMs));
         }
       },
-      padding: const .fromLTRB(0, 4, 0, 4),
+      thumbHeight: 24,
+      padding: const .symmetric(vertical: 6),
     );
 
     return Column(
@@ -115,7 +129,7 @@ class _BookSliderState extends ConsumerState<BookSlider>
         Row(
           mainAxisAlignment: .spaceBetween,
           children: [
-            Text(format(positionMs)),
+            Text(format(displayPositionMs)),
             GestureDetector(
               behavior: .opaque,
               onTap: () => ref

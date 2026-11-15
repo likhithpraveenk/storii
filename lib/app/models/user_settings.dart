@@ -53,6 +53,7 @@ class DefaultUserSettings {
   static const PlayerBackgroundTheme playerBackgroundTheme = .none;
   static const PlaybackControlsLayout playbackControlsLayout = .defaultLayout;
   static const showChapterProgressSlider = true;
+  static const showCoverInFullPlayer = true;
   static const scaleTimeBySpeed = true;
   static const osNotificationCanSeek = true;
   static const osNotificationCanSkip = true;
@@ -90,6 +91,9 @@ class DefaultUserSettings {
   static const String? defaultDownloadsLocationAudiobooks = null;
   static const String? defaultDownloadsLocationPodcasts = null;
   static const bool useWavySlider = false;
+  static const isEqualizerEnabled = false;
+  static const equalizerPresetId = 'flat';
+  static const loudnessGainDb = 0.0;
 }
 
 @freezed
@@ -202,6 +206,9 @@ sealed class UserSettings with _$UserSettings {
     @Default(DefaultUserSettings.showChapterProgressSlider)
     bool showChapterProgressSlider,
 
+    @Default(DefaultUserSettings.showCoverInFullPlayer)
+    bool showCoverInFullPlayer,
+
     @Default(DefaultUserSettings.scaleTimeBySpeed) bool scaleTimeBySpeed,
 
     @Default(DefaultUserSettings.osNotificationCanSeek)
@@ -297,6 +304,12 @@ sealed class UserSettings with _$UserSettings {
     String? defaultDownloadsLocationPodcasts,
 
     @Default(DefaultUserSettings.useWavySlider) bool useWavySlider,
+
+    @Default(DefaultUserSettings.isEqualizerEnabled) bool isEqualizerEnabled,
+
+    @Default(DefaultUserSettings.equalizerPresetId) String equalizerPresetId,
+
+    @Default(DefaultUserSettings.loudnessGainDb) double loudnessGainDb,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);

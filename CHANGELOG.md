@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- 10-band equalizer with default/custom presets
+- advanced app data manager
+- loudness boost audio effect
+- cover image in full player off setting
+
+### Fixed
+
+- slider position not set on seek
+- download screen flickering during active downloads
+
 ## [v0.13.4-beta.1] - 2026-11-12
 
 ### Fixed

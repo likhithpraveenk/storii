@@ -42,7 +42,7 @@ final class DownloadAutoDeleteWatcherProvider
 }
 
 String _$downloadAutoDeleteWatcherHash() =>
-    r'2278ef3dcc643096ff437eca1ebd1a3aed8f0e0c';
+    r'17815d016d38efbaccfc45b6560d9da2237b8274';
 
 abstract class _$DownloadAutoDeleteWatcher extends $Notifier<void> {
   void build();

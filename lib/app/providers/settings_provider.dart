@@ -131,6 +131,7 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
         miniplayerSubtitleMode: DefaultUserSettings.miniplayerSubtitleMode,
         playerBackgroundTheme: DefaultUserSettings.playerBackgroundTheme,
         playbackControlsLayout: DefaultUserSettings.playbackControlsLayout,
+        showCoverInFullPlayer: DefaultUserSettings.showCoverInFullPlayer,
         shakeDuringSleepTimer: DefaultUserSettings.shakeDuringSleepTimer,
         shakeSleepTimerAddMinutes:
             DefaultUserSettings.shakeSleepTimerAddMinutes,
@@ -155,6 +156,9 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
         interruptionLongSkipBackward:
             DefaultUserSettings.interruptionLongSkipBackward,
         useWavySlider: DefaultUserSettings.useWavySlider,
+        isEqualizerEnabled: DefaultUserSettings.isEqualizerEnabled,
+        equalizerPresetId: DefaultUserSettings.equalizerPresetId,
+        loudnessGainDb: DefaultUserSettings.loudnessGainDb,
       ),
     );
   }

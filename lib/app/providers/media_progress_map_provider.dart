@@ -16,7 +16,7 @@ Future<void> mediaProgressSyncController(Ref ref) async {
   final user = await ref.watch(authenticatedUserProvider.future);
   final store = ref.read(progressStoreProvider(user.id));
   final serverUser = await ref.watch(serverUserProvider.future);
-  store.putAll(serverUser.mediaProgress);
+  unawaited(store.putAll(serverUser.mediaProgress));
   ref.listen(_progressUpdateProvider, (_, next) {
     final progress = next.value;
     if (progress != null) {
@@ -36,9 +36,7 @@ Stream<MediaProgress> _progressUpdate(Ref ref) async* {
 @riverpod
 Future<Map<String, MediaProgress>> mediaProgressMap(Ref ref) async {
   final user = ref.watch(currentUserProvider);
-  if (user == null) {
-    return Future.value({});
-  }
+  if (user == null) return {};
   final map = await ref.watch(progressMapProvider(user.id).future);
   return map;
 }

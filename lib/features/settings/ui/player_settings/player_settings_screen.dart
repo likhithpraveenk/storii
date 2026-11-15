@@ -12,6 +12,7 @@ import 'package:storii/features/settings/ui/player_settings/play_on_startup_tile
 import 'package:storii/features/settings/ui/player_settings/playback_controls_layout_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/player_background_theme_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/shake_sleep_tile.dart';
+import 'package:storii/features/settings/ui/player_settings/show_cover_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/show_seek_buttons_tile.dart';
 import 'package:storii/features/settings/ui/player_settings/skip_tiles.dart';
 import 'package:storii/features/settings/ui/player_settings/sleep_window_tile.dart';
@@ -95,6 +96,7 @@ class _PlayerSettingsScreenState extends State<PlayerSettingsScreen> {
               children: const [
                 PlayerBackgroundThemeTile(),
                 PlaybackControlsLayoutTile(),
+                ShowCoverInFullPlayerTile(),
               ],
             ),
             SettingsHeader(

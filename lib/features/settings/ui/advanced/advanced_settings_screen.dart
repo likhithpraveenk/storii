@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/features/settings/ui/advanced/app_cache_tile.dart';
+import 'package:storii/features/settings/ui/advanced/app_data_manager_screen.dart';
 import 'package:storii/features/settings/ui/advanced/backup_settings_tile.dart';
 import 'package:storii/features/settings/ui/advanced/http_logs.dart';
 import 'package:storii/features/settings/ui/advanced/local_url_tile.dart';
@@ -50,6 +51,7 @@ class AdvancedSettingsScreen extends StatelessWidget {
           HttpLogsTile(),
           TrustAllCertificatesTile(),
           AppCacheTile(),
+          AppDataManagerTile(),
           LocalUrlTile(),
         ],
       ),

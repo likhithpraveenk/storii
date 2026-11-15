@@ -261,6 +261,7 @@ enum FullPlayerActions {
   speed,
   volume,
   bookmarks,
+  equalizer,
   queue;
 
   String get label => switch (this) {
@@ -270,6 +271,7 @@ enum FullPlayerActions {
     .speed => l10n.playbackSpeed,
     .volume => l10n.volume,
     .bookmarks => l10n.bookmarks,
+    .equalizer => l10n.equalizer,
     .queue => l10n.queue,
   };
 
@@ -280,6 +282,7 @@ enum FullPlayerActions {
     .speed => Icons.speed,
     .volume => Icons.volume_up,
     .bookmarks => Icons.bookmark,
+    .equalizer => Icons.equalizer,
     .queue => Icons.horizontal_split_outlined,
   };
 }

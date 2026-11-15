@@ -7,8 +7,8 @@ import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/repository_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
+import 'package:storii/storage/local/downloaded_items_store.dart';
 import 'package:storii/storage/local/downloads_store.dart';
-import 'package:storii/storage/local/items_cache.dart';
 import 'package:storii/storage/local/session_store.dart';
 
 part 'shelves_provider.g.dart';
@@ -100,14 +100,14 @@ Future<List<Shelf>> sortedShelves(Ref ref) async {
 Future<List<Shelf>> rawShelves(Ref ref) async {
   final isOffline = ref.watch(isServerOfflineProvider);
   if (isOffline) {
-    final downloads = ref.read(downloadsStoreProvider).getAll();
-    final cache = ref.read(itemsCacheProvider);
+    final downloads = await ref.read(downloadsStoreProvider).getAll();
+    final store = ref.read(downloadedItemsStoreProvider);
 
     final dAudiobooks = <LibraryItem>[];
     final dPodcasts = <LibraryItem>[];
 
     for (final d in downloads.values.where((d) => d.isComplete)) {
-      final item = await cache.get(d.libraryItemId);
+      final item = await store.get(d.libraryItemId);
       if (item != null) {
         switch (item.mediaType) {
           case .book:

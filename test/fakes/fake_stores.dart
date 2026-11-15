@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/models/playback_event.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
+import 'package:storii/storage/local/downloaded_items_store.dart';
 import 'package:storii/storage/local/downloads_store.dart';
-import 'package:storii/storage/local/items_cache.dart';
 import 'package:storii/storage/local/playback_history_store.dart';
 import 'package:storii/storage/local/progress_store.dart';
 import 'package:storii/storage/local/session_store.dart';
@@ -111,10 +111,10 @@ class FakeDownloadsStore extends DownloadsStore {
   Object? saveError;
 
   @override
-  DownloadItem? get(String key) => _data[key];
+  Future<DownloadItem?> get(String key) async => _data[key];
 
   @override
-  Map<String, DownloadItem> getAll() => Map.unmodifiable(_data);
+  Future<Map<String, DownloadItem>> getAll() async => Map.unmodifiable(_data);
 
   @override
   Stream<Map<String, DownloadItem>> watch() async* {
@@ -139,7 +139,7 @@ class FakeDownloadsStore extends DownloadsStore {
   }
 }
 
-class FakeItemsCache extends ItemsCache {
+class FakeDownloadedItemsStore extends DownloadedItemsStore {
   new() : super();
   final List<LibraryItem> puts = <LibraryItem>[];
 

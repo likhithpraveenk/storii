@@ -13,12 +13,13 @@ class BackupService {
   static const _version = 1;
 
   static final List<BoxBase> _boxes = [
-    Hive.box(usersBoxName),
-    Hive.box(serversBoxName),
-    Hive.box(appSettingsBoxName),
-    Hive.box(userSettingsBoxName),
-    Hive.box(speedsBoxName),
-    Hive.lazyBox(playbackHistoryBoxName),
+    Hive.box<UserDomain>(usersBoxName),
+    Hive.box<Server>(serversBoxName),
+    Hive.box<String>(appSettingsBoxName),
+    Hive.box<String>(userSettingsBoxName),
+    Hive.box<double>(speedsBoxName),
+    Hive.box<String>(equalizerBoxName),
+    Hive.lazyBox<List<dynamic>>(playbackHistoryBoxName),
   ];
 
   static dynamic _withoutCurrentUser(dynamic value) {

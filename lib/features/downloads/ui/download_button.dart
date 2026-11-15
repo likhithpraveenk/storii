@@ -22,14 +22,14 @@ class ActiveDownloadsButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final activeDownloads = ref.watch(activeDownloadsProvider);
-    final activeCount = activeDownloads.length;
-    if (activeDownloads.isEmpty) {
-      return const SizedBox.shrink();
-    }
+    final activeCount = ref.watch(
+      activeDownloadsProvider.select(
+        (asyncList) => asyncList.value?.length ?? 0,
+      ),
+    );
+    if (activeCount == 0) return const SizedBox.shrink();
 
     final theme = Theme.of(context);
-
     return Stack(
       children: [
         IconButton(

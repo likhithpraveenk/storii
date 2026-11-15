@@ -22,73 +22,74 @@ class MoreScreen extends ConsumerWidget {
     final offlineMode = ref.watch(offlineModeProvider);
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: .start,
-          children: [
-            const SizedBox(height: 48),
-            Stack(
-              children: [
-                const LogoHeader(),
-                Positioned(
-                  top: 0,
-                  right: 16,
-                  child: IconButton(
-                    tooltip: l10n.logs,
-                    onPressed: () {
-                      context.push(AppRoute.logs.path);
-                    },
-                    icon: const Icon(Icons.bug_report),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: .start,
+            children: [
+              Stack(
+                children: [
+                  const LogoHeader(),
+                  Positioned(
+                    top: 0,
+                    right: 16,
+                    child: IconButton(
+                      tooltip: l10n.logs,
+                      onPressed: () {
+                        context.push(AppRoute.logs.path);
+                      },
+                      icon: const Icon(Icons.bug_report),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SwitchListTile(
-              title: Text(l10n.offlineMode),
-              secondary: const Icon(Icons.wifi_off),
-              value: offlineMode,
-              onChanged: (v) =>
-                  ref.read(userSettingsProvider.notifier).setOfflineMode(v),
-            ),
-            if (remainingTargets.isNotEmpty) ...[
-              const Divider(),
-              ...remainingTargets.map((target) {
-                return ListTile(
-                  onTap: () {
-                    context.push(target.item.route.path);
-                  },
-                  leading: Icon(target.item.selectedIcon),
-                  title: Text(target.label),
-                );
-              }),
-            ],
-            const Divider(),
-            ListTile(
-              onTap: () => context.push(AppRoute.playbackHistory.path),
-              leading: const Icon(Icons.history),
-              title: Text(l10n.playbackHistory),
-            ),
-            if (hasUnsyncedSessions)
-              ListTile(
-                onTap: () => context.push(AppRoute.localSessions.path),
-                leading: const Icon(Icons.sync_disabled),
-                title: Text(l10n.unsyncedSessions),
+                ],
               ),
-            ListTile(
-              onTap: () => context.push(AppRoute.stats.path),
-              leading: const Icon(Icons.query_stats),
-              title: Text(l10n.stats),
-            ),
-            const AdminTile(),
-            const Divider(),
-            ListTile(
-              onTap: () => context.push(AppRoute.settings.path),
-              leading: const Icon(Icons.settings),
-              title: Text(l10n.settings),
-            ),
-            const ChangelogTile(),
-            const AboutTile(),
-          ],
+              SwitchListTile(
+                title: Text(l10n.offlineMode),
+                secondary: const Icon(Icons.wifi_off),
+                value: offlineMode,
+                onChanged: (v) =>
+                    ref.read(userSettingsProvider.notifier).setOfflineMode(v),
+              ),
+              if (remainingTargets.isNotEmpty) ...[
+                const Divider(),
+                ...remainingTargets.map((target) {
+                  return ListTile(
+                    onTap: () {
+                      context.push(target.item.route.path);
+                    },
+                    leading: Icon(target.item.selectedIcon),
+                    title: Text(target.label),
+                  );
+                }),
+              ],
+              const Divider(),
+              ListTile(
+                onTap: () => context.push(AppRoute.playbackHistory.path),
+                leading: const Icon(Icons.history),
+                title: Text(l10n.playbackHistory),
+              ),
+              if (hasUnsyncedSessions)
+                ListTile(
+                  onTap: () => context.push(AppRoute.localSessions.path),
+                  leading: const Icon(Icons.sync_disabled),
+                  title: Text(l10n.unsyncedSessions),
+                ),
+              ListTile(
+                onTap: () => context.push(AppRoute.stats.path),
+                leading: const Icon(Icons.query_stats),
+                title: Text(l10n.stats),
+              ),
+              const AdminTile(),
+              const Divider(),
+              ListTile(
+                onTap: () => context.push(AppRoute.settings.path),
+                leading: const Icon(Icons.settings),
+                title: Text(l10n.settings),
+              ),
+              const ChangelogTile(),
+              const AboutTile(),
+            ],
+          ),
         ),
       ),
     );

@@ -141,6 +141,9 @@ _UserSettings _$UserSettingsFromJson(
   showChapterProgressSlider:
       json['showChapterProgressSlider'] as bool? ??
       DefaultUserSettings.showChapterProgressSlider,
+  showCoverInFullPlayer:
+      json['showCoverInFullPlayer'] as bool? ??
+      DefaultUserSettings.showCoverInFullPlayer,
   scaleTimeBySpeed:
       json['scaleTimeBySpeed'] as bool? ?? DefaultUserSettings.scaleTimeBySpeed,
   osNotificationCanSeek:
@@ -276,6 +279,15 @@ _UserSettings _$UserSettingsFromJson(
       json['defaultDownloadsLocationPodcasts'] as String?,
   useWavySlider:
       json['useWavySlider'] as bool? ?? DefaultUserSettings.useWavySlider,
+  isEqualizerEnabled:
+      json['isEqualizerEnabled'] as bool? ??
+      DefaultUserSettings.isEqualizerEnabled,
+  equalizerPresetId:
+      json['equalizerPresetId'] as String? ??
+      DefaultUserSettings.equalizerPresetId,
+  loudnessGainDb:
+      (json['loudnessGainDb'] as num?)?.toDouble() ??
+      DefaultUserSettings.loudnessGainDb,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -330,6 +342,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'playbackControlsLayout':
       _$PlaybackControlsLayoutEnumMap[instance.playbackControlsLayout]!,
   'showChapterProgressSlider': instance.showChapterProgressSlider,
+  'showCoverInFullPlayer': instance.showCoverInFullPlayer,
   'scaleTimeBySpeed': instance.scaleTimeBySpeed,
   'osNotificationCanSeek': instance.osNotificationCanSeek,
   'osNotificationCanSkip': instance.osNotificationCanSkip,
@@ -379,6 +392,9 @@ Map<String, dynamic> _$UserSettingsToJson(
   'defaultDownloadsLocationPodcasts':
       ?instance.defaultDownloadsLocationPodcasts,
   'useWavySlider': instance.useWavySlider,
+  'isEqualizerEnabled': instance.isEqualizerEnabled,
+  'equalizerPresetId': instance.equalizerPresetId,
+  'loudnessGainDb': instance.loudnessGainDb,
 };
 
 const _$NavTargetEnumMap = {
@@ -466,6 +482,7 @@ const _$FullPlayerActionsEnumMap = {
   FullPlayerActions.speed: 'speed',
   FullPlayerActions.volume: 'volume',
   FullPlayerActions.bookmarks: 'bookmarks',
+  FullPlayerActions.equalizer: 'equalizer',
   FullPlayerActions.queue: 'queue',
 };
 

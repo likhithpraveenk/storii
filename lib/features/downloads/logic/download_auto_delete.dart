@@ -29,7 +29,7 @@ class DownloadAutoDelete {
   }) : _now = now ?? DateTime.now,
        _timerFactory = timerFactory ?? Timer.new;
 
-  final Map<String, DownloadItem> Function() readDownloads;
+  final Future<Map<String, DownloadItem>> Function() readDownloads;
   final Future<Map<String, MediaProgress>> Function() readProgress;
   final Duration Function() readDeleteDelay;
   final Future<void> Function(DownloadItem item) delete;
@@ -70,7 +70,7 @@ class DownloadAutoDelete {
 
   Future<void> sweep() async {
     if (!isEnabled()) return;
-    final downloads = readDownloads();
+    final downloads = await readDownloads();
     final progressMap = await readProgress();
     final delay = readDeleteDelay();
     final exclusions = readExcluded();
@@ -114,7 +114,7 @@ class DownloadAutoDelete {
   Future<void> _scheduleSweep() async {
     _cancelTimer();
     if (!isEnabled()) return;
-    final downloads = readDownloads();
+    final downloads = await readDownloads();
     final delay = readDeleteDelay();
     final exclusions = readExcluded();
     final progressMap = await readProgress();
@@ -184,7 +184,7 @@ class DownloadAutoDeleteWatcher extends _$DownloadAutoDeleteWatcher {
       final map = next.value;
       if (map == null) return;
       final prevMap = prev?.value ?? const {};
-      final downloads = ref.read(downloadsStoreProvider).getAll();
+      final downloads = ref.read(downloadsProvider).value ?? const {};
       final becameFinished = downloads.values.any(
         (item) =>
             item.status == .completed &&
