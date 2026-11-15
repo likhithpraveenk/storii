@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'daa3d9972a21ec504d4213d6e38c3e70d5230e27';
+    r'33be4872d8d4c6a84953e54a6bbc751c8ec407b7';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -490,6 +490,9 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setEqualizerPresetId(String value) =>
       _save(state?.copyWith(equalizerPresetId: value));
+
+  Future<void> setLoudnessGainDb(double value) =>
+      _save(state?.copyWith(loudnessGainDb: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -1280,4 +1283,13 @@ final equalizerPresetIdProvider = Provider<String>(
     ),
   ),
   name: 'equalizerPresetIdProvider',
+);
+
+final loudnessGainDbProvider = Provider<double>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.loudnessGainDb ?? DefaultUserSettings.loudnessGainDb,
+    ),
+  ),
+  name: 'loudnessGainDbProvider',
 );

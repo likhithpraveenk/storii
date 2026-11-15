@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 - 10-band equalizer with default/custom presets
 - advanced app data manager
+- loudness boost audio effect
 
 ### Fixed
 

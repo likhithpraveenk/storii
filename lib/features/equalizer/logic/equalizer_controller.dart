@@ -22,12 +22,15 @@ class EqualizerController extends _$EqualizerController {
   EqualizerDraft build() {
     final preset = ref.watch(currentEqualizerPresetProvider);
     Future.microtask(() => _apply(enabled: _isEnabled, bands: preset.bands));
+    Future.microtask(_applyLoudness);
     ref.listen(isEqualizerEnabledProvider, (_, enabled) {
       _apply(enabled: enabled, bands: state.bands);
     });
+    ref.listen(loudnessGainDbProvider, (_, _) => _applyLoudness());
     ref.listen(playbackStatusProvider, (_, next) {
       if (next.value == .ready) {
         _apply(enabled: _isEnabled, bands: preset.bands);
+        _applyLoudness();
       }
     });
 
@@ -88,6 +91,13 @@ class EqualizerController extends _$EqualizerController {
     final service = ref.read(equalizerServiceProvider);
     if (!service.supported) return;
     service.apply(enabled: enabled, bands: bands);
+  }
+
+  void _applyLoudness() {
+    final service = ref.read(equalizerServiceProvider);
+    if (!service.supported) return;
+    final db = ref.read(loudnessGainDbProvider);
+    service.setLoudness(db);
   }
 
   String _nextForkName() => '${l10n.custom} (${_store.getAll().length + 1})';

@@ -6,6 +6,7 @@ import 'package:storii/features/equalizer/logic/equalizer_presets.dart';
 import 'package:storii/features/equalizer/logic/equalizer_service.dart';
 import 'package:storii/features/equalizer/ui/equalizer_bands.dart';
 import 'package:storii/features/equalizer/ui/equalizer_preset_chips.dart';
+import 'package:storii/features/settings/ui/setting_slider.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 
@@ -118,6 +119,7 @@ class _EqualizerSheetBody extends ConsumerWidget {
               ],
             ),
             if (supported) ...const [
+              _LoudnessSlider(),
               EqualizerPresetChips(),
               SizedBox(height: 8),
               EqualizerBands(),
@@ -129,6 +131,29 @@ class _EqualizerSheetBody extends ConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _LoudnessSlider extends ConsumerWidget {
+  const new();
+
+  String _label(double v) => '${v.round()} dB';
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final value = ref.watch(loudnessGainDbProvider);
+    return SettingSlider(
+      title: l10n.loudnessBoost,
+      value: value,
+      trailing: _label(value),
+      padding: const .fromLTRB(16, 0, 16, 8),
+      labelBuilder: _label,
+      min: -15,
+      max: 15,
+      divisions: 30,
+      onChangeEnd: (v) =>
+          ref.read(userSettingsProvider.notifier).setLoudnessGainDb(v),
     );
   }
 }

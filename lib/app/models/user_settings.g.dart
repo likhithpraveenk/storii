@@ -282,6 +282,9 @@ _UserSettings _$UserSettingsFromJson(
   equalizerPresetId:
       json['equalizerPresetId'] as String? ??
       DefaultUserSettings.equalizerPresetId,
+  loudnessGainDb:
+      (json['loudnessGainDb'] as num?)?.toDouble() ??
+      DefaultUserSettings.loudnessGainDb,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -387,6 +390,7 @@ Map<String, dynamic> _$UserSettingsToJson(
   'useWavySlider': instance.useWavySlider,
   'isEqualizerEnabled': instance.isEqualizerEnabled,
   'equalizerPresetId': instance.equalizerPresetId,
+  'loudnessGainDb': instance.loudnessGainDb,
 };
 
 const _$NavTargetEnumMap = {

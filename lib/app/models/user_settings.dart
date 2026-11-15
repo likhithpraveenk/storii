@@ -92,6 +92,7 @@ class DefaultUserSettings {
   static const bool useWavySlider = false;
   static const isEqualizerEnabled = false;
   static const equalizerPresetId = 'flat';
+  static const loudnessGainDb = 0.0;
 }
 
 @freezed
@@ -303,6 +304,8 @@ sealed class UserSettings with _$UserSettings {
     @Default(DefaultUserSettings.isEqualizerEnabled) bool isEqualizerEnabled,
 
     @Default(DefaultUserSettings.equalizerPresetId) String equalizerPresetId,
+
+    @Default(DefaultUserSettings.loudnessGainDb) double loudnessGainDb,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);

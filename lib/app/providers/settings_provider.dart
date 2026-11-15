@@ -157,6 +157,7 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
         useWavySlider: DefaultUserSettings.useWavySlider,
         isEqualizerEnabled: DefaultUserSettings.isEqualizerEnabled,
         equalizerPresetId: DefaultUserSettings.equalizerPresetId,
+        loudnessGainDb: DefaultUserSettings.loudnessGainDb,
       ),
     );
   }

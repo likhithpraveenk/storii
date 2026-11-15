@@ -12,19 +12,22 @@ const _source = 'Equalizer';
 const _parameterTimeout = Duration(seconds: 5);
 
 class EqualizerService {
-  new _({this._equalizer, this.pipeline});
+  new _({this._equalizer, this._loudness, this.pipeline});
 
   factory create({bool? isAndroid}) {
     if (!(isAndroid ?? Platform.isAndroid)) return EqualizerService._();
     final equalizer = AndroidEqualizer();
+    final loudness = AndroidLoudnessEnhancer();
     return EqualizerService._(
       equalizer: equalizer,
-      pipeline: AudioPipeline(androidAudioEffects: [equalizer]),
+      loudness: loudness,
+      pipeline: AudioPipeline(androidAudioEffects: [equalizer, loudness]),
     );
   }
 
   final AudioPipeline? pipeline;
   final AndroidEqualizer? _equalizer;
+  final AndroidLoudnessEnhancer? _loudness;
 
   EqualizerParameters? _parameters;
   List<AndroidEqualizerBand>? _deviceBands;
@@ -68,11 +71,33 @@ class EqualizerService {
     await _toggle(equalizer, enabled: true);
   }
 
+  Future<void> setLoudness(double db) async {
+    final loudness = _loudness;
+    if (loudness == null || _disposed) return;
+    final gain = db.clamp(-15.0, 15.0);
+    try {
+      await loudness.setEnabled(true);
+      await loudness.setTargetGain(gain);
+    } catch (e, st) {
+      LogService.log(
+        'failed to set loudness: $e',
+        source: _source,
+        stackTrace: st,
+      );
+    }
+  }
+
   Future<void> dispose() async {
     _disposed = true;
     final equalizer = _equalizer;
     if (equalizer != null) {
       await _toggle(equalizer, enabled: false);
+    }
+    final loudness = _loudness;
+    if (loudness != null) {
+      try {
+        await loudness.setEnabled(false);
+      } catch (_) {}
     }
   }
 
