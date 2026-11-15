@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/logs/log_service.dart';
@@ -43,7 +45,7 @@ class SessionsCleanup {
 
         if (session.playMethod == .local) {
           await repo.syncLocal(localSession: session.stripped);
-          progressStore.put(session.toMediaProgress());
+          unawaited(progressStore.put(session.toMediaProgress()));
         } else {
           await repo.syncSession(
             sessionId: session.id,

@@ -63,7 +63,7 @@ Future<void> setupHive() async {
   await Hive.openLazyBox<List<dynamic>>(playbackHistoryBoxName);
   await Hive.openLazyBox<String>(downloadsBoxName);
   await Hive.openBox<double>(speedsBoxName);
-  await Hive.openBox<String>(userMediaProgressBoxName);
+  await Hive.openLazyBox<String>(userMediaProgressBoxName);
   await Hive.openBox<String>(serverSettingsBoxName);
   await Hive.openBox<String>(playbackQueueBoxName);
   await Hive.openLazyBox<String>(logsBoxName);

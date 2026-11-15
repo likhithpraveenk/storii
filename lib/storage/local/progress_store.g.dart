@@ -86,11 +86,19 @@ final class ProgressStoreFamily extends $Family
   String toString() => r'progressStoreProvider';
 }
 
-@ProviderFor(ProgressMap)
+@ProviderFor(progressMap)
 final progressMapProvider = ProgressMapFamily._();
 
 final class ProgressMapProvider
-    extends $StreamNotifierProvider<ProgressMap, Map<String, MediaProgress>> {
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, MediaProgress>>,
+          Map<String, MediaProgress>,
+          Stream<Map<String, MediaProgress>>
+        >
+    with
+        $FutureModifier<Map<String, MediaProgress>>,
+        $StreamProvider<Map<String, MediaProgress>> {
   ProgressMapProvider._({
     required ProgressMapFamily super.from,
     required String super.argument,
@@ -114,7 +122,15 @@ final class ProgressMapProvider
 
   @$internal
   @override
-  ProgressMap create() => ProgressMap();
+  $StreamProviderElement<Map<String, MediaProgress>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<Map<String, MediaProgress>> create(Ref ref) {
+    final argument = this.argument as String;
+    return progressMap(ref, argument);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -127,17 +143,10 @@ final class ProgressMapProvider
   }
 }
 
-String _$progressMapHash() => r'a98b3d52ca0b884236147bfed1c7c4ab67ea33e3';
+String _$progressMapHash() => r'52b8d608e55b7ddad72848c68544304ef17c1c59';
 
 final class ProgressMapFamily extends $Family
-    with
-        $ClassFamilyOverride<
-          ProgressMap,
-          AsyncValue<Map<String, MediaProgress>>,
-          Map<String, MediaProgress>,
-          Stream<Map<String, MediaProgress>>,
-          String
-        > {
+    with $FunctionalFamilyOverride<Stream<Map<String, MediaProgress>>, String> {
   ProgressMapFamily._()
     : super(
         retry: null,
@@ -152,34 +161,4 @@ final class ProgressMapFamily extends $Family
 
   @override
   String toString() => r'progressMapProvider';
-}
-
-abstract class _$ProgressMap
-    extends $StreamNotifier<Map<String, MediaProgress>> {
-  late final _$args = ref.$arg as String;
-  String get userId => _$args;
-
-  Stream<Map<String, MediaProgress>> build(String userId);
-  @$mustCallSuper
-  @override
-  WhenComplete runBuild() {
-    final ref =
-        this.ref
-            as $Ref<
-              AsyncValue<Map<String, MediaProgress>>,
-              Map<String, MediaProgress>
-            >;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<
-                AsyncValue<Map<String, MediaProgress>>,
-                Map<String, MediaProgress>
-              >,
-              AsyncValue<Map<String, MediaProgress>>,
-              Object?,
-              Object?
-            >;
-    return element.handleCreate(ref, () => build(_$args));
-  }
 }

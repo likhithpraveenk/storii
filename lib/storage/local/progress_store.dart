@@ -35,7 +35,7 @@ String? _splitKey(dynamic key, String userId) {
   return key.substring(index + 1);
 }
 
-Box<String> get _box => Hive.box(userMediaProgressBoxName);
+LazyBox<String> get _box => Hive.lazyBox(userMediaProgressBoxName);
 
 class ProgressStore {
   const new({required this.userId});
@@ -45,13 +45,12 @@ class ProgressStore {
   String _key(String id, String? episodeId) =>
       '$userId:${mediaItemIdKey(id, episodeId)}';
 
-  Map<String, MediaProgress> getAll() {
-    final entries = _box.toMap().entries;
+  Future<Map<String, MediaProgress>> getAll() async {
     final items = <String, MediaProgress>{};
-    for (final entry in entries) {
-      final mapKey = _splitKey(entry.key, userId);
+    for (final key in _box.keys) {
+      final mapKey = _splitKey(key, userId);
       if (mapKey == null) continue;
-      final item = _decode(entry.value);
+      final item = _decode(await _box.get(key));
       if (item != null) {
         items[mediaItemIdKey(item.libraryItemId, item.episodeId)] = item;
       }
@@ -59,14 +58,14 @@ class ProgressStore {
     return items;
   }
 
-  void put(MediaProgress progress) {
-    _box.put(
+  Future<void> put(MediaProgress progress) async {
+    await _box.put(
       _key(progress.libraryItemId, progress.episodeId),
       jsonEncode(progress),
     );
   }
 
-  void putAll(List<MediaProgress> list) {
+  Future<void> putAll(List<MediaProgress> list) async {
     final entries = <String, String>{
       for (final p in list) _key(p.libraryItemId, p.episodeId): jsonEncode(p),
     };
@@ -76,9 +75,8 @@ class ProgressStore {
         .toList();
 
     try {
-      _box
-        ..deleteAll(keysToDelete)
-        ..putAll(entries);
+      await _box.deleteAll(keysToDelete);
+      await _box.putAll(entries);
     } catch (e) {
       LogService.log(
         'Failed to sync media progress',
@@ -87,18 +85,10 @@ class ProgressStore {
       );
     }
   }
-}
 
-@riverpod
-ProgressStore progressStore(Ref ref, String userId) =>
-    ProgressStore(userId: userId);
-
-@riverpod
-class ProgressMap extends _$ProgressMap {
-  @override
-  Stream<Map<String, MediaProgress>> build(String userId) {
-    final map = ref.read(progressStoreProvider(userId)).getAll();
-    return _box
+  Stream<Map<String, MediaProgress>> watch() async* {
+    final map = await getAll();
+    yield* _box
         .watch()
         .map((e) {
           final mapKey = _splitKey(e.key, userId);
@@ -116,3 +106,11 @@ class ProgressMap extends _$ProgressMap {
         .startWith(Map<String, MediaProgress>.from(map));
   }
 }
+
+@riverpod
+ProgressStore progressStore(Ref ref, String userId) =>
+    ProgressStore(userId: userId);
+
+@riverpod
+Stream<Map<String, MediaProgress>> progressMap(Ref ref, String userId) =>
+    ref.watch(progressStoreProvider(userId)).watch();
