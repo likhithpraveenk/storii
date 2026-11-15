@@ -10,6 +10,7 @@ Storii is a modern, feature-rich client for <a href="https://github.com/advplyr/
 <li>Advanced library browsing with filters, sorting, and series grouping</li>
 <li>Search across books, series, authors, narrators, tags, and genres</li>
 <li>Customizable player: sleep timer, speed control, seek buttons, chapter navigation, listening history, bookmarks, OS notification controls, and configurable skip-back after interruptions</li>
+<li>Equalizer: 10-bands with default/custom presets, loudness boost</li>
 <li>Playback queue: supporting collections &amp; playlists</li>
 <li>Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling</li>
 <li>Navigation customization: reorder tabs, choose startup screen, label behavior</li>

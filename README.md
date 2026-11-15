@@ -38,6 +38,7 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 - Advanced library browsing with filters, sorting, and series grouping
 - Search across books, series, authors, narrators, tags, and genres
 - Customizable player: sleep timer, speed control, seek buttons, chapter navigation, listening history, bookmarks, OS notification controls, and configurable skip-back after interruptions
+- Equalizer: 10-bands with default/custom presets, loudness boost
 - Playback queue: supporting collections & playlists
 - Appearance settings: system/light/dark themes, dynamic colors, pure black mode, custom fonts, font scaling
 - Navigation customization: reorder tabs, choose startup screen, label behavior
@@ -79,7 +80,7 @@ A Flutter client for <a href="https://github.com/advplyr/audiobookshelf">Audiobo
 | Dynamic colors (Material You)         |   ✅   |        ❌        |
 | Navigation customization              |   ✅   |        ❌        |
 | Collections / Playlists               |   ✅   |        ✅        |
-| Equalizer                             |   💡   |        ❓        |
+| Equalizer                             |   ✅   |        ❓        |
 | Server management / admin             |   ⚠️   |        ❌        |
 | eBook reader                          |   💡   |        ✅        |
 | Chromecast                            |   💡   |        ✅        |
