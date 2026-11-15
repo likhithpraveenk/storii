@@ -43,6 +43,7 @@ _AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => _AppSettings(
           ?.map((e) => StorageLocation.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const [defaultInternalAudiobooks, defaultInternalPodcasts],
+  downloadedItemsMigrated: json['downloadedItemsMigrated'] as bool? ?? false,
   lastVersion: json['lastVersion'] as String?,
 );
 
@@ -62,6 +63,7 @@ Map<String, dynamic> _$AppSettingsToJson(
   'syncIntervalMetered': instance.syncIntervalMetered.inMicroseconds,
   'trustAllCertificates': instance.trustAllCertificates,
   'storageLocations': instance.storageLocations.map((e) => e.toJson()).toList(),
+  'downloadedItemsMigrated': instance.downloadedItemsMigrated,
   'lastVersion': ?instance.lastVersion,
 };
 

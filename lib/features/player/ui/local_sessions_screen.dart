@@ -10,7 +10,7 @@ import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/marquee_text.dart';
-import 'package:storii/storage/local/items_cache.dart';
+import 'package:storii/storage/local/downloaded_items_store.dart';
 import 'package:storii/storage/local/session_store.dart';
 
 class LocalSessionsScreen extends ConsumerStatefulWidget {
@@ -78,7 +78,7 @@ class _SessionRow extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     final scheme = Theme.of(context).colorScheme;
     final activeSessionId = ref.watch(sessionProvider)?.id;
-    final item = ref.watch(cachedItemProvider(session.libraryItemId)).value;
+    final item = ref.watch(downloadedItemProvider(session.libraryItemId)).value;
 
     final isActive = activeSessionId != null && activeSessionId == session.id;
     final isLessThanMin = session.timeListening.inSeconds < 60;

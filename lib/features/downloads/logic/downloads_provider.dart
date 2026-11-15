@@ -7,8 +7,8 @@ import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/storage/local/downloaded_items_store.dart';
 import 'package:storii/storage/local/downloads_store.dart';
-import 'package:storii/storage/local/items_cache.dart';
 import 'package:storii/storage/local/session_store.dart';
 
 part 'downloads_provider.g.dart';
@@ -114,10 +114,10 @@ Future<List<DownloadItem>> _filterDownloads(
   List<DownloadItem> items,
   String query,
 ) async {
-  final cache = ref.read(itemsCacheProvider);
+  final store = ref.read(downloadedItemsStoreProvider);
   final result = <DownloadItem>[];
   for (final item in items) {
-    final cached = await cache.get(item.libraryItemId);
+    final cached = await store.get(item.libraryItemId);
     final title = cached?.title ?? item.title;
     final author = cached?.authorName ?? item.author;
     if (title.toLowerCase().contains(query) ||
@@ -134,7 +134,7 @@ Future<List<DownloadItem>> _sortDownloads(
   DownloadSort sort,
   bool ascending,
 ) async {
-  final cache = ref.read(itemsCacheProvider);
+  final store = ref.read(downloadedItemsStoreProvider);
   final settings = ref.watch(currentServerSettingsProvider);
   final prefixes = settings?.sortingIgnorePrefix == true
       ? settings?.sortingPrefixes ?? <String>[]
@@ -145,7 +145,7 @@ Future<List<DownloadItem>> _sortDownloads(
 
   for (final item in items) {
     if (!titles.containsKey(item.libraryItemId)) {
-      final cached = await cache.get(item.libraryItemId);
+      final cached = await store.get(item.libraryItemId);
       titles[item.libraryItemId] = cached?.title ?? item.title;
       authors[item.libraryItemId] = cached?.authorName ?? item.author;
     }
@@ -212,13 +212,13 @@ DateTime _lastListenedTime(Ref ref, DownloadItem item) {
 @riverpod
 Future<List<LibraryItem>> downloadedItems(Ref ref) async {
   final items = await ref.watch(sortedCompletedDownloadsProvider.future);
-  final cache = ref.watch(itemsCacheProvider);
+  final store = ref.read(downloadedItemsStoreProvider);
 
   final libraryItems = <LibraryItem>[];
   final seen = <String>{};
   for (final item in items) {
     if (!seen.add(item.libraryItemId)) continue;
-    final libraryItem = await cache.get(item.libraryItemId);
+    final libraryItem = await store.get(item.libraryItemId);
     if (libraryItem == null) continue;
     libraryItems.add(libraryItem);
   }

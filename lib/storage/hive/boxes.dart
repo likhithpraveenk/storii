@@ -13,11 +13,13 @@ const appSettingsBoxName = 'app_settings_box';
 const userSettingsBoxName = 'user_settings_box';
 const usersBoxName = 'users_box';
 const serversBoxName = 'servers_box';
+// TODO: deprecated item cache, remove after downloaded items migration
 const itemsBoxName = 'items_box';
 const localSessionsBoxName = 'local_sessions_box';
 const userMediaProgressBoxName = 'user_media_progress_box_v2';
 const playbackHistoryBoxName = 'playback_history_box';
 const downloadsBoxName = 'downloads_box';
+const downloadedItemsBoxName = 'downloaded_items_box';
 const speedsBoxName = 'speeds_box';
 const serverSettingsBoxName = 'server_settings_box';
 const playbackQueueBoxName = 'playback_queue_box_1';
@@ -36,6 +38,7 @@ final _knownNames = [
   userMediaProgressBoxName,
   playbackHistoryBoxName,
   downloadsBoxName,
+  downloadedItemsBoxName,
   speedsBoxName,
   serverSettingsBoxName,
   playbackQueueBoxName,
@@ -62,6 +65,7 @@ Future<void> setupHive() async {
   await Hive.openBox<String>(localSessionsBoxName);
   await Hive.openLazyBox<List<dynamic>>(playbackHistoryBoxName);
   await Hive.openLazyBox<String>(downloadsBoxName);
+  await Hive.openLazyBox<String>(downloadedItemsBoxName);
   await Hive.openBox<double>(speedsBoxName);
   await Hive.openLazyBox<String>(userMediaProgressBoxName);
   await Hive.openBox<String>(serverSettingsBoxName);

@@ -12,7 +12,7 @@ import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
-import 'package:storii/storage/local/items_cache.dart';
+import 'package:storii/storage/local/downloaded_items_store.dart';
 
 class PlaybackHistoryScreen extends ConsumerStatefulWidget {
   const new({super.key});
@@ -109,7 +109,7 @@ class _HistoryRow extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
 
     final String? title;
-    final item = ref.watch(cachedItemProvider(entry.itemId)).value;
+    final item = ref.watch(downloadedItemProvider(entry.itemId)).value;
     if (entry.episodeId != null) {
       final episode = item?.episodes.firstWhereOrNull(
         (e) => e.id == entry.episodeId,

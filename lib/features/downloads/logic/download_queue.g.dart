@@ -33,7 +33,7 @@ final class DownloadQueueProvider
   DownloadQueue create() => DownloadQueue();
 }
 
-String _$downloadQueueHash() => r'ad6c582e2dc503c7e802f87316a7a2d75cbcacc0';
+String _$downloadQueueHash() => r'5c7667df21fbfa81df22554d20e24ac764c0718b';
 
 abstract class _$DownloadQueue extends $AsyncNotifier<List<String>> {
   FutureOr<List<String>> build();

@@ -16,8 +16,8 @@ import 'package:storii/features/item/logic/item_detail_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
 import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/storage/local/downloaded_items_store.dart';
 import 'package:storii/storage/local/downloads_store.dart';
-import 'package:storii/storage/local/items_cache.dart';
 
 part 'download_queue.g.dart';
 
@@ -60,7 +60,7 @@ class DownloadQueue extends _$DownloadQueue {
     if (existing != null && existing.isActive) return;
     try {
       final item = await ref.read(itemDetailProvider(libraryItemId).future);
-      await ref.read(itemsCacheProvider).put(item);
+      await ref.read(downloadedItemsStoreProvider).put(item);
 
       final user = ref.read(currentUserProvider);
       if (user == null) throw StateError('No current user');
@@ -196,7 +196,7 @@ class DownloadQueue extends _$DownloadQueue {
       );
     } else {
       await service.deleteFolder(relativePath: item.relativePath);
-      await ref.read(itemsCacheProvider).delete(item.libraryItemId);
+      await ref.read(downloadedItemsStoreProvider).delete(item.libraryItemId);
     }
 
     unawaited(service.cleanupEmptyFolders());

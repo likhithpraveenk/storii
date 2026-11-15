@@ -15,8 +15,8 @@ import 'package:storii/features/downloads/logic/storage_service.dart';
 import 'package:storii/features/downloads/logic/storage_service_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
 import 'package:storii/features/item/logic/item_detail_provider.dart';
+import 'package:storii/storage/local/downloaded_items_store.dart';
 import 'package:storii/storage/local/downloads_store.dart';
-import 'package:storii/storage/local/items_cache.dart';
 
 import '../../../fakes/fake_download_transport.dart';
 import '../../../fakes/fake_notifications.dart';
@@ -188,7 +188,9 @@ ProviderContainer _container({
   return ProviderContainer(
     overrides: [
       downloadsStoreProvider.overrideWithValue(store),
-      itemsCacheProvider.overrideWithValue(FakeItemsCache()),
+      downloadedItemsStoreProvider.overrideWithValue(
+        FakeDownloadedItemsStore(),
+      ),
       storageServiceProvider(_location)
           .overrideWithValue(_FakeStorageService(_location)),
       itemDetailProvider('item-1').overrideWith(_FakeItemDetail.new),
@@ -331,7 +333,9 @@ void main() {
         final container = ProviderContainer(
           overrides: [
             downloadsStoreProvider.overrideWithValue(FakeDownloadsStore()),
-            itemsCacheProvider.overrideWithValue(FakeItemsCache()),
+            downloadedItemsStoreProvider.overrideWithValue(
+              FakeDownloadedItemsStore(),
+            ),
             storageServiceProvider(_location)
                 .overrideWithValue(_FakeStorageService(_location)),
             itemDetailProvider('item-1').overrideWith(_FakeItemDetail.new),
@@ -371,7 +375,9 @@ void main() {
         final container = ProviderContainer(
           overrides: [
             downloadsStoreProvider.overrideWithValue(FakeDownloadsStore()),
-            itemsCacheProvider.overrideWithValue(FakeItemsCache()),
+            downloadedItemsStoreProvider.overrideWithValue(
+              FakeDownloadedItemsStore(),
+            ),
             storageServiceProvider(_location)
                 .overrideWithValue(_FakeStorageService(_location)),
             itemDetailProvider('item-1').overrideWith(_FakeItemDetail.new),

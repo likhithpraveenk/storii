@@ -20,7 +20,7 @@ final class AppControllerProvider extends $FunctionalProvider<void, void, void>
         argument: null,
         retry: null,
         name: r'appControllerProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -47,4 +47,4 @@ final class AppControllerProvider extends $FunctionalProvider<void, void, void>
   }
 }
 
-String _$appControllerHash() => r'cc5ccb42534764b4f75eacefd92c562a6502c2dc';
+String _$appControllerHash() => r'68b70bf2389ee0230f393af32e5c93e9add0527e';

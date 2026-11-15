@@ -2,6 +2,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/app/providers/deep_link_controller.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/downloads/logic/download_auto_delete.dart';
+import 'package:storii/features/downloads/logic/download_queue.dart';
+import 'package:storii/features/downloads/logic/downloaded_items_migration.dart';
 import 'package:storii/features/equalizer/logic/equalizer_controller.dart';
 import 'package:storii/features/library/logic/active_library_provider.dart';
 import 'package:storii/features/more/logic/changelog_provider.dart';
@@ -15,9 +17,11 @@ import 'package:storii/features/widget/logic/widget_play_controller.dart';
 
 part 'app_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 void appController(Ref ref) {
   ref
+    ..watch(downloadedItemsMigrationProvider)
+    ..watch(downloadQueueProvider)
     ..watch(widgetControllerProvider)
     ..watch(widgetPlayControllerProvider)
     ..watch(deepLinkControllerProvider)
