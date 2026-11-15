@@ -60,7 +60,6 @@ class ScreenOptionsButton extends StatelessWidget {
             maxChildSize: 0.95,
             minChildSize: 0.4,
             shouldCloseOnMinExtent: false,
-            snap: true,
             expand: false,
             builder: (context, controller) {
               return DecoratedBox(

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/equalizer/logic/equalizer_presets.dart';
@@ -15,6 +16,9 @@ Future<void> openEqualizerSheet(BuildContext context) {
     context: context,
     showDragHandle: false,
     isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: .vertical(top: .circular(kRadiusXl)),
+    ),
     builder: (_) => const _EqualizerSheetBody(),
   );
 }
