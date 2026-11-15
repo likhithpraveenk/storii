@@ -19,7 +19,13 @@ Future<void> openEqualizerSheet(BuildContext context) {
     shape: const RoundedRectangleBorder(
       borderRadius: .vertical(top: .circular(kRadiusXl)),
     ),
-    builder: (_) => const _EqualizerSheetBody(),
+    useSafeArea: true,
+    builder: (_) => DraggableScrollableSheet(
+      minChildSize: 0.4,
+      shouldCloseOnMinExtent: false,
+      expand: false,
+      builder: (_, controller) => _EqualizerSheetBody(controller),
+    ),
   );
 }
 
@@ -70,7 +76,9 @@ class EqualizerSubtitle extends ConsumerWidget {
 }
 
 class _EqualizerSheetBody extends ConsumerWidget {
-  const new();
+  const new(this.controller);
+
+  final ScrollController controller;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -79,6 +87,7 @@ class _EqualizerSheetBody extends ConsumerWidget {
       decoration: bottomSheetDecoration(context),
       child: SingleChildScrollView(
         padding: MediaQuery.viewInsetsOf(context).add(const .only(bottom: 48)),
+        controller: controller,
         child: Column(
           mainAxisSize: .min,
           children: [
