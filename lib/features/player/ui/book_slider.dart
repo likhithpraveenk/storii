@@ -90,7 +90,7 @@ class _BookSliderState extends ConsumerState<BookSlider>
       .remaining => '$kMinus${scaledRemaining.toTime()}',
     };
 
-    Widget buildSlider(SliderTrackShape? shape) => AppSlider(
+    Widget buildSlider(SliderTrackShape? shape) => AppSliderWithCancel(
       value: displayPositionMs,
       max: durationMs,
       enableCancel: true,

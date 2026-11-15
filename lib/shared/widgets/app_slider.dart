@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
 
-class AppSlider extends StatefulWidget {
+class AppSliderWithCancel extends StatefulWidget {
   const new({
     super.key,
     required this.value,
@@ -45,10 +45,10 @@ class AppSlider extends StatefulWidget {
   final SliderTrackShape? trackShape;
 
   @override
-  State<AppSlider> createState() => _AppSliderState();
+  State<AppSliderWithCancel> createState() => _AppSliderWithCancelState();
 }
 
-class _AppSliderState extends State<AppSlider> {
+class _AppSliderWithCancelState extends State<AppSliderWithCancel> {
   double? _dragValue;
   double? _initialValue;
   bool _isDragging = false;
@@ -203,6 +203,103 @@ class _AppSliderState extends State<AppSlider> {
               ),
             ),
         ],
+      ),
+    );
+  }
+}
+
+class AppSlider extends StatefulWidget {
+  const new({
+    super.key,
+    required this.value,
+    this.labelBuilder,
+    this.onChanged,
+    this.onChangeStart,
+    this.onChangeEnd,
+    this.min = 0.0,
+    this.max = 1.0,
+    this.divisions,
+    this.padding,
+    this.thumbColor,
+    this.activeTrackColor,
+    this.showValueIndicator = .onDrag,
+    this.trackHeight,
+    this.thumbWidth = 4,
+    this.thumbHeight = 44,
+    this.trackShape,
+  });
+
+  final double value;
+  final String Function(double value)? labelBuilder;
+  final ValueChanged<double>? onChanged;
+  final ValueChanged<double>? onChangeStart;
+  final ValueChanged<double>? onChangeEnd;
+  final double min;
+  final double max;
+  final int? divisions;
+  final EdgeInsetsGeometry? padding;
+  final Color? thumbColor;
+  final Color? activeTrackColor;
+  final ShowValueIndicator showValueIndicator;
+  final double? trackHeight;
+  final double thumbWidth;
+  final double thumbHeight;
+  final SliderTrackShape? trackShape;
+
+  @override
+  State<AppSlider> createState() => _AppSliderState();
+}
+
+class _AppSliderState extends State<AppSlider> {
+  double? _dragValue;
+
+  double get _value =>
+      (_dragValue ?? widget.value).clamp(widget.min, widget.max);
+
+  void _handleChanged(double value) {
+    setState(() => _dragValue = value);
+    widget.onChanged?.call(value);
+  }
+
+  void _handleChangeEnd(double value) {
+    HapticFeedback.selectionClick();
+    widget.onChangeEnd?.call(value);
+    setState(() => _dragValue = null);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final thumbColor = widget.thumbColor ?? theme.colorScheme.primary;
+    final activeTrackColor =
+        widget.activeTrackColor ?? theme.colorScheme.primary;
+
+    return SliderTheme(
+      data: SliderTheme.of(context).copyWith(
+        thumbColor: thumbColor,
+        trackHeight: widget.trackHeight,
+        activeTrackColor: activeTrackColor,
+        year2023: false,
+        trackShape: widget.trackShape,
+        thumbShape: _PillSliderThumbShape(
+          width: widget.thumbWidth,
+          height: widget.thumbHeight,
+        ),
+        thumbSize: WidgetStatePropertyAll<Size?>(
+          Size(widget.thumbWidth, widget.thumbHeight),
+        ),
+      ),
+      child: Slider(
+        value: _value,
+        min: widget.min,
+        max: widget.max,
+        divisions: widget.divisions,
+        label: widget.labelBuilder?.call(_value),
+        onChangeStart: widget.onChangeStart,
+        onChanged: _handleChanged,
+        onChangeEnd: _handleChangeEnd,
+        showValueIndicator: widget.showValueIndicator,
+        padding: widget.padding ?? .zero,
       ),
     );
   }

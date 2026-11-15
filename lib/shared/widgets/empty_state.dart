@@ -64,21 +64,18 @@ class _EmptyStateState extends State<EmptyState> {
           children: [
             Text(_emoji, style: theme.textTheme.displaySmall),
             const SizedBox(height: 16),
-            Text(
-              l10n.emptyMsg,
-              textAlign: .center,
-              style: theme.textTheme.titleMedium,
-            ),
-            if (widget.subtitle != null) ...[
-              const SizedBox(height: 8),
+            if (widget.subtitle == null)
+              Text(
+                l10n.emptyMsg,
+                textAlign: .center,
+                style: theme.textTheme.titleMedium,
+              )
+            else
               Text(
                 widget.subtitle!,
                 textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
+                style: theme.textTheme.titleMedium,
               ),
-            ],
             if (widget.action != null) ...[
               const SizedBox(height: 24),
               widget.action!,
