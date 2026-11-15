@@ -23,6 +23,7 @@ const serverSettingsBoxName = 'server_settings_box';
 const playbackQueueBoxName = 'playback_queue_box_1';
 const logsBoxName = 'logs_box_1';
 const autoDeleteExclusionBoxName = 'auto_delete_exclusion_box';
+const equalizerBoxName = 'equalizer_box';
 
 //* any new hive box should be added to this list
 final _knownNames = [
@@ -40,6 +41,7 @@ final _knownNames = [
   playbackQueueBoxName,
   logsBoxName,
   autoDeleteExclusionBoxName,
+  equalizerBoxName,
 ];
 
 const networkCacheDir = 'dio_cache';
@@ -66,6 +68,7 @@ Future<void> setupHive() async {
   await Hive.openBox<String>(playbackQueueBoxName);
   await Hive.openLazyBox<String>(logsBoxName);
   await Hive.openBox<bool>(autoDeleteExclusionBoxName);
+  await Hive.openBox<String>(equalizerBoxName);
 
   // dio cache
   final dir = await getApplicationDocumentsDirectory();

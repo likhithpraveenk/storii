@@ -18,6 +18,7 @@ class BackupService {
     Hive.box<String>(appSettingsBoxName),
     Hive.box<String>(userSettingsBoxName),
     Hive.box<double>(speedsBoxName),
+    Hive.box<String>(equalizerBoxName),
     Hive.lazyBox<List<dynamic>>(playbackHistoryBoxName),
   ];
 

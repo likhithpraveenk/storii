@@ -48,4 +48,4 @@ final class JustAudioPlayerProvider
   }
 }
 
-String _$justAudioPlayerHash() => r'aabad64a3d99ac9bffc93363d155adb41ed584f9';
+String _$justAudioPlayerHash() => r'eb542530f992485a0e725173517bcc1af72a41db';

@@ -90,6 +90,8 @@ class DefaultUserSettings {
   static const String? defaultDownloadsLocationAudiobooks = null;
   static const String? defaultDownloadsLocationPodcasts = null;
   static const bool useWavySlider = false;
+  static const isEqualizerEnabled = false;
+  static const equalizerPresetId = 'flat';
 }
 
 @freezed
@@ -297,6 +299,10 @@ sealed class UserSettings with _$UserSettings {
     String? defaultDownloadsLocationPodcasts,
 
     @Default(DefaultUserSettings.useWavySlider) bool useWavySlider,
+
+    @Default(DefaultUserSettings.isEqualizerEnabled) bool isEqualizerEnabled,
+
+    @Default(DefaultUserSettings.equalizerPresetId) String equalizerPresetId,
   }) = _UserSettings;
 
   factory fromJson(Map<String, dynamic> json) => _$UserSettingsFromJson(json);

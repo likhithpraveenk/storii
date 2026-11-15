@@ -95,7 +95,7 @@ final class UserSettingsNotifierProvider
 }
 
 String _$userSettingsNotifierHash() =>
-    r'7cf96e92c9b673e917c13e018d2a0310ee0ee7b4';
+    r'daa3d9972a21ec504d4213d6e38c3e70d5230e27';
 
 abstract class _$UserSettingsNotifier extends $Notifier<UserSettings?> {
   UserSettings? build();
@@ -475,6 +475,12 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setUseWavySlider(bool value) =>
       _save(state?.copyWith(useWavySlider: value));
+
+  Future<void> setIsEqualizerEnabled(bool value) =>
+      _save(state?.copyWith(isEqualizerEnabled: value));
+
+  Future<void> setEqualizerPresetId(String value) =>
+      _save(state?.copyWith(equalizerPresetId: value));
 }
 
 final currentLibraryProvider = Provider<Library?>(
@@ -1247,4 +1253,22 @@ final useWavySliderProvider = Provider<bool>(
     ),
   ),
   name: 'useWavySliderProvider',
+);
+
+final isEqualizerEnabledProvider = Provider<bool>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.isEqualizerEnabled ?? DefaultUserSettings.isEqualizerEnabled,
+    ),
+  ),
+  name: 'isEqualizerEnabledProvider',
+);
+
+final equalizerPresetIdProvider = Provider<String>(
+  (ref) => ref.watch(
+    userSettingsProvider.select(
+      (s) => s?.equalizerPresetId ?? DefaultUserSettings.equalizerPresetId,
+    ),
+  ),
+  name: 'equalizerPresetIdProvider',
 );

@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/features/equalizer/logic/equalizer_service.dart';
 import 'package:storii/features/player/models/app_audio_player.dart';
 import 'package:storii/features/player/models/app_audio_source.dart';
 import 'package:storii/features/player/models/app_playback_error.dart';
@@ -16,9 +17,11 @@ part 'just_audio_player.g.dart';
 @Riverpod(keepAlive: true)
 AppAudioPlayer justAudioPlayer(Ref ref) {
   final minBuffer = ref.read(minBufferDurationProvider);
+  final service = ref.read(equalizerServiceProvider);
 
   final player = JustAudioPlayer(
     AudioPlayer(
+      audioPipeline: service.pipeline,
       handleInterruptions: false,
       audioLoadConfiguration: AudioLoadConfiguration(
         androidLoadControl: AndroidLoadControl(

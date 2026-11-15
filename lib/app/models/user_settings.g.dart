@@ -276,6 +276,12 @@ _UserSettings _$UserSettingsFromJson(
       json['defaultDownloadsLocationPodcasts'] as String?,
   useWavySlider:
       json['useWavySlider'] as bool? ?? DefaultUserSettings.useWavySlider,
+  isEqualizerEnabled:
+      json['isEqualizerEnabled'] as bool? ??
+      DefaultUserSettings.isEqualizerEnabled,
+  equalizerPresetId:
+      json['equalizerPresetId'] as String? ??
+      DefaultUserSettings.equalizerPresetId,
 );
 
 Map<String, dynamic> _$UserSettingsToJson(
@@ -379,6 +385,8 @@ Map<String, dynamic> _$UserSettingsToJson(
   'defaultDownloadsLocationPodcasts':
       ?instance.defaultDownloadsLocationPodcasts,
   'useWavySlider': instance.useWavySlider,
+  'isEqualizerEnabled': instance.isEqualizerEnabled,
+  'equalizerPresetId': instance.equalizerPresetId,
 };
 
 const _$NavTargetEnumMap = {
@@ -466,6 +474,7 @@ const _$FullPlayerActionsEnumMap = {
   FullPlayerActions.speed: 'speed',
   FullPlayerActions.volume: 'volume',
   FullPlayerActions.bookmarks: 'bookmarks',
+  FullPlayerActions.equalizer: 'equalizer',
   FullPlayerActions.queue: 'queue',
 };
 

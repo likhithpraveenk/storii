@@ -155,6 +155,8 @@ class UserSettingsNotifier extends _$UserSettingsNotifier {
         interruptionLongSkipBackward:
             DefaultUserSettings.interruptionLongSkipBackward,
         useWavySlider: DefaultUserSettings.useWavySlider,
+        isEqualizerEnabled: DefaultUserSettings.isEqualizerEnabled,
+        equalizerPresetId: DefaultUserSettings.equalizerPresetId,
       ),
     );
   }
