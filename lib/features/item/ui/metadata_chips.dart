@@ -34,6 +34,11 @@ class _MetadataChipsState<T> extends State<MetadataChips<T>> {
   String _compareVal(T value) =>
       _norm(widget.compareValue?.call(value) ?? widget.displayValue(value));
 
+  String Function(String)? get _optionText {
+    final suffix = widget.suffixOnSelect;
+    return suffix == null ? null : (option) => '$option$suffix';
+  }
+
   bool _isNew(T value) {
     final l = _compareVal(value);
     return !widget.options.any((o) => _compareVal(o) == l);
@@ -106,23 +111,25 @@ class _MetadataChipsState<T> extends State<MetadataChips<T>> {
             children: [
               for (var i = 0; i < selected.length; i++)
                 if (_editingIndex == i)
-                  _InlineEditor(
+                  ChipEditor(
                     key: ValueKey('edit-$i'),
                     initialText: widget.displayValue(selected[i]),
                     suggestionsFor: (q) => _suggestions(q, exceptIndex: i),
-                    onDone: (text) => _commit(i, text),
-                    suffixOnSelect: widget.suffixOnSelect,
+                    onCommit: (text) => _commit(i, text),
+                    displayStringForOption: _optionText,
+                    keepEditorOpenOnSelect: widget.suffixOnSelect != null,
                   )
                 else
                   _buildChip(i, selected[i], theme.colorScheme),
               if (_editingIndex == selected.length)
-                _InlineEditor(
+                ChipEditor(
                   key: const ValueKey('edit-new'),
                   initialText: '',
                   suggestionsFor: (q) =>
                       _suggestions(q, exceptIndex: selected.length),
-                  onDone: (text) => _commit(selected.length, text),
-                  suffixOnSelect: widget.suffixOnSelect,
+                  onCommit: (text) => _commit(selected.length, text),
+                  displayStringForOption: _optionText,
+                  keepEditorOpenOnSelect: widget.suffixOnSelect != null,
                 )
               else
                 ActionChip(
@@ -158,146 +165,5 @@ class _MetadataChipsState<T> extends State<MetadataChips<T>> {
         .where((o) => !taken.contains(_compareVal(o)))
         .map(widget.displayValue)
         .where((l) => _norm(l).contains(q));
-  }
-}
-
-class _InlineEditor extends StatefulWidget {
-  const new({
-    super.key,
-    required this.initialText,
-    required this.suggestionsFor,
-    required this.onDone,
-    this.suffixOnSelect,
-  });
-
-  final String initialText;
-  final Iterable<String> Function(String query) suggestionsFor;
-  final void Function(String text) onDone;
-  final String? suffixOnSelect;
-
-  @override
-  State<_InlineEditor> createState() => _InlineEditorState();
-}
-
-class _InlineEditorState extends State<_InlineEditor> {
-  late final TextEditingController _controller;
-  final FocusNode _focus = FocusNode();
-  bool _done = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController(text: widget.initialText);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) _focus.requestFocus();
-    });
-  }
-
-  void _finish(String text) {
-    if (_done) return;
-    _done = true;
-    _focus.unfocus();
-    widget.onDone(text);
-  }
-
-  @override
-  void dispose() {
-    _focus.dispose();
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final screenWidth = MediaQuery.sizeOf(context).width;
-    final width = (screenWidth - 48).clamp(200.0, 400.0);
-    final groupId = widget.key ?? Object();
-
-    return SizedBox(
-      width: width,
-      child: RawAutocomplete<String>(
-        textEditingController: _controller,
-        focusNode: _focus,
-        optionsBuilder: (value) => widget.suggestionsFor(value.text),
-        onSelected: (option) {
-          final suffix = widget.suffixOnSelect;
-          if (suffix == null) {
-            _finish(option);
-            return;
-          }
-          final text = '$option$suffix';
-          _controller.value = TextEditingValue(
-            text: text,
-            selection: .collapsed(offset: text.length),
-          );
-          _focus.requestFocus();
-        },
-        fieldViewBuilder: (context, controller, focusNode, onSubmit) {
-          return TapRegion(
-            groupId: groupId,
-            onTapOutside: (_) => _finish(controller.text),
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                shape: StadiumBorder(
-                  side: BorderSide(
-                    color: theme.colorScheme.primary,
-                    width: 1.5,
-                  ),
-                ),
-              ),
-              child: Padding(
-                padding: const .symmetric(horizontal: 12),
-                child: TextField(
-                  controller: controller,
-                  focusNode: focusNode,
-                  style: theme.textTheme.labelLarge,
-                  textInputAction: .done,
-                  decoration: const InputDecoration(
-                    isDense: true,
-                    border: .none,
-                    contentPadding: .symmetric(vertical: 8),
-                    focusedBorder: .none,
-                    errorBorder: .none,
-                  ),
-                  onSubmitted: _finish,
-                ),
-              ),
-            ),
-          );
-        },
-        optionsViewBuilder: (context, onSelected, options) {
-          return Align(
-            alignment: .topLeft,
-            child: Material(
-              elevation: 4,
-              borderRadius: .circular(kRadius),
-              color: theme.colorScheme.surfaceContainerHighest,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxHeight: 200,
-                  maxWidth: 240,
-                ),
-                child: ListView.builder(
-                  padding: .zero,
-                  shrinkWrap: true,
-                  itemCount: options.length,
-                  itemBuilder: (context, i) {
-                    final option = options.elementAt(i);
-                    return InkWell(
-                      onTap: () => onSelected(option),
-                      child: Padding(
-                        padding: const .symmetric(horizontal: 16, vertical: 10),
-                        child: Text(option),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
   }
 }
