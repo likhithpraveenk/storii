@@ -689,5 +689,8 @@
   "removeDefaultLocationNote": "By usunąć ustawienie domyślne przejdź do Ustawienia > Pobieranie > Pamięć",
   "removeDefault": "Usuń ustawienie domyślne",
   "wavySlider": "Falisty pasek postępu",
-  "wavySliderSubtitle": "Animowana fala na pasku postępu"
+  "wavySliderSubtitle": "Animowana fala na pasku postępu",
+  "itemMissing": "Katalog elementów nie istnieje!",
+  "itemInvalidBook": "Element nie ma ścieżek audio",
+  "itemInvalidPodcast": "Podcast nie ma odcinków"
 }
