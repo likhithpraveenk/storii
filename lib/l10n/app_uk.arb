@@ -1,0 +1,99 @@
+{
+  "login": "Увійти",
+  "logout": "Вийти",
+  "addServer": "Додати сервер",
+  "serverUrl": "URL-адреса сервера",
+  "validateServer": "Перевірити сервер",
+  "advanced": "Додаткові налаштування",
+  "customHeaders": "Користувацькі заголовки",
+  "key": "Ключ",
+  "value": "Значення",
+  "required": "Обов'язково",
+  "username": "Ім'я користувача",
+  "password": "Пароль",
+  "delete": "Видалити",
+  "cancel": "Скасувати",
+  "deleteServer": "Видалити сервер",
+  "duplicateHeader": "Дублювати заголовок",
+  "deleteServerQ": "Видалити сервер?",
+  "deleteUserQ": "Видалити {user}?",
+  "@deleteUserQ": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
+  "noUsersServer": "До цього сервера не прив'язано жодного користувача.",
+  "followingUsers": "Ви збираєтеся видалити таких користувачів",
+  "addUser": "Додати користувача",
+  "edit": "Редагувати",
+  "editMetadata": "Редагувати метадані",
+  "errorLoadingUsers": "Помилка завантаження користувачів",
+  "switchingToUser": "Перемикання на {user}",
+  "@switchingToUser": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
+  "loading": "Завантаження",
+  "active": "Активний",
+  "noSession": "Немає сеансів",
+  "recentSessions": "Останні сеанси",
+  "noAuthor": "Автора не вказано",
+  "noTitle": "Назву не вказано",
+  "noImage": "Немає зображення",
+  "errorImage": "Помилка завантаження зображення",
+  "continueWord": "Продовжити",
+  "shelfContinueListening": "Продовжити прослуховування",
+  "shelfContinueSeries": "Продовжити Cерію",
+  "shelfDiscover": "Відкрийте для себе",
+  "shelfRecentlyAdded": "Нещодавно Додані",
+  "shelfRecentSeries": "Нещодавні Cерії",
+  "shelfNewestAuthors": "Нові Автори",
+  "shelfNewestEpisodes": "Нові Епізоди",
+  "shelfListenAgain": "Прослухати Знову",
+  "downloads": "Завантаження",
+  "startingDownload": "Початок завантаження…",
+  "settings": "Налаштування",
+  "logs": "Логі",
+  "about": "Про застосунок",
+  "switchAccount": "Змінити обліковий запис",
+  "switchAccountConfirm": "Перейти на інший обліковий запис?",
+  "logoutConfirm": "Вийти з цього облікового запису?",
+  "noLibrary": "Немає Бібліотеки",
+  "libraries": "Бібліотеки",
+  "collapse": "Згорнути",
+  "refresh": "Оновити",
+  "retry": "Повторити",
+  "description": "Опис",
+  "noDescription": "Опис Відсутній",
+  "resume": "Продовжити",
+  "play": "Відтворити",
+  "playAll": "Відтворити все",
+  "queue": "Черга",
+  "addToQueue": "Додати до черги",
+  "addedToQueue": "Додано до черги",
+  "clearQueue": "Очистити Чергу",
+  "autoplay": "Автовідтворення",
+  "pause": "Пауза",
+  "replay": "Повтор",
+  "deleteLogsQ": "Видалити всі логі?",
+  "selectedCount": "{count} обрано",
+  "@selectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "copy": "Скопіювати",
+  "audiobooks": "Аудіокниги",
+  "podcasts": "Подкасти",
+  "episodes": "Епізоди",
+  "search": "Пошук",
+  "dateFormat": "Формат дати",
+  "invalidFormat": "Неправильний формат"
+}
