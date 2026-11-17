@@ -692,5 +692,10 @@
   "removeDefaultLocationNote": "Um die Standardeinstellung zu entfernen, gehen Sie zu Einstellungen > Downloads > Speicher",
   "removeDefault": "Standard entfernen",
   "wavySlider": "Wellenförmiger Fortschrittsbalken",
-  "wavySliderSubtitle": "Animierter Welleneffekt auf der Fortschrittsanzeige"
+  "wavySliderSubtitle": "Animierter Welleneffekt auf der Fortschrittsanzeige",
+  "equalizer": "Equalizer",
+  "equalizerPresetFlat": "Flach",
+  "equalizerPresetVocal": "Stimme",
+  "equalizerPresetWarm": "Warm",
+  "equalizerPresetWhisper": "Sanfte Stimme"
 }
