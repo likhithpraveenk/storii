@@ -91,3 +91,5 @@ const speedPresets = [1.0, 1.25, 1.5, 1.75, 2.0];
 
 /// sentinel for "use system font"
 const systemFont = 'system';
+
+final kZeroEpoch = DateTime.fromMillisecondsSinceEpoch(0);

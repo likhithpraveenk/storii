@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/api/abs/abs_api.dart';
+import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/models/enums.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
@@ -66,7 +67,7 @@ Future<List<DownloadItem>> activeDownloads(Ref ref) async {
     ),
   );
   active.sort(
-    (a, b) => (a.startedAt ?? _zeroEpoch).compareTo(b.startedAt ?? _zeroEpoch),
+    (a, b) => (a.startedAt ?? kZeroEpoch).compareTo(b.startedAt ?? kZeroEpoch),
   );
   return active;
 }
@@ -88,8 +89,6 @@ int? downloadQueuePosition(Ref ref, String libraryItemId, [String? episodeId]) {
   final index = queuedItems.indexWhere((i) => i.key == key);
   return index != -1 ? index + 1 : null;
 }
-
-final _zeroEpoch = DateTime.fromMillisecondsSinceEpoch(0);
 
 @riverpod
 Future<List<DownloadItem>> sortedCompletedDownloads(Ref ref) async {
@@ -158,7 +157,7 @@ Future<List<DownloadItem>> _sortDownloads(
       authors[item.libraryItemId] ?? item.author;
 
   DateTime lastListened(DownloadItem item) =>
-      listenedAt[item.key] ?? _zeroEpoch;
+      listenedAt[item.key] ?? kZeroEpoch;
 
   final list = List<DownloadItem>.from(items);
   final dir = ascending ? 1 : -1;
@@ -178,7 +177,7 @@ Future<List<DownloadItem>> _sortDownloads(
             ).compareTo(_sortKey(author(b), prefixes)),
       .size => dir * a.totalBytes.compareTo(b.totalBytes),
       .added =>
-        dir * (a.startedAt ?? _zeroEpoch).compareTo(b.startedAt ?? _zeroEpoch),
+        dir * (a.startedAt ?? kZeroEpoch).compareTo(b.startedAt ?? kZeroEpoch),
       .lastListened => dir * lastListened(a).compareTo(lastListened(b)),
     },
   );
@@ -206,7 +205,7 @@ DateTime _lastListenedTime(Ref ref, DownloadItem item) {
       .value;
   if (progress?.lastUpdate != null) return progress!.lastUpdate!;
 
-  return _zeroEpoch;
+  return kZeroEpoch;
 }
 
 @riverpod
