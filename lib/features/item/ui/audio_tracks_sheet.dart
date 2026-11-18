@@ -19,8 +19,11 @@ void showAudioTracksSheet(
     shape: const RoundedRectangleBorder(
       borderRadius: .vertical(top: .circular(kRadiusXl)),
     ),
-    builder: (_) => SafeArea(
-      child: DecoratedBox(
+    builder: (_) => DraggableScrollableSheet(
+      minChildSize: 0.4,
+      initialChildSize: 0.6,
+      expand: false,
+      builder: (context, controller) => DecoratedBox(
         decoration: bottomSheetDecoration(context),
         child: Column(
           mainAxisSize: .min,
@@ -37,6 +40,7 @@ void showAudioTracksSheet(
               child: ListView.builder(
                 padding: const .only(bottom: 36),
                 itemCount: tracks.length,
+                controller: controller,
                 itemBuilder: (context, index) => _AudioTrackTile(
                   track: tracks[index],
                   index: index,

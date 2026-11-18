@@ -67,10 +67,10 @@ class FullPlayerActionsWidget extends ConsumerWidget {
               shape: const RoundedRectangleBorder(
                 borderRadius: .vertical(top: .circular(kRadiusXl)),
               ),
+              useSafeArea: true,
               isScrollControlled: true,
-              builder: (context) => SafeArea(
-                child: MoreActionsSheet(remaining: remaining, session: session),
-              ),
+              builder: (context) =>
+                  MoreActionsSheet(remaining: remaining, session: session),
             );
           },
           icon: const Icon(Icons.more_horiz),
@@ -104,12 +104,11 @@ class FullPlayerActionsBig extends ConsumerWidget {
               borderRadius: .vertical(top: .circular(kRadiusXl)),
             ),
             isScrollControlled: true,
-            builder: (context) => SafeArea(
-              child: MoreActionsSheet(
-                remaining: all,
-                session: session,
-                inBigLayout: true,
-              ),
+            useSafeArea: true,
+            builder: (context) => MoreActionsSheet(
+              remaining: all,
+              session: session,
+              inBigLayout: true,
             ),
           );
         },

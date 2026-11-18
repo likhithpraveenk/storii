@@ -22,7 +22,7 @@ Future<void> openEqualizerSheet(BuildContext context) {
     useSafeArea: true,
     builder: (_) => DraggableScrollableSheet(
       minChildSize: 0.4,
-      shouldCloseOnMinExtent: false,
+      initialChildSize: 0.6,
       expand: false,
       builder: (_, controller) => _EqualizerSheetBody(controller),
     ),
@@ -85,64 +85,61 @@ class _EqualizerSheetBody extends ConsumerWidget {
     final supported = ref.watch(equalizerServiceProvider).supported;
     return DecoratedBox(
       decoration: bottomSheetDecoration(context),
-      child: SingleChildScrollView(
+      child: ListView(
         padding: MediaQuery.viewInsetsOf(context).add(const .only(bottom: 48)),
         controller: controller,
-        child: Column(
-          mainAxisSize: .min,
-          children: [
-            Column(
-              mainAxisSize: .min,
-              crossAxisAlignment: .stretch,
-              children: [
-                Padding(
-                  padding: const .fromLTRB(16, 16, 16, 0),
-                  child: Stack(
-                    alignment: .center,
-                    children: [
-                      Align(
-                        child: Text(
-                          l10n.equalizer,
-                          style: bottomSheetTitleTextStyle(context),
-                          textAlign: .center,
-                        ),
+        children: [
+          Column(
+            mainAxisSize: .min,
+            crossAxisAlignment: .stretch,
+            children: [
+              Padding(
+                padding: const .fromLTRB(16, 16, 16, 0),
+                child: Stack(
+                  alignment: .center,
+                  children: [
+                    Align(
+                      child: Text(
+                        l10n.equalizer,
+                        style: bottomSheetTitleTextStyle(context),
+                        textAlign: .center,
                       ),
-                      Align(
-                        alignment: .centerRight,
-                        child: Switch(
-                          value: ref.watch(isEqualizerEnabledProvider),
-                          onChanged: supported
-                              ? (value) => ref
-                                    .read(userSettingsProvider.notifier)
-                                    .setIsEqualizerEnabled(value)
-                              : null,
-                        ),
+                    ),
+                    Align(
+                      alignment: .centerRight,
+                      child: Switch(
+                        value: ref.watch(isEqualizerEnabledProvider),
+                        onChanged: supported
+                            ? (value) => ref
+                                  .read(userSettingsProvider.notifier)
+                                  .setIsEqualizerEnabled(value)
+                            : null,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const .fromLTRB(24, 8, 24, 12),
-                  child: Text(
-                    l10n.equalizerQualityNote,
-                    style: bottomSheetSubtitleTextStyle(context),
-                    textAlign: .center,
-                  ),
-                ),
-              ],
-            ),
-            if (supported) ...const [
-              _LoudnessSlider(),
-              EqualizerPresetChips(),
-              SizedBox(height: 8),
-              EqualizerBands(),
-            ] else
-              SizedBox(
-                height: 200,
-                child: Center(child: EmptyState(subtitle: l10n.notSupported)),
               ),
-          ],
-        ),
+              Padding(
+                padding: const .fromLTRB(24, 8, 24, 12),
+                child: Text(
+                  l10n.equalizerQualityNote,
+                  style: bottomSheetSubtitleTextStyle(context),
+                  textAlign: .center,
+                ),
+              ),
+            ],
+          ),
+          if (supported) ...const [
+            _LoudnessSlider(),
+            EqualizerPresetChips(),
+            SizedBox(height: 8),
+            EqualizerBands(),
+          ] else
+            SizedBox(
+              height: 200,
+              child: Center(child: EmptyState(subtitle: l10n.notSupported)),
+            ),
+        ],
       ),
     );
   }

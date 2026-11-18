@@ -80,10 +80,13 @@ class _BookmarkSheetBody extends ConsumerWidget {
     );
     final position = ref.watch(globalPositionProvider).value ?? Duration.zero;
 
-    return SafeArea(
-      child: DecoratedBox(
-        decoration: bottomSheetDecoration(context),
-        child: Column(
+    return DecoratedBox(
+      decoration: bottomSheetDecoration(context),
+      child: DraggableScrollableSheet(
+        minChildSize: 0.4,
+        initialChildSize: 0.6,
+        expand: false,
+        builder: (context, controller) => Column(
           mainAxisSize: .min,
           children: [
             Padding(
@@ -129,62 +132,16 @@ class _BookmarkSheetBody extends ConsumerWidget {
                 error: (e, _) => EmptyState(subtitle: l10n.errorUnknown),
                 data: (bookmarks) {
                   if (bookmarks.isEmpty) return const EmptyState();
-
                   return ListView.builder(
-                    padding: const .only(bottom: 48),
-                    shrinkWrap: true,
+                    padding: const .only(bottom: 64),
                     itemCount: bookmarks.length,
+                    controller: controller,
                     itemBuilder: (context, index) {
                       final bookmark = bookmarks[index];
-                      return ListTile(
-                        leading: const Icon(Icons.bookmark_outline),
-                        title: Text(bookmark.title, softWrap: true),
-                        subtitle: Text(bookmark.time.toTime(padHours: true)),
-                        contentPadding: const .only(left: 16, right: 8),
-                        onTap: () {
-                          if (isCurrentItem) {
-                            audioHandler.seekFromGlobalPosition(bookmark.time);
-                          } else {
-                            ref
-                                .read(queueProvider.notifier)
-                                .play(
-                                  itemId: itemId,
-                                  initialPosition: bookmark.time,
-                                );
-                          }
-                          Navigator.pop(context);
-                        },
-                        trailing: Row(
-                          mainAxisSize: .min,
-                          children: [
-                            IconButton(
-                              tooltip: l10n.edit,
-                              onPressed: () => showBookmarkDialog(
-                                context,
-                                ref,
-                                itemId: itemId,
-                                bookmark: bookmark,
-                              ),
-                              icon: const Icon(Icons.edit),
-                            ),
-                            IconButton(
-                              tooltip: l10n.remove,
-                              icon: const Icon(Icons.delete_outline),
-                              onPressed: () async {
-                                final controller = await ref.read(
-                                  bookmarksControllerProvider.future,
-                                );
-                                final ok = await controller.remove(
-                                  itemId: itemId,
-                                  time: bookmark.time,
-                                );
-                                if (ok && context.mounted) {
-                                  ref.invalidate(serverUserProvider);
-                                }
-                              },
-                            ),
-                          ],
-                        ),
+                      return _BookmarkTile(
+                        bookmark: bookmark,
+                        isCurrentItem: isCurrentItem,
+                        itemId: itemId,
                       );
                     },
                   );
@@ -193,6 +150,69 @@ class _BookmarkSheetBody extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _BookmarkTile extends ConsumerWidget {
+  const new({
+    required this.bookmark,
+    required this.isCurrentItem,
+    required this.itemId,
+  });
+
+  final Bookmark bookmark;
+  final bool isCurrentItem;
+  final String itemId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListTile(
+      leading: const Icon(Icons.bookmark_outline),
+      title: Text(bookmark.title, softWrap: true),
+      subtitle: Text(bookmark.time.toTime(padHours: true)),
+      contentPadding: const .only(left: 16, right: 8),
+      onTap: () {
+        if (isCurrentItem) {
+          audioHandler.seekFromGlobalPosition(bookmark.time);
+        } else {
+          ref
+              .read(queueProvider.notifier)
+              .play(itemId: itemId, initialPosition: bookmark.time);
+        }
+        Navigator.pop(context);
+      },
+      trailing: Row(
+        mainAxisSize: .min,
+        children: [
+          IconButton(
+            tooltip: l10n.edit,
+            onPressed: () => showBookmarkDialog(
+              context,
+              ref,
+              itemId: itemId,
+              bookmark: bookmark,
+            ),
+            icon: const Icon(Icons.edit),
+          ),
+          IconButton(
+            tooltip: l10n.remove,
+            icon: const Icon(Icons.delete_outline),
+            onPressed: () async {
+              final controller = await ref.read(
+                bookmarksControllerProvider.future,
+              );
+              final ok = await controller.remove(
+                itemId: itemId,
+                time: bookmark.time,
+              );
+              if (ok && context.mounted) {
+                ref.invalidate(serverUserProvider);
+              }
+            },
+          ),
+        ],
       ),
     );
   }

@@ -38,9 +38,8 @@ class HistoryButton extends StatelessWidget {
         borderRadius: .vertical(top: .circular(kRadiusXl)),
       ),
       builder: (_) => DraggableScrollableSheet(
-        maxChildSize: 0.95,
         minChildSize: 0.4,
-        shouldCloseOnMinExtent: false,
+        initialChildSize: 0.6,
         expand: false,
         builder: (context, controller) => DecoratedBox(
           decoration: bottomSheetDecoration(context),

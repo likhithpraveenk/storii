@@ -64,177 +64,193 @@ class _MoreActionsSheetState extends ConsumerState<MoreActionsSheet> {
 
     return DecoratedBox(
       decoration: bottomSheetDecoration(context),
-      child: Column(
-        mainAxisSize: .min,
-        children: [
-          Padding(
-            padding: const .all(16),
-            child: Stack(
-              alignment: .center,
-              children: [
-                Align(
-                  child: Text(
-                    l10n.more,
-                    style: bottomSheetTitleTextStyle(context),
-                  ),
-                ),
-                if (!widget.inBigLayout)
-                  Align(
-                    alignment: .centerRight,
-                    child: IconButton(
-                      tooltip: _editMode ? l10n.cancel : l10n.edit,
-                      onPressed: () {
-                        setState(() => _editMode = !_editMode);
-                      },
-                      icon: Icon(_editMode ? Icons.cancel : Icons.edit),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-          if (!_editMode) ...[
-            ...widget.remaining
-                .map((a) => a.widget(context, widget.session, inOverflow: true))
-                .whereType<Widget>(),
-            SwitchListTile(
-              value: ref.watch(useWavySliderProvider),
-              title: Text(l10n.wavySlider),
-              secondary: const Icon(Icons.waves),
-              subtitle: Text(l10n.wavySliderSubtitle),
-              onChanged: (value) => ref
-                  .read(userSettingsProvider.notifier)
-                  .setUseWavySlider(value),
-            ),
-            SwitchListTile(
-              value: ref.watch(showChapterProgressSliderProvider),
-              title: Text(l10n.chapterProgressBar),
-              secondary: const Icon(Icons.segment),
-              subtitle: Text(l10n.chapterProgressBarSubtitle),
-              onChanged: (value) => ref
-                  .read(userSettingsProvider.notifier)
-                  .setShowChapterProgressSlider(value),
-            ),
-            SwitchListTile(
-              value: ref.watch(scaleTimeBySpeedProvider),
-              title: Text(l10n.speedAdjustedTime),
-              secondary: const Icon(Icons.av_timer),
-              subtitle: Text(l10n.speedAdjustedTimeSubtitle),
-              onChanged: (value) => ref
-                  .read(userSettingsProvider.notifier)
-                  .setScaleTimeBySpeed(value),
-            ),
-          ],
-          if (_editMode) ...[
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: .circular(kRadius),
-                color: scheme.surfaceContainerLowest,
-                border: .all(width: 1, color: scheme.outlineVariant),
-              ),
-              margin: const .symmetric(horizontal: 16, vertical: 12),
-              child: ReorderableListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _masterOrder.length,
-                onReorderItem: _onReorder,
-                buildDefaultDragHandles: false,
-                proxyDecorator: (child, index, animation) => Material(
-                  color: scheme.surfaceContainerHighest,
-                  borderRadius: .circular(kRadius),
-                  child: child,
-                ),
-                itemBuilder: (context, index) {
-                  final action = _masterOrder[index];
-                  final isEnabled = _pinnedDraft.contains(action);
-                  if (!isEnabled) return SizedBox.shrink(key: ValueKey(action));
-
-                  return DecoratedBox(
-                    key: ValueKey(action),
-                    decoration: BoxDecoration(borderRadius: .circular(kRadius)),
-                    child: ListTile(
-                      leading: Icon(action.icon),
-                      contentPadding: const .symmetric(
-                        horizontal: 16,
-                        vertical: 4,
+      child: DraggableScrollableSheet(
+        minChildSize: 0.4,
+        initialChildSize: 0.6,
+        expand: false,
+        builder: (context, controller) => SingleChildScrollView(
+          controller: controller,
+          child: Column(
+            mainAxisSize: .min,
+            children: [
+              Padding(
+                padding: const .all(16),
+                child: Stack(
+                  alignment: .center,
+                  children: [
+                    Align(
+                      child: Text(
+                        l10n.more,
+                        style: bottomSheetTitleTextStyle(context),
                       ),
-                      visualDensity: .compact,
-                      title: Text(
-                        action.label,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontWeight: .w600,
-                          color: scheme.onSurface,
+                    ),
+                    if (!widget.inBigLayout)
+                      Align(
+                        alignment: .centerRight,
+                        child: IconButton(
+                          tooltip: _editMode ? l10n.cancel : l10n.edit,
+                          onPressed: () {
+                            setState(() => _editMode = !_editMode);
+                          },
+                          icon: Icon(_editMode ? Icons.cancel : Icons.edit),
                         ),
                       ),
-                      trailing: Row(
-                        mainAxisSize: .min,
-                        children: [
-                          IconButton(
-                            onPressed: () => _disable(action),
-                            icon: const Icon(Icons.remove_circle),
+                  ],
+                ),
+              ),
+              if (!_editMode) ...[
+                ...widget.remaining
+                    .map(
+                      (a) =>
+                          a.widget(context, widget.session, inOverflow: true),
+                    )
+                    .whereType<Widget>(),
+                SwitchListTile(
+                  value: ref.watch(useWavySliderProvider),
+                  title: Text(l10n.wavySlider),
+                  secondary: const Icon(Icons.waves),
+                  subtitle: Text(l10n.wavySliderSubtitle),
+                  onChanged: (value) => ref
+                      .read(userSettingsProvider.notifier)
+                      .setUseWavySlider(value),
+                ),
+                SwitchListTile(
+                  value: ref.watch(showChapterProgressSliderProvider),
+                  title: Text(l10n.chapterProgressBar),
+                  secondary: const Icon(Icons.segment),
+                  subtitle: Text(l10n.chapterProgressBarSubtitle),
+                  onChanged: (value) => ref
+                      .read(userSettingsProvider.notifier)
+                      .setShowChapterProgressSlider(value),
+                ),
+                SwitchListTile(
+                  value: ref.watch(scaleTimeBySpeedProvider),
+                  title: Text(l10n.speedAdjustedTime),
+                  secondary: const Icon(Icons.av_timer),
+                  subtitle: Text(l10n.speedAdjustedTimeSubtitle),
+                  onChanged: (value) => ref
+                      .read(userSettingsProvider.notifier)
+                      .setScaleTimeBySpeed(value),
+                ),
+              ],
+              if (_editMode) ...[
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: .circular(kRadius),
+                    color: scheme.surfaceContainerLowest,
+                    border: .all(width: 1, color: scheme.outlineVariant),
+                  ),
+                  margin: const .symmetric(horizontal: 16, vertical: 12),
+                  child: ReorderableListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _masterOrder.length,
+                    onReorderItem: _onReorder,
+                    buildDefaultDragHandles: false,
+                    proxyDecorator: (child, index, animation) => Material(
+                      color: scheme.surfaceContainerHighest,
+                      borderRadius: .circular(kRadius),
+                      child: child,
+                    ),
+                    itemBuilder: (context, index) {
+                      final action = _masterOrder[index];
+                      final isEnabled = _pinnedDraft.contains(action);
+                      if (!isEnabled) {
+                        return SizedBox.shrink(key: ValueKey(action));
+                      }
+
+                      return DecoratedBox(
+                        key: ValueKey(action),
+                        decoration: BoxDecoration(
+                          borderRadius: .circular(kRadius),
+                        ),
+                        child: ListTile(
+                          leading: Icon(action.icon),
+                          contentPadding: const .symmetric(
+                            horizontal: 16,
+                            vertical: 4,
                           ),
-                          const SizedBox(width: 8),
-                          ReorderableDragStartListener(
-                            index: index,
-                            child: Icon(
-                              Icons.drag_indicator_rounded,
-                              color: scheme.onSurfaceVariant.withValues(
-                                alpha: 0.6,
+                          visualDensity: .compact,
+                          title: Text(
+                            action.label,
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(
+                                  fontWeight: .w600,
+                                  color: scheme.onSurface,
+                                ),
+                          ),
+                          trailing: Row(
+                            mainAxisSize: .min,
+                            children: [
+                              IconButton(
+                                onPressed: () => _disable(action),
+                                icon: const Icon(Icons.remove_circle),
                               ),
+                              const SizedBox(width: 8),
+                              ReorderableDragStartListener(
+                                index: index,
+                                child: Icon(
+                                  Icons.drag_indicator_rounded,
+                                  color: scheme.onSurfaceVariant.withValues(
+                                    alpha: 0.6,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Wrap(
+                  spacing: 12,
+                  children: [
+                    ..._masterOrder
+                        .where((a) => !_pinnedDraft.contains(a))
+                        .map(
+                          (a) => TextButton(
+                            onPressed: () => _enable(a),
+                            child: Row(
+                              mainAxisSize: .min,
+                              children: [
+                                Icon(a.icon),
+                                const SizedBox(width: 4),
+                                Text(a.label),
+                                const SizedBox(width: 4),
+                                const Icon(Icons.add_circle),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Wrap(
-              spacing: 12,
-              children: [
-                ..._masterOrder
-                    .where((a) => !_pinnedDraft.contains(a))
-                    .map(
-                      (a) => TextButton(
-                        onPressed: () => _enable(a),
-                        child: Row(
-                          mainAxisSize: .min,
-                          children: [
-                            Icon(a.icon),
-                            const SizedBox(width: 4),
-                            Text(a.label),
-                            const SizedBox(width: 4),
-                            const Icon(Icons.add_circle),
-                          ],
                         ),
-                      ),
-                    ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const .symmetric(horizontal: 16),
-              child: SizedBox(
-                width: double.infinity,
-                child: AppFilledButton(
-                  onPressed: () async {
-                    final finalOrder = _masterOrder
-                        .where((a) => _pinnedDraft.contains(a))
-                        .toList();
-                    await ref
-                        .read(userSettingsProvider.notifier)
-                        .setPinnedPlayerActions(finalOrder);
-                    if (context.mounted) {
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  text: l10n.save,
+                  ],
                 ),
-              ),
-            ),
-          ],
-          const SizedBox(height: 48),
-        ],
+                const SizedBox(height: 12),
+                Padding(
+                  padding: const .symmetric(horizontal: 16),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: AppFilledButton(
+                      onPressed: () async {
+                        final finalOrder = _masterOrder
+                            .where((a) => _pinnedDraft.contains(a))
+                            .toList();
+                        await ref
+                            .read(userSettingsProvider.notifier)
+                            .setPinnedPlayerActions(finalOrder);
+                        if (context.mounted) {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      text: l10n.save,
+                    ),
+                  ),
+                ),
+              ],
+              const SizedBox(height: 48),
+            ],
+          ),
+        ),
       ),
     );
   }

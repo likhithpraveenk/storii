@@ -28,8 +28,11 @@ void showChapterListSheet(
     shape: const RoundedRectangleBorder(
       borderRadius: .vertical(top: .circular(kRadiusXl)),
     ),
-    builder: (_) => SafeArea(
-      child: DecoratedBox(
+    builder: (_) => DraggableScrollableSheet(
+      minChildSize: 0.4,
+      initialChildSize: 0.6,
+      expand: false,
+      builder: (context, controller) => DecoratedBox(
         decoration: bottomSheetDecoration(context),
         child: Column(
           mainAxisSize: .min,
@@ -48,6 +51,7 @@ void showChapterListSheet(
                 itemId: itemId,
                 itemTitle: itemTitle,
                 episodeId: episodeId,
+                controller: controller,
               ),
             ),
           ],
@@ -64,11 +68,13 @@ class ChapterList extends ConsumerStatefulWidget {
     required this.itemId,
     this.episodeId,
     required this.itemTitle,
+    required this.controller,
   });
   final List<BookChapter> chapters;
   final String itemId;
   final String? episodeId;
   final String itemTitle;
+  final ScrollController controller;
 
   @override
   ConsumerState<ChapterList> createState() => _ChapterListState();
@@ -76,18 +82,11 @@ class ChapterList extends ConsumerStatefulWidget {
 
 class _ChapterListState extends ConsumerState<ChapterList> {
   static const _tileHeight = 70.0; // rough estimate
-  final controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToActive());
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
   }
 
   void _scrollToActive() {
@@ -98,11 +97,11 @@ class _ChapterListState extends ConsumerState<ChapterList> {
     if (index < 0) return;
 
     final offset = index * _tileHeight;
-    final viewportHeight = controller.position.viewportDimension;
+    final viewportHeight = widget.controller.position.viewportDimension;
     final centeredOffset = offset - (viewportHeight / 2) + (_tileHeight / 2);
 
-    controller.animateTo(
-      centeredOffset.clamp(0.0, controller.position.maxScrollExtent),
+    widget.controller.animateTo(
+      centeredOffset.clamp(0.0, widget.controller.position.maxScrollExtent),
       duration: kDurationMd,
       curve: Curves.easeOutCubic,
     );
@@ -116,7 +115,7 @@ class _ChapterListState extends ConsumerState<ChapterList> {
 
     return ListView.builder(
       padding: const .only(bottom: 36),
-      controller: controller,
+      controller: widget.controller,
       itemCount: widget.chapters.length,
       itemBuilder: (context, index) => _ChapterTile(
         index,
