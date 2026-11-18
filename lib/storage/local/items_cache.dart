@@ -8,29 +8,30 @@ import 'package:storii/storage/hive/boxes.dart';
 
 part 'items_cache.g.dart';
 
-LibraryItem? _decode(String? value) {
+LibraryItem? _decode(String? value, String key) {
   if (value == null) return null;
   try {
     return LibraryItem.fromJson(jsonDecode(value));
   } catch (e, st) {
     LogService.log(
-      'failed to decode library item: $value',
+      'failed to decode library item',
       level: .error,
       originalError: e,
       stackTrace: st,
       source: 'ItemsCache',
     );
+    _box.delete(key);
     return null;
   }
 }
 
+LazyBox<String> get _box => Hive.lazyBox(itemsBoxName);
+
 class ItemsCache {
   const new();
 
-  LazyBox<String> get _box => Hive.lazyBox(itemsBoxName);
-
   Future<LibraryItem?> get(String id) async {
-    return _decode(await _box.get(id));
+    return _decode(await _box.get(id), id);
   }
 
   Future<void> delete(String id) => _box.delete(id);
