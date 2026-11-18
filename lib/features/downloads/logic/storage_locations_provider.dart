@@ -3,6 +3,7 @@ import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/models/storage_location.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
+import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/storage/local/downloads_store.dart';
 
 part 'storage_locations_provider.g.dart';
@@ -12,6 +13,20 @@ List<StorageLocation> storageLocationsByType(Ref ref, MediaType mediaType) {
   final locations = ref.watch(storageLocationsProvider);
   final DownloadMediaType type = mediaType == .book ? .audiobook : .podcast;
   return locations.where((l) => l.mediaType == type).toList();
+}
+
+@riverpod
+StorageLocation? preferredDownloadLocation(Ref ref, MediaType mediaType) {
+  final locations = ref.watch(storageLocationsByTypeProvider(mediaType));
+  final defaultUri = mediaType == .book
+      ? ref.watch(defaultDownloadsLocationAudiobooksProvider)
+      : ref.watch(defaultDownloadsLocationPodcastsProvider);
+  final defaultLocation = locations.firstWhereOrNull(
+    (l) => l.uri == defaultUri,
+  );
+  if (defaultLocation != null) return defaultLocation;
+  if (locations.length == 1) return locations.first;
+  return null;
 }
 
 @riverpod

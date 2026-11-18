@@ -94,6 +94,90 @@ final class StorageLocationsByTypeFamily extends $Family
   String toString() => r'storageLocationsByTypeProvider';
 }
 
+@ProviderFor(preferredDownloadLocation)
+final preferredDownloadLocationProvider = PreferredDownloadLocationFamily._();
+
+final class PreferredDownloadLocationProvider
+    extends
+        $FunctionalProvider<
+          StorageLocation?,
+          StorageLocation?,
+          StorageLocation?
+        >
+    with $Provider<StorageLocation?> {
+  PreferredDownloadLocationProvider._({
+    required PreferredDownloadLocationFamily super.from,
+    required MediaType super.argument,
+  }) : super(
+         retry: null,
+         name: r'preferredDownloadLocationProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$preferredDownloadLocationHash();
+
+  @override
+  String toString() {
+    return r'preferredDownloadLocationProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $ProviderElement<StorageLocation?> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  StorageLocation? create(Ref ref) {
+    final argument = this.argument as MediaType;
+    return preferredDownloadLocation(ref, argument);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(StorageLocation? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<StorageLocation?>(value),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is PreferredDownloadLocationProvider &&
+        other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$preferredDownloadLocationHash() =>
+    r'55a20fa8080e8ea044346ca9a566d58a7d53c957';
+
+final class PreferredDownloadLocationFamily extends $Family
+    with $FunctionalFamilyOverride<StorageLocation?, MediaType> {
+  PreferredDownloadLocationFamily._()
+    : super(
+        retry: null,
+        name: r'preferredDownloadLocationProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  PreferredDownloadLocationProvider call(MediaType mediaType) =>
+      PreferredDownloadLocationProvider._(argument: mediaType, from: this);
+
+  @override
+  String toString() => r'preferredDownloadLocationProvider';
+}
+
 @ProviderFor(storageSpaceByType)
 final storageSpaceByTypeProvider = StorageSpaceByTypeFamily._();
 

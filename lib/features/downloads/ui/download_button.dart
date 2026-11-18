@@ -94,33 +94,15 @@ class DownloadButton extends ConsumerWidget {
         tooltip: l10n.download,
         icon: const Icon(Icons.file_download_outlined),
         onPressed: () async {
-          final availableLocations = ref.read(
-            storageLocationsByTypeProvider(mediaType),
+          final defaultLocation = ref.read(
+            preferredDownloadLocationProvider(mediaType),
           );
-          final defaultUri = mediaType == .book
-              ? ref.read(defaultDownloadsLocationAudiobooksProvider)
-              : ref.read(defaultDownloadsLocationPodcastsProvider);
-          final defaultLocation = availableLocations.firstWhereOrNull(
-            (l) => l.uri == defaultUri,
-          );
-          if (defaultLocation != null) {
-            return queue.enqueue(
-              libraryItemId: libraryItemId,
-              episodeId: episodeId,
-              location: defaultLocation,
-            );
-          }
-          if (availableLocations.length == 1) {
-            return queue.enqueue(
-              libraryItemId: libraryItemId,
-              episodeId: episodeId,
-              location: availableLocations.first,
-            );
-          }
-          final location = await showDialog<StorageLocation?>(
-            context: context,
-            builder: (_) => ChooseLocationDialog(mediaType),
-          );
+          final location =
+              defaultLocation ??
+              await showDialog<StorageLocation?>(
+                context: context,
+                builder: (_) => ChooseLocationDialog(mediaType),
+              );
           if (location != null) {
             return queue.enqueue(
               libraryItemId: libraryItemId,
