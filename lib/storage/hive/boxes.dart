@@ -50,6 +50,12 @@ final _knownNames = [
 const networkCacheDir = 'dio_cache';
 late final HiveCacheStore networkCacheStore;
 
+// Large values with rare deletes; reclaim dead frames early
+bool _largeValueCompaction(int _, int deletedEntries) => deletedEntries >= 4;
+
+// Single-key box overwritten on every write
+bool _logCompaction(int _, int deletedEntries) => deletedEntries >= 10;
+
 Future<void> setupHive() async {
   await Hive.initFlutter();
   Hive
@@ -61,16 +67,28 @@ Future<void> setupHive() async {
   await Hive.openBox<String>(userSettingsBoxName);
   await Hive.openBox<UserDomain>(usersBoxName);
   await Hive.openBox<Server>(serversBoxName);
-  await Hive.openLazyBox<String>(itemsBoxName);
+  await Hive.openLazyBox<String>(
+    itemsBoxName,
+    compactionStrategy: _largeValueCompaction,
+  );
   await Hive.openBox<String>(localSessionsBoxName);
   await Hive.openLazyBox<List<dynamic>>(playbackHistoryBoxName);
-  await Hive.openLazyBox<String>(downloadsBoxName);
-  await Hive.openLazyBox<String>(downloadedItemsBoxName);
+  await Hive.openLazyBox<String>(
+    downloadsBoxName,
+    compactionStrategy: _largeValueCompaction,
+  );
+  await Hive.openLazyBox<String>(
+    downloadedItemsBoxName,
+    compactionStrategy: _largeValueCompaction,
+  );
   await Hive.openBox<double>(speedsBoxName);
   await Hive.openLazyBox<String>(userMediaProgressBoxName);
   await Hive.openBox<String>(serverSettingsBoxName);
   await Hive.openBox<String>(playbackQueueBoxName);
-  await Hive.openLazyBox<String>(logsBoxName);
+  await Hive.openLazyBox<String>(
+    logsBoxName,
+    compactionStrategy: _logCompaction,
+  );
   await Hive.openBox<bool>(autoDeleteExclusionBoxName);
   await Hive.openBox<String>(equalizerBoxName);
 
