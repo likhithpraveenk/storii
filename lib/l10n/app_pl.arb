@@ -743,5 +743,7 @@
   "autoDeleteExclusion": "Wykluczenia z automatycznego usuwania",
   "autoDeleteExclusionDescription": "Pobrane elementy chronione przed automatycznym usunięciem",
   "equalizerPresets": "Profile korektora dźwięku",
-  "equalizerPresetsDescription": "Własne profile korektora"
+  "equalizerPresetsDescription": "Własne profile korektora",
+  "localNetworkAccessDenied": "Dostęp do sieci lokalnej jest wyłączony. Storii nie może połączyć się z serwerem w tej sieci.",
+  "openSettings": "Otwórz ustawienia"
 }

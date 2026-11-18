@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:storii/shared/helpers/local_network.dart';
 
@@ -28,6 +30,83 @@ void main() {
 
     test('bare hostname no dot', () {
       expect(Uri.parse('http://myserver').isLocal, true);
+    });
+
+    test('IPv6 unique local and link-local', () {
+      expect(Uri.parse('http://[fd12:3456:789a::1]').isLocal, true);
+      expect(Uri.parse('http://[fc00::1]').isLocal, true);
+      expect(Uri.parse('http://[fe80::1]').isLocal, true);
+      expect(Uri.parse('http://[2001:4860:4860::8888]').isLocal, false);
+    });
+
+    test('IPv4-mapped IPv6', () {
+      expect(Uri.parse('http://[::ffff:192.168.1.10]').isLocal, true);
+      expect(Uri.parse('http://[::ffff:8.8.8.8]').isLocal, false);
+    });
+  });
+
+  group('resolvesToLocalNetwork', () {
+    HostLookup lookupReturning(List<String> ips) =>
+        (_) async => ips.map(InternetAddress.new).toList();
+
+    test('split-horizon domain on home network', () async {
+      final uri = Uri.parse('https://audiobookshelf.example.com');
+      expect(
+        await resolvesToLocalNetwork(
+          uri,
+          lookup: lookupReturning(['10.10.10.60']),
+        ),
+        true,
+      );
+    });
+
+    test('same domain away from home', () async {
+      final uri = Uri.parse('https://audiobookshelf.example.com');
+      expect(
+        await resolvesToLocalNetwork(
+          uri,
+          lookup: lookupReturning(['93.184.216.34']),
+        ),
+        false,
+      );
+    });
+
+    test('any local address counts', () async {
+      final uri = Uri.parse('https://abs.example.com');
+      expect(
+        await resolvesToLocalNetwork(
+          uri,
+          lookup: lookupReturning(['93.184.216.34', 'fd00::5']),
+        ),
+        true,
+      );
+    });
+
+    test('lookup failure is not local', () async {
+      final uri = Uri.parse('https://abs.example.com');
+      expect(
+        await resolvesToLocalNetwork(
+          uri,
+          lookup: (_) async => throw const SocketException('no dns'),
+        ),
+        false,
+      );
+    });
+
+    test('literal addresses skip lookup', () async {
+      Future<List<InternetAddress>> fail(String _) =>
+          throw StateError('lookup should not be called');
+      expect(
+        await resolvesToLocalNetwork(
+          Uri.parse('http://192.168.1.5'),
+          lookup: fail,
+        ),
+        true,
+      );
+      expect(
+        await resolvesToLocalNetwork(Uri.parse('http://8.8.8.8'), lookup: fail),
+        false,
+      );
     });
   });
 }

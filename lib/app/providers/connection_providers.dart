@@ -1,11 +1,15 @@
+import 'dart:async';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/api_providers.dart';
+import 'package:storii/app/providers/is_background_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
+import 'package:storii/shared/helpers/local_network.dart';
 import 'package:storii/storage/local/servers_store.dart';
 
 part 'connection_providers.g.dart';
@@ -81,6 +85,32 @@ bool isServerOffline(Ref ref) {
   );
 }
 
+/// Android 17+: asks for local network access when the active server
+/// resolves to a LAN address. Re-checked on network changes and when the
+/// app returns to the foreground, since a split-horizon domain is only
+/// local while on the home network.
+@Riverpod(keepAlive: true)
+void localNetworkAccessWatcher(Ref ref) {
+  Future<void> check() async {
+    final user = ref.read(currentUserProvider);
+    if (user == null || ref.read(isOfflineProvider)) return;
+    await ensureLocalNetworkAccess(user.serverUrl);
+    final server = ref.read(serverStreamProvider(user.serverUrl)).value;
+    final localUrl = server?.localUrl;
+    if (localUrl != null) await ensureLocalNetworkAccess(localUrl);
+  }
+
+  ref
+    ..listen(currentUserProvider, (_, _) => unawaited(check()))
+    ..listen(connectivityStreamProvider, (_, next) {
+      if (next.hasValue) unawaited(check());
+    })
+    ..listen(isBackgroundProvider, (_, isBackground) {
+      if (!isBackground) unawaited(check());
+    });
+  unawaited(check());
+}
+
 @Riverpod(keepAlive: true)
 class ActiveServerUrl extends _$ActiveServerUrl {
   @override
@@ -110,6 +140,8 @@ class ActiveServerUrl extends _$ActiveServerUrl {
   }
 
   Future<void> _resolve(Uri localUrl, Uri remoteUrl) async {
+    await ensureLocalNetworkAccess(localUrl);
+    if (!ref.mounted) return;
     final error = await ref
         .read(pingServerProvider(localUrl).future)
         .timeout(const Duration(seconds: 2), onTimeout: () => 'error');

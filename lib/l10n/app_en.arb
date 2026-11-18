@@ -743,5 +743,7 @@
   "autoDeleteExclusion": "Auto-Delete exclusions",
   "autoDeleteExclusionDescription": "Downloads kept from auto-delete",
   "equalizerPresets": "Equalizer presets",
-  "equalizerPresetsDescription": "Your custom equalizer presets"
+  "equalizerPresetsDescription": "Your custom equalizer presets",
+  "localNetworkAccessDenied": "Local network access is off. Storii can't reach your server on this network.",
+  "openSettings": "Open settings"
 }

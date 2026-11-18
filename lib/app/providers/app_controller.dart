@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/deep_link_controller.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/features/downloads/logic/download_auto_delete.dart';
@@ -37,4 +38,5 @@ void appController(Ref ref) {
   keepAlive(whatsNewControllerProvider);
   keepAlive(downloadAutoDeleteWatcherProvider);
   keepAlive(equalizerControllerProvider);
+  keepAlive(localNetworkAccessWatcherProvider);
 }

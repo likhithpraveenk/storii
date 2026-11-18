@@ -95,5 +95,7 @@
   "episodes": "Епізоди",
   "search": "Пошук",
   "dateFormat": "Формат дати",
-  "invalidFormat": "Неправильний формат"
+  "invalidFormat": "Неправильний формат",
+  "localNetworkAccessDenied": "Доступ до локальної мережі вимкнено. Storii не може підключитися до сервера в цій мережі.",
+  "openSettings": "Відкрити налаштування"
 }

@@ -697,5 +697,7 @@
   "equalizerPresetFlat": "Flach",
   "equalizerPresetVocal": "Stimme",
   "equalizerPresetWarm": "Warm",
-  "equalizerPresetWhisper": "Sanfte Stimme"
+  "equalizerPresetWhisper": "Sanfte Stimme",
+  "localNetworkAccessDenied": "Zugriff auf lokales Netzwerk ist deaktiviert. Storii kann Ihren Server in diesem Netzwerk nicht erreichen.",
+  "openSettings": "Einstellungen öffnen"
 }

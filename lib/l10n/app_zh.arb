@@ -540,5 +540,7 @@
   "both": "两者",
   "miniplayerSubtitle": "迷你播放器副标题",
   "osNotificationCanStopSubtitle": "在系统通知中显示停止按钮",
-  "osNotificationCanSpeedSubtitle": "在系统通知中显示播放速度按钮"
+  "osNotificationCanSpeedSubtitle": "在系统通知中显示播放速度按钮",
+  "localNetworkAccessDenied": "本地网络访问已关闭。Storii 无法在此网络上连接到服务器。",
+  "openSettings": "打开设置"
 }

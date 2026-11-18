@@ -250,6 +250,62 @@ final class IsServerOfflineProvider
 
 String _$isServerOfflineHash() => r'95fa17ba611909319350b8a011c8ea0f858f2af2';
 
+/// Android 17+: asks for local network access when the active server
+/// resolves to a LAN address. Re-checked on network changes and when the
+/// app returns to the foreground, since a split-horizon domain is only
+/// local while on the home network.
+
+@ProviderFor(localNetworkAccessWatcher)
+final localNetworkAccessWatcherProvider = LocalNetworkAccessWatcherProvider._();
+
+/// Android 17+: asks for local network access when the active server
+/// resolves to a LAN address. Re-checked on network changes and when the
+/// app returns to the foreground, since a split-horizon domain is only
+/// local while on the home network.
+
+final class LocalNetworkAccessWatcherProvider
+    extends $FunctionalProvider<void, void, void>
+    with $Provider<void> {
+  /// Android 17+: asks for local network access when the active server
+  /// resolves to a LAN address. Re-checked on network changes and when the
+  /// app returns to the foreground, since a split-horizon domain is only
+  /// local while on the home network.
+  LocalNetworkAccessWatcherProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'localNetworkAccessWatcherProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$localNetworkAccessWatcherHash();
+
+  @$internal
+  @override
+  $ProviderElement<void> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  void create(Ref ref) {
+    return localNetworkAccessWatcher(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(void value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<void>(value),
+    );
+  }
+}
+
+String _$localNetworkAccessWatcherHash() =>
+    r'3eef8423642d32fbe4c297babc110fe32a8dad84';
+
 @ProviderFor(ActiveServerUrl)
 final activeServerUrlProvider = ActiveServerUrlProvider._();
 
@@ -282,7 +338,7 @@ final class ActiveServerUrlProvider
   }
 }
 
-String _$activeServerUrlHash() => r'd15f10527ee60ed977c6ec4b738d6ea8248e05b3';
+String _$activeServerUrlHash() => r'ecee7ab2bdd3fb61fd94a4a9a6b9c7469f60ee1a';
 
 abstract class _$ActiveServerUrl extends $Notifier<Uri> {
   Uri build();
