@@ -20,7 +20,7 @@ class RecentSessions extends StatelessWidget {
         children: [
           Text(l10n.recentSessions, style: theme.textTheme.titleMedium),
           ...sorted.map((session) {
-            final isLessThanMin = session.timeListening.inSeconds < 60;
+            final isLessThanMin = (session.timeListening?.inSeconds ?? 0) < 60;
 
             return Column(
               children: [
@@ -29,7 +29,7 @@ class RecentSessions extends StatelessWidget {
                   title: Text('${session.displayTitle}'),
                   subtitle: Text(session.updatedAt.toRelativeTime()),
                   trailing: Text(
-                    session.timeListening.toReadableDuration(
+                    (session.timeListening ?? .zero).toReadableDuration(
                       showSeconds: isLessThanMin,
                     ),
                     style: theme.textTheme.bodySmall?.copyWith(

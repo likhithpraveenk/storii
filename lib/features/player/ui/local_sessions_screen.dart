@@ -81,7 +81,7 @@ class _SessionRow extends ConsumerWidget {
     final item = ref.watch(downloadedItemProvider(session.libraryItemId)).value;
 
     final isActive = activeSessionId != null && activeSessionId == session.id;
-    final isLessThanMin = session.timeListening.inSeconds < 60;
+    final isLessThanMin = (session.timeListening?.inSeconds ?? 0) < 60;
 
     return Column(
       children: [
@@ -168,11 +168,11 @@ class _SessionRow extends ConsumerWidget {
         ),
         _InfoRow(
           label: l10n.currentPosition,
-          value: session.currentTime.toTime(padHours: true),
+          value: (session.currentTime ?? .zero).toTime(padHours: true),
         ),
         _InfoRow(
           label: l10n.totalListeningTime,
-          value: session.timeListening.toReadableDuration(
+          value: (session.timeListening ?? .zero).toReadableDuration(
             showSeconds: isLessThanMin,
           ),
         ),

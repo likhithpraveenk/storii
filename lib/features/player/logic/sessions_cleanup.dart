@@ -50,8 +50,8 @@ class SessionsCleanup {
           await repo.syncSession(
             sessionId: session.id,
             params: SyncSessionRequestParams(
-              currentTime: session.currentTime,
-              timeListened: session.timeListening,
+              currentTime: session.currentTime ?? .zero,
+              timeListened: session.timeListening ?? .zero,
             ),
           );
         }
