@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/connection_providers.dart';
@@ -29,7 +28,7 @@ Future<UserDomain> authenticatedUser(Ref ref) async {
       logMessage: 'Error authenticating user',
       debug: true,
     );
-    LogService.log('user auth success!', source: 'authenticatedUser');
+    // LogService.log('user auth success!', source: 'authenticatedUser');
     final serverId = ref.read(serversStoreProvider).get(user.serverUrl)?.id;
     if (serverId != null) {
       await ref

@@ -6,6 +6,19 @@ import 'package:storii/app/models/log_entry.dart';
 import 'package:storii/app/providers/logs_provider.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 
+const _maxLines = 8;
+
+String? _truncateStackTrace(StackTrace? st) {
+  if (st == null) return null;
+  final lines = st.toString().split('\n');
+  return lines.take(_maxLines).join('\n');
+}
+
+String _truncateMessage(String msg) {
+  final lines = msg.split('\n');
+  return lines.take(_maxLines).join('\n');
+}
+
 class LogService {
   static late final ProviderContainer _container;
   static bool _httpLoggingEnabled = false;
@@ -33,10 +46,10 @@ class LogService {
     final msg = originalError != null ? '$message\n$originalError' : message;
     final entry = LogEntry(
       timestamp: DateTime.now(),
-      message: msg,
+      message: _truncateMessage(msg),
       source: source,
       level: level,
-      stackTrace: stackTrace?.toString(),
+      stackTrace: _truncateStackTrace(stackTrace),
     );
 
     if (kDebugMode) {

@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/api/abs/abs_api.dart';
-import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/logs/logs_interceptor.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/network/offline_cache_interceptor.dart';
@@ -119,7 +118,7 @@ Future<SocketApi> socketApi(Ref ref, UserDomain user) async {
     headers: headers,
     getToken: () => tokenService.getAccessToken(user.id),
     onAuthFailure: (reason) {
-      LogService.log('Socket authentication failed: $reason');
+      // LogService.log('Socket authentication failed: $reason');
     },
     autoConnect: !offlineMode,
   );
