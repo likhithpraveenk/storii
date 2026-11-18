@@ -556,5 +556,7 @@
   "osNotificationCanStopSubtitle": "Vis stoppknapp i systemvarselet",
   "osNotificationCanSpeedSubtitle": "Vis knapp for avspillingshastighet i systemvarselet",
   "hardwareClickToSkipChapters": "Bruk fysiske knapper til å hoppe mellom kapitler",
-  "hardwareClickToSkipChaptersSubtitle": "Bruk neste- og forrige-knappene til å hoppe mellom kapitler i stedet for å spole"
+  "hardwareClickToSkipChaptersSubtitle": "Bruk neste- og forrige-knappene til å hoppe mellom kapitler i stedet for å spole",
+  "localNetworkAccessDenied": "Tilgang til lokalt nettverk er av. Storii når ikke serveren din på dette nettverket.",
+  "openSettings": "Åpne innstillinger"
 }

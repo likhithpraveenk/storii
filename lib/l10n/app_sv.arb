@@ -500,5 +500,7 @@
   "osNotificationCanSkipChapter": "Hoppa mellan kapitel",
   "osNotificationCanSkipChapterSubtitle": "Visa knappar för att hoppa till nästa/föregående kapitel i systemavisering",
   "osNotificationCanStopSubtitle": "Visa stoppknapp i systemavisering",
-  "osNotificationCanSpeedSubtitle": "Visa knapp för uppspelningshastighet i systemavisering"
+  "osNotificationCanSpeedSubtitle": "Visa knapp för uppspelningshastighet i systemavisering",
+  "localNetworkAccessDenied": "Åtkomst till lokalt nätverk är avstängd. Storii kan inte nå din server på det här nätverket.",
+  "openSettings": "Öppna inställningar"
 }

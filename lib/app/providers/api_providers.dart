@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/logs/logs_interceptor.dart';
 import 'package:storii/app/models/user.dart';
+import 'package:storii/app/network/local_network_interceptor.dart';
 import 'package:storii/app/network/offline_cache_interceptor.dart';
 import 'package:storii/app/providers/connection_providers.dart';
 import 'package:storii/app/providers/is_background_provider.dart';
@@ -40,6 +41,7 @@ ApiClient apiClient(Ref ref, UserDomain user) {
     // TODO: user agent to all http requests
     interceptors: [
       LogsInterceptor(),
+      LocalNetworkInterceptor(),
       OfflineCacheInterceptor(
         isOffline: () => ref.read(isServerOfflineProvider),
         cacheOptions: cacheOptions,
@@ -78,7 +80,7 @@ AuthApi authApi(Ref ref, Uri baseUrl) {
     BaseApiClient(
       baseUrl: baseUrl,
       headers: headers,
-      interceptors: [LogsInterceptor()],
+      interceptors: [LogsInterceptor(), LocalNetworkInterceptor()],
     ),
   );
 }

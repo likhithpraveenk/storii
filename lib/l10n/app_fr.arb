@@ -540,5 +540,7 @@
   "osNotificationCanSkipChapter": "Sauter les chapitres",
   "osNotificationCanSkipChapterSubtitle": "Afficher les boutons de chapitre suivant/précédent dans la notification système",
   "osNotificationCanStopSubtitle": "Afficher le bouton d'arrêt dans la notification système",
-  "osNotificationCanSpeedSubtitle": "Afficher le bouton de vitesse de lecture dans la notification système"
+  "osNotificationCanSpeedSubtitle": "Afficher le bouton de vitesse de lecture dans la notification système",
+  "localNetworkAccessDenied": "L'accès au réseau local est désactivé. Storii ne peut pas joindre votre serveur sur ce réseau.",
+  "openSettings": "Ouvrir les paramètres"
 }

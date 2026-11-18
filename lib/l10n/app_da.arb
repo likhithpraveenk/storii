@@ -451,5 +451,7 @@
   "osNotificationCanSkipChapter": "Spring kapitler over",
   "osNotificationCanSkipChapterSubtitle": "Vis knapper til at springe til næste/forrige kapitel i systemmeddelelsen",
   "osNotificationCanStopSubtitle": "Vis stopknap i systemmeddelelsen",
-  "osNotificationCanSpeedSubtitle": "Vis knap til afspilningshastighed i systemmeddelelsen"
+  "osNotificationCanSpeedSubtitle": "Vis knap til afspilningshastighed i systemmeddelelsen",
+  "localNetworkAccessDenied": "Lokal netværksadgang er slået fra. Storii kan ikke nå din server på dette netværk.",
+  "openSettings": "Åbn indstillinger"
 }
