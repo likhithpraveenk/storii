@@ -42,7 +42,7 @@ final class EqualizerControllerProvider
 }
 
 String _$equalizerControllerHash() =>
-    r'd794bc00ee6305eeeea65aea9d9b27406bde75ee';
+    r'70f715d27c03db249a029f877e0d5f26ffdeff2b';
 
 abstract class _$EqualizerController extends $Notifier<EqualizerDraft> {
   EqualizerDraft build();

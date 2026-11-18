@@ -5,6 +5,7 @@ import 'package:storii/features/equalizer/logic/equalizer_presets.dart';
 import 'package:storii/features/equalizer/logic/equalizer_service.dart';
 import 'package:storii/features/equalizer/models/equalizer.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
+import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/storage/local/equalizer_store.dart';
 
@@ -21,8 +22,12 @@ class EqualizerController extends _$EqualizerController {
   @override
   EqualizerDraft build() {
     final preset = ref.watch(currentEqualizerPresetProvider);
-    Future.microtask(() => _apply(enabled: _isEnabled, bands: preset.bands));
-    Future.microtask(_applyLoudness);
+    Future.microtask(() {
+      if (ref.read(sessionProvider) != null) {
+        _apply(enabled: _isEnabled, bands: preset.bands);
+        _applyLoudness();
+      }
+    });
     ref.listen(isEqualizerEnabledProvider, (_, enabled) {
       _apply(enabled: enabled, bands: state.bands);
     });
