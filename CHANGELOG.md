@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
-## Fixed
+## [v0.13.5] - 2026-11-18
+
+### Fixed
 
 - playback session model update for null values
 - dismiss notification on download complete
@@ -880,7 +882,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.13.4...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.13.5...HEAD
+[v0.13.5]: https://github.com/likhithpraveenk/storii/compare/v0.13.4...v0.13.5
 [v0.13.4]: https://github.com/likhithpraveenk/storii/compare/v0.13.3...v0.13.4
 [v0.13.4-beta.1]: https://github.com/likhithpraveenk/storii/compare/v0.13.3...v0.13.4-beta.1
 [v0.13.3]: https://github.com/likhithpraveenk/storii/compare/v0.13.2...v0.13.3

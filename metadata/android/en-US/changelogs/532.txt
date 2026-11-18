@@ -1,0 +1,4 @@
+Fixed:
+- playback session model update for null values
+- dismiss notification on download complete
+- default download location respected
