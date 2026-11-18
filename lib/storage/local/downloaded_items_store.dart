@@ -8,10 +8,28 @@ import 'package:storii/storage/hive/boxes.dart';
 
 part 'downloaded_items_store.g.dart';
 
+LibraryItem? _decode(String? value, String key) {
+  if (value == null) return null;
+  try {
+    return LibraryItem.fromJson(jsonDecode(value) as Map<String, dynamic>);
+  } catch (e, st) {
+    LogService.log(
+      'failed to decode downloaded item'
+      '\nrecovery: go to book details screen when connected to server',
+      level: .error,
+      originalError: e,
+      stackTrace: st,
+      source: 'DownloadedItemsStore',
+    );
+    _box.delete(key);
+    return null;
+  }
+}
+
+LazyBox<String> get _box => Hive.lazyBox(downloadedItemsBoxName);
+
 class DownloadedItemsStore {
   const new();
-
-  LazyBox<String> get _box => Hive.lazyBox(downloadedItemsBoxName);
 
   Future<void> put(LibraryItem item) async {
     await _box.put(item.id, jsonEncode(item));
@@ -19,19 +37,7 @@ class DownloadedItemsStore {
 
   Future<LibraryItem?> get(String id) async {
     final json = await _box.get(id);
-    if (json == null) return null;
-    try {
-      return LibraryItem.fromJson(jsonDecode(json) as Map<String, dynamic>);
-    } catch (e, st) {
-      LogService.log(
-        'failed to decode downloaded item: $id',
-        level: .error,
-        originalError: e,
-        stackTrace: st,
-        source: 'DownloadedItemsStore',
-      );
-      return null;
-    }
+    return _decode(json, id);
   }
 
   Future<void> delete(String id) => _box.delete(id);

@@ -111,7 +111,7 @@ class SessionNotifier extends _$SessionNotifier {
 
     final updated = session.copyWith(
       currentTime: position,
-      timeListening: session.timeListening + totalListened,
+      timeListening: (session.timeListening ?? .zero) + totalListened,
       updatedAt: DateTime.now(),
     );
 

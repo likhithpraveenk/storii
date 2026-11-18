@@ -42,7 +42,7 @@ class DownloadTask {
       );
 
       await persister.flush();
-      await notifications.finish(key);
+      await notifications.dismiss(key);
     } catch (e, st) {
       await _flushQuietly(persister);
       final error = AppError.from(e, st);
@@ -54,8 +54,7 @@ class DownloadTask {
         stackTrace: error.stackTrace,
       );
       await _setStatus(key, .failed);
-
-      await notifications.finish(key);
+      await notifications.dismiss(key);
       final failedItem = await store.get(key);
       if (failedItem != null) {
         await notifications.update(key, failedItem);

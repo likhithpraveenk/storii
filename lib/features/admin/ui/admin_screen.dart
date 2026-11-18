@@ -57,9 +57,9 @@ class _OnlineUsersTile extends ConsumerWidget {
               user.type.isAdmin ? Icons.shield_outlined : Icons.person_outline,
             ),
             title: Text(user.username),
-            subtitle: user.session?.mediaMetadata.title == null
+            subtitle: user.session?.mediaMetadata?.title == null
                 ? null
-                : Text(user.session?.mediaMetadata.title ?? ''),
+                : Text(user.session?.mediaMetadata?.title ?? ''),
           ),
       ],
     );

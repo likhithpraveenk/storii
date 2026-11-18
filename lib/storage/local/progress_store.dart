@@ -10,18 +10,19 @@ import 'package:storii/storage/hive/boxes.dart';
 
 part 'progress_store.g.dart';
 
-MediaProgress? _decode(String? value) {
+MediaProgress? _decode(String? value, String key) {
   if (value == null) return null;
   try {
     return MediaProgress.fromJson(jsonDecode(value));
   } catch (e, st) {
     LogService.log(
-      'failed to decode media progress: $value',
+      'failed to decode media progress',
       level: .error,
       originalError: e,
       stackTrace: st,
       source: 'ProgressStore',
     );
+    _box.delete(key);
     return null;
   }
 }
@@ -50,7 +51,7 @@ class ProgressStore {
     for (final key in _box.keys) {
       final mapKey = _splitKey(key, userId);
       if (mapKey == null) continue;
-      final item = _decode(await _box.get(key));
+      final item = _decode(await _box.get(key), key);
       if (item != null) {
         items[mediaItemIdKey(item.libraryItemId, item.episodeId)] = item;
       }
@@ -94,7 +95,7 @@ class ProgressStore {
           final mapKey = _splitKey(e.key, userId);
           if (mapKey == null) return null;
 
-          final item = e.deleted ? null : _decode(e.value);
+          final item = e.deleted ? null : _decode(e.value, e.key);
           if (item != null) {
             map[mediaItemIdKey(item.libraryItemId, item.episodeId)] = item;
           } else {

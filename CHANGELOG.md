@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+## Fixed
+
+- playback session model update for null values
+- dismiss notification on download complete
+- default download location respected
+
 ## [v0.13.4] - 2026-11-15
 
 ### Added

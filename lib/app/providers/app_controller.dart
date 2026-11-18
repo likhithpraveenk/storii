@@ -19,21 +19,22 @@ part 'app_controller.g.dart';
 
 @Riverpod(keepAlive: true)
 void appController(Ref ref) {
-  ref
-    ..watch(downloadedItemsMigrationProvider)
-    ..watch(downloadQueueProvider)
-    ..watch(widgetControllerProvider)
-    ..watch(widgetPlayControllerProvider)
-    ..watch(deepLinkControllerProvider)
-    ..watch(librarySyncControllerProvider)
-    ..watch(playerStateWatcherProvider)
-    ..watch(sessionSyncWatcherProvider)
-    ..watch(audioSettingsWatcherProvider)
-    ..watch(queueControllerProvider)
-    ..watch(appStartThemeUpdateProvider)
-    ..watch(mediaProgressSyncControllerProvider)
-    ..watch(sleepWindowConsumerProvider)
-    ..watch(whatsNewControllerProvider)
-    ..watch(downloadAutoDeleteWatcherProvider)
-    ..watch(equalizerControllerProvider);
+  void keepAlive(ProviderListenable<Object?> p) => ref.listen(p, (_, _) {});
+
+  keepAlive(downloadedItemsMigrationProvider);
+  keepAlive(downloadQueueProvider);
+  keepAlive(widgetControllerProvider);
+  keepAlive(widgetPlayControllerProvider);
+  keepAlive(deepLinkControllerProvider);
+  keepAlive(librarySyncControllerProvider);
+  keepAlive(playerStateWatcherProvider);
+  keepAlive(sessionSyncWatcherProvider);
+  keepAlive(audioSettingsWatcherProvider);
+  keepAlive(queueControllerProvider);
+  keepAlive(appStartThemeUpdateProvider);
+  keepAlive(mediaProgressSyncControllerProvider);
+  keepAlive(sleepWindowConsumerProvider);
+  keepAlive(whatsNewControllerProvider);
+  keepAlive(downloadAutoDeleteWatcherProvider);
+  keepAlive(equalizerControllerProvider);
 }

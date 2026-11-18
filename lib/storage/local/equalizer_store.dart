@@ -9,7 +9,7 @@ import 'package:storii/storage/hive/boxes.dart';
 
 part 'equalizer_store.g.dart';
 
-EqualizerPreset? _decode(String? value) {
+EqualizerPreset? _decode(String? value, String key) {
   if (value == null) return null;
   try {
     return EqualizerPreset.fromJson(jsonDecode(value));
@@ -21,17 +21,18 @@ EqualizerPreset? _decode(String? value) {
       stackTrace: st,
       source: 'EqualizerStore',
     );
+    _box.delete(key);
     return null;
   }
 }
 
+Box<String> get _box => Hive.box(equalizerBoxName);
+
 class EqualizerStore {
   const new();
 
-  Box<String> get _box => Hive.box(equalizerBoxName);
-
   List<EqualizerPreset> getAll() {
-    return _box.values.map(_decode).nonNulls.toList();
+    return _box.keys.map((k) => _decode(_box.get(k), k)).nonNulls.toList();
   }
 
   Stream<List<EqualizerPreset>> watch() {

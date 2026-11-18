@@ -61,30 +61,21 @@ class SeriesOptionsWidget extends ConsumerWidget {
             title: Text(l10n.downloadAll),
             leading: const Icon(Icons.file_download_outlined),
             onTap: () async {
-              final availableLocations = ref.read(
-                storageLocationsByTypeProvider(.book),
-              );
               final queue = ref.read(downloadQueueProvider.notifier);
-              if (availableLocations.length == 1) {
+              final defaultLocation = ref.read(
+                preferredDownloadLocationProvider(.book),
+              );
+              final location =
+                  defaultLocation ??
+                  await showDialog<StorageLocation?>(
+                    context: context,
+                    builder: (_) => const ChooseLocationDialog(.book),
+                  );
+              if (location != null) {
                 for (final book in series.books) {
                   unawaited(
-                    queue.enqueue(
-                      libraryItemId: book.id,
-                      location: availableLocations.first,
-                    ),
+                    queue.enqueue(libraryItemId: book.id, location: location),
                   );
-                }
-              } else {
-                final location = await showDialog<StorageLocation?>(
-                  context: context,
-                  builder: (_) => const ChooseLocationDialog(.book),
-                );
-                if (location != null) {
-                  for (final book in series.books) {
-                    unawaited(
-                      queue.enqueue(libraryItemId: book.id, location: location),
-                    );
-                  }
                 }
               }
               if (context.mounted) {

@@ -116,14 +116,15 @@ class FullPlayer extends ConsumerWidget {
                   FullPlayerActionsWidget(session),
                   const SizedBox(height: 8),
                 ],
-                Text(
-                  session.playMethod.label,
-                  textAlign: .center,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.outlineVariant,
-                    fontStyle: .italic,
+                if (session.playMethod != null)
+                  Text(
+                    session.playMethod!.label,
+                    textAlign: .center,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.outlineVariant,
+                      fontStyle: .italic,
+                    ),
                   ),
-                ),
                 SizedBox(height: MediaQuery.paddingOf(context).bottom),
               ],
             ),

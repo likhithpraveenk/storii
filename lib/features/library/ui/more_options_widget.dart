@@ -224,34 +224,25 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
         onTap: () async {
           if (_isBusy) return;
           final MediaType type = widget.episodeId != null ? .podcast : .book;
-          final availableLocations = ref.read(
-            storageLocationsByTypeProvider(type),
-          );
           final queue = ref.read(downloadQueueProvider.notifier);
-          if (availableLocations.length == 1) {
+          final defaultLocation = ref.read(
+            preferredDownloadLocationProvider(type),
+          );
+          final location =
+              defaultLocation ??
+              await showDialog<StorageLocation?>(
+                context: context,
+                builder: (_) => ChooseLocationDialog(type),
+              );
+          if (location != null) {
             setState(() => _isBusy = true);
             await queue.enqueue(
               libraryItemId: widget.itemId,
               episodeId: widget.episodeId,
-              location: availableLocations.first,
+              location: location,
             );
             if (!mounted) return;
             setState(() => _isBusy = false);
-          } else {
-            final location = await showDialog<StorageLocation?>(
-              context: context,
-              builder: (_) => ChooseLocationDialog(type),
-            );
-            if (location != null) {
-              setState(() => _isBusy = true);
-              await queue.enqueue(
-                libraryItemId: widget.itemId,
-                episodeId: widget.episodeId,
-                location: location,
-              );
-              if (!mounted) return;
-              setState(() => _isBusy = false);
-            }
           }
         },
       ));

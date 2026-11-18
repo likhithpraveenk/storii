@@ -45,12 +45,12 @@ class LocalSessionIcon extends ConsumerWidget {
                     const SizedBox(height: 8),
                     _SessionInfoRow(
                       label: l10n.currentPosition,
-                      value: session?.currentTime.toTime(padHours: true),
+                      value: session?.currentTime?.toTime(padHours: true),
                     ),
                     const SizedBox(height: 8),
                     _SessionInfoRow(
                       label: l10n.totalListeningTime,
-                      value: session?.timeListening.toReadableDuration(
+                      value: session?.timeListening?.toReadableDuration(
                         showSeconds: true,
                       ),
                     ),

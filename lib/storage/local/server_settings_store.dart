@@ -9,18 +9,20 @@ import 'package:storii/storage/hive/boxes.dart';
 
 part 'server_settings_store.g.dart';
 
-ServerSettings? _decode(String? value) {
+ServerSettings? _decode(String? value, String key) {
   if (value == null) return null;
   try {
     return ServerSettings.fromJson(jsonDecode(value));
   } catch (e, st) {
     LogService.log(
-      'failed to decode server settings: $value',
+      'failed to decode server settings'
+      '\nrecovery: login again for server settings',
       level: .error,
       originalError: e,
       stackTrace: st,
       source: 'ServerSettingsStore',
     );
+    _box.delete(key);
     return null;
   }
 }
@@ -35,7 +37,7 @@ class ServerSettingsStore {
 
   Future<void> remove(String serverId) => _box.delete(serverId);
 
-  ServerSettings? get(String serverId) => _decode(_box.get(serverId));
+  ServerSettings? get(String serverId) => _decode(_box.get(serverId), serverId);
 }
 
 @riverpod

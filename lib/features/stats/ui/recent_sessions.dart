@@ -1,7 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/features/stats/ui/stat_widgets.dart';
 import 'package:storii/shared/helpers/extensions.dart';
+import 'package:storii/shared/widgets/empty_state.dart';
 
 class RecentSessions extends StatelessWidget {
   const new(this.sessions, {super.key});
@@ -9,39 +11,33 @@ class RecentSessions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    if (sessions.isEmpty) return const EmptyState();
     final sorted = [...sessions]
       ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
     return Padding(
-      padding: const .symmetric(horizontal: 24),
+      padding: const .symmetric(horizontal: 24, vertical: 8),
       child: Column(
         crossAxisAlignment: .start,
         children: [
-          Text(l10n.recentSessions, style: theme.textTheme.titleMedium),
-          ...sorted.map((session) {
-            final isLessThanMin = session.timeListening.inSeconds < 60;
-
-            return Column(
+          Text(
+            l10n.recentSessions,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 4),
+          for (final (i, session) in sorted.indexed)
+            Column(
               children: [
                 ListTile(
                   contentPadding: .zero,
                   title: Text('${session.displayTitle}'),
                   subtitle: Text(session.updatedAt.toRelativeTime()),
-                  trailing: Text(
-                    session.timeListening.toReadableDuration(
-                      showSeconds: isLessThanMin,
-                    ),
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
+                  trailing: DurationPill(session.timeListening ?? .zero),
                 ),
-                if (session != sorted.last)
+                if (i != sorted.length - 1)
                   const Divider(height: 0, thickness: 0.5),
               ],
-            );
-          }),
+            ),
         ],
       ),
     );

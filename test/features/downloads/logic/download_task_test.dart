@@ -98,7 +98,7 @@ void main() {
 
       expect((await store.get('item-1'))?.status, DownloadStatus.completed);
       expect(notifications.countOf('acquire'), 1);
-      expect(notifications.countOf('release'), 1);
+      expect(notifications.countOf('dismiss'), 1);
       expect(notifications.progressCalls.last.isComplete, isTrue);
     });
 
@@ -118,7 +118,7 @@ void main() {
 
       expect((await store.get('item-1'))?.status, DownloadStatus.failed);
       expect(notifications.progressCalls.last.isFailed, isTrue);
-      expect(notifications.countOf('release'), 1);
+      expect(notifications.countOf('dismiss'), 1);
     });
 
     test('does nothing when the item is gone', () async {

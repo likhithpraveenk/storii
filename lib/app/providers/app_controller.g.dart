@@ -47,4 +47,4 @@ final class AppControllerProvider extends $FunctionalProvider<void, void, void>
   }
 }
 
-String _$appControllerHash() => r'68b70bf2389ee0230f393af32e5c93e9add0527e';
+String _$appControllerHash() => r'd8c2be534c1a8e3cda5ff2fe7e25c433f6e273ea';

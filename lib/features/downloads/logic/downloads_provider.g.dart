@@ -231,7 +231,7 @@ final class ActiveDownloadsProvider
   }
 }
 
-String _$activeDownloadsHash() => r'e701897929a66c6ffebc28fbe17ddef7f6d61d9d';
+String _$activeDownloadsHash() => r'47a16b791845d82990861e3199d2a7cc494ce007';
 
 @ProviderFor(completedDownloads)
 final completedDownloadsProvider = CompletedDownloadsProvider._();

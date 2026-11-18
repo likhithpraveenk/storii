@@ -11,70 +11,22 @@ class FinishedStats extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final booksCount = ref.watch(totalFinishedBooksProvider).value ?? 0;
     final episodesCount = ref.watch(totalFinishedEpisodesProvider).value ?? 0;
+    final numberStyle = Theme.of(context).textTheme.headlineMedium
+        ?.copyWith(fontWeight: .w400);
 
-    return Padding(
-      padding: const .symmetric(horizontal: 24),
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            _FinishedStat(
-              icon: Icons.menu_book_outlined,
-              label: l10n.booksFinished,
-              count: booksCount,
-            ),
-            if (episodesCount == 0)
-              const SizedBox.shrink()
-            else
-              Row(
-                children: [
-                  const StatVerticalDivider(),
-                  _FinishedStat(
-                    icon: Icons.podcasts_outlined,
-                    label: l10n.episodesFinished,
-                    count: episodesCount,
-                  ),
-                ],
-              ),
-          ],
+    return StatRow([
+      if (booksCount > 0)
+        StatCard(
+          icon: Icons.menu_book_outlined,
+          label: l10n.booksFinished,
+          child: CountUp(booksCount, style: numberStyle),
         ),
-      ),
-    );
-  }
-}
-
-class _FinishedStat extends StatelessWidget {
-  const new({required this.icon, required this.label, required this.count});
-  final IconData icon;
-  final String label;
-  final int count;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: .start,
-        children: [
-          Row(
-            children: [
-              Icon(icon, size: 14, color: theme.colorScheme.onSurfaceVariant),
-              const SizedBox(width: 4),
-              Text(
-                label,
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Text(
-            '$count',
-            style: theme.textTheme.headlineMedium?.copyWith(fontWeight: .w400),
-          ),
-        ],
-      ),
-    );
+      if (episodesCount > 0)
+        StatCard(
+          icon: Icons.podcasts_outlined,
+          label: l10n.episodesFinished,
+          child: CountUp(episodesCount, style: numberStyle),
+        ),
+    ]);
   }
 }

@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PlaybackSession {
 
- String get id; String get userId; String get libraryId; String get libraryItemId; String? get episodeId; MediaType get mediaType; MediaMetadata get mediaMetadata; List<BookChapter> get chapters; String? get displayTitle; String? get displayAuthor; String? get coverPath; Duration get duration; PlayMethod get playMethod; String get mediaPlayer; DeviceInfo? get deviceInfo; String get date; String get dayOfWeek; Duration get timeListening; Duration get startTime; Duration get currentTime; DateTime get startedAt; DateTime get updatedAt; SessionUser? get user; List<AudioTrack>? get audioTracks; LibraryItem? get libraryItem;
+ String get id; String get userId; String get libraryId; String get libraryItemId; String? get episodeId; MediaType get mediaType; MediaMetadata? get mediaMetadata; List<BookChapter> get chapters; String? get displayTitle; String? get displayAuthor; String? get coverPath; Duration get duration; PlayMethod? get playMethod; String? get mediaPlayer; DeviceInfo? get deviceInfo; String? get date; String? get dayOfWeek; Duration? get timeListening; Duration? get startTime; Duration? get currentTime; DateTime get startedAt; DateTime get updatedAt; SessionUser? get user; List<AudioTrack>? get audioTracks; LibraryItem? get libraryItem;
 /// Create a copy of PlaybackSession
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -54,11 +54,11 @@ abstract mixin class $PlaybackSessionCopyWith<$Res>  {
   factory $PlaybackSessionCopyWith(PlaybackSession value, $Res Function(PlaybackSession) _then) = _$PlaybackSessionCopyWithImpl;
 @useResult
 $Res call({
- String id, String userId, String libraryId, String libraryItemId, String? episodeId, MediaType mediaType, MediaMetadata mediaMetadata, List<BookChapter> chapters, String? displayTitle, String? displayAuthor, String? coverPath, Duration duration, PlayMethod playMethod, String mediaPlayer, DeviceInfo? deviceInfo, String date, String dayOfWeek, Duration timeListening, Duration startTime, Duration currentTime, DateTime startedAt, DateTime updatedAt, SessionUser? user, List<AudioTrack>? audioTracks, LibraryItem? libraryItem
+ String id, String userId, String libraryId, String libraryItemId, String? episodeId, MediaType mediaType, MediaMetadata? mediaMetadata, List<BookChapter> chapters, String? displayTitle, String? displayAuthor, String? coverPath, Duration duration, PlayMethod? playMethod, String? mediaPlayer, DeviceInfo? deviceInfo, String? date, String? dayOfWeek, Duration? timeListening, Duration? startTime, Duration? currentTime, DateTime startedAt, DateTime updatedAt, SessionUser? user, List<AudioTrack>? audioTracks, LibraryItem? libraryItem
 });
 
 
-$MediaMetadataCopyWith<$Res> get mediaMetadata;$DeviceInfoCopyWith<$Res>? get deviceInfo;$SessionUserCopyWith<$Res>? get user;$LibraryItemCopyWith<$Res>? get libraryItem;
+$MediaMetadataCopyWith<$Res>? get mediaMetadata;$DeviceInfoCopyWith<$Res>? get deviceInfo;$SessionUserCopyWith<$Res>? get user;$LibraryItemCopyWith<$Res>? get libraryItem;
 
 }
 /// @nodoc
@@ -71,7 +71,7 @@ class _$PlaybackSessionCopyWithImpl<$Res>
 
 /// Create a copy of PlaybackSession
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? libraryId = null,Object? libraryItemId = null,Object? episodeId = freezed,Object? mediaType = null,Object? mediaMetadata = null,Object? chapters = null,Object? displayTitle = freezed,Object? displayAuthor = freezed,Object? coverPath = freezed,Object? duration = null,Object? playMethod = null,Object? mediaPlayer = null,Object? deviceInfo = freezed,Object? date = null,Object? dayOfWeek = null,Object? timeListening = null,Object? startTime = null,Object? currentTime = null,Object? startedAt = null,Object? updatedAt = null,Object? user = freezed,Object? audioTracks = freezed,Object? libraryItem = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? libraryId = null,Object? libraryItemId = null,Object? episodeId = freezed,Object? mediaType = null,Object? mediaMetadata = freezed,Object? chapters = null,Object? displayTitle = freezed,Object? displayAuthor = freezed,Object? coverPath = freezed,Object? duration = null,Object? playMethod = freezed,Object? mediaPlayer = freezed,Object? deviceInfo = freezed,Object? date = freezed,Object? dayOfWeek = freezed,Object? timeListening = freezed,Object? startTime = freezed,Object? currentTime = freezed,Object? startedAt = null,Object? updatedAt = null,Object? user = freezed,Object? audioTracks = freezed,Object? libraryItem = freezed,}) {
   return _then(PlaybackSession(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -79,21 +79,21 @@ as String,libraryId: null == libraryId ? _self.libraryId : libraryId // ignore: 
 as String,libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
 as String,episodeId: freezed == episodeId ? _self.episodeId : episodeId // ignore: cast_nullable_to_non_nullable
 as String?,mediaType: null == mediaType ? _self.mediaType : mediaType // ignore: cast_nullable_to_non_nullable
-as MediaType,mediaMetadata: null == mediaMetadata ? _self.mediaMetadata : mediaMetadata // ignore: cast_nullable_to_non_nullable
-as MediaMetadata,chapters: null == chapters ? _self.chapters : chapters // ignore: cast_nullable_to_non_nullable
+as MediaType,mediaMetadata: freezed == mediaMetadata ? _self.mediaMetadata : mediaMetadata // ignore: cast_nullable_to_non_nullable
+as MediaMetadata?,chapters: null == chapters ? _self.chapters : chapters // ignore: cast_nullable_to_non_nullable
 as List<BookChapter>,displayTitle: freezed == displayTitle ? _self.displayTitle : displayTitle // ignore: cast_nullable_to_non_nullable
 as String?,displayAuthor: freezed == displayAuthor ? _self.displayAuthor : displayAuthor // ignore: cast_nullable_to_non_nullable
 as String?,coverPath: freezed == coverPath ? _self.coverPath : coverPath // ignore: cast_nullable_to_non_nullable
 as String?,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
-as Duration,playMethod: null == playMethod ? _self.playMethod : playMethod // ignore: cast_nullable_to_non_nullable
-as PlayMethod,mediaPlayer: null == mediaPlayer ? _self.mediaPlayer : mediaPlayer // ignore: cast_nullable_to_non_nullable
-as String,deviceInfo: freezed == deviceInfo ? _self.deviceInfo : deviceInfo // ignore: cast_nullable_to_non_nullable
-as DeviceInfo?,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
-as String,dayOfWeek: null == dayOfWeek ? _self.dayOfWeek : dayOfWeek // ignore: cast_nullable_to_non_nullable
-as String,timeListening: null == timeListening ? _self.timeListening : timeListening // ignore: cast_nullable_to_non_nullable
-as Duration,startTime: null == startTime ? _self.startTime : startTime // ignore: cast_nullable_to_non_nullable
-as Duration,currentTime: null == currentTime ? _self.currentTime : currentTime // ignore: cast_nullable_to_non_nullable
-as Duration,startedAt: null == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
+as Duration,playMethod: freezed == playMethod ? _self.playMethod : playMethod // ignore: cast_nullable_to_non_nullable
+as PlayMethod?,mediaPlayer: freezed == mediaPlayer ? _self.mediaPlayer : mediaPlayer // ignore: cast_nullable_to_non_nullable
+as String?,deviceInfo: freezed == deviceInfo ? _self.deviceInfo : deviceInfo // ignore: cast_nullable_to_non_nullable
+as DeviceInfo?,date: freezed == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as String?,dayOfWeek: freezed == dayOfWeek ? _self.dayOfWeek : dayOfWeek // ignore: cast_nullable_to_non_nullable
+as String?,timeListening: freezed == timeListening ? _self.timeListening : timeListening // ignore: cast_nullable_to_non_nullable
+as Duration?,startTime: freezed == startTime ? _self.startTime : startTime // ignore: cast_nullable_to_non_nullable
+as Duration?,currentTime: freezed == currentTime ? _self.currentTime : currentTime // ignore: cast_nullable_to_non_nullable
+as Duration?,startedAt: null == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as SessionUser?,audioTracks: freezed == audioTracks ? _self.audioTracks : audioTracks // ignore: cast_nullable_to_non_nullable
@@ -105,9 +105,12 @@ as LibraryItem?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$MediaMetadataCopyWith<$Res> get mediaMetadata {
-  
-  return $MediaMetadataCopyWith<$Res>(_self.mediaMetadata, (value) {
+$MediaMetadataCopyWith<$Res>? get mediaMetadata {
+    if (_self.mediaMetadata == null) {
+    return null;
+  }
+
+  return $MediaMetadataCopyWith<$Res>(_self.mediaMetadata!, (value) {
     return _then(_self.copyWith(mediaMetadata: value));
   });
 }/// Create a copy of PlaybackSession
@@ -228,7 +231,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String libraryId,  String libraryItemId,  String? episodeId,  MediaType mediaType,  MediaMetadata mediaMetadata,  List<BookChapter> chapters,  String? displayTitle,  String? displayAuthor,  String? coverPath,  Duration duration,  PlayMethod playMethod,  String mediaPlayer,  DeviceInfo? deviceInfo,  String date,  String dayOfWeek,  Duration timeListening,  Duration startTime,  Duration currentTime,  DateTime startedAt,  DateTime updatedAt,  SessionUser? user,  List<AudioTrack>? audioTracks,  LibraryItem? libraryItem)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  String libraryId,  String libraryItemId,  String? episodeId,  MediaType mediaType,  MediaMetadata? mediaMetadata,  List<BookChapter> chapters,  String? displayTitle,  String? displayAuthor,  String? coverPath,  Duration duration,  PlayMethod? playMethod,  String? mediaPlayer,  DeviceInfo? deviceInfo,  String? date,  String? dayOfWeek,  Duration? timeListening,  Duration? startTime,  Duration? currentTime,  DateTime startedAt,  DateTime updatedAt,  SessionUser? user,  List<AudioTrack>? audioTracks,  LibraryItem? libraryItem)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PlaybackSession() when $default != null:
 return $default(_that.id,_that.userId,_that.libraryId,_that.libraryItemId,_that.episodeId,_that.mediaType,_that.mediaMetadata,_that.chapters,_that.displayTitle,_that.displayAuthor,_that.coverPath,_that.duration,_that.playMethod,_that.mediaPlayer,_that.deviceInfo,_that.date,_that.dayOfWeek,_that.timeListening,_that.startTime,_that.currentTime,_that.startedAt,_that.updatedAt,_that.user,_that.audioTracks,_that.libraryItem);case _:
@@ -249,7 +252,7 @@ return $default(_that.id,_that.userId,_that.libraryId,_that.libraryItemId,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String libraryId,  String libraryItemId,  String? episodeId,  MediaType mediaType,  MediaMetadata mediaMetadata,  List<BookChapter> chapters,  String? displayTitle,  String? displayAuthor,  String? coverPath,  Duration duration,  PlayMethod playMethod,  String mediaPlayer,  DeviceInfo? deviceInfo,  String date,  String dayOfWeek,  Duration timeListening,  Duration startTime,  Duration currentTime,  DateTime startedAt,  DateTime updatedAt,  SessionUser? user,  List<AudioTrack>? audioTracks,  LibraryItem? libraryItem)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  String libraryId,  String libraryItemId,  String? episodeId,  MediaType mediaType,  MediaMetadata? mediaMetadata,  List<BookChapter> chapters,  String? displayTitle,  String? displayAuthor,  String? coverPath,  Duration duration,  PlayMethod? playMethod,  String? mediaPlayer,  DeviceInfo? deviceInfo,  String? date,  String? dayOfWeek,  Duration? timeListening,  Duration? startTime,  Duration? currentTime,  DateTime startedAt,  DateTime updatedAt,  SessionUser? user,  List<AudioTrack>? audioTracks,  LibraryItem? libraryItem)  $default,) {final _that = this;
 switch (_that) {
 case _PlaybackSession():
 return $default(_that.id,_that.userId,_that.libraryId,_that.libraryItemId,_that.episodeId,_that.mediaType,_that.mediaMetadata,_that.chapters,_that.displayTitle,_that.displayAuthor,_that.coverPath,_that.duration,_that.playMethod,_that.mediaPlayer,_that.deviceInfo,_that.date,_that.dayOfWeek,_that.timeListening,_that.startTime,_that.currentTime,_that.startedAt,_that.updatedAt,_that.user,_that.audioTracks,_that.libraryItem);case _:
@@ -269,7 +272,7 @@ return $default(_that.id,_that.userId,_that.libraryId,_that.libraryItemId,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String libraryId,  String libraryItemId,  String? episodeId,  MediaType mediaType,  MediaMetadata mediaMetadata,  List<BookChapter> chapters,  String? displayTitle,  String? displayAuthor,  String? coverPath,  Duration duration,  PlayMethod playMethod,  String mediaPlayer,  DeviceInfo? deviceInfo,  String date,  String dayOfWeek,  Duration timeListening,  Duration startTime,  Duration currentTime,  DateTime startedAt,  DateTime updatedAt,  SessionUser? user,  List<AudioTrack>? audioTracks,  LibraryItem? libraryItem)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  String libraryId,  String libraryItemId,  String? episodeId,  MediaType mediaType,  MediaMetadata? mediaMetadata,  List<BookChapter> chapters,  String? displayTitle,  String? displayAuthor,  String? coverPath,  Duration duration,  PlayMethod? playMethod,  String? mediaPlayer,  DeviceInfo? deviceInfo,  String? date,  String? dayOfWeek,  Duration? timeListening,  Duration? startTime,  Duration? currentTime,  DateTime startedAt,  DateTime updatedAt,  SessionUser? user,  List<AudioTrack>? audioTracks,  LibraryItem? libraryItem)?  $default,) {final _that = this;
 switch (_that) {
 case _PlaybackSession() when $default != null:
 return $default(_that.id,_that.userId,_that.libraryId,_that.libraryItemId,_that.episodeId,_that.mediaType,_that.mediaMetadata,_that.chapters,_that.displayTitle,_that.displayAuthor,_that.coverPath,_that.duration,_that.playMethod,_that.mediaPlayer,_that.deviceInfo,_that.date,_that.dayOfWeek,_that.timeListening,_that.startTime,_that.currentTime,_that.startedAt,_that.updatedAt,_that.user,_that.audioTracks,_that.libraryItem);case _:
@@ -285,7 +288,7 @@ return $default(_that.id,_that.userId,_that.libraryId,_that.libraryItemId,_that.
 @DateTimeEpochConverter()
 @DurationPreciseSecondsConverter()
 class _PlaybackSession implements PlaybackSession {
-  const _PlaybackSession({required this.id, required this.userId, required this.libraryId, required this.libraryItemId, this.episodeId, required this.mediaType, required this.mediaMetadata, required  List<BookChapter> chapters, this.displayTitle, this.displayAuthor, this.coverPath, required this.duration, required this.playMethod, required this.mediaPlayer, this.deviceInfo, required this.date, required this.dayOfWeek, required this.timeListening, required this.startTime, required this.currentTime, required this.startedAt, required this.updatedAt, this.user,  List<AudioTrack>? audioTracks, this.libraryItem}): _chapters = chapters,_audioTracks = audioTracks;
+  const _PlaybackSession({required this.id, required this.userId, required this.libraryId, required this.libraryItemId, this.episodeId, required this.mediaType, this.mediaMetadata,  List<BookChapter> chapters = const [], this.displayTitle, this.displayAuthor, this.coverPath, required this.duration, this.playMethod, this.mediaPlayer, this.deviceInfo, this.date, this.dayOfWeek, this.timeListening, this.startTime, this.currentTime, required this.startedAt, required this.updatedAt, this.user,  List<AudioTrack>? audioTracks, this.libraryItem}): _chapters = chapters,_audioTracks = audioTracks;
   factory _PlaybackSession.fromJson(Map<String, dynamic> json) => _$PlaybackSessionFromJson(json);
 
 @override final  String id;
@@ -294,9 +297,9 @@ class _PlaybackSession implements PlaybackSession {
 @override final  String libraryItemId;
 @override final  String? episodeId;
 @override final  MediaType mediaType;
-@override final  MediaMetadata mediaMetadata;
+@override final  MediaMetadata? mediaMetadata;
  final  List<BookChapter> _chapters;
-@override List<BookChapter> get chapters {
+@override@JsonKey() List<BookChapter> get chapters {
   if (_chapters is EqualUnmodifiableListView) return _chapters;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_chapters);
@@ -306,14 +309,14 @@ class _PlaybackSession implements PlaybackSession {
 @override final  String? displayAuthor;
 @override final  String? coverPath;
 @override final  Duration duration;
-@override final  PlayMethod playMethod;
-@override final  String mediaPlayer;
+@override final  PlayMethod? playMethod;
+@override final  String? mediaPlayer;
 @override final  DeviceInfo? deviceInfo;
-@override final  String date;
-@override final  String dayOfWeek;
-@override final  Duration timeListening;
-@override final  Duration startTime;
-@override final  Duration currentTime;
+@override final  String? date;
+@override final  String? dayOfWeek;
+@override final  Duration? timeListening;
+@override final  Duration? startTime;
+@override final  Duration? currentTime;
 @override final  DateTime startedAt;
 @override final  DateTime updatedAt;
 @override final  SessionUser? user;
@@ -363,11 +366,11 @@ abstract mixin class _$PlaybackSessionCopyWith<$Res> implements $PlaybackSession
   factory _$PlaybackSessionCopyWith(_PlaybackSession value, $Res Function(_PlaybackSession) _then) = __$PlaybackSessionCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String userId, String libraryId, String libraryItemId, String? episodeId, MediaType mediaType, MediaMetadata mediaMetadata, List<BookChapter> chapters, String? displayTitle, String? displayAuthor, String? coverPath, Duration duration, PlayMethod playMethod, String mediaPlayer, DeviceInfo? deviceInfo, String date, String dayOfWeek, Duration timeListening, Duration startTime, Duration currentTime, DateTime startedAt, DateTime updatedAt, SessionUser? user, List<AudioTrack>? audioTracks, LibraryItem? libraryItem
+ String id, String userId, String libraryId, String libraryItemId, String? episodeId, MediaType mediaType, MediaMetadata? mediaMetadata, List<BookChapter> chapters, String? displayTitle, String? displayAuthor, String? coverPath, Duration duration, PlayMethod? playMethod, String? mediaPlayer, DeviceInfo? deviceInfo, String? date, String? dayOfWeek, Duration? timeListening, Duration? startTime, Duration? currentTime, DateTime startedAt, DateTime updatedAt, SessionUser? user, List<AudioTrack>? audioTracks, LibraryItem? libraryItem
 });
 
 
-@override $MediaMetadataCopyWith<$Res> get mediaMetadata;@override $DeviceInfoCopyWith<$Res>? get deviceInfo;@override $SessionUserCopyWith<$Res>? get user;@override $LibraryItemCopyWith<$Res>? get libraryItem;
+@override $MediaMetadataCopyWith<$Res>? get mediaMetadata;@override $DeviceInfoCopyWith<$Res>? get deviceInfo;@override $SessionUserCopyWith<$Res>? get user;@override $LibraryItemCopyWith<$Res>? get libraryItem;
 
 }
 /// @nodoc
@@ -380,7 +383,7 @@ class __$PlaybackSessionCopyWithImpl<$Res>
 
 /// Create a copy of PlaybackSession
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? libraryId = null,Object? libraryItemId = null,Object? episodeId = freezed,Object? mediaType = null,Object? mediaMetadata = null,Object? chapters = null,Object? displayTitle = freezed,Object? displayAuthor = freezed,Object? coverPath = freezed,Object? duration = null,Object? playMethod = null,Object? mediaPlayer = null,Object? deviceInfo = freezed,Object? date = null,Object? dayOfWeek = null,Object? timeListening = null,Object? startTime = null,Object? currentTime = null,Object? startedAt = null,Object? updatedAt = null,Object? user = freezed,Object? audioTracks = freezed,Object? libraryItem = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? libraryId = null,Object? libraryItemId = null,Object? episodeId = freezed,Object? mediaType = null,Object? mediaMetadata = freezed,Object? chapters = null,Object? displayTitle = freezed,Object? displayAuthor = freezed,Object? coverPath = freezed,Object? duration = null,Object? playMethod = freezed,Object? mediaPlayer = freezed,Object? deviceInfo = freezed,Object? date = freezed,Object? dayOfWeek = freezed,Object? timeListening = freezed,Object? startTime = freezed,Object? currentTime = freezed,Object? startedAt = null,Object? updatedAt = null,Object? user = freezed,Object? audioTracks = freezed,Object? libraryItem = freezed,}) {
   return _then(_PlaybackSession(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -388,21 +391,21 @@ as String,libraryId: null == libraryId ? _self.libraryId : libraryId // ignore: 
 as String,libraryItemId: null == libraryItemId ? _self.libraryItemId : libraryItemId // ignore: cast_nullable_to_non_nullable
 as String,episodeId: freezed == episodeId ? _self.episodeId : episodeId // ignore: cast_nullable_to_non_nullable
 as String?,mediaType: null == mediaType ? _self.mediaType : mediaType // ignore: cast_nullable_to_non_nullable
-as MediaType,mediaMetadata: null == mediaMetadata ? _self.mediaMetadata : mediaMetadata // ignore: cast_nullable_to_non_nullable
-as MediaMetadata,chapters: null == chapters ? _self._chapters : chapters // ignore: cast_nullable_to_non_nullable
+as MediaType,mediaMetadata: freezed == mediaMetadata ? _self.mediaMetadata : mediaMetadata // ignore: cast_nullable_to_non_nullable
+as MediaMetadata?,chapters: null == chapters ? _self._chapters : chapters // ignore: cast_nullable_to_non_nullable
 as List<BookChapter>,displayTitle: freezed == displayTitle ? _self.displayTitle : displayTitle // ignore: cast_nullable_to_non_nullable
 as String?,displayAuthor: freezed == displayAuthor ? _self.displayAuthor : displayAuthor // ignore: cast_nullable_to_non_nullable
 as String?,coverPath: freezed == coverPath ? _self.coverPath : coverPath // ignore: cast_nullable_to_non_nullable
 as String?,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
-as Duration,playMethod: null == playMethod ? _self.playMethod : playMethod // ignore: cast_nullable_to_non_nullable
-as PlayMethod,mediaPlayer: null == mediaPlayer ? _self.mediaPlayer : mediaPlayer // ignore: cast_nullable_to_non_nullable
-as String,deviceInfo: freezed == deviceInfo ? _self.deviceInfo : deviceInfo // ignore: cast_nullable_to_non_nullable
-as DeviceInfo?,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
-as String,dayOfWeek: null == dayOfWeek ? _self.dayOfWeek : dayOfWeek // ignore: cast_nullable_to_non_nullable
-as String,timeListening: null == timeListening ? _self.timeListening : timeListening // ignore: cast_nullable_to_non_nullable
-as Duration,startTime: null == startTime ? _self.startTime : startTime // ignore: cast_nullable_to_non_nullable
-as Duration,currentTime: null == currentTime ? _self.currentTime : currentTime // ignore: cast_nullable_to_non_nullable
-as Duration,startedAt: null == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
+as Duration,playMethod: freezed == playMethod ? _self.playMethod : playMethod // ignore: cast_nullable_to_non_nullable
+as PlayMethod?,mediaPlayer: freezed == mediaPlayer ? _self.mediaPlayer : mediaPlayer // ignore: cast_nullable_to_non_nullable
+as String?,deviceInfo: freezed == deviceInfo ? _self.deviceInfo : deviceInfo // ignore: cast_nullable_to_non_nullable
+as DeviceInfo?,date: freezed == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as String?,dayOfWeek: freezed == dayOfWeek ? _self.dayOfWeek : dayOfWeek // ignore: cast_nullable_to_non_nullable
+as String?,timeListening: freezed == timeListening ? _self.timeListening : timeListening // ignore: cast_nullable_to_non_nullable
+as Duration?,startTime: freezed == startTime ? _self.startTime : startTime // ignore: cast_nullable_to_non_nullable
+as Duration?,currentTime: freezed == currentTime ? _self.currentTime : currentTime // ignore: cast_nullable_to_non_nullable
+as Duration?,startedAt: null == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,user: freezed == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as SessionUser?,audioTracks: freezed == audioTracks ? _self._audioTracks : audioTracks // ignore: cast_nullable_to_non_nullable
@@ -415,9 +418,12 @@ as LibraryItem?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$MediaMetadataCopyWith<$Res> get mediaMetadata {
-  
-  return $MediaMetadataCopyWith<$Res>(_self.mediaMetadata, (value) {
+$MediaMetadataCopyWith<$Res>? get mediaMetadata {
+    if (_self.mediaMetadata == null) {
+    return null;
+  }
+
+  return $MediaMetadataCopyWith<$Res>(_self.mediaMetadata!, (value) {
     return _then(_self.copyWith(mediaMetadata: value));
   });
 }/// Create a copy of PlaybackSession

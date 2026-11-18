@@ -9,18 +9,20 @@ import 'package:storii/storage/hive/boxes.dart';
 
 part 'downloads_store.g.dart';
 
-DownloadItem? _decode(String? value) {
+DownloadItem? _decode(String? value, String key) {
   if (value == null) return null;
   try {
     return DownloadItem.fromJson(jsonDecode(value));
   } catch (e, st) {
     LogService.log(
-      'failed to decode download item: $value',
+      'failed to decode download item: ${value.substring(0, 200)}'
+      '\nrecovery: files are safe, db entry removed. re-download',
       level: .error,
       originalError: e,
       stackTrace: st,
       source: 'DownloadsStore',
     );
+    _box.delete(key);
     return null;
   }
 }
@@ -37,13 +39,16 @@ class DownloadsStore {
   Future<void> remove(String id) => _box.delete(id);
 
   Future<DownloadItem?> get(String mediaItemIdKey) async {
-    return _decode(await _box.get(mediaItemIdKey));
+    final value = await _box.get(mediaItemIdKey);
+    return _decode(value, mediaItemIdKey);
   }
 
   Future<Map<String, DownloadItem>> getAll() async {
     final map = <String, DownloadItem>{};
     for (final key in _box.keys) {
-      final item = _decode(await _box.get(key));
+      final value = await _box.get(key);
+      if (value == null) continue;
+      final item = _decode(value, key);
       if (item != null) map[item.key] = item;
     }
     return map;
@@ -62,11 +67,15 @@ class DownloadsStore {
     yield* _box
         .watch()
         .map((e) {
-          final item = e.deleted ? null : _decode(e.value);
-          if (item != null) {
-            map[item.key] = item;
-          } else {
+          if (e.deleted) {
             map.remove(e.key);
+          } else {
+            final item = _decode(e.value, e.key);
+            if (item != null) {
+              map[item.key] = item;
+            } else {
+              map.remove(e.key);
+            }
           }
           return Map<String, DownloadItem>.from(map);
         })

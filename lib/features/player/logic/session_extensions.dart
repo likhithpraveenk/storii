@@ -98,8 +98,8 @@ extension PlaybackSessionX on PlaybackSession {
         artist: displayAuthor,
         duration: track.duration,
         album: isEpisode
-            ? mediaMetadata.title
-            : mediaMetadata.mapOrNull(book: (b) => b.seriesName),
+            ? mediaMetadata?.title
+            : mediaMetadata?.mapOrNull(book: (b) => b.seriesName),
         artUri: coverUriForPlayback,
         extras: {
           if (index == 0) 'chapters': jsonChapters,
@@ -134,7 +134,7 @@ extension PlaybackSessionX on PlaybackSession {
   }
 
   (int, Duration) getIndexAndOffset([Duration? position]) {
-    final target = position ?? currentTime;
+    final target = position ?? currentTime ?? .zero;
     var accumulated = Duration.zero;
     final tracks = audioTracks ?? [];
     for (var i = 0; i < tracks.length; i++) {
@@ -175,12 +175,18 @@ extension PlaybackSessionX on PlaybackSession {
   );
 
   double? get localProgress => playMethod == .local && duration > Duration.zero
-      ? (currentTime.inMilliseconds / duration.inMilliseconds).clamp(0.0, 1.0)
+      ? ((currentTime?.inMilliseconds ?? 0) / duration.inMilliseconds).clamp(
+          0.0,
+          1.0,
+        )
       : null;
 
   MediaProgress toMediaProgress() {
     final progress = duration > .zero
-        ? (currentTime.inMilliseconds / duration.inMilliseconds).clamp(0.0, 1.0)
+        ? ((currentTime?.inMilliseconds ?? 0) / duration.inMilliseconds).clamp(
+            0.0,
+            1.0,
+          )
         : 0.0;
     return MediaProgress(
       id: id,
