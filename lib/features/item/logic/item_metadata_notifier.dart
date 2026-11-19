@@ -18,7 +18,6 @@ abstract class EditorState with _$EditorState {
   const factory({
     required Media original,
     required Media draft,
-    required String libraryId,
     required DateTime updatedAt,
     @Default(false) bool saving,
   }) = _EditorState;
@@ -38,7 +37,6 @@ class ItemMetadataNotifier extends _$ItemMetadataNotifier {
     return EditorState(
       original: item.media,
       draft: item.media,
-      libraryId: item.libraryId,
       updatedAt: item.updatedAt,
     );
   }
@@ -91,7 +89,6 @@ class ItemMetadataNotifier extends _$ItemMetadataNotifier {
         ),
       );
       if (response.success) {
-        state = AsyncData(state.value!.copyWith(updatedAt: DateTime.now()));
         return l10n.success;
       } else {
         return l10n.failed;
@@ -113,7 +110,6 @@ class ItemMetadataNotifier extends _$ItemMetadataNotifier {
       final user = await ref.read(authenticatedUserProvider.future);
       final repo = ref.read(itemRepositoryProvider(user));
       await repo.removeCover(libraryItemId: id);
-      state = AsyncData(state.value!.copyWith(updatedAt: DateTime.now()));
       return true;
     } catch (e, st) {
       LogService.log(

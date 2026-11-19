@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$EditorState {
 
- Media get original; Media get draft; String get libraryId; DateTime get updatedAt; bool get saving;
+ Media get original; Media get draft; DateTime get updatedAt; bool get saving;
 /// Create a copy of EditorState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,20 +27,20 @@ $EditorStateCopyWith<EditorState> get copyWith => _$EditorStateCopyWithImpl<Edit
 @override
 bool operator ==(Object other) {
   final _this = this as EditorState;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditorState&&(identical(other.original, _this.original) || other.original == _this.original)&&(identical(other.draft, _this.draft) || other.draft == _this.draft)&&(identical(other.libraryId, _this.libraryId) || other.libraryId == _this.libraryId)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&(identical(other.saving, _this.saving) || other.saving == _this.saving));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditorState&&(identical(other.original, _this.original) || other.original == _this.original)&&(identical(other.draft, _this.draft) || other.draft == _this.draft)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&(identical(other.saving, _this.saving) || other.saving == _this.saving));
 }
 
 
 @override
 int get hashCode {
   final _this = this as EditorState;
-  return Object.hash(runtimeType,_this.original,_this.draft,_this.libraryId,_this.updatedAt,_this.saving);
+  return Object.hash(runtimeType,_this.original,_this.draft,_this.updatedAt,_this.saving);
 }
 
 @override
 String toString() {
   final _this = this as EditorState;
-  return 'EditorState(original: ${_this.original}, draft: ${_this.draft}, libraryId: ${_this.libraryId}, updatedAt: ${_this.updatedAt}, saving: ${_this.saving})';
+  return 'EditorState(original: ${_this.original}, draft: ${_this.draft}, updatedAt: ${_this.updatedAt}, saving: ${_this.saving})';
 }
 
 
@@ -51,7 +51,7 @@ abstract mixin class $EditorStateCopyWith<$Res>  {
   factory $EditorStateCopyWith(EditorState value, $Res Function(EditorState) _then) = _$EditorStateCopyWithImpl;
 @useResult
 $Res call({
- Media original, Media draft, String libraryId, DateTime updatedAt, bool saving
+ Media original, Media draft, DateTime updatedAt, bool saving
 });
 
 
@@ -68,12 +68,11 @@ class _$EditorStateCopyWithImpl<$Res>
 
 /// Create a copy of EditorState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? original = null,Object? draft = null,Object? libraryId = null,Object? updatedAt = null,Object? saving = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? original = null,Object? draft = null,Object? updatedAt = null,Object? saving = null,}) {
   return _then(EditorState(
 original: null == original ? _self.original : original // ignore: cast_nullable_to_non_nullable
 as Media,draft: null == draft ? _self.draft : draft // ignore: cast_nullable_to_non_nullable
-as Media,libraryId: null == libraryId ? _self.libraryId : libraryId // ignore: cast_nullable_to_non_nullable
-as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as Media,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,saving: null == saving ? _self.saving : saving // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
@@ -178,10 +177,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Media original,  Media draft,  String libraryId,  DateTime updatedAt,  bool saving)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Media original,  Media draft,  DateTime updatedAt,  bool saving)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _EditorState() when $default != null:
-return $default(_that.original,_that.draft,_that.libraryId,_that.updatedAt,_that.saving);case _:
+return $default(_that.original,_that.draft,_that.updatedAt,_that.saving);case _:
   return orElse();
 
 }
@@ -199,10 +198,10 @@ return $default(_that.original,_that.draft,_that.libraryId,_that.updatedAt,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Media original,  Media draft,  String libraryId,  DateTime updatedAt,  bool saving)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Media original,  Media draft,  DateTime updatedAt,  bool saving)  $default,) {final _that = this;
 switch (_that) {
 case _EditorState():
-return $default(_that.original,_that.draft,_that.libraryId,_that.updatedAt,_that.saving);case _:
+return $default(_that.original,_that.draft,_that.updatedAt,_that.saving);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -219,10 +218,10 @@ return $default(_that.original,_that.draft,_that.libraryId,_that.updatedAt,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Media original,  Media draft,  String libraryId,  DateTime updatedAt,  bool saving)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Media original,  Media draft,  DateTime updatedAt,  bool saving)?  $default,) {final _that = this;
 switch (_that) {
 case _EditorState() when $default != null:
-return $default(_that.original,_that.draft,_that.libraryId,_that.updatedAt,_that.saving);case _:
+return $default(_that.original,_that.draft,_that.updatedAt,_that.saving);case _:
   return null;
 
 }
@@ -234,12 +233,11 @@ return $default(_that.original,_that.draft,_that.libraryId,_that.updatedAt,_that
 
 
 class _EditorState extends EditorState {
-  const _EditorState({required this.original, required this.draft, required this.libraryId, required this.updatedAt, this.saving = false}): super._();
+  const _EditorState({required this.original, required this.draft, required this.updatedAt, this.saving = false}): super._();
   
 
 @override final  Media original;
 @override final  Media draft;
-@override final  String libraryId;
 @override final  DateTime updatedAt;
 @override@JsonKey() final  bool saving;
 
@@ -253,18 +251,18 @@ _$EditorStateCopyWith<_EditorState> get copyWith => __$EditorStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _EditorState&&(identical(other.original, original) || other.original == original)&&(identical(other.draft, draft) || other.draft == draft)&&(identical(other.libraryId, libraryId) || other.libraryId == libraryId)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.saving, saving) || other.saving == saving));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _EditorState&&(identical(other.original, original) || other.original == original)&&(identical(other.draft, draft) || other.draft == draft)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.saving, saving) || other.saving == saving));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,original,draft,libraryId,updatedAt,saving);
+    return Object.hash(runtimeType,original,draft,updatedAt,saving);
 }
 
 @override
 String toString() {
-    return 'EditorState(original: $original, draft: $draft, libraryId: $libraryId, updatedAt: $updatedAt, saving: $saving)';
+    return 'EditorState(original: $original, draft: $draft, updatedAt: $updatedAt, saving: $saving)';
 }
 
 
@@ -275,7 +273,7 @@ abstract mixin class _$EditorStateCopyWith<$Res> implements $EditorStateCopyWith
   factory _$EditorStateCopyWith(_EditorState value, $Res Function(_EditorState) _then) = __$EditorStateCopyWithImpl;
 @override @useResult
 $Res call({
- Media original, Media draft, String libraryId, DateTime updatedAt, bool saving
+ Media original, Media draft, DateTime updatedAt, bool saving
 });
 
 
@@ -292,12 +290,11 @@ class __$EditorStateCopyWithImpl<$Res>
 
 /// Create a copy of EditorState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? original = null,Object? draft = null,Object? libraryId = null,Object? updatedAt = null,Object? saving = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? original = null,Object? draft = null,Object? updatedAt = null,Object? saving = null,}) {
   return _then(_EditorState(
 original: null == original ? _self.original : original // ignore: cast_nullable_to_non_nullable
 as Media,draft: null == draft ? _self.draft : draft // ignore: cast_nullable_to_non_nullable
-as Media,libraryId: null == libraryId ? _self.libraryId : libraryId // ignore: cast_nullable_to_non_nullable
-as String,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
+as Media,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,saving: null == saving ? _self.saving : saving // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
