@@ -233,8 +233,17 @@ void queueController(Ref ref) {
     final queue = ref.read(queueProvider);
     final session = ref.read(sessionProvider);
     if (queue.current != null && session == null) {
-      Future.microtask(() {
-        ref.read(queueProvider.notifier).playLastPlayed();
+      Future.microtask(() async {
+        try {
+          await ref.read(queueProvider.notifier).playLastPlayed();
+        } catch (e, st) {
+          LogService.log(
+            'play on startup failed',
+            source: 'QueueController',
+            originalError: e,
+            stackTrace: st,
+          );
+        }
       });
     }
   }

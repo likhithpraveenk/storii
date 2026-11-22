@@ -98,8 +98,8 @@ class _ConnectionDetailsSheet extends ConsumerWidget {
         scheme.error,
       ),
     };
-    final serverUrl = ref.watch(activeServerUrlProvider);
-    final serverStatus = user != null
+    final serverUrl = user != null ? ref.watch(activeServerUrlProvider) : null;
+    final serverStatus = serverUrl != null
         ? ref.watch(serverStatusProvider(serverUrl))
         : null;
     final canRetry = socketState == .disconnected || socketState == .authFailed;

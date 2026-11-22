@@ -20,8 +20,9 @@ class UpdateCoverWidget extends ConsumerWidget {
     final imageSize = orientation == .portrait
         ? screenWidth * 0.7
         : screenWidth * 0.5;
-    final editorState = ref.watch(itemMetadataProvider(id));
-    final updatedAt = editorState.value?.updatedAt;
+    final updatedAt = ref.watch(
+      itemMetadataProvider(id).select((e) => e.value?.updatedAt),
+    );
     final notifier = ref.read(itemMetadataProvider(id).notifier);
 
     return Stack(

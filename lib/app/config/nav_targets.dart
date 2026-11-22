@@ -38,7 +38,7 @@ enum NavTarget {
     .downloads => const NavItem(
       route: AppRoute.downloads,
       icon: Icons.file_download_outlined,
-      selectedIcon: Icons.file_download,
+      selectedIcon: Icons.file_download_outlined,
     ),
     .authors => const NavItem(
       route: AppRoute.authors,

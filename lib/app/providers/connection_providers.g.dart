@@ -282,7 +282,7 @@ final class ActiveServerUrlProvider
   }
 }
 
-String _$activeServerUrlHash() => r'd15f10527ee60ed977c6ec4b738d6ea8248e05b3';
+String _$activeServerUrlHash() => r'ed9b1c2923fb70e60d36e5a9c3c63b510b36ee30';
 
 abstract class _$ActiveServerUrl extends $Notifier<Uri> {
   Uri build();

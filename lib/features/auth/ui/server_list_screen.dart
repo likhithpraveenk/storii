@@ -132,6 +132,16 @@ class ServerListScreen extends ConsumerWidget {
                         },
                       ),
                     ),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      width: double.infinity,
+                      child: AppTextButton(
+                        text: l10n.home,
+                        onPressed: () {
+                          context.go(AppRoute.home.path);
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),

@@ -13,7 +13,6 @@ import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/logic/storage_locations_provider.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';
-import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
@@ -35,10 +34,7 @@ class ActiveDownloadsButton extends ConsumerWidget {
         IconButton(
           tooltip: l10n.downloads,
           onPressed: () {
-            context.push(
-              AppRoute.downloads.path,
-              extra: DownloadsScreenTab.active,
-            );
+            context.push(AppRoute.activeDownloads.path);
           },
           icon: const Icon(Icons.file_download_outlined),
         ),
@@ -89,8 +85,10 @@ class DownloadButton extends ConsumerWidget {
     final queue = ref.read(downloadQueueProvider.notifier);
     final scheme = Theme.of(context).colorScheme;
 
-    return switch (item?.status) {
-      null => IconButton(
+    void openActiveDownloads() => context.push(AppRoute.activeDownloads.path);
+
+    if (item == null) {
+      return IconButton(
         tooltip: l10n.download,
         icon: const Icon(Icons.file_download_outlined),
         onPressed: () async {
@@ -111,20 +109,23 @@ class DownloadButton extends ConsumerWidget {
             );
           }
         },
-      ),
+      );
+    }
+
+    return switch (item.status) {
       .queued => IconButton(
         tooltip: l10n.queued,
         icon: Icon(Icons.schedule, color: scheme.outline),
-        onPressed: () => queue.delete(libraryItemId, episodeId),
+        onPressed: openActiveDownloads,
       ),
       .waiting => IconButton(
         tooltip: l10n.waitingForNetwork,
         icon: Icon(Icons.wifi_off, color: scheme.outline),
-        onPressed: () => queue.delete(libraryItemId, episodeId),
+        onPressed: openActiveDownloads,
       ),
       .downloading => _ProgressButton(
-        progress: item!.progress,
-        onCancel: () => queue.delete(libraryItemId, episodeId),
+        progress: item.progress,
+        onTap: openActiveDownloads,
       ),
       .completed => IconButton(
         tooltip: l10n.downloaded,
@@ -133,7 +134,7 @@ class DownloadButton extends ConsumerWidget {
           color: appGreenColor,
         ),
         onPressed: () =>
-            showDownloadsDeleteDialog(context, item: item!, ref: ref),
+            showDownloadsDeleteDialog(context, item: item, ref: ref),
       ),
       .failed => IconButton(
         tooltip: l10n.downloadFailed,
@@ -150,30 +151,32 @@ class DownloadButton extends ConsumerWidget {
 }
 
 class _ProgressButton extends StatelessWidget {
-  const new({required this.progress, required this.onCancel});
+  const new({required this.progress, required this.onTap});
 
   final double progress;
-  final VoidCallback onCancel;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final percent = (progress * 100).toStringAsFixed(0);
     return IconButton(
-      tooltip: '${(progress * 100).toStringAsFixed(0)}%',
-      onPressed: onCancel,
-      icon: Stack(
-        alignment: .center,
-        children: [
-          SizedBox.square(
-            dimension: 24,
-            child: CircularProgressIndicator(
+      tooltip: '$percent%',
+      onPressed: onTap,
+      icon: SizedBox.square(
+        dimension: 30,
+        child: Stack(
+          alignment: .center,
+          children: [
+            CircularProgressIndicator(
               value: progress > 0 ? progress : null,
               strokeWidth: 2.5,
               color: scheme.primary,
             ),
-          ),
-          Icon(Icons.close, size: 12, color: scheme.onSurface),
-        ],
+            Text(percent, maxLines: 1, style: theme.textTheme.labelSmall),
+          ],
+        ),
       ),
     );
   }

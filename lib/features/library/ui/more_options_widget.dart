@@ -10,6 +10,7 @@ import 'package:storii/app/models/storage_location.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/repository_providers.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
@@ -94,6 +95,7 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
   @override
   Widget build(BuildContext context) {
     final isAdmin = ref.watch(isUserAdminProvider);
+    final hasUser = ref.watch(currentUserProvider) != null;
     final mediaProgress = ref
         .watch(mediaProgressFromMapProvider(widget.itemId, widget.episodeId))
         .value;
@@ -117,7 +119,8 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
       ),
     ];
 
-    if (mediaProgress != null &&
+    if (hasUser &&
+        mediaProgress != null &&
         mediaProgress.isFinished == true &&
         !widget.inDetailScreen) {
       options.add((
@@ -134,7 +137,9 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
       ));
     }
 
-    if (mediaProgress?.isFinished != true && !widget.inDetailScreen) {
+    if (hasUser &&
+        mediaProgress?.isFinished != true &&
+        !widget.inDetailScreen) {
       options.add((
         title: l10n.markAsComplete,
         icon: Icons.beenhere_outlined,
@@ -152,7 +157,7 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
       ));
     }
 
-    if (widget.fromContinueListening && mediaProgress != null) {
+    if (hasUser && widget.fromContinueListening && mediaProgress != null) {
       options.add((
         title: l10n.removeFromContinueListening,
         icon: Icons.playlist_remove,
@@ -167,7 +172,7 @@ class _MoreOptionsWidgetState extends ConsumerState<_MoreOptionsWidget> {
       ));
     }
 
-    if (widget.fromContinueSeries && widget.seriesId != null) {
+    if (hasUser && widget.fromContinueSeries && widget.seriesId != null) {
       options.add((
         title: l10n.removeSeriesFromContinueListening,
         icon: Icons.playlist_remove,

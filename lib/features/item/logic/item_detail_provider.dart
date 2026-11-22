@@ -33,6 +33,7 @@ class ItemDetail extends _$ItemDetail {
     if (isOffline) {
       final localItem = await store.get(id);
       if (localItem != null) return localItem;
+      if (ref.read(currentUserProvider) == null) throw NoUser();
       throw l10n.connectionTypeNone;
     }
 

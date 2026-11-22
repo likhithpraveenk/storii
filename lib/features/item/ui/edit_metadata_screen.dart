@@ -34,6 +34,8 @@ class EditMetadataScreen extends ConsumerWidget {
         actions: [_SaveButton(id)],
       ),
       body: metadataAsync.when(
+        skipLoadingOnRefresh: true,
+        skipLoadingOnReload: true,
         loading: () => const Center(child: RandomWaveform()),
         error: (e, _) => ErrorRetryWidget(
           'failed to get metadata',

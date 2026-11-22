@@ -77,7 +77,7 @@ class SessionNotifier extends _$SessionNotifier {
     final params = await ref.read(playRequestParamsProvider.future);
     final user = ref.read(currentUserProvider);
     var session = item.toPlaybackSession(
-      user!.id,
+      user?.id ?? 'user-id',
       deviceInfo: params.deviceInfo,
       episodeId: episodeId,
       currentOffset: currentOffset,
@@ -198,7 +198,7 @@ class SessionNotifier extends _$SessionNotifier {
     }
 
     try {
-      if (!isLocal) {
+      if (!isLocal && ref.read(currentUserProvider) != null) {
         final user = await ref.read(authenticatedUserProvider.future);
         final repo = ref.read(sessionRepositoryProvider(user));
         await repo.closeSession(sessionId: session.id);
@@ -209,6 +209,7 @@ class SessionNotifier extends _$SessionNotifier {
         source: 'SessionNotifier',
       );
     } on AppError catch (_) {
+    } on NoUser catch (_) {
     } finally {
       state = null;
     }

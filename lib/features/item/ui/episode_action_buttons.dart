@@ -5,6 +5,7 @@ import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/user_progress_actions.dart';
 import 'package:storii/features/item/ui/chapter_list.dart';
@@ -27,6 +28,7 @@ class EpisodeActionButtons extends ConsumerWidget {
     final progress = ref
         .watch(mediaProgressFromMapProvider(episode.libraryItemId, episode.id))
         .value;
+    final hasUser = ref.watch(currentUserProvider) != null;
 
     return Wrap(
       alignment: .spaceBetween,
@@ -98,7 +100,7 @@ class EpisodeActionButtons extends ConsumerWidget {
                         episodeId: episode.id,
                         inOverflow: true,
                       ),
-                      if (progress?.isFinished != true)
+                      if (hasUser && progress?.isFinished != true)
                         ListTile(
                           title: Text(l10n.markAsComplete),
                           leading: const Icon(Icons.beenhere_outlined),
@@ -132,7 +134,7 @@ class EpisodeActionButtons extends ConsumerWidget {
                             );
                           },
                         ),
-                      if (progress != null)
+                      if (hasUser && progress != null)
                         ListTile(
                           title: Text(l10n.removeProgressQ),
                           leading: const Icon(Icons.delete_outline),
