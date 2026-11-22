@@ -64,6 +64,7 @@ enum AppRoute {
   playlists('/playlists'),
   playlistDetail('/playlists/:id'),
   downloads('/downloads'),
+  activeDownloads('/active-downloads'),
   latest('/latest'),
   admin('/admin'),
   adminLibraries('/admin/libraries'),
@@ -175,12 +176,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoute.downloads.path,
-                builder: (_, state) {
-                  final tab = state.extra as DownloadsScreenTab?;
-                  return DownloadsScreen(
-                    tab: tab ?? DownloadsScreenTab.completed,
-                  );
-                },
+                builder: (_, _) => const DownloadsScreen(),
+              ),
+              GoRoute(
+                path: AppRoute.activeDownloads.path,
+                builder: (_, _) => const ActiveDownloadsScreen(),
               ),
             ],
           ),

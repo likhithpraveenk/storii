@@ -101,13 +101,6 @@ Future<List<DownloadItem>> sortedCompletedDownloads(Ref ref) async {
   return _sortDownloads(ref, filtered, sortState.sort, sortState.ascending);
 }
 
-@riverpod
-Future<List<DownloadItem>> sortedActiveDownloads(Ref ref) async {
-  final items = await ref.watch(activeDownloadsProvider.future);
-  final query = ref.watch(downloadSearchQueryProvider).trim().toLowerCase();
-  return query.isEmpty ? items : await _filterDownloads(ref, items, query);
-}
-
 Future<List<DownloadItem>> _filterDownloads(
   Ref ref,
   List<DownloadItem> items,

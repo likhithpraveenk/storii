@@ -400,48 +400,6 @@ final class SortedCompletedDownloadsProvider
 String _$sortedCompletedDownloadsHash() =>
     r'22d8cf3091b3361670b6915d024f295ddedd233b';
 
-@ProviderFor(sortedActiveDownloads)
-final sortedActiveDownloadsProvider = SortedActiveDownloadsProvider._();
-
-final class SortedActiveDownloadsProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<DownloadItem>>,
-          List<DownloadItem>,
-          FutureOr<List<DownloadItem>>
-        >
-    with
-        $FutureModifier<List<DownloadItem>>,
-        $FutureProvider<List<DownloadItem>> {
-  SortedActiveDownloadsProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'sortedActiveDownloadsProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$sortedActiveDownloadsHash();
-
-  @$internal
-  @override
-  $FutureProviderElement<List<DownloadItem>> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<List<DownloadItem>> create(Ref ref) {
-    return sortedActiveDownloads(ref);
-  }
-}
-
-String _$sortedActiveDownloadsHash() =>
-    r'8290300e6fbbb27477b168e80d425f39ff90fd5e';
-
 @ProviderFor(downloadedItems)
 final downloadedItemsProvider = DownloadedItemsProvider._();
 

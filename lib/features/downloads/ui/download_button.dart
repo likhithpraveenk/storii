@@ -13,7 +13,6 @@ import 'package:storii/features/downloads/logic/download_queue.dart';
 import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/downloads/logic/storage_locations_provider.dart';
 import 'package:storii/features/downloads/ui/download_widgets.dart';
-import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/widgets/app_bottom_sheet.dart';
 
@@ -35,10 +34,7 @@ class ActiveDownloadsButton extends ConsumerWidget {
         IconButton(
           tooltip: l10n.downloads,
           onPressed: () {
-            context.push(
-              AppRoute.downloads.path,
-              extra: DownloadsScreenTab.active,
-            );
+            context.push(AppRoute.activeDownloads.path);
           },
           icon: const Icon(Icons.file_download_outlined),
         ),
@@ -89,8 +85,7 @@ class DownloadButton extends ConsumerWidget {
     final queue = ref.read(downloadQueueProvider.notifier);
     final scheme = Theme.of(context).colorScheme;
 
-    void openActiveDownloads() =>
-        context.push(AppRoute.downloads.path, extra: DownloadsScreenTab.active);
+    void openActiveDownloads() => context.push(AppRoute.activeDownloads.path);
 
     if (item == null) {
       return IconButton(

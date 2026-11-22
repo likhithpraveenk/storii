@@ -7,7 +7,6 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/downloads/models/download_item.dart';
-import 'package:storii/features/downloads/ui/downloads_screen.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 
 part 'downloads_notification_service.g.dart';
@@ -66,10 +65,7 @@ class DownloadsNotificationService implements DownloadsNotifications {
       onDidReceiveNotificationResponse: (details) {
         final payload = details.payload;
         if (payload != null && payload.startsWith('downloads')) {
-          getRouter().push(
-            AppRoute.downloads.path,
-            extra: DownloadsScreenTab.active,
-          );
+          getRouter().push(AppRoute.activeDownloads.path);
         }
       },
     );
