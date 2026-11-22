@@ -140,4 +140,4 @@ final class QueueControllerProvider
   }
 }
 
-String _$queueControllerHash() => r'4589187669a674dfc617c1a2ef1c857f9725a7da';
+String _$queueControllerHash() => r'cacf6d8ca60f8b3b856f9f043d528b8969c3cb6e';

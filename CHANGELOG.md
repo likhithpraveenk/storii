@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- screens that need a user account now shows login button instead of redirecting to login screen
+
+### Fixed
+
+- downloaded books playable when logged out or the server is unreachable
+
 ## [v0.13.5] - 2026-11-18
 
 ### Fixed

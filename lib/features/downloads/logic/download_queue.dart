@@ -63,7 +63,7 @@ class DownloadQueue extends _$DownloadQueue {
       await ref.read(downloadedItemsStoreProvider).put(item);
 
       final user = ref.read(currentUserProvider);
-      if (user == null) throw StateError('No current user');
+      if (user == null) throw NoUser();
       final service = ref.read(storageServiceProvider(location));
 
       final downloadItem = await item.toDownloadItem(

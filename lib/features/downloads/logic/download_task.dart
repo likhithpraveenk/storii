@@ -33,7 +33,7 @@ class DownloadTask {
 
     try {
       final user = currentUser();
-      if (user == null) throw StateError('No current user');
+      if (user == null) throw NoUser();
 
       await engine.download(
         item: item,

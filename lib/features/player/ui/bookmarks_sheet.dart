@@ -5,6 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/bookmarks_provider.dart';
@@ -16,7 +17,7 @@ import 'package:storii/shared/widgets/app_dialog.dart';
 import 'package:storii/shared/widgets/empty_state.dart';
 import 'package:storii/shared/widgets/waveform.dart';
 
-class BookmarkButton extends StatelessWidget {
+class BookmarkButton extends ConsumerWidget {
   const new({
     super.key,
     required this.itemId,
@@ -39,7 +40,9 @@ class BookmarkButton extends StatelessWidget {
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (ref.watch(currentUserProvider) == null) return const SizedBox.shrink();
+
     if (inOverflow) {
       return ListTile(
         title: Text(

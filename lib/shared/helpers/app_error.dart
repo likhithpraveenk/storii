@@ -62,3 +62,10 @@ extension AppErrorTypeX on ApiExceptionType {
     .rateLimit => l10n.errorServer,
   };
 }
+
+class NoUser extends Error {
+  new();
+
+  @override
+  String toString() => 'No user';
+}

@@ -16,7 +16,7 @@ part 'authenticated_user_provider.g.dart';
 @Riverpod(keepAlive: true)
 Future<UserDomain> authenticatedUser(Ref ref) async {
   final user = ref.watch(currentUserProvider);
-  if (user == null) throw StateError('No current user');
+  if (user == null) throw NoUser();
 
   final ifOffline = ref.watch(isServerOfflineProvider);
   if (ifOffline) return user;

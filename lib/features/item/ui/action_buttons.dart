@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/app/providers/user_provider.dart';
 import 'package:storii/features/downloads/ui/download_button.dart';
 import 'package:storii/features/item/logic/user_progress_actions.dart';
@@ -31,6 +32,7 @@ class ActionButtons extends ConsumerWidget {
     final localSession = ref.watch(localSessionByIdProvider(item.id)).value;
     final canDownload =
         ref.watch(userPermissionsProvider).value?.download ?? false;
+    final hasUser = ref.watch(currentUserProvider) != null;
 
     return Row(
       mainAxisAlignment: .spaceEvenly,
@@ -39,8 +41,8 @@ class ActionButtons extends ConsumerWidget {
           LocalSessionIcon(itemId: item.id),
         if (canDownload) DownloadButton(libraryItemId: item.id),
         HistoryButton(itemId: item.id),
-        BookmarkButton(itemId: item.id, isPodcast: item.isPodcast),
-        if (!isFinished)
+        if (hasUser) BookmarkButton(itemId: item.id, isPodcast: item.isPodcast),
+        if (hasUser && !isFinished)
           IconButton(
             tooltip: l10n.markAsComplete,
             onPressed: () => AppBottomSheet.show(
@@ -68,7 +70,7 @@ class ActionButtons extends ConsumerWidget {
             ),
             icon: const Icon(Icons.beenhere_outlined),
           ),
-        if (mediaProgress != null)
+        if (hasUser && mediaProgress != null)
           IconButton(
             tooltip: l10n.removeProgressQ,
             onPressed: () => AppBottomSheet.show(

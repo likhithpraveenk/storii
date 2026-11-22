@@ -6,6 +6,7 @@ import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/api_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/servers_provider.dart';
+import 'package:storii/shared/helpers/app_error.dart';
 import 'package:storii/storage/local/servers_store.dart';
 
 part 'connection_providers.g.dart';
@@ -86,7 +87,7 @@ class ActiveServerUrl extends _$ActiveServerUrl {
   @override
   Uri build() {
     final user = ref.watch(currentUserProvider);
-    if (user == null) throw StateError('No current user');
+    if (user == null) throw NoUser();
 
     final server = ref.watch(serverStreamProvider(user.serverUrl)).value;
     final localUrl = server?.localUrl;

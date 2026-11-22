@@ -86,14 +86,6 @@ enum AppRoute {
   String withId(String id) => path.replaceFirst(':id', Uri.encodeComponent(id));
 }
 
-final publicRoutes = [
-  AppRoute.logs.path,
-  AppRoute.about.path,
-  AppRoute.login.path,
-  AppRoute.oauth.path,
-  AppRoute.changelog.path,
-];
-
 final routerProvider = Provider<GoRouter>((ref) {
   final user = ref.watch(currentUserProvider);
   String initialRoute = AppRoute.home.path;
@@ -104,17 +96,9 @@ final routerProvider = Provider<GoRouter>((ref) {
         ? startup.item.route.path
         : AppRoute.home.path;
   }
-
   return GoRouter(
     initialLocation: initialRoute,
     navigatorKey: rootNavigatorKey,
-    redirect: (context, state) {
-      final isPublic = publicRoutes.contains(state.matchedLocation);
-      if (user == null && !isPublic) {
-        return AppRoute.login.path;
-      }
-      return null;
-    },
     errorBuilder: (context, state) {
       return NotFoundScreen(path: state.uri.toString());
     },
