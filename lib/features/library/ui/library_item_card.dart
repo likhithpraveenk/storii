@@ -7,8 +7,8 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/settings_provider.dart';
-import 'package:storii/features/downloads/logic/downloads_provider.dart';
 import 'package:storii/features/item/ui/error_badge.dart';
+import 'package:storii/features/library/ui/download_badge.dart';
 import 'package:storii/features/library/ui/image_widget.dart';
 import 'package:storii/features/library/ui/item_card_progress_widget.dart';
 import 'package:storii/features/library/ui/more_options_widget.dart';
@@ -116,20 +116,13 @@ class LibraryItemCard extends ConsumerWidget {
                         right: 6,
                         child: StackBadge(episodeNumber),
                       ),
-                    Consumer(
-                      builder: (context, ref, _) {
-                        final isDownloaded =
-                            ref.watch(downloadItemProvider(item.id))?.status ==
-                            .completed;
-                        if (isDownloaded) {
-                          return const Positioned(
-                            bottom: 6,
-                            left: 6,
-                            child: DownloadBadge(),
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      },
+                    Positioned(
+                      bottom: 6,
+                      left: 6,
+                      child: DownloadBadge(
+                        itemId: item.id,
+                        episodeId: item.recentEpisode?.id,
+                      ),
                     ),
                     if (showPlay && !item.hasItemError)
                       Positioned(

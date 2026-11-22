@@ -33,35 +33,3 @@ class StackBadge extends StatelessWidget {
     );
   }
 }
-
-class DownloadBadge extends StatelessWidget {
-  const new({this.fillColor = true, super.key});
-
-  final bool fillColor;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Container(
-      alignment: .center,
-      padding: const .all(4),
-      decoration: BoxDecoration(
-        color: fillColor ? scheme.primaryContainer : Colors.transparent,
-        borderRadius: .circular(kRadiusSm),
-        border: fillColor ? null : .all(width: 1, color: scheme.primary),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.5),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Icon(
-        Icons.download_done,
-        size: 12,
-        color: fillColor ? scheme.onPrimaryContainer : scheme.primary,
-      ),
-    );
-  }
-}
