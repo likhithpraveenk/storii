@@ -3,6 +3,7 @@ import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
+import 'package:storii/storage/local/downloads_store.dart';
 
 part 'episode_filter_provider.g.dart';
 
@@ -10,13 +11,15 @@ enum EpisodeFilter {
   all,
   incomplete,
   inProgress,
-  completed;
+  completed,
+  downloaded;
 
   String get label => switch (this) {
     .all => l10n.all,
     .incomplete => l10n.inComplete,
     .inProgress => l10n.inProgress,
     .completed => l10n.completed,
+    .downloaded => l10n.downloaded,
   };
 }
 
@@ -84,6 +87,11 @@ List<PodcastEpisode> filteredEpisodes(
 }) {
   final filterState = ref.watch(episodeFilterProvider);
   final progressMap = ref.watch(mediaProgressMapProvider).value ?? {};
+  final downloads = ref.watch(downloadsProvider).value ?? const {};
+  final downloadedKeys = {
+    for (final download in downloads.values)
+      if (download.isComplete) download.key,
+  };
 
   var list = List<PodcastEpisode>.from(episodes);
 
@@ -99,6 +107,7 @@ List<PodcastEpisode> filteredEpisodes(
             progress.progress! > 0 &&
             !(progress.isFinished ?? false),
       .completed => progress?.isFinished ?? false,
+      .downloaded => downloadedKeys.contains(key),
     };
   }).toList();
 

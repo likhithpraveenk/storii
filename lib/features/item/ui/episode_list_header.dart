@@ -29,9 +29,24 @@ class EpisodeListHeader extends ConsumerWidget {
           const Spacer(),
           IconButton(
             tooltip: l10n.filter,
-            icon: Icon(
-              Icons.filter_list,
-              color: filter != .all ? scheme.primary : null,
+            icon: Stack(
+              clipBehavior: .none,
+              children: [
+                const Icon(Icons.filter_list),
+                if (filter != .all)
+                  Positioned(
+                    top: -4,
+                    right: -4,
+                    child: Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: scheme.error,
+                        shape: .circle,
+                      ),
+                    ),
+                  ),
+              ],
             ),
             onPressed: () => _showFilterSheet(context),
           ),
