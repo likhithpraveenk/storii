@@ -209,11 +209,7 @@ class _ChooseLocationDialogState extends ConsumerState<ChooseLocationDialog> {
         color: theme.colorScheme.surface,
         shape: RoundedRectangleBorder(
           borderRadius: .circular(kRadiusXl),
-          side: .new(
-            width: kBorderHairline,
-            strokeAlign: BorderSide.strokeAlignInside,
-            color: theme.colorScheme.primary,
-          ),
+          side: .new(width: kBorderHairline, color: theme.colorScheme.primary),
         ),
         child: Padding(
           padding: const .symmetric(vertical: 24),

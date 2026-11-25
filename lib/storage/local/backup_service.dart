@@ -82,8 +82,6 @@ class BackupService {
       dialogTitle: 'Save backup',
       fileName: '$_format-$stamp.json',
       bytes: bytes,
-      type: .custom,
-      allowedExtensions: ['json'],
     );
   }
 

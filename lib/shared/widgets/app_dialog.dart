@@ -12,11 +12,7 @@ BoxDecoration dialogDecoration(BuildContext context) {
   return BoxDecoration(
     color: theme.colorScheme.surface,
     borderRadius: .circular(kRadiusXl),
-    border: .all(
-      width: kBorderHairline,
-      strokeAlign: BorderSide.strokeAlignInside,
-      color: theme.colorScheme.primary,
-    ),
+    border: .all(width: kBorderHairline, color: theme.colorScheme.primary),
   );
 }
 

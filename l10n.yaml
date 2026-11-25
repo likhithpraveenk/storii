@@ -3,3 +3,4 @@ template-arb-file: app_en.arb
 output-localization-file: l10n.dart
 output-dir: lib/l10n/gen
 untranslated-messages-file: lib/l10n/gen/untranslated.json
+header: "// ignore_for_file: deprecated_member_use"
