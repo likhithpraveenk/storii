@@ -40,7 +40,6 @@ class HiveStorageService {
     userSettingsBoxName: () => Hive.box<String>(userSettingsBoxName),
     usersBoxName: () => Hive.box<UserDomain>(usersBoxName),
     serversBoxName: () => Hive.box<Server>(serversBoxName),
-    itemsBoxName: () => Hive.lazyBox<String>(itemsBoxName),
     localSessionsBoxName: () => Hive.box<String>(localSessionsBoxName),
     userMediaProgressBoxName: () =>
         Hive.lazyBox<String>(userMediaProgressBoxName),
