@@ -265,6 +265,14 @@
       }
     }
   },
+  "progressPercentComplete": "{percent}% complete",
+  "@progressPercentComplete": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
   "chapters": "Chapters",
   "removeProgressQ": "Remove progress?",
   "removeProgress": "Remove progress",

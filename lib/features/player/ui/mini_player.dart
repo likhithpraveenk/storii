@@ -46,15 +46,14 @@ class MiniPlayer extends ConsumerWidget {
           )
         : remainingDuration;
     final remainingStr = scaledRemaining.toReadableDuration(isLeft: true);
-    final positionStr = position.toReadableDuration();
+    final positionStr = position.toTime();
     final showSeekButtons = ref.watch(showMiniPlayerSeekButtonsProvider);
 
     final miniplayerSubtitleMode = ref.watch(miniplayerSubtitleModeProvider);
     final subtitle = switch (miniplayerSubtitleMode) {
-      .both => '$positionStr  $kDot  $remainingStr',
-      .remaining =>
-        '$kMinus${scaledRemaining.toReadableDuration(showSeconds: true)}',
-      .position => position.toReadableDuration(showSeconds: true),
+      .both => '$positionStr  $kSmallDot  $remainingStr',
+      .remaining => '$kMinus${scaledRemaining.toTime()}',
+      .position => positionStr,
     };
 
     return Directionality(

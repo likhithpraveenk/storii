@@ -15,7 +15,6 @@ import 'package:storii/features/player/ui/button_layout_default.dart';
 import 'package:storii/features/player/ui/full_player_actions.dart';
 import 'package:storii/features/player/ui/progress_label.dart';
 import 'package:storii/shared/helpers/abs_model_extensions.dart';
-import 'package:storii/shared/widgets/marquee_text.dart';
 
 class FullPlayer extends ConsumerWidget {
   const new({super.key, required this.expandFactor});
@@ -37,9 +36,6 @@ class FullPlayer extends ConsumerWidget {
 
     final localSpeed = ref.watch(localSpeedProvider);
     final scaleTimeBySpeed = ref.watch(scaleTimeBySpeedProvider);
-    final showChapterProgressSlider = ref.watch(
-      showChapterProgressSliderProvider,
-    );
     final showCoverInFullPlayer = ref.watch(showCoverInFullPlayerProvider);
 
     Duration scale(Duration d) => scaleTimeBySpeed
@@ -78,11 +74,15 @@ class FullPlayer extends ConsumerWidget {
               children: [
                 Padding(
                   padding: const .symmetric(horizontal: 24),
-                  child: MarqueeText(
+                  child: Text(
                     title,
+                    textAlign: .center,
+                    maxLines: 2,
+                    overflow: .ellipsis,
                     style: theme.textTheme.titleLarge?.copyWith(fontSize: 22),
                   ),
                 ),
+                const SizedBox(height: 4),
                 Padding(
                   padding: const .symmetric(horizontal: 24),
                   child: Text(
@@ -96,12 +96,6 @@ class FullPlayer extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                if (showChapterProgressSlider)
-                  ProgressLabel(
-                    currentPosition: globalPosition,
-                    totalDuration: totalDuration,
-                    remaining: remaining,
-                  ),
                 const Padding(
                   padding: .symmetric(horizontal: 24),
                   child: BookSlider(),
@@ -134,11 +128,17 @@ class FullPlayer extends ConsumerWidget {
           ),
         );
 
+        final progressLabel = ProgressLabel(
+          currentPosition: globalPosition,
+          totalDuration: totalDuration,
+          remaining: remaining,
+        );
+
         if (isLandscape) {
           final statusBar = statusBarHeight(context);
           return Row(
             children: [
-              const _PlayerHeader(isVertical: true),
+              _PlayerHeader(isVertical: true, progressLabel: progressLabel),
               Expanded(
                 child: Padding(
                   padding: .only(
@@ -156,9 +156,8 @@ class FullPlayer extends ConsumerWidget {
 
         return Column(
           mainAxisAlignment: showCoverInFullPlayer ? .start : .center,
-          mainAxisSize: .min,
           children: [
-            const _PlayerHeader(),
+            _PlayerHeader(progressLabel: progressLabel),
             SizedBox(
               height: showCoverInFullPlayer ? size + playerCoverContentGap : 0,
             ),
@@ -185,9 +184,10 @@ double statusBarHeight(BuildContext context) =>
     MediaQueryData.fromView(View.of(context)).padding.top;
 
 class _PlayerHeader extends ConsumerWidget {
-  const new({this.isVertical = false});
+  const new({required this.progressLabel, this.isVertical = false});
 
   final bool isVertical;
+  final Widget progressLabel;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -197,19 +197,27 @@ class _PlayerHeader extends ConsumerWidget {
       icon: const Icon(Icons.keyboard_arrow_down),
     );
 
+    final label = isVertical
+        ? RotatedBox(
+            quarterTurns: 3,
+            child: FittedBox(fit: .scaleDown, child: progressLabel),
+          )
+        : progressLabel;
+
     return SizedBox(
       width: isVertical ? fullPlayerHeaderHeight : null,
       height: isVertical ? null : fullPlayerTopInset(context),
       child: Padding(
         padding: .only(top: statusBarHeight(context)),
-        child: isVertical
-            ? Column(children: [collapseButton])
-            : Row(
-                children: [
-                  collapseButton,
-                  const Expanded(child: SizedBox.shrink()),
-                ],
-              ),
+        child: Stack(
+          children: [
+            Positioned.fill(child: Center(child: label)),
+            Align(
+              alignment: isVertical ? .topCenter : .centerLeft,
+              child: collapseButton,
+            ),
+          ],
+        ),
       ),
     );
   }

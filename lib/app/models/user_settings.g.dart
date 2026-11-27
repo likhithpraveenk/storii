@@ -179,12 +179,6 @@ _UserSettings _$UserSettingsFromJson(
       : Duration(
           microseconds: (json['interruptionLongSkipBackward'] as num).toInt(),
         ),
-  globalProgressEndLabel:
-      $enumDecodeNullable(
-        _$ProgressEndLabelEnumMap,
-        json['globalProgressEndLabel'],
-      ) ??
-      DefaultUserSettings.globalProgressEndLabel,
   progressEndLabel:
       $enumDecodeNullable(
         _$ProgressEndLabelEnumMap,
@@ -355,8 +349,6 @@ Map<String, dynamic> _$UserSettingsToJson(
       instance.interruptionLongSkipThreshold.inMicroseconds,
   'interruptionLongSkipBackward':
       instance.interruptionLongSkipBackward.inMicroseconds,
-  'globalProgressEndLabel':
-      _$ProgressEndLabelEnumMap[instance.globalProgressEndLabel]!,
   'progressEndLabel': _$ProgressEndLabelEnumMap[instance.progressEndLabel]!,
   'miniplayerSubtitleMode':
       _$MiniplayerSubtitleModeEnumMap[instance.miniplayerSubtitleMode]!,
