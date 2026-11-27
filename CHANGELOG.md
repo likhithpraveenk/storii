@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 ## [Unreleased]
 
+## [v0.14.0] - 2026-11-27
+
 ### Added
 
 - "Downloaded" filter in episode list
@@ -22,6 +24,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 - downloaded books playable when logged out or the server is unreachable
 - screens reloading on progress update
+
+### Removed
+
+- deprecated items cache box
 
 ## [v0.13.5] - 2026-11-18
 
@@ -899,7 +905,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 - Custom fonts support
 - Dynamic theme support
 
-[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.13.5...HEAD
+[Unreleased]: https://github.com/likhithpraveenk/storii/compare/v0.14.0...HEAD
+[v0.14.0]: https://github.com/likhithpraveenk/storii/compare/v0.13.5...v0.14.0
 [v0.13.5]: https://github.com/likhithpraveenk/storii/compare/v0.13.4...v0.13.5
 [v0.13.4]: https://github.com/likhithpraveenk/storii/compare/v0.13.3...v0.13.4
 [v0.13.4-beta.1]: https://github.com/likhithpraveenk/storii/compare/v0.13.3...v0.13.4-beta.1

@@ -1,0 +1,13 @@
+Added:
+- "Downloaded" filter in episode list
+- widgets management screen for now playing and binding
+
+Changed:
+- screens needing an account show a login button
+- moved changelog tile to about screen
+- full player actions edit view
+- book progress moved to top of full player
+
+Fixed:
+- downloaded books playable when logged out or server unreachable
+- screens reloading on progress update
