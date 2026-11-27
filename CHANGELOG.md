@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 ### Added
 
 - "Downloaded" filter in episode list
+- widgets management screen to set a widget to "now playing" or change binding
 
 ### Changed
 

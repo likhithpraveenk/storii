@@ -32,7 +32,9 @@ void deepLinkController(Ref ref) {
         case 'widget':
           final widgetId = int.tryParse(url.queryParameters['id'] ?? '');
           if (widgetId != null) {
-            ref.read(widgetControllerProvider.notifier).setWidgetId(widgetId);
+            await ref
+                .read(widgetControllerProvider.notifier)
+                .prepareWidgetForBinding(widgetId);
           }
 
         case '':

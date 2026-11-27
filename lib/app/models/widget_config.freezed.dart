@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$WidgetConfig {
 
- int get widgetId; String get itemId; String? get episodeId; DateTime get updatedAt; String? get coverPath; double? get progress; WidgetPlaybackState get state;
+ int get widgetId; String get itemId; String? get episodeId; DateTime get updatedAt; String? get coverPath; double? get progress; WidgetPlaybackState get state; WidgetSource get source;
 /// Create a copy of WidgetConfig
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $WidgetConfigCopyWith<WidgetConfig> get copyWith => _$WidgetConfigCopyWithImpl<W
 @override
 bool operator ==(Object other) {
   final _this = this as WidgetConfig;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WidgetConfig&&(identical(other.widgetId, _this.widgetId) || other.widgetId == _this.widgetId)&&(identical(other.itemId, _this.itemId) || other.itemId == _this.itemId)&&(identical(other.episodeId, _this.episodeId) || other.episodeId == _this.episodeId)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&(identical(other.coverPath, _this.coverPath) || other.coverPath == _this.coverPath)&&(identical(other.progress, _this.progress) || other.progress == _this.progress)&&(identical(other.state, _this.state) || other.state == _this.state));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WidgetConfig&&(identical(other.widgetId, _this.widgetId) || other.widgetId == _this.widgetId)&&(identical(other.itemId, _this.itemId) || other.itemId == _this.itemId)&&(identical(other.episodeId, _this.episodeId) || other.episodeId == _this.episodeId)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&(identical(other.coverPath, _this.coverPath) || other.coverPath == _this.coverPath)&&(identical(other.progress, _this.progress) || other.progress == _this.progress)&&(identical(other.state, _this.state) || other.state == _this.state)&&(identical(other.source, _this.source) || other.source == _this.source));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as WidgetConfig;
-  return Object.hash(runtimeType,_this.widgetId,_this.itemId,_this.episodeId,_this.updatedAt,_this.coverPath,_this.progress,_this.state);
+  return Object.hash(runtimeType,_this.widgetId,_this.itemId,_this.episodeId,_this.updatedAt,_this.coverPath,_this.progress,_this.state,_this.source);
 }
 
 @override
 String toString() {
   final _this = this as WidgetConfig;
-  return 'WidgetConfig(widgetId: ${_this.widgetId}, itemId: ${_this.itemId}, episodeId: ${_this.episodeId}, updatedAt: ${_this.updatedAt}, coverPath: ${_this.coverPath}, progress: ${_this.progress}, state: ${_this.state})';
+  return 'WidgetConfig(widgetId: ${_this.widgetId}, itemId: ${_this.itemId}, episodeId: ${_this.episodeId}, updatedAt: ${_this.updatedAt}, coverPath: ${_this.coverPath}, progress: ${_this.progress}, state: ${_this.state}, source: ${_this.source})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $WidgetConfigCopyWith<$Res>  {
   factory $WidgetConfigCopyWith(WidgetConfig value, $Res Function(WidgetConfig) _then) = _$WidgetConfigCopyWithImpl;
 @useResult
 $Res call({
- int widgetId, String itemId, String? episodeId, DateTime updatedAt, String? coverPath, double? progress, WidgetPlaybackState state
+ int widgetId, String itemId, String? episodeId, DateTime updatedAt, String? coverPath, double? progress, WidgetPlaybackState state, WidgetSource source
 });
 
 
@@ -71,7 +71,7 @@ class _$WidgetConfigCopyWithImpl<$Res>
 
 /// Create a copy of WidgetConfig
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? widgetId = null,Object? itemId = null,Object? episodeId = freezed,Object? updatedAt = null,Object? coverPath = freezed,Object? progress = freezed,Object? state = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? widgetId = null,Object? itemId = null,Object? episodeId = freezed,Object? updatedAt = null,Object? coverPath = freezed,Object? progress = freezed,Object? state = null,Object? source = null,}) {
   return _then(WidgetConfig(
 widgetId: null == widgetId ? _self.widgetId : widgetId // ignore: cast_nullable_to_non_nullable
 as int,itemId: null == itemId ? _self.itemId : itemId // ignore: cast_nullable_to_non_nullable
@@ -80,7 +80,8 @@ as String?,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore:
 as DateTime,coverPath: freezed == coverPath ? _self.coverPath : coverPath // ignore: cast_nullable_to_non_nullable
 as String?,progress: freezed == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
 as double?,state: null == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
-as WidgetPlaybackState,
+as WidgetPlaybackState,source: null == source ? _self.source : source // ignore: cast_nullable_to_non_nullable
+as WidgetSource,
   ));
 }
 
@@ -162,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int widgetId,  String itemId,  String? episodeId,  DateTime updatedAt,  String? coverPath,  double? progress,  WidgetPlaybackState state)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int widgetId,  String itemId,  String? episodeId,  DateTime updatedAt,  String? coverPath,  double? progress,  WidgetPlaybackState state,  WidgetSource source)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WidgetConfig() when $default != null:
-return $default(_that.widgetId,_that.itemId,_that.episodeId,_that.updatedAt,_that.coverPath,_that.progress,_that.state);case _:
+return $default(_that.widgetId,_that.itemId,_that.episodeId,_that.updatedAt,_that.coverPath,_that.progress,_that.state,_that.source);case _:
   return orElse();
 
 }
@@ -183,10 +184,10 @@ return $default(_that.widgetId,_that.itemId,_that.episodeId,_that.updatedAt,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int widgetId,  String itemId,  String? episodeId,  DateTime updatedAt,  String? coverPath,  double? progress,  WidgetPlaybackState state)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int widgetId,  String itemId,  String? episodeId,  DateTime updatedAt,  String? coverPath,  double? progress,  WidgetPlaybackState state,  WidgetSource source)  $default,) {final _that = this;
 switch (_that) {
 case _WidgetConfig():
-return $default(_that.widgetId,_that.itemId,_that.episodeId,_that.updatedAt,_that.coverPath,_that.progress,_that.state);}
+return $default(_that.widgetId,_that.itemId,_that.episodeId,_that.updatedAt,_that.coverPath,_that.progress,_that.state,_that.source);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -200,10 +201,10 @@ return $default(_that.widgetId,_that.itemId,_that.episodeId,_that.updatedAt,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int widgetId,  String itemId,  String? episodeId,  DateTime updatedAt,  String? coverPath,  double? progress,  WidgetPlaybackState state)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int widgetId,  String itemId,  String? episodeId,  DateTime updatedAt,  String? coverPath,  double? progress,  WidgetPlaybackState state,  WidgetSource source)?  $default,) {final _that = this;
 switch (_that) {
 case _WidgetConfig() when $default != null:
-return $default(_that.widgetId,_that.itemId,_that.episodeId,_that.updatedAt,_that.coverPath,_that.progress,_that.state);case _:
+return $default(_that.widgetId,_that.itemId,_that.episodeId,_that.updatedAt,_that.coverPath,_that.progress,_that.state,_that.source);case _:
   return null;
 
 }
@@ -215,7 +216,7 @@ return $default(_that.widgetId,_that.itemId,_that.episodeId,_that.updatedAt,_tha
 @JsonSerializable()
 
 class _WidgetConfig implements WidgetConfig {
-  const _WidgetConfig({required this.widgetId, required this.itemId, this.episodeId, required this.updatedAt, this.coverPath, this.progress, this.state = WidgetPlaybackState.none});
+  const _WidgetConfig({required this.widgetId, required this.itemId, this.episodeId, required this.updatedAt, this.coverPath, this.progress, this.state = WidgetPlaybackState.none, this.source = WidgetSource.media});
   factory _WidgetConfig.fromJson(Map<String, dynamic> json) => _$WidgetConfigFromJson(json);
 
 @override final  int widgetId;
@@ -225,6 +226,7 @@ class _WidgetConfig implements WidgetConfig {
 @override final  String? coverPath;
 @override final  double? progress;
 @override@JsonKey() final  WidgetPlaybackState state;
+@override@JsonKey() final  WidgetSource source;
 
 /// Create a copy of WidgetConfig
 /// with the given fields replaced by the non-null parameter values.
@@ -239,18 +241,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WidgetConfig&&(identical(other.widgetId, widgetId) || other.widgetId == widgetId)&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.state, state) || other.state == state));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _WidgetConfig&&(identical(other.widgetId, widgetId) || other.widgetId == widgetId)&&(identical(other.itemId, itemId) || other.itemId == itemId)&&(identical(other.episodeId, episodeId) || other.episodeId == episodeId)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.coverPath, coverPath) || other.coverPath == coverPath)&&(identical(other.progress, progress) || other.progress == progress)&&(identical(other.state, state) || other.state == state)&&(identical(other.source, source) || other.source == source));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,widgetId,itemId,episodeId,updatedAt,coverPath,progress,state);
+    return Object.hash(runtimeType,widgetId,itemId,episodeId,updatedAt,coverPath,progress,state,source);
 }
 
 @override
 String toString() {
-    return 'WidgetConfig(widgetId: $widgetId, itemId: $itemId, episodeId: $episodeId, updatedAt: $updatedAt, coverPath: $coverPath, progress: $progress, state: $state)';
+    return 'WidgetConfig(widgetId: $widgetId, itemId: $itemId, episodeId: $episodeId, updatedAt: $updatedAt, coverPath: $coverPath, progress: $progress, state: $state, source: $source)';
 }
 
 
@@ -261,7 +263,7 @@ abstract mixin class _$WidgetConfigCopyWith<$Res> implements $WidgetConfigCopyWi
   factory _$WidgetConfigCopyWith(_WidgetConfig value, $Res Function(_WidgetConfig) _then) = __$WidgetConfigCopyWithImpl;
 @override @useResult
 $Res call({
- int widgetId, String itemId, String? episodeId, DateTime updatedAt, String? coverPath, double? progress, WidgetPlaybackState state
+ int widgetId, String itemId, String? episodeId, DateTime updatedAt, String? coverPath, double? progress, WidgetPlaybackState state, WidgetSource source
 });
 
 
@@ -278,7 +280,7 @@ class __$WidgetConfigCopyWithImpl<$Res>
 
 /// Create a copy of WidgetConfig
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? widgetId = null,Object? itemId = null,Object? episodeId = freezed,Object? updatedAt = null,Object? coverPath = freezed,Object? progress = freezed,Object? state = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? widgetId = null,Object? itemId = null,Object? episodeId = freezed,Object? updatedAt = null,Object? coverPath = freezed,Object? progress = freezed,Object? state = null,Object? source = null,}) {
   return _then(_WidgetConfig(
 widgetId: null == widgetId ? _self.widgetId : widgetId // ignore: cast_nullable_to_non_nullable
 as int,itemId: null == itemId ? _self.itemId : itemId // ignore: cast_nullable_to_non_nullable
@@ -287,7 +289,8 @@ as String?,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore:
 as DateTime,coverPath: freezed == coverPath ? _self.coverPath : coverPath // ignore: cast_nullable_to_non_nullable
 as String?,progress: freezed == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
 as double?,state: null == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
-as WidgetPlaybackState,
+as WidgetPlaybackState,source: null == source ? _self.source : source // ignore: cast_nullable_to_non_nullable
+as WidgetSource,
   ));
 }
 

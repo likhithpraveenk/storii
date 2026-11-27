@@ -25,7 +25,6 @@ import java.io.File
 
 
 class MediaWidgetProvider : AppWidgetProvider() {
-
     companion object {
         private const val HOME_WIDGET_PREFS = "HomeWidgetPreferences"
         private const val STATE_NONE = "none"
@@ -43,15 +42,17 @@ class MediaWidgetProvider : AppWidgetProvider() {
             val dataKey = "widget_$appWidgetId"
             val config = widgetData.getString(dataKey, null)?.let { parseWidgetConfig(it) }
 
-            val itemId = config?.itemId ?: ""
+            val itemId = config?.itemId
             val episodeId = config?.episodeId
             val coverPath = config?.coverPath
             val progress = config?.progress
 
-            if (itemId.isEmpty()) {
-                views.setImageViewResource(R.id.widget_cover, R.drawable.add_rounded)
+            if (itemId == null) {
+                views.setViewVisibility(R.id.widget_cover, View.GONE)
+                views.setViewVisibility(R.id.widget_setup_text, View.VISIBLE)
                 views.setViewVisibility(R.id.widget_progress_red, View.GONE)
                 views.setViewVisibility(R.id.widget_progress_green, View.GONE)
+                views.setViewVisibility(R.id.widget_badge, View.GONE)
 
                 val configureUri = "storii://widget?id=$appWidgetId".toUri()
                 val configureIntent = Intent(Intent.ACTION_VIEW, configureUri).apply {
@@ -62,10 +63,32 @@ class MediaWidgetProvider : AppWidgetProvider() {
                     context,
                     appWidgetId,
                     configureIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                )
+                views.setOnClickPendingIntent(R.id.widget_root, configurePendingIntent)
+            } else if (itemId.isEmpty()) {
+                views.setViewVisibility(R.id.widget_cover, View.VISIBLE)
+                views.setImageViewResource(R.id.widget_cover, R.mipmap.ic_launcher_foreground)
+                views.setViewVisibility(R.id.widget_setup_text, View.GONE)
+                views.setViewVisibility(R.id.widget_progress_red, View.GONE)
+                views.setViewVisibility(R.id.widget_progress_green, View.GONE)
+                views.setViewVisibility(R.id.widget_badge, View.GONE)
+
+                val configureUri = "storii:///home".toUri()
+                val configureIntent = Intent(Intent.ACTION_VIEW, configureUri).apply {
+                    setPackage(context.packageName)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                }
+                val configurePendingIntent = PendingIntent.getActivity(
+                    context,
+                    appWidgetId,
+                    configureIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                 )
                 views.setOnClickPendingIntent(R.id.widget_root, configurePendingIntent)
             } else {
+                views.setViewVisibility(R.id.widget_cover, View.VISIBLE)
+                views.setViewVisibility(R.id.widget_setup_text, View.GONE)
                 val bitmap = loadDownsampledBitmap(coverPath)
                 if (bitmap != null) {
                     val roundCover = roundBitmap(context, bitmap)
@@ -119,7 +142,7 @@ class MediaWidgetProvider : AppWidgetProvider() {
                 )
                 views.setOnClickPendingIntent(R.id.widget_badge, playPendingIntent)
 
-                val state = config?.state ?: STATE_NONE
+                val state = config.state
                 if (state == STATE_LOADING) {
                     views.setViewVisibility(R.id.widget_badge_loading, View.VISIBLE)
                     views.setViewVisibility(R.id.widget_badge, View.GONE)
@@ -147,19 +170,17 @@ class MediaWidgetProvider : AppWidgetProvider() {
             val state: String,
         )
 
-        private fun parseWidgetConfig(jsonString: String): WidgetConfigData? {
-            return try {
-                val json = JSONObject(jsonString)
-                WidgetConfigData(
-                    itemId = json.optString("itemId"),
-                    episodeId = json.optString("episodeId").takeIf { it.isNotEmpty() },
-                    coverPath = json.optString("coverPath").takeIf { it.isNotBlank() },
-                    progress = json.optDouble("progress").takeIf { !it.isNaN() },
-                    state = json.optString("state").takeIf { it.isNotEmpty() } ?: STATE_NONE,
-                )
-            } catch (_: JSONException) {
-                null
-            }
+        private fun parseWidgetConfig(jsonString: String): WidgetConfigData? = try {
+            val json = JSONObject(jsonString)
+            WidgetConfigData(
+                itemId = json.optString("itemId"),
+                episodeId = json.optString("episodeId").takeIf { it.isNotEmpty() },
+                coverPath = json.optString("coverPath").takeIf { it.isNotBlank() },
+                progress = json.optDouble("progress").takeIf { !it.isNaN() },
+                state = json.optString("state").takeIf { it.isNotEmpty() } ?: STATE_NONE,
+            )
+        } catch (_: JSONException) {
+            null
         }
 
         private fun loadDownsampledBitmap(coverPath: String?): Bitmap? {
@@ -211,7 +232,6 @@ class MediaWidgetProvider : AppWidgetProvider() {
             return output
         }
     }
-
 
     override fun onUpdate(
         context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray

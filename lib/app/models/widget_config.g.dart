@@ -17,6 +17,9 @@ _WidgetConfig _$WidgetConfigFromJson(Map<String, dynamic> json) =>
       state:
           $enumDecodeNullable(_$WidgetPlaybackStateEnumMap, json['state']) ??
           WidgetPlaybackState.none,
+      source:
+          $enumDecodeNullable(_$WidgetSourceEnumMap, json['source']) ??
+          WidgetSource.media,
     );
 
 Map<String, dynamic> _$WidgetConfigToJson(_WidgetConfig instance) =>
@@ -28,6 +31,7 @@ Map<String, dynamic> _$WidgetConfigToJson(_WidgetConfig instance) =>
       'coverPath': ?instance.coverPath,
       'progress': ?instance.progress,
       'state': _$WidgetPlaybackStateEnumMap[instance.state]!,
+      'source': _$WidgetSourceEnumMap[instance.source]!,
     };
 
 const _$WidgetPlaybackStateEnumMap = {
@@ -35,4 +39,9 @@ const _$WidgetPlaybackStateEnumMap = {
   WidgetPlaybackState.loading: 'loading',
   WidgetPlaybackState.playing: 'playing',
   WidgetPlaybackState.paused: 'paused',
+};
+
+const _$WidgetSourceEnumMap = {
+  WidgetSource.media: 'media',
+  WidgetSource.nowPlaying: 'nowPlaying',
 };

@@ -79,6 +79,11 @@ class MoreScreen extends ConsumerWidget {
                 leading: const Icon(Icons.query_stats),
                 title: Text(l10n.stats),
               ),
+              ListTile(
+                onTap: () => context.push(AppRoute.widgets.path),
+                leading: const Icon(Icons.widgets_outlined),
+                title: Text(l10n.widgets),
+              ),
               const AdminTile(),
               const Divider(),
               ListTile(

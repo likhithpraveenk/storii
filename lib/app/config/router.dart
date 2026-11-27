@@ -38,6 +38,7 @@ import 'package:storii/features/settings/ui/library/library_settings_screen.dart
 import 'package:storii/features/settings/ui/player_settings/player_settings_screen.dart';
 import 'package:storii/features/settings/ui/settings_screen.dart';
 import 'package:storii/features/stats/ui/stats_screen.dart';
+import 'package:storii/features/widget/ui/widgets_screen.dart';
 import 'package:storii/shared/splash_screen.dart';
 import 'package:storii/shared/widgets/not_found_screen.dart';
 import 'package:storii/shared/widgets/shell_scaffold.dart';
@@ -78,6 +79,7 @@ enum AppRoute {
   storage('/more/settings/advanced/storage'),
   customizationSettings('/more/settings/customization'),
   stats('/more/stats'),
+  widgets('/more/widgets'),
   playbackHistory('/more/playback-history'),
   localSessions('/more/local-sessions');
 
@@ -276,6 +278,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: 'stats',
                     builder: (context, state) => const StatsScreen(),
+                  ),
+                  GoRoute(
+                    path: 'widgets',
+                    builder: (context, state) => const WidgetsScreen(),
                   ),
                   GoRoute(
                     path: 'playback-history',

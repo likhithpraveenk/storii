@@ -9,6 +9,48 @@ part of 'widget_controller.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
+@ProviderFor(availableWidgetConfigs)
+final availableWidgetConfigsProvider = AvailableWidgetConfigsProvider._();
+
+final class AvailableWidgetConfigsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<int, WidgetConfig?>>,
+          Map<int, WidgetConfig?>,
+          FutureOr<Map<int, WidgetConfig?>>
+        >
+    with
+        $FutureModifier<Map<int, WidgetConfig?>>,
+        $FutureProvider<Map<int, WidgetConfig?>> {
+  AvailableWidgetConfigsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'availableWidgetConfigsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$availableWidgetConfigsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<int, WidgetConfig?>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<int, WidgetConfig?>> create(Ref ref) {
+    return availableWidgetConfigs(ref);
+  }
+}
+
+String _$availableWidgetConfigsHash() =>
+    r'd53fb8c7948be6aef72b304cd5e0b641e3e1e475';
+
 @ProviderFor(WidgetController)
 final widgetControllerProvider = WidgetControllerProvider._();
 
@@ -20,7 +62,7 @@ final class WidgetControllerProvider
         argument: null,
         retry: null,
         name: r'widgetControllerProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -41,7 +83,7 @@ final class WidgetControllerProvider
   }
 }
 
-String _$widgetControllerHash() => r'0415a4d9ee31bb73f415490e1863aadb2d204898';
+String _$widgetControllerHash() => r'32cc4f1d6156bbbc117d1d734e3fd35fd7995007';
 
 abstract class _$WidgetController extends $Notifier<void> {
   void build();
