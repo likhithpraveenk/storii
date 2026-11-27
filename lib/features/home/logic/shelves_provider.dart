@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:storii/api/abs/abs_api.dart';
 import 'package:storii/app/init.dart';
@@ -14,39 +15,55 @@ import 'package:storii/storage/local/session_store.dart';
 part 'shelves_provider.g.dart';
 
 @riverpod
-Future<List<Shelf>> shelves(Ref ref) async {
-  final rawShelves = await ref.watch(rawShelvesProvider.future);
-  final progressMap = await ref.watch(mediaProgressMapProvider.future);
+class Shelves extends _$Shelves {
+  @override
+  Future<List<Shelf>> build() async {
+    ref.listen(mediaProgressMapProvider, (previous, next) {
+      final progressMap = next.value;
+      final current = state.value;
+      if (progressMap == null || current == null) return;
+      final updated = _applyProgress(current, progressMap);
+      if (listEquals(updated, current)) return;
+      state = AsyncData(updated);
+    });
 
-  return rawShelves
-      .map(
-        (shelf) => switch (shelf) {
-          LibraryItemsShelf() => shelf.copyWith(
-            entities: shelf.entities
-                .map(
-                  (item) =>
-                      item.copyWith(userMediaProgress: progressMap[item.id]),
-                )
-                .toList(),
-          ),
-          SeriesShelf() => shelf.copyWith(
-            entities: shelf.entities
-                .map(
-                  (s) => s.copyWith(
-                    books: s.books
-                        .map(
-                          (i) =>
-                              i.copyWith(userMediaProgress: progressMap[i.id]),
-                        )
-                        .toList(),
-                  ),
-                )
-                .toList(),
-          ),
-          _ => shelf,
-        },
-      )
-      .toList();
+    final rawShelves = await ref.watch(rawShelvesProvider.future);
+    final progressMap = await ref.read(mediaProgressMapProvider.future);
+    return _applyProgress(rawShelves, progressMap);
+  }
+
+  List<Shelf> _applyProgress(
+    List<Shelf> rawShelves,
+    Map<String, MediaProgress> progressMap,
+  ) {
+    return rawShelves
+        .map(
+          (shelf) => switch (shelf) {
+            LibraryItemsShelf() => shelf.copyWith(
+              entities: shelf.entities
+                  .map((i) => i.copyWith(userMediaProgress: progressMap[i.id]))
+                  .toList(),
+            ),
+            SeriesShelf() => shelf.copyWith(
+              entities: shelf.entities
+                  .map(
+                    (s) => s.copyWith(
+                      books: s.books
+                          .map(
+                            (i) => i.copyWith(
+                              userMediaProgress: progressMap[i.id],
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  )
+                  .toList(),
+            ),
+            _ => shelf,
+          },
+        )
+        .toList();
+  }
 }
 
 @riverpod

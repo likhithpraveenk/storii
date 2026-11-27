@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -30,6 +31,14 @@ class LibraryItemsNotifier extends _$LibraryItemsNotifier {
 
   @override
   Future<PaginatedLibraryItems> build() async {
+    ref.listen(mediaProgressMapProvider, (previous, next) {
+      final progressMap = next.value;
+      final current = state.value;
+      if (progressMap == null || current == null) return;
+      final items = _applyProgress(current.items, progressMap);
+      if (listEquals(items, current.items)) return;
+      state = AsyncData(current.copyWith(items: items));
+    });
     _page = 0;
     return _fetchPage(_page);
   }
@@ -47,7 +56,7 @@ class LibraryItemsNotifier extends _$LibraryItemsNotifier {
     final repo = ref.read(libraryRepositoryProvider(user));
     final response = await repo.getItems(libraryId, params);
 
-    final progressMap = await ref.watch(mediaProgressMapProvider.future);
+    final progressMap = await ref.read(mediaProgressMapProvider.future);
     final processed = _applyProgress(response.results, progressMap);
     final hasMore = response.total > (page + 1) * pageSize;
 

@@ -9,17 +9,11 @@ part of 'shelves_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(shelves)
+@ProviderFor(Shelves)
 final shelvesProvider = ShelvesProvider._();
 
 final class ShelvesProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<Shelf>>,
-          List<Shelf>,
-          FutureOr<List<Shelf>>
-        >
-    with $FutureModifier<List<Shelf>>, $FutureProvider<List<Shelf>> {
+    extends $AsyncNotifierProvider<Shelves, List<Shelf>> {
   ShelvesProvider._()
     : super(
         from: null,
@@ -36,17 +30,28 @@ final class ShelvesProvider
 
   @$internal
   @override
-  $FutureProviderElement<List<Shelf>> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<List<Shelf>> create(Ref ref) {
-    return shelves(ref);
-  }
+  Shelves create() => Shelves();
 }
 
-String _$shelvesHash() => r'345fdd366f9cefc848d6b0ff19a4198de267b466';
+String _$shelvesHash() => r'b320b457af6ae97cca8f8c5b8cc16083870e2045';
+
+abstract class _$Shelves extends $AsyncNotifier<List<Shelf>> {
+  FutureOr<List<Shelf>> build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<List<Shelf>>, List<Shelf>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<List<Shelf>>, List<Shelf>>,
+              AsyncValue<List<Shelf>>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}
 
 @ProviderFor(sortedShelves)
 final sortedShelvesProvider = SortedShelvesProvider._();

@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 ### Fixed
 
 - downloaded books playable when logged out or the server is unreachable
+- screens reloading on progress update
 
 ## [v0.13.5] - 2026-11-18
 
