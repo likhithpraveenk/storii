@@ -31,24 +31,27 @@ class ProgressLabel extends ConsumerWidget {
       .remaining => '$kMinus${remaining.toTime()}',
     };
 
-    return Padding(
-      padding: const .symmetric(horizontal: 24),
-      child: Row(
-        children: [
-          Text(currentPosition.toTime(), style: textStyle),
-          const Spacer(),
-          GestureDetector(
-            behavior: .opaque,
-            onTap: () {
-              ref
-                  .read(userSettingsProvider.notifier)
-                  .setGlobalProgressEndLabel(
-                    label == .total ? .remaining : .total,
-                  );
-            },
-            child: Text(end, style: textStyle),
-          ),
-        ],
+    return Directionality(
+      textDirection: .ltr,
+      child: Padding(
+        padding: const .symmetric(horizontal: 24),
+        child: Row(
+          children: [
+            Text(currentPosition.toTime(), style: textStyle),
+            const Spacer(),
+            GestureDetector(
+              behavior: .opaque,
+              onTap: () {
+                ref
+                    .read(userSettingsProvider.notifier)
+                    .setGlobalProgressEndLabel(
+                      label == .total ? .remaining : .total,
+                    );
+              },
+              child: Text(end, style: textStyle),
+            ),
+          ],
+        ),
       ),
     );
   }

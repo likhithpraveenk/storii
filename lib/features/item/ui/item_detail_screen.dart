@@ -160,9 +160,9 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               ),
             ),
           ),
-          Positioned(
+          PositionedDirectional(
             top: MediaQuery.paddingOf(context).top,
-            left: 4,
+            start: 4,
             child: IconButton(
               onPressed: () {
                 if (context.canPop()) {
@@ -175,9 +175,9 @@ class _ItemDetailScreenState extends ConsumerState<ItemDetailScreen> {
               icon: const Icon(Icons.arrow_back),
             ),
           ),
-          Positioned(
+          PositionedDirectional(
             top: MediaQuery.paddingOf(context).top,
-            right: 4,
+            end: 4,
             child: IconButton(
               onPressed: () => showMoreItemOptionsSheet(
                 context,

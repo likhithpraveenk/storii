@@ -106,11 +106,14 @@ class FullPlayer extends ConsumerWidget {
                   padding: .symmetric(horizontal: 24),
                   child: BookSlider(),
                 ),
-                switch (layout) {
-                  .defaultLayout => const ButtonLayoutDefault(),
-                  .compact => const ButtonLayoutCompact(),
-                  .big => const ButtonLayoutBig(),
-                },
+                Directionality(
+                  textDirection: .ltr,
+                  child: switch (layout) {
+                    .defaultLayout => const ButtonLayoutDefault(),
+                    .compact => const ButtonLayoutCompact(),
+                    .big => const ButtonLayoutBig(),
+                  },
+                ),
                 const SizedBox(height: 8),
                 if (layout != .big) ...[
                   FullPlayerActionsWidget(session),

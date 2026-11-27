@@ -57,51 +57,57 @@ class MiniPlayer extends ConsumerWidget {
       .position => position.toReadableDuration(showSeconds: true),
     };
 
-    return ThemedBackground(
-      miniplayer: true,
-      child: Padding(
-        padding: const .all(8),
-        child: Row(
-          children: [
-            const SizedBox(width: imgSizeInMiniPlayer),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: .center,
-                crossAxisAlignment: .start,
-                children: [
-                  MarqueeText(
-                    title,
-                    style: textTheme.labelLarge?.copyWith(fontWeight: .bold),
-                  ),
-                  Text(
-                    subtitle,
-                    style: textTheme.labelSmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                      fontWeight: .bold,
+    return Directionality(
+      textDirection: .ltr,
+      child: ThemedBackground(
+        miniplayer: true,
+        child: Padding(
+          padding: const .all(8),
+          child: Row(
+            children: [
+              const SizedBox(width: imgSizeInMiniPlayer),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: .center,
+                  crossAxisAlignment: .start,
+                  children: [
+                    MarqueeText(
+                      title,
+                      style: textTheme.labelLarge?.copyWith(fontWeight: .bold),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            if (showSeekButtons)
-              IconButton(
-                icon: const Icon(Icons.replay, size: 20),
-                onPressed: audioHandler.rewind,
-              ),
-            IconButton(
-              icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow, size: 30),
-              onPressed: isLoading ? null : audioHandler.togglePlay,
-            ),
-            if (showSeekButtons)
-              IconButton(
-                onPressed: audioHandler.fastForward,
-                icon: Transform.flip(
-                  flipX: true,
-                  child: const Icon(Icons.replay, size: 20),
+                    Text(
+                      subtitle,
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                        fontWeight: .bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-          ],
+              if (showSeekButtons)
+                IconButton(
+                  icon: const Icon(Icons.replay, size: 20),
+                  onPressed: audioHandler.rewind,
+                ),
+              IconButton(
+                icon: Icon(
+                  isPlaying ? Icons.pause : Icons.play_arrow,
+                  size: 30,
+                ),
+                onPressed: isLoading ? null : audioHandler.togglePlay,
+              ),
+              if (showSeekButtons)
+                IconButton(
+                  onPressed: audioHandler.fastForward,
+                  icon: Transform.flip(
+                    flipX: true,
+                    child: const Icon(Icons.replay, size: 20),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
