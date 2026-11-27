@@ -7,7 +7,6 @@ import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/admin/ui/admin_tile.dart';
 import 'package:storii/features/more/ui/about_screen.dart';
-import 'package:storii/features/more/ui/changelog_screen.dart';
 import 'package:storii/shared/widgets/logo_header.dart';
 import 'package:storii/storage/local/session_store.dart';
 
@@ -91,7 +90,6 @@ class MoreScreen extends ConsumerWidget {
                 leading: const Icon(Icons.settings),
                 title: Text(l10n.settings),
               ),
-              const ChangelogTile(),
               const AboutTile(),
             ],
           ),

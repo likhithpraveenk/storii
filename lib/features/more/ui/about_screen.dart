@@ -7,6 +7,7 @@ import 'package:storii/app/config/router.dart';
 import 'package:storii/app/init.dart';
 import 'package:storii/app/providers/device_info_provider.dart';
 import 'package:storii/features/more/logic/bug_report_provider.dart';
+import 'package:storii/features/more/ui/changelog_screen.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 import 'package:storii/shared/helpers/helpers.dart';
 import 'package:storii/shared/widgets/logo_header.dart';
@@ -34,7 +35,6 @@ class AboutScreen extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final packageInfo = ref.watch(packageInfoProvider).value;
-    final deviceInfo = ref.watch(deviceInfoStringProvider).value;
 
     return Scaffold(
       appBar: AppBar(
@@ -57,7 +57,18 @@ class AboutScreen extends ConsumerWidget {
                   subtitle: Text(
                     '${packageInfo?.version} (${packageInfo?.buildNumber})',
                   ),
+                  onTap: () async {
+                    final deviceInfo = await ref.watch(
+                      deviceInfoStringProvider.future,
+                    );
+                    if (!context.mounted) return;
+                    await Clipboard.setData(ClipboardData(text: deviceInfo));
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context)
+                        .showAppSnackBar(l10n.copiedToClipboard);
+                  },
                 ),
+                const ChangelogTile(),
                 ListTile(
                   title: Text(l10n.licenses),
                   leading: const Icon(Icons.gavel_outlined),
@@ -98,14 +109,6 @@ class AboutScreen extends ConsumerWidget {
               child: Column(
                 mainAxisSize: .min,
                 children: [
-                  if (deviceInfo != null)
-                    SelectableText(
-                      deviceInfo,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: scheme.onSurfaceVariant,
-                      ),
-                    ),
-                  const SizedBox(height: 8),
                   Row(
                     mainAxisSize: .min,
                     children: [
