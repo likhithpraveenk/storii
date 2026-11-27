@@ -112,7 +112,7 @@ class TrackTransfer {
         }
 
         LogService.log(
-          'Track retry $attempt for ${track.ino}',
+          'Track retry $attempt for ${track.filename}',
           source: 'TrackTransfer',
         );
         await delay(retryDelays[attempt]);
