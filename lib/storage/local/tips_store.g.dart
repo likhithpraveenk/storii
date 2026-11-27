@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'items_cache.dart';
+part of 'tips_store.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,43 +9,43 @@ part of 'items_cache.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(itemsCache)
-final itemsCacheProvider = ItemsCacheProvider._();
+@ProviderFor(tipsStore)
+final tipsStoreProvider = TipsStoreProvider._();
 
-final class ItemsCacheProvider
-    extends $FunctionalProvider<ItemsCache, ItemsCache, ItemsCache>
-    with $Provider<ItemsCache> {
-  ItemsCacheProvider._()
+final class TipsStoreProvider
+    extends $FunctionalProvider<TipsStore, TipsStore, TipsStore>
+    with $Provider<TipsStore> {
+  TipsStoreProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'itemsCacheProvider',
+        name: r'tipsStoreProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$itemsCacheHash();
+  String debugGetCreateSourceHash() => _$tipsStoreHash();
 
   @$internal
   @override
-  $ProviderElement<ItemsCache> $createElement($ProviderPointer pointer) =>
+  $ProviderElement<TipsStore> $createElement($ProviderPointer pointer) =>
       $ProviderElement(pointer);
 
   @override
-  ItemsCache create(Ref ref) {
-    return itemsCache(ref);
+  TipsStore create(Ref ref) {
+    return tipsStore(ref);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(ItemsCache value) {
+  Override overrideWithValue(TipsStore value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<ItemsCache>(value),
+      providerOverride: $SyncValueProvider<TipsStore>(value),
     );
   }
 }
 
-String _$itemsCacheHash() => r'fbb87eb121ca560c00358ca615ba92950afc03ba';
+String _$tipsStoreHash() => r'90af8eb367acc2e3c9a5937a906e4b1fac5179cc';

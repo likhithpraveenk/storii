@@ -179,12 +179,6 @@ _UserSettings _$UserSettingsFromJson(
       : Duration(
           microseconds: (json['interruptionLongSkipBackward'] as num).toInt(),
         ),
-  globalProgressEndLabel:
-      $enumDecodeNullable(
-        _$ProgressEndLabelEnumMap,
-        json['globalProgressEndLabel'],
-      ) ??
-      DefaultUserSettings.globalProgressEndLabel,
   progressEndLabel:
       $enumDecodeNullable(
         _$ProgressEndLabelEnumMap,
@@ -240,7 +234,7 @@ _UserSettings _$UserSettingsFromJson(
   isSleepWindowOn:
       json['isSleepWindowOn'] as bool? ?? DefaultUserSettings.isSleepWindowOn,
   sleepWindow:
-      _$recordConvert(
+      _$recordConvertNullable(
         json['sleepWindow'],
         ($jsonValue) => (
           ($jsonValue[r'$1'] as num).toInt(),
@@ -355,8 +349,6 @@ Map<String, dynamic> _$UserSettingsToJson(
       instance.interruptionLongSkipThreshold.inMicroseconds,
   'interruptionLongSkipBackward':
       instance.interruptionLongSkipBackward.inMicroseconds,
-  'globalProgressEndLabel':
-      _$ProgressEndLabelEnumMap[instance.globalProgressEndLabel]!,
   'progressEndLabel': _$ProgressEndLabelEnumMap[instance.progressEndLabel]!,
   'miniplayerSubtitleMode':
       _$MiniplayerSubtitleModeEnumMap[instance.miniplayerSubtitleMode]!,
@@ -533,5 +525,7 @@ const _$ShakeSensitivityEnumMap = {
   ShakeSensitivity.high: 'high',
 };
 
-$Rec _$recordConvert<$Rec>(Object? value, $Rec Function(Map) convert) =>
-    convert(value as Map<String, dynamic>);
+$Rec? _$recordConvertNullable<$Rec>(
+  Object? value,
+  $Rec Function(Map) convert,
+) => value == null ? null : convert(value as Map<String, dynamic>);

@@ -277,11 +277,11 @@ enum FullPlayerActions {
 
   IconData get icon => switch (this) {
     .history => Icons.history,
-    .chapters => Icons.menu_book,
-    .sleep => Icons.nightlight,
-    .speed => Icons.speed,
+    .chapters => Icons.list_rounded,
+    .sleep => Icons.bedtime_outlined,
+    .speed => Icons.speed_rounded,
     .volume => Icons.volume_up,
-    .bookmarks => Icons.bookmark,
+    .bookmarks => Icons.bookmark_outline,
     .equalizer => Icons.equalizer,
     .queue => Icons.horizontal_split_outlined,
   };

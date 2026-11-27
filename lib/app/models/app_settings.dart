@@ -38,9 +38,6 @@ sealed class AppSettings with _$AppSettings {
     @Default([defaultInternalAudiobooks, defaultInternalPodcasts])
     List<StorageLocation> storageLocations,
 
-    // @Default(false) bool downloadPathsV4Migrated,
-    @Default(false) bool downloadedItemsMigrated,
-
     String? lastVersion,
   }) = _AppSettings;
 

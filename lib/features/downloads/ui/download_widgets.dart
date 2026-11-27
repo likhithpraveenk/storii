@@ -100,7 +100,7 @@ class DownloadStatusRow extends ConsumerWidget {
     final total = formatBytes(item.totalBytes, useBinary: useBinary);
     final bytesStr = '$received / $total';
 
-    final queuePos = queueIndex != null ? ' #$queueIndex' : '';
+    final queuePos = queueIndex != null ? '  #$queueIndex' : '';
 
     return switch (item.status) {
       .queued => Row(
@@ -125,7 +125,7 @@ class DownloadStatusRow extends ConsumerWidget {
           text: '${(item.progress * 100).toStringAsFixed(0)}%',
           style: textTheme.labelSmall,
           children: [
-            const TextSpan(text: '$kSmallDot  '),
+            const TextSpan(text: '  $kSmallDot  '),
             TextSpan(text: bytesStr),
           ],
         ),
@@ -135,7 +135,7 @@ class DownloadStatusRow extends ConsumerWidget {
           text: l10n.failed,
           style: textTheme.labelSmall?.copyWith(color: scheme.error),
           children: [
-            TextSpan(text: '$kSmallDot  ', style: textTheme.labelSmall),
+            TextSpan(text: '  $kSmallDot  ', style: textTheme.labelSmall),
             TextSpan(text: bytesStr, style: textTheme.labelSmall),
           ],
         ),
@@ -145,7 +145,7 @@ class DownloadStatusRow extends ConsumerWidget {
           text: l10n.paused,
           style: textTheme.labelSmall?.copyWith(color: scheme.onSurfaceVariant),
           children: [
-            const TextSpan(text: ' $kSmallDot '),
+            const TextSpan(text: '  $kSmallDot  '),
             TextSpan(text: bytesStr),
           ],
         ),

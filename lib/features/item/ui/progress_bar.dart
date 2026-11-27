@@ -87,7 +87,7 @@ class _AnimatedProgress extends StatelessWidget {
             : theme.colorScheme.onSurface;
 
         return Stack(
-          alignment: .centerLeft,
+          alignment: .centerStart,
           children: [
             Container(
               height: 20,
@@ -107,8 +107,8 @@ class _AnimatedProgress extends StatelessWidget {
               ),
             ),
             if (barWidth > 0)
-              Positioned(
-                left: clampedLeft,
+              PositionedDirectional(
+                start: clampedLeft,
                 child: Text(
                   '$animatedPercent%',
                   style: theme.textTheme.labelMedium?.copyWith(

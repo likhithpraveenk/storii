@@ -1,10 +1,9 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
-import 'package:storii/app/providers/settings_provider.dart';
+import 'package:storii/app/init.dart';
 import 'package:storii/shared/helpers/extensions.dart';
 
-class ProgressLabel extends ConsumerWidget {
+class ProgressLabel extends StatelessWidget {
   const new({
     required this.currentPosition,
     required this.totalDuration,
@@ -17,39 +16,23 @@ class ProgressLabel extends ConsumerWidget {
   final Duration remaining;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final label = ref.watch(globalProgressEndLabelProvider);
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final textStyle = theme.textTheme.labelSmall?.copyWith(
-      color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.9),
-      fontWeight: .bold,
-      letterSpacing: 1,
-    );
+    final percent = totalDuration.inSeconds > 0
+        ? (currentPosition.inSeconds / totalDuration.inSeconds * 100)
+              .floor()
+              .clamp(0, 100)
+        : 0;
 
-    final end = switch (label) {
-      .total => totalDuration.toTime(),
-      .remaining => '$kMinus${remaining.toTime()}',
-    };
-
-    return Padding(
-      padding: const .symmetric(horizontal: 24),
-      child: Row(
-        children: [
-          Text(currentPosition.toTime(), style: textStyle),
-          const Spacer(),
-          GestureDetector(
-            behavior: .opaque,
-            onTap: () {
-              ref
-                  .read(userSettingsProvider.notifier)
-                  .setGlobalProgressEndLabel(
-                    label == .total ? .remaining : .total,
-                  );
-            },
-            child: Text(end, style: textStyle),
-          ),
-        ],
+    return Text(
+      '${l10n.progressPercentComplete(percent)}  $kSmallDot  '
+      '${remaining.toReadableDuration(isLeft: true)}',
+      style: theme.textTheme.labelMedium?.copyWith(
+        color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.9),
+        fontWeight: .bold,
+        letterSpacing: 1,
       ),
+      textAlign: .center,
     );
   }
 }

@@ -13,7 +13,7 @@ part of 'series_list_provider.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$PaginatedSeriesItems {
+mixin _$PaginatedSeriesItems implements DiagnosticableTreeMixin {
 
  List<Series> get items; bool get hasMore; bool get isLoadingMore;
 /// Create a copy of PaginatedSeriesItems
@@ -23,6 +23,13 @@ mixin _$PaginatedSeriesItems {
 $PaginatedSeriesItemsCopyWith<PaginatedSeriesItems> get copyWith => _$PaginatedSeriesItemsCopyWithImpl<PaginatedSeriesItems>(this as PaginatedSeriesItems, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as PaginatedSeriesItems;
+  properties
+    ..add(DiagnosticsProperty('type', 'PaginatedSeriesItems'))
+    ..add(DiagnosticsProperty('items', _this.items))..add(DiagnosticsProperty('hasMore', _this.hasMore))..add(DiagnosticsProperty('isLoadingMore', _this.isLoadingMore));
+}
 
 @override
 bool operator ==(Object other) {
@@ -38,7 +45,7 @@ int get hashCode {
 }
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   final _this = this as PaginatedSeriesItems;
   return 'PaginatedSeriesItems(items: ${_this.items}, hasMore: ${_this.hasMore}, isLoadingMore: ${_this.isLoadingMore})';
 }
@@ -213,7 +220,7 @@ return $default(_that.items,_that.hasMore,_that.isLoadingMore);case _:
 /// @nodoc
 
 
-class _PaginatedSeriesItems implements PaginatedSeriesItems {
+class _PaginatedSeriesItems with DiagnosticableTreeMixin implements PaginatedSeriesItems {
   const _PaginatedSeriesItems({required  List<Series> items, required this.hasMore, this.isLoadingMore = false}): _items = items;
   
 
@@ -234,6 +241,12 @@ class _PaginatedSeriesItems implements PaginatedSeriesItems {
 _$PaginatedSeriesItemsCopyWith<_PaginatedSeriesItems> get copyWith => __$PaginatedSeriesItemsCopyWithImpl<_PaginatedSeriesItems>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+    ..add(DiagnosticsProperty('type', 'PaginatedSeriesItems'))
+    ..add(DiagnosticsProperty('items', items))..add(DiagnosticsProperty('hasMore', hasMore))..add(DiagnosticsProperty('isLoadingMore', isLoadingMore));
+}
 
 @override
 bool operator ==(Object other) {
@@ -247,7 +260,7 @@ int get hashCode {
 }
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
     return 'PaginatedSeriesItems(items: $items, hasMore: $hasMore, isLoadingMore: $isLoadingMore)';
 }
 

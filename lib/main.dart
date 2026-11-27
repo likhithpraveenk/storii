@@ -47,7 +47,7 @@ class MyApp extends ConsumerWidget {
       darkTheme: darkTheme,
       routerConfig: router,
       title: appName,
-      // TODO: pending material_ui fix https://github.com/flutter/flutter/issues/191072
+      // TODO: waiting for flutter hot-fix version which includes https://github.com/flutter/flutter/pull/197319
       localizationsDelegates: const [
         AppLocalizations.delegate,
         ...GlobalMaterialLocalizations.delegates,

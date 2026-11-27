@@ -112,36 +112,39 @@ class _BookSliderState extends ConsumerState<BookSlider>
       padding: const .symmetric(vertical: 6),
     );
 
-    return Column(
-      mainAxisSize: .min,
-      children: [
-        if (showWave)
-          RepaintBoundary(
-            child: AnimatedBuilder(
-              animation: _wave,
-              builder: (_, _) => buildSlider(
-                WavySliderTrackShape(phase: _wave.value * 2 * math.pi),
+    return Directionality(
+      textDirection: .ltr,
+      child: Column(
+        mainAxisSize: .min,
+        children: [
+          if (showWave)
+            RepaintBoundary(
+              child: AnimatedBuilder(
+                animation: _wave,
+                builder: (_, _) => buildSlider(
+                  WavySliderTrackShape(phase: _wave.value * 2 * math.pi),
+                ),
               ),
-            ),
-          )
-        else
-          buildSlider(null),
-        Row(
-          mainAxisAlignment: .spaceBetween,
-          children: [
-            Text(format(displayPositionMs)),
-            GestureDetector(
-              behavior: .opaque,
-              onTap: () => ref
-                  .read(userSettingsProvider.notifier)
-                  .setProgressEndLabel(
-                    endLabel == .total ? .remaining : .total,
-                  ),
-              child: Text(end),
-            ),
-          ],
-        ),
-      ],
+            )
+          else
+            buildSlider(null),
+          Row(
+            mainAxisAlignment: .spaceBetween,
+            children: [
+              Text(format(displayPositionMs)),
+              GestureDetector(
+                behavior: .opaque,
+                onTap: () => ref
+                    .read(userSettingsProvider.notifier)
+                    .setProgressEndLabel(
+                      endLabel == .total ? .remaining : .total,
+                    ),
+                child: Text(end),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -154,11 +157,14 @@ class MiniProgressIndicator extends ConsumerWidget {
     final (:duration, :position) = ref.watch(displayProgressProvider);
     final progress = (position.inSeconds / duration.inSeconds).clamp(0.0, 1.0);
 
-    return LinearProgressIndicator(
-      value: progress,
-      minHeight: 2,
-      backgroundColor: Colors.transparent,
-      color: Theme.of(context).colorScheme.primary,
+    return Directionality(
+      textDirection: .ltr,
+      child: LinearProgressIndicator(
+        value: progress,
+        minHeight: 2,
+        backgroundColor: Colors.transparent,
+        color: Theme.of(context).colorScheme.primary,
+      ),
     );
   }
 }

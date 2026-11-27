@@ -46,62 +46,67 @@ class MiniPlayer extends ConsumerWidget {
           )
         : remainingDuration;
     final remainingStr = scaledRemaining.toReadableDuration(isLeft: true);
-    final positionStr = position.toReadableDuration();
+    final positionStr = position.toTime();
     final showSeekButtons = ref.watch(showMiniPlayerSeekButtonsProvider);
 
     final miniplayerSubtitleMode = ref.watch(miniplayerSubtitleModeProvider);
     final subtitle = switch (miniplayerSubtitleMode) {
-      .both => '$positionStr  $kDot  $remainingStr',
-      .remaining =>
-        '$kMinus${scaledRemaining.toReadableDuration(showSeconds: true)}',
-      .position => position.toReadableDuration(showSeconds: true),
+      .both => '$positionStr  $kSmallDot  $remainingStr',
+      .remaining => '$kMinus${scaledRemaining.toTime()}',
+      .position => positionStr,
     };
 
-    return ThemedBackground(
-      miniplayer: true,
-      child: Padding(
-        padding: const .all(8),
-        child: Row(
-          children: [
-            const SizedBox(width: imgSizeInMiniPlayer),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: .center,
-                crossAxisAlignment: .start,
-                children: [
-                  MarqueeText(
-                    title,
-                    style: textTheme.labelLarge?.copyWith(fontWeight: .bold),
-                  ),
-                  Text(
-                    subtitle,
-                    style: textTheme.labelSmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                      fontWeight: .bold,
+    return Directionality(
+      textDirection: .ltr,
+      child: ThemedBackground(
+        miniplayer: true,
+        child: Padding(
+          padding: const .all(8),
+          child: Row(
+            children: [
+              const SizedBox(width: imgSizeInMiniPlayer),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: .center,
+                  crossAxisAlignment: .start,
+                  children: [
+                    MarqueeText(
+                      title,
+                      style: textTheme.labelLarge?.copyWith(fontWeight: .bold),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            if (showSeekButtons)
-              IconButton(
-                icon: const Icon(Icons.replay, size: 20),
-                onPressed: audioHandler.rewind,
-              ),
-            IconButton(
-              icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow, size: 30),
-              onPressed: isLoading ? null : audioHandler.togglePlay,
-            ),
-            if (showSeekButtons)
-              IconButton(
-                onPressed: audioHandler.fastForward,
-                icon: Transform.flip(
-                  flipX: true,
-                  child: const Icon(Icons.replay, size: 20),
+                    Text(
+                      subtitle,
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                        fontWeight: .bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-          ],
+              if (showSeekButtons)
+                IconButton(
+                  icon: const Icon(Icons.replay, size: 20),
+                  onPressed: audioHandler.rewind,
+                ),
+              IconButton(
+                icon: Icon(
+                  isPlaying ? Icons.pause : Icons.play_arrow,
+                  size: 30,
+                ),
+                onPressed: isLoading ? null : audioHandler.togglePlay,
+              ),
+              if (showSeekButtons)
+                IconButton(
+                  onPressed: audioHandler.fastForward,
+                  icon: Transform.flip(
+                    flipX: true,
+                    child: const Icon(Icons.replay, size: 20),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

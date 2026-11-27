@@ -6,12 +6,11 @@ import 'package:storii/app/config/constants.dart';
 import 'package:storii/shared/widgets/app_buttons.dart';
 
 BoxDecoration bottomSheetDecoration(BuildContext context) {
+  final scheme = Theme.of(context).colorScheme;
   return BoxDecoration(
+    color: scheme.surfaceContainerLowest,
     borderRadius: const .vertical(top: .circular(kRadiusXl)),
-    border: Border.all(
-      width: kBorderHairline,
-      color: Theme.of(context).colorScheme.primary,
-    ),
+    border: .all(width: kBorderHairline, color: scheme.primary),
   );
 }
 
@@ -85,70 +84,64 @@ class AppBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasButton = onTap != null;
-
-    final decoration = bottomSheetDecoration(context);
-
-    final header = Padding(
-      padding: const .fromLTRB(24, 24, 24, 16),
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: bottomSheetTitleTextStyle(context),
-            textAlign: .center,
-          ),
-          if (subtitle != null) ...[
-            const SizedBox(height: 8),
-            Text(
-              subtitle!,
-              style: bottomSheetSubtitleTextStyle(context),
-              textAlign: .center,
-            ),
-          ],
-        ],
+    final scheme = Theme.of(context).colorScheme;
+    return Material(
+      color: scheme.surfaceContainerLowest,
+      shape: RoundedRectangleBorder(
+        borderRadius: const .vertical(top: .circular(kRadiusXl)),
+        side: .new(width: kBorderHairline, color: scheme.primary),
       ),
-    );
-
-    final footer = hasButton
-        ? Column(
-            mainAxisSize: .min,
-            children: [
-              Container(
-                padding: const .symmetric(horizontal: 24),
-                width: double.infinity,
-                child: AppFilledButton(
-                  isDestructive: isDestructive,
-                  onPressed: () async {
-                    unawaited(HapticFeedback.lightImpact());
-                    await onTap?.call();
-                    if (context.mounted) Navigator.of(context).pop();
-                  },
-                  text: actionLabel!,
-                  icon: actionIcon != null
-                      ? Icon(
-                          actionIcon,
-                          color: isDestructive
-                              ? Theme.of(context).colorScheme.onError
-                              : null,
-                        )
-                      : null,
-                ),
-              ),
-              const SizedBox(height: 24),
-            ],
-          )
-        : const SizedBox(height: 16);
-
-    return DecoratedBox(
-      decoration: decoration,
       child: Column(
         mainAxisSize: .min,
         crossAxisAlignment: .stretch,
         children: [
-          header,
+          Padding(
+            padding: const .fromLTRB(
+              kSpacingLg,
+              kSpacingLg,
+              kSpacingLg,
+              kSpacingMd,
+            ),
+            child: Column(
+              children: [
+                Text(
+                  title,
+                  style: bottomSheetTitleTextStyle(context),
+                  textAlign: .center,
+                ),
+                if (subtitle != null) ...[
+                  const SizedBox(height: kSpacingSm),
+                  Text(
+                    subtitle!,
+                    style: bottomSheetSubtitleTextStyle(context),
+                    textAlign: .center,
+                  ),
+                ],
+              ],
+            ),
+          ),
           if (body != null) Flexible(child: SingleChildScrollView(child: body)),
-          footer,
+          if (onTap != null)
+            Container(
+              padding: const .symmetric(horizontal: kSpacingLg),
+              width: double.infinity,
+              child: AppFilledButton(
+                isDestructive: isDestructive,
+                onPressed: () async {
+                  unawaited(HapticFeedback.lightImpact());
+                  await onTap?.call();
+                  if (context.mounted) Navigator.of(context).pop();
+                },
+                text: actionLabel!,
+                icon: actionIcon != null
+                    ? Icon(
+                        actionIcon,
+                        color: isDestructive ? scheme.onError : null,
+                      )
+                    : null,
+              ),
+            ),
+          const SizedBox(height: kSpacingLg),
         ],
       ),
     );

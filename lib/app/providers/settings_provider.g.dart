@@ -158,9 +158,6 @@ extension AppSettingsSetters on AppSettingsNotifier {
   Future<void> setStorageLocations(List<StorageLocation> value) =>
       _save(state.copyWith(storageLocations: value));
 
-  Future<void> setDownloadedItemsMigrated(bool value) =>
-      _save(state.copyWith(downloadedItemsMigrated: value));
-
   Future<void> setLastVersion(String? value) =>
       _save(state.copyWith(lastVersion: value));
 }
@@ -228,12 +225,6 @@ final trustAllCertificatesProvider = Provider<bool>(
 final storageLocationsProvider = Provider<List<StorageLocation>>(
   (ref) => ref.watch(appSettingsProvider.select((s) => s.storageLocations)),
   name: 'storageLocationsProvider',
-);
-
-final downloadedItemsMigratedProvider = Provider<bool>(
-  (ref) =>
-      ref.watch(appSettingsProvider.select((s) => s.downloadedItemsMigrated)),
-  name: 'downloadedItemsMigratedProvider',
 );
 
 final lastVersionProvider = Provider<String?>(
@@ -406,9 +397,6 @@ extension UserSettingsSetters on UserSettingsNotifier {
 
   Future<void> setInterruptionLongSkipBackward(Duration value) =>
       _save(state?.copyWith(interruptionLongSkipBackward: value));
-
-  Future<void> setGlobalProgressEndLabel(ProgressEndLabel value) =>
-      _save(state?.copyWith(globalProgressEndLabel: value));
 
   Future<void> setProgressEndLabel(ProgressEndLabel value) =>
       _save(state?.copyWith(progressEndLabel: value));
@@ -1012,17 +1000,6 @@ final interruptionLongSkipBackwardProvider = Provider<Duration>(
     ),
   ),
   name: 'interruptionLongSkipBackwardProvider',
-);
-
-final globalProgressEndLabelProvider = Provider<ProgressEndLabel>(
-  (ref) => ref.watch(
-    userSettingsProvider.select(
-      (s) =>
-          s?.globalProgressEndLabel ??
-          DefaultUserSettings.globalProgressEndLabel,
-    ),
-  ),
-  name: 'globalProgressEndLabelProvider',
 );
 
 final progressEndLabelProvider = Provider<ProgressEndLabel>(

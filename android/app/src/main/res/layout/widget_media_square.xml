@@ -13,7 +13,19 @@
         android:background="@drawable/widget_background"
         android:contentDescription="@string/app_name"
         android:scaleType="fitCenter"
-        android:src="@drawable/add_rounded" />
+        android:src="@mipmap/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/widget_setup_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/widget_tap_to_bind"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/widget_progress_red"
@@ -44,10 +56,10 @@
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_alignBottom="@id/widget_cover"
         android:layout_alignEnd="@id/widget_cover"
-        android:layout_marginBottom="8dp"
+        android:layout_alignBottom="@id/widget_cover"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:indeterminate="true"
         android:indeterminateTint="@android:color/white"
         android:visibility="gone" />
@@ -56,10 +68,10 @@
         android:id="@+id/widget_badge"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_alignBottom="@id/widget_cover"
         android:layout_alignEnd="@id/widget_cover"
-        android:layout_marginBottom="8dp"
+        android:layout_alignBottom="@id/widget_cover"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/widget_badge_background"
         android:contentDescription="@string/app_name"
         android:padding="4dp"

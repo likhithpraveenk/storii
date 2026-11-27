@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Storii</string>
     <string name="widget_preparing_playback">Preparing playback…</string>
+    <string name="widget_tap_to_bind">Tap to bind widget</string>
 </resources>

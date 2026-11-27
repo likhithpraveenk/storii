@@ -7,22 +7,56 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:storii/app/config/keys.dart';
 import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/widget_config.dart';
 import 'package:storii/app/providers/authenticated_user_provider.dart';
 import 'package:storii/app/providers/media_progress_map_provider.dart';
 import 'package:storii/app/providers/repository_providers.dart';
+import 'package:storii/app/providers/tips_provider.dart';
 import 'package:storii/features/downloads/logic/cover_helper.dart';
 import 'package:storii/features/player/logic/audio_providers.dart';
 import 'package:storii/features/player/logic/session_notifier.dart';
 import 'package:storii/features/widget/logic/widget_bridge.dart';
+import 'package:storii/features/widget/ui/widget_binding_tip.dart';
 
 part 'widget_controller.g.dart';
 
 const _widgetPrefix = 'widget_';
 final _coverFilePattern = RegExp(r'widget_(.+)_cover\.jpg');
 
+Future<WidgetConfig?> _decodeWidgetConfig(
+  WidgetBridge bridge,
+  int id,
+  String? json,
+) async {
+  if (json == null) return null;
+  try {
+    return WidgetConfig.fromJson(jsonDecode(json));
+  } catch (e, st) {
+    LogService.log(
+      'Corrupt widget config for widget $id: json string: $json\nremoving',
+      originalError: e,
+      stackTrace: st,
+      source: 'WidgetController',
+    );
+    await bridge.saveData('$_widgetPrefix$id', null);
+    return null;
+  }
+}
+
 @riverpod
+Future<Map<int, WidgetConfig?>> availableWidgetConfigs(Ref ref) async {
+  final map = <int, WidgetConfig?>{};
+  final bridge = ref.read(widgetBridgeProvider);
+  for (final id in await bridge.installedWidgetIds()) {
+    final json = await bridge.readData('$_widgetPrefix$id');
+    map[id] = await _decodeWidgetConfig(bridge, id, json);
+  }
+  return map;
+}
+
+@Riverpod(keepAlive: true)
 class WidgetController extends _$WidgetController {
   int? _widgetId;
   bool _syncing = false;
@@ -38,16 +72,43 @@ class WidgetController extends _$WidgetController {
 
   bool get isActive => _widgetId != null;
 
-  void setWidgetId(int id) => _widgetId = id;
+  Future<void> prepareWidgetForBinding(int id) async {
+    _widgetId = id;
+    await _saveUnboundWidget(id);
+    final dismissed = ref.read(tipsProvider).isDismissed(.widgetBinding);
+    if (!dismissed) {
+      final context = shellScaffoldKey.currentContext;
+      if (context != null && context.mounted) {
+        await showWidgetBindingTipDialog(
+          context,
+          onSetDismissed: ref.read(tipsProvider.notifier).setDismissed,
+        );
+      }
+    }
+  }
+
+  Future<void> _saveUnboundWidget(int id) async {
+    try {
+      await ref.read(widgetBridgeProvider).saveData('$_widgetPrefix$id', null);
+      await _updateWidgetsUI();
+    } catch (e, st) {
+      LogService.log(
+        'Failed to save widget config',
+        originalError: e,
+        stackTrace: st,
+        source: 'WidgetController',
+      );
+    }
+  }
 
   Future<bool> bindActiveWidget({
     required String itemId,
     String? episodeId,
   }) async {
     try {
+      if (!isActive) return false;
       final coverPath = await _coverPathForWidget(itemId, episodeId != null);
       final progress = await _fetchProgress(itemId, episodeId);
-      if (_widgetId == null) return false;
 
       final config = WidgetConfig(
         widgetId: _widgetId!,
@@ -77,17 +138,8 @@ class WidgetController extends _$WidgetController {
     final configs = <WidgetConfig>[];
     for (final id in await bridge.installedWidgetIds()) {
       final json = await bridge.readData('$_widgetPrefix$id');
-      if (json == null) continue;
-      try {
-        configs.add(WidgetConfig.fromJson(jsonDecode(json)));
-      } catch (e, st) {
-        LogService.log(
-          'Corrupt widget config for widget $id',
-          originalError: e,
-          stackTrace: st,
-          source: 'WidgetController',
-        );
-      }
+      final config = await _decodeWidgetConfig(bridge, id, json);
+      if (config != null) configs.add(config);
     }
     return configs;
   }
@@ -95,7 +147,9 @@ class WidgetController extends _$WidgetController {
   Future<void> _startupSync() async {
     try {
       final configs = await _installedConfigs();
-      configs.forEach(_refreshWidget);
+      for (final config in configs) {
+        await _refreshWidget(config);
+      }
       await _deleteOrphanedCovers(configs);
     } catch (e, st) {
       LogService.log(
@@ -139,6 +193,7 @@ class WidgetController extends _$WidgetController {
   }
 
   Future<void> _refreshWidget(WidgetConfig config) async {
+    if (config.itemId.isEmpty) return;
     final coverPath = await _coverPathForWidget(
       config.itemId,
       config.episodeId != null,
@@ -151,6 +206,51 @@ class WidgetController extends _$WidgetController {
     );
 
     await _saveAndUpdateWidget(updatedConfig);
+  }
+
+  Future<void> bindWidgetToNowPlaying(int widgetId) async {
+    final session = ref.read(sessionProvider);
+    final itemId = session?.libraryItemId;
+    var config = WidgetConfig(
+      widgetId: widgetId,
+      itemId: itemId ?? '', //* initial no session handling
+      episodeId: session?.episodeId,
+      updatedAt: DateTime.now(),
+      source: .nowPlaying,
+    );
+
+    if (itemId != null) {
+      final coverPath = await _coverPathForWidget(
+        config.itemId,
+        config.episodeId != null,
+      );
+      config = config.copyWith(coverPath: coverPath);
+    }
+
+    await _saveAndUpdateWidget(config);
+  }
+
+  Future<WidgetConfig> _resolveNowPlayingConfig(WidgetConfig config) async {
+    if (config.source != .nowPlaying) return config;
+
+    final session = ref.read(sessionProvider);
+    if (session != null) {
+      final newConfig = config.copyWith(
+        itemId: session.libraryItemId,
+        episodeId: session.episodeId,
+      );
+      if (newConfig.itemId != config.itemId) {
+        final coverPath = await _coverPathForWidget(
+          newConfig.itemId,
+          newConfig.episodeId != null,
+        );
+        return newConfig.copyWith(
+          coverPath: coverPath ?? newConfig.coverPath,
+          updatedAt: DateTime.now(),
+        );
+      }
+    }
+    return config;
   }
 
   Future<double?> _fetchProgress(String itemId, String? episodeId) async {
@@ -184,7 +284,14 @@ class WidgetController extends _$WidgetController {
   Future<void> _syncOnce() async {
     var changed = false;
     final configs = await _installedConfigs();
-    for (final config in configs) {
+    for (final originalConfig in configs) {
+      var config = originalConfig;
+      if (config.source == .nowPlaying) {
+        config = await _resolveNowPlayingConfig(config);
+      }
+
+      if (config.itemId.isEmpty) continue;
+
       final progress = await _fetchProgress(config.itemId, config.episodeId);
       final state = _playbackStateFor(config);
       final updated = config.copyWith(progress: progress, state: state);
@@ -228,6 +335,8 @@ class WidgetController extends _$WidgetController {
     String libraryItemId,
     bool isPodcast,
   ) async {
+    if (libraryItemId.isEmpty) return null;
+
     final coverPath = await ref
         .read(coverHelperProvider)
         .coverPathIfExists(libraryItemId, isPodcast: isPodcast);

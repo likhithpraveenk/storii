@@ -62,12 +62,6 @@ final hiveBoxSpecs = <HiveBoxSpec>[
     canReset: false,
   ),
   HiveBoxSpec(
-    name: itemsBoxName,
-    label: 'Item cache (Deprecated)',
-    description: 'Cache for migration. It will be deleted in a future version',
-    icon: Icons.inventory_2_outlined,
-  ),
-  HiveBoxSpec(
     name: localSessionsBoxName,
     label: l10n.localSessions,
     description: l10n.localSessionsDescription,

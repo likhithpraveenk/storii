@@ -64,7 +64,6 @@ class DefaultUserSettings {
   static const interruptionSkipBackward = Duration.zero;
   static const interruptionLongSkipThreshold = Duration(seconds: 30);
   static const interruptionLongSkipBackward = Duration.zero;
-  static const globalProgressEndLabel = ProgressEndLabel.total;
   static const progressEndLabel = ProgressEndLabel.total;
   static const miniplayerSubtitleMode = MiniplayerSubtitleMode.both;
   static const homeShelves = ShelfIdentity.values;
@@ -237,9 +236,6 @@ sealed class UserSettings with _$UserSettings {
 
     @Default(DefaultUserSettings.interruptionLongSkipBackward)
     Duration interruptionLongSkipBackward,
-
-    @Default(DefaultUserSettings.globalProgressEndLabel)
-    ProgressEndLabel globalProgressEndLabel,
 
     @Default(DefaultUserSettings.progressEndLabel)
     ProgressEndLabel progressEndLabel,

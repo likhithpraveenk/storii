@@ -94,3 +94,44 @@ final class RemainingNavTargetsProvider
 
 String _$remainingNavTargetsHash() =>
     r'76a1ea27ceb3d0c609139fe4f87190d6999da8ef';
+
+@ProviderFor(startupRoute)
+final startupRouteProvider = StartupRouteProvider._();
+
+final class StartupRouteProvider
+    extends $FunctionalProvider<String, String, String>
+    with $Provider<String> {
+  StartupRouteProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'startupRouteProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$startupRouteHash();
+
+  @$internal
+  @override
+  $ProviderElement<String> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  String create(Ref ref) {
+    return startupRoute(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(String value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<String>(value),
+    );
+  }
+}
+
+String _$startupRouteHash() => r'd84495fb07bd1cab99b657859bceb579f07d3f31';

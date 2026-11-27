@@ -49,4 +49,4 @@ final class DeepLinkControllerProvider
 }
 
 String _$deepLinkControllerHash() =>
-    r'590165df416f5ca979c267e8db62dffb2b90f6b5';
+    r'915862e9aa76cb532367ad6aa3632df6e58d0e6f';

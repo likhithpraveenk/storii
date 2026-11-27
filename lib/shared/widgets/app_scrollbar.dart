@@ -87,7 +87,7 @@ class _AppScrollbarState extends ConsumerState<AppScrollbar>
             builder: (context, constraints) {
               final showThumb = ref.watch(scrollThumbVisibilityProvider);
               if (!showThumb) return const SizedBox.shrink();
-
+              final isRtl = Directionality.of(context) == .rtl;
               final availableHeight = constraints.maxHeight - thumbHeight;
               return Stack(
                 children: [
@@ -126,11 +126,11 @@ class _AppScrollbarState extends ConsumerState<AppScrollbar>
                       final slideDx =
                           lerpDouble(thumbWidth, 0, _anim.value) ?? thumbWidth;
 
-                      return Positioned(
+                      return PositionedDirectional(
                         top: topOffset,
-                        right: 0,
+                        end: 0,
                         child: Transform.translate(
-                          offset: Offset(slideDx, 0),
+                          offset: Offset(isRtl ? -slideDx : slideDx, 0),
                           child: child,
                         ),
                       );
@@ -152,17 +152,17 @@ class Thumb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Container(
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: .horizontal(left: .circular(height)),
+        color: scheme.primaryContainer,
+        borderRadius: BorderRadiusDirectional.horizontal(
+          start: .circular(height),
+        ),
       ),
-      child: Icon(
-        Icons.unfold_more,
-        color: Theme.of(context).colorScheme.onPrimaryContainer,
-      ),
+      child: Icon(Icons.unfold_more, color: scheme.onPrimaryContainer),
     );
   }
 }
