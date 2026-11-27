@@ -326,6 +326,8 @@
   "playbackSpeed": "Playback speed",
   "playback": "Playback",
   "doNotShowTipAgain": "Don't show this tip again",
+  "resetTips": "Reset tips",
+  "resetTipsSubtitle": "Show dismissed tips again",
   "gotIt": "Got it",
   "sleepTimer": "Sleep timer",
   "cancelTimer": "Cancel timer",

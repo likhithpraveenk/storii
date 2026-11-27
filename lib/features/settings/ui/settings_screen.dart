@@ -9,6 +9,7 @@ import 'package:storii/features/settings/ui/downloads/downloads_settings_screen.
 import 'package:storii/features/settings/ui/library/library_settings_screen.dart';
 import 'package:storii/features/settings/ui/player_settings/player_settings_screen.dart';
 import 'package:storii/features/settings/ui/reset_settings_action.dart';
+import 'package:storii/features/settings/ui/reset_tips_tile.dart';
 
 class SettingsScreen extends StatelessWidget {
   const new({super.key});
@@ -37,6 +38,7 @@ class SettingsScreen extends StatelessWidget {
           LibrarySettingsTile(),
           DownloadsSettingsTile(),
           AdvancedSettingsTile(),
+          ResetTipsTile(),
           AccountSection(),
         ],
       ),
