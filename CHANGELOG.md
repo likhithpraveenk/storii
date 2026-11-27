@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/).
 
 - screens that need a user account now shows login button instead of redirecting to login screen
 - moved changelog tile to about screen
+- full player actions edit view
 
 ### Fixed
 

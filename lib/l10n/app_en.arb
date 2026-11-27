@@ -755,5 +755,6 @@
   "autoDeleteExclusion": "Auto-Delete exclusions",
   "autoDeleteExclusionDescription": "Downloads kept from auto-delete",
   "equalizerPresets": "Equalizer presets",
-  "equalizerPresetsDescription": "Your custom equalizer presets"
+  "equalizerPresetsDescription": "Your custom equalizer presets",
+  "moreActionsEditSubtitle": "Drag and drop any button in the top row to show it in the player, or below to hide it"
 }
