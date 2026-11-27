@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/config/constants.dart';
 import 'package:storii/app/init.dart';
@@ -6,6 +7,7 @@ import 'package:storii/app/logs/log_service.dart';
 import 'package:storii/app/models/server.dart';
 import 'package:storii/app/models/user.dart';
 import 'package:storii/app/providers/api_providers.dart';
+import 'package:storii/app/providers/nav_providers.dart';
 import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/user_auth_status.dart';
 import 'package:storii/features/auth/ui/add_user_sheet.dart';
@@ -43,6 +45,9 @@ class UserTile extends ConsumerWidget {
             ref
               ..invalidate(apiClientProvider(previous))
               ..invalidate(socketApiProvider(previous));
+          }
+          if (context.mounted) {
+            context.go(ref.read(startupRouteProvider));
           }
         } else if (loginNeeded) {
           await showAddUserSheet(context, server.url, user.username);

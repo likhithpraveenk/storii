@@ -1,6 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:storii/app/init.dart';
+import 'package:storii/app/providers/nav_providers.dart';
+import 'package:storii/app/providers/settings_provider.dart';
 import 'package:storii/features/auth/logic/add_server_notifier.dart';
 import 'package:storii/features/auth/logic/add_user_notifier.dart';
 import 'package:storii/features/auth/ui/user_login_form.dart';
@@ -48,6 +51,13 @@ class _AddUserSheetState extends ConsumerState<AddUserSheet> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(currentUserProvider, (_, next) {
+      if (next == null) return;
+      final router = GoRouter.of(context);
+      Navigator.of(context).pop();
+      router.go(ref.read(startupRouteProvider));
+    });
+
     final state = ref.watch(addUserProvider);
     final isLoading = state.status == .loading;
     final scheme = Theme.of(context).colorScheme;

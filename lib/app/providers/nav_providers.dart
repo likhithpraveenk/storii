@@ -33,3 +33,11 @@ List<NavTarget> remainingNavTargets(Ref ref) {
     return remaining.where((t) => t != .latest).toList();
   }
 }
+
+@riverpod
+String startupRoute(Ref ref) {
+  final startup = ref.watch(startupNavProvider);
+  final effective = ref.watch(effectiveNavTargetsProvider);
+  final target = effective.contains(startup) ? startup : NavTarget.home;
+  return target.item.route.path;
+}

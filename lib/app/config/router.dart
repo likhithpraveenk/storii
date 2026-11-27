@@ -90,15 +90,10 @@ enum AppRoute {
 }
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final user = ref.watch(currentUserProvider);
-  String initialRoute = AppRoute.home.path;
-  if (user != null) {
-    final startup = ref.read(startupNavProvider);
-    final effective = ref.read(effectiveNavTargetsProvider);
-    initialRoute = effective.contains(startup)
-        ? startup.item.route.path
-        : AppRoute.home.path;
-  }
+  final user = ref.read(currentUserProvider);
+  final initialRoute = user != null
+      ? ref.read(startupRouteProvider)
+      : AppRoute.login.path;
   return GoRouter(
     initialLocation: initialRoute,
     navigatorKey: rootNavigatorKey,
