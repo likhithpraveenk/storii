@@ -561,7 +561,7 @@
   "playOnStartupSubtitle": "Automatycznie kontynuuj odtwarzanie ostatniej książki po otwarciu aplikacji",
   "copyPlayLink": "Kopiuj link do odtworzenia",
   "copiedToClipboard": "Skopiowano do schowka",
-  "bindToWidget": "Powiąż z widżetem",
+  "bindToWidget": "Połącz z widżetem",
   "success": "Sukces",
   "errorSocket": "Nie można połączyć z adresem serwerem",
   "errorHandshake": "Nie można ustanowić połączenia (błąd TLS)",
@@ -743,5 +743,26 @@
   "autoDeleteExclusion": "Wykluczenia z automatycznego usuwania",
   "autoDeleteExclusionDescription": "Pobrane elementy chronione przed automatycznym usunięciem",
   "equalizerPresets": "Profile korektora dźwięku",
-  "equalizerPresetsDescription": "Własne profile korektora"
+  "equalizerPresetsDescription": "Własne profile korektora",
+  "progressPercentComplete": "Ukończono {percent}%",
+  "@progressPercentComplete": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "widgets": "Widżety",
+  "widgetRebind": "Zmień połączenie widżetu",
+  "widgetTapToBind": "Naciśnij by połączyć z widżetem",
+  "widgetFollowNowPlaying": "Śledź aktualnie odtwarzane",
+  "nowPlaying": "Aktualnie odtwarzane",
+  "widgetUnbound": "Anuluj powiązanie",
+  "widgetBindingTipTitle": "Połącz swój widżet",
+  "widgetBindingTipBody": "By powiązać widżet otwórz audiobooka lub podcast. Naciśnij i przytrzymaj wybrany element długo lub użyj \"Więcej opcji\" i wybierz \"Połącz z widżetem\".",
+  "doNotShowTipAgain": "Nie pokazuj tej porady ponownie",
+  "resetTips": "Resetuj porady",
+  "resetTipsSubtitle": "Pokaż ponownie odrzucone porady",
+  "gotIt": "Ok",
+  "moreActionsEditSubtitle": "Przeciągnij przycisk na górny pasek, aby pokazać go w odtwarzaczu, lub poniżej, aby go ukryć"
 }
